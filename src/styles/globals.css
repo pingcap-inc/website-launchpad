@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Font Loading via CDN (local files and Google Fonts are forbidden) ─── */
+@font-face {
+  font-family: 'Moderat';
+  src: url('https://static.pingcap.com/dist/fonts/moderat/Moderat-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Moderat';
+  src: url('https://static.pingcap.com/dist/fonts/moderat/Moderat-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Moderat';
+  src: url('https://static.pingcap.com/dist/fonts/moderat/Moderat-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Moderat';
+  src: url('https://static.pingcap.com/dist/fonts/moderat/Moderat-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Moderat Mono';
+  src: url('https://static.pingcap.com/dist/fonts/moderat-mono/Moderat-Mono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --font-moderat: 'Moderat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-moderat-mono: 'Moderat Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans antialiased bg-bg-primary text-text-inverse;
+  }
+}
