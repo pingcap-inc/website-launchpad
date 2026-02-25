@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import '@/styles/globals.css'
+import { GTMScript, GTMNoScript } from '@/lib/gtm'
+import { RouteTracker } from '@/components/ui/RouteTracker'
 
 export const metadata: Metadata = {
   title: {
@@ -18,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preconnect to font CDN for performance */}
+        <GTMScript />
         <link rel="preconnect" href="https://static.pingcap.com" />
         <link rel="dns-prefetch" href="https://static.pingcap.com" />
       </head>
       <body className="font-sans bg-bg-primary text-text-inverse antialiased">
+        <GTMNoScript />
+        <RouteTracker />
         {children}
       </body>
     </html>

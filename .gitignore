@@ -28,6 +28,7 @@ yarn-error.log*
 .vscode/
 *.swp
 *.swo
+settings.json
 
 # Vercel
 .vercel

@@ -171,7 +171,7 @@ const softwareSchema = {
     priceCurrency: 'USD',
   },
   description: 'Open-source distributed SQL database supporting HTAP workloads.',
-  url: 'https://www.pingcap.com/tidb/',
+  url: 'https://www.pingcap.com/',
 }
 ```
 

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Navbar, HeroSection, FeaturesGrid, CtaSection, JsonLd, organizationSchema } from '@/components'
+import { Navbar, HeroSection, FeaturesGrid, CtaSection, JsonLd } from '@/components'
+import { buildPageSchema, softwareApplicationSchema } from '@/lib/schema'
 import { Database, Zap, Shield, Globe, BarChart3, Cpu } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -20,10 +21,27 @@ export const metadata: Metadata = {
     title: 'TiDB — The Distributed SQL Database',
     description: 'Open-source HTAP database. Scale without re-architecting.',
     images: ['https://www.pingcap.com/og/home.png'],
+    creator: '@PingCAP',
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/' },
 }
+
+const schema = buildPageSchema({
+  path: '/',
+  title: 'TiDB — The Distributed SQL Database for Real-Time Analytics',
+  description: 'Open-source distributed SQL database supporting HTAP workloads at any scale.',
+  pageType: 'WebPage',
+  breadcrumbs: [{ name: 'Home', path: '/' }],
+  image: 'https://www.pingcap.com/og/home.png',
+  extraSchemas: [
+    softwareApplicationSchema({
+      name: 'TiDB',
+      description: 'Open-source distributed SQL database supporting HTAP workloads.',
+      url: 'https://www.pingcap.com/tidb/',
+    }),
+  ],
+})
 
 const features = [
   {
@@ -61,7 +79,7 @@ const features = [
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={organizationSchema} />
+      <JsonLd data={schema} />
       <Navbar />
       <main className="pt-20">
         <HeroSection
@@ -71,7 +89,6 @@ export default function HomePage() {
           primaryCta={{ text: 'Start for Free', href: '/signup/' }}
           secondaryCta={{ text: 'View Demo', href: '/demo/' }}
         />
-
         <FeaturesGrid
           label="CAPABILITIES"
           title="One Database for Every Workload"
@@ -80,7 +97,6 @@ export default function HomePage() {
           columns={3}
           className="bg-bg-primary"
         />
-
         <CtaSection
           label="GET STARTED"
           title="Ready to Scale Your Database?"
