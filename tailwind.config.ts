@@ -45,6 +45,7 @@ const config: Config = {
         'h2-mb':   ['40px', { lineHeight: '1.1', fontWeight: '700' }],
         'h3-lg':   ['24px', { lineHeight: '1.3', fontWeight: '700' }],
         'h3-sm':   ['20px', { lineHeight: '1.3', fontWeight: '700' }],
+        'body-xl': ['22px', { lineHeight: '1.4', fontWeight: '400' }],
         'body-lg': ['18px', { lineHeight: '1.4', fontWeight: '400' }],
         'body-md': ['16px', { lineHeight: '1.4', fontWeight: '400' }],
         'body-sm': ['14px', { lineHeight: '1.4', fontWeight: '400' }],
@@ -70,7 +71,7 @@ const config: Config = {
         'container':  '40px',
       },
       maxWidth: {
-        'container':  '1374px',
+        'container':  '1502px',
         'hero-title': '860px',
         'subtitle':   '640px',
       },

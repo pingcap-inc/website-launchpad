@@ -22,7 +22,6 @@ interface CtaSectionProps {
 }
 
 export function CtaSection({
-  label,
   title,
   subtitle,
   primaryCta,
@@ -32,10 +31,7 @@ export function CtaSection({
 }: CtaSectionProps) {
   return (
     <section className={cn(bgMap[background], 'py-section md:py-section-sm', className)}>
-      <div className="max-w-container mx-auto px-16 lg:px-8 sm:px-4 text-center">
-        {label && (
-          <p className="font-mono text-eyebrow text-carbon-400 mb-8">{label}</p>
-        )}
+      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 text-center">
         <h2 className="text-h2-md md:text-h2-mb font-bold leading-tight text-text-inverse mb-6">
           {title}
         </h2>

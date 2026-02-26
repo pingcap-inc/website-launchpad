@@ -82,6 +82,7 @@ Gradients (only for dark sections that are **not** Hero or CTA):
 | H2-md | 56px | 40px | 700 | 1.1 | Sans |
 | H2-sm | 50px | 40px | 700 | 1.1 | Sans |
 | H3 | 24px / 20px | same | 700 | 1.3 | Sans |
+| Body-xl | 22px | 22px | 400 | 1.4 | Sans |
 | Body-lg | 18px | 18px | 400 | 1.4 | Sans |
 | Body-md | 16px | 16px | 400 | 1.4 | Sans |
 | Body-sm / Code | 14px | 14px | 400 | 1.4 | Sans / Mono |
@@ -139,6 +140,7 @@ const config: Config = {
         'h2-mb':   ['40px', { lineHeight:'1.1', fontWeight:'700' }],
         'h3-lg':   ['24px', { lineHeight:'1.3', fontWeight:'700' }],
         'h3-sm':   ['20px', { lineHeight:'1.3', fontWeight:'700' }],
+        'body-xl': ['22px', { lineHeight:'1.4', fontWeight:'400' }],
         'body-lg': ['18px', { lineHeight:'1.4', fontWeight:'400' }],
         'body-md': ['16px', { lineHeight:'1.4', fontWeight:'400' }],
         'body-sm': ['14px', { lineHeight:'1.4', fontWeight:'400' }],
@@ -151,7 +153,7 @@ const config: Config = {
         '6':'24px','8':'32px','10':'40px','12':'48px','16':'64px','20':'80px',
         'section':'80px','section-sm':'48px','container':'40px',
       },
-      maxWidth: { 'container':'1374px', 'hero-title':'860px', 'subtitle':'640px' },
+      maxWidth: { 'container':'1502px', 'hero-title':'860px', 'subtitle':'640px' },
       borderRadius: { 'pill':'9999px' },
       boxShadow: {
         'card':       '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)',

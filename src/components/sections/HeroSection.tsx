@@ -22,21 +22,21 @@ export function HeroSection({
   return (
     <section
       className={cn(
-        'bg-bg-inverse pt-40 pb-20 text-center relative overflow-hidden',
+        'bg-bg-inverse pt-20 pb-20 text-center relative overflow-hidden',
         className
       )}
     >
-      <div className="max-w-container mx-auto px-16 lg:px-8 sm:px-4">
+      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
         {eyebrow && (
           <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>
         )}
 
-        <h1 className="text-h1 md:text-h1-mb font-bold leading-tight text-text-inverse max-w-hero-title mx-auto mb-6">
+        <h1 className="text-h1-mb md:text-h1 font-bold leading-tight text-text-inverse max-w-hero-title mx-auto mb-6">
           {headline}
         </h1>
 
         {subheadline && (
-          <p className="text-body-lg text-text-inverse/65 max-w-subtitle mx-auto mb-10">
+          <p className="text-body-xl text-carbon-400 max-w-subtitle mx-auto mb-10">
             {subheadline}
           </p>
         )}

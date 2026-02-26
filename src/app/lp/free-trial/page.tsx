@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Navbar, HeroSection, FeaturesGrid, CtaSection } from '@/components'
+import { NavbarLp, HeroSection, FeaturesGrid, CtaSection } from '@/components'
 import { Clock, DollarSign, RefreshCw } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -44,8 +44,8 @@ const benefits = [
 export default function FreeTrial() {
   return (
     <>
-      <Navbar />
-      <main className="pt-20">
+      <NavbarLp />
+      <main className="pt-[62px] lg:pt-20">
         <HeroSection
           eyebrow="FREE TRIAL"
           headline="Zero Config. Real Scale. 7 Days Free."
@@ -63,7 +63,6 @@ export default function FreeTrial() {
         />
 
         <CtaSection
-          label="GET STARTED"
           title="Start Your Free Trial Today"
           subtitle="7 days free. No credit card. Cancel anytime."
           primaryCta={{ text: 'Start for Free', href: '/signup/' }}

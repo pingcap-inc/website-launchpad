@@ -5,6 +5,8 @@ export { GhostButton } from './ui/GhostButton'
 export { FeatureCard } from './ui/FeatureCard'
 export { SectionHeader } from './ui/SectionHeader'
 export { Navbar } from './ui/Navbar'
+export { NavbarLp } from './ui/NavbarLp'
+export { Footer } from './ui/Footer'
 export { JsonLd, organizationSchema, softwareSchema } from './ui/JsonLd'
 
 // Section Components

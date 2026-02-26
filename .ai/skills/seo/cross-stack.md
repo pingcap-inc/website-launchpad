@@ -78,51 +78,7 @@ server {
 
 ---
 
-## 2. Cloudflare Alternative
-
-If using Cloudflare Workers instead of Nginx:
-
-```js
-// cloudflare-worker.js
-export default {
-  async fetch(request) {
-    const url = new URL(request.url)
-    const NEXTJS_ORIGIN = 'https://website-launchpad.vercel.app'
-    const WP_ORIGIN = 'https://wordpress-backend.pingcap.com'
-
-    const NEXTJS_PATHS = ['/glossary/', '/compare/', '/lp/', '/marketing/', '/_next/', '/nextjs-sitemap.xml']
-    const isNextJs = NEXTJS_PATHS.some(p => url.pathname.startsWith(p))
-
-    const origin = isNextJs ? NEXTJS_ORIGIN : WP_ORIGIN
-    const targetUrl = `${origin}${url.pathname}${url.search}`
-
-    const response = await fetch(targetUrl, {
-      method: request.method,
-      headers: {
-        ...Object.fromEntries(request.headers),
-        'Host': 'www.pingcap.com',
-        'X-Forwarded-For': request.headers.get('CF-Connecting-IP') ?? '',
-      },
-      body: request.method !== 'GET' ? request.body : undefined,
-    })
-
-    const newResponse = new Response(response.body, response)
-
-    // Security headers
-    newResponse.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
-    newResponse.headers.set('X-Frame-Options', 'DENY')
-    newResponse.headers.set('X-Content-Type-Options', 'nosniff')
-    newResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-    newResponse.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
-
-    return newResponse
-  }
-}
-```
-
----
-
-## 3. Sitemap Merge
+## 2. Sitemap Merge
 
 **Option A (Recommended): Inject Next.js sitemap into WordPress Yoast**
 
@@ -165,7 +121,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 ---
 
-## 4. Route-Level Analytics (page_view on navigation)
+## 3. Route-Level Analytics (page_view on navigation)
 
 Next.js App Router does not fire GTM page_view automatically on route changes.
 Add this component to `src/app/layout.tsx`:
@@ -205,7 +161,7 @@ For page-specific `page_type`, pass it via a layout or page-level wrapper.
 
 ---
 
-## 5. Validation Checklist (run before each new path goes live)
+## 4. Validation Checklist (run before each new path goes live)
 
 ```
 Domain & Routing
@@ -232,7 +188,7 @@ Security Headers
 Analytics
 - [ ] GTM fires on page load
 - [ ] page_view event in dataLayer with correct page_type
-- [ ] Both GTM containers fire (pingcap.com + all_websites) — check Network tab for two gtm.js requests
+- [ ] No duplicate GTM containers
 
 Sitemap
 - [ ] New URL appears in /nextjs-sitemap.xml
@@ -241,10 +197,10 @@ Sitemap
 
 ---
 
-## 6. Adding a New Next.js Path
+## 5. Adding a New Next.js Path
 
 When a new path goes live (e.g. `/solutions/`), three things must be updated:
 
-1. **Nginx / Cloudflare** — add the new path to the proxy rules
+1. **Nginx** — add the new path to the proxy rules
 2. **`src/app/sitemap.ts`** — add the URL entry
 3. **Validation checklist** — run through before announcing live

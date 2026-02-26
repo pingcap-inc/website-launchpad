@@ -21,7 +21,7 @@
 
 **Layout / Spacing**
 - [ ] Spacing uses Token values only (`p-1` through `p-20` — no arbitrary pixel values)
-- [ ] Container: `max-w-container mx-auto px-16 lg:px-8 sm:px-4` (max 1374px, padding 64/32/16px)
+- [ ] Container: `max-w-container mx-auto px-4 md:px-8 lg:px-16` (max 1502px outer / 1374px content, padding 16/32/64px)
 - [ ] Section padding: `py-section md:py-section-sm`
 - [ ] Responsive grids: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`
 
@@ -60,7 +60,7 @@ import localFont from 'next/font/local'    // → CDN only
 // ─── Spacing ────────────────────────────────────────────
 py-[96px]                 // → py-section (80px)
 gap-[18px]                // → gap-4 (16px) or gap-6 (24px)
-max-w-[1440px]            // → max-w-container (1374px)
+max-w-[1440px]            // → max-w-container (1502px)
 
 // ─── Code ───────────────────────────────────────────────
 `${isDark ? 'text-white' : 'text-black'}`  // → cn()

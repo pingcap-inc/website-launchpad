@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Navbar, HeroSection, FeaturesGrid, CtaSection, JsonLd } from '@/components'
+import { Navbar, Footer, HeroSection, FeaturesGrid, CtaSection, JsonLd } from '@/components'
 import { buildPageSchema, softwareApplicationSchema } from '@/lib/schema'
 import { Database, Zap, Shield, Globe, BarChart3, Cpu } from 'lucide-react'
 
@@ -81,7 +81,7 @@ export default function HomePage() {
     <>
       <JsonLd data={schema} />
       <Navbar />
-      <main className="pt-20">
+      <main className="pt-[62px] lg:pt-20">
         <HeroSection
           eyebrow="DISTRIBUTED SQL DATABASE"
           headline="Built for Real-Time Data at Any Scale"
@@ -106,6 +106,7 @@ export default function HomePage() {
           background="red"
         />
       </main>
+      <Footer />
     </>
   )
 }

@@ -171,7 +171,7 @@ const softwareSchema = {
     priceCurrency: 'USD',
   },
   description: 'Open-source distributed SQL database supporting HTAP workloads.',
-  url: 'https://www.pingcap.com/',
+  url: 'https://www.pingcap.com/tidb/',
 }
 ```
 
@@ -197,7 +197,7 @@ const softwareSchema = {
 
 | Rule | Example |
 |------|---------|
-| Lowercase, hyphen-separated | `/tidb-cloud/` ✅  `/TiDB_Cloud/` ❌ |
+| Lowercase, hyphen-separated | `/distributed-sql/` ✅  `/Distributed_SQL/` ❌ |
 | Trailing slash | `/tidb/` ✅  `/tidb` ❌ |
 | Short, keyword-rich | `/distributed-sql-database/` ✅  `/page-1234/` ❌ |
 | Max 3 levels deep | `/tidb/features/htap/` ✅ |

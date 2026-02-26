@@ -3,22 +3,22 @@
 ## Container
 
 ```tsx
-// max-w-container = 1374px · responsive horizontal padding
-<div className="max-w-container mx-auto px-16 lg:px-8 sm:px-4">
+// max-w-container = 1502px (outer) · content = 1374px · responsive horizontal padding
+<div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
 ```
 
 | Breakpoint | Padding |
 |------------|---------|
-| Desktop (default) | `px-16` (64px) |
-| Below lg | `lg:px-8` (32px) |
-| Below sm | `sm:px-4` (16px) |
+| Mobile (default) | `px-4` (16px) |
+| ≥768px (md) | `md:px-8` (32px) |
+| ≥1024px (lg) | `lg:px-16` (64px) |
 
 ---
 
 ## Page Structure
 
 ```
-Navbar          fixed h-20 — add pt-20 to page content
+Navbar          fixed h-[62px] lg:h-20 — add pt-[62px] lg:pt-20 to page content
 Hero            bg-bg-inverse (pure black), no gradients
 Feature Sections  alternating bg-bg-primary / bg-bg-subtle
 CTA Section     one of four brand dark backgrounds
@@ -30,16 +30,16 @@ Footer
 ## Hero Section
 
 ```tsx
-<section className="bg-bg-inverse pt-40 pb-20 text-center relative overflow-hidden">
+<section className="bg-bg-inverse pt-20 pb-20 text-center relative overflow-hidden">
   {/* Eyebrow: optional, placed directly above H1 when used */}
   {eyebrow && (
     <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>
   )}
-  {/* H1: 68px desktop / 48px mobile */}
-  <h1 className="text-h1 md:text-h1-mb font-bold leading-tight text-text-inverse max-w-hero-title mx-auto mb-6">
+  {/* H1: 48px mobile / 68px desktop — mobile-first order */}
+  <h1 className="text-h1-mb md:text-h1 font-bold leading-tight text-text-inverse max-w-hero-title mx-auto mb-6">
     Modern Database for Real-Time Workloads
   </h1>
-  <p className="text-body-lg text-text-inverse/65 max-w-subtitle mx-auto mb-10">
+  <p className="text-body-xl text-carbon-400 max-w-subtitle mx-auto mb-10">
     Scale from gigabytes to petabytes without re-architecting your application.
   </p>
   <div className="flex items-center justify-center gap-4 flex-wrap">
@@ -52,7 +52,7 @@ Footer
 **Hero Rules:**
 - Background: `bg-bg-inverse` (`#000000`), **no gradients of any kind**
 - Eyebrow: **optional** — when present, place directly above H1 with `mb-8`
-- Add `pt-20` to the page content wrapper to compensate for the fixed Navbar
+- Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
 
 ---
 
@@ -61,7 +61,7 @@ Footer
 ```tsx
 {/* Choose one of the four brand dark backgrounds */}
 <section className="bg-brand-red-bg py-section md:py-section-sm">
-  <div className="max-w-container mx-auto px-16 lg:px-8 sm:px-4 text-center">
+  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 text-center">
     <p className="font-mono text-eyebrow text-carbon-400 mb-8">Get Started</p>
     <h2 className="text-h2-md md:text-h2-mb font-bold leading-tight text-text-inverse mb-6">
       Ready to Scale Your Database?
