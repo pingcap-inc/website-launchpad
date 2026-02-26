@@ -97,7 +97,7 @@ H3: `24px` for visually prominent cards · `20px` for 3-column+ dense grids.
 
 Allowed values (Tailwind `0/1/2/3/4/5/6/8/10/12/16/20`): `0 4 8 12 16 20 24 32 40 48 64 80px`
 
-Section padding: desktop `py-section` (80px) · mobile `md:py-section-sm` (48px)
+Section padding: `py-section-sm lg:py-section` — mobile 40px · desktop 80px
 
 ---
 
@@ -151,7 +151,7 @@ const config: Config = {
       spacing: {
         '0':'0px','1':'4px','2':'8px','3':'12px','4':'16px','5':'20px',
         '6':'24px','8':'32px','10':'40px','12':'48px','16':'64px','20':'80px',
-        'section':'80px','section-sm':'48px','container':'40px',
+        'section':'80px','section-sm':'40px','container':'40px',
       },
       maxWidth: { 'container':'1502px', 'hero-title':'860px', 'subtitle':'640px' },
       borderRadius: { 'pill':'9999px' },

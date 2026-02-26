@@ -33,7 +33,7 @@ export function FeaturesGrid({
   className,
 }: FeaturesGridProps) {
   return (
-    <section className={cn('py-section md:py-section-sm', className)}>
+    <section className={cn('py-section-sm lg:py-section', className)}>
       <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
         <SectionHeader
           label={label}

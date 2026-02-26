@@ -67,7 +67,7 @@ const config: Config = {
         '16': '64px',
         '20': '80px',
         'section':    '80px',
-        'section-sm': '48px',
+        'section-sm': '40px',
         'container':  '40px',
       },
       maxWidth: {

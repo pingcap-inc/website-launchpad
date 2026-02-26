@@ -30,7 +30,7 @@ export function CtaSection({
   className,
 }: CtaSectionProps) {
   return (
-    <section className={cn(bgMap[background], 'py-section md:py-section-sm', className)}>
+    <section className={cn(bgMap[background], 'py-section-sm lg:py-section', className)}>
       <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 text-center">
         <h2 className="text-h2-md md:text-h2-mb font-bold leading-tight text-text-inverse mb-6">
           {title}

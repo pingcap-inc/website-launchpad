@@ -60,7 +60,7 @@ Footer
 
 ```tsx
 {/* Choose one of the four brand dark backgrounds */}
-<section className="bg-brand-red-bg py-section md:py-section-sm">
+<section className="bg-brand-red-bg py-section-sm lg:py-section">
   <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 text-center">
     <p className="font-mono text-eyebrow text-carbon-400 mb-8">Get Started</p>
     <h2 className="text-h2-md md:text-h2-mb font-bold leading-tight text-text-inverse mb-6">
