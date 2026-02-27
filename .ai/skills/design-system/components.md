@@ -1,6 +1,8 @@
 # Component Specifications
 
-> All components use `cn()` for className merging, imported from `@/lib/utils`. Icons use `lucide-react`.
+> All components use `cn()` for className merging, imported from `@/lib/utils`.
+> **Icons**: `lucide-react` for chrome UI only (Menu, X, ChevronRight). All nav/content icons use `pingcap-icons` (204 custom SVG icons from PingCAP iconfont).
+> **Links**: Within website-launchpad, internal hrefs use relative paths (`/tidb/`). **Outside website-launchpad**, use full domain `https://www.pingcap.com/...`. Sign In → `https://tidbcloud.com/signin`. Start for Free → `https://tidbcloud.com/free-trial/`.
 
 ---
 
@@ -8,31 +10,41 @@
 
 ```tsx
 // components/ui/Navbar.tsx
-<nav className="fixed top-0 left-0 right-0 z-50 bg-bg-inverse h-20 px-12 flex items-center justify-between">
+<nav className="fixed top-0 left-0 right-0 z-50 bg-bg-inverse h-[62px] lg:h-20 px-4 md:px-8 lg:px-16 flex items-center justify-between">
 
-  {/* Logo: fixed 120×50px, do not replace */}
-  <a href="/tidb/" className="shrink-0">
-    <img src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
-         alt="TiDB" width={120} height={50} className="block" />
+  {/* Logo: 92×38 mobile / 120×50 desktop, do not replace */}
+  <a href="https://www.pingcap.com/tidb/" className="shrink-0">
+    <Image src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
+         alt="TiDB" width={120} height={50}
+         className="block w-[92px] h-[38px] lg:w-[120px] lg:h-[50px]" />
   </a>
 
-  {/* Menu: 16px font-sans */}
-  <ul className="flex items-center gap-8 text-base font-normal text-text-inverse/80">
-    <li className="hover:text-carbon-400 cursor-pointer transition-colors duration-200">Product</li>
-    <li className="hover:text-carbon-400 cursor-pointer transition-colors duration-200">Solutions</li>
-    <li className="hover:text-carbon-400 cursor-pointer transition-colors duration-200">Resources</li>
-    <li className="hover:text-carbon-400 cursor-pointer transition-colors duration-200">Company</li>
+  {/* Desktop menu: hover-triggered mega-menu dropdowns */}
+  <ul className="hidden lg:flex items-center gap-1 text-base font-medium text-text-inverse">
+    <li>Product</li>      {/* MegaMenu dropdown with featured panel + sections */}
+    <li>Solutions</li>     {/* MegaMenu dropdown */}
+    <li>Resources</li>     {/* MegaMenu dropdown */}
+    <li>Company</li>       {/* MegaMenu dropdown */}
+    <li><a href="https://docs.pingcap.com/">Docs</a></li>
   </ul>
 
-  <div className="flex items-center gap-4 shrink-0">
-    <GhostButton>Sign In</GhostButton>
-    <PrimaryButton>Start for Free</PrimaryButton>
+  {/* Desktop CTAs */}
+  <div className="hidden lg:flex items-center gap-4 shrink-0">
+    <GhostButton href="https://tidbcloud.com/signin">Sign In</GhostButton>
+    <PrimaryButton href="https://tidbcloud.com/free-trial/">Start for Free</PrimaryButton>
   </div>
 
+  {/* Mobile: hamburger → accordion menu */}
 </nav>
 ```
 
-Rules: `h-20` (80px) · `px-12` (0 48px) · pure black background · no transparency / gradient / blur · add `pt-20` to page content to avoid being covered.
+**Dropdown icons** use `pingcap-icons` (imported from `./pingcap-icons`):
+- Product: `CloudTIcon`, `StackTIcon`, `DollarTIcon`, `GearIcon`, `SlidersIcon`, `StarIcon`, `EyeIcon`
+- Solutions: `ChartDownTIcon`, `StarIcon`, `CloudTIcon`, `AiTIcon`, `WalletTIcon`, `BagT1Icon`, `DesktopTIcon`
+- Resources: `FileTIcon`, `BookTIcon`, `VideoIcon`, `ScaleTIcon`, `CalendarTIcon`, `CommentsTIcon`, `CodeTIcon`, `BookmarkTIcon`, `EducationIcon`, `AppWindowIcon`, `AwardIcon`
+- Company: `NewspaperIcon`, `BuildingsIcon`, `BriefcaseIcon`, `HandshakeIcon`, `AtIcon`
+
+Rules: `h-[62px] lg:h-20` (62px mobile / 80px desktop) · responsive padding `px-4 md:px-8 lg:px-16` · pure black background · no transparency / gradient / blur · add `pt-[62px] lg:pt-20` to page content.
 
 ---
 
@@ -53,22 +65,24 @@ button  →  relative + overflow-hidden  (clips the circle)
 import { ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-export function PrimaryButton({ children, className, onClick }: {
+// Supports both <button> and <a> via optional `href` prop.
+// When `href` is provided, renders as <a>; otherwise renders as <button>.
+export function PrimaryButton({ children, className, onClick, href }: {
   children: React.ReactNode
   className?: string
   onClick?: () => void
+  href?: string
 }) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'group relative overflow-hidden',
-        'rounded-none h-10 bg-white px-[14px]',
-        'inline-flex items-center gap-2',
-        'border-none outline-none cursor-pointer whitespace-nowrap',
-        className
-      )}
-    >
+  const classes = cn(
+    'group relative overflow-hidden',
+    'rounded-none h-10 bg-white px-[14px]',
+    'inline-flex items-center gap-2',
+    'border-none outline-none cursor-pointer whitespace-nowrap',
+    className
+  )
+
+  const content = (
+    <>
       {/* Red Flood circle */}
       <span
         aria-hidden="true"
@@ -90,8 +104,11 @@ export function PrimaryButton({ children, className, onClick }: {
                    transition-colors duration-500 ease-in-out
                    group-hover:text-text-inverse"
       />
-    </button>
+    </>
   )
+
+  if (href) return <a href={href} className={classes}>{content}</a>
+  return <button onClick={onClick} className={classes}>{content}</button>
 }
 ```
 
@@ -163,21 +180,23 @@ Transition `300ms ease-in-out`. No shadow / blur / glow.
 
 ```tsx
 // components/ui/GhostButton.tsx
-export function GhostButton({ children, className, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'inline-flex items-center gap-2 font-medium rounded-pill',
-        'bg-transparent text-text-inverse hover:text-carbon-400',
-        'border-0 cursor-pointer px-4 py-3 text-base',
-        'transition-colors duration-200 whitespace-nowrap',
-        className
-      )}
-    >
-      {children}
-    </button>
+// Supports both <button> and <a> via optional `href` prop.
+export function GhostButton({ children, className, onClick, href }: {
+  children: React.ReactNode
+  className?: string
+  onClick?: () => void
+  href?: string
+}) {
+  const classes = cn(
+    'inline-flex items-center gap-2 font-medium rounded-pill',
+    'bg-transparent text-text-inverse hover:text-carbon-400',
+    'border-0 cursor-pointer px-4 py-3 text-base',
+    'transition-colors duration-200 whitespace-nowrap',
+    className
   )
+
+  if (href) return <a href={href} className={classes}>{children}</a>
+  return <button onClick={onClick} className={classes}>{children}</button>
 }
 ```
 
@@ -264,17 +283,64 @@ Usage examples:
 
 ---
 
+## PingCAP Icons
+
+```tsx
+// components/ui/pingcap-icons.tsx
+// 204 custom SVG icons extracted from PingCAP's iconfont (iconfont.woff).
+// Factory pattern: makeIcon(path, displayName) → React.FC<IconProps>
+// viewBox: 0 0 1024 1024, y-axis flipped via transform="translate(0,1024) scale(1,-1)"
+
+import type { IconProps } from './pingcap-icons'
+// Usage:
+import { NewspaperIcon, BuildingsIcon, CloudTIcon } from './pingcap-icons'
+
+<NewspaperIcon size={16} className="text-carbon-400" />
+```
+
+All nav dropdown icons must use `pingcap-icons`, not `lucide-react`. See Navbar section for the full mapping.
+
+---
+
+## Footer
+
+```tsx
+// components/ui/Footer.tsx
+// 4-column nav grid + "Stay Connected" with newsletter + 7 social icons
+// Social icons: exact SVG sprites from pingcap.com (viewBox 0 0 25 25, circular style)
+// GitHub · Twitter · LinkedIn · Facebook · Slack · Discord · YouTube
+// Social icon gap: gap-4 (16px)
+```
+
+All footer nav links use full `https://www.pingcap.com/...` domain. External links (ossinsight.io, docs.pingcap.com) keep their own domains.
+
+---
+
+## LanguageSwitcher
+
+```tsx
+// components/ui/LanguageSwitcher.tsx
+// Dropdown: English (/) · 日本語 (https://pingcap.co.jp/)
+// External links open in new tab via window.open()
+```
+
+---
+
 ## File Structure
 
 ```
 components/
   ui/
-    Navbar.tsx
-    PrimaryButton.tsx
-    SecondaryButton.tsx
-    GhostButton.tsx
-    FeatureCard.tsx
-    SectionHeader.tsx
+    Navbar.tsx              # Nav bar with mega-menu dropdowns + mobile accordion
+    Footer.tsx              # Footer nav grid + social icons + newsletter
+    PrimaryButton.tsx       # "Red Flood" CTA button (supports href)
+    SecondaryButton.tsx     # Text + arrow icon button
+    GhostButton.tsx         # Transparent nav button (supports href)
+    FeatureCard.tsx         # Icon + title + description card
+    SectionHeader.tsx       # Eyebrow + H2 + subtitle
+    NewsletterForm.tsx      # Email subscribe form
+    LanguageSwitcher.tsx    # EN / JP language dropdown
+    pingcap-icons.tsx       # 204 custom PingCAP SVG icons (iconfont)
   sections/
     HeroSection.tsx
     FeaturesGrid.tsx
