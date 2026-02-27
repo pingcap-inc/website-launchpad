@@ -161,7 +161,7 @@ export function HubSpotForm({
   return (
     <div className={cn(className ?? 'hs-form')}>
       <div id={containerId} />
-      {status === 'loading' && <p className="text-body-md text-carbon-400">{loadingText}</p>}
+      {status === 'loading' && <p className="text-body-md text-carbon-400 text-center">{loadingText}</p>}
       {status === 'error' && <p className="text-body-sm text-brand-red-light">{errorText}</p>}
     </div>
   )
