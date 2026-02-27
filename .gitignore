@@ -32,3 +32,5 @@ settings.json
 
 # Vercel
 .vercel
+
+*.tsbuildinfo
