@@ -67,6 +67,7 @@ const config: Config = {
         '16': '64px',
         '20': '80px',
         'section':    '80px',
+        'section-md': '64px',
         'section-sm': '40px',
         'container':  '40px',
       },

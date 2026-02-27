@@ -6,48 +6,56 @@ import { PrimaryButton } from './PrimaryButton'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import {
-  Cloud,
-  Layers,
-  DollarSign,
-  Settings,
-  Sliders,
-  Star,
-  Eye,
-  TrendingDown,
-  RefreshCw,
-  Cpu,
-  Bot,
-  Landmark,
-  ShoppingBag,
-  Monitor,
-  FileText,
-  BookOpen,
-  Video,
-  BarChart2,
-  CalendarDays,
-  MessageSquare,
-  Code2,
-  Bookmark,
-  GraduationCap,
-  FlaskConical,
-  Award,
-  Newspaper,
-  Building2,
-  Briefcase,
-  Users,
-  AtSign,
   Menu,
   X,
   ChevronRight,
   type LucideIcon,
 } from 'lucide-react'
+import {
+  type IconProps,
+  // Product
+  CloudTIcon,
+  StackTIcon,
+  DollarTIcon,
+  GearIcon,
+  SlidersIcon,
+  StarIcon,
+  EyeIcon,
+  // Solutions – By Use Case
+  ChartDownTIcon,
+  AiTIcon,
+  // Solutions – By Industry
+  WalletTIcon,
+  BagT1Icon,
+  DesktopTIcon,
+  // Resources – Learn
+  FileTIcon,
+  BookTIcon,
+  VideoIcon,
+  ScaleTIcon,
+  // Resources – Engage
+  CalendarTIcon,
+  CommentsTIcon,
+  CodeTIcon,
+  BookmarkTIcon,
+  // Resources – PingCAP University
+  EducationIcon,
+  AppWindowIcon,
+  AwardIcon,
+  // Company
+  NewspaperIcon,
+  BuildingsIcon,
+  BriefcaseIcon,
+  HandshakeIcon,
+  AtIcon,
+} from './pingcap-icons'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface DropdownItem {
   label: string
   href: string
-  icon?: LucideIcon
+  icon?: LucideIcon | React.FC<IconProps>
   description?: string
 }
 
@@ -95,18 +103,18 @@ const navItems: NavItem[] = [
       {
         title: 'Deployment Options',
         items: [
-          { label: 'TiDB Cloud', href: '/tidb/cloud/', icon: Cloud },
-          { label: 'TiDB Self-Managed', href: '/tidb/self-managed/', icon: Layers },
-          { label: 'Pricing', href: '/tidb/pricing/', icon: DollarSign },
+          { label: 'TiDB Cloud', href: '/tidb/cloud/', icon: CloudTIcon },
+          { label: 'TiDB Self-Managed', href: '/tidb/self-managed/', icon: StackTIcon },
+          { label: 'Pricing', href: '/tidb/pricing/', icon: DollarTIcon },
         ],
       },
       {
         title: 'Ecosystem',
         items: [
-          { label: 'Integrations', href: '/tidb/integrations/', icon: Settings },
-          { label: 'TiKV', href: '/tikv/', icon: Sliders },
-          { label: 'TiSpark', href: '/tispark/', icon: Star },
-          { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: Eye },
+          { label: 'Integrations', href: '/tidb/integrations/', icon: GearIcon },
+          { label: 'TiKV', href: '/tikv/', icon: SlidersIcon },
+          { label: 'TiSpark', href: '/tispark/', icon: StarIcon },
+          { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
         ],
       },
     ],
@@ -118,19 +126,19 @@ const navItems: NavItem[] = [
       {
         title: 'By Use Case',
         items: [
-          { label: 'Lower Infrastructure Costs', href: '/solutions/lower-infrastructure-costs/', icon: TrendingDown },
-          { label: 'Enable Operational Intelligence', href: '/solutions/operational-intelligence/', icon: Star },
-          { label: 'Modernize MySQL Workloads', href: '/solutions/mysql-alternative/', icon: RefreshCw },
-          { label: 'Build GenAI Applications', href: '/solutions/genai/', icon: Cpu },
+          { label: 'Lower Infrastructure Costs', href: '/solutions/lower-infrastructure-costs/', icon: ChartDownTIcon },
+          { label: 'Enable Operational Intelligence', href: '/solutions/operational-intelligence/', icon: StarIcon },
+          { label: 'Modernize MySQL Workloads', href: '/solutions/mysql-alternative/', icon: CloudTIcon },
+          { label: 'Build GenAI Applications', href: '/solutions/genai/', icon: AiTIcon },
         ],
       },
       {
         title: 'By Industry',
         items: [
-          { label: 'AI', href: '/solutions/ai/', icon: Bot },
-          { label: 'Fintech', href: '/solutions/fintech/', icon: Landmark },
-          { label: 'eCommerce', href: '/solutions/ecommerce/', icon: ShoppingBag },
-          { label: 'SaaS', href: '/solutions/saas/', icon: Monitor },
+          { label: 'AI', href: '/solutions/ai/', icon: AiTIcon },
+          { label: 'Fintech', href: '/solutions/fintech/', icon: WalletTIcon },
+          { label: 'eCommerce', href: '/solutions/ecommerce/', icon: BagT1Icon },
+          { label: 'SaaS', href: '/solutions/saas/', icon: DesktopTIcon },
         ],
       },
       {
@@ -147,27 +155,27 @@ const navItems: NavItem[] = [
       {
         title: 'Learn',
         items: [
-          { label: 'Blog', href: '/blog/', icon: FileText },
-          { label: 'eBooks & Whitepapers', href: '/resources/ebooks/', icon: BookOpen },
-          { label: 'Videos & Replays', href: '/resources/videos/', icon: Video },
-          { label: 'Horizontal Scaling', href: '/resources/horizontal-scaling/', icon: BarChart2 },
+          { label: 'Blog', href: '/blog/', icon: FileTIcon },
+          { label: 'eBooks & Whitepapers', href: '/resources/ebooks/', icon: BookTIcon },
+          { label: 'Videos & Replays', href: '/resources/videos/', icon: VideoIcon },
+          { label: 'Horizontal Scaling', href: '/resources/horizontal-scaling/', icon: ScaleTIcon },
         ],
       },
       {
         title: 'Engage',
         items: [
-          { label: 'Events & Webinars', href: '/events/', icon: CalendarDays },
-          { label: 'Discord Community', href: 'https://discord.gg/pingcap', icon: MessageSquare },
-          { label: 'Developer Hub', href: '/developer/', icon: Code2 },
-          { label: 'TiDB SCaiLE', href: '/tidb-scaile/', icon: Bookmark },
+          { label: 'Events & Webinars', href: '/events/', icon: CalendarTIcon },
+          { label: 'Discord Community', href: 'https://discord.gg/pingcap', icon: CommentsTIcon },
+          { label: 'Developer Hub', href: '/developer/', icon: CodeTIcon },
+          { label: 'TiDB SCaiLE', href: '/tidb-scaile/', icon: BookmarkTIcon },
         ],
       },
       {
         title: 'PingCAP University',
         items: [
-          { label: 'Courses', href: '/university/courses/', icon: GraduationCap },
-          { label: 'Hands-on Labs', href: '/university/labs/', icon: FlaskConical },
-          { label: 'Certifications', href: '/university/certifications/', icon: Award },
+          { label: 'Courses', href: '/university/courses/', icon: EducationIcon },
+          { label: 'Hands-on Labs', href: '/university/labs/', icon: AppWindowIcon },
+          { label: 'Certifications', href: '/university/certifications/', icon: AwardIcon },
         ],
       },
     ],
@@ -178,11 +186,11 @@ const navItems: NavItem[] = [
       {
         title: 'About',
         items: [
-          { label: 'Press Releases & News', href: '/news/', icon: Newspaper },
-          { label: 'About Us', href: '/about/', icon: Building2 },
-          { label: 'Careers', href: '/careers/', icon: Briefcase },
-          { label: 'Partners', href: '/partners/', icon: Users },
-          { label: 'Contact Us', href: '/contact-us/', icon: AtSign },
+          { label: 'Press Releases & News', href: '/news/', icon: NewspaperIcon },
+          { label: 'About Us', href: '/about/', icon: BuildingsIcon },
+          { label: 'Careers', href: '/careers/', icon: BriefcaseIcon },
+          { label: 'Partners', href: '/partners/', icon: HandshakeIcon },
+          { label: 'Contact Us', href: '/contact-us/', icon: AtIcon },
         ],
       },
       {
@@ -229,7 +237,7 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                 height={25}
                 className="block"
               />
-              <p className="text-base text-carbon-400 my-4 leading-relaxed">
+              <p className="text-[15px] text-carbon-400 my-4 leading-relaxed">
                 {item.featured.description}
               </p>
               <a
@@ -246,12 +254,12 @@ function MegaMenu({ item }: { item: NavDropdown }) {
           )}
 
           {/* Sections */}
-          <div className="flex">
+          <div className="flex space-x-12">
             {item.sections.map((section, i) => (
               <div key={section.title ?? i} className={cn(
                 'space-y-4',
-                i !== 0 && 'pl-12 ml-12 border-l border-carbon-800',
-                section.titleHref && 'min-w-[360px]',
+                i !== 0 && 'pl-12 border-l border-carbon-800',
+                section.titleHref && 'min-w-[388px]',
               )}>
                 {/* Section title — plain or linked (Customer Stories style) */}
                 {section.title && (
@@ -283,7 +291,7 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                   <a
                     key={sub.label}
                     href={sub.href}
-                    className="flex items-start gap-3 text-carbon-400 hover:text-text-inverse group/item font-medium"
+                    className="flex items-start gap-3 text-carbon-400 hover:text-carbon-800 group/item font-medium"
                   >
                     {sub.icon && (
                       <sub.icon size={16} className="shrink-0 mt-0.5" />
@@ -445,7 +453,7 @@ function MobileMenu({
             )}
             {/* Sign In as plain list item */}
             <li className="py-1">
-              <a href="/signin/" className="flex items-center py-3 text-base font-medium text-text-inverse">
+              <a href="https://tidbcloud.com/signin" className="flex items-center py-3 text-base font-medium text-text-inverse">
                 Sign In
               </a>
             </li>
@@ -453,7 +461,7 @@ function MobileMenu({
 
           {/* Start for Free button */}
           <div className="py-4 flex justify-center">
-            <PrimaryButton href="/signup/" className="w-full max-w-[230px] justify-center">Start for Free</PrimaryButton>
+            <PrimaryButton href="https://tidbcloud.com/free-trial/" className="w-full max-w-[230px] justify-center">Start for Free</PrimaryButton>
           </div>
         </div>
       </div>
@@ -521,8 +529,8 @@ export function Navbar() {
 
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center gap-4 shrink-0">
-            <GhostButton href="/signin/">Sign In</GhostButton>
-            <PrimaryButton href="/signup/">Start for Free</PrimaryButton>
+            <GhostButton href="https://tidbcloud.com/signin">Sign In</GhostButton>
+            <PrimaryButton href="https://tidbcloud.com/free-trial/">Start for Free</PrimaryButton>
           </div>
 
           {/* Hamburger (mobile only) */}

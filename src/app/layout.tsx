@@ -23,6 +23,8 @@ export default function RootLayout({
         <GTMScript />
         <link rel="preconnect" href="https://static.pingcap.com" />
         <link rel="dns-prefetch" href="https://static.pingcap.com" />
+        <link rel="preconnect" href="https://js.hsforms.net" />
+        <link rel="dns-prefetch" href="https://js.hsforms.net" />
       </head>
       <body className="font-sans bg-bg-primary text-text-inverse antialiased">
         <GTMNoScript />

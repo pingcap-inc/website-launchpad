@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from 'react'
 import { Globe, ChevronDown } from 'lucide-react'
 
 const languages = [
-  { label: 'English', value: '/' },
-  { label: '日本語', value: '/ja/' },
+  { label: 'English', href: '/', external: false },
+  { label: '日本語', href: 'https://pingcap.co.jp/', external: true },
 ]
 
 export function LanguageSwitcher() {
@@ -26,17 +26,21 @@ export function LanguageSwitcher() {
   function select(lang: (typeof languages)[0]) {
     setCurrent(lang)
     setOpen(false)
-    window.location.href = lang.value
+    if (lang.external) {
+      window.open(lang.href, '_blank', 'noopener,noreferrer')
+    } else {
+      window.location.href = lang.href
+    }
   }
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative mt-16">
       <button
         type="button"
         onClick={() => setOpen((p) => !p)}
-        className="flex items-center gap-1.5 text-body-sm text-text-inverse hover:text-carbon-400 transition-colors duration-150"
+        className="flex items-center gap-1.5 text-body-md text-text-inverse hover:text-carbon-400 transition-colors duration-150"
       >
-        <Globe size={15} className="shrink-0 text-carbon-400" />
+        <Globe size={16} className="shrink-0" />
         <span>{current.label}</span>
         <ChevronDown
           size={13}
@@ -48,11 +52,11 @@ export function LanguageSwitcher() {
         <div className="absolute top-full mt-1 left-0 min-w-[120px] bg-[#0a0a0a] border border-carbon-800 z-10">
           {languages.map((lang) => (
             <button
-              key={lang.value}
+              key={lang.href}
               type="button"
               onClick={() => select(lang)}
               className={`w-full text-left px-3 py-2 text-body-sm transition-colors duration-150 ${
-                lang.value === current.value
+                lang.href === current.href
                   ? 'text-text-inverse'
                   : 'text-carbon-400 hover:text-text-inverse'
               }`}

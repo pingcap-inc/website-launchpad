@@ -10,8 +10,10 @@ description: >
 
 # Website Launchpad Design System
 
-> **Stack**: Next.js 14+ · React 18+ · Tailwind CSS v3  
-> All styles must use Tailwind utility classes. Inline `style` is forbidden (except for dynamic values).  
+> **Stack**: Next.js 16 · React 18 · Tailwind CSS v3 · pnpm
+> All styles must use Tailwind utility classes. Inline `style` is forbidden (except for dynamic values).
+> **Icons**: `lucide-react` for chrome UI (Menu, X, ChevronRight) · `pingcap-icons` for all nav/content icons (204 glyphs extracted from PingCAP iconfont).
+> **Links**: Within website-launchpad project, internal hrefs use relative paths (e.g. `/tidb/`). **For pages generated outside website-launchpad**, all internal hrefs must use full domain `https://www.pingcap.com/...`.
 > **Before writing any code**, read the relevant sub-files based on your task.
 
 ---
@@ -42,4 +44,6 @@ Professional, modern, restrained. Dark Hero alternating with light content secti
 ❌ next/font/google           → globals.css @font-face + CDN
 ❌ PrimaryButton missing relative / overflow-hidden / z-10 layer structure
 ❌ className concatenation outside cn()
+❌ Relative href in non-website-launchpad projects → https://www.pingcap.com/tidb/
+❌ lucide-react for nav icons → pingcap-icons (lucide only for Menu/X/ChevronRight/ArrowUpRight)
 ```

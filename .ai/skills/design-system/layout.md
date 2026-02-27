@@ -19,10 +19,14 @@
 
 ```
 Navbar          fixed h-[62px] lg:h-20 — add pt-[62px] lg:pt-20 to page content
+                Links: relative paths within website-launchpad;
+                       full domain https://www.pingcap.com/... outside website-launchpad
+                CTAs: Sign In → https://tidbcloud.com/signin
+                      Start for Free → https://tidbcloud.com/free-trial/
 Hero            bg-bg-inverse (pure black), no gradients
 Feature Sections  alternating bg-bg-primary / bg-bg-subtle
 CTA Section     one of four brand dark backgrounds
-Footer
+Footer          Links: same rule — relative inside, full domain outside website-launchpad
 ```
 
 ---
@@ -49,29 +53,62 @@ Footer
 </section>
 ```
 
+### Variant B — Split layout (text left + right slot)
+
+Use `rightSlot` for hero sections that pair copy with a form, image, or other content on the right.
+
+```tsx
+<HeroSection
+  eyebrow="TiDB Cloud Startup Program"
+  headline="Launch Fast. Scale without Limits."
+  subheadline="Apply now and start building with the distributed SQL database that grows with you."
+  rightSlot={
+    <div id="hero-form">
+      <HubSpotForm formId={FORM_ID} />
+    </div>
+  }
+/>
+```
+
 **Hero Rules:**
 - Background: `bg-bg-inverse` (`#000000`), **no gradients of any kind**
 - Eyebrow: **optional** — when present, place directly above H1 with `mb-8`
 - Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
+- Split layout: when `rightSlot` is provided, layout switches to a 2-column grid (`grid-cols-1 lg:grid-cols-2`), text becomes left-aligned, headline uses `text-h2` scale instead of `text-h1`
 
 ---
 
 ## CTA Section
 
+Always use the `<CtaSection>` component. Layout: colored background · cube image left (4 cols) · title + CTAs right (8 cols).
+
 ```tsx
-{/* Choose one of the four brand dark backgrounds */}
-<section className="bg-brand-red-bg py-section-sm lg:py-section">
-  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 text-center">
-    <p className="font-mono text-eyebrow text-carbon-400 mb-8">Get Started</p>
-    <h2 className="text-h2-md md:text-h2-mb font-bold leading-tight text-text-inverse mb-6">
-      Ready to Scale Your Database?
-    </h2>
-    <PrimaryButton>Start for Free</PrimaryButton>
-  </div>
-</section>
+<CtaSection
+  title="Ready to Scale Your Database?"
+  subtitle="Deploy TiDB in minutes. No credit card required."
+  primaryCta={{ text: 'Start for Free', href: '/signup/' }}
+  secondaryCta={{ text: 'Read the Docs', href: '/docs/' }}
+  background="red"
+/>
 ```
 
-CTA background options: `bg-brand-red-bg` (red) · `bg-brand-violet-bg` (AI) · `bg-brand-blue-bg` (cloud-native) · `bg-brand-teal-bg` (data/success)
+**Props:**
+- `background`: `'red'` (default) · `'violet'` · `'blue'` · `'teal'` — controls both background color and cube image
+- `title`: required
+- `subtitle`: optional
+- `primaryCta`: required `{ text, href }`
+- `secondaryCta`: optional `{ text, href }`
+
+**Background options:**
+
+| value | use case | bg color |
+|-------|----------|----------|
+| `red` | general / get started | `#630D09` |
+| `violet` | AI features | `#3C174C` |
+| `blue` | cloud-native | `#0D3152` |
+| `teal` | data / success | `#093434` |
+
+The cube image automatically matches the background color — do not override it.
 
 ---
 

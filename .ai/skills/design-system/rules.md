@@ -25,6 +25,17 @@
 - [ ] Section padding: `py-section md:py-section-sm`
 - [ ] Responsive grids: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`
 
+**Icons**
+- [ ] Nav/content icons use `pingcap-icons` — **not** `lucide-react`
+- [ ] `lucide-react` reserved for chrome UI only: `Menu`, `X`, `ChevronRight`, `ArrowUpRight`
+
+**Links**
+- [ ] **Within website-launchpad project**: internal hrefs use relative paths (e.g. `/tidb/`, `/blog/`)
+- [ ] **Outside website-launchpad project** (standalone pages, other repos): all internal hrefs must use full domain `https://www.pingcap.com/...`
+- [ ] Sign In → `https://tidbcloud.com/signin`
+- [ ] Start for Free → `https://tidbcloud.com/free-trial/`
+- [ ] External links (ossinsight.io, docs.pingcap.com, discord.gg, etc.) keep their own domains
+
 **Code Quality**
 - [ ] Section headings rendered via `<SectionHeader>` (Eyebrow + H2 + subtitle)
 - [ ] Images use `<Image>` (next/image) with `width/height` or `fill` specified
@@ -61,6 +72,15 @@ import localFont from 'next/font/local'    // → CDN only
 py-[96px]                 // → py-section (80px)
 gap-[18px]                // → gap-4 (16px) or gap-6 (24px)
 max-w-[1440px]            // → max-w-container (1502px)
+
+// ─── Icons ────────────────────────────────────────────────
+import { Newspaper } from 'lucide-react'    // nav icon → import { NewspaperIcon } from './pingcap-icons'
+<Briefcase size={16} />                     // lucide nav icon → <BriefcaseIcon size={16} />
+
+// ─── Links (non-website-launchpad projects only) ──────────
+href="/tidb/"                               // relative → href="https://www.pingcap.com/tidb/"
+href="/signin/"                             // → href="https://tidbcloud.com/signin"
+href="/signup/"                             // → href="https://tidbcloud.com/free-trial/"
 
 // ─── Code ───────────────────────────────────────────────
 `${isDark ? 'text-white' : 'text-black'}`  // → cn()
