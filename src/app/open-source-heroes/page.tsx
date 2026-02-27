@@ -187,7 +187,6 @@ export default function OpenSourceHeroesPage() {
 
         {/* ── 1. Hero ── */}
         <HeroSection
-          eyebrow="Sponsored by TiDB"
           headline="Fuel Your Next Big Idea: TiDB Cloud Serverless Credits for Open Source Heroes"
           subheadline="TiDB loves open-source. We contribute code, sponsor projects and deeply appreciate developers who actively contribute to the community. As a token of our appreciation, we're offering up to $2,000 in free TiDB Cloud Serverless credits to fuel open-source heroes' next big idea. Simply log in with your GitHub account to calculate and claim your credits."
           primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
