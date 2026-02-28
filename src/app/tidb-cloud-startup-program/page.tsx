@@ -129,7 +129,6 @@ export default function StartupProgramPage() {
           <div className="grid md:grid-cols-2 gap-4">
           <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
             <div>
-              <p className="font-mono text-eyebrow text-carbon-400 mb-4">About The Program</p>
               <h2 className="text-h3-lg mb-4">Who is this for?</h2>
               <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
                 <li>• Seed to Series B startups building data-intensive products.</li>

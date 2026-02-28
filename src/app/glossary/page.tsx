@@ -28,7 +28,6 @@ export const metadata: Metadata = {
     canonical: 'https://www.pingcap.com/glossary/',
     languages: {
       'en': 'https://www.pingcap.com/glossary/',
-      'ja': 'https://www.pingcap.com/ja/glossary/',
       'x-default': 'https://www.pingcap.com/glossary/',
     },
   },
@@ -63,13 +62,13 @@ const terms = [
         term: 'NewSQL',
         fullName: 'NewSQL',
         definition:
-          'A category of modern relational databases designed to provide the scalability of NoSQL systems while maintaining the ACID guarantees and SQL interface of traditional RDBMS. TiDB is a NewSQL database — it scales horizontally like NoSQL but remains fully MySQL-compatible.',
+          'Modern relational databases that deliver SQL and ACID transactions with improved horizontal scalability and availability compared to traditional RDBMS. “NewSQL” is outcome-focused and not inherently cloud-native by design, even though many deployments run in cloud environments.',
       },
       {
         term: 'Distributed SQL',
         fullName: 'Distributed SQL Database',
         definition:
-          'A SQL database that distributes data and query processing across multiple nodes for horizontal scalability and fault tolerance. Unlike sharded MySQL, a distributed SQL database handles data distribution transparently — applications interact with a standard SQL interface while the database manages partitioning, replication, and routing internally.',
+          'A cloud-native SQL database that operates as one logical system while automatically partitioning, replicating, and routing data and queries across nodes for scale and fault tolerance. TiDB is a distributed SQL database, providing MySQL compatibility with transparent distribution and resilience.',
       },
     ],
   },
