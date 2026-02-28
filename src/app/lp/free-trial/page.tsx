@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
-import { NavbarLp, HeroSection, FeaturesGrid, CtaSection } from '@/components'
+import { HeaderLp, HeroSection, FeaturesGrid, CtaSection } from '@/components'
 import { Clock, DollarSign, RefreshCw } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'TiDB Cloud Free Trial — Start in 5 Minutes',
-  description: 'Try TiDB Cloud free for 7 days. No credit card required. Deploy a fully managed distributed SQL database in minutes.',
+  description:
+    'Try TiDB Cloud free for 7 days. No credit card required. Deploy a fully managed distributed SQL database in minutes.',
   openGraph: {
     title: 'TiDB Cloud Free Trial — Start in 5 Minutes',
     description: 'Zero-config distributed database. 7-day free trial, no credit card required.',
@@ -27,24 +28,27 @@ const benefits = [
   {
     icon: <Clock className="w-full h-full text-brand-red-primary" />,
     title: 'Deploy in 5 Minutes',
-    description: 'No infrastructure setup. No DBA required. Enter your cluster name and click deploy — TiDB Cloud handles the rest.',
+    description:
+      'No infrastructure setup. No DBA required. Enter your cluster name and click deploy — TiDB Cloud handles the rest.',
   },
   {
     icon: <DollarSign className="w-full h-full text-brand-red-primary" />,
     title: 'Pay Only for What You Use',
-    description: 'Automatic elastic scaling means you never over-provision. Scale down during off-peak hours and save up to 60% on compute costs.',
+    description:
+      'Automatic elastic scaling means you never over-provision. Scale down during off-peak hours and save up to 60% on compute costs.',
   },
   {
     icon: <RefreshCw className="w-full h-full text-brand-red-primary" />,
     title: 'Zero Migration Cost',
-    description: 'Full MySQL compatibility means your existing queries, ORMs, and drivers work without modification. Migrate in hours, not months.',
+    description:
+      'Full MySQL compatibility means your existing queries, ORMs, and drivers work without modification. Migrate in hours, not months.',
   },
 ]
 
 export default function FreeTrial() {
   return (
     <>
-      <NavbarLp />
+      <HeaderLp />
       <main className="pt-[62px] lg:pt-20">
         <HeroSection
           eyebrow="FREE TRIAL"

@@ -3,42 +3,71 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
-const tabs = [
+type TabItem = { title: string; description: string }
+
+const tabs: { label: string; items: TabItem[] }[] = [
   {
     label: 'Free',
     items: [
-      'Personal Website Hosting',
-      'RAG Agent Prototyping',
-      'Minecraft Server',
+      {
+        title: 'Personal Website Hosting',
+        description: 'Create websites or blogs using WordPress or Joomla.',
+      },
+      {
+        title: 'RAG Agent Prototyping',
+        description: 'Develop RAG agents with your own knowledge base.',
+      },
+      {
+        title: 'Minecraft Server',
+        description:
+          'Run a personal Minecraft server, where you can play on with your friends all day.',
+      },
     ],
   },
   {
     label: '$5–$10',
     items: [
-      'Small business management systems',
-      'Small-scale Data API backends',
+      {
+        title: 'Start small businesses',
+        description: 'Power online stores, community forums, or customer feedback systems.',
+      },
+      {
+        title: 'Data API Backends',
+        description: 'Host small databases for managing small-scale workloads like API backend.',
+      },
     ],
   },
   {
     label: '$10–$100',
     items: [
-      'Startup-level SaaS applications',
-      'Analytics dashboards',
-      'E-commerce platforms',
+      {
+        title: 'Scale startups',
+        description:
+          'Deploy SaaS applications, analytics dashboards, or e-commerce platforms with thousands of users and continuous read/write operations.',
+      },
     ],
   },
   {
     label: '$100–$300',
     items: [
-      'Data-intensive applications',
-      'Enterprise-grade systems',
+      {
+        title: 'Data-heavy applications',
+        description:
+          'Scale applications with distributed databases, handle enterprise-level systems, or power data-heavy industries like fintech or healthcare.',
+      },
     ],
   },
   {
     label: '$300–$2,000',
     items: [
-      'Large-scale enterprise systems',
-      'Mission-critical business applications',
+      {
+        title: 'Power large-scale enterprises',
+        description: 'Handle millions of users with high performance and reliability requirements.',
+      },
+      {
+        title: 'Run mission-critical systems',
+        description: 'Support complex applications like fintech, gaming, or healthcare solutions.',
+      },
     ],
   },
 ]
@@ -64,11 +93,14 @@ export function CreditTabs() {
           </button>
         ))}
       </div>
-      <ul className="space-y-4">
+      <ul className="space-y-5">
         {tabs[active].items.map((item) => (
-          <li key={item} className="flex items-start gap-3 text-body-md text-carbon-300 leading-relaxed">
+          <li key={item.title} className="flex items-start gap-3">
             <span className="text-brand-red-primary font-medium mt-0.5 shrink-0">→</span>
-            {item}
+            <div>
+              <p className="text-body-md text-text-inverse font-medium mb-1">{item.title}</p>
+              <p className="text-body-sm text-carbon-400 leading-relaxed">{item.description}</p>
+            </div>
           </li>
         ))}
       </ul>

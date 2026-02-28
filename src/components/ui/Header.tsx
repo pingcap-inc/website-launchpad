@@ -5,12 +5,7 @@ import { GhostButton } from './GhostButton'
 import { PrimaryButton } from './PrimaryButton'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import {
-  Menu,
-  X,
-  ChevronRight,
-  type LucideIcon,
-} from 'lucide-react'
+import { Menu, X, ChevronRight, type LucideIcon } from 'lucide-react'
 import {
   type IconProps,
   // Product
@@ -61,14 +56,14 @@ interface DropdownItem {
 
 interface DropdownSection {
   title?: string
-  titleHref?: string   // if set, title renders as a link with → arrow
+  titleHref?: string // if set, title renders as a link with → arrow
   description?: string // shown below title (used when no items, e.g. Customer Stories)
   items: DropdownItem[]
 }
 
 interface NavDropdown {
   label: string
-  translateX?: string  // horizontal offset for the dropdown panel, default '-translate-x-1/2'
+  translateX?: string // horizontal offset for the dropdown panel, default '-translate-x-1/2'
   featured?: {
     description: string
     cta: { label: string; href: string }
@@ -126,9 +121,21 @@ const navItems: NavItem[] = [
       {
         title: 'By Use Case',
         items: [
-          { label: 'Lower Infrastructure Costs', href: '/solutions/lower-infrastructure-costs/', icon: ChartDownTIcon },
-          { label: 'Enable Operational Intelligence', href: '/solutions/operational-intelligence/', icon: StarIcon },
-          { label: 'Modernize MySQL Workloads', href: '/solutions/mysql-alternative/', icon: CloudTIcon },
+          {
+            label: 'Lower Infrastructure Costs',
+            href: '/solutions/lower-infrastructure-costs/',
+            icon: ChartDownTIcon,
+          },
+          {
+            label: 'Enable Operational Intelligence',
+            href: '/solutions/operational-intelligence/',
+            icon: StarIcon,
+          },
+          {
+            label: 'Modernize MySQL Workloads',
+            href: '/solutions/mysql-alternative/',
+            icon: CloudTIcon,
+          },
           { label: 'Build GenAI Applications', href: '/solutions/genai/', icon: AiTIcon },
         ],
       },
@@ -216,17 +223,22 @@ function MegaMenu({ item }: { item: NavDropdown }) {
   const translateX = item.translateX ?? '-translate-x-1/2'
 
   // Panel min-width
-  const panelMinWidth =
-    hasFeatured ? 'min-w-[828px]' :
-    sectionCount === 1 ? 'min-w-[260px]' :
-    sectionCount === 2 ? 'min-w-[500px]' :
-    'min-w-[660px]'
+  const panelMinWidth = hasFeatured
+    ? 'min-w-[828px]'
+    : sectionCount === 1
+      ? 'min-w-[260px]'
+      : sectionCount === 2
+        ? 'min-w-[500px]'
+        : 'min-w-[660px]'
 
   return (
-    <div className={cn('absolute top-full left-1/2 pt-3 hidden group-hover:block z-50', translateX)}>
-      <div className={`bg-bg-inverse border border-carbon-800 shadow-card p-5 overflow-hidden ${panelMinWidth}`}>
+    <div
+      className={cn('absolute top-full left-1/2 pt-3 hidden group-hover:block z-50', translateX)}
+    >
+      <div
+        className={`bg-bg-primary border border-carbon-800 shadow-card p-5 overflow-hidden ${panelMinWidth}`}
+      >
         <div className={hasFeatured ? 'grid grid-cols-[408px_1fr]' : ''}>
-
           {/* Featured panel (Product only) */}
           {item.featured && (
             <div className="flex flex-col pr-12 mr-12 border-r border-carbon-800">
@@ -256,14 +268,17 @@ function MegaMenu({ item }: { item: NavDropdown }) {
           {/* Sections */}
           <div className="flex space-x-12">
             {item.sections.map((section, i) => (
-              <div key={section.title ?? i} className={cn(
-                'space-y-4',
-                i !== 0 && 'pl-12 border-l border-carbon-800',
-                section.titleHref && 'min-w-[388px]',
-              )}>
+              <div
+                key={section.title ?? i}
+                className={cn(
+                  'space-y-4',
+                  i !== 0 && 'pl-12 border-l border-carbon-800',
+                  section.titleHref && 'min-w-[388px]'
+                )}
+              >
                 {/* Section title — plain or linked (Customer Stories style) */}
-                {section.title && (
-                  section.titleHref ? (
+                {section.title &&
+                  (section.titleHref ? (
                     <a
                       href={section.titleHref}
                       className="group/col inline-flex items-center gap-2 text-base text-text-inverse font-medium"
@@ -278,13 +293,10 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                     <p className="text-base text-text-inverse font-medium whitespace-nowrap">
                       {section.title}
                     </p>
-                  )
-                )}
+                  ))}
                 {/* Section description (no items, e.g. Customer Stories) */}
                 {section.description && section.items.length === 0 && (
-                  <p className="text-base text-carbon-400 leading-relaxed">
-                    {section.description}
-                  </p>
+                  <p className="text-base text-carbon-400 leading-relaxed">{section.description}</p>
                 )}
                 {/* Items */}
                 {section.items.map((sub) => (
@@ -293,13 +305,9 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                     href={sub.href}
                     className="flex items-start gap-3 text-carbon-400 hover:text-carbon-800 group/item font-medium"
                   >
-                    {sub.icon && (
-                      <sub.icon size={16} className="shrink-0 mt-0.5" />
-                    )}
+                    {sub.icon && <sub.icon size={16} className="shrink-0 mt-0.5" />}
                     <span>
-                      <span className="block text-body-md whitespace-nowrap">
-                        {sub.label}
-                      </span>
+                      <span className="block text-body-md whitespace-nowrap">{sub.label}</span>
                       {sub.description && (
                         <span className="block text-[11px] text-text-inverse/40 mt-0.5 leading-snug whitespace-normal">
                           {sub.description}
@@ -342,10 +350,12 @@ function MobileAccordionItem({
         />
       </button>
 
-      <div className={cn(
-        'overflow-hidden transition-[max-height] duration-300 ease-in-out',
-        isOpen ? 'max-h-[800px]' : 'max-h-0',
-      )}>
+      <div
+        className={cn(
+          'overflow-hidden transition-[max-height] duration-300 ease-in-out',
+          isOpen ? 'max-h-[800px]' : 'max-h-0'
+        )}
+      >
         <div className="divide-y divide-carbon-800">
           {/* Featured panel (Product only) */}
           {item.featured && (
@@ -371,8 +381,8 @@ function MobileAccordionItem({
 
           {item.sections.map((section, i) => (
             <div key={section.title ?? i} className="py-4 space-y-3">
-              {section.title && (
-                section.titleHref ? (
+              {section.title &&
+                (section.titleHref ? (
                   <a
                     href={section.titleHref}
                     className="block text-base font-semibold text-text-inverse"
@@ -380,15 +390,10 @@ function MobileAccordionItem({
                     {section.title} →
                   </a>
                 ) : (
-                  <p className="text-base font-semibold text-text-inverse">
-                    {section.title}
-                  </p>
-                )
-              )}
+                  <p className="text-base font-semibold text-text-inverse">{section.title}</p>
+                ))}
               {section.description && section.items.length === 0 && (
-                <p className="text-base text-carbon-400 leading-relaxed">
-                  {section.description}
-                </p>
+                <p className="text-base text-carbon-400 leading-relaxed">{section.description}</p>
               )}
               {section.items.length > 0 && (
                 <div className="grid grid-cols-2 gap-x-4 gap-y-3">
@@ -424,11 +429,13 @@ function MobileMenu({
   onToggleAccordion: (label: string) => void
 }) {
   return (
-    <div className={cn(
-      'lg:hidden overflow-hidden transition-[max-height] duration-300 ease-in-out',
-      isOpen ? 'max-h-screen' : 'max-h-0',
-    )}>
-      <div className="bg-bg-inverse h-[calc(100vh-62px)] overflow-y-auto">
+    <div
+      className={cn(
+        'lg:hidden overflow-hidden transition-[max-height] duration-300 ease-in-out',
+        isOpen ? 'max-h-screen' : 'max-h-0'
+      )}
+    >
+      <div className="bg-bg-primary h-[calc(100vh-62px)] overflow-y-auto">
         <div className="max-w-container mx-auto px-4 md:px-8">
           <ul className="py-2 divide-y divide-carbon-800">
             {navItems.map((item) =>
@@ -453,7 +460,10 @@ function MobileMenu({
             )}
             {/* Sign In as plain list item */}
             <li className="py-1">
-              <a href="https://tidbcloud.com/signin" className="flex items-center py-3 text-base font-medium text-text-inverse">
+              <a
+                href="https://tidbcloud.com/signin"
+                className="flex items-center py-3 text-base font-medium text-text-inverse"
+              >
                 Sign In
               </a>
             </li>
@@ -461,7 +471,12 @@ function MobileMenu({
 
           {/* Start for Free button */}
           <div className="py-4 flex justify-center">
-            <PrimaryButton href="https://tidbcloud.com/free-trial/" className="w-full max-w-[230px] justify-center">Start for Free</PrimaryButton>
+            <PrimaryButton
+              href="https://tidbcloud.com/free-trial/"
+              className="w-full max-w-[230px] justify-center"
+            >
+              Start for Free
+            </PrimaryButton>
           </div>
         </div>
       </div>
@@ -469,9 +484,38 @@ function MobileMenu({
   )
 }
 
-// ─── Navbar ────────────────────────────────────────────────────────────────────
+// ─── Navbar (desktop nav menu only) ───────────────────────────────────────────
 
-export function Navbar() {
+function Navbar() {
+  return (
+    <ul className="hidden lg:flex items-center gap-1 text-base font-medium text-text-inverse">
+      {navItems.map((item) =>
+        isDropdown(item) ? (
+          <li key={item.label} className="group relative">
+            <button className="flex items-center gap-1 px-3 py-2 hover:text-carbon-400 transition-colors duration-150 cursor-pointer">
+              {item.label}
+            </button>
+            <MegaMenu item={item} />
+          </li>
+        ) : (
+          <li key={item.label}>
+            <a
+              href={item.href}
+              {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              className="px-3 py-2 hover:text-carbon-400 transition-colors duration-150 block"
+            >
+              {item.label}
+            </a>
+          </li>
+        )
+      )}
+    </ul>
+  )
+}
+
+// ─── Header ────────────────────────────────────────────────────────────────────
+
+export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openAccordion, setOpenAccordion] = useState<string | null>(null)
 
@@ -481,11 +525,13 @@ export function Navbar() {
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [mobileOpen])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-bg-inverse">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-bg-primary">
       <div className="h-[62px] lg:h-20">
         <nav
           className="max-w-container mx-auto h-full px-4 md:px-8 lg:px-16 flex items-center justify-between"
@@ -503,29 +549,8 @@ export function Navbar() {
             />
           </a>
 
-          {/* Desktop menu */}
-          <ul className="hidden lg:flex items-center gap-1 text-base font-medium text-text-inverse">
-            {navItems.map((item) =>
-              isDropdown(item) ? (
-                <li key={item.label} className="group relative">
-                  <button className="flex items-center gap-1 px-3 py-2 hover:text-carbon-400 transition-colors duration-150 cursor-pointer">
-                    {item.label}
-                  </button>
-                  <MegaMenu item={item} />
-                </li>
-              ) : (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className="px-3 py-2 hover:text-carbon-400 transition-colors duration-150 block"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              )
-            )}
-          </ul>
+          {/* Desktop nav menu */}
+          <Navbar />
 
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center gap-4 shrink-0">

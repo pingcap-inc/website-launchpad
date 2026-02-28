@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Navbar, Footer, HeroSection, CtaSection, SectionHeader, PrimaryButton } from '@/components'
+import { Header, Footer, HeroSection, CtaSection, SectionHeader, PrimaryButton } from '@/components'
 import { CreditTabs } from './_components/CreditTabs'
 
 const CLAIM_URL = 'https://ossinsight.io/open-source-heroes/'
@@ -20,7 +20,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Open Source Heroes — Claim FREE TiDB Cloud Serverless Credits',
-    description: 'Claim up to $2,000 in TiDB Cloud Serverless credits based on your open source contributions.',
+    description:
+      'Claim up to $2,000 in TiDB Cloud Serverless credits based on your open source contributions.',
     creator: '@PingCAP',
   },
   robots: { index: true, follow: true },
@@ -32,15 +33,18 @@ export const metadata: Metadata = {
 const steps = [
   {
     title: 'Link your Github',
-    description: 'Sign in with your GitHub account. We calculate your credits based on your public open source contributions.',
+    description:
+      'Sign in with your GitHub account. We calculate your credits based on your public open source contributions.',
   },
   {
     title: 'Claim your Credits',
-    description: 'Connect your TiDB Cloud account and claim up to $2,000 in Serverless credits — instantly applied.',
+    description:
+      'Connect your TiDB Cloud account and claim up to $2,000 in Serverless credits — instantly applied.',
   },
   {
     title: 'Start Building',
-    description: 'Deploy your first cluster in seconds. Scale from a weekend project to a production system without changing a line.',
+    description:
+      'Deploy your first cluster in seconds. Scale from a weekend project to a production system without changing a line.',
   },
 ]
 
@@ -182,9 +186,8 @@ const GITHUB_STATS = {
 export default function OpenSourceHeroesPage() {
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
-
         {/* ── 1. Hero ── */}
         <HeroSection
           headline="Fuel Your Next Big Idea: TiDB Cloud Serverless Credits for Open Source Heroes"
@@ -211,19 +214,19 @@ export default function OpenSourceHeroesPage() {
         {/* ── 3. Introduction ── */}
         <section className="py-section-sm lg:py-section bg-bg-primary">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-
             {/* Part A — capabilities */}
-            <SectionHeader
-              title="With TiDB Cloud Serverless, you can:"
-              align="left"
-              h2Size="sm"
-            />
+            <SectionHeader title="With TiDB Cloud Serverless, you can:" align="left" h2Size="sm" />
             <p className="text-body-lg text-carbon-300 leading-relaxed mb-8">
-              TiDB Cloud Serverless is a highly scalable, vector search built-in, and cost-effective serverless database, which is dedicated to powering modern applications with simple solutions.
+              TiDB Cloud Serverless is a highly scalable, vector search built-in, and cost-effective
+              serverless database, which is dedicated to powering modern applications with simple
+              solutions.
             </p>
             <ul className="space-y-4 mb-10">
               {capabilities.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-body-md text-carbon-300 leading-relaxed">
+                <li
+                  key={item}
+                  className="flex items-start gap-3 text-body-md text-carbon-300 leading-relaxed"
+                >
                   <span className="text-brand-red-primary font-medium mt-0.5 shrink-0">→</span>
                   {item}
                 </li>
@@ -244,7 +247,8 @@ export default function OpenSourceHeroesPage() {
               <PrimaryButton href={CLAIM_URL}>Claim your credits now</PrimaryButton>
             </div>
             <p className="text-body-sm text-carbon-500 italic">
-              *The scenarios above are for reference only. The actual bill will be based on real usage.
+              *The scenarios above are for reference only. The actual bill will be based on real
+              usage.
             </p>
           </div>
         </section>
@@ -278,7 +282,9 @@ export default function OpenSourceHeroesPage() {
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 text-center">
             <p className="font-mono text-eyebrow text-carbon-400 mb-6">TiDB ❤️ Open Source</p>
             <p className="text-body-lg text-carbon-300 leading-relaxed max-w-2xl mx-auto mb-16">
-              We take pride in our open-source roots. With the developer community, we align our product, to make sure it perfectly fits modern application&rsquo;s developer&rsquo;s needs.
+              We take pride in our open-source roots. With the developer community, we align our
+              product, to make sure it perfectly fits modern application&rsquo;s developer&rsquo;s
+              needs.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
               {[
@@ -313,7 +319,9 @@ export default function OpenSourceHeroesPage() {
                 <details key={faq.q} className="group">
                   <summary className="flex items-center justify-between gap-4 py-6 cursor-pointer list-none text-body-lg font-medium text-text-inverse">
                     {faq.q}
-                    <span className="shrink-0 font-mono text-carbon-500 group-open:rotate-45 transition-transform">+</span>
+                    <span className="shrink-0 font-mono text-carbon-500 group-open:rotate-45 transition-transform">
+                      +
+                    </span>
                   </summary>
                   <p className="text-body-md text-carbon-300 leading-relaxed pb-6">{faq.a}</p>
                 </details>
@@ -335,21 +343,26 @@ export default function OpenSourceHeroesPage() {
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <details className="group">
               <summary className="cursor-pointer list-none flex items-center gap-2 text-body-sm text-carbon-500 hover:text-carbon-300 transition-colors">
-                <span className="font-mono group-open:rotate-90 transition-transform inline-block">▶</span>
+                <span className="font-mono group-open:rotate-90 transition-transform inline-block">
+                  ▶
+                </span>
                 Legal Terms &amp; Conditions
               </summary>
               <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                 {legalSections.map((section) => (
                   <div key={section.title}>
-                    <h4 className="text-body-sm font-medium text-carbon-400 mb-2">{section.title}</h4>
-                    <p className="text-body-sm text-carbon-600 leading-relaxed">{section.content}</p>
+                    <h4 className="text-body-sm font-medium text-carbon-400 mb-2">
+                      {section.title}
+                    </h4>
+                    <p className="text-body-sm text-carbon-600 leading-relaxed">
+                      {section.content}
+                    </p>
                   </div>
                 ))}
               </div>
             </details>
           </div>
         </section>
-
       </main>
       <Footer />
     </>

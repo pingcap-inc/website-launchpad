@@ -1,6 +1,14 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { HeroSection, CtaSection, Footer, HubSpotForm, Navbar, PrimaryButton, SectionHeader } from '@/components'
+import {
+  HeroSection,
+  CtaSection,
+  Footer,
+  HubSpotForm,
+  Header,
+  PrimaryButton,
+  SectionHeader,
+} from '@/components'
 
 const HERO_FORM_ID = '8d439c40-4e6b-4192-a99b-a2c619ad4146'
 
@@ -91,7 +99,7 @@ function LinkArrow() {
 export default function StartupProgramPage() {
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         <HeroSection
           eyebrow="TiDB Cloud Startup Program"
@@ -127,42 +135,42 @@ export default function StartupProgramPage() {
         <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
           <SectionHeader align="center" h2Size="sm" title="About The Program" />
           <div className="grid md:grid-cols-2 gap-4">
-          <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
-            <div>
-              <h2 className="text-h3-lg mb-4">Who is this for?</h2>
-              <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
-                <li>• Seed to Series B startups building data-intensive products.</li>
-                <li>• Founded within 36 months from the application date.</li>
-                <li>• Less than $10M in annual revenue.</li>
-                <li>
-                  • Experiencing or expecting rapid growth and don’t want your database to become a
-                  bottleneck.
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="text-body-md text-carbon-300 mb-3 leading-relaxed">
-                Investors &amp; Incubators: We offer a dedicated track for your portfolio’s application.
-                Please use the form above, and we will contact you shortly.
-              </p>
-            </div>
+            <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
+              <div>
+                <h2 className="text-h3-lg mb-4">Who is this for?</h2>
+                <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
+                  <li>• Seed to Series B startups building data-intensive products.</li>
+                  <li>• Founded within 36 months from the application date.</li>
+                  <li>• Less than $10M in annual revenue.</li>
+                  <li>
+                    • Experiencing or expecting rapid growth and don’t want your database to become
+                    a bottleneck.
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-body-md text-carbon-300 mb-3 leading-relaxed">
+                  Investors &amp; Incubators: We offer a dedicated track for your portfolio’s
+                  application. Please use the form above, and we will contact you shortly.
+                </p>
+              </div>
             </div>
             <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
-            <div>
-              <h3 className="text-h3-sm mb-3">What do you get?</h3>
-              <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
-                <li>• Financial Support: Up to $100,000 in TiDB Cloud credits.</li>
-                <li>
-                  • Technical Support: Direct access to professional engineers for onboarding, scaling,
-                  and optimization.
-                </li>
-                <li>
-                  • Growth Support: Co-marketing opportunities through blogs, community showcases,
-                  events, and more.
-                </li>
-              </ul>
+              <div>
+                <h3 className="text-h3-sm mb-3">What do you get?</h3>
+                <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
+                  <li>• Financial Support: Up to $100,000 in TiDB Cloud credits.</li>
+                  <li>
+                    • Technical Support: Direct access to professional engineers for onboarding,
+                    scaling, and optimization.
+                  </li>
+                  <li>
+                    • Growth Support: Co-marketing opportunities through blogs, community showcases,
+                    events, and more.
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
           </div>
         </section>
 
@@ -179,7 +187,13 @@ export default function StartupProgramPage() {
             {valueCards.map((card) => (
               <article key={card.title} className="border border-carbon-800 p-6 lg:p-8">
                 <div className="mb-6">
-                  <Image src={card.image} alt={card.alt} width={64} height={64} className="w-14 h-14" />
+                  <Image
+                    src={card.image}
+                    alt={card.alt}
+                    width={64}
+                    height={64}
+                    className="w-14 h-14"
+                  />
                 </div>
                 <h3 className="text-h3-sm mb-3">{card.title}</h3>
                 <p className="text-body-md text-carbon-300 leading-relaxed">{card.body}</p>

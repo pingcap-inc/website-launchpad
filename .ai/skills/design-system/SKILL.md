@@ -20,12 +20,12 @@ description: >
 
 ## File Index
 
-| File | Contents | When to Read |
-|------|----------|--------------|
-| `tokens.md` | Color / Typography / Spacing tokens + Tailwind config + globals.css | Required before any dev task |
+| File            | Contents                                                                                    | When to Read                         |
+| --------------- | ------------------------------------------------------------------------------------------- | ------------------------------------ |
+| `tokens.md`     | Color / Typography / Spacing tokens + Tailwind config + globals.css                         | Required before any dev task         |
 | `components.md` | Navbar · PrimaryButton · SecondaryButton · FeatureCard · SectionHeader full implementations | When writing or modifying components |
-| `layout.md` | Page structure · Hero · Container · Responsive grid · Copy guidelines | When building pages or sections |
-| `rules.md` | Quality checklist · Full list of forbidden patterns | Review before outputting code |
+| `layout.md`     | Page structure · Hero · Container · Responsive grid · Copy guidelines                       | When building pages or sections      |
+| `rules.md`      | Quality checklist · Full list of forbidden patterns                                         | Review before outputting code        |
 
 ---
 
@@ -39,7 +39,7 @@ Professional, modern, restrained. Dark Hero alternating with light content secti
 
 ```
 ❌ Hardcoded color values     → Use Token class names (bg-brand-red-primary, etc.)
-❌ Gradient on Hero           → bg-bg-inverse (pure black only)
+❌ Gradient on Hero           → bg-bg-primary (pure black only)
 ❌ font-semibold              → font-bold (no 600-weight file on CDN)
 ❌ next/font/google           → globals.css @font-face + CDN
 ❌ PrimaryButton missing relative / overflow-hidden / z-10 layer structure

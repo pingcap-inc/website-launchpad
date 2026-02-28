@@ -7,11 +7,11 @@
 <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
 ```
 
-| Breakpoint | Padding |
-|------------|---------|
-| Mobile (default) | `px-4` (16px) |
-| ≥768px (md) | `md:px-8` (32px) |
-| ≥1024px (lg) | `lg:px-16` (64px) |
+| Breakpoint       | Padding           |
+| ---------------- | ----------------- |
+| Mobile (default) | `px-4` (16px)     |
+| ≥768px (md)      | `md:px-8` (32px)  |
+| ≥1024px (lg)     | `lg:px-16` (64px) |
 
 ---
 
@@ -23,7 +23,7 @@ Navbar          fixed h-[62px] lg:h-20 — add pt-[62px] lg:pt-20 to page conten
                        full domain https://www.pingcap.com/... outside website-launchpad
                 CTAs: Sign In → https://tidbcloud.com/signin
                       Start for Free → https://tidbcloud.com/free-trial/
-Hero            bg-bg-inverse (pure black), no gradients
+Hero            bg-bg-primary (pure black), no gradients
 Feature Sections  alternating bg-bg-primary / bg-bg-subtle
 CTA Section     one of four brand dark backgrounds
 Footer          Links: same rule — relative inside, full domain outside website-launchpad
@@ -34,11 +34,9 @@ Footer          Links: same rule — relative inside, full domain outside websit
 ## Hero Section
 
 ```tsx
-<section className="bg-bg-inverse pt-20 pb-20 text-center relative overflow-hidden">
+<section className="bg-bg-primary pt-20 pb-20 text-center relative overflow-hidden">
   {/* Eyebrow: optional, placed directly above H1 when used */}
-  {eyebrow && (
-    <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>
-  )}
+  {eyebrow && <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>}
   {/* H1: 48px mobile / 68px desktop — mobile-first order */}
   <h1 className="text-h1-mb md:text-h1 font-bold leading-tight text-text-inverse max-w-hero-title mx-auto mb-6">
     Modern Database for Real-Time Workloads
@@ -71,10 +69,66 @@ Use `rightSlot` for hero sections that pair copy with a form, image, or other co
 ```
 
 **Hero Rules:**
-- Background: `bg-bg-inverse` (`#000000`), **no gradients of any kind**
+
+- Background: `bg-bg-primary` (`#000000`), **no gradients of any kind**
 - Eyebrow: **optional** — when present, place directly above H1 with `mb-8`
 - Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
 - Split layout: when `rightSlot` is provided, layout switches to a 2-column grid (`grid-cols-1 lg:grid-cols-2`), text becomes left-aligned, headline uses `text-h2` scale instead of `text-h1`
+
+---
+
+## ColorCard
+
+Colored background card with no border. The card IS the link — on hover it floats up 8px and the SecondaryButton arrow animates. Use in a 4-column grid following the red → violet → blue → teal order.
+
+```tsx
+import { ColorCard } from '@/components'
+import { Rocket } from 'lucide-react'
+
+;<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  <ColorCard
+    variant="red"
+    icon={<Rocket className="w-full h-full" />}
+    title="..."
+    description="..."
+    cta={{ text: 'Learn More', href: '/' }}
+  />
+  <ColorCard
+    variant="violet"
+    icon={<Rocket className="w-full h-full" />}
+    title="..."
+    description="..."
+    cta={{ text: 'Learn More', href: '/' }}
+  />
+  <ColorCard
+    variant="blue"
+    image={{ src: '/icon.svg', alt: '...' }}
+    title="..."
+    description="..."
+    cta={{ text: 'Learn More', href: '/' }}
+  />
+  <ColorCard
+    variant="teal"
+    image={{ src: '/icon.svg', alt: '...' }}
+    title="..."
+    description="..."
+    cta={{ text: 'Learn More', href: '/' }}
+  />
+</div>
+```
+
+**Props:**
+
+- `variant`: `'red'` · `'violet'` · `'blue'` · `'teal'` — sets background color
+- `title`: required
+- `description`: required
+- `cta`: required `{ text, href }` — SecondaryButton style, triggered by card hover
+- `icon`: optional — Lucide icon or SVG ReactNode (rendered at 48×48, white/80)
+- `image`: optional — `{ src, alt, width?, height? }` (rendered via next/image at 48×48)
+
+**Hover behavior:** card floats up 8px · arrow rotates 45° · circle fills white
+
+**Background colors:** red `#630D09` · violet `#3C174C` · blue `#0D3152` · teal `#093434`
 
 ---
 
@@ -93,6 +147,7 @@ Always use the `<CtaSection>` component. Layout: colored background · cube imag
 ```
 
 **Props:**
+
 - `background`: `'red'` (default) · `'violet'` · `'blue'` · `'teal'` — controls both background color and cube image
 - `title`: required
 - `subtitle`: optional
@@ -101,12 +156,12 @@ Always use the `<CtaSection>` component. Layout: colored background · cube imag
 
 **Background options:**
 
-| value | use case | bg color |
-|-------|----------|----------|
-| `red` | general / get started | `#630D09` |
-| `violet` | AI features | `#3C174C` |
-| `blue` | cloud-native | `#0D3152` |
-| `teal` | data / success | `#093434` |
+| value    | use case              | bg color  |
+| -------- | --------------------- | --------- |
+| `red`    | general / get started | `#630D09` |
+| `violet` | AI features           | `#3C174C` |
+| `blue`   | cloud-native          | `#0D3152` |
+| `teal`   | data / success        | `#093434` |
 
 The cube image automatically matches the background color — do not override it.
 
@@ -116,13 +171,13 @@ The cube image automatically matches the background color — do not override it
 
 Mobile-first. Primary design target: `xl` (>1280px).
 
-| Breakpoint | Prefix | Range |
-|------------|--------|-------|
-| xs | none | < 480px |
-| sm | `sm:` | ≥ 480px |
-| md | `md:` | ≥ 768px |
-| lg | `lg:` | ≥ 1024px |
-| xl | `xl:` | ≥ 1280px |
+| Breakpoint | Prefix | Range    |
+| ---------- | ------ | -------- |
+| xs         | none   | < 480px  |
+| sm         | `sm:`  | ≥ 480px  |
+| md         | `md:`  | ≥ 768px  |
+| lg         | `lg:`  | ≥ 1024px |
+| xl         | `xl:`  | ≥ 1280px |
 
 ---
 

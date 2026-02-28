@@ -9,7 +9,13 @@ interface SecondaryButtonProps {
   dark?: boolean
 }
 
-export function SecondaryButton({ children, className, onClick, href, dark = true }: SecondaryButtonProps) {
+export function SecondaryButton({
+  children,
+  className,
+  onClick,
+  href,
+  dark = true,
+}: SecondaryButtonProps) {
   const classes = cn(
     'group inline-flex items-center gap-2',
     'text-base font-medium',
@@ -21,14 +27,14 @@ export function SecondaryButton({ children, className, onClick, href, dark = tru
   const content = (
     <>
       <span>{children}</span>
-      <span className={cn(
-        'relative flex items-center justify-center',
-        'w-6 h-6 rounded-full aspect-square shrink-0',
-        'transition-colors duration-300 ease-in-out',
-        dark
-          ? 'group-hover:bg-text-inverse'
-          : 'group-hover:bg-text-primary'
-      )}>
+      <span
+        className={cn(
+          'relative flex items-center justify-center',
+          'w-6 h-6 rounded-full aspect-square shrink-0',
+          'transition-colors duration-300 ease-in-out',
+          dark ? 'group-hover:bg-text-inverse' : 'group-hover:bg-text-primary'
+        )}
+      >
         <ArrowUpRight
           size={16}
           className={cn(

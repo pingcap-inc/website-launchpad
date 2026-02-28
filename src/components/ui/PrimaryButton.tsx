@@ -28,9 +28,11 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
                    group-hover:translate-y-[10%] group-hover:scale-[6]"
       />
       {/* Text */}
-      <span className="relative z-10 text-base font-medium leading-none
+      <span
+        className="relative z-10 text-base font-medium leading-none
                        text-text-primary transition-colors duration-500 ease-in-out
-                       group-hover:text-text-inverse">
+                       group-hover:text-text-inverse"
+      >
         {children}
       </span>
       {/* Icon */}

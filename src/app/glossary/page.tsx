@@ -1,15 +1,22 @@
 import type { Metadata } from 'next'
-import { Navbar, Footer, HeroSection, CtaSection, JsonLd } from '@/components'
+import { Header, Footer, HeroSection, CtaSection, JsonLd } from '@/components'
 import { buildPageSchema, glossaryIndexSchema } from '@/lib/schema'
-import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Database & TiDB Glossary — Key Terms Explained | PingCAP',
-  description: 'Definitions of key database, distributed systems, and cloud-native terms used across TiDB products and documentation. From HTAP to TiKV.',
-  keywords: ['database glossary', 'HTAP definition', 'distributed database terms', 'NewSQL glossary', 'TiDB terms'],
+  description:
+    'Definitions of key database, distributed systems, and cloud-native terms used across TiDB products and documentation. From HTAP to TiKV.',
+  keywords: [
+    'database glossary',
+    'HTAP definition',
+    'distributed database terms',
+    'NewSQL glossary',
+    'TiDB terms',
+  ],
   openGraph: {
     title: 'Database & TiDB Glossary — Key Terms Explained',
-    description: 'Definitions of key database, distributed systems, and cloud-native terms used across TiDB products and documentation.',
+    description:
+      'Definitions of key database, distributed systems, and cloud-native terms used across TiDB products and documentation.',
     url: 'https://www.pingcap.com/glossary/',
     siteName: 'PingCAP',
     images: [{ url: 'https://www.pingcap.com/og/glossary.png', width: 1200, height: 630 }],
@@ -27,7 +34,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.pingcap.com/glossary/',
     languages: {
-      'en': 'https://www.pingcap.com/glossary/',
+      en: 'https://www.pingcap.com/glossary/',
       'x-default': 'https://www.pingcap.com/glossary/',
     },
   },
@@ -56,7 +63,7 @@ const terms = [
         term: 'OLAP',
         fullName: 'Online Analytical Processing',
         definition:
-          'A class of database workloads involving complex queries over large datasets for business intelligence and reporting. OLAP queries typically scan many rows and perform aggregations. Traditionally handled by separate data warehouses, but TiDB\'s columnar storage engine (TiFlash) brings OLAP capabilities to the same cluster.',
+          "A class of database workloads involving complex queries over large datasets for business intelligence and reporting. OLAP queries typically scan many rows and perform aggregations. Traditionally handled by separate data warehouses, but TiDB's columnar storage engine (TiFlash) brings OLAP capabilities to the same cluster.",
       },
       {
         term: 'NewSQL',
@@ -86,7 +93,7 @@ const terms = [
         term: 'TiFlash',
         fullName: 'TiFlash Columnar Storage',
         definition:
-          'TiDB\'s columnar storage extension that enables real-time OLAP queries. TiFlash maintains a columnar replica of TiKV data asynchronously, allowing analytical queries to run on column-oriented storage for significantly better performance — without impacting transactional workloads on TiKV.',
+          "TiDB's columnar storage extension that enables real-time OLAP queries. TiFlash maintains a columnar replica of TiKV data asynchronously, allowing analytical queries to run on column-oriented storage for significantly better performance — without impacting transactional workloads on TiKV.",
       },
       {
         term: 'PD',
@@ -137,14 +144,17 @@ const terms = [
 const schema = buildPageSchema({
   path: '/glossary/',
   title: 'Database & TiDB Glossary — Key Terms Explained | PingCAP',
-  description: 'Definitions of key database, distributed systems, and cloud-native terms used across TiDB products and documentation.',
+  description:
+    'Definitions of key database, distributed systems, and cloud-native terms used across TiDB products and documentation.',
   pageType: 'CollectionPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: 'Glossary', path: '/glossary/' },
   ],
   image: 'https://www.pingcap.com/og/glossary.png',
-  extraSchemas: [glossaryIndexSchema({ termCount: terms.reduce((acc, c) => acc + c.items.length, 0) })],
+  extraSchemas: [
+    glossaryIndexSchema({ termCount: terms.reduce((acc, c) => acc + c.items.length, 0) }),
+  ],
 })
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -153,9 +163,8 @@ export default function GlossaryPage() {
   return (
     <>
       <JsonLd data={schema} />
-      <Navbar />
+      <Header />
       <main className="pt-[62px] lg:pt-20">
-
         {/* Hero */}
         <HeroSection
           eyebrow="GLOSSARY"
@@ -171,7 +180,6 @@ export default function GlossaryPage() {
             aria-labelledby={`section-${category.category.toLowerCase().replace(/\s+/g, '-')}`}
           >
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-
               {/* Category heading */}
               <h2
                 id={`section-${category.category.toLowerCase().replace(/\s+/g, '-')}`}
@@ -189,9 +197,7 @@ export default function GlossaryPage() {
                   >
                     {/* Term + full name */}
                     <div className="md:col-span-1">
-                      <h3 className="text-h3-lg font-bold text-text-inverse mb-1">
-                        {item.term}
-                      </h3>
+                      <h3 className="text-h3-lg font-bold text-text-inverse mb-1">{item.term}</h3>
                       {item.fullName !== item.term && (
                         <p className="text-body-sm text-text-inverse/40 font-mono">
                           {item.fullName}
@@ -220,7 +226,6 @@ export default function GlossaryPage() {
           secondaryCta={{ text: 'Read the Docs', href: '/docs/' }}
           background="red"
         />
-
       </main>
       <Footer />
     </>

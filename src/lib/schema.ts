@@ -117,9 +117,10 @@ export function buildPageSchema({
       ...(image && { image: { '@type': 'ImageObject', url: image } }),
       ...(datePublished && { datePublished }),
       ...(dateModified && { dateModified }),
-      ...(breadcrumbs && breadcrumbs.length > 0 && {
-        breadcrumb: { '@id': breadcrumbId },
-      }),
+      ...(breadcrumbs &&
+        breadcrumbs.length > 0 && {
+          breadcrumb: { '@id': breadcrumbId },
+        }),
     },
   ]
 
@@ -192,12 +193,38 @@ export function articleSchema(options: {
   }
 }
 
-
+/** TechArticle — use on developer guides/docs style pages */
+export function techArticleSchema(options: {
+  title: string
+  description: string
+  /** Full URL or site-relative path */
+  url: string
+  image?: string
+  proficiencyLevel?: 'Beginner' | 'Intermediate' | 'Advanced'
+  dependencies?: string[]
+  datePublished?: string
+  dateModified?: string
+}): Record<string, unknown> {
+  const absoluteUrl = options.url.startsWith('http') ? options.url : `${SITE_URL}${options.url}`
+  return {
+    '@type': 'TechArticle',
+    headline: options.title,
+    description: options.description,
+    url: absoluteUrl,
+    mainEntityOfPage: absoluteUrl,
+    author: { '@id': ORG_ID },
+    publisher: { '@id': ORG_ID },
+    ...(options.image && { image: { '@type': 'ImageObject', url: options.image } }),
+    ...(options.proficiencyLevel && { proficiencyLevel: options.proficiencyLevel }),
+    ...(options.dependencies &&
+      options.dependencies.length > 0 && { dependencies: options.dependencies }),
+    ...(options.datePublished && { datePublished: options.datePublished }),
+    ...(options.dateModified && { dateModified: options.dateModified }),
+  }
+}
 
 /** FAQPage — append to any page that has FAQ content */
-export function faqSchema(
-  items: { question: string; answer: string }[]
-): Record<string, unknown> {
+export function faqSchema(items: { question: string; answer: string }[]): Record<string, unknown> {
   return {
     '@type': 'FAQPage',
     mainEntity: items.map((item) => ({
@@ -253,14 +280,13 @@ export function definedTermSchema(options: {
  * Usage:
  *   extraSchemas: [glossaryIndexSchema({ termCount: 42 })]
  */
-export function glossaryIndexSchema(options?: {
-  termCount?: number
-}): Record<string, unknown> {
+export function glossaryIndexSchema(options?: { termCount?: number }): Record<string, unknown> {
   return {
     '@type': 'DefinedTermSet',
     '@id': `${SITE_URL}/glossary/`,
     name: 'TiDB & Database Glossary',
-    description: 'Definitions of key database, distributed systems, and cloud-native terms used across TiDB documentation and products.',
+    description:
+      'Definitions of key database, distributed systems, and cloud-native terms used across TiDB documentation and products.',
     url: `${SITE_URL}/glossary/`,
     publisher: { '@id': ORG_ID },
     ...(options?.termCount && { numberOfItems: options.termCount }),

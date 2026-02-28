@@ -95,7 +95,10 @@ export function HubSpotForm({
       }
 
       const container = document.getElementById(containerId)
-      if (!container) { markError(); return }
+      if (!container) {
+        markError()
+        return
+      }
 
       container.innerHTML = ''
       hsWindow.hbspt.forms.create({
@@ -126,7 +129,9 @@ export function HubSpotForm({
       }
     }
 
-    const existingScript = document.querySelector<HTMLScriptElement>('script[data-hs-form-script="true"]')
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      'script[data-hs-form-script="true"]'
+    )
     let script = existingScript
 
     // If a previous script tag exists but never initialized `window.hbspt`,
@@ -161,7 +166,9 @@ export function HubSpotForm({
   return (
     <div className={cn(className ?? 'hs-form')}>
       <div id={containerId} />
-      {status === 'loading' && <p className="text-body-md text-carbon-400 text-center">{loadingText}</p>}
+      {status === 'loading' && (
+        <p className="text-body-md text-carbon-400 text-center">{loadingText}</p>
+      )}
       {status === 'error' && <p className="text-body-sm text-brand-red-light">{errorText}</p>}
     </div>
   )

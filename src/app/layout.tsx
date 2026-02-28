@@ -8,15 +8,12 @@ export const metadata: Metadata = {
     default: 'TiDB — The Distributed SQL Database',
     template: '%s — TiDB',
   },
-  description: 'TiDB is an open-source distributed SQL database that supports Hybrid Transactional and Analytical Processing (HTAP).',
+  description:
+    'TiDB is an open-source distributed SQL database that supports Hybrid Transactional and Analytical Processing (HTAP).',
   metadataBase: new URL('https://www.pingcap.com'),
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
