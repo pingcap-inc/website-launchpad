@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Globe, ChevronDown } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 const languages = [
   { label: 'English', href: '/', external: false },
@@ -38,13 +39,15 @@ export function LanguageSwitcher() {
       <button
         type="button"
         onClick={() => setOpen((p) => !p)}
-        className="flex items-center gap-1.5 text-body-md text-text-inverse hover:text-carbon-400 transition-colors duration-150"
+        className={cn(
+          'flex items-center gap-1.5 text-body-md text-text-inverse hover:text-carbon-400 transition-colors duration-150'
+        )}
       >
         <Globe size={16} className="shrink-0" />
         <span>{current.label}</span>
         <ChevronDown
           size={13}
-          className={`text-carbon-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={cn('text-carbon-400 transition-transform duration-200', open && 'rotate-180')}
         />
       </button>
 
@@ -55,11 +58,12 @@ export function LanguageSwitcher() {
               key={lang.href}
               type="button"
               onClick={() => select(lang)}
-              className={`w-full text-left px-3 py-2 text-body-sm transition-colors duration-150 ${
+              className={cn(
+                'w-full text-left px-3 py-2 text-body-sm transition-colors duration-150',
                 lang.href === current.href
                   ? 'text-text-inverse'
                   : 'text-carbon-400 hover:text-text-inverse'
-              }`}
+              )}
             >
               {lang.label}
             </button>

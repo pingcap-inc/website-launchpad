@@ -11,7 +11,7 @@ interface PrimaryButtonProps {
 export function PrimaryButton({ children, className, onClick, href }: PrimaryButtonProps) {
   const classes = cn(
     'group relative overflow-hidden',
-    'rounded-none h-10 bg-white px-[14px]',
+    'rounded-none h-10 bg-bg-inverse px-4',
     'inline-flex items-center gap-2',
     'border-none outline-none cursor-pointer whitespace-nowrap',
     className

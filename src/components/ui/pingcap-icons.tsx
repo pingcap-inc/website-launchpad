@@ -1,7 +1,7 @@
 /**
  * PingCAP Iconfont Icon Library
  * Auto-generated from PingCAP's custom iconfont (UPM=1024).
- * Usage: <NewspaperIcon size={16} className="text-gray-400" />
+ * Usage: <NewspaperIcon size={16} className="text-carbon-400" />
  */
 
 import React from 'react'

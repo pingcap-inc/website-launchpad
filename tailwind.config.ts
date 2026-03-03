@@ -23,7 +23,6 @@ const config: Config = {
           },
         },
         carbon: {
-          default: '#06111A',
           100: '#E5E8EB',
           200: '#CBD1D7',
           300: '#B9C2CA',
@@ -32,6 +31,8 @@ const config: Config = {
           600: '#74808B',
           700: '#5D6974',
           800: '#424D57',
+          900: '#28333E',
+          DEFAULT: '#06111A',
         },
         bg: { primary: '#000000', inverse: '#FFFFFF', subtle: '#E5E8EB', surface: '#06111A' },
         text: { primary: '#000000', inverse: '#FFFFFF', secondary: '#A2ADB9' },

@@ -283,6 +283,28 @@ export function FeatureCard({
 
 ---
 
+## Tabs
+
+```tsx
+// components/ui/Tabs.tsx
+// Default: click-to-switch, autoSwitch disabled.
+// When autoSwitch=true: enable hover switch + progress underline animation.
+```
+
+Behavior rules:
+
+- Default interaction is click only. `autoSwitch` default value must be `false`.
+- Enable hover switch only when `autoSwitch={true}`.
+- Tab underline uses 2 layers, both `2px`:
+  - Base line: `bg-carbon-900` (always visible)
+  - Active line: `bg-white`
+- Active tab text color is white (`text-white`).
+- Active underline animation is progress style (left-to-right width growth).
+- Previous tab underline must not play reverse/shrink animation; it disappears immediately when inactive.
+- If `autoSwitch={false}`, active underline should render at full width with no progress animation.
+
+---
+
 ## SectionHeader
 
 ```tsx
@@ -351,7 +373,6 @@ Usage examples:
 import type { IconProps } from './pingcap-icons'
 // Usage:
 import { NewspaperIcon, BuildingsIcon, CloudTIcon } from './pingcap-icons'
-
 ;<NewspaperIcon size={16} className="text-carbon-400" />
 ```
 
@@ -393,6 +414,7 @@ components/
     PrimaryButton.tsx       # "Red Flood" CTA button (supports href)
     SecondaryButton.tsx     # Text + arrow icon button
     GhostButton.tsx         # Transparent nav button (supports href)
+    Tabs.tsx                # Tabs with 2px baseline + active progress underline
     FeatureCard.tsx         # Icon + title + description card
     SectionHeader.tsx       # Eyebrow + H2 + subtitle
     NewsletterForm.tsx      # Email subscribe form

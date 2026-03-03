@@ -1,4 +1,6 @@
 // UI Components
+export { CountUp } from './ui/CountUp'
+export { Tabs } from './ui/Tabs'
 export { PrimaryButton } from './ui/PrimaryButton'
 export { SecondaryButton } from './ui/SecondaryButton'
 export { GhostButton } from './ui/GhostButton'

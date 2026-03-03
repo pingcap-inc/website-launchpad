@@ -28,7 +28,9 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className={cn('mb-16', align === 'center' && 'text-center', className)}>
-      {label && <p className="font-mono text-eyebrow text-text-secondary mb-8">{label}</p>}
+      {label && (
+        <label className="font-mono text-eyebrow text-text-secondary block mb-8">{label}</label>
+      )}
       <h2
         className={cn(
           h2SizeMap[h2Size],

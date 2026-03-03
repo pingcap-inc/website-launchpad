@@ -1,5 +1,14 @@
 import type { Metadata } from 'next'
-import { Header, Footer, HeroSection, CtaSection, SectionHeader, PrimaryButton } from '@/components'
+import { Bot, TrendingUp, Globe, Truck, ShoppingCart, Wifi } from 'lucide-react'
+import {
+  Header,
+  Footer,
+  HeroSection,
+  CtaSection,
+  SectionHeader,
+  PrimaryButton,
+  CountUp,
+} from '@/components'
 import { CreditTabs } from './_components/CreditTabs'
 
 const CLAIM_URL = 'https://ossinsight.io/open-source-heroes/'
@@ -181,6 +190,105 @@ const GITHUB_STATS = {
   contributors: '873',
 }
 
+const heroStats = [
+  { label: 'Max Credits', value: '$2,000' },
+  { label: 'Claim Time', value: '< 3 min' },
+  { label: 'Contributors', value: `${GITHUB_STATS.contributors}+` },
+  { label: 'Program Type', value: 'Serverless' },
+]
+
+const stepCardStyles = [
+  'border-brand-red-dark/60 bg-brand-red-bg/20',
+  'border-brand-violet-dark/60 bg-brand-violet-bg/20',
+  'border-brand-blue-dark/60 bg-brand-blue-bg/20',
+]
+
+const statColors = ['text-brand-red-primary', 'text-brand-blue-medium', 'text-brand-teal-medium']
+
+const statAccentLines = [
+  'bg-brand-red-primary',
+  'bg-brand-teal-medium',
+  'bg-brand-blue-medium',
+  'bg-brand-violet-medium',
+]
+
+const tagMeta: Record<string, { icon: React.ReactNode; style: string }> = {
+  'AI App': {
+    icon: <Bot size={13} />,
+    style: 'text-brand-red-primary bg-brand-red-bg/60 border-brand-red-primary/30',
+  },
+  FinTech: {
+    icon: <TrendingUp size={13} />,
+    style: 'text-brand-blue-medium bg-brand-blue-bg/60 border-brand-blue-medium/30',
+  },
+  'Web 3': {
+    icon: <Globe size={13} />,
+    style: 'text-brand-violet-medium bg-brand-violet-bg/60 border-brand-violet-medium/30',
+  },
+  Logistics: {
+    icon: <Truck size={13} />,
+    style: 'text-brand-teal-medium bg-brand-teal-bg/60 border-brand-teal-medium/30',
+  },
+  'E-Commerce': {
+    icon: <ShoppingCart size={13} />,
+    style: 'text-brand-mango bg-[#E99100]/10 border-brand-mango/30',
+  },
+  Internet: { icon: <Wifi size={13} />, style: 'text-carbon-400 bg-carbon-800 border-carbon-700' },
+}
+
+function CapabilityIllustration() {
+  return (
+    <div className="bg-bg-primary">
+      <svg
+        viewBox="0 0 600 380"
+        className="w-full h-auto"
+        role="img"
+        aria-label="Isometric capability illustration"
+      >
+        <rect width="600" height="380" fill="#000000" />
+
+        {/* thin wireframe cube array */}
+        <g stroke="#D9E0E7" strokeWidth="0.9" fill="none" opacity="0.72">
+          <path d="M150 74 l42 -24 l42 24 l-42 24 z" />
+          <path d="M150 74 l0 48 l42 24 l0 -48 z" />
+          <path d="M234 74 l0 48 l-42 24 l0 -48 z" />
+
+          <path d="M210 106 l42 -24 l42 24 l-42 24 z" />
+          <path d="M210 106 l0 48 l42 24 l0 -48 z" />
+          <path d="M294 106 l0 48 l-42 24 l0 -48 z" />
+
+          <path d="M270 76 l42 -24 l42 24 l-42 24 z" />
+          <path d="M270 76 l0 48 l42 24 l0 -48 z" />
+          <path d="M354 76 l0 48 l-42 24 l0 -48 z" />
+
+          <path d="M330 108 l42 -24 l42 24 l-42 24 z" />
+          <path d="M330 108 l0 48 l42 24 l0 -48 z" />
+          <path d="M414 108 l0 48 l-42 24 l0 -48 z" />
+
+          <path d="M188 164 l42 -24 l42 24 l-42 24 z" />
+          <path d="M188 164 l0 48 l42 24 l0 -48 z" />
+          <path d="M272 164 l0 48 l-42 24 l0 -48 z" />
+
+          <path d="M248 196 l42 -24 l42 24 l-42 24 z" />
+          <path d="M248 196 l0 48 l42 24 l0 -48 z" />
+          <path d="M332 196 l0 48 l-42 24 l0 -48 z" />
+
+          <path d="M308 164 l42 -24 l42 24 l-42 24 z" />
+          <path d="M308 164 l0 48 l42 24 l0 -48 z" />
+          <path d="M392 164 l0 48 l-42 24 l0 -48 z" />
+        </g>
+
+        {/* single highlighted focal cube */}
+        <g transform="translate(315 220)">
+          <polygon points="42,0 84,24 42,48 0,24" fill="#FF4A4A" />
+          <polygon points="0,24 42,48 42,96 0,72" fill="#990606" />
+          <polygon points="84,24 42,48 42,96 84,72" fill="#E20F0F" />
+        </g>
+      </svg>
+    </div>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function OpenSourceHeroesPage() {
@@ -190,18 +298,25 @@ export default function OpenSourceHeroesPage() {
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         {/* ── 1. Hero ── */}
         <HeroSection
+          eyebrow="Open Source Heroes Program"
           headline="Fuel Your Next Big Idea: TiDB Cloud Serverless Credits for Open Source Heroes"
           subheadline="TiDB loves open-source. We contribute code, sponsor projects and deeply appreciate developers who actively contribute to the community. As a token of our appreciation, we're offering up to $2,000 in free TiDB Cloud Serverless credits to fuel open-source heroes' next big idea. Simply log in with your GitHub account to calculate and claim your credits."
           primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
         />
 
         {/* ── 2. How It Works ── */}
-        <section className="py-section-sm lg:py-section bg-bg-primary">
+        <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <SectionHeader title="How it Works" />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {steps.map((step, i) => (
-                <div key={step.title} className="border border-carbon-800 p-6 lg:p-8">
+                <div
+                  key={step.title}
+                  className={`relative overflow-hidden border p-6 lg:p-8 transition-all duration-200 ease-in-out hover:-translate-y-2 hover:shadow-card ${stepCardStyles[i]}`}
+                >
+                  <span className="absolute -bottom-6 right-3 font-mono text-[112px] font-bold leading-none select-none pointer-events-none text-text-inverse/[0.04]">
+                    0{i + 1}
+                  </span>
                   <p className="font-mono text-eyebrow text-carbon-500 mb-6">STEP {i + 1}</p>
                   <h3 className="text-h3-sm font-bold text-text-inverse mb-3">{step.title}</h3>
                   <p className="text-body-md text-carbon-300 leading-relaxed">{step.description}</p>
@@ -214,26 +329,42 @@ export default function OpenSourceHeroesPage() {
         {/* ── 3. Introduction ── */}
         <section className="py-section-sm lg:py-section bg-bg-primary">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-            {/* Part A — capabilities */}
-            <SectionHeader title="With TiDB Cloud Serverless, you can:" align="left" h2Size="sm" />
-            <p className="text-body-lg text-carbon-300 leading-relaxed mb-8">
-              TiDB Cloud Serverless is a highly scalable, vector search built-in, and cost-effective
-              serverless database, which is dedicated to powering modern applications with simple
-              solutions.
-            </p>
-            <ul className="space-y-4 mb-10">
-              {capabilities.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-body-md text-carbon-300 leading-relaxed"
-                >
-                  <span className="text-brand-red-primary font-medium mt-0.5 shrink-0">→</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="flex justify-start mb-20">
-              <PrimaryButton href={CLAIM_URL}>Try Free</PrimaryButton>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-20">
+              <div className="lg:col-span-7">
+                {/* Part A — capabilities */}
+                <SectionHeader
+                  title="With TiDB Cloud Serverless, you can:"
+                  align="left"
+                  h2Size="sm"
+                />
+                <p className="text-body-lg text-carbon-300 leading-relaxed mb-8">
+                  TiDB Cloud Serverless is a highly scalable, vector search built-in, and
+                  cost-effective serverless database, which is dedicated to powering modern
+                  applications with simple solutions.
+                </p>
+                <ul className="space-y-4 mb-10">
+                  {capabilities.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-body-md text-carbon-300 leading-relaxed"
+                    >
+                      <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full border border-brand-teal-medium/60 bg-brand-teal-bg/40 flex items-center justify-center text-brand-teal-medium text-[11px] font-bold leading-none">
+                        ✓
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex justify-start">
+                  <PrimaryButton href={CLAIM_URL}>Try Free</PrimaryButton>
+                </div>
+              </div>
+              <div className="lg:col-span-5 bg-gradient-dark-top p-4 md:p-6">
+                <CapabilityIllustration />
+                <p className="mt-4 font-mono text-label text-carbon-500">
+                  Built for open-source builders shipping production-grade apps.
+                </p>
+              </div>
             </div>
 
             {/* Part B — credit tiers */}
@@ -242,32 +373,37 @@ export default function OpenSourceHeroesPage() {
               align="left"
               h2Size="sm"
             />
-            <CreditTabs />
-            <div className="flex justify-start mt-10 mb-4">
-              <PrimaryButton href={CLAIM_URL}>Claim your credits now</PrimaryButton>
-            </div>
-            <p className="text-body-sm text-carbon-500 italic">
-              *The scenarios above are for reference only. The actual bill will be based on real
-              usage.
-            </p>
+            <CreditTabs ctaHref={CLAIM_URL} />
           </div>
         </section>
 
         {/* ── 4. Reviews ── */}
-        <section className="py-section-sm lg:py-section bg-bg-primary border-t border-carbon-800">
+        <section className="py-section-sm lg:py-section bg-gradient-dark-top border-t border-carbon-800">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-            <SectionHeader title="We Build with TiDB" />
+            <SectionHeader label="Community Stories" title="We Build with TiDB" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {reviews.map((review) => (
                 <article
                   key={review.author + review.tag}
-                  className="border border-carbon-800 p-5 flex flex-col"
+                  className="border border-carbon-800 bg-bg-primary/80 p-5 flex flex-col transition-all duration-200 ease-in-out hover:-translate-y-1 hover:border-carbon-600"
                 >
-                  <span className="font-mono text-eyebrow text-carbon-500 mb-4">{review.tag}</span>
-                  <p className="text-body-md text-carbon-300 leading-relaxed mb-6 flex-1">
-                    &ldquo;{review.content}&rdquo;
+                  <div className="flex items-center gap-2 mb-4">
+                    {tagMeta[review.tag] && (
+                      <span
+                        className={`w-6 h-6 rounded border flex items-center justify-center shrink-0 ${tagMeta[review.tag].style}`}
+                      >
+                        {tagMeta[review.tag].icon}
+                      </span>
+                    )}
+                    <span className="font-mono text-eyebrow text-carbon-500">{review.tag}</span>
+                  </div>
+                  <p className="text-[48px] font-bold text-brand-red-primary mb-1 leading-none select-none">
+                    &ldquo;
                   </p>
-                  <div>
+                  <p className="text-body-md text-carbon-300 leading-relaxed mb-6 flex-1 -mt-1">
+                    {review.content}&rdquo;
+                  </p>
+                  <div className="border-t border-carbon-800 pt-4 mt-auto">
                     <p className="text-body-sm text-text-inverse font-medium">{review.author}</p>
                     <p className="text-body-sm text-carbon-500">{review.role}</p>
                   </div>
@@ -286,14 +422,20 @@ export default function OpenSourceHeroesPage() {
               product, to make sure it perfectly fits modern application&rsquo;s developer&rsquo;s
               needs.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               {[
                 { value: `${GITHUB_STATS.stars}+`, label: 'GitHub Stars' },
                 { value: `${GITHUB_STATS.prs}+`, label: 'Pull Requests' },
                 { value: GITHUB_STATS.contributors, label: 'Contributors' },
-              ].map(({ value, label }) => (
-                <div key={label}>
-                  <p className="font-mono text-h2-mb font-bold text-text-inverse mb-2">{value}</p>
+              ].map(({ value, label }, i) => (
+                <div
+                  key={label}
+                  className="border border-carbon-800 bg-gradient-dark-top p-6 md:p-10 relative overflow-hidden"
+                >
+                  <div className={`absolute top-0 left-0 right-0 h-0.5 ${statAccentLines[i]}`} />
+                  <p className={`text-h2-mb font-bold mb-2 ${statColors[i]}`}>
+                    <CountUp value={value} />
+                  </p>
                   <p className="text-body-md text-carbon-400">{label}</p>
                 </div>
               ))}
@@ -311,19 +453,19 @@ export default function OpenSourceHeroesPage() {
         </section>
 
         {/* ── 6. FAQ ── */}
-        <section className="py-section-sm lg:py-section bg-bg-primary border-t border-carbon-800">
+        <section className="py-section-sm lg:py-section bg-gradient-dark-bottom border-t border-carbon-800">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 max-w-3xl">
             <SectionHeader title="FAQ" align="left" h2Size="sm" />
-            <div className="divide-y divide-carbon-800">
+            <div className="space-y-3">
               {faqs.map((faq) => (
-                <details key={faq.q} className="group">
-                  <summary className="flex items-center justify-between gap-4 py-6 cursor-pointer list-none text-body-lg font-medium text-text-inverse">
+                <details key={faq.q} className="group border border-carbon-800 px-4 md:px-6">
+                  <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none text-body-lg font-medium text-text-inverse">
                     {faq.q}
                     <span className="shrink-0 font-mono text-carbon-500 group-open:rotate-45 transition-transform">
                       +
                     </span>
                   </summary>
-                  <p className="text-body-md text-carbon-300 leading-relaxed pb-6">{faq.a}</p>
+                  <p className="text-body-md text-carbon-300 leading-relaxed pb-5">{faq.a}</p>
                 </details>
               ))}
             </div>

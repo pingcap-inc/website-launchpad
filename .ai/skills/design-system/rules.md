@@ -6,7 +6,11 @@
 
 - [ ] All colors use Token class names — no hardcoded values (`bg-[#xxx]` etc.)
 - [ ] Default page background is `bg-bg-primary` (`#000000`) — **`bg-white` as page base is forbidden**
-- [ ] Hero uses `bg-bg-primary` — **no gradients**
+- [ ] Hero uses `bg-bg-primary` as base — **no gradients**
+- [ ] Hero default layout is split: left copy/buttons + right visual slot
+- [ ] Centered Hero defaults to no eyebrow and includes a background image
+- [ ] If no Hero background image resource is provided, enable auto-generated illustration from page content
+- [ ] Hero background image has no overlay layer by default; keep content wrapper `relative z-10`
 - [ ] CTA Section uses one of the four brand dark backgrounds (`bg-brand-*-bg`)
 - [ ] Gradients (`bg-gradient-dark-*`) only used in dark content sections other than Hero / CTA
 
@@ -31,8 +35,8 @@
 
 **Icons**
 
-- [ ] Nav/content icons use `pingcap-icons` — **not** `lucide-react`
-- [ ] `lucide-react` reserved for chrome UI only: `Menu`, `X`, `ChevronRight`, `ArrowUpRight`
+- [ ] Nav/content icons use `pingcap-icons`
+- [ ] `lucide-react`
 
 **Links**
 
@@ -64,6 +68,9 @@ text-blue-600             // → text-brand-blue-medium
 <section className="bg-gradient-dark-top">    // Hero → bg-bg-primary
 <section className="bg-bg-primary">           // CTA → bg-brand-*-bg (one of four)
 <section className="bg-[#06111A]">            // gradient endpoint only, never solid bg
+<div className="absolute inset-0 bg-bg-primary/65" /> // Hero overlay layer → remove (hero has no overlay)
+<HeroSection centered eyebrow="..." />        // centered hero default should be no eyebrow
+<HeroSection centered />                      // centered hero missing background image or auto-generation
 
 // ─── PrimaryButton layer structure ──────────────────────
 <button>                  // missing relative + overflow-hidden

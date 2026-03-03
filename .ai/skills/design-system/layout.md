@@ -34,46 +34,87 @@ Footer          Links: same rule — relative inside, full domain outside websit
 ## Hero Section
 
 ```tsx
-<section className="bg-bg-primary pt-20 pb-20 text-center relative overflow-hidden">
-  {/* Eyebrow: optional, placed directly above H1 when used */}
-  {eyebrow && <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>}
-  {/* H1: 48px mobile / 68px desktop — mobile-first order */}
-  <h1 className="text-h1-mb md:text-h1 font-bold leading-tight text-text-inverse max-w-hero-title mx-auto mb-6">
-    Modern Database for Real-Time Workloads
-  </h1>
-  <p className="text-body-xl text-carbon-400 max-w-subtitle mx-auto mb-10">
-    Scale from gigabytes to petabytes without re-architecting your application.
-  </p>
-  <div className="flex items-center justify-center gap-4 flex-wrap">
-    <PrimaryButton>Start for Free</PrimaryButton>
-    <SecondaryButton>View Demo</SecondaryButton>
+<section className="bg-bg-primary pt-20 pb-20 relative overflow-hidden">
+  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <div>
+        {eyebrow && <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>}
+        <h1 className="text-h1-mb md:text-h1 font-bold leading-tight text-text-inverse mb-6">
+          Modern Database for Real-Time Workloads
+        </h1>
+        <p className="text-body-xl text-carbon-400 max-w-subtitle mb-10">
+          Scale from gigabytes to petabytes without re-architecting your application.
+        </p>
+        <div className="flex items-center gap-4 flex-wrap">
+          <PrimaryButton>Start for Free</PrimaryButton>
+          <SecondaryButton>View Demo</SecondaryButton>
+        </div>
+      </div>
+      <div>{/* illustration / form / visual panel */}</div>
+    </div>
   </div>
 </section>
 ```
 
-### Variant B — Split layout (text left + right slot)
+### Hero visual references
 
-Use `rightSlot` for hero sections that pair copy with a form, image, or other content on the right.
+All Hero illustration generation and manual selection should align to:
+`.ai/skills/design-system/references/hero/`
+
+Current references:
+
+- `hero-ref-main-01.png`
+- `hero-ref-main-02.png`
+- `hero-ref-main-03.png`
+
+Usage rule:
+
+- Prefer SVG references first for shape language and composition.
+- PNG references are secondary for texture/lighting hints.
+- Auto-generated Hero visuals must follow these references for geometry density, color restraint, and spacing rhythm.
+
+### Variant A — Split layout (default)
+
+Default Hero layout is split: left column for copy + CTAs, right column for a visual slot.
+The right slot can be an illustration, product screenshot, stats panel, or form.
+
+### Variant B — Centered layout
+
+Use centered layout only when the page intent is message-first.
+Centered Hero must include a background image and defaults to no eyebrow.
 
 ```tsx
 <HeroSection
-  eyebrow="TiDB Cloud Startup Program"
   headline="Launch Fast. Scale without Limits."
   subheadline="Apply now and start building with the distributed SQL database that grows with you."
-  rightSlot={
-    <div id="hero-form">
-      <HubSpotForm formId={FORM_ID} />
-    </div>
-  }
+  centered
+  autoGenerateBackgroundImage
 />
+```
+
+### Background image behavior (all Hero variants)
+
+```tsx
+// Preferred: use provided background image asset
+<HeroSection backgroundImage={{ src: heroBg }} />
+
+// Fallback: if no image resource is specified, auto-generate from page content
+<HeroSection autoGenerateBackgroundImage />
 ```
 
 **Hero Rules:**
 
 - Background: `bg-bg-primary` (`#000000`), **no gradients of any kind**
-- Eyebrow: **optional** — when present, place directly above H1 with `mb-8`
+- Default layout is split (`grid-cols-1 lg:grid-cols-2`): left text+buttons, right visual slot
+- Right visual slot accepts illustration, form, chart, screenshot, or product panel
+- Centered layout: default **no eyebrow**
+- Centered layout: background image is required
+- If no background image resource is provided, auto-generate the Hero illustration from page content
+- Eyebrow (when used): place directly above H1 with `mb-8`
 - Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
-- Split layout: when `rightSlot` is provided, layout switches to a 2-column grid (`grid-cols-1 lg:grid-cols-2`), text becomes left-aligned, headline uses `text-h2` scale instead of `text-h1`
+- Hero background image: no overlay layer by default
+- Hero image treatment: use `opacity-30` to `opacity-70`; no heavy blur, no strong color cast that competes with headline
+- Mobile fallback (`<md`): text-first reading order; split layout collapses to single column with copy above visual
 
 ---
 
@@ -84,7 +125,6 @@ Colored background card with no border. The card IS the link — on hover it flo
 ```tsx
 import { ColorCard } from '@/components'
 import { Rocket } from 'lucide-react'
-
 ;<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
   <ColorCard
     variant="red"

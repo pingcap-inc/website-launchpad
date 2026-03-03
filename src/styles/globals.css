@@ -29,7 +29,8 @@
 }
 @font-face {
   font-family: 'Moderat Mono';
-  src: url('https://static.pingcap.com/dist/fonts/moderat-mono/Moderat-Mono-Regular.woff2') format('woff2');
+  src: url('https://static.pingcap.com/dist/fonts/moderat-mono/Moderat-Mono-Regular.woff2')
+    format('woff2');
   font-weight: 400;
   font-display: swap;
 }
@@ -65,8 +66,7 @@
   box-sizing: border-box;
   width: 100%;
   background: transparent;
-  border: 1px solid #5d6974;
-  color: rgb(255 255 255);
+  @apply border border-border-primary text-text-inverse;
   font-family: var(--font-moderat);
   font-size: 16px;
   line-height: 1.4;
@@ -83,12 +83,12 @@
 .hs-form input[type='tel']:focus,
 .hs-form select:focus,
 .hs-form textarea:focus {
-  border-color: rgb(139 150 162);
+  @apply border-border-primary;
 }
 
 .hs-form input::placeholder,
 .hs-form textarea::placeholder {
-  color: rgb(139 150 162);
+  @apply text-carbon-500;
   opacity: 1;
 }
 
@@ -102,7 +102,7 @@
 }
 
 .hs-form select option {
-  color: rgb(0 0 0);
+  @apply text-text-inverse;
 }
 
 .hs-form .actions {
@@ -111,9 +111,8 @@
 }
 
 .hs-form .hs-button {
+  @apply bg-bg-inverse text-text-primary;
   border: 0;
-  background: rgb(255 255 255);
-  color: rgb(0 0 0);
   height: 40px;
   padding: 0 1.125rem;
   font-family: var(--font-moderat);
@@ -122,16 +121,17 @@
   font-weight: 500;
   cursor: pointer;
   border-radius: 0;
-  transition: background-color 150ms, color 150ms;
+  transition:
+    background-color 150ms,
+    color 150ms;
 }
 
 .hs-form .hs-button:hover {
-  background: rgb(220 21 11);
-  color: rgb(255 255 255);
+  @apply bg-brand-red-primary text-text-inverse;
 }
 
 .hs-form .submitted-message {
-  color: rgb(255 255 255);
+  @apply text-text-inverse;
   font-family: var(--font-moderat);
   font-size: 16px;
   line-height: 1.4;
@@ -145,19 +145,19 @@
 
 .hs-form .hs-error-msg,
 .hs-form .hs_error_rollup label {
-  color: rgb(243 80 72);
+  @apply !text-accent-primary;
   font-family: var(--font-moderat);
   font-size: 14px;
   line-height: 1.4;
 }
 
 .hs-form .hs-form-required {
-  color: rgb(243 80 72);
+  @apply text-accent-primary;
 }
 
 .hs-form .legal-consent-container,
 .hs-form .hs-richtext {
-  color: #fff;
+  @apply text-text-inverse;
   font-family: var(--font-moderat);
   font-size: 16px;
   line-height: 1.4;
@@ -173,15 +173,15 @@
   gap: 8px;
 }
 
-.hs-form .hs-form-booleancheckbox-display>span {
-  margin-left: 0!important;
+.hs-form .hs-form-booleancheckbox-display > span {
+  margin-left: 0 !important;
 }
 
 .hs-form .hs-form-booleancheckbox-display input[type='checkbox'] {
+  @apply border border-border-primary bg-transparent;
   width: 16px;
   height: 16px;
   min-height: 16px;
-  border: 1px solid rgb(66 77 87);
   margin-top: 0.2rem;
 }
 
@@ -196,4 +196,19 @@
 .hs-newsletter .hs_recaptcha,
 .hs-newsletter .grecaptcha-badge {
   display: none !important;
+}
+
+@keyframes tab-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-tab-progress {
+  animation-name: tab-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
 }

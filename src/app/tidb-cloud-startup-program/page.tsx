@@ -113,7 +113,7 @@ export default function StartupProgramPage() {
         />
 
         <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
-          <SectionHeader align="left" h2Size="sm" title="Trusted by Builders from MVP to Scale" />
+          <SectionHeader align="left" title="Trusted by Builders from MVP to Scale" />
           <div className="grid md:grid-cols-3 gap-4">
             {proofCards.map((card) => (
               <a
