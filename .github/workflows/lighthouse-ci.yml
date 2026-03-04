@@ -27,8 +27,11 @@ jobs:
       - name: Vercel Preview URL
         id: vercel_preview
         uses: zentered/vercel-preview-url@v1.4.0
-        with:
+        env:
           vercel_token: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
 
       # 2. Extract Paths from PR Table
       - name: Extract Paths
