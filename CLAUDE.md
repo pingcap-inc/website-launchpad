@@ -17,7 +17,9 @@ This Next.js app coexists with the main PingCAP WordPress site. Nginx proxies sp
 
 When the user pastes a Google Doc, Feishu doc, PRD, campaign brief, product spec, or any other material and asks to turn it into a page:
 
-### Step 0 — Check Current Branch
+### Step 0 — Check Branch & Sync with Main
+
+**① Check you are NOT on `main`:**
 
 ```bash
 git branch --show-current
@@ -26,6 +28,18 @@ git branch --show-current
 If on `main`, **stop and tell the user**:
 
 > "You are currently on the main branch. You need to create a new branch before creating the page. Please run: `git checkout -b feat/page_name` (for example, `feat/tidb-cloud-trial`), or tell me the page name and I will generate the command for you."
+
+**② Sync branch with `main` (prevents "Can't automatically merge" on GitHub):**
+
+```bash
+git fetch origin
+git rebase origin/main
+```
+
+- If rebase is **clean** → continue to Step 1.
+- If rebase has **conflicts** → stop, resolve conflicts, then `git rebase --continue` before proceeding.
+
+> **Why:** A branch that has diverged from `main` will show "Can't automatically merge" on GitHub. Rebasing now keeps the PR clean and mergeable.
 
 ### Step 1 — Classify the Page Type
 
