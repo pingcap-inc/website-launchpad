@@ -30,8 +30,10 @@ description: >
 **Metadata**
 
 - [ ] `metadata` export with `title`, `description`, `openGraph`, `twitter`, `robots`, `canonical`
-- [ ] `siteName: 'TiDB | SQL at Scale'` — exact string, no variations
+- [ ] `siteName: 'TiDB'` — exact string, no variations
 - [ ] `twitter.site: '@PingCAP'` — exact string
+- [ ] `openGraph.images` present — default `https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png`; replace with page-specific OG image when available
+- [ ] `twitter.images` present — same default URL (format: array of strings `['url']`)
 - [ ] `canonical` always `https://www.pingcap.com/[path]/` — never `vercel.app`
 - [ ] Landing pages (`/lp/*`): `robots: { index: false, follow: false }`
 
@@ -98,11 +100,18 @@ const schema = buildPageSchema({
 
 ## GTM Usage Reference
 
+File: `src/lib/gtm.tsx` (note: `.tsx` extension, not `.ts`)
+
+Available exports: `trackCTAClick`, `trackFormSubmit`, `trackPageView`, `pushEvent`, `GTMScript`, `GTMNoScript`, `PageType`
+
 ```ts
 import { trackCTAClick, trackFormSubmit } from '@/lib/gtm'
 
 // CTA button click
 trackCTAClick({ cta_text: 'Start for Free', cta_location: 'hero', page_path: '/glossary/' })
+
+// Form submit
+trackFormSubmit({ form_id: 'hubspot-contact', page_path: '/contact/' })
 
 // page_view fires automatically via RouteTracker in layout.tsx — no manual call needed
 ```

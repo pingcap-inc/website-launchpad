@@ -118,6 +118,98 @@ Centered Hero must include a background image and defaults to no eyebrow.
 
 ---
 
+## Section Layout Decision Tree
+
+Use this tree to choose the layout for every content section after the Hero.
+
+```
+Content to present
+│
+├── Multiple features / capabilities (3–6 items)
+│   └── → FeaturesGrid  (icon + title + description cards, 2/3/4 columns)
+│
+├── Single core concept + visual support (diagram / screenshot / illustration)
+│   └── → Split Layout  (text one side, image the other — alternate per section)
+│
+├── 3+ distinct feature areas needing progressive disclosure
+│   └── → Tabs  (autoSwitch, one panel visible at a time)
+│
+├── 2–4 use-case / workload highlights
+│   └── → ColorCard Grid  (red → violet → blue → teal)
+│
+└── Concrete benchmark / scale metrics
+    └── → CountUp stats row  (triggers on scroll)
+```
+
+---
+
+## Split Layout
+
+Use when a single concept is best understood with a paired visual (diagram, screenshot, or illustration). Alternate text/image sides across sections to create visual rhythm.
+
+```
+Section 1  →  Text left   · Image right
+Section 2  →  Image left  · Text right
+Section 3  →  Text left   · Image right
+…
+```
+
+```tsx
+{
+  /* Text left / Image right */
+}
+;<section className="py-section-sm lg:py-section bg-bg-primary">
+  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <p className="font-mono text-eyebrow text-carbon-400 mb-6">Eyebrow</p>
+        <h2 className="text-h2-mb lg:text-h2-sm font-bold text-text-inverse mb-6">
+          Section headline
+        </h2>
+        <p className="text-body-lg text-carbon-300 mb-8">
+          Supporting explanation — one clear idea per section.
+        </p>
+        <SecondaryButton href="/learn-more/">Learn More</SecondaryButton>
+      </div>
+      <div className="relative aspect-video lg:aspect-square">
+        <Image src="..." alt="..." fill className="object-contain" />
+      </div>
+    </div>
+  </div>
+</section>
+
+{
+  /* Image left / Text right — swap grid children order */
+}
+;<section className="py-section-sm lg:py-section bg-bg-primary">
+  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative aspect-video lg:aspect-square order-last lg:order-first">
+        <Image src="..." alt="..." fill className="object-contain" />
+      </div>
+      <div>
+        <p className="font-mono text-eyebrow text-carbon-400 mb-6">Eyebrow</p>
+        <h2 className="text-h2-mb lg:text-h2-sm font-bold text-text-inverse mb-6">
+          Next section headline
+        </h2>
+        <p className="text-body-lg text-carbon-300 mb-8">Supporting explanation.</p>
+        <SecondaryButton href="/learn-more/">Learn More</SecondaryButton>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+**Split Layout Rules:**
+
+- Image side: use `relative` + `fill` + `object-contain`; wrap in `aspect-video` (mobile) → `aspect-square` (lg)
+- Image swap on mobile: use `order-last lg:order-first` on the image div so text always reads first on small screens
+- Eyebrow is optional — omit when the heading is self-explanatory
+- Max 4 Split Layout sections per page; if you need more, switch to FeaturesGrid or Tabs
+- Each section covers exactly one concept — no multi-point bullet lists in the text column
+
+---
+
 ## ColorCard
 
 Colored background card with no border. The card IS the link — on hover it floats up 8px and the SecondaryButton arrow animates. Use in a 4-column grid following the red → violet → blue → teal order.
@@ -168,7 +260,9 @@ import { Rocket } from 'lucide-react'
 
 **Hover behavior:** card floats up 8px · arrow rotates 45° · circle fills white
 
-**Background colors:** red `#630D09` · violet `#3C174C` · blue `#0D3152` · teal `#093434`
+**Background colors:** red `bg-brand-red-dark` (`#87120C`) · violet `bg-brand-violet-dark` (`#5D137D`) · blue `bg-brand-blue-dark` (`#10487B`) · teal `bg-brand-teal-dark` (`#0F5353`)
+
+> ColorCard uses `-dark` variant (slightly lighter). CtaSection uses `bg-brand-*-bg` (deepest shade). Do not swap.
 
 ---
 

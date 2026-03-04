@@ -176,7 +176,12 @@ const config: Config = {
         'section-sm': '40px',
         container: '40px',
       },
-      maxWidth: { container: '1502px', 'hero-title': '860px', subtitle: '640px' },
+      maxWidth: {
+        container: '1502px',
+        'hero-title': '860px',
+        'section-title': '880px',
+        subtitle: '640px',
+      },
       borderRadius: { pill: '9999px' },
       boxShadow: {
         card: '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)',

@@ -5,11 +5,11 @@ import { RouteTracker } from '@/components/ui/RouteTracker'
 
 export const metadata: Metadata = {
   title: {
-    default: 'TiDB — The Distributed SQL Database',
-    template: '%s — TiDB',
+    default: 'TiDB, Powered by PingCAP',
+    template: '%s | TiDB',
   },
   description:
-    'TiDB is an open-source distributed SQL database that supports Hybrid Transactional and Analytical Processing (HTAP).',
+    'TiDB is an open-source, MySQL compatible, distributed SQL database. It powers companies like LinkedIn, Pinterest, Square, and more.',
   metadataBase: new URL('https://www.pingcap.com'),
 }
 

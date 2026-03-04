@@ -17,13 +17,15 @@ robots:        index: true
 ```
 
 **Metadata template:**
+
 ```tsx
-title: 'Database & TiDB Glossary — Key Terms Explained | PingCAP'
+title: 'Database & TiDB Glossary — Key Terms Explained | TiDB'
 description: 'Definitions of key database, distributed systems, and cloud-native terms...' // 120–160 chars
 canonical: 'https://www.pingcap.com/glossary/'
 ```
 
 **Content structure:**
+
 - `<h1>` — glossary name
 - Terms grouped by category under `<h2>` (category name)
 - Each term in `<article>` with `<h3>` (term) + `<p>` (definition)
@@ -42,18 +44,21 @@ robots:        index: true
 ```
 
 **Metadata template:**
+
 ```tsx
-title: 'What is {Term}? — TiDB Glossary | PingCAP'  // 50–60 chars
+title: 'What is {Term}? — TiDB Glossary | TiDB' // 50–60 chars
 description: '{One sentence definition including the term}...'
 canonical: 'https://www.pingcap.com/glossary/{term}/'
 ```
 
 **Breadcrumbs:**
+
 ```
 Home → Glossary → {Term}
 ```
 
 **Content structure:**
+
 - `<h1>` — "What is {Term}?"
 - Definition paragraph
 - Related terms section (`<h2>`)
@@ -62,7 +67,7 @@ Home → Glossary → {Term}
 
 ---
 
-## Product Page — `/marketing/[product]/` or `/tidb/`, `/tidb/cloud/`
+## Product Page — `/tidb/`, `/tidb/cloud/`
 
 ```
 File path:     src/app/marketing/[product]/page.tsx
@@ -73,6 +78,7 @@ robots:        index: true
 ```
 
 **Metadata template:**
+
 ```tsx
 title: '{Product} — {One-line value prop} | PingCAP'
 description: '{Product} is {category}. {Key benefit}. {Social proof or metric}.'
@@ -80,6 +86,7 @@ canonical: 'https://www.pingcap.com/marketing/{product}/'
 ```
 
 **Content structure:**
+
 - Hero with primary CTA
 - Features grid (3 or 4 columns)
 - Use cases or metrics section (optional)
@@ -101,6 +108,7 @@ robots:        index: false   ← landing pages must NOT be indexed
 They are campaign pages, not organic search targets.
 
 **Content structure:**
+
 - Hero with primary CTA
 - Key selling points (3 items)
 - CTA section
@@ -118,13 +126,15 @@ robots:        index: true
 ```
 
 **Metadata template:**
+
 ```tsx
-title: '{Primary keyword} — {Benefit or context} | PingCAP'  // must include keyword
+title: '{Primary keyword} — {Benefit or context} | PingCAP' // must include keyword
 description: '{Definition or hook including primary keyword}. {Value prop}.'
 canonical: 'https://www.pingcap.com/marketing/{topic}/'
 ```
 
 **Content structure:**
+
 - Hero with primary keyword in `<h1>`
 - Prose body content following outline
 - `<SectionHeader>` to divide sections (uses `<h2>`)
@@ -144,13 +154,15 @@ robots:        index: true
 ```
 
 **Metadata template:**
+
 ```tsx
-title: 'TiDB vs {Competitor} — {Key differentiator} | PingCAP'
+title: 'TiDB vs {Competitor} — {Key differentiator} | TiDB'
 description: 'TiDB vs {Competitor}: {Key difference}. Compare {feature1}, {feature2}, and {feature3}.'
 canonical: 'https://www.pingcap.com/compare/{vs}/'
 ```
 
 **Content structure:**
+
 - Hero with comparison headline
 - Comparison table (`<h2>`)
 - Feature-by-feature breakdown
@@ -161,13 +173,13 @@ canonical: 'https://www.pingcap.com/compare/{vs}/'
 
 ## Path → page_type Mapping (complete reference)
 
-| URL Pattern | page_type | robots index |
-|-------------|-----------|-------------|
-| `/` | `home` | true |
-| `/tidb/` | `product` | true |
-| `/tidb/cloud/` | `product` | true |
-| `/glossary/` | `glossary` | true |
-| `/glossary/[term]/` | `glossary` | true |
-| `/compare/[vs]/` | `compare` | true |
-| `/marketing/[topic]/` | `seo_content` | true |
-| `/lp/[slug]/` | `landing_page` | **false** |
+| URL Pattern           | page_type      | robots index |
+| --------------------- | -------------- | ------------ |
+| `/`                   | `home`         | true         |
+| `/tidb/`              | `product`      | true         |
+| `/tidb/cloud/`        | `product`      | true         |
+| `/glossary/`          | `glossary`     | true         |
+| `/glossary/[term]/`   | `glossary`     | true         |
+| `/compare/[vs]/`      | `compare`      | true         |
+| `/marketing/[topic]/` | `seo_content`  | true         |
+| `/lp/[slug]/`         | `landing_page` | **false**    |
