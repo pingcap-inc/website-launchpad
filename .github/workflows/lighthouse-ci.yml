@@ -28,7 +28,7 @@ jobs:
         id: vercel_preview
         uses: zentered/vercel-preview-url@v1.4.0
         env:
-          vercel_token: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
