@@ -14,33 +14,18 @@ jobs:
   lighthouse:
     name: Lighthouse audit
     runs-on: ubuntu-latest
+    environment: preview
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check required secrets
-        id: check_secrets
-        run: |
-          if [ -n "${{ secrets.VERCEL_TOKEN }}" ] && [ -n "${{ secrets.VERCEL_PROJECT_ID }}" ] && [ -n "${{ secrets.VERCEL_TEAM_ID }}" ]; then
-            echo "ready=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Skip Lighthouse (missing Vercel secrets)
-        if: steps.check_secrets.outputs.ready != 'true'
-        run: |
-          echo "Skipping Lighthouse audit because one or more required Vercel secrets are missing."
-
       # Buffer for Vercel deployment (Approx 30s)
       - name: Wait for Vercel Deployment
-        if: steps.check_secrets.outputs.ready == 'true'
         run: sleep 40
 
       # 1. Get Vercel Preview URL
       - name: Vercel Preview URL
-        if: steps.check_secrets.outputs.ready == 'true'
         id: vercel_preview
         uses: zentered/vercel-preview-url@v1.4.0
         env:
@@ -51,7 +36,6 @@ jobs:
 
       # 2. Extract Paths from PR Table
       - name: Extract Paths
-        if: steps.check_secrets.outputs.ready == 'true'
         id: extract_url
         uses: actions/github-script@v7
         with:
@@ -69,7 +53,7 @@ jobs:
             
             let urlList = [];
             if (match && match[1]) {
-              const rawValue = match[1].replace(/`/g, '').trim();
+              const rawValue = match[1].replace(//g, '').trim();
               if (rawValue && rawValue.toLowerCase() !== 'n/a') {
                 const paths = rawValue.split(/[\s,，]+/).filter(p => p.trim() !== "");
                 paths.forEach(path => {
@@ -88,7 +72,7 @@ jobs:
 
       # 3. Run Lighthouse CI with Failure Threshold
       - name: Run Lighthouse CI
-        if: steps.check_secrets.outputs.ready == 'true' && steps.extract_url.outputs.has_urls == 'true'
+        if: steps.extract_url.outputs.has_urls == 'true'
         id: lhci
         uses: treosh/lighthouse-ci-action@v12
         with:
@@ -108,7 +92,7 @@ jobs:
 
       # 4. Post Results Summary
       - name: Post score comment
-        if: always() && steps.check_secrets.outputs.ready == 'true' && steps.lhci.outputs.manifest != ''
+        if: always() && steps.lhci.outputs.manifest != ''
         uses: actions/github-script@v7
         env:
           LHCI_MANIFEST: ${{ steps.lhci.outputs.manifest }}
