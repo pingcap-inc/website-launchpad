@@ -1,0 +1,80 @@
+name: Lighthouse CI (Preview)
+
+on:
+  pull_request:
+    paths:
+      - 'src/app/**/*.tsx'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lighthouse:
+    name: Lighthouse audit (Preview)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Wait for Vercel Preview deployment to complete
+      - name: Wait for Vercel Preview
+        id: waitForPreview
+        uses: jakepartusch/wait-for-vercel-preview@v1.4.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Run Lighthouse
+      - name: Run Lighthouse CI
+        id: lhci
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: ${{ steps.waitForPreview.outputs.url }}
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      # Post score comment
+      - name: Post score comment
+        if: always() && steps.lhci.outputs.manifest != ''
+        uses: actions/github-script@v7
+        env:
+          LHCI_MANIFEST: ${{ steps.lhci.outputs.manifest }}
+        with:
+          script: |
+            const manifest = JSON.parse(process.env.LHCI_MANIFEST)
+            const emoji = s => s >= 0.9 ? '🟢' : s >= 0.5 ? '🟡' : '🔴'
+
+            const sections = manifest.map(({ url, summary }) => {
+              const path = new URL(url).pathname
+              const p = Math.round(summary.performance * 100)
+              const a = Math.round(summary.accessibility * 100)
+              const b = Math.round(summary['best-practices'] * 100)
+              const s = Math.round(summary.seo * 100)
+              return [
+                `### \`${path}\``,
+                `| Category | Score | |`,
+                `|----------|:-----:|-|`,
+                `| Performance    | ${p} | ${emoji(summary.performance)} |`,
+                `| Accessibility  | ${a} | ${emoji(summary.accessibility)} |`,
+                `| Best Practices | ${b} | ${emoji(summary['best-practices'])} |`,
+                `| SEO            | ${s} | ${emoji(summary.seo)} |`,
+              ].join('\n')
+            })
+
+            const body = [
+              '## 🔦 Lighthouse CI (Vercel Preview)',
+              '',
+              ...sections,
+              '',
+              '🟢 ≥90 · 🟡 50–89 · 🔴 <50',
+              '',
+              `*Full reports in Actions artifacts*`,
+            ].join('\n')
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            })
