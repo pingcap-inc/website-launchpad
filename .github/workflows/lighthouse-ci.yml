@@ -53,7 +53,7 @@ jobs:
             
             let urlList = [];
             if (match && match[1]) {
-              const rawValue = match[1].replace(//g, '').trim();
+              const rawValue = match[1].replace(/`/g, '').trim();
               if (rawValue && rawValue.toLowerCase() !== 'n/a') {
                 const paths = rawValue.split(/[\s,，]+/).filter(p => p.trim() !== "");
                 paths.forEach(path => {
