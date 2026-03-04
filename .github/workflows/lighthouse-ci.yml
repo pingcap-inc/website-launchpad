@@ -26,7 +26,7 @@ jobs:
 
       # 1. Get Vercel Preview URL
       - name: Vercel Preview URL
-        id: vercel_preview
+        id: vercel_preview_url
         uses: zentered/vercel-preview-url@v1.4.0
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -38,13 +38,19 @@ jobs:
       - name: Extract Paths
         id: extract_url
         uses: actions/github-script@v7
+        env:
+          VERCEL_PREVIEW_URL: ${{ steps.vercel_preview_url.outputs.preview_url }}
+          VERCEL_PREVIEW_URL_ALT: ${{ steps.vercel_preview_url.outputs.url }}
         with:
           script: |
             const body = context.payload.pull_request.body || "";
-            const baseUrl = "${{ steps.vercel_preview.outputs.url }}".replace(/\/$/, "");
+            const rawBaseUrl = (process.env.VERCEL_PREVIEW_URL || process.env.VERCEL_PREVIEW_URL_ALT || "").trim();
+            const extractedUrl = (rawBaseUrl.match(/https?:\/\/[^\s)]+/)?.[0] || "").replace(/\/$/, "");
+            const extractedHost = rawBaseUrl.replace(/^\s*https?:\/\//, '').split(/[\s)]+/)[0].replace(/\/$/, "");
+            const baseUrl = extractedUrl || (extractedHost ? `https://${extractedHost}` : "");
             
             if (!baseUrl || baseUrl === "" || baseUrl === "undefined") {
-              core.setFailed("Vercel URL not found. Ensure deployment is successful.");
+              core.setFailed(`Vercel URL not found. raw output: "${rawBaseUrl || "empty"}"`);
               return;
             }
 
