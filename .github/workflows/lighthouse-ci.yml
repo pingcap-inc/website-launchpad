@@ -28,7 +28,7 @@ jobs:
         id: vercel_preview
         uses: zentered/vercel-preview-url@v1.4.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
 
       # 2. Extract Paths from PR Table
       - name: Extract Paths
