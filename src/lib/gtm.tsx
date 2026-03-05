@@ -26,7 +26,7 @@ const GTM_IDS = [
   process.env.NEXT_PUBLIC_GTM_ID_ALL_WEBSITES,
 ].filter(Boolean) as string[]
 
-const SHOULD_LOAD_GTM = process.env.NODE_ENV === 'production'
+const SHOULD_LOAD_GTM = process.env.VERCEL_ENV === 'production'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useState } from 'react'
 import { cn } from '@/lib/utils'
+import styles from './HubSpotForm.module.css'
 
 const DEFAULT_PORTAL_ID = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID ?? '4466002'
 const DEFAULT_REGION = process.env.NEXT_PUBLIC_HUBSPOT_REGION ?? 'na1'
@@ -24,7 +25,7 @@ type HubSpotWindow = Window & {
   }
 }
 
-interface HubSpotFormProps {
+export interface HubSpotFormProps {
   formId: string
   portalId?: string
   region?: string
@@ -62,6 +63,7 @@ export function HubSpotForm({
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const uid = useId()
   const containerId = `hubspot-form-${uid.replace(/:/g, '')}`
+  const isNewsletter = className?.split(/\s+/).includes('hs-newsletter') ?? false
 
   useEffect(() => {
     setStatus('loading')
@@ -164,7 +166,7 @@ export function HubSpotForm({
   }, [containerId, formId, portalId, region, sfdcCampaignId, onFormSubmit])
 
   return (
-    <div className={cn(className ?? 'hs-form')}>
+    <div className={cn(styles.root, isNewsletter && styles.newsletter, className)}>
       <div id={containerId} />
       {status === 'loading' && (
         <p className="text-body-md text-carbon-400 text-center">{loadingText}</p>

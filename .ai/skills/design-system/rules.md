@@ -25,6 +25,8 @@
 - [ ] `<PrimaryButton>`: `rounded-none h-10`, parent has `relative overflow-hidden`, text/icon have `relative z-10`
 - [ ] `<SecondaryButton>`: hover black circle + 45° arrow — no shadow / blur / glow
 - [ ] Navbar Logo uses the specified CDN SVG, fixed at `120×50px`
+- [ ] Header keeps lightweight shell in `Header.tsx`; mega-menu/mobile menu logic lives in dynamically loaded `HeaderMenus.tsx`
+- [ ] Footer newsletter form uses deferred mount (`DeferredHubSpotForm`) rather than eager third-party script load
 
 **Layout / Spacing**
 
@@ -70,7 +72,7 @@ text-blue-600             // → text-brand-blue-medium
 <section className="bg-[#06111A]">            // gradient endpoint only, never solid bg
 <div className="absolute inset-0 bg-bg-primary/65" /> // Hero overlay layer → remove (hero has no overlay)
 <HeroSection centered eyebrow="..." />        // centered hero default should be no eyebrow
-<HeroSection centered />                      // centered hero missing background image or auto-generation
+<HeroSection rightSlot={undefined} />         // split hero: omit only if default /images/hero/r/ visual is acceptable
 
 // ─── PrimaryButton layer structure ──────────────────────
 <button>                  // missing relative + overflow-hidden

@@ -3,111 +3,110 @@
 > Marketing pages and landing pages powered by Next.js + Tailwind CSS.  
 > Business teams use AI to generate pages. Tech team maintains the design system.
 
----
+Next.js pages coexisting with the main [PingCAP](https://www.pingcap.com) WordPress site. Nginx proxies specific paths to this app. The homepage (`/`) stays on WordPress — do **not** create `src/app/page.tsx`.
 
 ## Stack
 
-- **Next.js 14+** — App Router, SSG/SSR, Image optimization
-- **Tailwind CSS v3** — Design Token–based utility classes
-- **TypeScript** — Strict mode
-- **Vercel** — Deployment & preview URLs
-
----
+|                 |                         |
+| --------------- | ----------------------- |
+| Framework       | Next.js 16 (App Router) |
+| Styling         | Tailwind CSS v3         |
+| Language        | TypeScript              |
+| Package manager | pnpm                    |
 
 ## Getting Started
 
 ```bash
-npm install
-npm run dev
+git clone https://github.com/pingcap-inc/website-launchpad.git
+cd website-launchpad
+pnpm install
+pnpm dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Other commands:
 
----
+```bash
+pnpm build        # production build
+pnpm lint         # ESLint
+pnpm type-check   # TypeScript
+```
 
 ## Project Structure
 
 ```
 src/
-├── app/
-│   ├── page.tsx              # Homepage
-│   ├── marketing/            # Product pages & SEO content pages
-│   └── lp/                   # Landing pages (campaign-specific)
+├── app/               # Next.js App Router pages
+│   └── sitemap.ts     # XML sitemap (add every new indexable page here)
 ├── components/
-│   ├── ui/                   # Base components (Button, Card, etc.)
-│   └── sections/             # Page sections (Hero, Features, CTA)
-├── styles/
-│   └── globals.css           # Font loading + Tailwind base
-└── lib/
-    └── utils.ts              # cn() utility
+│   ├── ui/            # Primitive components (Button, Card, Tabs…)
+│   └── sections/      # Page-level sections (HeroSection, FeaturesGrid, CtaSection)
+├── lib/
+│   ├── schema.ts      # buildPageSchema() and all JSON-LD builders
+│   └── gtm.tsx        # GTM helpers — use instead of raw dataLayer.push()
+└── styles/
+    └── globals.css    # @font-face (CDN) + base styles
 
 .ai/
+├── page-types/        # Per-type spec: structure, schema, GTM, sitemap rules
 ├── skills/
-│   ├── design-system/        # Design system specification for AI
-│   └── seo/                  # SEO specification for AI
-├── prompts/                  # Page generation prompt templates
-│   ├── landing-page.md       # ← Business teams start here
-│   ├── product-page.md
-│   └── seo-page.md
+│   ├── design-system/ # Design tokens, components, layout, quality rules
+│   ├── seo/           # Metadata, schema, analytics, cross-stack rules
+│   └── for-marketing/ # Non-technical user workflow guides
 └── context/
-    └── brand.md              # Brand voice & naming rules
+    └── brand.md       # Product names, tone, CTA copy, forbidden words
+
+.github/
+├── workflows/
+│   └── lighthouse-ci.yml    # Runs Lighthouse on every PR, posts score comment
+└── PULL_REQUEST_TEMPLATE.md
 ```
 
----
+## Creating Pages
 
-## For Business Teams: Creating a New Page
+`CLAUDE.md` (auto-loaded by Claude Code) contains the full generation workflow, component reference, and quality checklist.
 
-### Step 1 — Choose your page type
+**For marketing / ops (no coding):** See `.ai/skills/for-marketing/SETUP.md` for the one-time setup and `GUIDE.md` for the daily workflow.
 
-| Page Type | Template | Output Path |
-|-----------|----------|-------------|
-| Campaign landing page | `.ai/prompts/landing-page.md` | `src/app/lp/[slug]/page.tsx` |
-| Product introduction | `.ai/prompts/product-page.md` | `src/app/marketing/[slug]/page.tsx` |
-| SEO content page | `.ai/prompts/seo-page.md` | `src/app/marketing/[slug]/page.tsx` |
+**For adding components:** build in `src/components/ui/` or `src/components/sections/`, export from `src/components/index.ts`, then document in `.ai/skills/design-system/components.md`.
 
-### Step 2 — Fill in the prompt template
+## Quality Gates
 
-Open the relevant file in `.ai/prompts/`, copy the prompt, and fill in the `【】` placeholders.
+**Pre-commit (Husky)** — runs on every `git commit`:
 
-### Step 3 — Generate with AI
-
-Paste the filled prompt into Claude or Cursor. The AI will output a complete `page.tsx` file.
-
-### Step 4 — Preview & publish
-
-Create the file at the specified path, then:
-
-```bash
-# Local preview
-npm run dev
-
-# Deploy (push to main branch → Vercel auto-deploys)
-git add .
-git commit -m "add: [page name]"
-git push
+```
+lint-staged → pnpm lint → pnpm type-check → pnpm build
 ```
 
----
+**Pre-push (Claude)** — before running `git push`, Claude reviews all changed pages in `src/app/` across 5 dimensions and auto-fixes issues before pushing:
 
-## For Tech Team: Adding New Components
+| Dimension | Checks                                                                     |
+| --------- | -------------------------------------------------------------------------- |
+| Code      | No hex colors, no font-semibold, next/image, Link scope, buildPageSchema() |
+| Design    | Token usage, component reuse, no inline styles                             |
+| UX        | Single H1, heading hierarchy, CTA above fold, alt text                     |
+| SEO       | Complete metadata, correct siteName/twitter.site, canonical, sitemap entry |
+| AEO       | Structured data quality, AI-citable content, faqSchema where applicable    |
 
-1. Read `.ai/skills/design-system/SKILL.md` before starting
-2. Build the component in `src/components/ui/` or `src/components/sections/`
-3. Export it from `src/components/index.ts`
-4. Update `.ai/skills/design-system/components.md` with usage documentation
-5. AI-generated pages will automatically be able to use the new component
+All dimensions must score ≥ 7/10 to proceed.
 
----
+**PR (Lighthouse CI)** — GitHub Actions runs Lighthouse on every PR touching `src/app/**/*.tsx` and posts a score comment (Performance · Accessibility · Best Practices · SEO). Uses the auto-provided `GITHUB_TOKEN` — no secrets required.
 
-## Deployment
+## Key Rules
 
-Connected to Vercel. Every push to `main` triggers a production deploy.  
-Pull requests automatically get preview URLs.
+| Rule           | Correct                                         |
+| -------------- | ----------------------------------------------- |
+| Colors         | Tailwind tokens only — no hardcoded hex         |
+| Font weight    | `font-bold` — never `font-semibold`             |
+| Images         | `<Image>` from `next/image`                     |
+| External links | `<a href>` — `<Link>` is Next.js internal only  |
+| Analytics      | `@/lib/gtm` helpers — no raw `dataLayer.push()` |
+| Schema         | `buildPageSchema()` — no raw JSON-LD            |
+| siteName       | `'TiDB'`                                        |
+| twitter.site   | `'@PingCAP'`                                    |
+| Canonical      | `https://www.pingcap.com/[path]/`               |
 
-```bash
-# Production
-git push origin main
+## Technical Setup (one-time, dev team)
 
-# Preview (automatic on PR)
-git push origin feature/my-page
-```
+1. **Nginx** — route new paths from `www.pingcap.com` to the Vercel deployment, forwarding `Host: www.pingcap.com`.
+2. **WordPress sitemap** — inject the Next.js sitemap into Yoast's `sitemap_index.xml` (see `.ai/skills/seo/audit-rules.md` Rule 4).
+3. **GTM** — set `NEXT_PUBLIC_GTM_ID` in Vercel environment variables.

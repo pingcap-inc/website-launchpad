@@ -15,7 +15,7 @@ import { buildPageSchema } from '@/lib/schema'
 import { Rocket, Database, Cpu, GitBranch, ArrowUpRight } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Developer Hub — Build with TiDB | PingCAP',
+  title: 'TiDB Developers Hub',
   description:
     'Everything you need to build scalable, real-time applications with TiDB. Quick starts, tutorials, courses, and community resources for developers.',
   robots: { index: true, follow: true },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/developer/',
-  title: 'Developer Hub — Build with TiDB | PingCAP',
+  title: 'Developer Hub',
   description: 'Everything you need to build scalable, real-time applications with TiDB.',
   pageType: 'WebPage',
   breadcrumbs: [

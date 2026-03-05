@@ -1,0 +1,44 @@
+import type { MetadataRoute } from 'next'
+
+const BASE_URL = 'https://www.pingcap.com'
+
+/**
+ * Next.js sitemap for website-launchpad pages.
+ *
+ * NOTE: Does NOT include the homepage (/) — that is managed by WordPress.
+ * This sitemap is registered in WordPress's sitemap_index.xml via functions.php.
+ *
+ * Add new pages here whenever a new route is created in src/app/.
+ * Landing pages with robots: noindex should NOT be added here.
+ */
+export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date()
+
+  const routes: Array<{
+    url: string
+    priority: number
+    changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
+  }> = [
+    // Developer section
+    { url: '/developer/', priority: 0.9, changeFrequency: 'weekly' },
+    { url: '/developer/get-started/', priority: 0.8, changeFrequency: 'monthly' },
+    { url: '/developer/build-data-apps/', priority: 0.8, changeFrequency: 'monthly' },
+    { url: '/developer/build-ai-apps/', priority: 0.8, changeFrequency: 'monthly' },
+    { url: '/developer/migration-center/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/developer/learn/', priority: 0.7, changeFrequency: 'monthly' },
+    // Content pages
+    { url: '/glossary/', priority: 0.7, changeFrequency: 'monthly' },
+    // Company pages
+    { url: '/about-us/', priority: 0.7, changeFrequency: 'monthly' },
+    // Campaign / program pages
+    { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
+    { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
+  ]
+
+  return routes.map(({ url, priority, changeFrequency }) => ({
+    url: `${BASE_URL}${url}`,
+    lastModified: now,
+    changeFrequency,
+    priority,
+  }))
+}

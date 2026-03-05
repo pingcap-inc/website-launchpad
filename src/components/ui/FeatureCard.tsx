@@ -32,7 +32,7 @@ export function FeatureCard({
   const content = (
     <>
       {icon && (
-        <div className="w-[90px] h-[60px] relative">
+        <div className="relative">
           {typeof icon === 'string' ? (
             <Image src={icon} alt="" fill className="object-contain" />
           ) : (
@@ -40,8 +40,8 @@ export function FeatureCard({
           )}
         </div>
       )}
-      <h3 className="text-h3-sm font-bold leading-normal m-0 text-text-inverse">{title}</h3>
-      <p className="text-body-sm leading-relaxed m-0 text-text-inverse">{description}</p>
+      <h3 className="text-h3-lg font-bold leading-normal m-0 text-text-inverse">{title}</h3>
+      <p className="text-body-md leading-relaxed m-0 text-text-inverse">{description}</p>
     </>
   )
 

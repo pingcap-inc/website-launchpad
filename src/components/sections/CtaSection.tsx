@@ -56,7 +56,7 @@ export function CtaSection({
               {title}
             </h2>
             {subtitle && (
-              <p className="text-2xl text-text-inverse mb-4 leading-relaxed">{subtitle}</p>
+              <p className="text-2xl text-text-inverse mb-6 leading-relaxed">{subtitle}</p>
             )}
             <div className="flex items-center gap-4 flex-wrap">
               {primaryCta && (

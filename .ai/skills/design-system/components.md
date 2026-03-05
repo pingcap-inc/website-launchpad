@@ -1,15 +1,15 @@
 # Component Specifications
 
 > All components use `cn()` for className merging, imported from `@/lib/utils`.
-> **Icons**: `lucide-react` for chrome UI only (Menu, X, ChevronRight). All nav/content icons use `pingcap-icons` (204 custom SVG icons from PingCAP iconfont).
+> **Icons**: `lucide-react` for chrome UI only (Menu, X, ChevronRight, ArrowUpRight). Header dropdown icons use `header-icons` (Header-only subset extracted from PingCAP iconfont). Other nav/content icon usage can still reference `pingcap-icons` when needed.
 > **Links**: Within website-launchpad, internal hrefs use relative paths (`/tidb/`). **Outside website-launchpad**, use full domain `https://www.pingcap.com/...`. Sign In → `https://tidbcloud.com/signin`. Start for Free → `https://tidbcloud.com/free-trial/`.
 
 ---
 
-## Navbar
+## Header
 
 ```tsx
-// components/ui/Navbar.tsx
+// components/ui/Header.tsx
 <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-primary h-[62px] lg:h-20 px-4 md:px-8 lg:px-16 flex items-center justify-between">
   {/* Logo: 92×38 mobile / 120×50 desktop, do not replace */}
   <a href="https://www.pingcap.com/tidb/" className="shrink-0">
@@ -24,10 +24,10 @@
 
   {/* Desktop menu: hover-triggered mega-menu dropdowns */}
   <ul className="hidden lg:flex items-center gap-1 text-base font-medium text-text-inverse">
-    <li>Product</li> {/* MegaMenu dropdown with featured panel + sections */}
-    <li>Solutions</li> {/* MegaMenu dropdown */}
-    <li>Resources</li> {/* MegaMenu dropdown */}
-    <li>Company</li> {/* MegaMenu dropdown */}
+    <li>Product</li>
+    <li>Solutions</li>
+    <li>Resources</li>
+    <li>Company</li>
     <li>
       <a href="https://docs.pingcap.com/">Docs</a>
     </li>
@@ -43,37 +43,40 @@
 </nav>
 ```
 
-**Dropdown icons** use `pingcap-icons` (imported from `./pingcap-icons`):
+**Implementation details (current):**
+
+- `Header.tsx` keeps a lightweight shell (logo / top-level nav labels / CTA / mobile toggle).
+- `HeaderMenus.tsx` contains mega-menu + mobile accordion content and is loaded with `next/dynamic`.
+- Desktop dropdown content renders only when hovered/focused (`openDropdown === item.label`), not pre-rendered.
+- Mobile menu mounts only when opened (`mobileOpen`).
+- Header dropdown icons are imported from `header-icons.tsx` (subset), avoiding full `pingcap-icons.tsx` in initial Header path.
+
+**Dropdown icons** in Header use this subset:
 
 - Product: `CloudTIcon`, `StackTIcon`, `DollarTIcon`, `GearIcon`, `SlidersIcon`, `StarIcon`, `EyeIcon`
 - Solutions: `ChartDownTIcon`, `StarIcon`, `CloudTIcon`, `AiTIcon`, `WalletTIcon`, `BagT1Icon`, `DesktopTIcon`
 - Resources: `FileTIcon`, `BookTIcon`, `VideoIcon`, `ScaleTIcon`, `CalendarTIcon`, `CommentsTIcon`, `CodeTIcon`, `BookmarkTIcon`, `EducationIcon`, `AppWindowIcon`, `AwardIcon`
 - Company: `NewspaperIcon`, `BuildingsIcon`, `BriefcaseIcon`, `HandshakeIcon`, `AtIcon`
 
-Rules: `h-[62px] lg:h-20` (62px mobile / 80px desktop) · responsive padding `px-4 md:px-8 lg:px-16` · pure black background · no transparency / gradient / blur · add `pt-[62px] lg:pt-20` to page content.
+Rules: `h-[62px] lg:h-20` · `px-4 md:px-8 lg:px-16` · pure black background · add `pt-[62px] lg:pt-20` to page content wrapper.
 
 ---
 
 ## PrimaryButton — "The Red Flood"
 
-White rectangle, on hover a red circle expands from the bottom center to flood the entire button; text transitions to white simultaneously.
+White rectangle, on hover a red circle expands to flood the button; text transitions to white.
 
 **Layer structure — must be strictly followed:**
 
 ```
-button  →  relative + overflow-hidden  (clips the circle)
-  span  →  absolute z-0               (Red Flood circle)
-  span  →  relative z-10              (text)
-  icon  →  relative z-10              (icon)
+button  →  relative + overflow-hidden
+  span  →  absolute z-0   (Red Flood circle)
+  span  →  relative z-10  (text)
+  icon  →  relative z-10  (icon)
 ```
 
 ```tsx
 // components/ui/PrimaryButton.tsx
-import { ArrowUpRight } from 'lucide-react'
-import { cn } from '@/lib/utils'
-
-// Supports both <button> and <a> via optional `href` prop.
-// When `href` is provided, renders as <a>; otherwise renders as <button>.
 export function PrimaryButton({
   children,
   className,
@@ -87,129 +90,81 @@ export function PrimaryButton({
 }) {
   const classes = cn(
     'group relative overflow-hidden',
-    'rounded-none h-10 bg-white px-[14px]',
+    'rounded-none h-10 bg-bg-inverse px-4', // px-4 = 16px
     'inline-flex items-center gap-2',
     'border-none outline-none cursor-pointer whitespace-nowrap',
     className
   )
-
-  const content = (
-    <>
-      {/* Red Flood circle */}
-      <span
-        aria-hidden="true"
-        className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-full
-                   w-[30%] aspect-square rounded-full bg-brand-red-primary z-0
-                   transition-transform duration-500 ease-in-out
-                   group-hover:translate-y-[10%] group-hover:scale-[6]"
-      />
-      {/* Text */}
-      <span
-        className="relative z-10 text-base font-medium leading-none
-                       text-text-primary transition-colors duration-500 ease-in-out
-                       group-hover:text-text-inverse"
-      >
-        {children}
-      </span>
-      {/* Icon */}
-      <ArrowUpRight
-        size={17}
-        className="relative z-10 shrink-0 text-text-primary
-                   transition-colors duration-500 ease-in-out
-                   group-hover:text-text-inverse"
-      />
-    </>
-  )
-
-  if (href)
-    return (
-      <a href={href} className={classes}>
-        {content}
-      </a>
-    )
-  return (
-    <button onClick={onClick} className={classes}>
-      {content}
-    </button>
-  )
+  // content: Red Flood circle + text span + ArrowUpRight icon
+  // all three must have relative z-10 except the circle (absolute z-0)
 }
 ```
 
-| Property          | Value                                                  |
-| ----------------- | ------------------------------------------------------ |
-| Shape             | `rounded-none` (strictly rectangular, 0 border-radius) |
-| Height            | `h-10` (40px)                                          |
-| Padding           | `px-[14px]`                                            |
-| Background        | `bg-white`                                             |
-| Red Flood initial | `w-[30%] bottom-0 translate-y-full`                    |
-| Red Flood hover   | `scale-[6] translate-y-[10%]`                          |
-| Transition        | `500ms ease-in-out`                                    |
+| Property   | Value                                           |
+| ---------- | ----------------------------------------------- |
+| Height     | `h-10` (40px)                                   |
+| Padding    | `px-4` (16px)                                   |
+| Background | `bg-bg-inverse` (`#FFFFFF`)                     |
+| Red Flood  | `w-[30%]` circle scales to `scale-[6]` on hover |
+| Transition | `500ms ease-in-out`                             |
 
 ---
 
 ## SecondaryButton
 
-No background, no border, black text. On hover: black circle appears behind the icon + arrow rotates 45°.
+No background, no border. `dark` prop controls color scheme (default `true` for dark backgrounds).
 
 ```tsx
 // components/ui/SecondaryButton.tsx
-import { ArrowUpRight } from 'lucide-react'
-import { cn } from '@/lib/utils'
+interface SecondaryButtonProps {
+  children: React.ReactNode
+  className?: string
+  onClick?: () => void
+  href?: string // renders as <a> when provided
+  dark?: boolean // default true — use false on light/white backgrounds
+}
 
 export function SecondaryButton({
   children,
   className,
   onClick,
-}: {
-  children: React.ReactNode
-  className?: string
-  onClick?: () => void
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'group inline-flex items-center gap-2',
-        'text-text-primary text-base font-medium',
-        'bg-transparent border-none outline-none cursor-pointer whitespace-nowrap',
-        className
-      )}
-    >
-      <span>{children}</span>
-      <span
-        className="relative flex items-center justify-center
-                       w-6 h-6 rounded-full aspect-square shrink-0
-                       transition-colors duration-300 ease-in-out
-                       group-hover:bg-text-primary"
-      >
-        <ArrowUpRight
-          size={16}
-          className="transition-all duration-300 ease-in-out
-                     rotate-0 text-text-primary
-                     group-hover:rotate-45 group-hover:text-text-inverse"
-        />
-      </span>
-    </button>
+  href,
+  dark = true,
+}: SecondaryButtonProps) {
+  const classes = cn(
+    'group inline-flex items-center gap-2 text-base font-medium',
+    dark ? 'text-text-inverse' : 'text-text-primary',
+    'bg-transparent border-none outline-none cursor-pointer whitespace-nowrap',
+    className
   )
+  // circle: dark=true → group-hover:bg-text-inverse; dark=false → group-hover:bg-text-primary
+  // arrow: dark=true → text-text-inverse, hover: text-text-primary
+  //        dark=false → text-text-primary, hover: text-text-inverse
+  // Both rotate 45° on hover
 }
 ```
 
-| State | Arrow Rotation | Arrow Color | Circle Background         |
-| ----- | -------------- | ----------- | ------------------------- |
-| Idle  | `rotate-0`     | Black       | Transparent               |
-| Hover | `rotate-45`    | White       | `bg-text-primary` (black) |
+| State        | `dark=true` (dark bg)       | `dark=false` (light bg)     |
+| ------------ | --------------------------- | --------------------------- |
+| Text         | `text-text-inverse` (white) | `text-text-primary` (black) |
+| Circle hover | `bg-text-inverse`           | `bg-text-primary`           |
+| Arrow idle   | white                       | black                       |
+| Arrow hover  | black + `rotate-45`         | white + `rotate-45`         |
 
-Transition `300ms ease-in-out`. No shadow / blur / glow.
+```tsx
+// Dark background (default)
+<SecondaryButton href="/docs/">Read the Docs</SecondaryButton>
 
-> On dark backgrounds: change text/icon to `text-text-inverse`, circle hover to `group-hover:bg-text-inverse`, arrow hover to `group-hover:text-text-primary`.
+// Light background
+<SecondaryButton href="/docs/" dark={false}>Read the Docs</SecondaryButton>
+```
 
 ---
 
-## GhostButton (Navbar only)
+## GhostButton (Header only)
 
 ```tsx
 // components/ui/GhostButton.tsx
-// Supports both <button> and <a> via optional `href` prop.
 export function GhostButton({
   children,
   className,
@@ -221,99 +176,144 @@ export function GhostButton({
   onClick?: () => void
   href?: string
 }) {
-  const classes = cn(
-    'inline-flex items-center gap-2 font-medium rounded-pill',
-    'bg-transparent text-text-inverse hover:text-carbon-400',
-    'border-0 cursor-pointer px-4 py-3 text-base',
-    'transition-colors duration-200 whitespace-nowrap',
-    className
-  )
-
-  if (href)
-    return (
-      <a href={href} className={classes}>
-        {children}
-      </a>
-    )
-  return (
-    <button onClick={onClick} className={classes}>
-      {children}
-    </button>
-  )
+  // rounded-pill · bg-transparent · text-text-inverse hover:text-carbon-400
+  // px-4 py-3 · transition-colors 200ms
 }
 ```
-
-| State | Text Color                      | Background |
-| ----- | ------------------------------- | ---------- |
-| Idle  | `text-text-inverse` (`#FFFFFF`) | None       |
-| Hover | `text-carbon-400` (`#A2ADB9`)   | None       |
 
 ---
 
 ## FeatureCard
 
+Bordered card. Optional icon (ReactNode or image path). Optional link → `<a>` with hover float; no link → `<div>` with hover shadow.
+
 ```tsx
 // components/ui/FeatureCard.tsx
-export function FeatureCard({
-  icon,
-  title,
-  description,
-  className,
-}: {
-  icon: React.ReactNode
+interface FeatureCardProps {
+  icon?: React.ReactNode | string // string path → next/image fill in relative container
   title: string
   description: string
+  borderColor?: string // Tailwind border class. Default: 'border-carbon-800'
+  href?: string // When set: renders <a> with hover -translate-y-2
   className?: string
-}) {
-  return (
-    <div
-      className={cn(
-        'flex flex-col gap-4 p-8 rounded-none border border-border-subtle/20',
-        'transition-all duration-250 hover:shadow-card',
-        className
-      )}
-    >
-      <div className="w-12 h-12">{icon}</div>
-      <h3 className="text-h3-sm font-bold leading-normal m-0 text-text-inverse">{title}</h3>
-      <p className="text-body-sm leading-relaxed m-0 text-text-inverse/65">{description}</p>
-    </div>
-  )
 }
+```
+
+| Prop          | Default               | Notes                                                                               |
+| ------------- | --------------------- | ----------------------------------------------------------------------------------- |
+| `icon`        | —                     | Optional. String → `<Image fill>` in relative wrapper. ReactNode rendered directly. |
+| `borderColor` | `'border-carbon-800'` | Any Tailwind `border-*` class                                                       |
+| `href`        | —                     | With href: float `-translate-y-2`; without: `hover:shadow-card`                     |
+| `className`   | —                     | Add `h-full` when used in a grid for equal heights                                  |
+
+Typography in current implementation:
+
+- title: `text-h3-lg` (24px, bold)
+- description: `text-body-md` (16px, light)
+
+```tsx
+// Usage examples
+<FeatureCard title="High Availability" description="99.99% uptime SLA." />
+<FeatureCard icon="/images/icon.svg" title="..." description="..." borderColor="border-brand-red-primary" />
+<FeatureCard icon={<DatabaseIcon />} title="..." description="..." href="/product/" />
 ```
 
 ---
 
 ## Tabs
 
+Tab switcher with animated underline. `'use client'` component.
+
 ```tsx
-// components/ui/Tabs.tsx
-// Default: click-to-switch, autoSwitch disabled.
-// When autoSwitch=true: enable hover switch + progress underline animation.
+// components/ui/Tabs.tsx — 'use client'
+interface TabItem {
+  id: string
+  label: string
+  content: React.ReactNode
+}
+
+interface TabsProps {
+  tabs: TabItem[]
+  defaultActiveTab?: string // defaults to tabs[0].id
+  className?: string
+  autoSwitch?: boolean // default false
+  autoSwitchInterval?: number // ms, default 6000
+  onTabChange?: (tabId: string) => void
+}
 ```
 
-Behavior rules:
+**Behavior:**
 
-- Default interaction is click only. `autoSwitch` default value must be `false`.
-- Enable hover switch only when `autoSwitch={true}`.
-- Tab underline uses 2 layers, both `2px`:
-  - Base line: `bg-carbon-900` (always visible)
-  - Active line: `bg-white`
-- Active tab text color is white (`text-white`).
-- Active underline animation is progress style (left-to-right width growth).
-- Previous tab underline must not play reverse/shrink animation; it disappears immediately when inactive.
-- If `autoSwitch={false}`, active underline should render at full width with no progress animation.
+| Mode               | Interaction                   | Underline                                                 |
+| ------------------ | ----------------------------- | --------------------------------------------------------- |
+| `autoSwitch=false` | click-only                    | Full-width static (`w-full`)                              |
+| `autoSwitch=true`  | hover switches + auto-rotates | Left-to-right progress animation (`animate-tab-progress`) |
+
+- Tab label: active → `text-white`; inactive → `text-carbon-900 hover:text-white`
+- 2-layer underline: base `bg-carbon-900 h-[2px]` (always) + active `bg-white h-[2px]`
+- `autoSwitch=true`: `animationDuration = autoSwitchInterval`ms; hover pauses auto-rotation
+- Content: `opacity-100 block` ↔ `opacity-0 hidden` with `transition-opacity duration-300`
+- Requires `animate-tab-progress` keyframe in `tailwind.config.ts`
+
+```tsx
+// Auto-switch with 5s interval
+<Tabs
+  tabs={[
+    { id: 'oltp', label: 'OLTP', content: <OltpContent /> },
+    { id: 'analytics', label: 'Analytics', content: <AnalyticsContent /> },
+  ]}
+  autoSwitch
+  autoSwitchInterval={5000}
+/>
+
+// Static click-only tabs
+<Tabs tabs={tabs} />
+```
+
+---
+
+## CountUp
+
+Animated number counter. Triggers once when element scrolls into view. `'use client'` component.
+
+```tsx
+// components/ui/CountUp.tsx — 'use client'
+export function CountUp({ value, className }: { value: string; className?: string })
+```
+
+**Value parsing** — `"$2,000+"` → `{ prefix: "$", target: 2000, suffix: "+", hasComma: true }`
+
+| Input       | Parsed                                  |
+| ----------- | --------------------------------------- |
+| `"$2,000+"` | prefix `$`, number `2000`, suffix `+`   |
+| `"99.99%"`  | prefix `""`, number `99`, suffix `.99%` |
+| `"10M+"`    | prefix `""`, number `10`, suffix `M+`   |
+
+Animation: 1400ms cubic ease-out (`1 - (1-t)^3`). Fires once at 40% viewport visibility. Comma formatting via `toLocaleString('en-US')` when source includes comma.
+
+```tsx
+// Stats row
+<div className="grid grid-cols-3 gap-8 text-center">
+  <div>
+    <CountUp value="$2,000+" className="text-h2-mb md:text-h2-lg font-bold text-text-inverse" />
+    <p className="text-body-sm text-text-secondary mt-2">in cloud credits</p>
+  </div>
+</div>
+```
 
 ---
 
 ## SectionHeader
 
+Section title block with optional eyebrow, H2, and subtitle. Mobile-first sizing.
+
 ```tsx
 // components/ui/SectionHeader.tsx
-// h2Size: 'lg'=64px (default) / 'md'=56px / 'sm'=50px, mobile unified at 40px
+// Mobile-first: text-h2-mb (40px mobile) → md:text-h2-{size} (desktop)
 const h2SizeMap = {
-  lg: 'text-h2-lg md:text-h2-mb',
-  md: 'text-h2-md md:text-h2-mb',
-  sm: 'text-h2-sm md:text-h2-mb',
+  lg: 'text-h2-mb md:text-h2-lg', // 40px → 64px
+  md: 'text-h2-mb md:text-h2-md', // 40px → 56px
+  sm: 'text-h2-mb md:text-h2-sm', // 40px → 50px
 }
 
 export function SectionHeader({
@@ -322,42 +322,28 @@ export function SectionHeader({
   subtitle,
   h2Size = 'lg',
   align = 'center',
+  className,
 }: {
   label?: string
   title: string
   subtitle?: string
   h2Size?: 'lg' | 'md' | 'sm'
   align?: 'center' | 'left'
-}) {
-  return (
-    <div className={cn('mb-16', align === 'center' && 'text-center')}>
-      {label && <p className="font-mono text-eyebrow text-carbon-400 mb-8">{label}</p>}
-      <h2 className={cn(h2SizeMap[h2Size], 'font-bold leading-tight mb-4 text-text-inverse')}>
-        {title}
-      </h2>
-      {subtitle && (
-        <p
-          className={cn(
-            'text-body-lg leading-relaxed max-w-subtitle text-text-inverse/65',
-            align === 'center' && 'mx-auto'
-          )}
-        >
-          {subtitle}
-        </p>
-      )}
-    </div>
-  )
-}
+  className?: string
+})
 ```
 
-**Eyebrow**: `font-mono text-eyebrow text-carbon-400 mb-8` — placed directly above H1 or H2. Do not add `uppercase` or `tracking-widest`.
-
-Usage examples:
+| Element         | Classes                                                                                                        |
+| --------------- | -------------------------------------------------------------------------------------------------------------- |
+| Eyebrow (label) | `font-mono text-eyebrow text-text-secondary block mb-8`                                                        |
+| H2              | `{h2SizeMap[h2Size]} font-bold leading-tight mb-4 text-text-inverse` + `max-w-section-title` when left-aligned |
+| Subtitle        | `text-body-xl leading-relaxed max-w-subtitle text-text-secondary` + `mx-auto` when centered                    |
+| Wrapper         | `mb-16` (overridable via className)                                                                            |
 
 ```tsx
 <SectionHeader h2Size="lg" label="OVERVIEW" title="Modern Database Architecture" />
-<SectionHeader label="BENEFITS" title="Advanced Features" subtitle="..." />
-<SectionHeader h2Size="sm" label="USE CASES" title="Built for Real-Time Apps" />
+<SectionHeader label="BENEFITS" title="Advanced Features" subtitle="..." align="left" />
+<SectionHeader h2Size="sm" title="Built for Real-Time Apps" align="center" />
 ```
 
 ---
@@ -366,17 +352,12 @@ Usage examples:
 
 ```tsx
 // components/ui/pingcap-icons.tsx
-// 204 custom SVG icons extracted from PingCAP's iconfont (iconfont.woff).
-// Factory pattern: makeIcon(path, displayName) → React.FC<IconProps>
-// viewBox: 0 0 1024 1024, y-axis flipped via transform="translate(0,1024) scale(1,-1)"
-
-import type { IconProps } from './pingcap-icons'
-// Usage:
-import { NewspaperIcon, BuildingsIcon, CloudTIcon } from './pingcap-icons'
+// 204 custom SVG icons from PingCAP iconfont
+import { NewspaperIcon, BuildingsIcon, CloudTIcon } from '@/components/ui/pingcap-icons'
 ;<NewspaperIcon size={16} className="text-carbon-400" />
 ```
 
-All nav dropdown icons must use `pingcap-icons`, not `lucide-react`. See Navbar section for the full mapping.
+All nav/content icons use `pingcap-icons`. `lucide-react` only for: `Menu`, `X`, `ChevronRight`, `ArrowUpRight`.
 
 ---
 
@@ -384,22 +365,8 @@ All nav dropdown icons must use `pingcap-icons`, not `lucide-react`. See Navbar 
 
 ```tsx
 // components/ui/Footer.tsx
-// 4-column nav grid + "Stay Connected" with newsletter + 7 social icons
-// Social icons: exact SVG sprites from pingcap.com (viewBox 0 0 25 25, circular style)
-// GitHub · Twitter · LinkedIn · Facebook · Slack · Discord · YouTube
-// Social icon gap: gap-4 (16px)
-```
-
-All footer nav links use full `https://www.pingcap.com/...` domain. External links (ossinsight.io, docs.pingcap.com) keep their own domains.
-
----
-
-## LanguageSwitcher
-
-```tsx
-// components/ui/LanguageSwitcher.tsx
-// Dropdown: English (/) · 日本語 (https://pingcap.co.jp/)
-// External links open in new tab via window.open()
+// 4-column nav grid + newsletter + 7 social icons (GitHub/Twitter/LinkedIn/Facebook/Slack/Discord/YouTube)
+// All footer links use full https://www.pingcap.com/... domain
 ```
 
 ---
@@ -409,22 +376,24 @@ All footer nav links use full `https://www.pingcap.com/...` domain. External lin
 ```
 components/
   ui/
-    Navbar.tsx              # Nav bar with mega-menu dropdowns + mobile accordion
-    Footer.tsx              # Footer nav grid + social icons + newsletter
+    Header.tsx              # Fixed navbar with mega-menu + mobile accordion
+    Footer.tsx              # Footer nav + social icons + newsletter
     PrimaryButton.tsx       # "Red Flood" CTA button (supports href)
-    SecondaryButton.tsx     # Text + arrow icon button
+    SecondaryButton.tsx     # Text + arrow button (href?, dark=true)
     GhostButton.tsx         # Transparent nav button (supports href)
-    Tabs.tsx                # Tabs with 2px baseline + active progress underline
-    FeatureCard.tsx         # Icon + title + description card
-    SectionHeader.tsx       # Eyebrow + H2 + subtitle
-    NewsletterForm.tsx      # Email subscribe form
-    LanguageSwitcher.tsx    # EN / JP language dropdown
-    pingcap-icons.tsx       # 204 custom PingCAP SVG icons (iconfont)
+    Tabs.tsx                # Tab switcher with progress underline ('use client')
+    CountUp.tsx             # Animated number counter ('use client')
+    FeatureCard.tsx         # Card with optional icon, href, borderColor
+    SectionHeader.tsx       # Eyebrow + H2 + subtitle (mobile-first sizing)
+    HubSpotForm.tsx         # HubSpot form embed
+    LanguageSwitcher.tsx    # EN / JP language selector
+    pingcap-icons.tsx       # 204 custom PingCAP SVG icons
   sections/
     HeroSection.tsx
     FeaturesGrid.tsx
     CtaSection.tsx
-lib/utils.ts
+lib/
+  utils.ts                  # cn() utility
+  gtm.ts                    # trackCTAClick, trackFormSubmit
+  schema.ts                 # buildPageSchema and all schema builders
 ```
-
-Naming: components PascalCase · page/section files kebab-case · Props camelCase · boolean Props with `is/has` prefix.

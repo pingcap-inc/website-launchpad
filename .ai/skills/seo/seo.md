@@ -9,19 +9,21 @@ Every page must export complete metadata via `generateMetadata` or a static `met
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'TiDB — The Distributed SQL Database for Real-Time Analytics',
-  description: 'TiDB is an open-source distributed SQL database that supports Hybrid Transactional and Analytical Processing (HTAP). Scale from gigabytes to petabytes without re-architecting.',
+  title: 'Modern Database Architecture for Real-Time Data | TiDB',
+  description:
+    'Discover TiDB’s modern architecture for real-time data, cloud-native scale, and high availability. Explore TiDB Cloud or Self-managed now.',
   keywords: ['TiDB', 'distributed database', 'HTAP', 'MySQL compatible', 'NewSQL', 'PingCAP'],
   authors: [{ name: 'PingCAP' }],
 
   openGraph: {
-    title: 'TiDB — The Distributed SQL Database for Real-Time Analytics',
-    description: 'Open-source distributed SQL database supporting HTAP workloads at any scale.',
+    title: 'Modern Database Architecture for Real-Time Data | TiDB',
+    description:
+      'Discover TiDB’s modern architecture for real-time data, cloud-native scale, and high availability. Explore TiDB Cloud or Self-managed now.',
     url: 'https://www.pingcap.com/tidb/',
-    siteName: 'PingCAP',
+    siteName: 'TiDB',
     images: [
       {
-        url: 'https://www.pingcap.com/og/tidb.png',
+        url: 'https://static.pingcap.com/files/2025/12/01183322/TiDB-overview-1.png',
         width: 1200,
         height: 630,
         alt: 'TiDB Distributed SQL Database',
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'TiDB — The Distributed SQL Database',
     description: 'Open-source HTAP database. Scale without re-architecting.',
-    images: ['https://www.pingcap.com/og/tidb.png'],
+    images: ['https://static.pingcap.com/files/2025/12/01183322/TiDB-overview-1.png'],
     creator: '@PingCAP',
   },
 
@@ -65,13 +67,13 @@ export const metadata: Metadata = {
 
 ## Metadata Field Rules
 
-| Field | Length | Rules |
-|-------|--------|-------|
-| `title` | 50–60 chars | Format: `Page Name — Product \| Brand`, include primary keyword |
-| `description` | 120–160 chars | Full sentence, includes keyword, clear value proposition |
-| `og:image` | 1200×630px | Unique image per page — never reuse one image across all pages |
-| `canonical` | — | Required on every page to prevent duplicate content |
-| `robots` | — | Product pages: `index: true` · Internal tools: `index: false` |
+| Field         | Length        | Rules                                                           |
+| ------------- | ------------- | --------------------------------------------------------------- |
+| `title`       | 50–60 chars   | Format: `Page Name — Product \| Brand`, include primary keyword |
+| `description` | 120–160 chars | Full sentence, includes keyword, clear value proposition        |
+| `og:image`    | 1200×630px    | Unique image per page — never reuse one image across all pages  |
+| `canonical`   | —             | Required on every page to prevent duplicate content             |
+| `robots`      | —             | Product pages: `index: true` · Internal tools: `index: false`   |
 
 ---
 
@@ -97,6 +99,7 @@ export const metadata: Metadata = {
 ```
 
 **Heading hierarchy rules:**
+
 - Each page must have exactly **one `<h1>`** (Hero headline)
 - `<h2>` for section titles — never skip levels
 - `<h3>` for card / sub-module titles
@@ -124,6 +127,7 @@ export const metadata: Metadata = {
 ```
 
 **Alt text rules:**
+
 - Describe the image content, include relevant keywords
 - Purely decorative images use `alt=""` (empty string — do not omit the attribute)
 - Recommended length: < 125 characters
@@ -132,58 +136,17 @@ export const metadata: Metadata = {
 
 ## Structured Data (JSON-LD)
 
-Product pages must include Organization and SoftwareApplication schemas:
-
-```tsx
-// components/seo/JsonLd.tsx
-export function JsonLd({ data }: { data: Record<string, unknown> }) {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  )
-}
-
-// Use in layout.tsx or page.tsx
-const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'PingCAP',
-  url: 'https://www.pingcap.com',
-  logo: 'https://www.pingcap.com/logo.svg',
-  sameAs: [
-    'https://twitter.com/PingCAP',
-    'https://github.com/pingcap',
-    'https://www.linkedin.com/company/pingcap',
-  ],
-}
-
-const softwareSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'TiDB',
-  applicationCategory: 'DatabaseApplication',
-  operatingSystem: 'Linux, macOS, Windows',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'USD',
-  },
-  description: 'Open-source distributed SQL database supporting HTAP workloads.',
-  url: 'https://www.pingcap.com/tidb/',
-}
-```
+Always use `buildPageSchema()` from `@/lib/schema`. Never write raw JSON-LD or standalone schema objects. See `SKILL.md` for usage examples and the full list of schema builders (`softwareApplicationSchema`, `articleSchema`, `faqSchema`, `definedTermSchema`, `glossaryIndexSchema`).
 
 ---
 
 ## Performance SEO (Core Web Vitals)
 
-| Metric | Target | How to achieve |
-|--------|--------|----------------|
-| LCP | < 2.5s | Add `priority` to Hero images · `preconnect` for font CDN |
-| CLS | < 0.1 | Specify `width/height` on all images · `font-display: swap` on fonts |
-| INP | < 200ms | Avoid large JS bundles · use CSS transitions for animations |
+| Metric | Target  | How to achieve                                                       |
+| ------ | ------- | -------------------------------------------------------------------- |
+| LCP    | < 2.5s  | Add `priority` to Hero images · `preconnect` for font CDN            |
+| CLS    | < 0.1   | Specify `width/height` on all images · `font-display: swap` on fonts |
+| INP    | < 200ms | Avoid large JS bundles · use CSS transitions for animations          |
 
 ```tsx
 // Required in layout.tsx <head>
@@ -195,12 +158,12 @@ const softwareSchema = {
 
 ## URL Rules
 
-| Rule | Example |
-|------|---------|
-| Lowercase, hyphen-separated | `/distributed-sql/` ✅  `/Distributed_SQL/` ❌ |
-| Trailing slash | `/tidb/` ✅  `/tidb` ❌ |
-| Short, keyword-rich | `/distributed-sql-database/` ✅  `/page-1234/` ❌ |
-| Max 3 levels deep | `/tidb/features/htap/` ✅ |
+| Rule                        | Example                                          |
+| --------------------------- | ------------------------------------------------ |
+| Lowercase, hyphen-separated | `/distributed-sql/` ✅ `/Distributed_SQL/` ❌    |
+| Trailing slash              | `/tidb/` ✅ `/tidb` ❌                           |
+| Short, keyword-rich         | `/distributed-sql-database/` ✅ `/page-1234/` ❌ |
+| Max 3 levels deep           | `/tidb/features/htap/` ✅                        |
 
 ---
 

@@ -1,0 +1,147 @@
+.root :global(.hs-form-field) {
+  margin-bottom: 1rem;
+}
+
+.root :global(.hs-form-field > label) {
+  display: none;
+}
+
+.root :global(input[type='text']),
+.root :global(input[type='email']),
+.root :global(input[type='tel']),
+.root :global(select),
+.root :global(textarea) {
+  box-sizing: border-box;
+  width: 100%;
+  background: transparent;
+  @apply border border-border-primary text-text-inverse;
+  font-family: var(--font-moderat);
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 0 16px;
+  height: 60px;
+  min-height: 60px;
+  border-radius: 0;
+  outline: none;
+  appearance: none;
+}
+
+.root :global(input[type='text']:focus),
+.root :global(input[type='email']:focus),
+.root :global(input[type='tel']:focus),
+.root :global(select:focus),
+.root :global(textarea:focus) {
+  @apply border-border-primary;
+}
+
+.root :global(input::placeholder),
+.root :global(textarea::placeholder) {
+  @apply text-carbon-500;
+  opacity: 1;
+}
+
+.root :global(textarea) {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.root :global(.input) {
+  margin-right: 0;
+}
+
+.root :global(select option) {
+  @apply text-text-inverse;
+}
+
+.root :global(.actions) {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.root :global(.hs-button) {
+  @apply bg-bg-inverse text-text-primary;
+  border: 0;
+  height: 40px;
+  padding: 0 1.125rem;
+  font-family: var(--font-moderat);
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 0;
+  transition:
+    background-color 150ms,
+    color 150ms;
+}
+
+.root :global(.hs-button:hover) {
+  @apply bg-brand-red-primary text-text-inverse;
+}
+
+.root :global(.submitted-message) {
+  @apply text-text-inverse;
+  font-family: var(--font-moderat);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.root :global(.hs-error-msgs) {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.375rem;
+}
+
+.root :global(.hs-error-msg),
+.root :global(.hs_error_rollup label) {
+  @apply !text-accent-primary;
+  font-family: var(--font-moderat);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.root :global(.hs-form-required) {
+  @apply text-accent-primary;
+}
+
+.root :global(.legal-consent-container),
+.root :global(.hs-richtext) {
+  @apply text-text-inverse;
+  font-family: var(--font-moderat);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.root :global(a) {
+  text-decoration: underline;
+}
+
+.root :global(.hs-form-booleancheckbox-display) {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.root :global(.hs-form-booleancheckbox-display > span) {
+  margin-left: 0 !important;
+}
+
+.root :global(.hs-form-booleancheckbox-display input[type='checkbox']) {
+  @apply border border-border-primary bg-transparent;
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  margin-top: 0.2rem;
+}
+
+.newsletter :global(input[type='email']) {
+  height: 56px;
+}
+
+.newsletter :global(.actions) {
+  display: none !important;
+}
+
+.newsletter :global(.hs_recaptcha),
+.newsletter :global(.grecaptcha-badge) {
+  display: none !important;
+}

@@ -83,10 +83,10 @@ Gradients (only for dark sections that are **not** Hero or CTA):
 | H2-md          | 56px        | 40px   | 700    | 1.1         | Sans        |
 | H2-sm          | 50px        | 40px   | 700    | 1.1         | Sans        |
 | H3             | 24px / 20px | same   | 700    | 1.3         | Sans        |
-| Body-xl        | 22px        | 22px   | 400    | 1.4         | Sans        |
-| Body-lg        | 18px        | 18px   | 400    | 1.4         | Sans        |
-| Body-md        | 16px        | 16px   | 400    | 1.4         | Sans        |
-| Body-sm / Code | 14px        | 14px   | 400    | 1.4         | Sans / Mono |
+| Body-xl        | 22px        | 22px   | 300    | 1.4         | Sans        |
+| Body-lg        | 18px        | 18px   | 300    | 1.4         | Sans        |
+| Body-md        | 16px        | 16px   | 300    | 1.4         | Sans        |
+| Body-sm / Code | 14px        | 14px   | 300    | 1.4         | Sans / Mono |
 | Label / Badge  | 12px        | 12px   | 500    | 1.3         | **Mono**    |
 
 H2 size selection: `64px` for the single most prominent section per page · `56px` for primary feature modules (default) · `50px` for dense information sections.  
@@ -151,10 +151,10 @@ const config: Config = {
         'h2-mb': ['40px', { lineHeight: '1.1', fontWeight: '700' }],
         'h3-lg': ['24px', { lineHeight: '1.3', fontWeight: '700' }],
         'h3-sm': ['20px', { lineHeight: '1.3', fontWeight: '700' }],
-        'body-xl': ['22px', { lineHeight: '1.4', fontWeight: '400' }],
-        'body-lg': ['18px', { lineHeight: '1.4', fontWeight: '400' }],
-        'body-md': ['16px', { lineHeight: '1.4', fontWeight: '400' }],
-        'body-sm': ['14px', { lineHeight: '1.4', fontWeight: '400' }],
+        'body-xl': ['22px', { lineHeight: '1.4', fontWeight: '300' }],
+        'body-lg': ['18px', { lineHeight: '1.4', fontWeight: '300' }],
+        'body-md': ['16px', { lineHeight: '1.4', fontWeight: '300' }],
+        'body-sm': ['14px', { lineHeight: '1.4', fontWeight: '300' }],
         label: ['12px', { lineHeight: '1.3', fontWeight: '500' }],
       },
       fontWeight: { light: '300', regular: '400', medium: '500', bold: '700' },
@@ -176,7 +176,12 @@ const config: Config = {
         'section-sm': '40px',
         container: '40px',
       },
-      maxWidth: { container: '1502px', 'hero-title': '860px', subtitle: '640px' },
+      maxWidth: {
+        container: '1502px',
+        'hero-title': '860px',
+        'section-title': '880px',
+        subtitle: '640px',
+      },
       borderRadius: { pill: '9999px' },
       boxShadow: {
         card: '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)',

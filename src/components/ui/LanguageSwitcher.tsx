@@ -1,75 +1,34 @@
-'use client'
-
-import { useState, useRef, useEffect } from 'react'
-import { Globe, ChevronDown } from 'lucide-react'
-import { cn } from '@/lib/utils'
-
-const languages = [
-  { label: 'English', href: '/', external: false },
-  { label: '日本語', href: 'https://pingcap.co.jp/', external: true },
-]
+import { ChevronDown, Globe } from 'lucide-react'
 
 export function LanguageSwitcher() {
-  const [open, setOpen] = useState(false)
-  const [current, setCurrent] = useState(languages[0])
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    function onClickOutside(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', onClickOutside)
-    return () => document.removeEventListener('mousedown', onClickOutside)
-  }, [])
-
-  function select(lang: (typeof languages)[0]) {
-    setCurrent(lang)
-    setOpen(false)
-    if (lang.external) {
-      window.open(lang.href, '_blank', 'noopener,noreferrer')
-    } else {
-      window.location.href = lang.href
-    }
-  }
-
   return (
-    <div ref={ref} className="relative mt-16">
+    <div className="relative mt-16 group">
       <button
         type="button"
-        onClick={() => setOpen((p) => !p)}
-        className={cn(
-          'flex items-center gap-1.5 text-body-md text-text-inverse hover:text-carbon-400 transition-colors duration-150'
-        )}
+        aria-haspopup="menu"
+        aria-expanded="false"
+        className="flex items-center gap-2 text-body-md font-normal text-text-inverse transition-colors duration-150"
       >
         <Globe size={16} className="shrink-0" />
-        <span>{current.label}</span>
+        <span>English</span>
         <ChevronDown
           size={13}
-          className={cn('text-carbon-400 transition-transform duration-200', open && 'rotate-180')}
+          className="text-text-inverse transition-transform duration-150 group-hover:rotate-180 group-focus-within:rotate-180"
         />
       </button>
 
-      {open && (
-        <div className="absolute top-full mt-1 left-0 min-w-[120px] bg-[#0a0a0a] border border-carbon-800 z-10">
-          {languages.map((lang) => (
-            <button
-              key={lang.href}
-              type="button"
-              onClick={() => select(lang)}
-              className={cn(
-                'w-full text-left px-3 py-2 text-body-sm transition-colors duration-150',
-                lang.href === current.href
-                  ? 'text-text-inverse'
-                  : 'text-carbon-400 hover:text-text-inverse'
-              )}
-            >
-              {lang.label}
-            </button>
-          ))}
+      <div className="absolute top-full left-0 pt-2 min-w-[120px] z-10 opacity-0 invisible translate-y-1 pointer-events-none transition-all duration-150 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:pointer-events-auto">
+        <div className="bg-[#0a0a0a] border border-carbon-800">
+          <a
+            href="https://pingcap.co.jp/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full text-left px-3 py-2 text-body-sm text-carbon-400 hover:text-text-inverse transition-colors duration-150"
+          >
+            日本語
+          </a>
         </div>
-      )}
+      </div>
     </div>
   )
 }

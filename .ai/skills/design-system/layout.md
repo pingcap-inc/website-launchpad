@@ -76,19 +76,26 @@ Usage rule:
 ### Variant A — Split layout (default)
 
 Default Hero layout is split: left column for copy + CTAs, right column for a visual slot.
-The right slot can be an illustration, product screenshot, stats panel, or form.
+The right slot can be a product screenshot, stats panel, form, or hero image.
+
+If the user provides no specific visual for `rightSlot`, `HeroSection` now auto-selects a seeded
+image from `/public/images/hero/r/` (`Graphic-{1..22}-Dk.png`).
+Always use `-Dk` variants (dark-background site); never use `-Lt` variants unless explicitly requested.
+
+```tsx
+// Optional override — only set rightSlot when a specific visual is required.
+```
 
 ### Variant B — Centered layout
 
 Use centered layout only when the page intent is message-first.
-Centered Hero must include a background image and defaults to no eyebrow.
+Centered Hero defaults to no eyebrow.
 
 ```tsx
 <HeroSection
   headline="Launch Fast. Scale without Limits."
   subheadline="Apply now and start building with the distributed SQL database that grows with you."
   centered
-  autoGenerateBackgroundImage
 />
 ```
 
@@ -98,8 +105,11 @@ Centered Hero must include a background image and defaults to no eyebrow.
 // Preferred: use provided background image asset
 <HeroSection backgroundImage={{ src: heroBg }} />
 
-// Fallback: if no image resource is specified, auto-generate from page content
-<HeroSection autoGenerateBackgroundImage />
+// Default fallback (centered mode): pick seeded image from /public/images/hero/c/
+<HeroSection centered />
+
+// Optional alternative: auto-generate from page content
+<HeroSection centered autoGenerateBackgroundImage />
 ```
 
 **Hero Rules:**
@@ -107,14 +117,107 @@ Centered Hero must include a background image and defaults to no eyebrow.
 - Background: `bg-bg-primary` (`#000000`), **no gradients of any kind**
 - Default layout is split (`grid-cols-1 lg:grid-cols-2`): left text+buttons, right visual slot
 - Right visual slot accepts illustration, form, chart, screenshot, or product panel
+- Split mode with no `rightSlot`: seeded default visual from `/public/images/hero/r/`
 - Centered layout: default **no eyebrow**
-- Centered layout: background image is required
-- If no background image resource is provided, auto-generate the Hero illustration from page content
+- Centered layout with no `backgroundImage`: seeded default visual from `/public/images/hero/c/`
+- `autoGenerateBackgroundImage` is optional fallback when generated art is preferred
 - Eyebrow (when used): place directly above H1 with `mb-8`
 - Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
 - Hero background image: no overlay layer by default
 - Hero image treatment: use `opacity-30` to `opacity-70`; no heavy blur, no strong color cast that competes with headline
 - Mobile fallback (`<md`): text-first reading order; split layout collapses to single column with copy above visual
+
+---
+
+## Section Layout Decision Tree
+
+Use this tree to choose the layout for every content section after the Hero.
+
+```
+Content to present
+│
+├── Multiple features / capabilities (3–6 items)
+│   └── → FeaturesGrid  (icon + title + description cards, 2/3/4 columns)
+│
+├── Single core concept + visual support (diagram / screenshot / illustration)
+│   └── → Split Layout  (text one side, image the other — alternate per section)
+│
+├── 3+ distinct feature areas needing progressive disclosure
+│   └── → Tabs  (autoSwitch, one panel visible at a time)
+│
+├── 2–4 use-case / workload highlights
+│   └── → ColorCard Grid  (red → violet → blue → teal)
+│
+└── Concrete benchmark / scale metrics
+    └── → CountUp stats row  (triggers on scroll)
+```
+
+---
+
+## Split Layout
+
+Use when a single concept is best understood with a paired visual (diagram, screenshot, or illustration). Alternate text/image sides across sections to create visual rhythm.
+
+```
+Section 1  →  Text left   · Image right
+Section 2  →  Image left  · Text right
+Section 3  →  Text left   · Image right
+…
+```
+
+```tsx
+{
+  /* Text left / Image right */
+}
+;<section className="py-section-sm lg:py-section bg-bg-primary">
+  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <p className="font-mono text-eyebrow text-carbon-400 mb-6">Eyebrow</p>
+        <h2 className="text-h2-mb lg:text-h2-sm font-bold text-text-inverse mb-6">
+          Section headline
+        </h2>
+        <p className="text-body-lg text-carbon-300 mb-8">
+          Supporting explanation — one clear idea per section.
+        </p>
+        <SecondaryButton href="/learn-more/">Learn More</SecondaryButton>
+      </div>
+      <div className="relative aspect-video lg:aspect-square">
+        <Image src="..." alt="..." fill className="object-contain" />
+      </div>
+    </div>
+  </div>
+</section>
+
+{
+  /* Image left / Text right — swap grid children order */
+}
+;<section className="py-section-sm lg:py-section bg-bg-primary">
+  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative aspect-video lg:aspect-square order-last lg:order-first">
+        <Image src="..." alt="..." fill className="object-contain" />
+      </div>
+      <div>
+        <p className="font-mono text-eyebrow text-carbon-400 mb-6">Eyebrow</p>
+        <h2 className="text-h2-mb lg:text-h2-sm font-bold text-text-inverse mb-6">
+          Next section headline
+        </h2>
+        <p className="text-body-lg text-carbon-300 mb-8">Supporting explanation.</p>
+        <SecondaryButton href="/learn-more/">Learn More</SecondaryButton>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+**Split Layout Rules:**
+
+- Image side: use `relative` + `fill` + `object-contain`; wrap in `aspect-video` (mobile) → `aspect-square` (lg)
+- Image swap on mobile: use `order-last lg:order-first` on the image div so text always reads first on small screens
+- Eyebrow is optional — omit when the heading is self-explanatory
+- Max 4 Split Layout sections per page; if you need more, switch to FeaturesGrid or Tabs
+- Each section covers exactly one concept — no multi-point bullet lists in the text column
 
 ---
 
@@ -168,7 +271,9 @@ import { Rocket } from 'lucide-react'
 
 **Hover behavior:** card floats up 8px · arrow rotates 45° · circle fills white
 
-**Background colors:** red `#630D09` · violet `#3C174C` · blue `#0D3152` · teal `#093434`
+**Background colors:** red `bg-brand-red-dark` (`#87120C`) · violet `bg-brand-violet-dark` (`#5D137D`) · blue `bg-brand-blue-dark` (`#10487B`) · teal `bg-brand-teal-dark` (`#0F5353`)
+
+> ColorCard uses `-dark` variant (slightly lighter). CtaSection uses `bg-brand-*-bg` (deepest shade). Do not swap.
 
 ---
 
@@ -204,6 +309,17 @@ Always use the `<CtaSection>` component. Layout: colored background · cube imag
 | `teal`   | data / success        | `#093434` |
 
 The cube image automatically matches the background color — do not override it.
+
+---
+
+## FeaturesGrid Note
+
+Current `FeaturesGrid` renders `FeatureCard` items with:
+
+- title: `text-h3-lg`
+- description: `text-body-md`
+
+Use `columns={3}` as default; switch to `2` or `4` only when content density requires it.
 
 ---
 

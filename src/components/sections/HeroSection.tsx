@@ -3,6 +3,33 @@ import { cn } from '@/lib/utils'
 import { PrimaryButton } from '@/components/ui/PrimaryButton'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
 
+const HERO_RIGHT_IMAGES = [
+  '/images/hero/r/Graphic-1-Dk.png',
+  '/images/hero/r/Graphic-2-Dk.png',
+  '/images/hero/r/Graphic-3-Dk.png',
+  '/images/hero/r/Graphic-4-Dk.png',
+  '/images/hero/r/Graphic-5-Dk.png',
+  '/images/hero/r/Graphic-6-Dk.png',
+  '/images/hero/r/Graphic-7-Dk.png',
+  '/images/hero/r/Graphic-8-Dk.png',
+  '/images/hero/r/Graphic-9-Dk.png',
+  '/images/hero/r/Graphic-10-Dk.png',
+  '/images/hero/r/Graphic-11-Dk.png',
+  '/images/hero/r/Graphic-12-Dk.png',
+  '/images/hero/r/Graphic-13-Dk.png',
+  '/images/hero/r/Graphic-14-Dk.png',
+  '/images/hero/r/Graphic-15-Dk.png',
+  '/images/hero/r/Graphic-16-Dk.png',
+  '/images/hero/r/Graphic-17-Dk.png',
+  '/images/hero/r/Graphic-18-Dk.png',
+  '/images/hero/r/Graphic-19-Dk.png',
+  '/images/hero/r/Graphic-20-Dk.png',
+  '/images/hero/r/Graphic-21-Dk.png',
+  '/images/hero/r/Graphic-22-Dk.png',
+]
+
+const HERO_CENTERED_IMAGES = ['/images/hero/c/clip-group.svg']
+
 interface HeroBackgroundImage {
   src?: string
   alt?: string
@@ -32,6 +59,10 @@ type HeroIllustrationVariant = 'cube-grid' | 'cube-frame' | 'cube-ui'
 
 function hashSeed(seed: string) {
   return Array.from(seed).reduce((acc, char) => (acc * 31 + char.charCodeAt(0)) % 1000003, 7)
+}
+
+function pickSeededImage(seed: string, pool: string[]) {
+  return pool[hashSeed(seed) % pool.length]
 }
 
 function pickHeroIllustrationVariant(seed: string): HeroIllustrationVariant {
@@ -132,15 +163,20 @@ function createHeroIllustrationDataUri(seed: string, mode: 'panel' | 'background
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
 }
 
-function AutoHeroVisual({ seed }: { seed: string }) {
-  const src = createHeroIllustrationDataUri(seed, 'panel')
+function SeededHeroVisual({ seed }: { seed: string }) {
+  const src = pickSeededImage(seed, HERO_RIGHT_IMAGES)
   return (
     <div className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="w-full aspect-[16/10] bg-contain bg-center bg-no-repeat"
-        style={{ backgroundImage: `url("${src}")` }}
-      />
+      <div className="relative w-full aspect-[16/10]">
+        <Image
+          src={src}
+          alt=""
+          fill
+          priority
+          aria-hidden
+          className="object-contain object-center"
+        />
+      </div>
     </div>
   )
 }
@@ -169,8 +205,13 @@ export function HeroSection({
   className,
 }: HeroSectionProps) {
   const heroSeed = `${headline} ${subheadline ?? ''}`.trim()
+  const defaultCenteredBackgroundSrc =
+    centered && !backgroundImage?.src && !autoGenerateBackgroundImage
+      ? pickSeededImage(heroSeed, HERO_CENTERED_IMAGES)
+      : undefined
   const resolvedBackgroundSrc =
     backgroundImage?.src ??
+    defaultCenteredBackgroundSrc ??
     (autoGenerateBackgroundImage || backgroundImage ? 'AUTO_REFERENCE' : undefined)
 
   const heroBackgroundImage = resolvedBackgroundSrc
@@ -179,7 +220,9 @@ export function HeroSection({
         src: resolvedBackgroundSrc,
       }
     : null
-  const resolvedRightSlot = rightSlot ?? (!centered ? <AutoHeroVisual seed={heroSeed} /> : null)
+  const useCssBackgroundForCentered =
+    centered && !!heroBackgroundImage && heroBackgroundImage.src !== 'AUTO_REFERENCE'
+  const resolvedRightSlot = rightSlot ?? (!centered ? <SeededHeroVisual seed={heroSeed} /> : null)
 
   return (
     <section
@@ -198,6 +241,16 @@ export function HeroSection({
                 heroBackgroundImage.positionClassName ?? 'object-center',
                 heroBackgroundImage.opacityClassName ?? 'opacity-40'
               )}
+            />
+          ) : useCssBackgroundForCentered ? (
+            <div
+              aria-hidden="true"
+              className={cn(
+                'pointer-events-none absolute inset-0 bg-cover',
+                heroBackgroundImage.positionClassName ?? 'bg-center',
+                heroBackgroundImage.opacityClassName ?? 'opacity-40'
+              )}
+              style={{ backgroundImage: `url("${heroBackgroundImage.src}")` }}
             />
           ) : (
             <Image
