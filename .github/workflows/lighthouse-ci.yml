@@ -65,7 +65,13 @@ jobs:
                 paths.forEach(path => {
                   const value = path.trim();
                   if (!value) return;
-                  const formattedPath = value.startsWith('/') ? value : `/${value}`;
+                  const normalizedPath = value.startsWith('/') ? value : `/${value}`;
+                  const hasQueryOrHash = /[?#]/.test(normalizedPath);
+                  const looksLikeFile = /\.[^/]+$/.test(normalizedPath.split(/[?#]/)[0]);
+                  const formattedPath =
+                    !hasQueryOrHash && !looksLikeFile && !normalizedPath.endsWith('/')
+                      ? `${normalizedPath}/`
+                      : normalizedPath;
                   urlList.push(`${baseUrl}${formattedPath}`);
                 });
               }
