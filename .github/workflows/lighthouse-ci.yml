@@ -63,7 +63,9 @@ jobs:
               if (rawValue && rawValue.toLowerCase() !== 'n/a') {
                 const paths = rawValue.split(/[\s,，]+/).filter(p => p.trim() !== "");
                 paths.forEach(path => {
-                  const formattedPath = path.startsWith('/') ? path : `/${path}`;
+                  const value = path.trim();
+                  if (!value) return;
+                  const formattedPath = value.startsWith('/') ? value : `/${value}`;
                   urlList.push(`${baseUrl}${formattedPath}`);
                 });
               }
@@ -81,8 +83,11 @@ jobs:
         if: steps.extract_url.outputs.has_urls == 'true'
         id: lhci
         uses: treosh/lighthouse-ci-action@v12
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         with:
           urls: ${{ steps.extract_url.outputs.urls }}
+          configPath: ./.github/lighthouserc.js
           uploadArtifacts: true
           temporaryPublicStorage: true
           # Fails the build if Performance is < 70
@@ -117,11 +122,18 @@ jobs:
             ];
 
             const tableRows = manifest.map(({ url, summary }) => {
-              const path = new URL(url).pathname;
+              const pageUrl = url;
+              const pagePath = (() => {
+                try {
+                  return new URL(pageUrl).pathname || '/';
+                } catch {
+                  return pageUrl;
+                }
+              })();
               const reportUrl = links[url] || '#';
               const format = (val) => `${Math.round(val * 100)} ${emoji(val)}`;
               
-              return `| \`${path}\` | ${format(summary.performance)} | ${format(summary.accessibility)} | ${format(summary.seo)} | [View](${reportUrl}) |`;
+              return `| [\`${pagePath}\`](${pageUrl}) | ${format(summary.performance)} | ${format(summary.accessibility)} | ${format(summary.seo)} | [View](${reportUrl}) |`;
             });
 
             const body = [
