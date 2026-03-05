@@ -26,6 +26,8 @@ const GTM_IDS = [
   process.env.NEXT_PUBLIC_GTM_ID_ALL_WEBSITES,
 ].filter(Boolean) as string[]
 
+const SHOULD_LOAD_GTM = process.env.NODE_ENV === 'production'
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type PageType =
@@ -93,7 +95,7 @@ export function trackFormSubmit(options: Omit<FormSubmitEvent, 'event'>): void {
 // Add to src/app/layout.tsx inside <head> and after <body> opening tag
 
 export function GTMScript() {
-  if (GTM_IDS.length === 0) return null
+  if (!SHOULD_LOAD_GTM || GTM_IDS.length === 0) return null
   return (
     <>
       {GTM_IDS.map((id) => (
@@ -115,7 +117,7 @@ export function GTMScript() {
 }
 
 export function GTMNoScript() {
-  if (GTM_IDS.length === 0) return null
+  if (!SHOULD_LOAD_GTM || GTM_IDS.length === 0) return null
   return (
     <>
       {GTM_IDS.map((id) => (

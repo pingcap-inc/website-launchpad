@@ -121,7 +121,49 @@ jobs:
               '|:---        |:---:       |:---:    |:---: |:---:  |'
             ];
 
-            const tableRows = manifest.map(({ url, summary }) => {
+            const normalizeUrl = (value) => {
+              try {
+                const u = new URL(value);
+                return `${u.origin}${u.pathname}`.replace(/\/$/, '');
+              } catch {
+                return String(value || '').replace(/\/$/, '');
+              }
+            };
+
+            const getReportUrl = (entryUrl, entry) => {
+              if (entry?.htmlReport) return entry.htmlReport;
+              if (entry?.report) return entry.report;
+
+              if (links[entryUrl]) return links[entryUrl];
+
+              const normalizedEntryUrl = normalizeUrl(entryUrl);
+              const directMatchKey = Object.keys(links).find(
+                (key) => normalizeUrl(key) === normalizedEntryUrl
+              );
+              if (directMatchKey) return links[directMatchKey];
+
+              const entryPath = (() => {
+                try {
+                  return new URL(entryUrl).pathname.replace(/\/$/, '') || '/';
+                } catch {
+                  return '';
+                }
+              })();
+
+              const pathMatchKey = Object.keys(links).find((key) => {
+                try {
+                  return (new URL(key).pathname.replace(/\/$/, '') || '/') === entryPath;
+                } catch {
+                  return false;
+                }
+              });
+              if (pathMatchKey) return links[pathMatchKey];
+
+              return '#';
+            };
+
+            const tableRows = manifest.map((entry) => {
+              const { url, summary } = entry;
               const pageUrl = url;
               const pagePath = (() => {
                 try {
@@ -130,10 +172,10 @@ jobs:
                   return pageUrl;
                 }
               })();
-              const reportUrl = links[url] || '#';
+              const reportUrl = getReportUrl(pageUrl, entry);
               const format = (val) => `${Math.round(val * 100)} ${emoji(val)}`;
               
-              return `| [\`${pagePath}\`](${pageUrl}) | ${format(summary.performance)} | ${format(summary.accessibility)} | ${format(summary.seo)} | [View](${reportUrl}) |`;
+              return `| [\`${pagePath}\`](${pageUrl}) | ${format(summary.performance)} | ${format(summary.accessibility)} | ${format(summary.seo)} | [Lighthouse Report](${reportUrl}) |`;
             });
 
             const body = [
