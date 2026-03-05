@@ -301,6 +301,17 @@ The cube image automatically matches the background color — do not override it
 
 ---
 
+## FeaturesGrid Note
+
+Current `FeaturesGrid` renders `FeatureCard` items with:
+
+- title: `text-h3-lg`
+- description: `text-body-md`
+
+Use `columns={3}` as default; switch to `2` or `4` only when content density requires it.
+
+---
+
 ## Responsive Breakpoints
 
 Mobile-first. Primary design target: `xl` (>1280px).

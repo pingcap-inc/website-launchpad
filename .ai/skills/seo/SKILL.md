@@ -104,6 +104,11 @@ File: `src/lib/gtm.tsx` (note: `.tsx` extension, not `.ts`)
 
 Available exports: `trackCTAClick`, `trackFormSubmit`, `trackPageView`, `pushEvent`, `GTMScript`, `GTMNoScript`, `PageType`
 
+Runtime rule:
+
+- GTM scripts load only when `process.env.VERCEL_ENV === 'production'`.
+- Vercel Preview deployments (`VERCEL_ENV=preview`) should not load GTM containers.
+
 ```ts
 import { trackCTAClick, trackFormSubmit } from '@/lib/gtm'
 
