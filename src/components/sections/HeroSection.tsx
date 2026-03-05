@@ -220,6 +220,8 @@ export function HeroSection({
         src: resolvedBackgroundSrc,
       }
     : null
+  const useCssBackgroundForCentered =
+    centered && !!heroBackgroundImage && heroBackgroundImage.src !== 'AUTO_REFERENCE'
   const resolvedRightSlot = rightSlot ?? (!centered ? <SeededHeroVisual seed={heroSeed} /> : null)
 
   return (
@@ -239,6 +241,16 @@ export function HeroSection({
                 heroBackgroundImage.positionClassName ?? 'object-center',
                 heroBackgroundImage.opacityClassName ?? 'opacity-40'
               )}
+            />
+          ) : useCssBackgroundForCentered ? (
+            <div
+              aria-hidden="true"
+              className={cn(
+                'pointer-events-none absolute inset-0 bg-cover',
+                heroBackgroundImage.positionClassName ?? 'bg-center',
+                heroBackgroundImage.opacityClassName ?? 'opacity-40'
+              )}
+              style={{ backgroundImage: `url("${heroBackgroundImage.src}")` }}
             />
           ) : (
             <Image

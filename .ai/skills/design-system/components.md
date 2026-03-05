@@ -1,7 +1,7 @@
 # Component Specifications
 
 > All components use `cn()` for className merging, imported from `@/lib/utils`.
-> **Icons**: `lucide-react` for chrome UI only (Menu, X, ChevronRight, ArrowUpRight). All nav/content icons use `pingcap-icons` (204 custom SVG icons from PingCAP iconfont).
+> **Icons**: `lucide-react` for chrome UI only (Menu, X, ChevronRight, ArrowUpRight). Header dropdown icons use `header-icons` (Header-only subset extracted from PingCAP iconfont). Other nav/content icon usage can still reference `pingcap-icons` when needed.
 > **Links**: Within website-launchpad, internal hrefs use relative paths (`/tidb/`). **Outside website-launchpad**, use full domain `https://www.pingcap.com/...`. Sign In → `https://tidbcloud.com/signin`. Start for Free → `https://tidbcloud.com/free-trial/`.
 
 ---
@@ -43,7 +43,15 @@
 </nav>
 ```
 
-**Dropdown icons** use `pingcap-icons`:
+**Implementation details (current):**
+
+- `Header.tsx` keeps a lightweight shell (logo / top-level nav labels / CTA / mobile toggle).
+- `HeaderMenus.tsx` contains mega-menu + mobile accordion content and is loaded with `next/dynamic`.
+- Desktop dropdown content renders only when hovered/focused (`openDropdown === item.label`), not pre-rendered.
+- Mobile menu mounts only when opened (`mobileOpen`).
+- Header dropdown icons are imported from `header-icons.tsx` (subset), avoiding full `pingcap-icons.tsx` in initial Header path.
+
+**Dropdown icons** in Header use this subset:
 
 - Product: `CloudTIcon`, `StackTIcon`, `DollarTIcon`, `GearIcon`, `SlidersIcon`, `StarIcon`, `EyeIcon`
 - Solutions: `ChartDownTIcon`, `StarIcon`, `CloudTIcon`, `AiTIcon`, `WalletTIcon`, `BagT1Icon`, `DesktopTIcon`

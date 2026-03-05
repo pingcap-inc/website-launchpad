@@ -1,5 +1,5 @@
 import { LanguageSwitcher } from './LanguageSwitcher'
-import { LazyHubSpotForm } from './LazyHubSpotForm'
+import { DeferredHubSpotForm } from './DeferredHubSpotForm'
 
 const NEWSLETTER_FORM_ID =
   process.env.NEXT_PUBLIC_HUBSPOT_FORM_ID ?? 'd74dfb7c-a14a-4f8d-ab28-eba7a00e7900'
@@ -159,7 +159,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 space-y-6 text-center md:text-left">
             <p className="font-mono text-eyebrow text-carbon-400">Stay Connected</p>
             <div className="space-y-3">
-              <LazyHubSpotForm
+              <DeferredHubSpotForm
                 formId={NEWSLETTER_FORM_ID}
                 {...(NEWSLETTER_SFDC_CAMPAIGN_ID
                   ? { sfdcCampaignId: NEWSLETTER_SFDC_CAMPAIGN_ID }
