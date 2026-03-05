@@ -55,7 +55,8 @@ CtaSection
 ## Layout Guidance
 
 - **centered hero**: use when the page is informational and audience is broad
-- **split hero** (with rightSlot): use when showcasing a specific product, team, or visual asset
+- **split hero**: use when showcasing a specific product, team, or visual asset
+  - If no specific visual is provided, `HeroSection` falls back to a seeded image from `/public/images/hero/r/`
 - **Split Layout sections**: use when material contains 2–4 distinct concepts each paired with a diagram or screenshot — alternate text/image sides for visual rhythm
 - Mix and match content sections based on what's in the material — don't add sections you have no content for
 - Aim for 4–6 sections total (including hero and CTA)

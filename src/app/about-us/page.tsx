@@ -23,7 +23,7 @@ import {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
-const TITLE = 'About PingCAP – Mission, Values & Company Story | TiDB'
+const TITLE = 'About PingCAP – Mission, Values & Company Story'
 const DESCRIPTION =
   'PingCAP was founded in 2015 to build TiDB, an open-source distributed SQL database. Learn about our mission, values, and the team behind TiDB.'
 
@@ -116,7 +116,6 @@ export default function AboutUsPage() {
         {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
         <HeroSection
           centered
-          autoGenerateBackgroundImage
           headline="Empowering Engineers to Build at Scale"
           subheadline="Our mission is to empower engineers and enable business value with speed, scale, and agility."
           primaryCta={{ text: 'Book a Demo', href: 'https://www.pingcap.com/contact-us/' }}

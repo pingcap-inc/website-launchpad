@@ -70,7 +70,7 @@ text-blue-600             // → text-brand-blue-medium
 <section className="bg-[#06111A]">            // gradient endpoint only, never solid bg
 <div className="absolute inset-0 bg-bg-primary/65" /> // Hero overlay layer → remove (hero has no overlay)
 <HeroSection centered eyebrow="..." />        // centered hero default should be no eyebrow
-<HeroSection centered />                      // centered hero missing background image or auto-generation
+<HeroSection rightSlot={undefined} />         // split hero: omit only if default /images/hero/r/ visual is acceptable
 
 // ─── PrimaryButton layer structure ──────────────────────
 <button>                  // missing relative + overflow-hidden

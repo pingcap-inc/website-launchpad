@@ -76,19 +76,26 @@ Usage rule:
 ### Variant A — Split layout (default)
 
 Default Hero layout is split: left column for copy + CTAs, right column for a visual slot.
-The right slot can be an illustration, product screenshot, stats panel, or form.
+The right slot can be a product screenshot, stats panel, form, or hero image.
+
+If the user provides no specific visual for `rightSlot`, `HeroSection` now auto-selects a seeded
+image from `/public/images/hero/r/` (`Graphic-{1..22}-Dk.png`).
+Always use `-Dk` variants (dark-background site); never use `-Lt` variants unless explicitly requested.
+
+```tsx
+// Optional override — only set rightSlot when a specific visual is required.
+```
 
 ### Variant B — Centered layout
 
 Use centered layout only when the page intent is message-first.
-Centered Hero must include a background image and defaults to no eyebrow.
+Centered Hero defaults to no eyebrow.
 
 ```tsx
 <HeroSection
   headline="Launch Fast. Scale without Limits."
   subheadline="Apply now and start building with the distributed SQL database that grows with you."
   centered
-  autoGenerateBackgroundImage
 />
 ```
 
@@ -98,8 +105,11 @@ Centered Hero must include a background image and defaults to no eyebrow.
 // Preferred: use provided background image asset
 <HeroSection backgroundImage={{ src: heroBg }} />
 
-// Fallback: if no image resource is specified, auto-generate from page content
-<HeroSection autoGenerateBackgroundImage />
+// Default fallback (centered mode): pick seeded image from /public/images/hero/c/
+<HeroSection centered />
+
+// Optional alternative: auto-generate from page content
+<HeroSection centered autoGenerateBackgroundImage />
 ```
 
 **Hero Rules:**
@@ -107,9 +117,10 @@ Centered Hero must include a background image and defaults to no eyebrow.
 - Background: `bg-bg-primary` (`#000000`), **no gradients of any kind**
 - Default layout is split (`grid-cols-1 lg:grid-cols-2`): left text+buttons, right visual slot
 - Right visual slot accepts illustration, form, chart, screenshot, or product panel
+- Split mode with no `rightSlot`: seeded default visual from `/public/images/hero/r/`
 - Centered layout: default **no eyebrow**
-- Centered layout: background image is required
-- If no background image resource is provided, auto-generate the Hero illustration from page content
+- Centered layout with no `backgroundImage`: seeded default visual from `/public/images/hero/c/`
+- `autoGenerateBackgroundImage` is optional fallback when generated art is preferred
 - Eyebrow (when used): place directly above H1 with `mb-8`
 - Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
 - Hero background image: no overlay layer by default

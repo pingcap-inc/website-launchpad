@@ -25,7 +25,7 @@ type HubSpotWindow = Window & {
   }
 }
 
-interface HubSpotFormProps {
+export interface HubSpotFormProps {
   formId: string
   portalId?: string
   region?: string
