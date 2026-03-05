@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import { GhostButton } from './GhostButton'
 import { PrimaryButton } from './PrimaryButton'
@@ -43,20 +43,41 @@ const navItems: NavItemLite[] = [
 
 function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const preloadMenus = () => {
+    ;(HeaderMegaMenu as unknown as { preload?: () => void }).preload?.()
+  }
+
+  const openMenu = (label: string) => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+    preloadMenus()
+    setOpenDropdown(label)
+  }
+
+  const closeMenuSoon = () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
+    closeTimerRef.current = setTimeout(() => setOpenDropdown(null), 100)
+  }
 
   return (
-    <ul
-      className="hidden lg:flex items-center gap-1 text-base font-medium text-text-inverse"
-      onMouseLeave={() => setOpenDropdown(null)}
-    >
+    <ul className="hidden lg:flex items-center gap-1 text-base font-medium text-text-inverse">
       {navItems.map((item) =>
         isDropdown(item) ? (
           <li
             key={item.label}
             className="relative"
-            onMouseEnter={() => setOpenDropdown(item.label)}
-            onFocus={() => setOpenDropdown(item.label)}
-            onBlur={() => setOpenDropdown(null)}
+            onMouseEnter={() => openMenu(item.label)}
+            onMouseLeave={closeMenuSoon}
+            onFocus={() => openMenu(item.label)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+                setOpenDropdown(null)
+              }
+            }}
           >
             <button className="flex items-center gap-1 px-3 py-2 hover:text-carbon-400 transition-colors duration-150 cursor-pointer">
               {item.label}

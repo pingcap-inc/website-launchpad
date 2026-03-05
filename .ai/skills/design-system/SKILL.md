@@ -12,7 +12,7 @@ description: >
 
 > **Stack**: Next.js 16 · React 18 · Tailwind CSS v3 · pnpm
 > All styles must use Tailwind utility classes. Inline `style` is forbidden (except for dynamic values).
-> **Icons**: `lucide-react` for chrome UI (Menu, X, ChevronRight) · `pingcap-icons` for all nav/content icons (204 glyphs extracted from PingCAP iconfont).
+> **Icons**: Header dropdown/menu icons use `header-icons`. All other page/section/content icons use `lucide-react`.
 > **Links**: Within website-launchpad project, internal hrefs use relative paths (e.g. `/tidb/`). **For pages generated outside website-launchpad**, all internal hrefs must use full domain `https://www.pingcap.com/...`.
 > **Before writing any code**, read the relevant sub-files based on your task.
 
@@ -41,12 +41,13 @@ Professional, modern, restrained. Dark Hero alternating with light content secti
 ❌ Hardcoded color values     → Use Token class names (bg-brand-red-primary, etc.)
 ❌ Gradient on Hero base      → bg-bg-primary (pure black only)
 ✅ Hero default               → Split layout (left copy+CTA, right visual/form)
-✅ Hero centered mode         → No eyebrow by default + seeded /images/hero/c background when not specified
+✅ Hero centered mode         → No eyebrow by default
 ✅ Hero bg image              → No overlay layer by default
 ❌ font-semibold              → font-bold (no 600-weight file on CDN)
 ❌ next/font/google           → globals.css @font-face + CDN
 ❌ PrimaryButton missing relative / overflow-hidden / z-10 layer structure
 ❌ className concatenation outside cn()
 ❌ Relative href in non-website-launchpad projects → https://www.pingcap.com/tidb/
-❌ lucide-react for nav icons → pingcap-icons (lucide only for Menu/X/ChevronRight/ArrowUpRight)
+✅ Header nav dropdown icons   → header-icons
+✅ Non-header icons            → lucide-react
 ```

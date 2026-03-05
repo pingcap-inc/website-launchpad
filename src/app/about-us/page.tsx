@@ -10,15 +10,8 @@ import {
   FeaturesGrid,
   CtaSection,
 } from '@/components'
+import { Handshake, Award, Code2, BriefcaseBusiness, MessageCircle, AppWindow } from 'lucide-react'
 import { buildPageSchema } from '@/lib/schema'
-import {
-  HandshakeIcon,
-  AwardIcon,
-  CodeTIcon,
-  BriefcaseIcon,
-  CommentsTIcon,
-  AppWindowIcon,
-} from '@/components/ui/pingcap-icons'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -67,37 +60,37 @@ const schema = buildPageSchema({
 
 const values = [
   {
-    icon: <HandshakeIcon size={32} />,
+    icon: <Handshake size={32} />,
     title: 'Customer Success',
     description:
       'We exist to help our customers succeed. Every decision is measured by the value it delivers to the engineers and organizations building on TiDB.',
   },
   {
-    icon: <AwardIcon size={32} />,
+    icon: <Award size={32} />,
     title: 'Deliver Results with Excellence',
     description:
       'We hold ourselves to high standards — shipping with care, reviewing with rigor, and taking pride in systems that are reliable, performant, and well-crafted.',
   },
   {
-    icon: <CodeTIcon size={32} />,
+    icon: <Code2 size={32} />,
     title: 'Be Open',
     description:
       'Open source is at our core — in our code, our processes, and our communication. Transparency builds trust across our community, customers, and teammates.',
   },
   {
-    icon: <BriefcaseIcon size={32} />,
+    icon: <BriefcaseBusiness size={32} />,
     title: 'Be an Owner',
     description:
       'We take responsibility for outcomes, not just tasks. Ownership means acting with initiative, following through, and holding each other accountable.',
   },
   {
-    icon: <CommentsTIcon size={32} />,
+    icon: <MessageCircle size={32} />,
     title: 'Respect and Empower People',
     description:
       'We build an inclusive team where every voice counts. We invest in growth and create space for everyone to do their best work.',
   },
   {
-    icon: <AppWindowIcon size={32} />,
+    icon: <AppWindow size={32} />,
     title: 'Think Big, Think Long, and Think Different',
     description:
       'Distributed databases are a long game. We plan with ambition, stay curious, and challenge assumptions to find better paths forward.',

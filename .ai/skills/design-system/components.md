@@ -1,7 +1,7 @@
 # Component Specifications
 
 > All components use `cn()` for className merging, imported from `@/lib/utils`.
-> **Icons**: `lucide-react` for chrome UI only (Menu, X, ChevronRight, ArrowUpRight). Header dropdown icons use `header-icons` (Header-only subset extracted from PingCAP iconfont). Other nav/content icon usage can still reference `pingcap-icons` when needed.
+> **Icons**: Header dropdown/menu icons use `header-icons` (Header-only subset). All other page/section/content icons use `lucide-react`.
 > **Links**: Within website-launchpad, internal hrefs use relative paths (`/tidb/`). **Outside website-launchpad**, use full domain `https://www.pingcap.com/...`. Sign In → `https://tidbcloud.com/signin`. Start for Free → `https://tidbcloud.com/free-trial/`.
 
 ---
@@ -348,16 +348,20 @@ export function SectionHeader({
 
 ---
 
-## PingCAP Icons
+## Icon Usage
 
 ```tsx
-// components/ui/pingcap-icons.tsx
-// 204 custom SVG icons from PingCAP iconfont
-import { NewspaperIcon, BuildingsIcon, CloudTIcon } from '@/components/ui/pingcap-icons'
-;<NewspaperIcon size={16} className="text-carbon-400" />
+// Header dropdown/menu only
+import { CloudTIcon, NewspaperIcon } from '@/components/ui/header-icons'
+
+// Non-header page/section content
+import { Globe, Database, Rocket } from 'lucide-react'
 ```
 
-All nav/content icons use `pingcap-icons`. `lucide-react` only for: `Menu`, `X`, `ChevronRight`, `ArrowUpRight`.
+Rule:
+
+- Header dropdown/menu icons: `header-icons`
+- Non-header icons: `lucide-react`
 
 ---
 
@@ -387,7 +391,7 @@ components/
     SectionHeader.tsx       # Eyebrow + H2 + subtitle (mobile-first sizing)
     HubSpotForm.tsx         # HubSpot form embed
     LanguageSwitcher.tsx    # EN / JP language selector
-    pingcap-icons.tsx       # 204 custom PingCAP SVG icons
+    header-icons.tsx        # Header dropdown/menu icon subset
   sections/
     HeroSection.tsx
     FeaturesGrid.tsx

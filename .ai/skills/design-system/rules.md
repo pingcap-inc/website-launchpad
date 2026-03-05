@@ -37,8 +37,8 @@
 
 **Icons**
 
-- [ ] Nav/content icons use `pingcap-icons`
-- [ ] `lucide-react`
+- [ ] Header dropdown/menu icons use `header-icons`
+- [ ] Non-header page/section/content icons use `lucide-react`
 
 **Links**
 
@@ -90,8 +90,8 @@ gap-[18px]                // → gap-4 (16px) or gap-6 (24px)
 max-w-[1440px]            // → max-w-container (1502px)
 
 // ─── Icons ────────────────────────────────────────────────
-import { Newspaper } from 'lucide-react'    // nav icon → import { NewspaperIcon } from './pingcap-icons'
-<Briefcase size={16} />                     // lucide nav icon → <BriefcaseIcon size={16} />
+import { NewspaperIcon } from './header-icons' // non-header usage should not use header-icons
+import { BriefcaseIcon } from './header-icons' // non-header usage should use lucide-react instead
 
 // ─── Links (non-website-launchpad projects only) ──────────
 href="/tidb/"                               // relative → href="https://www.pingcap.com/tidb/"
