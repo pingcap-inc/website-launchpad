@@ -1,6 +1,6 @@
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { SecondaryButton } from './SecondaryButton'
-import { externalLinkProps } from '@/lib/links'
 
 type ColorCardVariant = 'red' | 'violet' | 'blue' | 'teal'
 
@@ -38,10 +38,9 @@ export function ColorCard({ variant, title, description, cta, icon }: ColorCardP
       <p className="text-body-md text-white leading-relaxed flex-1">{description}</p>
 
       {/* SecondaryButton — triggered by card group hover */}
-      <div className="mt-8">
+      <div className="mt-8 flex justify-end">
         <SecondaryButton
           href={cta.href}
-          dark={true}
           className="group-hover:bg-transparent group-hover:text-text-inverse"
         >
           {cta.text}
