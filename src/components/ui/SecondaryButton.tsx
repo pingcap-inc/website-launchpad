@@ -69,8 +69,15 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
       )
     }
 
+  if (href) {
+    const isExternal = href.startsWith('http') && !href.includes('www.pingcap.com')
+
     return (
-      <button ref={ref as React.Ref<HTMLButtonElement>} onClick={onClick} className={classes}>
+      <a
+        href={href}
+        className={classes}
+        {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
+      >
         {content}
       </button>
     )

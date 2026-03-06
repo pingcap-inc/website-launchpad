@@ -7,10 +7,10 @@ import { DeveloperResourceCard } from '../_components/DeveloperResourceCard'
 import { IconAi, IconAiBackends, IconFinancial, IconRag, IconRealTime } from '../_components/icons'
 
 export const metadata: Metadata = {
-  title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+  title: 'Build AI Applications with TiDB | TiDB Developer Hub',
   description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
   openGraph: {
-    title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+    title: 'Build AI Applications with TiDB | TiDB Developer Hub',
     description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
     url: 'https://www.pingcap.com/developers/build-ai-apps/',
     siteName: 'TiDB',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+    title: 'Build AI Applications with TiDB | TiDB Developer Hub',
     description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
     site: '@PingCAP',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/developers/build-ai-apps/',
-  title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+  title: 'Build AI Applications with TiDB | TiDB Developer Hub',
   description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
   pageType: 'WebPage',
   breadcrumbs: [
@@ -48,7 +48,7 @@ const schema = buildPageSchema({
   image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
   extraSchemas: [
     techArticleSchema({
-      title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+      title: 'Build AI Applications with TiDB | TiDB Developer Hub',
       description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
       url: '/developers/build-ai-apps/',
       image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
@@ -60,6 +60,7 @@ const schema = buildPageSchema({
 
 const useCases = [
   {
+    icon: <IconFinancial />,
     title: 'AI-Powered Financial Insights',
     description:
       'Building an AI-powered crypto ETF insight app with GPTs and TiDB Cloud Data Service.',
@@ -75,21 +76,21 @@ const useCases = [
   },
   {
     icon: <IconAi />,
-    title: 'Agentic AI systems',
+    title: 'Agentic AI Systems',
     description: 'How to build an AI agent that builds full-stack apps.',
     href: 'https://www.pingcap.com/blog/ai-agent-that-builds-full-stack-apps/',
     borderClass: 'border-brand-blue-medium',
   },
   {
     icon: <IconAiBackends />,
-    title: 'AI-ready backends',
+    title: 'AI-Ready Backends',
     description: 'Mastering TiDB Cloud Data Service: building a data-driven backend.',
     href: 'https://www.pingcap.com/blog/building-a-data-driven-backend-with-data-service/',
     borderClass: 'border-brand-teal-medium',
   },
   {
     icon: <IconRealTime />,
-    title: 'Real-time hybrid architectures',
+    title: 'Real-Time Hybrid Architectures',
     description: 'Supercharge real-time applications with TiDB and DragonflyDB.',
     href: 'https://www.pingcap.com/blog/supercharging-real-time-applications-tidb-dragonflydb/',
     borderClass: 'border-brand-red-primary',
@@ -113,8 +114,8 @@ const vectorHandsOn = [
 
 const frameworks = [
   {
-    name: 'Amazon Bedrock integration',
-    subtitle: 'Amazon Bedrock integration',
+    name: 'Amazon Bedrock',
+    subtitle: 'Amazon Bedrock',
     href: 'https://docs.pingcap.com/tidbcloud/vector-search-integrate-with-amazon-bedrock/',
     logo: 'https://static.pingcap.com/files/2026/02/28014556/aws.png',
     cta: 'Read Docs',
@@ -128,14 +129,14 @@ const frameworks = [
   },
   {
     name: 'LangChain integration',
-    subtitle: 'LangChain integration',
+    subtitle: 'LangChain',
     href: 'https://www.pingcap.com/article/step-by-step-guide-to-langchain-integration/',
     logo: 'https://static.pingcap.com/files/2025/07/01063430/icon-langchain.webp',
     cta: 'Read Docs',
   },
   {
     name: 'LlamaIndex integration',
-    subtitle: 'LlamaIndex integration',
+    subtitle: 'LlamaIndex',
     href: 'https://docs.pingcap.com/tidb/stable/vector-search-integrate-with-llamaindex/',
     logo: 'https://static.pingcap.com/files/2025/07/01063357/icon-llamaindex.webp',
     cta: 'Read Docs',
@@ -152,13 +153,13 @@ const tuneAndScale = [
   {
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
-    title: 'Vector Search Functions',
+    title: 'Vector Data Operators',
     href: 'https://docs.pingcap.com/tidbcloud/vector-search-functions-and-operators/',
   },
   {
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
-    title: 'Design scalable, production-ready AI systems',
+    title: 'Design Scalable, Production-Ready AI Systems',
     href: 'https://docs.pingcap.com/tidbcloud/vector-search-hybrid-search/',
   },
 ]
@@ -175,7 +176,7 @@ export default function BuildAiAppsPage() {
         <main>
           <HeroSection
             layout="image-right"
-            headline="Build AI-powered applications with real-time data and vector search"
+            headline="Build AI-Powered Applications with Real-Time Data and Vector Search"
             subheadline="Explore how to combine LLMs, embeddings, and live transactional data using TiDB through real AI applications, hands-on integrations, and proven design patterns."
             heroImage={{
               src: '/images/developers/build-ai-apps-banner.svg',
@@ -198,8 +199,6 @@ export default function BuildAiAppsPage() {
                   <a
                     key={item.title}
                     href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className={`group min-h-[164px] px-8 py-5 border ${item.borderClass} hover:-translate-y-2 transition-transform duration-200 ease-in-out`}
                   >
                     <div className="flex items-start justify-between mb-4">
@@ -235,7 +234,7 @@ export default function BuildAiAppsPage() {
             </div>
           </section>
 
-          <section className="py-section-sm lg:py-section-sm bg-bg-primary">
+          <section className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-5">
@@ -262,14 +261,19 @@ export default function BuildAiAppsPage() {
                           />
                           <p className="text-body-md text-text-inverse">{framework.subtitle}</p>
                         </div>
-                        <div className="absolute inset-0 bg-brand-red-bg opacity-0 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
+                        <a
+                          href={framework.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute inset-0 bg-brand-red-bg opacity-0 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300"
+                        >
                           <SecondaryButton
                             href={framework.href}
                             className="mt-4 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
                           >
                             {framework.cta}
                           </SecondaryButton>
-                        </div>
+                        </a>
                       </div>
                     </div>
                   ))}

@@ -25,11 +25,11 @@ import {
 } from '../_components/icons'
 
 export const metadata: Metadata = {
-  title: 'Get Started with TiDB | PingCAP Developer Hub',
+  title: 'Get Started with TiDB | TiDB Developer Hub',
   description:
     'Everything you need to get started with TiDB. Learn the fundamentals, understand the architecture, and launch your first cluster.',
   openGraph: {
-    title: 'Get Started with TiDB | PingCAP Developer Hub',
+    title: 'Get Started with TiDB | TiDB Developer Hub',
     description:
       'Everything you need to get started with TiDB. Learn the fundamentals, understand the architecture, and launch your first cluster.',
     url: 'https://www.pingcap.com/developers/get-started/',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Get Started with TiDB | PingCAP Developer Hub',
+    title: 'Get Started with TiDB | TiDB Developer Hub',
     description:
       'Everything you need to get started with TiDB. Learn the fundamentals, understand the architecture, and launch your first cluster.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/developers/get-started/',
-  title: 'Get Started with TiDB | PingCAP Developer Hub',
+  title: 'Get Started with TiDB | TiDB Developer Hub',
   description: 'Everything you need to get started with TiDB.',
   pageType: 'WebPage',
   breadcrumbs: [
@@ -69,7 +69,7 @@ const schema = buildPageSchema({
   image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
   extraSchemas: [
     techArticleSchema({
-      title: 'Get Started with TiDB | PingCAP Developer Hub',
+      title: 'Get Started with TiDB | TiDB Developer Hub',
       description:
         'Everything you need to get started with TiDB. Learn the fundamentals, understand the architecture, and launch your first cluster.',
       url: '/developers/get-started/',
@@ -196,7 +196,7 @@ export default function GetStartedPage() {
           {/* ── Hero ── */}
           <HeroSection
             layout="image-right"
-            headline="Get Started TiDB"
+            headline="Get Started width TiDB"
             subheadline="It scales horizontally, maintains strong consistency, and brings transactional, analytical, and AI (vector search) workloads together in one unified system — eliminating the need for sharding, separate databases or complex data pipelines."
             heroImage={{
               src: '/images/developers/get-started-banner.svg',

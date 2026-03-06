@@ -324,8 +324,6 @@ export default function DeveloperHubPage() {
                   <a
                     key={item.title}
                     href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="group flex flex-col overflow-hidden bg-[#06111A] hover:bg-[#0A1828] hover:-translate-y-2 transition-all duration-200 ease-in-out"
                   >
                     {/* Thumbnail */}

@@ -9,11 +9,11 @@ import { IconFrame, IconPoint, IconRocket } from '../_components/icons'
 import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
+  title: 'Build Data Applications with TiDB | TiDB Developer Hub',
   description:
     'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
   openGraph: {
-    title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
+    title: 'Build Data Applications with TiDB | TiDB Developer Hub',
     description:
       'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
     url: 'https://www.pingcap.com/developers/build-data-apps/',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
+    title: 'Build Data Applications with TiDB | TiDB Developer Hub',
     description:
       'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/developers/build-data-apps/',
-  title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
+  title: 'Build Data Applications with TiDB | TiDB Developer Hub',
   description:
     'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
   pageType: 'WebPage',
@@ -54,7 +54,7 @@ const schema = buildPageSchema({
   image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
   extraSchemas: [
     techArticleSchema({
-      title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
+      title: 'Build Data Applications with TiDB | TiDB Developer Hub',
       description:
         'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
       url: '/developers/build-data-apps/',
@@ -116,7 +116,7 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Schema design overview',
+        title: 'Schema Design Overview',
         href: 'https://docs.pingcap.com/tidb/stable/dev-guide-schema-design-overview',
       },
       {
@@ -128,13 +128,13 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Create and manage database',
+        title: 'Create and Manage Database',
         href: 'https://docs.pingcap.com/tidb/stable/dev-guide-create-database/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Create and manage table',
+        title: 'Create and Manage Table',
         href: 'https://docs.pingcap.com/tidb/stable/dev-guide-create-table',
       },
     ],
@@ -145,14 +145,14 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Explore SQL with TiDB (Entry-Level Reference):',
+        title: 'Explore SQL with TiDB (entry-level reference)',
         href: 'https://docs.pingcap.com/tidb/stable/basic-sql-operations/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Full SQL Reference (Language, Statements, Functions):',
-        href: 'https://docs.pingcap.com/tidb/stable/sql-statements/',
+        title: 'Full SQL Reference (language, statements, functions)',
+        href: 'https://docs.pingcap.com/tidbcloud/sql-statement-overview/',
       },
     ],
   },
@@ -162,13 +162,13 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Index Best Practices (Primary Recommendation):',
+        title: 'Index Best Practices Guide',
         href: 'https://docs.pingcap.com/tidb/stable/dev-guide-index-best-practice/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Secondary index creation (supporting):',
+        title: 'Secondary Index Creation (supporting)',
         href: 'https://docs.pingcap.com/tidb/stable/dev-guide-create-secondary-indexes/',
       },
     ],

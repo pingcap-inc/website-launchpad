@@ -20,11 +20,11 @@ import {
 } from '../_components/icons'
 
 export const metadata: Metadata = {
-  title: 'Migration Center | PingCAP Developer Hub',
+  title: 'Migration Center | TiDB Developer Hub',
   description:
     'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
   openGraph: {
-    title: 'Migration Center | PingCAP Developer Hub',
+    title: 'Migration Center | TiDB Developer Hub',
     description:
       'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
     url: 'https://www.pingcap.com/developers/migration-center/',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Migration Center | PingCAP Developer Hub',
+    title: 'Migration Center | TiDB Developer Hub',
     description:
       'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/developers/migration-center/',
-  title: 'Migration Center | PingCAP Developer Hub',
+  title: 'Migration Center | TiDB Developer Hub',
   description:
     'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
   pageType: 'WebPage',
@@ -65,7 +65,7 @@ const schema = buildPageSchema({
   image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
   extraSchemas: [
     techArticleSchema({
-      title: 'Migration Center | PingCAP Developer Hub',
+      title: 'Migration Center | TiDB Developer Hub',
       description:
         'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
       url: '/developers/migration-center/',
@@ -100,7 +100,7 @@ const journey = [
       },
       {
         title: 'Migrate from TiDB Self-Managed to TiDB Cloud',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/migrate-from-op-tidb/',
+        href: 'https://docs.pingcap.com/tidbcloud/migrate-from-op-tidb/',
         icon: <IconMigrateSelfManagedToCloud />,
       },
     ],
@@ -112,17 +112,17 @@ const journey = [
     cards: [
       {
         title: 'Migration Overview (TiDB Cloud)',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/tidb-cloud-migration-overview/',
+        href: 'https://docs.pingcap.com/tidbcloud/tidb-cloud-migration-overview/',
         icon: <IconMigrationOverview />,
       },
       {
         title: 'Plan Your Cluster (Sizing & Capacity)',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/size-your-cluster',
+        href: 'https://docs.pingcap.com/tidbcloud/size-your-cluster',
         icon: <IconPlanCluster />,
       },
       {
         title: 'TiDB Cloud Performance Reference',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/tidb-cloud-performance-reference',
+        href: 'https://docs.pingcap.com/tidbcloud/tidb-cloud-performance-reference',
         icon: <IconPerformanceReference />,
       },
     ],
@@ -134,22 +134,22 @@ const journey = [
     cards: [
       {
         title: 'Migrate from MySQL Using Data Migration (DM)',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/migrate-from-mysql-using-data-migration/',
+        href: 'https://docs.pingcap.com/tidbcloud/migrate-from-mysql-using-data-migration/',
         icon: <IconMigrateFromMySQL />,
       },
       {
         title: 'Migrate Incremental Data Using DM',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/migrate-incremental-data-from-mysql-using-data-migration/',
+        href: 'https://docs.pingcap.com/tidbcloud/migrate-incremental-data-from-mysql-using-data-migration/',
         icon: <IconMigrateIncremental />,
       },
       {
         title: 'Migrate MySQL Shards',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/migrate-sql-shards/',
+        href: 'https://docs.pingcap.com/tidbcloud/migrate-sql-shards/',
         icon: <IconMigrateMySQLShards />,
       },
       {
         title: 'Migrate Using AWS DMS',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/migrate-from-mysql-using-aws-dms/',
+        href: 'https://docs.pingcap.com/tidbcloud/migrate-from-mysql-using-aws-dms/',
         icon: <IconMigrateAwsDms />,
       },
     ],
@@ -161,7 +161,7 @@ const journey = [
     cards: [
       {
         title: 'Precheck Errors & Migration Troubleshooting',
-        href: 'https://docs.pingcap.com/tidbcloud/stable/tidb-cloud-dm-precheck-and-troubleshooting',
+        href: 'https://docs.pingcap.com/tidbcloud/tidb-cloud-dm-precheck-and-troubleshooting',
         icon: <IconPrecheckErrors />,
       },
       {

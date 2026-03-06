@@ -82,11 +82,9 @@ interface FrameworkSelectorProps {
 export function FrameworkSelector({
   highlightClassName = 'text-brand-red-primary',
 }: FrameworkSelectorProps) {
-  const [activeId, setActiveId] = useState('jdbc')
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
-  const active = frameworks.find((f) => f.id === activeId)!
+  const [hoveredId, setHoveredId] = useState<string | null>('jdbc')
   const hovered = hoveredId ? frameworks.find((f) => f.id === hoveredId) : null
-  const displayLabel = hovered?.label ?? active.label
+  const displayLabel = hovered?.label
 
   return (
     <div>
@@ -102,10 +100,9 @@ export function FrameworkSelector({
           <a
             key={fw.id}
             onMouseEnter={() => setHoveredId(fw.id)}
-            onMouseLeave={() => setHoveredId(null)}
             className={cn(
               'w-[90px] h-[90px] flex items-center justify-center transition-colors duration-150 ease-in-out',
-              activeId === fw.id ? 'bg-text-inverse' : 'bg-carbon-800 hover:bg-bg-inverse'
+              hoveredId === fw.id ? 'bg-bg-inverse' : 'bg-carbon-800 hover:bg-bg-inverse'
             )}
             aria-label={fw.label}
             title={fw.label}

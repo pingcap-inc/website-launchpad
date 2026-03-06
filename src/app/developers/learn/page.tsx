@@ -6,11 +6,11 @@ import { DeveloperSubnav } from '../_components/DeveloperSubnav'
 import { IconLearnCourse, IconLearnDoing } from '../_components/icons'
 
 export const metadata: Metadata = {
-  title: 'Learn | PingCAP Developer Hub',
+  title: 'Learn | TiDB Developer Hub',
   description:
     'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
   openGraph: {
-    title: 'Learn | PingCAP Developer Hub',
+    title: 'Learn | TiDB Developer Hub',
     description:
       'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
     url: 'https://www.pingcap.com/developers/learn/',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Learn | PingCAP Developer Hub',
+    title: 'Learn | TiDB Developer Hub',
     description:
       'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/developers/learn/',
-  title: 'Learn | PingCAP Developer Hub',
+  title: 'Learn | TiDB Developer Hub',
   description:
     'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
   pageType: 'WebPage',
@@ -51,7 +51,7 @@ const schema = buildPageSchema({
   image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
   extraSchemas: [
     techArticleSchema({
-      title: 'Learn | PingCAP Developer Hub',
+      title: 'Learn | TiDB Developer Hub',
       description:
         'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
       url: '/developers/learn/',
@@ -67,7 +67,7 @@ const learnCards = [
     title: 'Learn with Courses',
     description: 'Structured learning paths that explain how TiDB works from the inside out.',
     cta: {
-      text: 'Explore courses and guided learning',
+      text: 'Explore Courses and Guided Learning',
       href: 'https://www.pingcap.com/education/',
     },
     variant: 'teal' as const,
@@ -76,7 +76,7 @@ const learnCards = [
   {
     title: 'Learn by Doing',
     description: 'Hands-on labs that let you explore TiDB behavior in real environments.',
-    cta: { text: 'Try interactive labs', href: 'https://www.pingcap.com/education/#labs' },
+    cta: { text: 'Try Interactive Labs', href: 'https://www.pingcap.com/education/#labs' },
     variant: 'blue' as const,
     icon: <IconLearnDoing className="text-text-inverse" />,
   },
