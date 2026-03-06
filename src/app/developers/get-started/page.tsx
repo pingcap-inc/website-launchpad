@@ -133,7 +133,7 @@ const basics = [
     tag: 'Docs',
     tagColor: '#9E4EC4',
     title: 'Transactional + analytical workloads (HTAP)',
-    href: 'https://docs.pingcap.com/tidb/stable/htap-overview',
+    href: 'https://docs.pingcap.com/tidb/stable/explore-htap/',
   },
   {
     tag: 'Docs',
@@ -196,7 +196,7 @@ export default function GetStartedPage() {
           {/* ── Hero ── */}
           <HeroSection
             layout="image-right"
-            headline="Get Started width TiDB"
+            headline="Get Started with TiDB"
             subheadline="It scales horizontally, maintains strong consistency, and brings transactional, analytical, and AI (vector search) workloads together in one unified system — eliminating the need for sharding, separate databases or complex data pipelines."
             heroImage={{
               src: '/images/developers/get-started-banner.svg',

@@ -38,7 +38,8 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
       </span>
       {/* Icon */}
       <ArrowUpRight
-        size={17}
+        size={16}
+        strokeWidth={1.5}
         className="relative z-10 shrink-0 text-text-primary
                    transition-colors duration-500 ease-in-out
                    group-hover:text-text-inverse"

@@ -37,7 +37,7 @@ const frameworks: Framework[] = [
     id: 'hibernate',
     label: 'Hibernate',
     image: {
-      src: '/images/developers/hibernate.svg',
+      src: '/images/developers/hibernate.png',
       alt: 'Hibernate logo',
       width: 69,
       height: 52,
@@ -107,6 +107,8 @@ export function FrameworkSelector({
             aria-label={fw.label}
             title={fw.label}
             href={fw.href}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <Image
               src={fw.image.src}

@@ -97,7 +97,7 @@ const localOrCloud = [
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
     title: 'Quick Start with TiDB',
-    href: 'https://docs.pingcap.com/tidb/stable/get-started-with-tidb/',
+    href: 'https://docs.pingcap.com/tidb/stable/quick-start-with-tidb',
     cta: 'Read More',
   },
   {

@@ -71,7 +71,7 @@ const useCases = [
     icon: <IconRag />,
     title: 'Retrieval-Augmented Generation (RAG)',
     description: 'Building RAG applications with TiDB.',
-    href: 'https://www.pingcap.com/blog/building-rag-applications-with-tidb/',
+    href: 'https://www.pingcap.com/blog/dify-tidb-build-scalable-ai-agent-with-knowledge-base/',
     borderClass: 'border-brand-violet-medium',
   },
   {
