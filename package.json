@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "setup:env": "bash .ai/skills/quick-setup/scripts/setup-environment.sh",
+    "verify:env": "bash .ai/skills/quick-setup/scripts/verify-environment.sh",
     "lint": "eslint src/",
     "type-check": "tsc --noEmit",
     "prepare": "husky"

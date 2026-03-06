@@ -1,0 +1,4 @@
+interface:
+  display_name: "One-Click Setup"
+  short_description: "Set up website-launchpad dev environment with one command."
+  default_prompt: "Set up the local environment for website-launchpad and verify it can run."
