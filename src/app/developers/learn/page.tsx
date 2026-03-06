@@ -3,6 +3,7 @@ import { Header, Footer, JsonLd, HeroSection, ColorCard } from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { GraduationCap, FlaskConical } from 'lucide-react'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
+import { IconLearnCourse, IconLearnDoing } from '../_components/icons'
 
 export const metadata: Metadata = {
   title: 'Learn | PingCAP Developer Hub',
@@ -12,8 +13,8 @@ export const metadata: Metadata = {
     title: 'Learn | PingCAP Developer Hub',
     description:
       'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
-    url: 'https://www.pingcap.com/developer/learn/',
-    siteName: 'PingCAP',
+    url: 'https://www.pingcap.com/developers/learn/',
+    siteName: 'TiDB',
     images: [
       {
         url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
@@ -30,22 +31,22 @@ export const metadata: Metadata = {
     description:
       'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
-    creator: '@PingCAP',
+    site: '@PingCAP',
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/developer/learn/' },
+  alternates: { canonical: 'https://www.pingcap.com/developers/learn/' },
 }
 
 const schema = buildPageSchema({
-  path: '/developer/learn/',
+  path: '/developers/learn/',
   title: 'Learn | PingCAP Developer Hub',
   description:
     'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
   pageType: 'WebPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: 'Developer Hub', path: '/developer/' },
-    { name: 'Learn', path: '/developer/learn/' },
+    { name: 'Developer Hub', path: '/developers/' },
+    { name: 'Learn', path: '/developers/learn/' },
   ],
   image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
   extraSchemas: [
@@ -53,7 +54,7 @@ const schema = buildPageSchema({
       title: 'Learn | PingCAP Developer Hub',
       description:
         'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
-      url: '/developer/learn/',
+      url: '/developers/learn/',
       image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
       proficiencyLevel: 'Beginner',
       dateModified: '2026-02-28',
@@ -70,14 +71,14 @@ const learnCards = [
       href: 'https://www.pingcap.com/education/',
     },
     variant: 'teal' as const,
-    icon: <GraduationCap size={36} className="text-text-inverse" />,
+    icon: <IconLearnCourse className="text-text-inverse" />,
   },
   {
     title: 'Learn by Doing',
     description: 'Hands-on labs that let you explore TiDB behavior in real environments.',
     cta: { text: 'Try interactive labs', href: 'https://www.pingcap.com/education/#labs' },
     variant: 'blue' as const,
-    icon: <FlaskConical size={36} className="text-text-inverse" />,
+    icon: <IconLearnDoing className="text-text-inverse" />,
   },
 ]
 
@@ -92,19 +93,20 @@ export default function LearnPage() {
 
         <main>
           <HeroSection
+            layout="image-right"
             headline="Learn How TiDB Works"
             subheadline="Learn the core architecture concepts, validate compatibility assumptions, and evaluate performance characteristics through guided courses and hands-on labs."
             className="pb-10"
-            rightSlot={
-              <div className="hidden lg:flex justify-center items-start pt-10">
-                <p className="text-brand-red-light text-h3-sm italic">
-                  Illustrations to be updated
-                </p>
-              </div>
-            }
+            heroImage={{
+              src: '/images/developers/learn-banner.svg',
+              alt: 'Learn Banner',
+              width: 463,
+              height: 332,
+              align: 'right',
+            }}
           />
 
-          <section className="pb-section-sm lg:pb-section bg-bg-primary">
+          <section className="pb-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {learnCards.map((card) => (

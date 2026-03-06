@@ -23,7 +23,7 @@ export function SectionHeader({
   title,
   subtitle,
   h2Size = 'lg',
-  align = 'center',
+  align = 'left',
   className,
 }: SectionHeaderProps) {
   return (

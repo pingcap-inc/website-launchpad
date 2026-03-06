@@ -73,31 +73,52 @@ Usage rule:
 - PNG references are secondary for texture/lighting hints.
 - Auto-generated Hero visuals must follow these references for geometry density, color restraint, and spacing rhythm.
 
-### Variant A — Split layout (default)
+### Variant A — Split layout (`layout="split"`, default)
 
-Default Hero layout is split: left column for copy + CTAs, right column for a visual slot.
-The right slot can be a product screenshot, stats panel, form, or hero image.
+Default Hero layout. 1:1 grid, left column for copy + CTAs, right column for `rightSlot`.
+The right slot accepts a product screenshot, stats panel, form, or any ReactNode.
 
-If the user provides no specific visual for `rightSlot`, `HeroSection` now auto-selects a seeded
-image from `/public/images/hero/r/` (`Graphic-{1..22}-Dk.png`).
+If `rightSlot` is omitted, auto-selects a seeded image from `/public/images/hero/r/` (`Graphic-{1..22}-Dk.png`).
 Always use `-Dk` variants (dark-background site); never use `-Lt` variants unless explicitly requested.
 
 ```tsx
-// Optional override — only set rightSlot when a specific visual is required.
+<HeroSection headline="Build Scalable Applications" rightSlot={<HubSpotForm formId="..." />} />
 ```
 
-### Variant B — Centered layout
+### Variant B — Centered layout (`layout="centered"`)
 
 Use centered layout only when the page intent is message-first.
 Centered Hero defaults to no eyebrow.
 
 ```tsx
 <HeroSection
+  layout="centered"
   headline="Launch Fast. Scale without Limits."
   subheadline="Apply now and start building with the distributed SQL database that grows with you."
-  centered
+/>
+// centered={true} still works as a backward-compatible alias
+```
+
+### Variant C — Image-right layout (`layout="image-right"`)
+
+Left text (max-w 780px) + right hero image. Use for product or feature pages with a banner image.
+
+```tsx
+<HeroSection
+  layout="image-right"
+  headline="Get Started with TiDB"
+  heroImage={{
+    src: '/images/page/banner.png',
+    alt: 'TiDB banner',
+    width: 600,
+    height: 400,
+    align: 'right', // 'right' (default) | 'center'
+  }}
 />
 ```
+
+- Mobile: image stacks below text
+- Desktop: left text `max-w-[780px]`, right image `flex-1` with `justify-end` (right) or `justify-center` (center)
 
 ### Background image behavior (all Hero variants)
 
@@ -106,15 +127,15 @@ Centered Hero defaults to no eyebrow.
 <HeroSection backgroundImage={{ src: heroBg }} />
 
 // Default fallback (centered mode): pick seeded image from /public/images/hero/c/
-<HeroSection centered />
+<HeroSection layout="centered" />
 
 ```
 
 **Hero Rules:**
 
 - Background: `bg-bg-primary` (`#000000`), **no gradients of any kind**
-- Default layout is split (`grid-cols-1 lg:grid-cols-2`): left text+buttons, right visual slot
-- Right visual slot accepts illustration, form, chart, screenshot, or product panel
+- `layout` prop selects the variant; `centered={true}` is a deprecated alias for `layout="centered"`
+- `headline` supports `\n` for line breaks (rendered with `whitespace-pre-line`)
 - Split mode with no `rightSlot`: seeded default visual from `/public/images/hero/r/`
 - Centered layout: default **no eyebrow**
 - Centered layout with no `backgroundImage`: seeded default visual from `/public/images/hero/c/`
@@ -123,7 +144,7 @@ Centered Hero defaults to no eyebrow.
 - Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
 - Hero background image: no overlay layer by default
 - Hero image treatment: use `opacity-30` to `opacity-70`; no heavy blur, no strong color cast that competes with headline
-- Mobile fallback (`<md`): text-first reading order; split layout collapses to single column with copy above visual
+- Mobile fallback (`<md`): text-first reading order; split/image-right layout collapses to single column with copy above visual
 
 ---
 

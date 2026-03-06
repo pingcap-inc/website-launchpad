@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Header, Footer, JsonLd, SectionHeader, SecondaryButton, HeroSection } from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
 import { FrameworkSelector } from '../_components/FrameworkSelector'
 import { DeveloperResourceCard } from '../_components/DeveloperResourceCard'
+import { IconFrame, IconPoint, IconRocket } from '../_components/icons'
+import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
@@ -13,8 +16,8 @@ export const metadata: Metadata = {
     title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
     description:
       'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
-    url: 'https://www.pingcap.com/developer/build-data-apps/',
-    siteName: 'PingCAP',
+    url: 'https://www.pingcap.com/developers/build-data-apps/',
+    siteName: 'TiDB',
     images: [
       {
         url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
@@ -31,22 +34,22 @@ export const metadata: Metadata = {
     description:
       'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
-    creator: '@PingCAP',
+    site: '@PingCAP',
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/developer/build-data-apps/' },
+  alternates: { canonical: 'https://www.pingcap.com/developers/build-data-apps/' },
 }
 
 const schema = buildPageSchema({
-  path: '/developer/build-data-apps/',
+  path: '/developers/build-data-apps/',
   title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
   description:
     'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
   pageType: 'WebPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: 'Developer Hub', path: '/developer/' },
-    { name: 'Build Data Applications', path: '/developer/build-data-apps/' },
+    { name: 'Developer Hub', path: '/developers/' },
+    { name: 'Build Data Applications', path: '/developers/build-data-apps/' },
   ],
   image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
   extraSchemas: [
@@ -54,7 +57,7 @@ const schema = buildPageSchema({
       title: 'Build Data Applications with TiDB | PingCAP Developer Hub',
       description:
         'Hands-on examples, frameworks, and best practices for building real-world data applications with TiDB.',
-      url: '/developer/build-data-apps/',
+      url: '/developers/build-data-apps/',
       image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
       proficiencyLevel: 'Intermediate',
       dateModified: '2026-02-28',
@@ -65,23 +68,24 @@ const schema = buildPageSchema({
 const demoCards = [
   {
     title: 'E-commerce',
-    variant: 'violet' as const,
-    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-python-sqlalchemy/',
+    image: '/images/developers/demo-ecommerce.png',
+    href: 'https://github.com/Mini256/tidb-snowflake-e-commerce-demo',
   },
   {
     title: 'Insights into Automotive Sales',
-    variant: 'teal' as const,
-    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-golang-gorm/',
+    image: '/images/developers/demo-automotive.png',
+    href: 'https://car-sales-insight.vercel.app/',
   },
   {
     title: 'Simple S&P500 Dashboard',
-    variant: 'blue' as const,
-    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-nodejs-prisma/',
+    image: '/images/developers/demo-sp500.png',
+    href: 'https://sp500-insight.vercel.app/SP500',
   },
 ]
 
 const localOrCloud = [
   {
+    icon: <IconFrame />,
     tag: 'Blog',
     tagClass: 'bg-brand-red-light',
     title: 'Kickstart Your Distributed SQL Journey (TiUP Playground)',
@@ -89,6 +93,7 @@ const localOrCloud = [
     cta: 'Read More',
   },
   {
+    icon: <IconRocket />,
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
     title: 'Quick Start with TiDB',
@@ -96,7 +101,7 @@ const localOrCloud = [
     cta: 'Read More',
   },
   {
-    tag: 'Guide',
+    icon: <IconPoint />,
     tagClass: 'bg-brand-blue-medium',
     title: 'TiDB Cloud Free Trial',
     href: 'https://tidbcloud.com/free-trial/',
@@ -111,26 +116,26 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Schema Design Overview',
-        href: 'https://docs.pingcap.com/tidb/stable/dev-guide-overview/',
+        title: 'Schema design overview',
+        href: 'https://docs.pingcap.com/tidb/stable/dev-guide-schema-design-overview',
       },
       {
         tag: 'Blog',
         tagClass: 'bg-brand-red-light',
         title: 'Schema Management',
-        href: 'https://www.pingcap.com/blog/database-schema-design-best-practices/',
+        href: 'https://www.pingcap.com/article/mastering-schema-management-in-tidb-for-scalable-databases/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Create and Manage Database',
-        href: 'https://docs.pingcap.com/tidb/stable/sql-statement-create-database/',
+        title: 'Create and manage database',
+        href: 'https://docs.pingcap.com/tidb/stable/dev-guide-create-database/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Create and Manage Table',
-        href: 'https://docs.pingcap.com/tidb/stable/sql-statement-create-table/',
+        title: 'Create and manage table',
+        href: 'https://docs.pingcap.com/tidb/stable/dev-guide-create-table',
       },
     ],
   },
@@ -163,43 +168,29 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Secondary Index Creation (Supporting):',
-        href: 'https://docs.pingcap.com/tidb/stable/sql-statement-create-index/',
+        title: 'Secondary index creation (supporting):',
+        href: 'https://docs.pingcap.com/tidb/stable/dev-guide-create-secondary-indexes/',
       },
     ],
   },
 ]
 
-function DemoCard({
-  title,
-  variant,
-  href,
-}: {
-  title: string
-  variant: 'violet' | 'teal' | 'blue'
-  href: string
-}) {
-  const variantClass =
-    variant === 'violet'
-      ? 'from-brand-violet-dark to-brand-violet-bg'
-      : variant === 'teal'
-        ? 'from-brand-teal-dark to-brand-teal-bg'
-        : 'from-brand-blue-dark to-brand-blue-bg'
-
+function DemoCard({ title, image, href }: { title: string; image: string; href: string }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block border border-[#214865] overflow-hidden hover:-translate-y-1 transition-transform duration-200 ease-in-out"
+      className="group block overflow-hidden hover:-translate-y-1 transition-transform duration-200 ease-in-out"
     >
-      <div className={`h-44 bg-gradient-to-br ${variantClass} relative`}>
-        <div className="absolute left-4 top-4 font-mono text-label text-text-inverse bg-white/25 px-2 py-0.5">
+      <div className="h-[290px] relative">
+        <Image src={image} alt={title} fill className="object-cover" />
+        <div className="absolute left-8 top-12 font-mono text-label text-text-inverse bg-white/25 px-2 py-0.5">
           Demo
         </div>
-        <div className="absolute left-4 top-12 text-h3-sm font-bold text-text-inverse">{title}</div>
-        <div className="absolute -bottom-10 -right-10 w-44 h-44 rotate-45 bg-white/15" />
-        <div className="absolute -bottom-14 left-3 w-28 h-28 rotate-45 border border-white/30" />
+        <div className="absolute left-8 top-24 text-h3-lg font-bold text-text-inverse leading-tight max-w-[80%]">
+          {title}
+        </div>
       </div>
     </a>
   )
@@ -216,27 +207,27 @@ export default function BuildDataApplicationsPage() {
 
         <main>
           <HeroSection
+            layout="image-right"
             headline="Explore Real TiDB Applications"
             subheadline="Hands-on examples, demos, and frameworks that show how TiDB is used in real-world data applications."
-            className="pb-10"
-            rightSlot={
-              <div className="hidden lg:flex justify-center items-start pt-10">
-                <p className="text-brand-red-light text-h3-sm italic">
-                  Illustrations to be updated
-                </p>
-              </div>
-            }
+            heroImage={{
+              src: '/images/developers/build-data-apps-banner.png',
+              alt: 'Build Data Applications Banner',
+              width: 404,
+              height: 388,
+              align: 'center',
+            }}
           />
 
-          <section className="py-section-sm lg:py-section-sm bg-bg-primary">
+          <section className="py-section-sm lg:pb-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Start with a Working Example" align="left" />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {demoCards.map((card) => (
                   <DemoCard
                     key={card.title}
                     title={card.title}
-                    variant={card.variant}
+                    image={card.image}
                     href={card.href}
                   />
                 ))}
@@ -251,14 +242,17 @@ export default function BuildDataApplicationsPage() {
                 {localOrCloud.map((item) => (
                   <div key={item.title} className="h-full min-h-[180px] flex flex-col">
                     <div className="flex gap-4 mb-4">
-                      <span className="w-9 h-9 rounded-full border border-carbon-300 shrink-0" />
+                      <div className="mt-8">{item.icon}</div>
                       <div>
                         <span
-                          className={`font-mono text-label text-text-inverse px-2 py-0.5 ${item.tagClass}`}
+                          className={cn(
+                            'font-mono text-label text-text-inverse px-2 py-0.5',
+                            item.tag && item.tagClass
+                          )}
                         >
                           {item.tag}
                         </span>
-                        <h3 className="text-h3-sm font-bold text-text-inverse mt-2 mb-4 leading-snug max-w-[360px] flex-1">
+                        <h3 className="text-h3-lg font-bold text-text-inverse mt-2 mb-4 leading-snug max-w-[360px] flex-1">
                           {item.title}
                         </h3>
                         <SecondaryButton href={item.href}>{item.cta}</SecondaryButton>
@@ -283,7 +277,7 @@ export default function BuildDataApplicationsPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {goDeeperColumns.map((column) => (
                   <div key={column.title}>
-                    <p className="text-body-md text-text-inverse mb-4">{column.title}</p>
+                    <p className="text-h3-lg font-normal text-text-inverse mb-4">{column.title}</p>
                     <div className="grid grid-cols-1 gap-4">
                       {column.items.map((item) => (
                         <DeveloperResourceCard key={item.title} item={item} openInNewTab />
