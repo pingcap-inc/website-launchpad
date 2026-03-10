@@ -176,6 +176,7 @@ export default function BuildAiAppsPage() {
         <main>
           <HeroSection
             layout="image-right"
+            eyebrow="TiDB Developer Hub"
             headline="Build AI-Powered Applications with Real-Time Data and Vector Search"
             subheadline="Explore how to combine LLMs, embeddings, and live transactional data using TiDB through real AI applications, hands-on integrations, and proven design patterns."
             heroImage={{

@@ -208,6 +208,7 @@ export default function BuildDataApplicationsPage() {
         <main>
           <HeroSection
             layout="image-right"
+            eyebrow="TiDB Developer Hub"
             headline="Explore Real TiDB Applications"
             subheadline="Hands-on examples, demos, and frameworks that show how TiDB is used in real-world data applications."
             heroImage={{

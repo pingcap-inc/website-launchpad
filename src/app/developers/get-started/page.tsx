@@ -196,6 +196,7 @@ export default function GetStartedPage() {
           {/* ── Hero ── */}
           <HeroSection
             layout="image-right"
+            eyebrow="TiDB Developer Hub"
             headline="Get Started with TiDB"
             subheadline="It scales horizontally, maintains strong consistency, and brings transactional, analytical, and AI (vector search) workloads together in one unified system — eliminating the need for sharding, separate databases or complex data pipelines."
             heroImage={{

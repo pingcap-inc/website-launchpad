@@ -205,6 +205,7 @@ export default function MigrationCenterPage() {
         <main>
           <HeroSection
             layout="image-right"
+            eyebrow="TiDB Developer Hub"
             headline="Migrate to TiDB with Confidence"
             subheadline="The Migration Center helps you evaluate fit, plan safely, and migrate your data to TiDB with a clear, staged approach. It focuses on decisions, sequencing, and risk reduction, while routing detailed execution steps to the right documentation."
             className="pb-8"

@@ -94,6 +94,7 @@ export default function LearnPage() {
         <main>
           <HeroSection
             layout="image-right"
+            eyebrow="TiDB Developer Hub"
             headline="Learn How TiDB Works"
             subheadline="Learn the core architecture concepts, validate compatibility assumptions, and evaluate performance characteristics through guided courses and hands-on labs."
             className="pb-10"
