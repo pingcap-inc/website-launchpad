@@ -80,7 +80,7 @@ const schema = buildPageSchema({
   ],
 })
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+// âââ Data âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 const whyFeatures = [
   {
@@ -181,7 +181,7 @@ const nextSteps = [
   },
 ]
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// âââ Page âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 export default function GetStartedPage() {
   return (
@@ -193,12 +193,12 @@ export default function GetStartedPage() {
         <DeveloperSubnav />
 
         <main>
-          {/* ── Hero ── */}
+          {/* ââ Hero ââ */}
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
             headline="Get Started with TiDB"
-            subheadline="It scales horizontally, maintains strong consistency, and brings transactional, analytical, and AI (vector search) workloads together in one unified system — eliminating the need for sharding, separate databases or complex data pipelines."
+            subheadline="New to TiDB? Start by spinning up a free cluster, then pick a path based on what you want to build."
             heroImage={{
               src: '/images/developers/get-started-banner.svg',
               alt: 'Get Started Banner',
@@ -208,7 +208,7 @@ export default function GetStartedPage() {
             }}
           />
 
-          {/* ── Why TiDB ── */}
+          {/* ââ Why TiDB ââ */}
           <section className="py-section-sm lg:pb-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Why Do Developers Choose TiDB?" h2Size="md" align="left" />
@@ -226,7 +226,75 @@ export default function GetStartedPage() {
             </div>
           </section>
 
-          {/* ── Understand the Basics ── */}
+          {/* ââ Understand the Basics ââ */}
+          
+          {/* —— Featured Quick Starts —— */}
+          <section id="quick-starts" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
+                {/* Title — 1/3 */}
+                <div className="lg:pt-2">
+                  <SectionHeader
+                    title={'Featured\nQuick Starts'}
+                    h2Size="md"
+                    align="left"
+                    className="md:!mb-0"
+                  />
+                </div>
+                {/* Items — 2/3 */}
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  {[
+                    {
+                      tag: 'Docs',
+                      tagColor: '#9E4EC4',
+                      title: 'Create a TiDB Cloud Starter Cluster',
+                      description: 'Deploy and connect to a fully managed TiDB cluster in minutes.',
+                      href: 'https://docs.pingcap.com/tidbcloud/dev-guide-build-cluster-in-cloud/',
+                    },
+                    {
+                      tag: 'Docs',
+                      tagColor: '#9E4EC4',
+                      title: 'Connect to TiDB with Go-MySQL-Driver',
+                      description: 'Connect a Go application to TiDB using the MySQL driver.',
+                      href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-golang-sql-driver/',
+                    },
+                    {
+                      tag: 'Docs',
+                      tagColor: '#9E4EC4',
+                      title: 'Connect to TiDB with Python (Django)',
+                      description: 'Connect a Django application to TiDB using django-tidb.',
+                      href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-python-django/',
+                    },
+                    {
+                      tag: 'Docs',
+                      tagColor: '#9E4EC4',
+                      title: 'Connect to TiDB with Node.js (mysql2)',
+                      description: 'Connect a Node.js application to TiDB using the mysql2 driver.',
+                      href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-nodejs-mysql2/',
+                    },
+                  ].map((item) => (
+                    <div key={item.title} className="flex items-center gap-2 flex-wrap">
+                      <span
+                        className="font-mono text-label text-white w-[56px] text-center py-1 shrink-0"
+                        style={{ background: item.tagColor }}
+                      >
+                        {item.tag}
+                      </span>
+                      <a
+                        href={item.href}
+                        className="text-sm font-medium text-white hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.title}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section className="py-section-sm lg:py-section bg-gradient-dark-top">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
@@ -245,7 +313,7 @@ export default function GetStartedPage() {
                   </div>
                 </div>
 
-                {/* Right: article cards — 2 columns */}
+                {/* Right: article cards â 2 columns */}
                 <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-12">
                   {basics.map((item) => (
                     <div key={item.title} className="flex flex-col gap-4">
@@ -266,7 +334,7 @@ export default function GetStartedPage() {
             </div>
           </section>
 
-          {/* ── Choose What to Do Next ── */}
+          {/* ââ Choose What to Do Next ââ */}
           <section className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Choose What to Do Next" h2Size="sm" align="left" />

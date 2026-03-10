@@ -57,7 +57,7 @@ const schema = buildPageSchema({
   ],
 })
 
-// âââ Data âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ Data Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 const pathCards = [
   {
@@ -138,23 +138,9 @@ const quickStarts = [
   {
     tag: 'Docs',
     tagColor: '#9E4EC4', // brand-violet-medium
-    title: 'Create a TiDB Cloud Starter Cluster',
-    description: 'Deploy and connect to a fully managed TiDB cluster in minutes.',
-    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-build-cluster-in-cloud/',
-  },
-  {
-    tag: 'Docs',
-    tagColor: '#9E4EC4', // brand-violet-medium
     title: 'Quick Start Guide for TiDB Data Migration',
     description: 'Move data from MySQL to TiDB using Data Migration (DM) with minimal downtime.',
     href: 'https://docs.pingcap.com/tidb/v5.4/quick-start-with-dm/',
-  },
-  {
-    tag: 'Docs',
-    tagColor: '#9E4EC4', // brand-violet-medium
-    title: 'Connect to TiDB with Go-MySQL-Driver',
-    description: 'Connect a Go application to TiDB Cloud using the standard sql.DB driver.',
-    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-golang-sql-driver/',
   },
 ]
 
@@ -163,7 +149,7 @@ const tutorials = [
     tag: 'Blog',
     title: 'Kickstart Your Distributed SQL Journey',
     description:
-      'A step-by-step guide to running your first TiDB cluster on your local machine â no cloud account required.',
+      'A step-by-step guide to running your first TiDB cluster on your local machine Ã¢ÂÂ no cloud account required.',
     href: 'https://www.pingcap.com/blog/distributed-sql-tutorial-first-steps-setting-up-tidb-locally/',
     image: '/images/developers/tutorials-1.png',
   },
@@ -270,7 +256,7 @@ const community = [
   },
 ]
 
-// âââ Page âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ Page Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 export default function DeveloperHubPage() {
   return (
@@ -279,11 +265,11 @@ export default function DeveloperHubPage() {
       <Header />
 
       <div className="pt-[62px] lg:pt-20">
-        {/* ââ Secondary subnav ââ */}
+        {/* Ã¢ÂÂÃ¢ÂÂ Secondary subnav Ã¢ÂÂÃ¢ÂÂ */}
         <DeveloperSubnav />
 
         <main>
-          {/* ââ Hero ââ */}
+          {/* Ã¢ÂÂÃ¢ÂÂ Hero Ã¢ÂÂÃ¢ÂÂ */}
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
@@ -299,7 +285,7 @@ export default function DeveloperHubPage() {
             }}
           />
 
-          {/* ââ Choose Your Path ââ */}
+          {/* Ã¢ÂÂÃ¢ÂÂ Choose Your Path Ã¢ÂÂÃ¢ÂÂ */}
           <section className="py-section-sm lg:pb-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader className="md:mb-6" subtitle="Choose Your Path" align="left" />
@@ -318,11 +304,11 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* ââ Featured Quick Starts ââ */}
+          {/* Ã¢ÂÂÃ¢ÂÂ Featured Quick Starts Ã¢ÂÂÃ¢ÂÂ */}
           <section id="get-started" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
-                {/* Title â 1/3 */}
+                {/* Title Ã¢ÂÂ 1/3 */}
                 <div className="lg:pt-2">
                   <SectionHeader
                     title={'Featured\nQuick Starts'}
@@ -331,7 +317,7 @@ export default function DeveloperHubPage() {
                     className="md:!mb-0"
                   />
                 </div>
-                {/* Items â 2/3 */}
+                {/* Items Ã¢ÂÂ 2/3 */}
                 <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {quickStarts.map((item) => (
                     <div key={item.title} className="flex items-center gap-2 flex-wrap">
@@ -350,7 +336,7 @@ export default function DeveloperHubPage() {
           </section>
 
 
-          {/* ── How-To Guides ── */}
+          {/* ââ How-To Guides ââ */}
           <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
@@ -373,7 +359,7 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-                    {/* ââ Featured Tutorials ââ */}
+                    {/* Ã¢ÂÂÃ¢ÂÂ Featured Tutorials Ã¢ÂÂÃ¢ÂÂ */}
           <section id="learn" className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Featured Tutorials" align="left" />
@@ -403,7 +389,7 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* ââ Courses ââ */}
+          {/* Ã¢ÂÂÃ¢ÂÂ Courses Ã¢ÂÂÃ¢ÂÂ */}
           <section className="py-section-sm lg:py-section">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Developer Courses" />
@@ -427,7 +413,7 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* ââ Community ââ */}
+          {/* Ã¢ÂÂÃ¢ÂÂ Community Ã¢ÂÂÃ¢ÂÂ */}
           <section className="py-section-sm lg:py-section">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Join the TiDB Community" />
