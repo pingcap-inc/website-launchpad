@@ -58,12 +58,38 @@ const schema = buildPageSchema({
   ],
 })
 
+const howToGuides = [
+  {
+    title: 'How do I build a RAG pipeline with TiDB?',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-get-started-using-python',
+  },
+  {
+    title: 'How do I store and query vector embeddings?',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-get-started-using-sql',
+  },
+  {
+    title: 'How do I integrate TiDB with LangChain?',
+    href: 'https://docs.pingcap.com/tidb/stable/vector-search-integrate-with-langchain',
+  },
+  {
+    title: 'How do I integrate TiDB with LlamaIndex?',
+    href: 'https://docs.pingcap.com/tidb/stable/vector-search-integrate-with-llamaindex',
+  },
+  {
+    title: 'How do I run hybrid search in TiDB?',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-hybrid-search',
+  },
+  {
+    title: 'How do I improve vector search performance?',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-improve-performance',
+  },
+]
+
 const useCases = [
   {
     icon: <IconFinancial />,
     title: 'AI-Powered Financial Insights',
-    description:
-      'Building an AI-powered crypto ETF insight app with GPTs and TiDB Cloud Data Service.',
+    description: 'Building an AI-powered crypto ETF insight app with GPTs and TiDB Cloud Data Service.',
     href: 'https://www.pingcap.com/blog/building-ai-powered-crypto-etf-insights-app-gpts-tidb-cloud-data-service/',
     borderClass: 'border-brand-red-primary',
   },
@@ -169,16 +195,14 @@ export default function BuildAiAppsPage() {
     <>
       <JsonLd data={schema} />
       <Header />
-
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
-
         <main>
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
-            headline="Build AI Apps with TiDB"
-            subheadline="Explore how to combine LLMs, embeddings, and live transactional data using TiDB through real AI applications, hands-on integrations, and proven design patterns."
+            headline="Add AI features to your app using TiDB"
+            subheadline="Vector search, RAG patterns, and LLM integrations — with working code for LangChain, LlamaIndex, and raw SQL."
             heroImage={{
               src: '/images/developers/build-ai-apps-banner.svg',
               alt: 'Build AI Applications Banner',
@@ -187,6 +211,29 @@ export default function BuildAiAppsPage() {
               align: 'right',
             }}
           />
+
+          {/* ── How-To Guides ── */}
+          <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
+                <div className="lg:pt-2">
+                  <SectionHeader
+                    title={"How-To\nGuides"}
+                    h2Size="md"
+                    align="left"
+                    className="md:!mb-0"
+                  />
+                </div>
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {howToGuides.map((item) => (
+                    <div key={item.title}>
+                      <SecondaryButton href={item.href}>{item.title}</SecondaryButton>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
 
           <section className="py-section-sm lg:pb-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
@@ -211,9 +258,7 @@ export default function BuildAiAppsPage() {
                     <h3 className="text-h3-lg font-bold text-text-inverse mb-3 leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-body-md text-carbon-400 leading-relaxed">
-                      {item.description}
-                    </p>
+                    <p className="text-body-md text-carbon-400 leading-relaxed">{item.description}</p>
                   </a>
                 ))}
               </div>
@@ -222,11 +267,14 @@ export default function BuildAiAppsPage() {
 
           <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-              <SectionHeader
-                title="Get Hands-On with Vector Search"
-                subtitle="Store embeddings, run similarity search, and combine vector queries with SQL in one system."
-                align="left"
-              />
+              <div className="mb-8 md:mb-16">
+                <h2 className="text-h2-mb md:text-h2-lg font-bold leading-tight mb-4 text-text-inverse">
+                  Get Hands-On with Vector Search
+                </h2>
+                <p className="text-body-xl leading-relaxed text-text-secondary">
+                  Store embeddings, run similarity search, and combine vector queries with SQL in one system.
+                </p>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {vectorHandsOn.map((item) => (
                   <DeveloperResourceCard key={item.title} item={item} openInNewTab />
@@ -285,11 +333,14 @@ export default function BuildAiAppsPage() {
 
           <section className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-              <SectionHeader
-                title="Tune and Scale Vector Search"
-                subtitle="Use these when you need precise configuration or performance tuning."
-                align="left"
-              />
+              <div className="mb-8 md:mb-16">
+                <h2 className="text-h2-mb md:text-h2-lg font-bold leading-tight mb-4 text-text-inverse">
+                  Tune and Scale Vector Search
+                </h2>
+                <p className="text-body-xl leading-relaxed text-text-secondary">
+                  Use these when you need precise configuration or performance tuning.
+                </p>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {tuneAndScale.map((item) => (
                   <DeveloperResourceCard key={item.title} item={item} openInNewTab />
@@ -299,7 +350,6 @@ export default function BuildAiAppsPage() {
           </section>
         </main>
       </div>
-
       <Footer />
     </>
   )

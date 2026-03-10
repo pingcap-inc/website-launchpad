@@ -5,8 +5,7 @@ import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
 import { FrameworkSelector } from '../_components/FrameworkSelector'
 import { DeveloperResourceCard } from '../_components/DeveloperResourceCard'
-import { IconFrame, IconPoint, IconRocket } from '../_components/icons'
-import { cn } from '@/lib/utils'
+
 
 export const metadata: Metadata = {
   title: 'Build Data Applications with TiDB | TiDB Developer Hub',
@@ -65,6 +64,33 @@ const schema = buildPageSchema({
   ],
 })
 
+const howToGuides = [
+  {
+    title: 'How do I migrate from MySQL to TiDB?',
+    href: 'https://docs.pingcap.com/tidbcloud/migrate-from-mysql-using-data-migration',
+  },
+  {
+    title: 'How do I design a schema for TiDB?',
+    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-schema-design-overview',
+  },
+  {
+    title: 'How do I connect TiDB to my existing app?',
+    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-overview',
+  },
+  {
+    title: 'How do I choose a driver or ORM?',
+    href: 'https://docs.pingcap.com/tidb/stable/dev-guide-choose-driver-or-orm',
+  },
+  {
+    title: 'How do I run analytics on live transactional data?',
+    href: 'https://docs.pingcap.com/tidb/stable/quick-start-with-htap',
+  },
+  {
+    title: 'How do I apply index best practices in TiDB?',
+    href: 'https://docs.pingcap.com/tidb/stable/dev-guide-index-best-practice',
+  },
+]
+
 const demoCards = [
   {
     title: 'E-commerce',
@@ -85,27 +111,16 @@ const demoCards = [
 
 const localOrCloud = [
   {
-    icon: <IconFrame />,
     tag: 'Blog',
     tagClass: 'bg-brand-red-light',
     title: 'Kickstart Your Distributed SQL Journey (TiUP Playground)',
     href: 'https://www.pingcap.com/blog/distributed-sql-tutorial-first-steps-setting-up-tidb-locally/',
-    cta: 'Read More',
   },
   {
-    icon: <IconRocket />,
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
     title: 'Quick Start with TiDB',
     href: 'https://docs.pingcap.com/tidb/stable/quick-start-with-tidb',
-    cta: 'Read More',
-  },
-  {
-    icon: <IconPoint />,
-    tagClass: 'bg-brand-blue-medium',
-    title: 'TiDB Cloud Free Trial',
-    href: 'https://tidbcloud.com/free-trial/',
-    cta: 'Start Now',
   },
 ]
 
@@ -201,16 +216,14 @@ export default function BuildDataApplicationsPage() {
     <>
       <JsonLd data={schema} />
       <Header />
-
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
-
         <main>
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
-            headline="Explore Real TiDB Applications"
-            subheadline="Hands-on examples, demos, and frameworks that show how TiDB is used in real-world data applications."
+            headline="Build apps on TiDB"
+            subheadline="Connection guides by language and ORM, schema patterns, and demo apps you can run locally or fork on GitHub."
             heroImage={{
               src: '/images/developers/build-data-apps-banner.png',
               alt: 'Build Data Applications Banner',
@@ -220,17 +233,35 @@ export default function BuildDataApplicationsPage() {
             }}
           />
 
+          {/* ── How-To Guides ── */}
+          <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
+                <div className="lg:pt-2">
+                  <SectionHeader
+                    title={"How-To\nGuides"}
+                    h2Size="md"
+                    align="left"
+                    className="md:!mb-0"
+                  />
+                </div>
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {howToGuides.map((item) => (
+                    <div key={item.title}>
+                      <SecondaryButton href={item.href}>{item.title}</SecondaryButton>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section className="py-section-sm lg:pb-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Start with a Working Example" align="left" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {demoCards.map((card) => (
-                  <DemoCard
-                    key={card.title}
-                    title={card.title}
-                    image={card.image}
-                    href={card.href}
-                  />
+                  <DemoCard key={card.title} title={card.title} image={card.image} href={card.href} />
                 ))}
               </div>
             </div>
@@ -239,28 +270,37 @@ export default function BuildDataApplicationsPage() {
           <section className="py-section-sm lg:py-section-sm bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Try It Locally or in the Cloud" align="left" />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {localOrCloud.map((item) => (
-                  <div key={item.title} className="h-full min-h-[180px] flex flex-col">
-                    <div className="flex gap-4 mb-4">
-                      <div className="mt-8">{item.icon}</div>
-                      <div>
-                        <span
-                          className={cn(
-                            'font-mono text-label text-text-inverse px-2 py-0.5',
-                            item.tag && item.tagClass
-                          )}
-                        >
-                          {item.tag}
-                        </span>
-                        <h3 className="text-h3-lg font-bold text-text-inverse mt-2 mb-4 leading-snug max-w-[360px] flex-1">
-                          {item.title}
-                        </h3>
-                        <SecondaryButton href={item.href}>{item.cta}</SecondaryButton>
-                      </div>
-                    </div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
+                {/* Left: two resource cards */}
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {localOrCloud.map((item) => (
+                    <DeveloperResourceCard key={item.title} item={item} openInNewTab />
+                  ))}
+                </div>
+                {/* Right: TiDB Cloud Free Trial CTA */}
+                <a
+                  href="https://tidbcloud.com/free-trial/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col justify-between bg-brand-red-primary hover:bg-brand-red-dark border border-brand-red-primary hover:-translate-y-1 transition-all duration-200 ease-in-out p-8 min-h-[160px]"
+                >
+                  <div>
+                    <span className="font-mono text-label text-white bg-white/20 px-2 py-0.5 mb-4 inline-block">
+                      Free Trial
+                    </span>
+                    <h3 className="text-h2-mb md:text-h2-sm font-bold text-white leading-tight mt-3 mb-3">
+                      TiDB Cloud Free Trial
+                    </h3>
+                    <p className="text-body-md text-white/80 leading-relaxed">
+                      Spin up a fully managed TiDB cluster in minutes. No credit card required.
+                    </p>
                   </div>
-                ))}
+                  <div className="mt-6">
+                    <span className="inline-flex items-center gap-2 border border-white text-white font-medium px-4 py-2 group-hover:bg-white group-hover:text-brand-red-primary transition-colors duration-200">
+                      Start for Free ↗
+                    </span>
+                  </div>
+                </a>
               </div>
             </div>
           </section>
@@ -291,7 +331,6 @@ export default function BuildDataApplicationsPage() {
           </section>
         </main>
       </div>
-
       <Footer />
     </>
   )
