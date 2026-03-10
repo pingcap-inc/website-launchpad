@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import type React from 'react'
-import { Header, Footer, JsonLd, SectionHeader, HeroSection } from '@/components'
+import { Header, Footer, JsonLd, SectionHeader, HeroSection, SecondaryButton } from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
 import {
@@ -21,12 +21,10 @@ import {
 
 export const metadata: Metadata = {
   title: 'Migration Center | TiDB Developer Hub',
-  description:
-    'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+  description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
   openGraph: {
     title: 'Migration Center | TiDB Developer Hub',
-    description:
-      'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+    description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
     url: 'https://www.pingcap.com/developers/migration-center/',
     siteName: 'TiDB',
     images: [
@@ -42,8 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Migration Center | TiDB Developer Hub',
-    description:
-      'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+    description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
     site: '@PingCAP',
   },
@@ -54,8 +51,7 @@ export const metadata: Metadata = {
 const schema = buildPageSchema({
   path: '/developers/migration-center/',
   title: 'Migration Center | TiDB Developer Hub',
-  description:
-    'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+  description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
   pageType: 'WebPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
@@ -66,8 +62,7 @@ const schema = buildPageSchema({
   extraSchemas: [
     techArticleSchema({
       title: 'Migration Center | TiDB Developer Hub',
-      description:
-        'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+      description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
       url: '/developers/migration-center/',
       image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
       proficiencyLevel: 'Intermediate',
@@ -76,9 +71,24 @@ const schema = buildPageSchema({
   ],
 })
 
+const howToGuides = [
+  {
+    title: 'How do I check MySQL compatibility before migrating?',
+    href: 'https://docs.pingcap.com/tidbcloud/tidb-cloud-migration-overview',
+  },
+  {
+    title: 'How do I migrate from MySQL using Data Migration?',
+    href: 'https://docs.pingcap.com/tidbcloud/migrate-from-mysql-using-data-migration',
+  },
+  {
+    title: 'How do I migrate using AWS DMS?',
+    href: 'https://docs.pingcap.com/tidbcloud/migrate-from-mysql-using-data-migration',
+  },
+]
+
 const journey = [
   {
-    title: 'Evaluate',
+    title: 'Step 1: Evaluate',
     subtitle: 'Is TiDB the right fit for your workload?',
     description:
       'Understand MySQL compatibility, supported scenarios, and key differences before committing.',
@@ -106,7 +116,7 @@ const journey = [
     ],
   },
   {
-    title: 'Plan',
+    title: 'Step 2: Plan',
     subtitle: 'Design a safe migration before touching production.',
     description: 'Choose the right strategy, understand tradeoffs, and plan for rollback.',
     cards: [
@@ -128,9 +138,10 @@ const journey = [
     ],
   },
   {
-    title: 'Execute',
+    title: 'Step 3: Execute',
     subtitle: 'Move data using the right tools for your scenario.',
-    description: 'High-level guidance on what tool to use when with links to step-by-step docs.',
+    description:
+      'High-level guidance on what tool to use when with links to step-by-step docs.',
     cards: [
       {
         title: 'Migrate from MySQL Using Data Migration (DM)',
@@ -155,7 +166,7 @@ const journey = [
     ],
   },
   {
-    title: 'Validate & Cut Over',
+    title: 'Step 4: Validate & Cut Over',
     subtitle: 'Go live with confidence.',
     description: 'Verify correctness, consistency, and readiness before cutover.',
     cards: [
@@ -198,16 +209,14 @@ export default function MigrationCenterPage() {
     <>
       <JsonLd data={schema} />
       <Header />
-
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
-
         <main>
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
             headline="Migrate to TiDB with Confidence"
-            subheadline="The Migration Center helps you evaluate fit, plan safely, and migrate your data to TiDB with a clear, staged approach. It focuses on decisions, sequencing, and risk reduction, while routing detailed execution steps to the right documentation."
+            subheadline="Coming from MySQL? Check compatibility first, then follow the guided path from staging to cutover. Nothing touches production until you say so."
             className="pb-8"
             heroImage={{
               src: '/images/developers/migrate-banner.svg',
@@ -218,10 +227,32 @@ export default function MigrationCenterPage() {
             }}
           />
 
+          {/* ── How-To Guides ── */}
+          <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
+                <div className="lg:pt-2">
+                  <SectionHeader
+                    title={"How-To\nGuides"}
+                    h2Size="md"
+                    align="left"
+                    className="md:!mb-0"
+                  />
+                </div>
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {howToGuides.map((item) => (
+                    <div key={item.title}>
+                      <SecondaryButton href={item.href}>{item.title}</SecondaryButton>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section className="py-section-sm lg:pb-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Migration Journey" align="left" />
-
               <div className="space-y-10 lg:space-y-12">
                 {journey.map((stage) => (
                   <div
@@ -235,11 +266,8 @@ export default function MigrationCenterPage() {
                       <h4 className="text-h3-lg font-bold text-text-inverse leading-snug mb-3">
                         {stage.subtitle}
                       </h4>
-                      <p className="text-body-md text-carbon-400 leading-relaxed">
-                        {stage.description}
-                      </p>
+                      <p className="text-body-md text-carbon-400 leading-relaxed">{stage.description}</p>
                     </div>
-
                     <div className="flex flex-wrap gap-3">
                       {stage.cards.map((card) => (
                         <MigrationDocCard key={card.title} card={card} />
@@ -252,7 +280,6 @@ export default function MigrationCenterPage() {
           </section>
         </main>
       </div>
-
       <Footer />
     </>
   )
