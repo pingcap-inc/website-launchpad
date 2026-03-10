@@ -92,51 +92,24 @@ const pathCards = [
 
 const howToGuides = [
   {
-    tag: 'Docs',
-    tagColor: '#9E4EC4',
     title: 'How do I migrate from MySQL to TiDB?',
     href: 'https://docs.pingcap.com/tidbcloud/migrate-from-mysql-using-data-migration',
   },
   {
-    tag: 'Docs',
-    tagColor: '#9E4EC4',
     title: 'How do I build a RAG pipeline with TiDB?',
     href: 'https://docs.pingcap.com/tidbcloud/vector-search-get-started-using-python',
   },
   {
-    tag: 'Docs',
-    tagColor: '#9E4EC4',
     title: 'How do I run analytics on live transactional data?',
     href: 'https://docs.pingcap.com/tidb/stable/quick-start-with-htap',
   },
   {
-    tag: 'Docs',
-    tagColor: '#9E4EC4',
     title: 'How do I connect TiDB to my existing app?',
     href: 'https://docs.pingcap.com/tidbcloud/dev-guide-overview',
   },
   {
-    tag: 'Docs',
-    tagColor: '#9E4EC4',
     title: 'How do I store and query vector embeddings in TiDB?',
     href: 'https://docs.pingcap.com/tidbcloud/vector-search-get-started-using-sql',
-  },
-]
-
-const quickStarts = [
-  {
-    tag: 'GitHub',
-    tagColor: '#A8752B', // brand-mango-600
-    title: 'Quick Start for AI with TiDB',
-    description: 'Get started with vector search and build your first AI-powered TiDB application.',
-    href: 'https://pingcap.github.io/ai/quickstart/',
-  },
-  {
-    tag: 'Docs',
-    tagColor: '#9E4EC4', // brand-violet-medium
-    title: 'Quick Start Guide for TiDB Data Migration',
-    description: 'Move data from MySQL to TiDB using Data Migration (DM) with minimal downtime.',
-    href: 'https://docs.pingcap.com/tidb/v5.4/quick-start-with-dm/',
   },
 ]
 
@@ -295,37 +268,6 @@ export default function DeveloperHubPage() {
                     cta={card.cta}
                   />
                 ))}
-              </div>
-            </div>
-          </section>
-
-          {/* ── Featured Quick Starts ── */}
-          <section id="get-started" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
-                {/* Title – 1/3 */}
-                <div className="lg:pt-2">
-                  <SectionHeader
-                    title={'Featured\nQuick Starts'}
-                    h2Size="md"
-                    align="left"
-                    className="md:!mb-0"
-                  />
-                </div>
-                {/* Items – 2/3 */}
-                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
-                  {quickStarts.map((item) => (
-                    <div key={item.title} className="flex items-center gap-2 flex-wrap">
-                      <span
-                        className="font-mono text-label text-white w-[56px] text-center py-1 shrink-0"
-                        style={{ background: item.tagColor }}
-                      >
-                        {item.tag}
-                      </span>
-                      <SecondaryButton href={item.href}>{item.title}</SecondaryButton>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </section>
