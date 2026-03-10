@@ -15,11 +15,11 @@ import { IconOltpD, IconSelfManagedC, IconBuildAi, IconMigration } from './_comp
 import { buildPageSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'Developer Hub â Build Real-Time Applications with TiDB | TiDB',
+  title: 'Developer Hub: Build Real-Time Applications with TiDB | TiDB',
   description:
-    'Everything you need to build scalable, real-time applications with TiDB. Quick starts, tutorials, courses, and community resources for developers.',
+    'Everything you need to build scalable, real-time applications ith TiDB. Quick starts, tutorials, courses, and community resources for developers.',
   openGraph: {
-    title: 'Developer Hub â Build Real-Time Applications with TiDB | TiDB',
+    title: 'Developer Hub: Build Real-Time Applications with TiDB | TiDB',
     description:
       'Everything you need to build scalable, real-time applications with TiDB. Quick starts, tutorials, courses, and community resources for developers.',
     url: 'https://www.pingcap.com/developers/',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Developer Hub â Build Real-Time Applications with TiDB | TiDB',
+    title: 'Developer Hub: Build Real-Time Applications with TiDB | TiDB',
     description:
       'Everything you need to build scalable, real-time applications with TiDB. Quick starts, tutorials, courses, and community resources for developers.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
@@ -286,6 +286,7 @@ export default function DeveloperHubPage() {
           {/* ââ Hero ââ */}
           <HeroSection
             layout="image-right"
+            eyebrow="TiDB Developer Hub"
             headline={'Build Scalable, \nReal-Time Applications with TiDB'}
             primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
             secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
@@ -402,7 +403,7 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* ââ Developer Courses ââ */}
+          {/* ââ Courses ââ */}
           <section className="py-section-sm lg:py-section">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Developer Courses" />
