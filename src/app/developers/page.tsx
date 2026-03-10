@@ -243,7 +243,7 @@ export default function DeveloperHubPage() {
             headline="Everything you need to build on TiDB"
             subheadline="Working examples, connection guides, migration paths, and courses — pick a section based on where you are."
             primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
-            secondaryCta={{ text: 'Browse the Docs', href: 'https://docs.pingcap.com/' }}
+            secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
             heroImage={{
               src: '/images/developers/developers-banner.svg',
               alt: 'Developers Banner',
@@ -275,7 +275,7 @@ export default function DeveloperHubPage() {
           {/* ── How-To Guides ── */}
           <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
                 <div className="lg:pt-2">
                   <SectionHeader
                     title={"How-To\nGuides"}
@@ -284,11 +284,22 @@ export default function DeveloperHubPage() {
                     className="md:!mb-0"
                   />
                 </div>
-                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {howToGuides.map((item) => (
-                    <div key={item.title}>
-                      <SecondaryButton href={item.href}>{item.title}</SecondaryButton>
-                    </div>
+                    <a
+                      key={item.title}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between gap-4 border-l-4 border-brand-red-primary bg-bg-secondary hover:bg-carbon-800 px-5 py-4 transition-colors duration-200 ease-in-out"
+                    >
+                      <p className="text-body-lg font-semibold text-text-inverse leading-snug">
+                        {item.title}
+                      </p>
+                      <span className="text-brand-red-primary text-lg shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
+                        ↗
+                      </span>
+                    </a>
                   ))}
                 </div>
               </div>
