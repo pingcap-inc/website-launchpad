@@ -57,39 +57,35 @@ const schema = buildPageSchema({
   ],
 })
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ Data Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ─── Data ──────────────────────────────────────────────────────────────────────
 
 const pathCards = [
   {
     variant: 'red' as const,
     icon: <IconOltpD />,
     title: 'Get Started',
-    description:
-      'New to TiDB? Learn what it is, how it works, and run your first cluster in minutes.',
+    description: 'New to TiDB? Learn what it is, how it works, and run your first cluster in minutes.',
     cta: { text: 'Explore', href: '/developers/get-started' },
   },
   {
     variant: 'violet' as const,
     icon: <IconSelfManagedC />,
     title: 'Build Data Applications',
-    description:
-      'Connect services, model data, and run transactional and analytical workloads in one system',
+    description: 'Connect services, model data, and run transactional and analytical workloads in one system.',
     cta: { text: 'Explore', href: '/developers/build-data-apps' },
   },
   {
     variant: 'blue' as const,
     icon: <IconBuildAi />,
     title: 'Build AI Applications',
-    description:
-      'Build RAG, semantic search, and agentic AI apps using vector search and real-time data.',
+    description: 'Build RAG, semantic search, and agentic AI apps using vector search and real-time data.',
     cta: { text: 'Explore', href: '/developers/build-ai-apps' },
   },
   {
     variant: 'teal' as const,
     icon: <IconMigration />,
     title: 'Migration Center',
-    description:
-      'Evaluate compatibility, plan safely, and migrate from MySQL or other databases to TiDB',
+    description: 'Evaluate compatibility, plan safely, and migrate from MySQL or other databases to TiDB.',
     cta: { text: 'Explore', href: '/developers/migration-center' },
   },
 ]
@@ -149,7 +145,7 @@ const tutorials = [
     tag: 'Blog',
     title: 'Kickstart Your Distributed SQL Journey',
     description:
-      'A step-by-step guide to running your first TiDB cluster on your local machine Ã¢ÂÂ no cloud account required.',
+      'A step-by-step guide to running your first TiDB cluster on your local machine — no cloud account required.',
     href: 'https://www.pingcap.com/blog/distributed-sql-tutorial-first-steps-setting-up-tidb-locally/',
     image: '/images/developers/tutorials-1.png',
   },
@@ -219,7 +215,7 @@ const courses = [
     ),
     title: 'Architect & DBA: Migration to TiDB Learning Path',
     description:
-      'Understand the migration process to TiDB, equipping yourself with skills to transition databases smoothly and efficiently.',
+      'A self-paced course covering TiDB architecture, distributed transactions, HTAP internals, and zero-downtime operations — with hands-on labs and a free certification exam.',
     href: 'https://www.pingcap.com/education/#migration_path',
     borderColor: 'border-brand-blue-medium',
   },
@@ -241,9 +237,9 @@ const community = [
     path: 'M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z',
   },
   {
-    name: 'reddit',
+    name: 'Reddit',
     href: 'https://www.reddit.com/r/TiDB/',
-    cta: 'Join reddit',
+    cta: 'Join Reddit',
     bgColor: 'bg-brand-blue-bg',
     path: 'M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z',
   },
@@ -256,24 +252,23 @@ const community = [
   },
 ]
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ Page Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ─── Page ──────────────────────────────────────────────────────────────────────
 
 export default function DeveloperHubPage() {
   return (
     <>
       <JsonLd data={schema} />
       <Header />
-
       <div className="pt-[62px] lg:pt-20">
-        {/* Ã¢ÂÂÃ¢ÂÂ Secondary subnav Ã¢ÂÂÃ¢ÂÂ */}
+        {/* ── Secondary subnav ── */}
         <DeveloperSubnav />
-
         <main>
-          {/* Ã¢ÂÂÃ¢ÂÂ Hero Ã¢ÂÂÃ¢ÂÂ */}
+          {/* ── Hero ── */}
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
-            headline={'Build Scalable, \nReal-Time Applications with TiDB'}
+            headline="Everything you need to build on TiDB"
+            subheadline="Working examples, connection guides, migration paths, and courses — pick a section based on where you are."
             primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
             secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
             heroImage={{
@@ -285,7 +280,7 @@ export default function DeveloperHubPage() {
             }}
           />
 
-          {/* Ã¢ÂÂÃ¢ÂÂ Choose Your Path Ã¢ÂÂÃ¢ÂÂ */}
+          {/* ── Choose Your Path ── */}
           <section className="py-section-sm lg:pb-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader className="md:mb-6" subtitle="Choose Your Path" align="left" />
@@ -304,11 +299,11 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* Ã¢ÂÂÃ¢ÂÂ Featured Quick Starts Ã¢ÂÂÃ¢ÂÂ */}
+          {/* ── Featured Quick Starts ── */}
           <section id="get-started" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
-                {/* Title Ã¢ÂÂ 1/3 */}
+                {/* Title – 1/3 */}
                 <div className="lg:pt-2">
                   <SectionHeader
                     title={'Featured\nQuick Starts'}
@@ -317,7 +312,7 @@ export default function DeveloperHubPage() {
                     className="md:!mb-0"
                   />
                 </div>
-                {/* Items Ã¢ÂÂ 2/3 */}
+                {/* Items – 2/3 */}
                 <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {quickStarts.map((item) => (
                     <div key={item.title} className="flex items-center gap-2 flex-wrap">
@@ -335,8 +330,7 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-
-          {/* ââ How-To Guides ââ */}
+          {/* ── How-To Guides ── */}
           <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
@@ -359,7 +353,7 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-                    {/* Ã¢ÂÂÃ¢ÂÂ Featured Tutorials Ã¢ÂÂÃ¢ÂÂ */}
+          {/* ── Featured Tutorials ── */}
           <section id="learn" className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Featured Tutorials" align="left" />
@@ -389,7 +383,7 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* Ã¢ÂÂÃ¢ÂÂ Courses Ã¢ÂÂÃ¢ÂÂ */}
+          {/* ── Courses ── */}
           <section className="py-section-sm lg:py-section">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Developer Courses" />
@@ -413,7 +407,7 @@ export default function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* Ã¢ÂÂÃ¢ÂÂ Community Ã¢ÂÂÃ¢ÂÂ */}
+          {/* ── Community ── */}
           <section className="py-section-sm lg:py-section">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Join the TiDB Community" />
@@ -449,7 +443,6 @@ export default function DeveloperHubPage() {
           </section>
         </main>
       </div>
-
       <Footer />
     </>
   )
