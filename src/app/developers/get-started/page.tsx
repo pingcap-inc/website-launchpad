@@ -11,6 +11,7 @@ import {
 } from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
+import { DeveloperResourceCard } from '../_components/DeveloperResourceCard'
 import {
   IconSeamless,
   IconMysql,
@@ -80,7 +81,7 @@ const schema = buildPageSchema({
   ],
 })
 
-// âââ Data âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── Data ──────────────────────────────────────────────────────────────────────
 
 const whyFeatures = [
   {
@@ -116,34 +117,61 @@ const whyFeatures = [
   },
 ]
 
+const quickStarts = [
+  {
+    tag: 'Docs',
+    tagClass: 'bg-brand-violet-medium',
+    title: 'Create a TiDB Cloud Starter Cluster',
+    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-build-cluster-in-cloud/',
+  },
+  {
+    tag: 'Docs',
+    tagClass: 'bg-brand-violet-medium',
+    title: 'Connect to TiDB with Go-MySQL-Driver',
+    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-golang-sql-driver/',
+  },
+  {
+    tag: 'Docs',
+    tagClass: 'bg-brand-violet-medium',
+    title: 'Connect to TiDB with Python (Django)',
+    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-python-django/',
+  },
+  {
+    tag: 'Docs',
+    tagClass: 'bg-brand-violet-medium',
+    title: 'Connect to TiDB with Node.js (mysql2)',
+    href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-nodejs-mysql2/',
+  },
+]
+
 const basics = [
   {
     tag: 'Blog',
-    tagColor: '#F35048',
+    tagClass: 'bg-brand-red-light',
     title: 'How TiDB Compares to Other Databases',
     href: 'https://www.pingcap.com/article/choosing-the-best-open-source-database-tidb-vs-mysql-postgresql-mongodb/',
   },
   {
     tag: 'Docs',
-    tagColor: '#9E4EC4',
+    tagClass: 'bg-brand-violet-medium',
     title: 'How TiDB Works Under the Hood',
     href: 'https://docs.pingcap.com/tidb/stable/tidb-architecture',
   },
   {
     tag: 'Docs',
-    tagColor: '#9E4EC4',
+    tagClass: 'bg-brand-violet-medium',
     title: 'Transactional + analytical workloads (HTAP)',
     href: 'https://docs.pingcap.com/tidb/stable/explore-htap/',
   },
   {
     tag: 'Docs',
-    tagColor: '#9E4EC4',
+    tagClass: 'bg-brand-violet-medium',
     title: 'Vector Search',
     href: 'https://docs.pingcap.com/tidb/stable/vector-search-overview',
   },
   {
     tag: 'Infographic',
-    tagColor: '#513669',
+    tagClass: 'bg-brand-violet-dark',
     title: 'When Teams Outgrow MySQL',
     href: 'https://static.pingcap.com/files/2025/03/18161435/Infographic-6-Signs-Youve-Outgrown-Traditional-MySQL.pdf',
   },
@@ -181,19 +209,17 @@ const nextSteps = [
   },
 ]
 
-// âââ Page âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── Page ──────────────────────────────────────────────────────────────────────
 
 export default function GetStartedPage() {
   return (
     <>
       <JsonLd data={schema} />
       <Header />
-
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
-
         <main>
-          {/* ââ Hero ââ */}
+          {/* ── Hero ── */}
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
@@ -208,7 +234,7 @@ export default function GetStartedPage() {
             }}
           />
 
-          {/* ââ Why TiDB ââ */}
+          {/* ── Why TiDB ── */}
           <section className="py-section-sm lg:pb-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Why Do Developers Choose TiDB?" h2Size="md" align="left" />
@@ -226,13 +252,10 @@ export default function GetStartedPage() {
             </div>
           </section>
 
-          {/* ââ Understand the Basics ââ */}
-          
-          {/* —— Featured Quick Starts —— */}
+          {/* ── Featured Quick Starts ── */}
           <section id="quick-starts" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
-                {/* Title — 1/3 */}
                 <div className="lg:pt-2">
                   <SectionHeader
                     title={'Featured\nQuick Starts'}
@@ -241,60 +264,16 @@ export default function GetStartedPage() {
                     className="md:!mb-0"
                   />
                 </div>
-                {/* Items — 2/3 */}
-                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
-                  {[
-                    {
-                      tag: 'Docs',
-                      tagColor: '#9E4EC4',
-                      title: 'Create a TiDB Cloud Starter Cluster',
-                      description: 'Deploy and connect to a fully managed TiDB cluster in minutes.',
-                      href: 'https://docs.pingcap.com/tidbcloud/dev-guide-build-cluster-in-cloud/',
-                    },
-                    {
-                      tag: 'Docs',
-                      tagColor: '#9E4EC4',
-                      title: 'Connect to TiDB with Go-MySQL-Driver',
-                      description: 'Connect a Go application to TiDB using the MySQL driver.',
-                      href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-golang-sql-driver/',
-                    },
-                    {
-                      tag: 'Docs',
-                      tagColor: '#9E4EC4',
-                      title: 'Connect to TiDB with Python (Django)',
-                      description: 'Connect a Django application to TiDB using django-tidb.',
-                      href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-python-django/',
-                    },
-                    {
-                      tag: 'Docs',
-                      tagColor: '#9E4EC4',
-                      title: 'Connect to TiDB with Node.js (mysql2)',
-                      description: 'Connect a Node.js application to TiDB using the mysql2 driver.',
-                      href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-nodejs-mysql2/',
-                    },
-                  ].map((item) => (
-                    <div key={item.title} className="flex items-center gap-2 flex-wrap">
-                      <span
-                        className="font-mono text-label text-white w-[56px] text-center py-1 shrink-0"
-                        style={{ background: item.tagColor }}
-                      >
-                        {item.tag}
-                      </span>
-                      <a
-                        href={item.href}
-                        className="text-sm font-medium text-white hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {item.title}
-                      </a>
-                    </div>
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {quickStarts.map((item) => (
+                    <DeveloperResourceCard key={item.title} item={item} openInNewTab />
                   ))}
                 </div>
               </div>
             </div>
           </section>
 
+          {/* ── Understand the Basics ── */}
           <section className="py-section-sm lg:py-section bg-gradient-dark-top">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
@@ -312,29 +291,17 @@ export default function GetStartedPage() {
                     />
                   </div>
                 </div>
-
-                {/* Right: article cards â 2 columns */}
-                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-12">
+                {/* Right: resource cards — 2 columns */}
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {basics.map((item) => (
-                    <div key={item.title} className="flex flex-col gap-4">
-                      <span
-                        className="font-mono text-label text-white self-start px-2 py-0.5"
-                        style={{ background: item.tagColor }}
-                      >
-                        {item.tag}
-                      </span>
-                      <h3 className="text-h3-lg font-bold text-text-inverse leading-snug flex-1">
-                        {item.title}
-                      </h3>
-                      <SecondaryButton href={item.href}>Read More</SecondaryButton>
-                    </div>
+                    <DeveloperResourceCard key={item.title} item={item} openInNewTab />
                   ))}
                 </div>
               </div>
             </div>
           </section>
 
-          {/* ââ Choose What to Do Next ââ */}
+          {/* ── Choose What to Do Next ── */}
           <section className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader title="Choose What to Do Next" h2Size="sm" align="left" />
@@ -353,7 +320,6 @@ export default function GetStartedPage() {
             </div>
           </section>
         </main>
-
         <Footer />
       </div>
     </>
