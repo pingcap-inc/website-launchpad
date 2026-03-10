@@ -243,7 +243,7 @@ export default function DeveloperHubPage() {
             headline="Everything you need to build on TiDB"
             subheadline="Working examples, connection guides, migration paths, and courses — pick a section based on where you are."
             primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
-            secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
+            secondaryCta={{ text: 'Browse the Docs', href: 'https://docs.pingcap.com/' }}
             heroImage={{
               src: '/images/developers/developers-banner.svg',
               alt: 'Developers Banner',
