@@ -233,7 +233,7 @@ const courses = [
     ),
     title: 'Architect & DBA: Migration to TiDB Learning Path',
     description:
-      'Build AI applications using TiDB Cloud as a unified storage layer, mastering Retrieval-Augmented Generation and Text-to-SQL with hands-on labs featuring Amazon Bedrock and OpenAI.',
+      'Understand the migration process to TiDB, equipping yourself with skills to transition databases smoothly and efficiently.',
     href: 'https://www.pingcap.com/education/#migration_path',
     borderColor: 'border-brand-blue-medium',
   },
