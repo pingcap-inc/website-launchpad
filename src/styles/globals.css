@@ -83,9 +83,26 @@
   animation: logo-marquee 28s linear infinite;
 }
 
+@keyframes glow-sweep {
+  from {
+    background-position: 200% 50%;
+  }
+  to {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-glow-sweep {
+  background-size: 200% 100%;
+  animation: glow-sweep 2.8s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-logo-marquee {
     animation: none;
     transform: translateX(100%);
+  }
+  .animate-glow-sweep {
+    animation: none;
   }
 }

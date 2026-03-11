@@ -170,6 +170,7 @@ export default function GlossaryPage() {
           eyebrow="GLOSSARY"
           headline="Database Terms, Defined"
           subheadline="Clear definitions of distributed database, cloud-native, and TiDB-specific terminology — written for engineers, not marketers."
+          centered
         />
 
         {/* Term sections */}

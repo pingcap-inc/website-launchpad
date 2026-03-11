@@ -11,6 +11,7 @@ import {
   TestimonialsSection,
   FeatureGridSection,
 } from '@/components'
+import { Users, Podcast } from 'lucide-react'
 
 const HERO_FORM_ID = '8d439c40-4e6b-4192-a99b-a2c619ad4146'
 
@@ -73,6 +74,8 @@ const valueCards = [
       <Image
         src="https://static.pingcap.com/files/2025/09/03234615/data.svg"
         alt="Unify Your Workloads"
+        width={80}
+        height={80}
       />
     ),
     alt: 'Unify Your Workloads',
@@ -82,8 +85,10 @@ const valueCards = [
     body: 'No more paying for idle servers. Your costs align perfectly with your growth, making your burn rate predictable.',
     image: (
       <Image
-        src="https://static.pingcap.com/files/2025/09/03234615/cost.svg"
+        src="https://static.pingcap.com/files/2025/09/03234542/cost.svg"
         alt="Pay Only for Usage"
+        width={80}
+        height={80}
       />
     ),
     alt: 'Pay Only for Usage',
@@ -95,6 +100,8 @@ const valueCards = [
       <Image
         src="https://static.pingcap.com/files/2026/01/20234056/Frame-4.svg"
         alt="Scale for Modern Apps"
+        width={80}
+        height={80}
       />
     ),
     alt: 'Scale for Modern Apps',
@@ -106,6 +113,8 @@ const valueCards = [
       <Image
         src="https://static.pingcap.com/files/2026/01/21011757/bring-your-stack-1.svg"
         alt="Bring Your Stack"
+        width={80}
+        height={80}
       />
     ),
     alt: 'Bring Your Stack',
@@ -119,7 +128,15 @@ export default function StartupProgramPage() {
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         <HeroSection
           eyebrow="TiDB Cloud Startup Program"
-          headline="Launch Fast. Scale Without Limits. Get $100,000 in TiDB Cloud Credits"
+          headline={
+            <>
+              Launch Fast. Scale Without Limits. Get{' '}
+              <span className="animate-glow-sweep bg-[linear-gradient(110deg,#c084fc_0%,#e879f9_20%,#ffffff_35%,#a855f7_50%,#8b5cf6_70%,#c084fc_100%)] text-transparent bg-clip-text drop-shadow-[0_0_18px_rgba(168,85,247,0.65)]">
+                $100,000
+              </span>{' '}
+              in TiDB Cloud Credits
+            </>
+          }
           subheadline="Apply now and start building with the distributed SQL database that grows with you - from MVP to millions of users."
           rightSlot={
             <div id="hero-form">
@@ -138,7 +155,10 @@ export default function StartupProgramPage() {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
               <div>
-                <h2 className="text-h3-lg mb-4">Who Is This for?</h2>
+                <h3 className="text-h3-lg mb-4 flex gap-2">
+                  <Users size={32} />
+                  Who Is This for?
+                </h3>
                 <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
                   <li>• Seed to Series B startups building data-intensive products.</li>
                   <li>• Founded within 36 months from the application date.</li>
@@ -158,7 +178,10 @@ export default function StartupProgramPage() {
             </div>
             <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
               <div>
-                <h3 className="text-h3-sm mb-3">What Do You Get?</h3>
+                <h3 className="text-h3-lg mb-3 flex gap-2">
+                  <Podcast size={32} />
+                  What Do You Get?
+                </h3>
                 <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
                   <li>• Financial Support: Up to $100,000 in TiDB Cloud credits.</li>
                   <li>
@@ -184,6 +207,7 @@ export default function StartupProgramPage() {
 
         <FeatureGridSection
           title="Start Simple. Never Outgrow"
+          columns={4}
           features={valueCards.map((card) => ({
             title: card.title,
             description: card.body,

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import {
   Header,
   HeroSection,
@@ -38,7 +39,7 @@ const schema = buildPageSchema({
 const pathCards = [
   {
     variant: 'red' as const,
-    icon: <Rocket className="w-full h-full" strokeWidth={1.5} />,
+    icon: <Rocket size={32} strokeWidth={1.5} />,
     title: 'Get Started',
     description:
       'New to TiDB? Learn what it is, how it works, and launch your first cluster in minutes.',
@@ -46,7 +47,7 @@ const pathCards = [
   },
   {
     variant: 'violet' as const,
-    icon: <Database className="w-full h-full" strokeWidth={1.5} />,
+    icon: <Database size={32} strokeWidth={1.5} />,
     title: 'Build Data Applications',
     description:
       'Connect services, model data, and run transactional and analytical workloads in one system.',
@@ -54,7 +55,7 @@ const pathCards = [
   },
   {
     variant: 'blue' as const,
-    icon: <Cpu className="w-full h-full" strokeWidth={1.5} />,
+    icon: <Cpu size={32} strokeWidth={1.5} />,
     title: 'Build AI Applications',
     description:
       'Use vector search and real-time SQL to power intelligent, production-ready AI apps.',
@@ -62,7 +63,7 @@ const pathCards = [
   },
   {
     variant: 'teal' as const,
-    icon: <GitBranch className="w-full h-full" strokeWidth={1.5} />,
+    icon: <GitBranch size={32} strokeWidth={1.5} />,
     title: 'Migration Center',
     description:
       'Evaluate, plan, and execute migration to TiDB with guides, tools, and best practices.',
@@ -128,7 +129,9 @@ const tutorials = [
 const courses = [
   {
     tag: 'Beginner',
-    icon: '/images/developer/course-beginner.svg',
+    icon: (
+      <Image src="/images/developer/course-beginner.svg" alt="beginner" width={90} height={60} />
+    ),
     title: 'TiDB Certified Practitioner Learning Path',
     description:
       'Learn TiDB fundamentals through a self-paced course and hands-on labs, covering architecture, HTAP capabilities, zero downtime, and culminating in a free certification exam.',
@@ -137,7 +140,7 @@ const courses = [
   },
   {
     tag: 'AI',
-    icon: '/images/developer/course-ai.svg',
+    icon: <Image src="/images/developer/course-ai.svg" alt="AI" width={90} height={60} />,
     title: 'Generative AI Learning Path',
     description:
       'Build AI applications using TiDB Cloud as a unified storage layer, mastering Retrieval-Augmented Generation and Text-to-SQL with hands-on labs featuring Amazon Bedrock and OpenAI.',
@@ -146,7 +149,9 @@ const courses = [
   },
   {
     tag: 'Architect',
-    icon: '/images/developer/course-architect.svg',
+    icon: (
+      <Image src="/images/developer/course-architect.svg" alt="Architect" width={90} height={60} />
+    ),
     title: 'Architect & DBA: Migration to TiDB Learning Path',
     description:
       'Build AI applications using TiDB Cloud as a unified storage layer, mastering Retrieval-Augmented Generation and Text-to-SQL with hands-on labs featuring Amazon Bedrock and OpenAI.',

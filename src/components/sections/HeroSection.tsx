@@ -28,13 +28,13 @@ const HERO_RIGHT_IMAGES = [
   '/images/hero/r/Graphic-22-Dk.png',
 ]
 
-const HERO_CENTERED_IMAGES = ['/images/hero/c/clip-group.svg']
+const HERO_CENTERED_IMAGES = ['/images/hero/c/clip-group.svg', '/images/hero/c/bg-banner.svg']
 
 interface HeroBackgroundImage {
   src?: string
   alt?: string
   priority?: boolean
-  /** Defaults to opacity-40 */
+  /** Defaults to opacity-80 */
   opacityClassName?: string
   /** Optional overlay class. No overlay is applied unless this is provided. */
   overlayClassName?: string
@@ -44,7 +44,7 @@ interface HeroBackgroundImage {
 
 interface HeroSectionProps {
   eyebrow?: string
-  headline: string
+  headline: React.ReactNode
   subheadline?: string
   primaryCta?: { text: string; href: string }
   secondaryCta?: { text: string; href: string }
@@ -204,7 +204,8 @@ export function HeroSection({
   autoGenerateBackgroundImage = false,
   className,
 }: HeroSectionProps) {
-  const heroSeed = `${headline} ${subheadline ?? ''}`.trim()
+  const headlineText = typeof headline === 'string' ? headline : ''
+  const heroSeed = `${headlineText} ${subheadline ?? ''}`.trim()
   const defaultCenteredBackgroundSrc =
     centered && !backgroundImage?.src && !autoGenerateBackgroundImage
       ? pickSeededImage(heroSeed, HERO_CENTERED_IMAGES)
@@ -239,7 +240,7 @@ export function HeroSection({
               seed={heroSeed}
               className={cn(
                 heroBackgroundImage.positionClassName ?? 'object-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-40'
+                heroBackgroundImage.opacityClassName ?? 'opacity-80'
               )}
             />
           ) : useCssBackgroundForCentered ? (
@@ -248,7 +249,7 @@ export function HeroSection({
               className={cn(
                 'pointer-events-none absolute inset-0 bg-cover',
                 heroBackgroundImage.positionClassName ?? 'bg-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-40'
+                heroBackgroundImage.opacityClassName ?? 'opacity-80'
               )}
               style={{ backgroundImage: `url("${heroBackgroundImage.src}")` }}
             />
@@ -262,7 +263,7 @@ export function HeroSection({
               className={cn(
                 'pointer-events-none object-cover',
                 heroBackgroundImage.positionClassName ?? 'object-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-40'
+                heroBackgroundImage.opacityClassName ?? 'opacity-80'
               )}
             />
           )}

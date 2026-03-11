@@ -4,12 +4,12 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const navItems = [
-  { label: 'Home', href: '/developer/' },
-  { label: 'Get Started', href: '/developer/get-started/' },
-  { label: 'Build Data Applications', href: '/developer/build-data-apps/' },
-  { label: 'Build AI Applications', href: '/developer/build-ai-apps/' },
-  { label: 'Migration Center', href: '/developer/migration-center/' },
-  { label: 'Learn', href: '/developer/learn/' },
+  { label: 'Home', href: '/developers/' },
+  { label: 'Get Started', href: '/developers/get-started/' },
+  { label: 'Build Data Applications', href: '/developers/build-data-apps/' },
+  { label: 'Build AI Applications', href: '/developers/build-ai-apps/' },
+  { label: 'Migration Center', href: '/developers/migration-center/' },
+  { label: 'Learn', href: '/developers/learn/' },
 ]
 
 export function DeveloperSubnav() {
