@@ -380,7 +380,7 @@ export default function OpenSourceHeroesPage() {
         {/* ── 4. Reviews ── */}
         <section className="py-section-sm lg:py-section bg-gradient-dark-top border-t border-carbon-800">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-            <SectionHeader label="Community Stories" title="We Build with TiDB" />
+            <SectionHeader eyebrow="Community Stories" title="We Build with TiDB" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {reviews.map((review) => (
                 <article

@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils'
-import { ArrowUpRight } from 'lucide-react'
 import Image from 'next/image'
 import { PrimaryButton } from '@/components/ui/PrimaryButton'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
+import { SlideIn } from '@/components/ui/SlideIn'
 
 type CtaBackground = 'red' | 'violet' | 'blue' | 'teal'
 
@@ -41,8 +41,8 @@ export function CtaSection({
   return (
     <section className={cn('py-section-sm lg:py-section-md', bgMap[background], className)}>
       <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-        <div className={cn('grid grid-cols-1 md:grid-cols-12 gap-8 items-center lg:px-16')}>
-          <div className="col-span-4">
+        <div className={cn('grid grid-cols-1 md:grid-cols-12 md:gap-8 items-center lg:px-16')}>
+          <SlideIn direction="left" className="col-span-4">
             <Image
               src={cubeImageMap[background]}
               alt="CTA cube"
@@ -50,9 +50,9 @@ export function CtaSection({
               height={256}
               className="mx-auto"
             />
-          </div>
-          <div className="col-span-8">
-            <h2 className="text-h3-lg md:text-h2-md font-bold leading-tight text-text-inverse mb-4">
+          </SlideIn>
+          <SlideIn direction="right" className="col-span-8">
+            <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-text-inverse mb-4">
               {title}
             </h2>
             {subtitle && (
@@ -66,7 +66,7 @@ export function CtaSection({
                 <SecondaryButton href={secondaryCta.href}>{secondaryCta.text}</SecondaryButton>
               )}
             </div>
-          </div>
+          </SlideIn>
         </div>
       </div>
     </section>

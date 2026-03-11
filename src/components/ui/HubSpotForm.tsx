@@ -169,7 +169,9 @@ export function HubSpotForm({
     <div className={cn(styles.root, isNewsletter && styles.newsletter, className)}>
       <div id={containerId} />
       {status === 'loading' && (
-        <p className="text-body-md text-carbon-400 text-center">{loadingText}</p>
+        <div className={styles.loading} role="status" aria-label={loadingText}>
+          <span className={styles.spinner} />
+        </div>
       )}
       {status === 'error' && <p className="text-body-sm text-brand-red-light">{errorText}</p>}
     </div>

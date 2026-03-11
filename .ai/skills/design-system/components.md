@@ -397,7 +397,144 @@ components/
     FeaturesGrid.tsx
     CtaSection.tsx
 lib/
-  utils.ts                  # cn() utility
+  utils.ts                  # cn() utility (uses clsx + tailwind-merge)
   gtm.ts                    # trackCTAClick, trackFormSubmit
   schema.ts                 # buildPageSchema and all schema builders
 ```
+
+---
+
+## shadcn Components (Radix UI Primitives)
+
+> These components are built on Radix UI for accessibility (keyboard nav, ARIA, focus management).
+> All are customized to use project brand tokens — no CSS variables required.
+
+### Badge
+
+```tsx
+import { Badge } from '@/components/ui/badge'
+
+// Outline (default) — category labels, eyebrow tags, filter chips
+<Badge>Open Source</Badge>
+<Badge variant="outline">Distributed SQL</Badge>
+
+// Primary (red) — "New", "Hot", highlighted
+<Badge variant="default">New</Badge>
+
+// Secondary (carbon) — "Beta", "Preview", status
+<Badge variant="secondary">Beta</Badge>
+```
+
+**Variants:** `default` (red) · `secondary` (carbon-800) · `outline` (border-carbon-700, default)
+
+**Rules:** Always use `font-bold` (built in). Place alongside section titles or inside cards. Never use for navigation.
+
+---
+
+### Accordion
+
+```tsx
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+
+// FAQ section pattern — always place before CtaSection
+;<section className="py-section-sm lg:py-section bg-bg-primary">
+  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+    <SectionHeader label="FAQ" title="Frequently Asked Questions" className="mb-12" />
+    <div className="max-w-3xl mx-auto">
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="q1">
+          <AccordionTrigger>What is TiDB?</AccordionTrigger>
+          <AccordionContent>
+            TiDB is a distributed SQL database that supports HTAP workloads...
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="q2">
+          <AccordionTrigger>How does TiDB scale?</AccordionTrigger>
+          <AccordionContent>
+            TiDB uses a shared-nothing architecture with separate storage and compute layers...
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  </div>
+</section>
+```
+
+**Props:** `type="single"` (one open at a time) · `collapsible` (allow closing all)
+**Animation:** Accordion open/close uses CSS height animation via `animate-accordion-down` / `animate-accordion-up` keyframes (added to `tailwind.config.ts`).
+
+---
+
+### Dialog
+
+```tsx
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+
+// CTA modal pattern
+;<Dialog>
+  <DialogTrigger asChild>
+    <PrimaryButton>Start for Free</PrimaryButton>
+  </DialogTrigger>
+  <DialogContent className="sm:max-w-md">
+    <DialogHeader>
+      <DialogTitle>Get Started with TiDB Cloud</DialogTitle>
+      <DialogDescription>
+        Create your free cluster in under 5 minutes. No credit card required.
+      </DialogDescription>
+    </DialogHeader>
+    {/* form or HubSpot embed */}
+  </DialogContent>
+</Dialog>
+```
+
+**Styling:** Dark surface (`bg-bg-surface` #06111A) with `border-carbon-800`. Overlay: `bg-black/80`. Inherits Moderat font from site globals.
+
+---
+
+### Tooltip
+
+```tsx
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+
+// Wrap page or section in TooltipProvider (once per subtree)
+;<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <span className="underline decoration-dotted cursor-help">HTAP</span>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>Hybrid Transactional and Analytical Processing</p>
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+
+**When to use:** Technical terms on hover, icon button labels, truncated text explanations. Don't use for important information that must always be visible.
+
+---
+
+### Separator
+
+```tsx
+import { Separator } from '@/components/ui/separator'
+
+// Horizontal divider (default)
+<Separator className="my-8" />
+
+// Vertical divider (e.g., in stat rows)
+<Separator orientation="vertical" className="h-12 mx-4" />
+```
+
+**Color:** `bg-carbon-800` by default — subtle 1px divider for dark backgrounds.

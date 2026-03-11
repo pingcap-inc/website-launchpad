@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import { ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { SecondaryButton } from './SecondaryButton'
 
 type ColorCardVariant = 'red' | 'violet' | 'blue' | 'teal'
 
@@ -50,22 +50,15 @@ export function ColorCard({ variant, title, description, cta, icon, image }: Col
       <h3 className="text-h3-lg font-bold text-text-inverse mb-4">{title}</h3>
       <p className="text-body-md text-white leading-relaxed flex-1">{description}</p>
 
-      {/* SecondaryButton visual — triggered by card group hover */}
-      <div className="mt-8 inline-flex items-center justify-end gap-2 text-base font-medium text-text-inverse">
-        <span>{cta.text}</span>
-        <span
-          className={cn(
-            'relative flex items-center justify-center',
-            'w-6 h-6 rounded-full aspect-square shrink-0',
-            'transition-colors duration-300 ease-in-out',
-            'group-hover:bg-text-inverse'
-          )}
+      {/* SecondaryButton — triggered by card group hover */}
+      <div className="mt-8">
+        <SecondaryButton
+          href={cta.href}
+          dark={true}
+          className="group-hover:bg-transparent group-hover:text-text-inverse"
         >
-          <ArrowUpRight
-            size={16}
-            className="text-text-inverse transition-all duration-300 ease-in-out group-hover:rotate-45 group-hover:text-text-primary"
-          />
-        </span>
+          {cta.text}
+        </SecondaryButton>
       </div>
     </a>
   )

@@ -121,7 +121,7 @@ export function Header() {
           className="max-w-container mx-auto h-full px-4 md:px-8 lg:px-16 flex items-center justify-between"
           aria-label="Main navigation"
         >
-          <a href="/tidb/" className="shrink-0">
+          <a href="/" className="shrink-0">
             <Image
               src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
               alt="TiDB"

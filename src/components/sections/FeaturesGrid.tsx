@@ -10,7 +10,7 @@ interface Feature {
 }
 
 interface FeaturesGridProps {
-  label?: string
+  eyebrow?: string
   title: string
   subtitle?: string
   features: Feature[]
@@ -27,7 +27,7 @@ const colsMap = {
 }
 
 export function FeaturesGrid({
-  label,
+  eyebrow,
   title,
   subtitle,
   features,
@@ -38,7 +38,7 @@ export function FeaturesGrid({
   return (
     <section className={cn('py-section-sm lg:py-section', className)}>
       <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-        <SectionHeader label={label} title={title} subtitle={subtitle} />
+        <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
         <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
           {features.map((feature, i) => (
             <FeatureCard

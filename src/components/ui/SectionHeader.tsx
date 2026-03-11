@@ -10,7 +10,7 @@ const h2SizeMap: Record<H2Size, string> = {
 }
 
 interface SectionHeaderProps {
-  label?: string
+  eyebrow?: string
   title: string
   subtitle?: string
   h2Size?: H2Size
@@ -19,7 +19,7 @@ interface SectionHeaderProps {
 }
 
 export function SectionHeader({
-  label,
+  eyebrow,
   title,
   subtitle,
   h2Size = 'lg',
@@ -28,8 +28,8 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className={cn('mb-16', align === 'center' && 'text-center', className)}>
-      {label && (
-        <label className="font-mono text-eyebrow text-text-secondary block mb-8">{label}</label>
+      {eyebrow && (
+        <div className="font-mono text-eyebrow text-text-secondary block mb-8">{eyebrow}</div>
       )}
       <h2
         className={cn(

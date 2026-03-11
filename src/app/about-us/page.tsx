@@ -179,7 +179,7 @@ export default function AboutUsPage() {
 
         {/* ── 3. Company Values ───────────────────────────────────────────── */}
         <FeaturesGrid
-          label="Our Values"
+          eyebrow="Our Values"
           title="The Principles That Guide Our Work"
           subtitle="Six principles define how we build products, support customers, and work together as a team."
           features={values}
@@ -239,7 +239,7 @@ export default function AboutUsPage() {
         <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <SectionHeader
-              label="Social Proof"
+              eyebrow="Social Proof"
               title="Customers Love TiDB"
               subtitle="Recognized by engineers worldwide on the industry's most trusted database review platforms."
               h2Size="md"

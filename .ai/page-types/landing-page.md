@@ -9,7 +9,7 @@
 
 Use this page type when the pasted material is:
 
-- A campaign brief or activity brief (活动简报)
+- A campaign brief or activity brief
 - A paid promotion / ad landing page
 - An event registration or limited-time offer page
 - A program enrollment page (e.g., startup programs, partner programs)
@@ -34,20 +34,59 @@ HeroSection (variant: centered)
   subheadline: 1–2 sentence description
   primaryCta: main conversion action
   secondaryCta: optional secondary link
+  [centered layout auto-seeds background from /public/images/hero/c/]
 
 [Optional] CountUp stats row
   Use when material includes concrete metrics (e.g. "$2,000+ in credits", "10,000+ users")
+  REQUIRED: wrap stats in <CountUp> for scroll-triggered reveal
 
 FeaturesGrid or FeatureCard grid
   3–4 key benefits from the material
+  REQUIRED: every features[] item MUST include icon (Lucide, strokeWidth={1.5})
+  REQUIRED: if items have href, add hover:-translate-y-2 transition-transform duration-200 ease-in-out
 
 [Optional] ColorCard — use case highlights
   Use when material describes distinct audience segments or scenarios
   variant: matches brand color context
+  REQUIRED: every ColorCard MUST include icon prop
+
+[Optional] Accordion FAQ
+  Use when material includes 3+ questions, objections, or "How does X work?" entries
+  Import from '@/components/ui/accordion'
 
 CtaSection
   Repeat primary CTA at page bottom
+  background: red=general, violet=AI, blue=cloud, teal=data
 ```
+
+---
+
+## Visual & Interaction Requirements
+
+> See `.ai/skills/design-system/visual-design.md` for the full icon guide and animation patterns.
+
+**Icons:**
+
+- FeaturesGrid items: every `item.icon` MUST use `lucide-react` with `strokeWidth={1.5}`
+- ColorCard items: every card MUST have `icon` prop (Lucide ReactNode)
+- Choose icons by semantic match — see visual-design.md Section B for the concept→icon table
+
+**Background rhythm:**
+
+- Use at least one gradient section: `bg-gradient-dark-bottom` or `bg-gradient-dark-top`
+- CTA section background color: red=general, violet=AI, blue=cloud, teal=data
+- Never use `bg-bg-primary` for all sections
+
+**Animations:**
+
+- `<CountUp>`: use when material contains ≥3 quantitative metrics
+- Clickable cards: always include `hover:-translate-y-2 transition-transform duration-200 ease-in-out`
+- Tabs (if used): always `autoSwitch={true} autoSwitchInterval={6000}`
+
+**New interactive components:**
+
+- `<Badge>` from `@/components/ui/badge`: use for campaign labels, "New", "Limited Time" tags
+- `<Accordion>` from `@/components/ui/accordion`: use for FAQ sections near the page bottom
 
 ---
 
@@ -125,3 +164,9 @@ Add to `src/app/sitemap.ts` (unless noindex):
 - [ ] All colors use design tokens (no `bg-[#...]`)
 - [ ] `<Header />` and `<Footer />` included
 - [ ] Page content wrapper has `pt-[62px] lg:pt-20`
+- [ ] Every FeaturesGrid / FeatureCard item has `icon` prop (Lucide, strokeWidth={1.5})
+- [ ] Every ColorCard item has `icon` prop
+- [ ] Clickable cards have `hover:-translate-y-2 transition-transform duration-200 ease-in-out`
+- [ ] `<CountUp>` used if page has ≥3 quantitative metrics
+- [ ] Page uses ≥2 distinct section backgrounds
+- [ ] FAQ section (if any) uses `<Accordion>` component

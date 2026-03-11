@@ -34,26 +34,65 @@ HeroSection (variant: split — text left, visual/image right)
   subheadline: 1–2 sentence value prop
   primaryCta: 'Start for Free' → https://tidbcloud.com/free-trial/
   secondaryCta: 'Read the Docs' or 'Learn More'
-  rightSlot: product screenshot, diagram, or code sample
+  rightSlot: product screenshot, diagram, code sample, or SVG illustration
+  [if no rightSlot provided, omit prop — HeroSection auto-seeds from /public/images/hero/r/]
 
 FeaturesGrid
   3–6 key capabilities from the material
-  Use icon + title + description for each feature
+  REQUIRED: every features[] item MUST include icon (Lucide, strokeWidth={1.5}) + title + description
+  See visual-design.md Section B for concept→icon mapping
 
 [Optional] Tabs — multi-capability showcase
   Use when material describes 3+ distinct feature areas
-  autoSwitch={true} autoSwitchInterval={6000}
+  REQUIRED: autoSwitch={true} autoSwitchInterval={6000}
 
 [Optional] ColorCard — use case / workload highlights
   Use when material describes 2–4 industry or workload scenarios
-  Each card: variant matching brand, title, description, cta
+  REQUIRED: every ColorCard MUST include icon prop
+  Each card: variant matching brand (red/violet/blue/teal), title, description, cta
 
 [Optional] CountUp stats row
   Use when material includes concrete benchmark or scale metrics
+  REQUIRED: wrap each stat in <CountUp> for scroll-triggered reveal
+
+[Optional] Accordion FAQ
+  Use when material includes 3+ questions or "How does X work?" content
+  Import from '@/components/ui/accordion' — place before CtaSection
 
 CtaSection
   Repeat primary CTA at page bottom
+  background: red=general, violet=AI, blue=cloud, teal=data
 ```
+
+---
+
+## Visual & Interaction Requirements
+
+> See `.ai/skills/design-system/visual-design.md` for the full icon guide and animation patterns.
+
+**Icons (non-negotiable):**
+
+- FeaturesGrid: every item MUST have `icon={<LucideIcon strokeWidth={1.5} />}`
+- ColorCard: every card MUST have `icon` prop
+- Hero right column: MUST contain a visual — product screenshot, diagram, or SVG illustration
+
+**Background rhythm:**
+
+- Use `bg-gradient-dark-bottom` or `bg-gradient-dark-top` for at least one non-hero section
+- Colored section (`bg-brand-{color}-bg`) for stats or a feature highlight area
+- Never all `bg-bg-primary`
+
+**Animations:**
+
+- Clickable cards: `hover:-translate-y-2 transition-transform duration-200 ease-in-out`
+- Stats: `<CountUp>` for all quantitative values (benchmarks, percentages, counts)
+- Tabs: `autoSwitch={true} autoSwitchInterval={6000}` always
+
+**New interactive components:**
+
+- `<Badge>` from `@/components/ui/badge`: use for "New", "Beta", version labels in cards
+- `<Accordion>` from `@/components/ui/accordion`: FAQ sections
+- `<Tooltip>` from `@/components/ui/tooltip`: technical term hover definitions
 
 ---
 
@@ -129,7 +168,14 @@ Add to `src/app/sitemap.ts`:
 - [ ] `twitter.site: '@PingCAP'` (exact string)
 - [ ] `buildPageSchema()` + `softwareApplicationSchema()` used
 - [ ] Page added to `src/app/sitemap.ts`
-- [ ] HeroSection uses split layout (rightSlot provided)
+- [ ] HeroSection uses split layout with rightSlot or heroImage
 - [ ] All colors use design tokens (no `bg-[#...]`)
 - [ ] `<Header />` and `<Footer />` included
 - [ ] Page content wrapper has `pt-[62px] lg:pt-20`
+- [ ] Every FeaturesGrid item has `icon` prop (Lucide, strokeWidth={1.5})
+- [ ] Every ColorCard item has `icon` prop
+- [ ] Clickable cards have `hover:-translate-y-2 transition-transform duration-200 ease-in-out`
+- [ ] Tabs (if used) has `autoSwitch={true} autoSwitchInterval={6000}`
+- [ ] `<CountUp>` used for benchmark / scale metrics (≥3 stats)
+- [ ] Page uses ≥2 distinct section backgrounds
+- [ ] FAQ section (if any) uses `<Accordion>` component

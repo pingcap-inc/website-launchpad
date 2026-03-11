@@ -8,6 +8,8 @@ import {
   Header,
   PrimaryButton,
   SectionHeader,
+  TestimonialsSection,
+  IconGridSection,
 } from '@/components'
 
 const HERO_FORM_ID = '8d439c40-4e6b-4192-a99b-a2c619ad4146'
@@ -43,6 +45,7 @@ const proofCards = [
     author: 'Ziming Miao / VP of Engineering, Manus',
     href: 'https://www.youtube.com/watch?v=vW8z71N9shI',
     cta: 'Watch the Video',
+    logo: { src: '/images/tidb-cloud-startup-program/manus.png', alt: 'Manus' },
   },
   {
     quote:
@@ -50,6 +53,7 @@ const proofCards = [
     author: 'Yan Zhang / Engineering Team, Dify.AI',
     href: '/customers/stories/',
     cta: 'Read the Story',
+    logo: { src: '/images/tidb-cloud-startup-program/Dify.png', alt: 'Dify' },
   },
   {
     quote:
@@ -57,6 +61,7 @@ const proofCards = [
     author: 'Shujun Liu / CTO, Rengage',
     href: '/customers/stories/',
     cta: 'Read the Story',
+    logo: { src: '/images/tidb-cloud-startup-program/Rengage.png', alt: 'Rengage' },
   },
 ]
 
@@ -87,15 +92,6 @@ const valueCards = [
   },
 ]
 
-function LinkArrow() {
-  return (
-    <span aria-hidden="true" className="inline-flex items-center">
-      <span className="block h-px bg-current w-3 transition-[width] duration-200 group-hover:w-5" />
-      <span className="inline-block w-2 h-2 border-r border-t border-current rotate-45 -ml-2" />
-    </span>
-  )
-}
-
 export default function StartupProgramPage() {
   return (
     <>
@@ -112,25 +108,10 @@ export default function StartupProgramPage() {
           }
         />
 
-        <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
-          <SectionHeader align="left" title="Trusted by Builders from MVP to Scale" />
-          <div className="grid md:grid-cols-3 gap-4">
-            {proofCards.map((card) => (
-              <a
-                key={card.quote}
-                href={card.href}
-                className="group border border-carbon-800 p-5 flex flex-col justify-between hover:border-carbon-600 transition-colors"
-              >
-                <p className="text-body-md text-carbon-300 leading-relaxed mb-5">“{card.quote}”</p>
-                <p className="text-body-sm text-carbon-500 mb-4">{card.author}</p>
-                <span className="inline-flex items-center gap-2 text-body-md text-text-inverse">
-                  {card.cta}
-                  <LinkArrow />
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
+        <TestimonialsSection
+          title="Trusted by Builders from MVP to Scale"
+          testimonials={proofCards}
+        />
 
         <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
           <SectionHeader align="center" h2Size="sm" title="About The Program" />
@@ -181,26 +162,17 @@ export default function StartupProgramPage() {
           background="red"
         />
 
-        <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
-          <SectionHeader align="left" h2Size="sm" title="Start Simple. Never Outgrow" />
-          <div className="grid md:grid-cols-2 gap-4">
-            {valueCards.map((card) => (
-              <article key={card.title} className="border border-carbon-800 p-6 lg:p-8">
-                <div className="mb-6">
-                  <Image
-                    src={card.image}
-                    alt={card.alt}
-                    width={64}
-                    height={64}
-                    className="w-14 h-14"
-                  />
-                </div>
-                <h3 className="text-h3-sm mb-3">{card.title}</h3>
-                <p className="text-body-md text-carbon-300 leading-relaxed">{card.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+        <IconGridSection
+          title="Start Simple. Never Outgrow"
+          items={valueCards.map((card) => ({
+            title: card.title,
+            description: card.body,
+            icon: {
+              src: card.image,
+              alt: card.alt,
+            },
+          }))}
+        />
       </main>
       <Footer />
     </>
