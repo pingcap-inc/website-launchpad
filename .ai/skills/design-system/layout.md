@@ -108,8 +108,6 @@ Centered Hero defaults to no eyebrow.
 // Default fallback (centered mode): pick seeded image from /public/images/hero/c/
 <HeroSection centered />
 
-// Optional alternative: auto-generate from page content
-<HeroSection centered autoGenerateBackgroundImage />
 ```
 
 **Hero Rules:**

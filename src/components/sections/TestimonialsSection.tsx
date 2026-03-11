@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
+import { SlideIn } from '../ui/SlideIn'
 
 interface TestimonialCard {
   quote: string
@@ -200,10 +201,12 @@ export function TestimonialsSection({
       <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
         <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
           <div className="md:col-span-5">
-            <p className="text-body-sm text-carbon-400 tracking-wide uppercase mb-4">{eyebrow}</p>
-            <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-text-inverse">
-              {title}
-            </h2>
+            <SlideIn direction="up">
+              <p className="text-body-sm text-carbon-400 tracking-wide uppercase mb-4">{eyebrow}</p>
+              <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-text-inverse">
+                {title}
+              </h2>
+            </SlideIn>
           </div>
           <div className="md:col-span-7">
             <div

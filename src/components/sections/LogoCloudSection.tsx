@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import { externalLinkProps } from '@/lib/links'
 
 export interface LogoCloudItem {
   name: string
@@ -66,7 +67,13 @@ export function LogoCloudSection({
 
     if (logo.href) {
       return (
-        <a key={key} href={logo.href} aria-label={logo.name} className="shrink-0">
+        <a
+          key={key}
+          href={logo.href}
+          aria-label={logo.name}
+          className="shrink-0"
+          {...externalLinkProps(logo.href)}
+        >
           {content}
         </a>
       )

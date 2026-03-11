@@ -6,6 +6,7 @@ import { GhostButton } from './GhostButton'
 import { PrimaryButton } from './PrimaryButton'
 import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
+import { isExternalHref } from '@/lib/links'
 
 const HeaderMegaMenu = dynamic(() => import('./HeaderMenus').then((mod) => mod.HeaderMegaMenu))
 const HeaderMobileMenu = dynamic(() => import('./HeaderMenus').then((mod) => mod.HeaderMobileMenu))
@@ -88,7 +89,9 @@ function Navbar() {
           <li key={item.label}>
             <a
               href={item.href}
-              {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              {...(item.external || isExternalHref(item.href)
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {})}
               className="px-3 py-2 hover:text-carbon-400 transition-colors duration-150 block"
             >
               {item.label}

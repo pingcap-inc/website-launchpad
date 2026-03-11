@@ -44,6 +44,7 @@
   html {
     scroll-behavior: smooth;
     font-variant-ligatures: no-common-ligatures;
+    @apply scroll-pt-[62px] lg:scroll-pt-20;
   }
   body {
     @apply font-sans antialiased bg-bg-primary text-text-inverse;

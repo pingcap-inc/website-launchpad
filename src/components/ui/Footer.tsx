@@ -1,5 +1,6 @@
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { DeferredHubSpotForm } from './DeferredHubSpotForm'
+import { externalLinkProps } from '@/lib/links'
 
 const NEWSLETTER_FORM_ID =
   process.env.NEXT_PUBLIC_HUBSPOT_FORM_ID ?? 'd74dfb7c-a14a-4f8d-ab28-eba7a00e7900'
@@ -11,46 +12,46 @@ const footerNav = [
   {
     title: 'Product',
     links: [
-      { label: 'Product Overview', href: '/tidb/' },
-      { label: 'TiDB Cloud', href: '/tidb/cloud/' },
-      { label: 'TiDB Self-Managed', href: '/tidb/self-managed/' },
-      { label: 'Pricing', href: '/tidb/pricing/' },
+      { label: 'Product Overview', href: 'https://www.pingcap.com/tidb/' },
+      { label: 'TiDB Cloud', href: 'https://www.pingcap.com/tidb/cloud/' },
+      { label: 'TiDB Self-Managed', href: 'https://www.pingcap.com/tidb/self-managed/' },
+      { label: 'Pricing', href: 'https://www.pingcap.com/pricing/' },
     ],
   },
   {
     title: 'Ecosystem',
     links: [
-      { label: 'Integrations', href: '/tidb/integrations/' },
-      { label: 'TiKV', href: '/tikv/' },
-      { label: 'TiSpark', href: '/tispark/' },
+      { label: 'Integrations', href: 'https://www.pingcap.com/integrations/' },
+      { label: 'TiKV', href: 'https://github.com/tikv/tikv' },
+      { label: 'TiSpark', href: 'https://github.com/pingcap/tispark' },
       { label: 'OSS Insight', href: 'https://ossinsight.io/' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { label: 'Blog', href: '/blog/' },
-      { label: 'Articles', href: '/resources/articles/' },
-      { label: 'Events & Webinars', href: '/events/' },
-      { label: 'TiDB SCaiLE', href: '/tidb-scaile/' },
+      { label: 'Blog', href: 'https://www.pingcap.com/blog/' },
+      { label: 'Articles', href: 'https://www.pingcap.com/article/' },
+      { label: 'Events & Webinars', href: 'https://www.pingcap.com/event/' },
+      { label: 'TiDB SCaiLE', href: 'https://www.pingcap.com/tidb-scaile-summit/' },
       { label: 'Docs', href: 'https://docs.pingcap.com/' },
-      { label: 'Developer Guide', href: '/developer/' },
-      { label: 'FAQs', href: '/faqs/' },
-      { label: 'Support', href: '/support/' },
+      { label: 'Developer Guide', href: 'https://docs.pingcap.com/developer/' },
+      { label: 'FAQs', href: 'https://docs.pingcap.com/tidb/stable/faq-overview/' },
+      { label: 'Support', href: 'https://tidb.support.pingcap.com/' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { label: 'About Us', href: '/about/' },
-      { label: 'News', href: '/news/' },
-      { label: 'Careers', href: '/careers/' },
-      { label: 'Contact Us', href: '/contact-us/' },
-      { label: 'Partners', href: '/partners/' },
-      { label: 'Trust Hub', href: '/trust-hub/' },
-      { label: 'Security', href: '/security/' },
-      { label: 'Release Support', href: '/release-support/' },
-      { label: 'Brand Guidelines', href: '/brand/' },
+      { label: 'About Us', href: 'https://www.pingcap.com/about-us/' },
+      { label: 'News', href: 'https://www.pingcap.com/press-releases-news/' },
+      { label: 'Careers', href: 'https://www.pingcap.com/careers/' },
+      { label: 'Contact Us', href: 'https://www.pingcap.com/contact-us/' },
+      { label: 'Partners', href: 'https://www.pingcap.com/partners/' },
+      { label: 'Trust Hub', href: 'https://www.pingcap.com/trust-hub/' },
+      { label: 'Security', href: 'https://www.pingcap.com/security/' },
+      { label: 'Release Support', href: 'https://www.pingcap.com/tidb-release-support-policy/' },
+      { label: 'Brand Guidelines', href: 'https://www.pingcap.com/tidb-brand-guidelines/' },
     ],
   },
 ]
@@ -124,6 +125,7 @@ export function Footer() {
                   <a
                     href={link.href}
                     className="text-body-md text-text-inverse hover:text-carbon-400 transition-colors duration-150"
+                    {...externalLinkProps(link.href)}
                   >
                     {link.label}
                   </a>
@@ -146,6 +148,7 @@ export function Footer() {
                     <a
                       href={link.href}
                       className="text-body-md text-text-inverse hover:text-carbon-400 transition-colors duration-150"
+                      {...externalLinkProps(link.href)}
                     >
                       {link.label}
                     </a>

@@ -30,9 +30,9 @@ export const metadata: Metadata = {
     siteName: 'PingCAP',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2025/04/17112450/tidb-cloud-startup-program-promo-right.webp',
-        width: 1030,
-        height: 1024,
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
       },
     ],
     type: 'website',
@@ -44,7 +44,7 @@ const proofCards = [
     quote:
       'We migrated to TiDB Cloud in just two weeks. It let us scale our agentic AI platform seamlessly-without needing to re-architect our system.',
     author: 'Ziming Miao / VP of Engineering, Manus',
-    href: 'https://www.youtube.com/watch?v=vW8z71N9shI',
+    href: 'https://www.pingcap.com/case-study/rengage-autonomous-marketing-tidb/',
     cta: 'Watch the Video',
     logo: { src: '/images/tidb-cloud-startup-program/manus.png', alt: 'Manus' },
   },
@@ -52,7 +52,7 @@ const proofCards = [
     quote:
       'Consolidating on TiDB Cloud cut our operational overhead by 90% and infrastructure costs by 100%. It just works.',
     author: 'Yan Zhang / Engineering Team, Dify.AI',
-    href: '/customers/stories/',
+    href: 'https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/',
     cta: 'Read the Story',
     logo: { src: '/images/tidb-cloud-startup-program/Dify.png', alt: 'Dify' },
   },
@@ -60,7 +60,7 @@ const proofCards = [
     quote:
       'TiDB Cloud powers our real-time marketing engine. We get instant analytics on transactional data without complex pipelines.',
     author: 'Shujun Liu / CTO, Rengage',
-    href: '/customers/stories/',
+    href: 'https://www.pingcap.com/case-study/rengage-autonomous-marketing-tidb/',
     cta: 'Read the Story',
     logo: { src: '/images/tidb-cloud-startup-program/Rengage.png', alt: 'Rengage' },
   },
@@ -148,12 +148,13 @@ export default function StartupProgramPage() {
         <TestimonialsSection
           title="Trusted by Builders from MVP to Scale"
           testimonials={proofCards}
+          className="bg-gradient-dark-top lg:pb-0"
         />
 
-        <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
+        <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section lg:pt-0">
           <SectionHeader align="center" h2Size="sm" title="About the Program" />
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
+            <div className="border border-carbon-800 p-6 space-y-6">
               <div>
                 <h3 className="text-h3-lg mb-4 flex gap-2">
                   <Users size={32} />

@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { externalLinkProps } from '@/lib/links'
 
 interface PrimaryButtonProps {
   children: React.ReactNode
@@ -47,7 +48,7 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
 
   if (href) {
     return (
-      <a href={href} className={classes}>
+      <a href={href} className={classes} {...externalLinkProps(href)}>
         {content}
       </a>
     )

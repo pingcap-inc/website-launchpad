@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+import { externalLinkProps } from '@/lib/links'
 
 interface FeatureCardProps {
   icon?: React.ReactNode
@@ -36,7 +37,7 @@ export function FeatureCard({
 
   if (href) {
     return (
-      <a href={href} className={classes}>
+      <a href={href} className={classes} {...externalLinkProps(href)}>
         {content}
       </a>
     )

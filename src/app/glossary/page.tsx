@@ -177,7 +177,7 @@ export default function GlossaryPage() {
         {terms.map((category) => (
           <section
             key={category.category}
-            className="py-section-sm lg:py-section bg-bg-primary"
+            className="py-section-sm lg:pb-section bg-bg-primary"
             aria-labelledby={`section-${category.category.toLowerCase().replace(/\s+/g, '-')}`}
           >
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">

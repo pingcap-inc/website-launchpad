@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { externalLinkProps } from '@/lib/links'
 
 interface SecondaryButtonProps {
   children: React.ReactNode
@@ -57,7 +58,12 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
 
     if (as === 'a' || href) {
       return (
-        <a ref={ref as React.Ref<HTMLAnchorElement>} href={href} className={classes}>
+        <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          href={href}
+          className={classes}
+          {...externalLinkProps(href)}
+        >
           {content}
         </a>
       )

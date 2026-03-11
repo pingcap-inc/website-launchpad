@@ -573,7 +573,6 @@ interface HeroSectionProps {
     align?: 'right' | 'center'
     priority?: boolean
   }
-  noPb?: boolean // remove bottom padding when next section shares bg-bg-primary
   className?: string
 }
 ```

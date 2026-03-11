@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 import { SecondaryButton } from './SecondaryButton'
+import { externalLinkProps } from '@/lib/links'
 
 type ColorCardVariant = 'red' | 'violet' | 'blue' | 'teal'
 
@@ -28,6 +29,7 @@ export function ColorCard({ variant, title, description, cta, icon }: ColorCardP
         bgMap[variant],
         'hover:-translate-y-2 transition-transform duration-200 ease-in-out'
       )}
+      {...externalLinkProps(cta.href)}
     >
       {/* Icon or image */}
       {icon && <div className="mb-6 text-white shrink-0">{icon}</div>}
