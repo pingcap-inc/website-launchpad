@@ -106,6 +106,7 @@ Visual & Interaction (see visual-design.md for full guide)
 ❌ Interactive card no hover   → clickable cards must have hover:-translate-y-2 transition-transform duration-200 ease-in-out
 ❌ 3+ metrics without CountUp  → use <CountUp> for scroll-triggered stat display
 ❌ Tabs without autoSwitch     → add autoSwitch={true} autoSwitchInterval={6000}
+❌ Stats section built inline  → use <StatsSection> component
 
 ✅ siteName must be exactly:   'TiDB'
 ✅ twitter.site must be:       '@PingCAP'
@@ -121,24 +122,38 @@ Visual & Interaction (see visual-design.md for full guide)
 
 ## 🧩 Component Quick Reference
 
-| Component           | Import from                          | Key Props                                                                              |
-| ------------------- | ------------------------------------ | -------------------------------------------------------------------------------------- |
-| `<HeroSection>`     | `@/components/sections/HeroSection`  | `eyebrow` `headline` `subheadline` `primaryCta` `secondaryCta` `rightSlot` `heroImage` |
-| `<FeaturesGrid>`    | `@/components/sections/FeaturesGrid` | `label` `title` `features={[{icon,title,description}]}` `columns={2\|3\|4}` `viewMore` |
-| `<CtaSection>`      | `@/components/sections/CtaSection`   | `background="red\|violet\|blue\|teal"` `title` `subtitle` `primaryCta` `secondaryCta`  |
-| `<FeatureCard>`     | `@/components/ui/FeatureCard`        | `icon={<LucideIcon strokeWidth={1.5}/>}` `title` `description` `href?` `borderColor?`  |
-| `<ColorCard>`       | `@/components/ui/ColorCard`          | `variant="red\|violet\|blue\|teal"` `title` `description` `cta` `icon` (required)      |
-| `<SectionHeader>`   | `@/components/ui/SectionHeader`      | `label?` `title` `subtitle?` `h2Size="lg\|md\|sm"` `align="center\|left"`              |
-| `<Tabs>`            | `@/components/ui/Tabs`               | `tabs` `autoSwitch={true}` `autoSwitchInterval={6000}` `defaultActiveTab?`             |
-| `<CountUp>`         | `@/components/ui/CountUp`            | `value="$2,000+"` `className?` — triggers on scroll (use for ≥3 stats)                 |
-| `<Badge>`           | `@/components/ui/badge`              | `variant="default\|secondary\|outline"` — feature tags, "New"/"Beta" labels            |
-| `<Accordion>`       | `@/components/ui/accordion`          | `type="single"` `collapsible` — FAQ sections (import Item/Trigger/Content too)         |
-| `<Dialog>`          | `@/components/ui/dialog`             | `<DialogTrigger>` `<DialogContent>` — CTA modals, video lightbox                       |
-| `<Tooltip>`         | `@/components/ui/tooltip`            | `<TooltipTrigger>` `<TooltipContent>` — technical term hints                           |
-| `<PrimaryButton>`   | `@/components/ui/PrimaryButton`      | `href?` `onClick?`                                                                     |
-| `<SecondaryButton>` | `@/components/ui/SecondaryButton`    | `href?` `dark={true}` `onClick?`                                                       |
-| `<Navbar>`          | `@/components/ui/Header`             | no props — always include                                                              |
-| `<Footer>`          | `@/components/ui/Footer`             | no props — always include                                                              |
+**Section Components** (import from `@/components/sections/[Name]` or barrel `@/components`)
+
+| Component                    | Import from                                      | Key Props                                                                                        |
+| ---------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `<HeroSection>`              | `@/components/sections/HeroSection`              | `eyebrow` `headline` `subheadline` `primaryCta` `secondaryCta` `rightSlot` `heroImage` `layout`  |
+| `<FeatureGridSection>`       | `@/components/sections/FeatureGridSection`       | `title` `features={[{icon?,title,description,cta?}]}` `columns={2\|3\|4}` `viewMore?`            |
+| `<FeatureCardSection>`       | `@/components/sections/FeatureCardSection`       | `title` `items={[{icon?,title,description,href?,borderColor?}]}` `columns?` `borderStyle?`       |
+| `<FeatureHighlightsSection>` | `@/components/sections/FeatureHighlightsSection` | `title` `items={[{variant,title,description,cta,icon}]}` `columns?`                              |
+| `<FeatureTabsSection>`       | `@/components/sections/FeatureTabsSection`       | `title` `tabs={[{id,label,description?,image}]}` `autoSwitch={true}` `autoSwitchInterval={6000}` |
+| `<StatsSection>`             | `@/components/sections/StatsSection`             | `stats={[{icon?,value,label,description?}]}` `columns={2\|3\|4}` — uses CountUp, `'use client'`  |
+| `<LogoCloudSection>`         | `@/components/sections/LogoCloudSection`         | `logos={[{name,src,href?}]}` `variant="default\|minimal"` `autoScroll?`                          |
+| `<TestimonialsSection>`      | `@/components/sections/TestimonialsSection`      | `title` `testimonials={[{quote,author,logo?,href?,cta?}]}`                                       |
+| `<FaqSection>`               | `@/components/sections/FaqSection`               | `items={[{q,a}]}` `title?="FAQ"` — always before CtaSection                                      |
+| `<CtaSection>`               | `@/components/sections/CtaSection`               | `background="red\|violet\|blue\|teal"` `title` `subtitle?` `primaryCta` `secondaryCta?`          |
+
+**UI Components**
+
+| Component           | Import from                       | Key Props                                                                             |
+| ------------------- | --------------------------------- | ------------------------------------------------------------------------------------- |
+| `<FeatureCard>`     | `@/components/ui/FeatureCard`     | `icon={<LucideIcon strokeWidth={1.5}/>}` `title` `description` `href?` `borderColor?` |
+| `<ColorCard>`       | `@/components/ui/ColorCard`       | `variant="red\|violet\|blue\|teal"` `title` `description` `cta` `icon` (required)     |
+| `<SectionHeader>`   | `@/components/ui/SectionHeader`   | `label?` `title` `subtitle?` `h2Size="lg\|md\|sm"` `align="center\|left"`             |
+| `<Tabs>`            | `@/components/ui/Tabs`            | `tabs` `autoSwitch={true}` `autoSwitchInterval={6000}` `defaultActiveTab?`            |
+| `<CountUp>`         | `@/components/ui/CountUp`         | `value="$2,000+"` `className?` — triggers on scroll (use for ≥3 stats)                |
+| `<Badge>`           | `@/components/ui/badge`           | `variant="default\|secondary\|outline"` — feature tags, "New"/"Beta" labels           |
+| `<Accordion>`       | `@/components/ui/accordion`       | `type="single"` `collapsible` — FAQ sections (import Item/Trigger/Content too)        |
+| `<Dialog>`          | `@/components/ui/dialog`          | `<DialogTrigger>` `<DialogContent>` — CTA modals, video lightbox                      |
+| `<Tooltip>`         | `@/components/ui/tooltip`         | `<TooltipTrigger>` `<TooltipContent>` — technical term hints                          |
+| `<PrimaryButton>`   | `@/components/ui/PrimaryButton`   | `href?` `onClick?`                                                                    |
+| `<SecondaryButton>` | `@/components/ui/SecondaryButton` | `href?` `dark={true}` `onClick?`                                                      |
+| `<Navbar>`          | `@/components/ui/Header`          | no props — always include                                                             |
+| `<Footer>`          | `@/components/ui/Footer`          | no props — always include                                                             |
 
 Full specs: `.ai/skills/design-system/components.md`
 

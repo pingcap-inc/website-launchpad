@@ -12,6 +12,7 @@ import {
   HeroSection,
   LogoCloudSection,
   TestimonialsSection,
+  StatsSection,
 } from '@/components'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
@@ -297,6 +298,32 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
       viewMore={{ text: 'View all initiatives', href: '/about-us/' }}
     />
   ),
+  StatsSection: () => (
+    <StatsSection
+      eyebrow="BY THE NUMBERS"
+      title="Performance You Can Measure"
+      stats={[
+        {
+          icon: <Rocket strokeWidth={1.5} size={28} />,
+          value: '10x',
+          label: 'Faster Queries',
+          description: 'Compared to standard MySQL deployments under mixed workloads.',
+        },
+        {
+          icon: <Compass strokeWidth={1.5} size={28} />,
+          value: '99.99%',
+          label: 'Uptime SLA',
+          description: 'Enterprise-grade availability with automated failover.',
+        },
+        {
+          icon: <Layers strokeWidth={1.5} size={28} />,
+          value: '5,000+',
+          label: 'Global Customers',
+          description: 'Spanning fintech, e-commerce, gaming, and SaaS.',
+        },
+      ]}
+    />
+  ),
   FaqSection: () => (
     <FaqSection
       items={[
@@ -339,7 +366,7 @@ export default async function SectionsPage() {
                   href={`#${section.name}`}
                   className="rounded-2xl border border-carbon-800 bg-bg-surface/60 p-6 transition-colors hover:border-brand-red-primary hover:text-brand-red-primary"
                 >
-                  <p className="text-body-lg font-semibold text-text-inverse">{section.label}</p>
+                  <p className="text-body-lg font-bold text-text-inverse">{section.label}</p>
                   <p className="mt-2 text-body-sm text-carbon-400">
                     {`/components/sections/${section.name}.tsx`}
                   </p>
