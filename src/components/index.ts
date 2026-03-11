@@ -15,7 +15,11 @@ export { JsonLd, organizationSchema, softwareSchema } from './ui/JsonLd'
 
 // Section Components
 export { HeroSection } from './sections/HeroSection'
-export { FeaturesGrid } from './sections/FeaturesGrid'
+export { FeatureGridSection } from './sections/FeatureGridSection'
 export { CtaSection } from './sections/CtaSection'
 export { TestimonialsSection } from './sections/TestimonialsSection'
-export { IconGridSection } from './sections/IconGridSection'
+export { FaqSection } from './sections/FaqSection'
+export { FeatureHighlightsSection } from './sections/FeatureHighlightsSection'
+export { FeatureTabsSection } from './sections/FeatureTabsSection'
+export { LogoCloudSection } from './sections/LogoCloudSection'
+export { FeatureCardSection } from './sections/FeatureCardSection'

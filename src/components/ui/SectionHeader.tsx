@@ -29,12 +29,12 @@ export function SectionHeader({
   return (
     <div className={cn('mb-16', align === 'center' && 'text-center', className)}>
       {eyebrow && (
-        <div className="font-mono text-eyebrow text-text-secondary block mb-8">{eyebrow}</div>
+        <div className="font-mono text-eyebrow text-text-secondary block mb-4">{eyebrow}</div>
       )}
       <h2
         className={cn(
           h2SizeMap[h2Size],
-          'font-bold leading-tight mb-4 text-text-inverse',
+          'font-bold leading-tight mb-6 text-text-inverse',
           align === 'left' && 'max-w-section-title'
         )}
       >
@@ -43,7 +43,7 @@ export function SectionHeader({
       {subtitle && (
         <p
           className={cn(
-            'text-body-xl leading-relaxed max-w-subtitle text-text-secondary',
+            'text-body-2xl leading-relaxed max-w-subtitle text-text-secondary',
             align === 'center' && 'mx-auto'
           )}
         >

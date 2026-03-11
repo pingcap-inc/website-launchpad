@@ -288,7 +288,7 @@ export function HeroSection({
                 {headline}
               </h1>
               {subheadline && (
-                <p className="text-body-xl text-carbon-300 max-w-subtitle leading-relaxed mb-8">
+                <p className="text-body-2xl text-carbon-300 max-w-subtitle leading-relaxed mb-8">
                   {subheadline}
                 </p>
               )}
@@ -312,7 +312,7 @@ export function HeroSection({
               {headline}
             </h1>
             {subheadline && (
-              <p className="text-body-xl text-text-secondary max-w-subtitle mx-auto mb-10">
+              <p className="text-body-2xl text-text-secondary max-w-subtitle mx-auto mb-10">
                 {subheadline}
               </p>
             )}

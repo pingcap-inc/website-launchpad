@@ -9,7 +9,7 @@ import {
   PrimaryButton,
   SectionHeader,
   TestimonialsSection,
-  IconGridSection,
+  FeatureGridSection,
 } from '@/components'
 
 const HERO_FORM_ID = '8d439c40-4e6b-4192-a99b-a2c619ad4146'
@@ -69,25 +69,45 @@ const valueCards = [
   {
     title: 'Unify Your Workloads',
     body: 'One database for transactions, analytics, and vectors. Ship features faster without maintaining multiple different systems.',
-    image: 'https://static.pingcap.com/files/2025/09/03234615/data.svg',
+    image: (
+      <Image
+        src="https://static.pingcap.com/files/2025/09/03234615/data.svg"
+        alt="Unify Your Workloads"
+      />
+    ),
     alt: 'Unify Your Workloads',
   },
   {
     title: 'Pay Only For Usage',
     body: 'No more paying for idle servers. Your costs align perfectly with your growth, making your burn rate predictable.',
-    image: 'https://static.pingcap.com/files/2025/09/03234542/cost.svg',
+    image: (
+      <Image
+        src="https://static.pingcap.com/files/2025/09/03234615/cost.svg"
+        alt="Pay Only For Usage"
+      />
+    ),
     alt: 'Pay Only For Usage',
   },
   {
     title: 'Scale For Modern Apps',
     body: 'Handle sudden traffic spikes or complex AI workloads instantly. Scale from your first user to your millionth without re-architecting.',
-    image: 'https://static.pingcap.com/files/2026/01/20234056/Frame-4.svg',
+    image: (
+      <Image
+        src="https://static.pingcap.com/files/2026/01/20234056/Frame-4.svg"
+        alt="Scale For Modern Apps"
+      />
+    ),
     alt: 'Scale For Modern Apps',
   },
   {
     title: 'Bring Your Stack',
     body: 'Works seamlessly with your current ecosystem, from modern frameworks to legacy drivers. Drop it in with zero friction.',
-    image: 'https://static.pingcap.com/files/2026/01/21011757/bring-your-stack-1.svg',
+    image: (
+      <Image
+        src="https://static.pingcap.com/files/2026/01/21011757/bring-your-stack-1.svg"
+        alt="Bring Your Stack"
+      />
+    ),
     alt: 'Bring Your Stack',
   },
 ]
@@ -162,15 +182,12 @@ export default function StartupProgramPage() {
           background="red"
         />
 
-        <IconGridSection
+        <FeatureGridSection
           title="Start Simple. Never Outgrow"
-          items={valueCards.map((card) => ({
+          features={valueCards.map((card) => ({
             title: card.title,
             description: card.body,
-            icon: {
-              src: card.image,
-              alt: card.alt,
-            },
+            icon: card.image,
           }))}
         />
       </main>

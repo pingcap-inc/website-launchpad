@@ -337,7 +337,7 @@ export function SectionHeader({
 | --------------- | -------------------------------------------------------------------------------------------------------------- |
 | Eyebrow (label) | `font-mono text-eyebrow text-text-secondary block mb-8`                                                        |
 | H2              | `{h2SizeMap[h2Size]} font-bold leading-tight mb-4 text-text-inverse` + `max-w-section-title` when left-aligned |
-| Subtitle        | `text-body-xl leading-relaxed max-w-subtitle text-text-secondary` + `mx-auto` when centered                    |
+| Subtitle        | `text-body-2xl leading-relaxed max-w-subtitle text-text-secondary` + `mx-auto` when centered                   |
 | Wrapper         | `mb-16` (overridable via className)                                                                            |
 
 ```tsx

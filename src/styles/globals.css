@@ -69,3 +69,23 @@
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
 }
+
+@keyframes logo-marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-logo-marquee {
+  animation: logo-marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo-marquee {
+    animation: none;
+    transform: translateX(100%);
+  }
+}

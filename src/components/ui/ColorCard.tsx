@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { SecondaryButton } from './SecondaryButton'
 
@@ -17,12 +16,10 @@ interface ColorCardProps {
   description: string
   cta: { text: string; href: string }
   /** Lucide icon or any SVG node */
-  icon?: React.ReactNode
-  /** Remote or local image */
-  image?: { src: string; alt: string; width?: number; height?: number }
+  icon: React.ReactNode
 }
 
-export function ColorCard({ variant, title, description, cta, icon, image }: ColorCardProps) {
+export function ColorCard({ variant, title, description, cta, icon }: ColorCardProps) {
   return (
     <a
       href={cta.href}
@@ -33,19 +30,7 @@ export function ColorCard({ variant, title, description, cta, icon, image }: Col
       )}
     >
       {/* Icon or image */}
-      {image ? (
-        <div className="mb-6 w-12 h-12 relative">
-          <Image
-            src={image.src}
-            alt={image.alt}
-            width={image.width ?? 48}
-            height={image.height ?? 48}
-            className="object-contain"
-          />
-        </div>
-      ) : icon ? (
-        <div className="mb-6 w-12 h-12 text-white shrink-0">{icon}</div>
-      ) : null}
+      {icon && <div className="mb-6 text-white shrink-0">{icon}</div>}
 
       <h3 className="text-h3-lg font-bold text-text-inverse mb-4">{title}</h3>
       <p className="text-body-md text-white leading-relaxed flex-1">{description}</p>

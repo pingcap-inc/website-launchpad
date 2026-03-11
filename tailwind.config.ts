@@ -10,7 +10,7 @@ const config: Config = {
           red: {
             bg: '#630D09',
             dark: '#87120C',
-            primary: '#DC150B',
+            medium: '#DC150B',
             light: '#F35048',
           },
           violet: {
@@ -154,8 +154,15 @@ const config: Config = {
             fontWeight: '700',
           },
         ],
-        'body-xl': [
+        'body-2xl': [
           '22px',
+          {
+            lineHeight: '1.4',
+            fontWeight: '300',
+          },
+        ],
+        'body-xl': [
+          '20px',
           {
             lineHeight: '1.4',
             fontWeight: '300',

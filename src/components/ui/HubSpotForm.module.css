@@ -75,7 +75,7 @@
 }
 
 .root :global(.hs-button:hover) {
-  @apply bg-brand-red-primary text-text-inverse;
+  @apply bg-brand-red-medium text-text-inverse;
 }
 
 .root :global(.submitted-message) {

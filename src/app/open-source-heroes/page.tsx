@@ -8,6 +8,7 @@ import {
   SectionHeader,
   PrimaryButton,
   CountUp,
+  FaqSection,
 } from '@/components'
 import { CreditTabs } from './_components/CreditTabs'
 
@@ -453,24 +454,7 @@ export default function OpenSourceHeroesPage() {
         </section>
 
         {/* ── 6. FAQ ── */}
-        <section className="py-section-sm lg:py-section bg-gradient-dark-bottom border-t border-carbon-800">
-          <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 max-w-3xl">
-            <SectionHeader title="FAQ" align="left" h2Size="sm" />
-            <div className="space-y-3">
-              {faqs.map((faq) => (
-                <details key={faq.q} className="group border border-carbon-800 px-4 md:px-6">
-                  <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none text-body-lg font-medium text-text-inverse">
-                    {faq.q}
-                    <span className="shrink-0 font-mono text-carbon-500 group-open:rotate-45 transition-transform">
-                      +
-                    </span>
-                  </summary>
-                  <p className="text-body-md text-carbon-300 leading-relaxed pb-5">{faq.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
+        <FaqSection items={faqs} />
 
         {/* ── 7. CTA ── */}
         <CtaSection

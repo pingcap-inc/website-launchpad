@@ -32,13 +32,19 @@ function TestimonialCard({
   logo,
   size = 'lg',
 }: TestimonialCard & { size?: 'lg' | 'sm' }) {
+  const isClickable = Boolean(href && cta)
+  const Wrapper = isClickable ? 'a' : 'div'
+  const wrapperProps = isClickable ? { href } : {}
+
   return (
-    <div
+    <Wrapper
       className={cn(
         'bg-bg-surface/40 backdrop-blur-sm',
         size === 'lg' ? 'p-6 lg:p-8' : 'p-5',
-        'rounded-2xl'
+        'rounded-2xl',
+        isClickable && 'cursor-pointer group'
       )}
+      {...wrapperProps}
     >
       <div className={cn('flex gap-6', size === 'lg' ? 'items-start' : 'items-center')}>
         {logo && (
@@ -61,7 +67,7 @@ function TestimonialCard({
           <p
             className={cn(
               'text-text-inverse leading-relaxed',
-              size === 'lg' ? 'text-body-xl' : 'text-lg'
+              size === 'lg' ? 'text-body-2xl' : 'text-lg'
             )}
           >
             {quote}
@@ -76,14 +82,14 @@ function TestimonialCard({
           </p>
           {href && cta && (
             <div className="flex justify-end">
-              <SecondaryButton className="mt-5" href={href}>
+              <SecondaryButton className="mt-5" as="span">
                 {cta}
               </SecondaryButton>
             </div>
           )}
         </div>
       </div>
-    </div>
+    </Wrapper>
   )
 }
 
@@ -98,6 +104,7 @@ export function TestimonialsSection({
   const [wrapperHeight, setWrapperHeight] = useState<number | null>(null)
   const [stepHeight, setStepHeight] = useState<number | null>(null)
   const [reducedMotion, setReducedMotion] = useState(false)
+  const [paused, setPaused] = useState(false)
   const listRef = useRef<HTMLDivElement>(null)
   const measureRef = useRef<HTMLDivElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -176,7 +183,7 @@ export function TestimonialsSection({
   }, [shouldFlip, index])
 
   useEffect(() => {
-    if (!shouldFlip || reducedMotion) return
+    if (!shouldFlip || reducedMotion || paused) return
     const interval = window.setInterval(() => {
       if (!stepHeight) return
       setAnimating(true)
@@ -186,10 +193,10 @@ export function TestimonialsSection({
       }, 700)
     }, 4000)
     return () => window.clearInterval(interval)
-  }, [shouldFlip, reducedMotion, testimonials.length, stepHeight])
+  }, [shouldFlip, reducedMotion, paused, testimonials.length, stepHeight])
 
   return (
-    <section className={cn('py-section-sm lg:py-section-md', className)}>
+    <section className={cn('py-section-sm lg:py-section', className)}>
       <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
         <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
           <div className="md:col-span-5">
@@ -203,6 +210,8 @@ export function TestimonialsSection({
               ref={wrapperRef}
               className={cn('relative overflow-hidden', shouldFlip && 'mask-bottom-fade')}
               style={shouldFlip && wrapperHeight ? { height: `${wrapperHeight}px` } : undefined}
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
             >
               <div
                 ref={listRef}

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 interface FeatureCardProps {
-  icon?: React.ReactNode | string
+  icon?: React.ReactNode
   title: string
   description: string
   /** Border color Tailwind class, e.g. 'border-brand-red-primary'. Defaults to border-carbon-800 */
@@ -21,25 +21,14 @@ export function FeatureCard({
   className,
 }: FeatureCardProps) {
   const classes = cn(
-    'flex flex-col gap-4 p-8 rounded-none border h-full',
+    'flex flex-col gap-4 p-8 border h-full hover:-translate-y-2 transition-transform duration-200 ease-in-out',
     borderColor,
-    href
-      ? 'hover:-translate-y-2 transition-transform duration-200 ease-in-out'
-      : 'transition-all duration-200 ease-in-out hover:shadow-card',
     className
   )
 
   const content = (
     <>
-      {icon && (
-        <div className="relative">
-          {typeof icon === 'string' ? (
-            <Image src={icon} alt="" fill className="object-contain" />
-          ) : (
-            icon
-          )}
-        </div>
-      )}
+      {icon && <div className="relative">{icon}</div>}
       <h3 className="text-h3-lg font-bold leading-normal m-0 text-text-inverse">{title}</h3>
       <p className="text-body-md leading-relaxed m-0 text-text-inverse">{description}</p>
     </>
