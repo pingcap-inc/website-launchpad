@@ -59,7 +59,7 @@ const schema = buildPageSchema({
 
 const useCases = [
   {
-    title: 'AI-powered financial insights',
+    title: 'AI-Powered Financial Insights',
     description:
       'Building an AI-powered crypto ETF insight app with GPTs and TiDB Cloud Data Service.',
     href: 'https://www.pingcap.com/blog/build-ai-apps-with-tidb/',
@@ -72,19 +72,19 @@ const useCases = [
     borderClass: 'border-brand-violet-medium',
   },
   {
-    title: 'Agentic AI systems',
+    title: 'Agentic AI Systems',
     description: 'How to build an AI agent that builds full-stack apps.',
     href: 'https://www.pingcap.com/blog/ai-agent-that-builds-full-stack-apps/',
     borderClass: 'border-brand-blue-medium',
   },
   {
-    title: 'AI-ready backends',
+    title: 'AI-Ready Backends',
     description: 'Mastering TiDB Cloud Data Service: building a data-driven backend.',
     href: 'https://www.pingcap.com/blog/data-service-real-time-apis/',
     borderClass: 'border-brand-teal-medium',
   },
   {
-    title: 'Real-time hybrid architectures',
+    title: 'Real-Time Hybrid Architectures',
     description: 'Supercharge real-time applications with TiDB and DragonflyDB.',
     href: 'https://www.pingcap.com/blog/realtime-apps-tidb-dragonflydb/',
     borderClass: 'border-brand-red-primary',
@@ -153,7 +153,7 @@ const tuneAndScale = [
   {
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
-    title: 'Design scalable, production-ready AI systems',
+    title: 'Design Scalable, Production-Ready AI Systems',
     href: 'https://www.pingcap.com/blog/how-to-design-ai-systems-with-vector-search/',
   },
 ]
@@ -169,7 +169,7 @@ export default function BuildAiAppsPage() {
 
         <main>
           <HeroSection
-            headline="Build AI-powered applications with real-time data and vector search"
+            headline="Build AI-Powered Applications with Real-Time Data and Vector Search"
             subheadline="Explore how to combine LLMs, embeddings, and live transactional data using TiDB through real AI applications, hands-on integrations, and proven design patterns."
             className="pb-10"
             rightSlot={

@@ -120,7 +120,7 @@ const basics = [
   {
     tag: 'Docs',
     tagColor: '#9E4EC4',
-    title: 'Transactional + analytical workloads (HTAP)',
+    title: 'Transactional + Analytical Workloads (HTAP)',
     href: 'https://www.pingcap.com/blog/htap-database/',
   },
   {

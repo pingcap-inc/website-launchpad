@@ -8,6 +8,7 @@ const config: Config = {
       colors: {
         brand: {
           red: {
+            primary: '#DC150B',
             bg: '#630D09',
             dark: '#87120C',
             medium: '#DC150B',

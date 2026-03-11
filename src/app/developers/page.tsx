@@ -111,7 +111,7 @@ const tutorials = [
   },
   {
     tag: 'Blog',
-    title: 'How to Build an AI Agent that Builds Full-Stack Apps',
+    title: 'How to Build an AI Agent That Builds Full-Stack Apps',
     description:
       'Use TiDB vector search to build an AI agent that generates and deploys full-stack applications end to end.',
     href: 'https://www.pingcap.com/blog/ai-agent-that-builds-full-stack-apps/',

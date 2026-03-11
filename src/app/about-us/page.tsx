@@ -271,7 +271,7 @@ export default function AboutUsPage() {
 
         {/* ── 6. CTA ──────────────────────────────────────────────────────── */}
         <CtaSection
-          title="Transform your database infrastructure with TiDB."
+          title="Transform Your Database Infrastructure with TiDB."
           subtitle="Open-source, MySQL-compatible, and built to scale from gigabytes to petabytes."
           primaryCta={{ text: 'Book a Demo', href: 'https://www.pingcap.com/contact-us/' }}
           secondaryCta={{ text: 'Start for Free', href: 'https://tidbcloud.com/free-trial/' }}

@@ -10,10 +10,15 @@
     "verify:env": "bash .ai/skills/quick-setup/scripts/verify-environment.sh",
     "lint": "eslint src/",
     "type-check": "tsc --noEmit",
+    "title-case": "node scripts/check-title-case.mjs $(git diff --name-only HEAD -- 'src/app/**/*.tsx' | tr '\\n' ' ')",
+    "title-case:fix": "node scripts/check-title-case.mjs --fix $(find src/app -name 'page.tsx' | tr '\\n' ' ')",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,json,md,css}": "prettier --write"
+    "*.{ts,tsx,js,json,md,css}": "prettier --write",
+    "src/app/**/*.tsx": [
+      "node scripts/check-title-case.mjs --fix"
+    ]
   },
   "browserslist": {
     "production": [

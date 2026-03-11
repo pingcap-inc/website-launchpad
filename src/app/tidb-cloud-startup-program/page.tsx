@@ -78,26 +78,26 @@ const valueCards = [
     alt: 'Unify Your Workloads',
   },
   {
-    title: 'Pay Only For Usage',
+    title: 'Pay Only for Usage',
     body: 'No more paying for idle servers. Your costs align perfectly with your growth, making your burn rate predictable.',
     image: (
       <Image
         src="https://static.pingcap.com/files/2025/09/03234615/cost.svg"
-        alt="Pay Only For Usage"
+        alt="Pay Only for Usage"
       />
     ),
-    alt: 'Pay Only For Usage',
+    alt: 'Pay Only for Usage',
   },
   {
-    title: 'Scale For Modern Apps',
+    title: 'Scale for Modern Apps',
     body: 'Handle sudden traffic spikes or complex AI workloads instantly. Scale from your first user to your millionth without re-architecting.',
     image: (
       <Image
         src="https://static.pingcap.com/files/2026/01/20234056/Frame-4.svg"
-        alt="Scale For Modern Apps"
+        alt="Scale for Modern Apps"
       />
     ),
-    alt: 'Scale For Modern Apps',
+    alt: 'Scale for Modern Apps',
   },
   {
     title: 'Bring Your Stack',
@@ -119,7 +119,7 @@ export default function StartupProgramPage() {
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         <HeroSection
           eyebrow="TiDB Cloud Startup Program"
-          headline="Launch Fast. Scale without Limits. Get $100,000 in TiDB Cloud Credits"
+          headline="Launch Fast. Scale Without Limits. Get $100,000 in TiDB Cloud Credits"
           subheadline="Apply now and start building with the distributed SQL database that grows with you - from MVP to millions of users."
           rightSlot={
             <div id="hero-form">
@@ -134,11 +134,11 @@ export default function StartupProgramPage() {
         />
 
         <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
-          <SectionHeader align="center" h2Size="sm" title="About The Program" />
+          <SectionHeader align="center" h2Size="sm" title="About the Program" />
           <div className="grid md:grid-cols-2 gap-4">
             <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
               <div>
-                <h2 className="text-h3-lg mb-4">Who is this for?</h2>
+                <h2 className="text-h3-lg mb-4">Who Is This for?</h2>
                 <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
                   <li>• Seed to Series B startups building data-intensive products.</li>
                   <li>• Founded within 36 months from the application date.</li>
@@ -158,7 +158,7 @@ export default function StartupProgramPage() {
             </div>
             <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
               <div>
-                <h3 className="text-h3-sm mb-3">What do you get?</h3>
+                <h3 className="text-h3-sm mb-3">What Do You Get?</h3>
                 <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
                   <li>• Financial Support: Up to $100,000 in TiDB Cloud credits.</li>
                   <li>

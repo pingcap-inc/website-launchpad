@@ -42,12 +42,12 @@ export const metadata: Metadata = {
 
 const steps = [
   {
-    title: 'Link your Github',
+    title: 'Link Your Github',
     description:
       'Sign in with your GitHub account. We calculate your credits based on your public open source contributions.',
   },
   {
-    title: 'Claim your Credits',
+    title: 'Claim Your Credits',
     description:
       'Connect your TiDB Cloud account and claim up to $2,000 in Serverless credits — instantly applied.',
   },
@@ -334,7 +334,7 @@ export default function OpenSourceHeroesPage() {
               <div className="lg:col-span-7">
                 {/* Part A — capabilities */}
                 <SectionHeader
-                  title="With TiDB Cloud Serverless, you can:"
+                  title="With TiDB Cloud Serverless, You Can:"
                   align="left"
                   h2Size="sm"
                 />
@@ -370,7 +370,7 @@ export default function OpenSourceHeroesPage() {
 
             {/* Part B — credit tiers */}
             <SectionHeader
-              title="With TiDB Cloud Serverless credits, you can:"
+              title="With TiDB Cloud Serverless Credits, You Can:"
               align="left"
               h2Size="sm"
             />

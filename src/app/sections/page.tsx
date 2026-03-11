@@ -52,7 +52,7 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
   HeroSection: () => (
     <HeroSection
       eyebrow="Section Demo"
-      headline="Hero section demo"
+      headline="Hero Section Demo"
       subheadline="Swap the copy and CTAs to fit any campaign."
       primaryCta={{ text: 'Primary Action', href: '/' }}
       secondaryCta={{ text: 'Secondary', href: '/' }}
@@ -92,26 +92,26 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
   FeatureCardSection: () => (
     <FeatureCardSection
       eyebrow="Feature Cards"
-      title="Bordered cards with color accents"
+      title="Bordered Cards with Color Accents"
       subtitle="Each card supports custom border colors or a default neutral border."
       items={[
         {
-          title: 'Secure by default',
+          title: 'Secure by Default',
           description: 'Built-in encryption, IAM integration, and audit-ready logs.',
           icon: <Rocket size={28} />,
         },
         {
-          title: 'Global ready',
+          title: 'Global Ready',
           description: 'Deploy across regions with predictable performance.',
           icon: <Compass size={28} />,
         },
         {
-          title: 'Developer friendly',
+          title: 'Developer Friendly',
           description: 'MySQL-compatible with a modern observability stack.',
           icon: <Layers size={28} />,
         },
         {
-          title: 'Reliable operations',
+          title: 'Reliable Operations',
           description: 'Automated backups and failure recovery at scale.',
           icon: <Computer size={28} />,
         },
@@ -124,13 +124,13 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
   FeatureTabsSection: () => (
     <FeatureTabsSection
       eyebrow="Feature Tabs"
-      title="Deep dives with auto-switching tabs"
+      title="Deep Dives with Auto-Switching Tabs"
       subtitle="Each tab pairs a story on the left with a visual on the right."
       tabs={[
         {
           id: 'scale',
           label: 'Scale',
-          title: 'Scale without re-architecture',
+          title: 'Scale Without Re-Architecture',
           description: 'Keep your existing MySQL-compatible workflows while scaling from GB to PB.',
           bullets: ['Horizontal scaling', 'Strong consistency', 'HTAP-ready'],
           primaryCta: { text: 'Learn More', href: '/developers/' },
@@ -144,7 +144,7 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
         {
           id: 'speed',
           label: 'Speed',
-          title: 'Fast queries, low latency',
+          title: 'Fast Queries, Low Latency',
           description: 'Serve transactional and analytical workloads in a single system.',
           bullets: ['Real-time insights', 'Elastic compute', 'Optimized storage'],
           secondaryCta: { text: 'See Docs', href: '/developers/' },
@@ -163,7 +163,7 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
               <p className="text-body-sm uppercase tracking-[0.18em] text-carbon-500">
                 Custom Content
               </p>
-              <h3 className="text-h3-lg text-text-inverse">Operate with confidence</h3>
+              <h3 className="text-h3-lg text-text-inverse">Operate with Confidence</h3>
               <p className="text-body-md text-carbon-300 leading-relaxed">
                 Bring your own layout, inline components, or richer narratives per tab.
               </p>
@@ -230,7 +230,7 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
   TestimonialsSection: () => (
     <TestimonialsSection
       eyebrow="Social Proof"
-      title="What teams are saying"
+      title="What Teams Are Saying"
       testimonials={[
         {
           quote:
@@ -258,7 +258,7 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
   ),
   CtaSection: () => (
     <CtaSection
-      title="Ready to assemble your next page?"
+      title="Ready to Assemble Your Next Page?"
       subtitle="Pick the sections you need, swap the copy, and go live fast."
       primaryCta={{ text: 'Start Building', href: '/open-source-heroes/' }}
       secondaryCta={{ text: 'Explore Pages', href: '/' }}
@@ -268,7 +268,7 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
   FeatureHighlightsSection: () => (
     <FeatureHighlightsSection
       eyebrow="Color Cards"
-      title="Highlight key initiatives"
+      title="Highlight Key Initiatives"
       subtitle="Bold tiles with strong color cues and CTA focus."
       items={[
         {
@@ -352,7 +352,7 @@ export default async function SectionsPage() {
       <div className="pt-[62px] lg:pt-20">
         <HeroSection
           eyebrow="Section Library"
-          headline="Preview reusable landing sections"
+          headline="Preview Reusable Landing Sections"
           subheadline="This page lists every section component found in src/components/sections."
           primaryCta={{ text: 'Use These Sections', href: '/' }}
           secondaryCta={{ text: 'See More Pages', href: '/' }}

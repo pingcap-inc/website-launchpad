@@ -61,7 +61,7 @@ export default async function HomePage() {
         <p className="text-sm uppercase tracking-[0.16em] text-brand-red-primary">
           website-launchpad
         </p>
-        <h1 className="text-4xl font-bold leading-tight sm:text-5xl">Local preview entry page</h1>
+        <h1 className="text-4xl font-bold leading-tight sm:text-5xl">Local Preview Entry Page</h1>
         <p className="max-w-2xl text-base text-text-secondary sm:text-lg">
           This root page exists for local onboarding. In production, root traffic is still handled
           by WordPress and reverse proxy routing.
