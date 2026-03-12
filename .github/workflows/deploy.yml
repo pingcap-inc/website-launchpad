@@ -50,5 +50,4 @@ jobs:
       - name: Sync public images to S3
         run: |
           aws s3 sync public/ s3://uploads-pingcap-com/launchpad/ \
-            --cache-control "public,max-age=86400" \
-            --delete
+            --cache-control "public,max-age=86400"
