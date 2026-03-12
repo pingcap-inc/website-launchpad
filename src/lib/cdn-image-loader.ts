@@ -1,4 +1,4 @@
-const CDN_BASE = 'https://static.pingcap.com/launchpad'
+const CDN_BASE = process.env.NEXT_PUBLIC_ASSET_PREFIX ?? 'https://static.pingcap.com/launchpad'
 
 export default function cdnImageLoader({
   src,

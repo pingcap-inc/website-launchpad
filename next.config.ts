@@ -1,12 +1,12 @@
 import type { NextConfig } from 'next'
 
-const isProd = process.env.NODE_ENV === 'production'
+const cdnPrefix = process.env.NEXT_PUBLIC_ASSET_PREFIX
 
 const nextConfig: NextConfig = {
-  assetPrefix: isProd ? 'https://static.pingcap.com/launchpad' : undefined,
+  assetPrefix: cdnPrefix ?? undefined,
   images: {
-    loader: isProd ? 'custom' : 'default',
-    loaderFile: isProd ? './src/lib/cdn-image-loader.ts' : undefined,
+    loader: cdnPrefix ? 'custom' : 'default',
+    loaderFile: cdnPrefix ? './src/lib/cdn-image-loader.ts' : undefined,
     remotePatterns: [
       {
         protocol: 'https',
