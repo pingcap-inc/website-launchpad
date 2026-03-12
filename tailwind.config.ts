@@ -86,9 +86,9 @@ const config: Config = {
       },
       fontSize: {
         eyebrow: [
-          '15px',
+          '16px',
           {
-            lineHeight: '1.3',
+            lineHeight: '1.5',
             fontWeight: '400',
           },
         ],
