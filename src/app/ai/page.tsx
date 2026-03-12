@@ -181,6 +181,27 @@ export default function AiPage() {
                 title="Proven in Real-World AI Deployments"
                 subtitle="Teams building AI‑driven applications rely on TiDB to support retrieval, agents, and live data across users, workloads, and environments."
               />
+              {/* Logo-wall marquee — scrolls right to left */}
+              <div className="overflow-hidden mb-12" aria-hidden="true">
+                <div className="flex w-max animate-marquee">
+                  {/* Two copies for seamless loop */}
+                  <img
+                    src="/logo-wall.svg"
+                    alt=""
+                    width={1066}
+                    height={34}
+                    className="h-[34px] w-auto shrink-0 mr-16"
+                  />
+                  <img
+                    src="/logo-wall.svg"
+                    alt=""
+                    width={1066}
+                    height={34}
+                    className="h-[34px] w-auto shrink-0 mr-16"
+                  />
+                </div>
+              </div>
+
               <div className="border border-carbon-800 p-8 md:p-12 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 <blockquote className="md:col-span-8 text-body-xl italic text-text-inverse leading-relaxed">
                   &ldquo;We migrated to TiDB Cloud in just two weeks. It let us scale our agentic AI

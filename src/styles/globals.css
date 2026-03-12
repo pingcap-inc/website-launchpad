@@ -64,3 +64,16 @@
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 }
+
+/* ─── Logo-wall marquee ─── */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
