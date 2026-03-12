@@ -20,19 +20,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
   }> = [
     // Developer section
-    { url: '/developer/', priority: 0.9, changeFrequency: 'weekly' },
-    { url: '/developer/get-started/', priority: 0.8, changeFrequency: 'monthly' },
-    { url: '/developer/build-data-apps/', priority: 0.8, changeFrequency: 'monthly' },
-    { url: '/developer/build-ai-apps/', priority: 0.8, changeFrequency: 'monthly' },
-    { url: '/developer/migration-center/', priority: 0.7, changeFrequency: 'monthly' },
-    { url: '/developer/learn/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/developers/', priority: 0.9, changeFrequency: 'weekly' },
+    { url: '/developers/get-started/', priority: 0.8, changeFrequency: 'monthly' },
+    { url: '/developers/build-data-apps/', priority: 0.8, changeFrequency: 'monthly' },
+    { url: '/developers/build-ai-apps/', priority: 0.8, changeFrequency: 'monthly' },
+    { url: '/developers/migration-center/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/developers/learn/', priority: 0.7, changeFrequency: 'monthly' },
     // Content pages
     { url: '/glossary/', priority: 0.7, changeFrequency: 'monthly' },
     // Company pages
-    { url: '/about-us/', priority: 0.7, changeFrequency: 'monthly' },
+    // { url: '/about-us/', priority: 0.7, changeFrequency: 'monthly' },
     // Campaign / program pages
-    { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
-    { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
+    // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
+    // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
   ]
 
   return routes.map(({ url, priority, changeFrequency }) => ({

@@ -45,6 +45,7 @@ export function DeferredHubSpotForm({
       onMouseEnter={mountNow}
       onFocusCapture={mountNow}
       onTouchStart={mountNow}
+      style={!shouldMount && props.minHeight ? { minHeight: props.minHeight } : undefined}
     >
       {shouldMount ? <LazyHubSpotForm {...props} /> : null}
     </div>

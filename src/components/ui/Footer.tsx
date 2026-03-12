@@ -1,5 +1,5 @@
 import { LanguageSwitcher } from './LanguageSwitcher'
-import { DeferredHubSpotForm } from './DeferredHubSpotForm'
+import { HubSpotForm } from './HubSpotForm'
 import { externalLinkProps } from '@/lib/links'
 
 const NEWSLETTER_FORM_ID =
@@ -162,7 +162,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 space-y-6 text-center md:text-left">
             <p className="font-mono text-eyebrow text-carbon-400">Stay Connected</p>
             <div className="space-y-3">
-              <DeferredHubSpotForm
+              <HubSpotForm
                 formId={NEWSLETTER_FORM_ID}
                 {...(NEWSLETTER_SFDC_CAMPAIGN_ID
                   ? { sfdcCampaignId: NEWSLETTER_SFDC_CAMPAIGN_ID }
@@ -204,13 +204,16 @@ export function Footer() {
           <p className="text-body-sm font-mono text-carbon-400">
             © 2026 PingCAP. All Rights Reserved. <span className="mx-1 text-carbon-700">/</span>
             <a
-              href="/privacy-policy/"
+              href="https://www.pingcap.com/privacy-policy/"
               className="hover:text-text-inverse transition-colors duration-150"
             >
               Privacy Policy
             </a>
             <span className="mx-1 text-carbon-700">/</span>
-            <a href="/legal/" className="hover:text-text-inverse transition-colors duration-150">
+            <a
+              href="https://www.pingcap.com/legal/"
+              className="hover:text-text-inverse transition-colors duration-150"
+            >
               Legal
             </a>
           </p>

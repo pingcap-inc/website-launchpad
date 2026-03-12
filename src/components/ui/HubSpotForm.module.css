@@ -151,6 +151,7 @@
   align-items: center;
   justify-content: center;
   min-height: 120px;
+  height: 100%;
 }
 
 .spinner {
