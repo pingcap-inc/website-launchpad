@@ -185,19 +185,21 @@ export default function AiPage() {
               <div className="overflow-hidden mb-12" aria-hidden="true">
                 <div className="flex w-max animate-marquee">
                   {/* Two copies for seamless loop */}
-                  <img
+                  <Image
                     src="/logo-wall.svg"
                     alt=""
                     width={1066}
                     height={34}
                     className="h-[34px] w-auto shrink-0 mr-16"
+                    unoptimized
                   />
-                  <img
+                  <Image
                     src="/logo-wall.svg"
                     alt=""
                     width={1066}
                     height={34}
                     className="h-[34px] w-auto shrink-0 mr-16"
+                    unoptimized
                   />
                 </div>
               </div>
