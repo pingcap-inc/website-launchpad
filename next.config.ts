@@ -1,12 +1,12 @@
 import type { NextConfig } from 'next'
 
-const cdnPrefix = process.env.NEXT_PUBLIC_ASSET_PREFIX
+const assetPrefix = process.env.NEXT_PUBLIC_ASSET_PREFIX
 
 const nextConfig: NextConfig = {
-  assetPrefix: cdnPrefix ?? undefined,
+  assetPrefix: assetPrefix ?? undefined,
   images: {
-    loader: cdnPrefix ? 'custom' : 'default',
-    loaderFile: cdnPrefix ? './src/lib/cdn-image-loader.ts' : undefined,
+    loader: assetPrefix ? 'custom' : 'default',
+    loaderFile: assetPrefix ? './src/lib/cdn-image-loader.ts' : undefined,
     remotePatterns: [
       {
         protocol: 'https',

@@ -32,7 +32,7 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: 1
           NODE_ENV: production
-          NEXT_PUBLIC_ASSET_PREFIX: https://static.pingcap.com/launchpad
+          NEXT_PUBLIC_ASSET_PREFIX: /launchpad
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -40,12 +40,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Sync JS/CSS bundles to S3
-        run: |
-          aws s3 sync .next/static/ s3://uploads-pingcap-com/launchpad/_next/static/ \
-            --cache-control "public,max-age=31536000,immutable" \
-            --delete
 
       - name: Sync public images to S3
         run: |
