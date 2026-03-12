@@ -115,6 +115,8 @@ function shouldSkip(text) {
   if (text.includes('\n')) return true; // actual newlines (shouldn't appear in attrs, but guard anyway)
   // Single-word — no inter-word rules apply, first-word rule always satisfied
   if (!text.trim().includes(' ')) return true;
+  // Questions are sentences (sentence case), not titles — skip title case check
+  if (text.trim().endsWith('?')) return true;
   return false;
 }
 

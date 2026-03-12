@@ -17,7 +17,7 @@
   "lint-staged": {
     "*.{ts,tsx,js,json,md,css}": "prettier --write",
     "src/app/**/*.tsx": [
-      "node scripts/check-title-case.mjs --fix"
+      "node scripts/check-title-case.mjs"
     ]
   },
   "browserslist": {

@@ -101,7 +101,7 @@ Generate the full file at `src/app/[path]/page.tsx`, then run the post-generatio
 Visual & Interaction (see visual-design.md for full guide)
 ❌ FeatureCard without icon    → every FeatureCard MUST have icon={<LucideIcon strokeWidth={1.5} />}
 ❌ ColorCard without icon      → every ColorCard MUST have icon or image prop
-❌ Hero split without visual   → rightSlot or heroImage required (auto-seeds if omitted)
+❌ Hero image-right no image   → omit heroImage to use default; provide heroImage for custom asset
 ❌ All-black page              → at least one section must use non-bg-bg-primary background
 ❌ Interactive card no hover   → clickable cards must have hover:-translate-y-2 transition-transform duration-200 ease-in-out
 ❌ 3+ metrics without CountUp  → use <CountUp> for scroll-triggered stat display
@@ -193,7 +193,7 @@ Code Quality
 Visual Quality
 - [ ] Every FeatureCard item has icon prop (Lucide component, strokeWidth={1.5})
 - [ ] Every ColorCard item has icon or image prop
-- [ ] HeroSection split layout has rightSlot or heroImage (or rightSlot omitted → auto-seeds)
+- [ ] HeroSection image-right layout: heroImage prop optional (defaults to Graphic-1-Dk.png 800×500)
 - [ ] Page uses ≥2 distinct section backgrounds (not all bg-bg-primary)
 - [ ] Clickable cards have hover:-translate-y-2 transition-transform duration-200 ease-in-out
 - [ ] Metric sections with ≥3 stats use <CountUp> for scroll-triggered animation

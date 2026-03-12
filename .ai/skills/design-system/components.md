@@ -551,21 +551,21 @@ import { Separator } from '@/components/ui/separator'
 
 ### HeroSection
 
-Full-width hero. Supports `split` (default), `centered`, and `image-right` layouts.
+Full-width hero. Supports `image-right` (default), `centered`, and `split` layouts.
 
 ```tsx
 import { HeroSection } from '@/components/sections/HeroSection'
 
 interface HeroSectionProps {
-  layout?: 'split' | 'centered' | 'image-right' // default 'split'
+  layout?: 'image-right' | 'centered' | 'split' // default 'image-right'
   eyebrow?: string
   headline: string // supports \n for line breaks
   subheadline?: string
   primaryCta?: { text: string; href: string }
   secondaryCta?: { text: string; href: string }
-  rightSlot?: React.ReactNode // split: right column (form, image, SVG cube)
+  rightSlot?: React.ReactNode // split layout: right column (form, image, SVG)
   heroImage?: {
-    // image-right layout
+    // image-right layout — defaults to Graphic-1-Dk.png (800×500) if omitted
     src: string
     alt?: string
     width: number
@@ -573,14 +573,23 @@ interface HeroSectionProps {
     align?: 'right' | 'center'
     priority?: boolean
   }
+  backgroundImage?: {
+    src?: string
+    alt?: string
+    priority?: boolean
+    opacityClassName?: string // default 'opacity-40'
+    overlayClassName?: string
+    positionClassName?: string // default 'object-center'
+  }
   className?: string
 }
 ```
 
 **Rules:**
 
-- Split layout MUST have `rightSlot` or `heroImage` (auto-seeds SVG if omitted).
-- Use `noPb` when the next section has the same `bg-bg-primary` background.
+- `image-right` is the default layout; `heroImage` is optional (falls back to `Graphic-1-Dk.png`).
+- `split` layout right column is empty when `rightSlot` is omitted — provide a visual.
+- Centered layout defaults to no eyebrow.
 
 ---
 

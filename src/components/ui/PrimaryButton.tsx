@@ -23,7 +23,7 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
       {/* Red Flood circle */}
       <span
         aria-hidden="true"
-        className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-full
+        className="absolute left-1/2 -translate-x-1/2 -bottom-1 translate-y-full
                    w-[30%] aspect-square rounded-full bg-brand-red-primary z-0
                    transition-transform duration-500 ease-in-out
                    group-hover:translate-y-[10%] group-hover:scale-[6]"
@@ -38,7 +38,8 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
       </span>
       {/* Icon */}
       <ArrowUpRight
-        size={17}
+        size={16}
+        strokeWidth={1.5}
         className="relative z-10 shrink-0 text-text-primary
                    transition-colors duration-500 ease-in-out
                    group-hover:text-text-inverse"

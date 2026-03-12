@@ -40,9 +40,8 @@ export function ColorCard({ variant, title, description, cta, icon }: ColorCardP
       {/* SecondaryButton — triggered by card group hover */}
       <div className="mt-8">
         <SecondaryButton
-          href={cta.href}
-          dark={true}
           className="group-hover:bg-transparent group-hover:text-text-inverse"
+          as="span"
         >
           {cta.text}
         </SecondaryButton>

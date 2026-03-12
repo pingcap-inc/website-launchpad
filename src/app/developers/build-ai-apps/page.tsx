@@ -1,18 +1,19 @@
 import type { Metadata } from 'next'
 import { Header, Footer, JsonLd, SectionHeader, HeroSection, SecondaryButton } from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
-import { Bot } from 'lucide-react'
+import { Bot, Icon } from 'lucide-react'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
 import { DeveloperResourceCard } from '../_components/DeveloperResourceCard'
+import { IconAi, IconAiBackends, IconFinancial, IconRag, IconRealTime } from '../_components/icons'
 
 export const metadata: Metadata = {
-  title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+  title: 'Build AI Applications with TiDB | TiDB Developer Hub',
   description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
   openGraph: {
-    title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+    title: 'Build AI Applications with TiDB | TiDB Developer Hub',
     description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
-    url: 'https://www.pingcap.com/developer/build-ai-apps/',
-    siteName: 'PingCAP',
+    url: 'https://www.pingcap.com/developers/build-ai-apps/',
+    siteName: 'TiDB',
     images: [
       {
         url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
@@ -25,31 +26,31 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+    title: 'Build AI Applications with TiDB | TiDB Developer Hub',
     description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
-    creator: '@PingCAP',
+    site: '@PingCAP',
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/developer/build-ai-apps/' },
+  alternates: { canonical: 'https://www.pingcap.com/developers/build-ai-apps/' },
 }
 
 const schema = buildPageSchema({
-  path: '/developer/build-ai-apps/',
-  title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+  path: '/developers/build-ai-apps/',
+  title: 'Build AI Applications with TiDB | TiDB Developer Hub',
   description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
   pageType: 'WebPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: 'Developer Hub', path: '/developer/' },
-    { name: 'Build AI Applications', path: '/developer/build-ai-apps/' },
+    { name: 'Developer Hub', path: '/developers/' },
+    { name: 'Build AI Applications', path: '/developers/build-ai-apps/' },
   ],
   image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
   extraSchemas: [
     techArticleSchema({
-      title: 'Build AI Applications with TiDB | PingCAP Developer Hub',
+      title: 'Build AI Applications with TiDB | TiDB Developer Hub',
       description: 'Build AI-powered applications with real-time data and vector search on TiDB.',
-      url: '/developer/build-ai-apps/',
+      url: '/developers/build-ai-apps/',
       image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
       proficiencyLevel: 'Intermediate',
       dateModified: '2026-02-28',
@@ -57,36 +58,68 @@ const schema = buildPageSchema({
   ],
 })
 
+const howToGuides = [
+  {
+    title: 'How do I build a RAG pipeline with TiDB?',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-get-started-using-python',
+  },
+  {
+    title: 'How do I store and query vector embeddings?',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-get-started-using-sql',
+  },
+  {
+    title: 'How do I integrate TiDB with LangChain?',
+    href: 'https://docs.pingcap.com/tidb/stable/vector-search-integrate-with-langchain',
+  },
+  {
+    title: 'How do I integrate TiDB with LlamaIndex?',
+    href: 'https://docs.pingcap.com/tidb/stable/vector-search-integrate-with-llamaindex',
+  },
+  {
+    title: 'How do I run hybrid search in TiDB?',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-hybrid-search',
+  },
+  {
+    title: 'How do I improve vector search performance?',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-improve-performance',
+  },
+]
+
 const useCases = [
   {
+    icon: <IconFinancial />,
     title: 'AI-Powered Financial Insights',
     description:
       'Building an AI-powered crypto ETF insight app with GPTs and TiDB Cloud Data Service.',
-    href: 'https://www.pingcap.com/blog/build-ai-apps-with-tidb/',
+    href: 'https://www.pingcap.com/blog/building-ai-powered-crypto-etf-insights-app-gpts-tidb-cloud-data-service/',
     borderClass: 'border-brand-red-primary',
   },
   {
+    icon: <IconRag />,
     title: 'Retrieval-Augmented Generation (RAG)',
     description: 'Building RAG applications with TiDB.',
-    href: 'https://docs.pingcap.com/tidbcloud/vector-search-integrate-with-llm-frameworks/',
+    href: 'https://www.pingcap.com/blog/dify-tidb-build-scalable-ai-agent-with-knowledge-base/',
     borderClass: 'border-brand-violet-medium',
   },
   {
+    icon: <IconAi />,
     title: 'Agentic AI Systems',
     description: 'How to build an AI agent that builds full-stack apps.',
     href: 'https://www.pingcap.com/blog/ai-agent-that-builds-full-stack-apps/',
     borderClass: 'border-brand-blue-medium',
   },
   {
+    icon: <IconAiBackends />,
     title: 'AI-Ready Backends',
     description: 'Mastering TiDB Cloud Data Service: building a data-driven backend.',
-    href: 'https://www.pingcap.com/blog/data-service-real-time-apis/',
+    href: 'https://www.pingcap.com/blog/building-a-data-driven-backend-with-data-service/',
     borderClass: 'border-brand-teal-medium',
   },
   {
+    icon: <IconRealTime />,
     title: 'Real-Time Hybrid Architectures',
     description: 'Supercharge real-time applications with TiDB and DragonflyDB.',
-    href: 'https://www.pingcap.com/blog/realtime-apps-tidb-dragonflydb/',
+    href: 'https://www.pingcap.com/blog/supercharging-real-time-applications-tidb-dragonflydb/',
     borderClass: 'border-brand-red-primary',
   },
 ]
@@ -108,6 +141,13 @@ const vectorHandsOn = [
 
 const frameworks = [
   {
+    name: 'Amazon Bedrock',
+    subtitle: 'Amazon Bedrock',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-integrate-with-amazon-bedrock/',
+    logo: 'https://static.pingcap.com/files/2026/02/28014556/aws.png',
+    cta: 'Read Docs',
+  },
+  {
     name: 'Gemini integration',
     subtitle: 'Gemini',
     href: 'https://github.com/pingcap/tidb-vector-python/tree/main/examples/gemini-ai-embeddings-demo',
@@ -116,23 +156,16 @@ const frameworks = [
   },
   {
     name: 'LangChain integration',
-    subtitle: 'LangChain integration',
-    href: 'https://docs.pingcap.com/tidbcloud/vector-search-integrate-with-llm-frameworks/#langchain',
+    subtitle: 'LangChain',
+    href: 'https://www.pingcap.com/article/step-by-step-guide-to-langchain-integration/',
     logo: 'https://static.pingcap.com/files/2025/07/01063430/icon-langchain.webp',
     cta: 'Read Docs',
   },
   {
     name: 'LlamaIndex integration',
-    subtitle: 'LlamaIndex integration',
-    href: 'https://docs.pingcap.com/tidbcloud/vector-search-integrate-with-llm-frameworks/#llamaindex',
+    subtitle: 'LlamaIndex',
+    href: 'https://docs.pingcap.com/tidb/stable/vector-search-integrate-with-llamaindex/',
     logo: 'https://static.pingcap.com/files/2025/07/01063357/icon-llamaindex.webp',
-    cta: 'Read Docs',
-  },
-  {
-    name: 'Amazon Bedrock integration',
-    subtitle: 'Amazon Bedrock integration',
-    href: 'https://docs.pingcap.com/tidbcloud/vector-search-integrate-with-llm-frameworks/#amazon-bedrock',
-    logo: 'https://static.pingcap.com/files/2026/02/28014556/aws.png',
     cta: 'Read Docs',
   },
 ]
@@ -147,14 +180,14 @@ const tuneAndScale = [
   {
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
-    title: 'Vector Search Functions',
+    title: 'Vector Data Operators',
     href: 'https://docs.pingcap.com/tidbcloud/vector-search-functions-and-operators/',
   },
   {
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
     title: 'Design Scalable, Production-Ready AI Systems',
-    href: 'https://www.pingcap.com/blog/how-to-design-ai-systems-with-vector-search/',
+    href: 'https://docs.pingcap.com/tidbcloud/vector-search-hybrid-search/',
   },
 ]
 
@@ -163,25 +196,61 @@ export default function BuildAiAppsPage() {
     <>
       <JsonLd data={schema} />
       <Header />
-
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
-
         <main>
           <HeroSection
-            headline="Build AI-Powered Applications with Real-Time Data and Vector Search"
-            subheadline="Explore how to combine LLMs, embeddings, and live transactional data using TiDB through real AI applications, hands-on integrations, and proven design patterns."
-            className="pb-10"
-            rightSlot={
-              <div className="hidden lg:flex justify-center items-start pt-10">
-                <p className="text-brand-red-light text-h3-sm italic">
-                  Illustrations to be updated
-                </p>
-              </div>
-            }
+            layout="image-right"
+            eyebrow="TiDB Developer Hub"
+            headline="Build Complete AI Apps Fast with One Database to Serve Agent Context, Branching and Search"
+            subheadline="Vector search, RAG patterns, and LLM integrations — with working code for LangChain, LlamaIndex, and raw SQL."
+            heroImage={{
+              src: '/images/developers/build-ai-apps-banner.svg',
+              alt: 'Build AI Applications Banner',
+              width: 427,
+              height: 444,
+              align: 'right',
+            }}
           />
 
-          <section className="py-section-sm lg:py-section-sm bg-bg-primary">
+          {/* ── How-To Guides ── */}
+          <section
+            id="how-to-guides"
+            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+          >
+            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
+                <div className="lg:pt-2">
+                  <SectionHeader
+                    title={'How-To\nGuides'}
+                    h2Size="md"
+                    align="left"
+                    className="md:!mb-0"
+                  />
+                </div>
+                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {howToGuides.map((item) => (
+                    <a
+                      key={item.title}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between gap-4 border-l-4 border-brand-red-primary bg-bg-secondary hover:bg-carbon-800 px-5 py-4 transition-colors duration-200 ease-in-out"
+                    >
+                      <p className="text-body-lg font-semibold text-text-inverse leading-snug">
+                        {item.title}
+                      </p>
+                      <span className="text-brand-red-primary text-lg shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
+                        ↗
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="py-section-sm lg:pb-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader
                 title="Explore Real AI Use Cases"
@@ -193,12 +262,10 @@ export default function BuildAiAppsPage() {
                   <a
                     key={item.title}
                     href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className={`group min-h-[164px] px-8 py-5 border ${item.borderClass} hover:-translate-y-2 transition-transform duration-200 ease-in-out`}
                   >
                     <div className="flex items-start justify-between mb-4">
-                      <Bot size={24} className="text-text-inverse" />
+                      {item.icon}
                       <span className="font-mono text-label text-white px-2 py-0.5 bg-brand-red-light">
                         Blog
                       </span>
@@ -215,14 +282,18 @@ export default function BuildAiAppsPage() {
             </div>
           </section>
 
-          <section className="py-section-sm lg:py-section bg-gradient-dark-top">
+          <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-              <SectionHeader
-                title="Get Hands-On with Vector Search"
-                subtitle="Store embeddings, run similarity search, and combine vector queries with SQL in one system."
-                align="left"
-              />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="mb-8 md:mb-16">
+                <h2 className="text-h2-mb md:text-h2-lg font-bold leading-tight mb-4 text-text-inverse">
+                  Get Hands-On with Vector Search
+                </h2>
+                <p className="text-body-2xl leading-relaxed text-text-secondary">
+                  Store embeddings, run similarity search, and combine vector queries with SQL in
+                  one system.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {vectorHandsOn.map((item) => (
                   <DeveloperResourceCard key={item.title} item={item} openInNewTab />
                 ))}
@@ -230,22 +301,22 @@ export default function BuildAiAppsPage() {
             </div>
           </section>
 
-          <section className="py-section-sm lg:py-section-sm bg-bg-primary">
+          <section className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-5">
                   <SectionHeader
-                    title="Integrate with AI Frameworks"
+                    title={'Integrate with \nAI Frameworks'}
                     subtitle="Use TiDB as the data and retrieval layer in modern AI stacks."
                     align="left"
-                    className="mb-0"
+                    className="md:!mb-0"
                   />
                 </div>
                 <div className="lg:col-span-7 grid md:grid-cols-2 xl:grid-cols-4 gap-3">
                   {frameworks.map((framework) => (
                     <div
                       key={framework.name}
-                      className="group relative overflow-hidden min-h-[148px] border border-border-primary bg-bg-primary flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 ease-out"
+                      className="group relative overflow-hidden min-h-[182px] border border-border-primary bg-bg-primary flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 ease-out"
                     >
                       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
                         <div className=" p-4 group-hover:opacity-0">
@@ -257,14 +328,16 @@ export default function BuildAiAppsPage() {
                           />
                           <p className="text-body-md text-text-inverse">{framework.subtitle}</p>
                         </div>
-                        <div className="absolute inset-0 bg-brand-red-bg opacity-0 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
-                          <SecondaryButton
-                            href={framework.href}
-                            className="mt-4 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-                          >
+                        <a
+                          href={framework.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute inset-0 bg-brand-red-bg opacity-0 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300"
+                        >
+                          <SecondaryButton className="mt-4 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                             {framework.cta}
                           </SecondaryButton>
-                        </div>
+                        </a>
                       </div>
                     </div>
                   ))}
@@ -275,11 +348,14 @@ export default function BuildAiAppsPage() {
 
           <section className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-              <SectionHeader
-                title="Tune and Scale Vector Search"
-                subtitle="Use these when you need precise configuration or performance tuning."
-                align="left"
-              />
+              <div className="mb-8 md:mb-16">
+                <h2 className="text-h2-mb md:text-h2-lg font-bold leading-tight mb-4 text-text-inverse">
+                  Tune and Scale Vector Search
+                </h2>
+                <p className="text-body-2xl leading-relaxed text-text-secondary">
+                  Use these when you need precise configuration or performance tuning.
+                </p>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {tuneAndScale.map((item) => (
                   <DeveloperResourceCard key={item.title} item={item} openInNewTab />
@@ -289,7 +365,6 @@ export default function BuildAiAppsPage() {
           </section>
         </main>
       </div>
-
       <Footer />
     </>
   )

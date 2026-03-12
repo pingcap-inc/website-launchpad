@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { DeveloperResourceCard } from './DeveloperResourceCard'
@@ -12,118 +13,65 @@ interface LabCard {
 interface Framework {
   id: string
   label: string
-  initials: string
-  labs: LabCard[]
+  image: { src: string; alt: string; width?: number; height?: number }
+  href: string
 }
+
+const labs: LabCard[] = [
+  { title: 'Introduction to TiDB Cloud Starter', href: 'https://labs.tidb.io/labs/demo_203' },
+  { title: 'Working with TiDB Cloud Using JDBC', href: 'https://labs.tidb.io/labs/demo_701' },
+  {
+    title: 'Working with TiDB Cloud Using mysql-connector-python',
+    href: 'https://labs.tidb.io/labs/demo_405',
+  },
+]
 
 const frameworks: Framework[] = [
   {
     id: 'jdbc',
     label: 'JDBC',
-    initials: 'J',
-    labs: [
-      { title: 'Introduction to TiDB Cloud Starter', href: 'https://www.pingcap.com/education/' },
-      { title: 'Working with TiDB Cloud Using JDBC', href: 'https://www.pingcap.com/education/' },
-      {
-        title: 'Working with TiDB Cloud Using mysql-connector-python',
-        href: 'https://www.pingcap.com/education/',
-      },
-    ],
+    image: { src: '/images/developers/jdbc.svg', alt: 'JDBC logo', width: 90, height: 90 },
+    href: 'https://docs.pingcap.com/tidb/stable/dev-guide-sample-application-java-jdbc/',
   },
   {
-    id: 'python',
-    label: 'Python',
-    initials: 'Py',
-    labs: [
-      {
-        title: 'Connect TiDB with SQLAlchemy',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-python-sqlalchemy/',
-      },
-      {
-        title: 'Build a Simple CRUD App with Python',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-python-mysqlclient/',
-      },
-      {
-        title: 'Use TiDB Vector Search with Python',
-        href: 'https://docs.pingcap.com/tidbcloud/vector-search-get-started-using-python/',
-      },
-    ],
+    id: 'hibernate',
+    label: 'Hibernate',
+    image: {
+      src: '/images/developers/hibernate.png',
+      alt: 'Hibernate logo',
+      width: 69,
+      height: 52,
+    },
+    href: 'https://docs.pingcap.com/tidb/stable/dev-guide-sample-application-java-hibernate/',
+  },
+  {
+    id: 'MyBatis',
+    label: 'MyBatis',
+    image: { src: '/images/developers/mybatis.svg', alt: 'MyBatis logo', width: 67, height: 63 },
+    href: 'https://docs.pingcap.com/tidb/stable/dev-guide-sample-application-java-mybatis/',
+  },
+  {
+    id: 'Spring-Boot',
+    label: 'Spring Boot',
+    image: {
+      src: '/images/developers/spring-boot.svg',
+      alt: 'Spring Boot logo',
+      width: 56,
+      height: 51,
+    },
+    href: 'https://docs.pingcap.com/tidb/stable/dev-guide-sample-application-java-spring-boot/',
   },
   {
     id: 'go',
-    label: 'Go',
-    initials: 'Go',
-    labs: [
-      {
-        title: 'Connect TiDB with Go MySQL Driver',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-golang-sql-driver/',
-      },
-      {
-        title: 'Build a Simple CRUD App with Go',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-golang-gorm/',
-      },
-      {
-        title: 'Use GORM with TiDB',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-golang-gorm/',
-      },
-    ],
+    label: 'Go-MySQL-Driver',
+    image: { src: '/images/developers/go.svg', alt: 'Go logo', width: 81, height: 65 },
+    href: 'https://docs.pingcap.com/tidb/stable/dev-guide-sample-application-golang-sql-driver/',
   },
   {
-    id: 'nodejs',
-    label: 'Node.js',
-    initials: 'JS',
-    labs: [
-      {
-        title: 'Connect TiDB with mysql2',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-nodejs-mysql2/',
-      },
-      {
-        title: 'Build a Simple CRUD App with Node.js',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-nodejs-mysqljs/',
-      },
-      {
-        title: 'Use Prisma ORM with TiDB',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-nodejs-prisma/',
-      },
-    ],
-  },
-  {
-    id: 'ruby',
-    label: 'Ruby',
-    initials: 'Rb',
-    labs: [
-      {
-        title: 'Connect TiDB with Ruby mysql2',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-ruby-mysql2/',
-      },
-      {
-        title: 'Build a Rails App with TiDB',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-ruby-rails/',
-      },
-      {
-        title: 'Use Active Record with TiDB',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-ruby-rails/',
-      },
-    ],
-  },
-  {
-    id: 'php',
-    label: 'PHP',
-    initials: 'PHP',
-    labs: [
-      {
-        title: 'Connect TiDB with PHP mysqlnd',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-php/',
-      },
-      {
-        title: 'Build a Laravel App with TiDB',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-php/',
-      },
-      {
-        title: 'Use PDO with TiDB',
-        href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-php/',
-      },
-    ],
+    id: 'python',
+    label: 'MySQL Connector/Python',
+    image: { src: '/images/developers/python.svg', alt: 'Python logo', width: 50, height: 50 },
+    href: 'https://docs.pingcap.com/tidb/stable/dev-guide-sample-application-python-mysql-connector/#connect-to-tidb-with-mysql-connectorpython',
   },
 ]
 
@@ -134,11 +82,9 @@ interface FrameworkSelectorProps {
 export function FrameworkSelector({
   highlightClassName = 'text-brand-red-primary',
 }: FrameworkSelectorProps) {
-  const [activeId, setActiveId] = useState('jdbc')
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
-  const active = frameworks.find((f) => f.id === activeId)!
+  const [hoveredId, setHoveredId] = useState<string | null>('jdbc')
   const hovered = hoveredId ? frameworks.find((f) => f.id === hoveredId) : null
-  const displayLabel = hovered?.label ?? active.label
+  const displayLabel = hovered?.label
 
   return (
     <div>
@@ -151,29 +97,32 @@ export function FrameworkSelector({
       {/* Framework icon row */}
       <div className="flex gap-3 mb-8">
         {frameworks.map((fw) => (
-          <button
+          <a
             key={fw.id}
-            onClick={() => setActiveId(fw.id)}
             onMouseEnter={() => setHoveredId(fw.id)}
-            onMouseLeave={() => setHoveredId(null)}
-            onFocus={() => setHoveredId(fw.id)}
-            onBlur={() => setHoveredId(null)}
             className={cn(
-              'w-20 h-20 rounded-full flex items-center justify-center text-label font-bold transition-colors duration-150 ease-in-out',
-              activeId === fw.id
-                ? 'bg-text-inverse text-text-primary'
-                : 'bg-carbon-800 text-carbon-300 hover:bg-carbon-700'
+              'w-[90px] h-[90px] flex items-center justify-center transition-colors duration-150 ease-in-out',
+              hoveredId === fw.id ? 'bg-bg-inverse' : 'bg-carbon-800 hover:bg-bg-inverse'
             )}
             aria-label={fw.label}
             title={fw.label}
+            href={fw.href}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            {fw.initials}
-          </button>
+            <Image
+              src={fw.image.src}
+              alt={fw.image.alt}
+              width={fw.image.width}
+              height={fw.image.height}
+              className="object-contain"
+            />
+          </a>
         ))}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-16">
-        {active.labs.map((lab) => (
+        {labs.map((lab) => (
           <DeveloperResourceCard
             key={lab.title}
             item={lab}

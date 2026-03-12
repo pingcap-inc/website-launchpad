@@ -11,7 +11,7 @@ const h2SizeMap: Record<H2Size, string> = {
 
 interface SectionHeaderProps {
   eyebrow?: string
-  title: string
+  title?: string
   subtitle?: string
   h2Size?: H2Size
   align?: Align
@@ -23,7 +23,7 @@ export function SectionHeader({
   title,
   subtitle,
   h2Size = 'lg',
-  align = 'center',
+  align = 'left',
   className,
 }: SectionHeaderProps) {
   return (
