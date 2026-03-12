@@ -1,0 +1,53 @@
+name: Deploy CDN
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-cdn:
+    name: Upload static assets to CDN
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          NODE_ENV: production
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Sync JS/CSS bundles to S3
+        run: |
+          aws s3 sync .next/static/ s3://uploads-pingcap-com/launchpad/_next/static/ \
+            --cache-control "public,max-age=31536000,immutable" \
+            --delete
+
+      - name: Sync public images to S3
+        run: |
+          aws s3 sync public/ s3://uploads-pingcap-com/launchpad/ \
+            --cache-control "public,max-age=86400" \
+            --delete
