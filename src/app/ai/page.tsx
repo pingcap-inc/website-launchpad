@@ -124,7 +124,6 @@ export default function AiPage() {
             />
             {/* Content */}
             <div className="relative z-10 max-w-container mx-auto px-4 md:px-8 lg:px-16 w-full">
-              <p className="font-mono text-eyebrow text-carbon-400 mb-8">AI & DATABASE</p>
               <h1 className="text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title mb-6">
                 <span className="text-text-inverse block">The Database for</span>
                 <span className="block text-text-inverse">Production AI</span>
@@ -142,7 +141,6 @@ export default function AiPage() {
 
           {/* 2. Why TiDB for AI — 4 pillars */}
           <FeaturesGrid
-            label="WHY TIDB FOR AI"
             title="The Unified Data Platform for AI-Native Systems"
             subtitle="A single architecture that brings transactional, analytical, and AI workloads together—enabling retrieval, stateful agents, and reasoning in one DB engine."
             features={pillars}
@@ -154,7 +152,6 @@ export default function AiPage() {
           <section className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader
-                label="USE CASES"
                 title="Where TiDB Powers Modern AI"
                 subtitle="From retrieval-driven experiences to autonomous agent systems, TiDB supports the architectures teams rely on to rapidly build and operate AI at scale."
               />
@@ -179,7 +176,6 @@ export default function AiPage() {
           <section className="py-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <SectionHeader
-                label="TRUSTED FOR AI AT SCALE"
                 title="Proven in Real-World AI Deployments"
                 subtitle="Teams building AI‑driven applications rely on TiDB to support retrieval, agents, and live data across users, workloads, and environments."
               />
