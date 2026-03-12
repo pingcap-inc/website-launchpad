@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { Database, Cpu, BarChart2, Network } from 'lucide-react'
+import { Search, Bot, Brain, Network } from 'lucide-react'
 import {
   Header,
   Footer,
@@ -65,25 +65,25 @@ const schema = buildPageSchema({
 
 const pillars = [
   {
-    icon: <Database size={24} className="text-text-inverse" />,
+    icon: <Search size={40} className="text-text-inverse" />,
     title: 'Precise Retrieval with Continuously Current Context',
     description:
       'Enable semantic search and RAG experiences that reflect the latest state of your data—without stale indexes or delayed pipelines.',
   },
   {
-    icon: <Cpu size={24} className="text-text-inverse" />,
+    icon: <Bot size={40} className="text-text-inverse" />,
     title: 'Durable State for Autonomous and Multi-Step Agents',
     description:
       'Persist conversations, tool interactions, and workflow progress with consistency designed for long-running and concurrent AI behavior.',
   },
   {
-    icon: <BarChart2 size={24} className="text-text-inverse" />,
+    icon: <Brain size={40} className="text-text-inverse" />,
     title: 'Intelligence Across Operational and Analytical Data',
     description:
       'Allow AI to reason across transactions and analytics together, eliminating complex synchronization between systems.',
   },
   {
-    icon: <Network size={24} className="text-text-inverse" />,
+    icon: <Network size={40} className="text-text-inverse" />,
     title: 'Distributed Architecture That Scales with AI Demand',
     description:
       'Support growth across users, agents, sessions, and environments with built-in concurrency, isolation, and horizontal expansion.',
@@ -161,12 +161,14 @@ export default function AiPage() {
                   title="Search, Retrieval, and RAG"
                   description="Build accurate, context-aware AI experiences using semantic search, hybrid queries, and continuously fresh data."
                   cta={{ text: 'Explore Vector Search & RAG', href: '/ai/rag/' }}
+                  icon={<Search width={60} height={60} className="text-white" strokeWidth={1.25} />}
                 />
                 <ColorCard
                   variant="violet"
                   title="Stateful Agents and Autonomous Workflows"
                   description="Build agents that maintain memory, coordinate tools, and operate reliably across complex, multi-step processes."
                   cta={{ text: 'Explore Agentic AI', href: '/ai/agents/' }}
+                  icon={<Bot width={60} height={60} className="text-white" strokeWidth={1.25} />}
                 />
               </div>
             </div>

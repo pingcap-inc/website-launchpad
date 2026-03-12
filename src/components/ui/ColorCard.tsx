@@ -44,7 +44,7 @@ export function ColorCard({ variant, title, description, cta, icon, image }: Col
           />
         </div>
       ) : icon ? (
-        <div className="mb-6 w-12 h-12 text-white shrink-0">{icon}</div>
+        <div className="mb-6 text-white shrink-0">{icon}</div>
       ) : null}
 
       <h3 className="text-h3-lg font-bold text-text-inverse mb-4">{title}</h3>
