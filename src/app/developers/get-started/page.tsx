@@ -139,7 +139,7 @@ const quickStarts = [
   {
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
-    title: 'Connect to TiDB with Node.js (mysql2)',
+    title: 'Connect to TiDB with Node.js (Mysql2)',
     href: 'https://docs.pingcap.com/tidbcloud/dev-guide-sample-application-nodejs-mysql2/',
   },
 ]
@@ -160,7 +160,7 @@ const basics = [
   {
     tag: 'Docs',
     tagClass: 'bg-brand-violet-medium',
-    title: 'Transactional + analytical workloads (HTAP)',
+    title: 'Transactional + Analytical Workloads (HTAP)',
     href: 'https://docs.pingcap.com/tidb/stable/explore-htap/',
   },
   {
@@ -253,7 +253,10 @@ export default function GetStartedPage() {
           </section>
 
           {/* ── Featured Quick Starts ── */}
-          <section id="quick-starts" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+          <section
+            id="quick-starts"
+            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+          >
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
                 <div className="lg:pt-2">

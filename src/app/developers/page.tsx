@@ -64,28 +64,32 @@ const pathCards = [
     variant: 'red' as const,
     icon: <IconOltpD />,
     title: 'Get Started',
-    description: 'New to TiDB? Learn what it is, how it works, and run your first cluster in minutes.',
+    description:
+      'New to TiDB? Learn what it is, how it works, and run your first cluster in minutes.',
     cta: { text: 'Explore', href: '/developers/get-started' },
   },
   {
     variant: 'violet' as const,
     icon: <IconSelfManagedC />,
     title: 'Build Data Applications',
-    description: 'Connect services, model data, and run transactional and analytical workloads in one system.',
+    description:
+      'Connect services, model data, and run transactional and analytical workloads in one system.',
     cta: { text: 'Explore', href: '/developers/build-data-apps' },
   },
   {
     variant: 'blue' as const,
     icon: <IconBuildAi />,
     title: 'Build AI Applications',
-    description: 'Build RAG, semantic search, and agentic AI apps using vector search and real-time data.',
+    description:
+      'Build RAG, semantic search, and agentic AI apps using vector search and real-time data.',
     cta: { text: 'Explore', href: '/developers/build-ai-apps' },
   },
   {
     variant: 'teal' as const,
     icon: <IconMigration />,
     title: 'Migration Center',
-    description: 'Evaluate compatibility, plan safely, and migrate from MySQL or other databases to TiDB.',
+    description:
+      'Evaluate compatibility, plan safely, and migrate from MySQL or other databases to TiDB.',
     cta: { text: 'Explore', href: '/developers/migration-center' },
   },
 ]
@@ -240,7 +244,7 @@ export default function DeveloperHubPage() {
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
-            headline="Everything you need to build on TiDB"
+            headline="Everything You Need to Build on TiDB"
             subheadline="Working examples, connection guides, migration paths, and courses — pick a section based on where you are."
             primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
             secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
@@ -273,12 +277,15 @@ export default function DeveloperHubPage() {
           </section>
 
           {/* ── How-To Guides ── */}
-          <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+          <section
+            id="how-to-guides"
+            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+          >
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
                 <div className="lg:pt-2">
                   <SectionHeader
-                    title={"How-To\nGuides"}
+                    title={'How-To\nGuides'}
                     h2Size="md"
                     align="left"
                     className="md:!mb-0"
@@ -387,7 +394,7 @@ export default function DeveloperHubPage() {
                       <span className="text-white font-bold text-h3-sm">{platform.name}</span>
                     </div>
                     <div className="flex items-center justify-center py-10 bg-bg-primary">
-                      <SecondaryButton href={platform.href}>{platform.cta}</SecondaryButton>
+                      <SecondaryButton>{platform.cta}</SecondaryButton>
                     </div>
                   </a>
                 ))}

@@ -1,5 +1,6 @@
-// import { ArrowUpRight } from 'lucide-react'
+import * as React from 'react'
 import { cn } from '@/lib/utils'
+import { externalLinkProps } from '@/lib/links'
 
 interface SecondaryButtonProps {
   children: React.ReactNode
@@ -7,7 +8,10 @@ interface SecondaryButtonProps {
   onClick?: () => void
   href?: string
   dark?: boolean
+  as?: 'a' | 'button' | 'span'
 }
+
+type SecondaryButtonRef = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement
 
 export function ArrowUpRight(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -19,7 +23,7 @@ export function ArrowUpRight(props: React.SVGProps<SVGSVGElement>) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_1018_6281)">
+      <g clipPath="url(#clip0_1018_6281)">
         <mask id="path-1-inside-1_1018_6281" fill="currentColor">
           <path d="M18.3197 5.77543L18.3197 15.7666L17.4031 15.7666L17.403 7.34033L6.19416 18.5492L5.54598 17.901L16.7549 6.69209L8.32854 6.69207L8.32853 5.77541L18.3197 5.77543Z" />
         </mask>
@@ -42,61 +46,66 @@ export function ArrowUpRight(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-export function SecondaryButton({
-  children,
-  className,
-  onClick,
-  href,
-  dark = true,
-}: SecondaryButtonProps) {
-  const classes = cn(
-    'group inline-flex items-center gap-2',
-    'text-base font-medium',
-    dark ? 'text-text-inverse' : 'text-text-primary',
-    'bg-transparent border-none outline-none cursor-pointer whitespace-nowrap',
-    className
-  )
+export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryButtonProps>(
+  ({ children, className, onClick, href, dark = true, as }, ref) => {
+    const classes = cn(
+      'group inline-flex items-center gap-2',
+      'text-base font-medium',
+      dark ? 'text-text-inverse' : 'text-text-primary',
+      'bg-transparent border-none outline-none cursor-pointer whitespace-nowrap',
+      className
+    )
 
-  const content = (
-    <>
-      <span>{children}</span>
-      <span
-        className={cn(
-          'relative flex items-center justify-center',
-          'w-6 h-6 rounded-full aspect-square shrink-0',
-          'transition-colors duration-300 ease-in-out',
-          dark ? 'group-hover:bg-text-inverse' : 'group-hover:bg-text-primary'
-        )}
-      >
-        <ArrowUpRight
+    const content = (
+      <>
+        <span>{children}</span>
+        <span
           className={cn(
-            'transition-all duration-300 ease-in-out rotate-0',
-            dark
-              ? 'text-text-inverse group-hover:rotate-45 group-hover:text-text-primary'
-              : 'text-text-primary group-hover:rotate-45 group-hover:text-text-inverse'
+            'relative flex items-center justify-center',
+            'w-6 h-6 rounded-full aspect-square shrink-0',
+            'transition-colors duration-300 ease-in-out',
+            dark ? 'group-hover:bg-text-inverse' : 'group-hover:bg-text-primary'
           )}
-        />
-      </span>
-    </>
-  )
+        >
+          <ArrowUpRight
+            className={cn(
+              'transition-all duration-300 ease-in-out rotate-0',
+              dark
+                ? 'text-text-inverse group-hover:rotate-45 group-hover:text-text-primary'
+                : 'text-text-primary group-hover:rotate-45 group-hover:text-text-inverse'
+            )}
+          />
+        </span>
+      </>
+    )
 
-  if (href) {
-    const isExternal = href.startsWith('http') && !href.includes('www.pingcap.com')
+    if (as === 'span') {
+      return (
+        <span ref={ref as React.Ref<HTMLSpanElement>} className={classes}>
+          {content}
+        </span>
+      )
+    }
+
+    if (as === 'a' || href) {
+      return (
+        <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          href={href}
+          className={classes}
+          {...externalLinkProps(href)}
+        >
+          {content}
+        </a>
+      )
+    }
 
     return (
-      <a
-        href={href}
-        className={classes}
-        {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
-      >
+      <button ref={ref as React.Ref<HTMLButtonElement>} onClick={onClick} className={classes}>
         {content}
-      </a>
+      </button>
     )
   }
+)
 
-  return (
-    <button onClick={onClick} className={classes}>
-      {content}
-    </button>
-  )
-}
+SecondaryButton.displayName = 'SecondaryButton'

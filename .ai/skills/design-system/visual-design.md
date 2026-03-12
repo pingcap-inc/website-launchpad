@@ -12,7 +12,7 @@ Every page MUST meet all of the following. These are not optional.
 | -------------------------- | ------------------------------------------------------------------------------------- |
 | `FeatureCard`              | MUST include `icon={<LucideIcon strokeWidth={1.5} />}` — never omit the icon prop     |
 | `ColorCard`                | MUST include `icon` (Lucide ReactNode) OR `image` prop                                |
-| `HeroSection` split layout | MUST include `rightSlot` or `heroImage` — never leave the right column empty          |
+| `HeroSection` split layout | MUST include `rightSlot` — right column is empty if omitted (no auto-seed)            |
 | Section backgrounds        | Page MUST use ≥2 distinct backgrounds — never all `bg-bg-primary`                     |
 | Stat/metric sections       | If page has ≥3 quantitative metrics, MUST use `<CountUp>` for scroll-triggered reveal |
 | Tabs                       | If used, MUST include `autoSwitch={true} autoSwitchInterval={6000}`                   |
@@ -199,13 +199,18 @@ All transitions MUST use `ease-in-out`. Never use `ease-in` or `ease-out` alone.
 
 ## E — Hero Illustration Guide
 
-### Split layout (`layout="split"` — default)
+### Image-right layout (`layout="image-right"` — default)
 
-The right column (`rightSlot`) MUST contain a visual. Priority order:
+The right image defaults to `Graphic-1-Dk.png` (800×500) when `heroImage` is omitted.
+To use a custom asset, pass the `heroImage` prop. Always use `-Dk` (dark) variants.
+
+### Split layout (`layout="split"`)
+
+The right column (`rightSlot`) MUST contain a visual — it renders empty if omitted. Priority order:
 
 1. **Product screenshot / diagram** — if the user provides an image asset, use it
 2. **Inline SVG illustration** — isometric cube with diagonal grid (code template below)
-3. **Seeded hero image** — omit `rightSlot` entirely; HeroSection auto-seeds from `/public/images/hero/r/Graphic-{N}-Dk.png`
+3. **Static hero image** — pass a `<img>` or `<Image>` referencing `/public/images/hero/r/Graphic-{N}-Dk.png`
 
 Always use `-Dk` (dark) variants. Never use `-Lt` variants on this dark-background site.
 
@@ -274,7 +279,7 @@ function HeroIllustration() {
 
 ### Centered layout (`layout="centered"`)
 
-Omit `backgroundImage` — HeroSection auto-seeds from `/public/images/hero/c/`. No eyebrow by default for centered layout.
+No eyebrow by default. Provide `backgroundImage` for a visual; no auto-seeding fallback.
 
 ---
 

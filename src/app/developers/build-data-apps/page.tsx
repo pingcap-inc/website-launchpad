@@ -6,7 +6,6 @@ import { DeveloperSubnav } from '../_components/DeveloperSubnav'
 import { FrameworkSelector } from '../_components/FrameworkSelector'
 import { DeveloperResourceCard } from '../_components/DeveloperResourceCard'
 
-
 export const metadata: Metadata = {
   title: 'Build Data Applications with TiDB | TiDB Developer Hub',
   description:
@@ -160,13 +159,13 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Explore SQL with TiDB (entry-level reference)',
+        title: 'Explore SQL with TiDB (Entry-Level Reference)',
         href: 'https://docs.pingcap.com/tidb/stable/basic-sql-operations/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Full SQL Reference (language, statements, functions)',
+        title: 'Full SQL Reference (Language, Statements, Functions)',
         href: 'https://docs.pingcap.com/tidbcloud/sql-statement-overview/',
       },
     ],
@@ -183,7 +182,7 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Secondary Index Creation (supporting)',
+        title: 'Secondary Index Creation (Supporting)',
         href: 'https://docs.pingcap.com/tidb/stable/dev-guide-create-secondary-indexes/',
       },
     ],
@@ -222,7 +221,7 @@ export default function BuildDataApplicationsPage() {
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
-            headline="Build data-intensive apps with no scale limits"
+            headline="Build Data-Intensive Apps with No Scale Limits"
             subheadline="Connection guides by language and ORM, schema patterns, and demo apps you can run locally or fork on GitHub."
             heroImage={{
               src: '/images/developers/build-data-apps-banner.png',
@@ -234,12 +233,15 @@ export default function BuildDataApplicationsPage() {
           />
 
           {/* ── How-To Guides ── */}
-          <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+          <section
+            id="how-to-guides"
+            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+          >
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
                 <div className="lg:pt-2">
                   <SectionHeader
-                    title={"How-To\nGuides"}
+                    title={'How-To\nGuides'}
                     h2Size="md"
                     align="left"
                     className="md:!mb-0"
@@ -272,7 +274,12 @@ export default function BuildDataApplicationsPage() {
               <SectionHeader title="Start with a Working Example" align="left" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {demoCards.map((card) => (
-                  <DemoCard key={card.title} title={card.title} image={card.image} href={card.href} />
+                  <DemoCard
+                    key={card.title}
+                    title={card.title}
+                    image={card.image}
+                    href={card.href}
+                  />
                 ))}
               </div>
             </div>

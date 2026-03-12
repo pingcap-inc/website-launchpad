@@ -73,39 +73,18 @@ Usage rule:
 - PNG references are secondary for texture/lighting hints.
 - Auto-generated Hero visuals must follow these references for geometry density, color restraint, and spacing rhythm.
 
-### Variant A — Split layout (`layout="split"`, default)
+### Variant A — Image-right layout (`layout="image-right"`, default)
 
-Default Hero layout. 1:1 grid, left column for copy + CTAs, right column for `rightSlot`.
-The right slot accepts a product screenshot, stats panel, form, or any ReactNode.
-
-If `rightSlot` is omitted, auto-selects a seeded image from `/public/images/hero/r/` (`Graphic-{1..22}-Dk.png`).
+Default Hero layout. Left text (max-w 780px) + right hero image.
+`heroImage` is optional — omit it to use the built-in default (`Graphic-1-Dk.png`, 800×500).
 Always use `-Dk` variants (dark-background site); never use `-Lt` variants unless explicitly requested.
 
 ```tsx
-<HeroSection headline="Build Scalable Applications" rightSlot={<HubSpotForm formId="..." />} />
-```
+// Minimal — uses default image
+<HeroSection headline="Get Started with TiDB" />
 
-### Variant B — Centered layout (`layout="centered"`)
-
-Use centered layout only when the page intent is message-first.
-Centered Hero defaults to no eyebrow.
-
-```tsx
+// Custom image
 <HeroSection
-  layout="centered"
-  headline="Launch Fast. Scale without Limits."
-  subheadline="Apply now and start building with the distributed SQL database that grows with you."
-/>
-// centered={true} still works as a backward-compatible alias
-```
-
-### Variant C — Image-right layout (`layout="image-right"`)
-
-Left text (max-w 780px) + right hero image. Use for product or feature pages with a banner image.
-
-```tsx
-<HeroSection
-  layout="image-right"
   headline="Get Started with TiDB"
   heroImage={{
     src: '/images/page/banner.png',
@@ -120,26 +99,48 @@ Left text (max-w 780px) + right hero image. Use for product or feature pages wit
 - Mobile: image stacks below text
 - Desktop: left text `max-w-[780px]`, right image `flex-1` with `justify-end` (right) or `justify-center` (center)
 
+### Variant B — Centered layout (`layout="centered"`)
+
+Use centered layout only when the page intent is message-first.
+Centered Hero defaults to no eyebrow.
+
+```tsx
+<HeroSection
+  layout="centered"
+  headline="Launch Fast. Scale without Limits."
+  subheadline="Apply now and start building with the distributed SQL database that grows with you."
+/>
+```
+
+### Variant C — Split layout (`layout="split"`)
+
+1:1 grid, left column for copy + CTAs, right column for `rightSlot`.
+The right slot accepts a product screenshot, stats panel, form, or any ReactNode.
+`rightSlot` is required — the right column is empty if omitted.
+
+```tsx
+<HeroSection
+  layout="split"
+  headline="Build Scalable Applications"
+  rightSlot={<HubSpotForm formId="..." />}
+/>
+```
+
 ### Background image behavior (all Hero variants)
 
 ```tsx
-// Preferred: use provided background image asset
+// Use a provided background image asset
 <HeroSection backgroundImage={{ src: heroBg }} />
-
-// Default fallback (centered mode): pick seeded image from /public/images/hero/c/
-<HeroSection layout="centered" />
-
 ```
 
 **Hero Rules:**
 
 - Background: `bg-bg-primary` (`#000000`), **no gradients of any kind**
-- `layout` prop selects the variant; `centered={true}` is a deprecated alias for `layout="centered"`
+- `layout` prop selects the variant; default is `'image-right'`
 - `headline` supports `\n` for line breaks (rendered with `whitespace-pre-line`)
-- Split mode with no `rightSlot`: seeded default visual from `/public/images/hero/r/`
+- `image-right` with no `heroImage`: renders default `Graphic-1-Dk.png` (800×500)
+- `split` with no `rightSlot`: right column renders empty — always provide a visual
 - Centered layout: default **no eyebrow**
-- Centered layout with no `backgroundImage`: seeded default visual from `/public/images/hero/c/`
-- `autoGenerateBackgroundImage` is optional fallback when generated art is preferred
 - Eyebrow (when used): place directly above H1 with `mb-8`
 - Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
 - Hero background image: no overlay layer by default

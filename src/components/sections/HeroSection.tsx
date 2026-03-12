@@ -39,15 +39,13 @@ export interface HeroImageSlot {
 interface HeroSectionProps {
   /**
    * Layout variant.
-   * - `'split'` (default) — 1:1 grid, left text, right `rightSlot`
-   * - `'centered'`        — centered text with optional background image
-   * - `'image-right'`     — left text (max-w 780px) + right `heroImage`
+   * - `'split'`                 — 1:1 grid, left text, right `rightSlot`
+   * - `'centered'`              — centered text with optional background image
+   * - `'image-right'` (default) — left text (max-w 780px) + right `heroImage`
    */
   layout?: HeroLayout
-  /** @deprecated Use `layout="centered"` instead. Kept for backward compatibility. */
-  centered?: boolean
   eyebrow?: string
-  headline: string
+  headline: string | React.ReactNode
   subheadline?: string
   primaryCta?: { text: string; href: string }
   secondaryCta?: { text: string; href: string }
@@ -87,8 +85,8 @@ function HeroTextBlock({
       {subheadline && (
         <p
           className={cn(
-            'text-body-xl leading-relaxed',
-            centered ? 'text-text-secondary mx-auto mb-10' : 'text-text-secondary'
+            'text-body-2xl leading-relaxed text-text-secondary max-w-subtitle',
+            centered && 'mx-auto mb-10'
           )}
         >
           {subheadline}
@@ -111,11 +109,19 @@ function HeroTextBlock({
   )
 }
 
+// ─── Defaults ──────────────────────────────────────────────────────────────────
+
+const DEFAULT_HERO_IMAGE: HeroImageSlot = {
+  src: '/images/hero/r/Graphic-1-Dk.png',
+  alt: '',
+  width: 800,
+  height: 500,
+}
+
 // ─── Component ─────────────────────────────────────────────────────────────────
 
 export function HeroSection({
   layout,
-  centered = false,
   eyebrow,
   headline,
   subheadline,
@@ -126,9 +132,9 @@ export function HeroSection({
   backgroundImage,
   className,
 }: HeroSectionProps) {
-  // Resolve layout: explicit `layout` prop takes precedence; fall back to `centered` bool for compat
-  const resolvedLayout: HeroLayout = layout ?? (centered ? 'centered' : 'split')
+  const resolvedLayout: HeroLayout = layout ?? 'image-right'
   const isCentered = resolvedLayout === 'centered'
+  const resolvedHeroImage = heroImage ?? DEFAULT_HERO_IMAGE
 
   const resolvedBackgroundSrc = backgroundImage?.src
   const heroBackgroundImage = resolvedBackgroundSrc
@@ -229,23 +235,21 @@ export function HeroSection({
               secondaryCta={secondaryCta}
               className="md:py-20 w-full lg:max-w-[780px] lg:shrink-0"
             />
-            {heroImage && (
-              <div
-                className={cn(
-                  'pt-4 lg:py-4 flex-1 flex items-center justify-center',
-                  heroImage.align === 'center' ? 'lg:justify-center' : 'lg:justify-end'
-                )}
-              >
-                <Image
-                  src={heroImage.src}
-                  alt={heroImage.alt ?? ''}
-                  width={heroImage.width}
-                  height={heroImage.height}
-                  className="max-w-full h-auto"
-                  priority={heroImage.priority ?? true}
-                />
-              </div>
-            )}
+            <div
+              className={cn(
+                'pt-4 lg:py-4 flex-1 flex items-center justify-center',
+                resolvedHeroImage.align === 'center' ? 'lg:justify-center' : 'lg:justify-end'
+              )}
+            >
+              <Image
+                src={resolvedHeroImage.src}
+                alt={resolvedHeroImage.alt ?? ''}
+                width={resolvedHeroImage.width}
+                height={resolvedHeroImage.height}
+                className="max-w-full h-auto"
+                priority={resolvedHeroImage.priority ?? true}
+              />
+            </div>
           </div>
         )}
       </div>

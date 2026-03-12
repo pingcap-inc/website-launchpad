@@ -89,7 +89,8 @@ const useCases = [
   {
     icon: <IconFinancial />,
     title: 'AI-Powered Financial Insights',
-    description: 'Building an AI-powered crypto ETF insight app with GPTs and TiDB Cloud Data Service.',
+    description:
+      'Building an AI-powered crypto ETF insight app with GPTs and TiDB Cloud Data Service.',
     href: 'https://www.pingcap.com/blog/building-ai-powered-crypto-etf-insights-app-gpts-tidb-cloud-data-service/',
     borderClass: 'border-brand-red-primary',
   },
@@ -201,7 +202,7 @@ export default function BuildAiAppsPage() {
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
-            headline="Build complete AI apps fast with one database to serve agent context, branching and search"
+            headline="Build Complete AI Apps Fast with One Database to Serve Agent Context, Branching and Search"
             subheadline="Vector search, RAG patterns, and LLM integrations — with working code for LangChain, LlamaIndex, and raw SQL."
             heroImage={{
               src: '/images/developers/build-ai-apps-banner.svg',
@@ -213,12 +214,15 @@ export default function BuildAiAppsPage() {
           />
 
           {/* ── How-To Guides ── */}
-          <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+          <section
+            id="how-to-guides"
+            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+          >
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
                 <div className="lg:pt-2">
                   <SectionHeader
-                    title={"How-To\nGuides"}
+                    title={'How-To\nGuides'}
                     h2Size="md"
                     align="left"
                     className="md:!mb-0"
@@ -269,7 +273,9 @@ export default function BuildAiAppsPage() {
                     <h3 className="text-h3-lg font-bold text-text-inverse mb-3 leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-body-md text-carbon-400 leading-relaxed">{item.description}</p>
+                    <p className="text-body-md text-carbon-400 leading-relaxed">
+                      {item.description}
+                    </p>
                   </a>
                 ))}
               </div>
@@ -282,8 +288,9 @@ export default function BuildAiAppsPage() {
                 <h2 className="text-h2-mb md:text-h2-lg font-bold leading-tight mb-4 text-text-inverse">
                   Get Hands-On with Vector Search
                 </h2>
-                <p className="text-body-xl leading-relaxed text-text-secondary">
-                  Store embeddings, run similarity search, and combine vector queries with SQL in one system.
+                <p className="text-body-2xl leading-relaxed text-text-secondary">
+                  Store embeddings, run similarity search, and combine vector queries with SQL in
+                  one system.
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -327,10 +334,7 @@ export default function BuildAiAppsPage() {
                           rel="noopener noreferrer"
                           className="absolute inset-0 bg-brand-red-bg opacity-0 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300"
                         >
-                          <SecondaryButton
-                            href={framework.href}
-                            className="mt-4 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-                          >
+                          <SecondaryButton className="mt-4 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                             {framework.cta}
                           </SecondaryButton>
                         </a>
@@ -348,7 +352,7 @@ export default function BuildAiAppsPage() {
                 <h2 className="text-h2-mb md:text-h2-lg font-bold leading-tight mb-4 text-text-inverse">
                   Tune and Scale Vector Search
                 </h2>
-                <p className="text-body-xl leading-relaxed text-text-secondary">
+                <p className="text-body-2xl leading-relaxed text-text-secondary">
                   Use these when you need precise configuration or performance tuning.
                 </p>
               </div>

@@ -40,7 +40,7 @@ Professional, modern, restrained. Dark Hero alternating with light content secti
 ```
 ❌ Hardcoded color values     → Use Token class names (bg-brand-red-primary, etc.)
 ❌ Gradient on Hero base      → bg-bg-primary (pure black only)
-✅ Hero default               → Split layout (left copy+CTA, right visual/form)
+✅ Hero default               → Image-right layout (left copy+CTA, right heroImage — defaults to Graphic-1-Dk.png)
 ✅ Hero centered mode         → No eyebrow by default
 ✅ Hero bg image              → No overlay layer by default
 ❌ font-semibold              → font-bold (no 600-weight file on CDN)

@@ -108,7 +108,7 @@ export default function AboutUsPage() {
       <div className="pt-[62px] lg:pt-20">
         {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
         <HeroSection
-          centered
+          layout="centered"
           headline="Empowering Engineers to Build at Scale"
           subheadline="Our mission is to empower engineers and enable business value with speed, scale, and agility."
           primaryCta={{ text: 'Book a Demo', href: 'https://www.pingcap.com/contact-us/' }}
