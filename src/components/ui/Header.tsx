@@ -143,7 +143,7 @@ export function Header() {
           </div>
 
           <button
-            className="lg:hidden flex items-center justify-center w-6 h-10 text-text-inverse"
+            className="lg:hidden flex items-center justify-center w-6 h-6 text-text-inverse"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
