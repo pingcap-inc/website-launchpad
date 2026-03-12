@@ -222,7 +222,7 @@ export default function BuildDataApplicationsPage() {
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
-            headline="Build apps on TiDB"
+            headline="Build data-intensive apps with no scale limits"
             subheadline="Connection guides by language and ORM, schema patterns, and demo apps you can run locally or fork on GitHub."
             heroImage={{
               src: '/images/developers/build-data-apps-banner.png',

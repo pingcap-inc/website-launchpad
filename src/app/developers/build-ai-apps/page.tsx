@@ -201,7 +201,7 @@ export default function BuildAiAppsPage() {
           <HeroSection
             layout="image-right"
             eyebrow="TiDB Developer Hub"
-            headline="Add AI features to your app using TiDB"
+            headline="Build complete AI apps fast with one database to serve agent context, branching and search"
             subheadline="Vector search, RAG patterns, and LLM integrations — with working code for LangChain, LlamaIndex, and raw SQL."
             heroImage={{
               src: '/images/developers/build-ai-apps-banner.svg',
