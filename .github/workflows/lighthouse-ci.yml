@@ -93,7 +93,7 @@ jobs:
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         with:
           urls: ${{ steps.extract_url.outputs.urls }}
-          runs: 3
+          runs: 2
           configPath: ./.github/lighthouserc.js
           uploadArtifacts: true
           temporaryPublicStorage: true

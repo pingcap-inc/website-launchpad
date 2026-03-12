@@ -44,6 +44,7 @@
   html {
     scroll-behavior: smooth;
     font-variant-ligatures: no-common-ligatures;
+    @apply scroll-pt-[62px] lg:scroll-pt-20;
   }
   body {
     @apply font-sans antialiased bg-bg-primary text-text-inverse;
@@ -63,4 +64,46 @@
   animation-name: tab-progress;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
+}
+
+.mask-bottom-fade {
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
+}
+
+@keyframes logo-marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-logo-marquee {
+  animation: logo-marquee 28s linear infinite;
+}
+
+@keyframes glow-sweep {
+  from {
+    background-position: 200% 50%;
+  }
+  to {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-glow-sweep {
+  background-size: 200% 100%;
+  animation: glow-sweep 2.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo-marquee {
+    animation: none;
+    transform: translateX(100%);
+  }
+  .animate-glow-sweep {
+    animation: none;
+  }
 }

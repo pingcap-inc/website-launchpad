@@ -8,7 +8,10 @@ import {
   Header,
   PrimaryButton,
   SectionHeader,
+  TestimonialsSection,
+  FeatureGridSection,
 } from '@/components'
+import { Users, Podcast } from 'lucide-react'
 
 const HERO_FORM_ID = '8d439c40-4e6b-4192-a99b-a2c619ad4146'
 
@@ -27,9 +30,9 @@ export const metadata: Metadata = {
     siteName: 'PingCAP',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2025/04/17112450/tidb-cloud-startup-program-promo-right.webp',
-        width: 1030,
-        height: 1024,
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
       },
     ],
     type: 'website',
@@ -41,22 +44,25 @@ const proofCards = [
     quote:
       'We migrated to TiDB Cloud in just two weeks. It let us scale our agentic AI platform seamlessly-without needing to re-architect our system.',
     author: 'Ziming Miao / VP of Engineering, Manus',
-    href: 'https://www.youtube.com/watch?v=vW8z71N9shI',
+    href: 'https://www.pingcap.com/case-study/rengage-autonomous-marketing-tidb/',
     cta: 'Watch the Video',
+    logo: { src: '/images/tidb-cloud-startup-program/manus.png', alt: 'Manus' },
   },
   {
     quote:
       'Consolidating on TiDB Cloud cut our operational overhead by 90% and infrastructure costs by 100%. It just works.',
     author: 'Yan Zhang / Engineering Team, Dify.AI',
-    href: '/customers/stories/',
+    href: 'https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/',
     cta: 'Read the Story',
+    logo: { src: '/images/tidb-cloud-startup-program/Dify.png', alt: 'Dify' },
   },
   {
     quote:
       'TiDB Cloud powers our real-time marketing engine. We get instant analytics on transactional data without complex pipelines.',
     author: 'Shujun Liu / CTO, Rengage',
-    href: '/customers/stories/',
+    href: 'https://www.pingcap.com/case-study/rengage-autonomous-marketing-tidb/',
     cta: 'Read the Story',
+    logo: { src: '/images/tidb-cloud-startup-program/Rengage.png', alt: 'Rengage' },
   },
 ]
 
@@ -64,37 +70,56 @@ const valueCards = [
   {
     title: 'Unify Your Workloads',
     body: 'One database for transactions, analytics, and vectors. Ship features faster without maintaining multiple different systems.',
-    image: 'https://static.pingcap.com/files/2025/09/03234615/data.svg',
+    image: (
+      <Image
+        src="https://static.pingcap.com/files/2025/09/03234615/data.svg"
+        alt="Unify Your Workloads"
+        width={80}
+        height={80}
+      />
+    ),
     alt: 'Unify Your Workloads',
   },
   {
-    title: 'Pay Only For Usage',
+    title: 'Pay Only for Usage',
     body: 'No more paying for idle servers. Your costs align perfectly with your growth, making your burn rate predictable.',
-    image: 'https://static.pingcap.com/files/2025/09/03234542/cost.svg',
-    alt: 'Pay Only For Usage',
+    image: (
+      <Image
+        src="https://static.pingcap.com/files/2025/09/03234542/cost.svg"
+        alt="Pay Only for Usage"
+        width={80}
+        height={80}
+      />
+    ),
+    alt: 'Pay Only for Usage',
   },
   {
-    title: 'Scale For Modern Apps',
+    title: 'Scale for Modern Apps',
     body: 'Handle sudden traffic spikes or complex AI workloads instantly. Scale from your first user to your millionth without re-architecting.',
-    image: 'https://static.pingcap.com/files/2026/01/20234056/Frame-4.svg',
-    alt: 'Scale For Modern Apps',
+    image: (
+      <Image
+        src="https://static.pingcap.com/files/2026/01/20234056/Frame-4.svg"
+        alt="Scale for Modern Apps"
+        width={80}
+        height={80}
+      />
+    ),
+    alt: 'Scale for Modern Apps',
   },
   {
     title: 'Bring Your Stack',
     body: 'Works seamlessly with your current ecosystem, from modern frameworks to legacy drivers. Drop it in with zero friction.',
-    image: 'https://static.pingcap.com/files/2026/01/21011757/bring-your-stack-1.svg',
+    image: (
+      <Image
+        src="https://static.pingcap.com/files/2026/01/21011757/bring-your-stack-1.svg"
+        alt="Bring Your Stack"
+        width={80}
+        height={80}
+      />
+    ),
     alt: 'Bring Your Stack',
   },
 ]
-
-function LinkArrow() {
-  return (
-    <span aria-hidden="true" className="inline-flex items-center">
-      <span className="block h-px bg-current w-3 transition-[width] duration-200 group-hover:w-5" />
-      <span className="inline-block w-2 h-2 border-r border-t border-current rotate-45 -ml-2" />
-    </span>
-  )
-}
 
 export default function StartupProgramPage() {
   return (
@@ -103,7 +128,15 @@ export default function StartupProgramPage() {
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         <HeroSection
           eyebrow="TiDB Cloud Startup Program"
-          headline="Launch Fast. Scale without Limits. Get $100,000 in TiDB Cloud Credits"
+          headline={
+            <>
+              Launch Fast. Scale Without Limits. Get{' '}
+              <span className="animate-glow-sweep bg-[linear-gradient(110deg,#c084fc_0%,#e879f9_20%,#ffffff_35%,#a855f7_50%,#8b5cf6_70%,#c084fc_100%)] text-transparent bg-clip-text drop-shadow-[0_0_18px_rgba(168,85,247,0.65)]">
+                $100,000
+              </span>{' '}
+              in TiDB Cloud Credits
+            </>
+          }
           subheadline="Apply now and start building with the distributed SQL database that grows with you - from MVP to millions of users."
           rightSlot={
             <div id="hero-form">
@@ -112,32 +145,21 @@ export default function StartupProgramPage() {
           }
         />
 
-        <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
-          <SectionHeader align="left" title="Trusted by Builders from MVP to Scale" />
-          <div className="grid md:grid-cols-3 gap-4">
-            {proofCards.map((card) => (
-              <a
-                key={card.quote}
-                href={card.href}
-                className="group border border-carbon-800 p-5 flex flex-col justify-between hover:border-carbon-600 transition-colors"
-              >
-                <p className="text-body-md text-carbon-300 leading-relaxed mb-5">“{card.quote}”</p>
-                <p className="text-body-sm text-carbon-500 mb-4">{card.author}</p>
-                <span className="inline-flex items-center gap-2 text-body-md text-text-inverse">
-                  {card.cta}
-                  <LinkArrow />
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
+        <TestimonialsSection
+          title="Trusted by Builders from MVP to Scale"
+          testimonials={proofCards}
+          className="bg-gradient-dark-top lg:pb-0"
+        />
 
-        <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
-          <SectionHeader align="center" h2Size="sm" title="About The Program" />
+        <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section lg:pt-0">
+          <SectionHeader align="center" h2Size="sm" title="About the Program" />
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
+            <div className="border border-carbon-800 p-6 space-y-6">
               <div>
-                <h2 className="text-h3-lg mb-4">Who is this for?</h2>
+                <h3 className="text-h3-lg mb-4 flex gap-2">
+                  <Users size={32} />
+                  Who Is This for?
+                </h3>
                 <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
                   <li>• Seed to Series B startups building data-intensive products.</li>
                   <li>• Founded within 36 months from the application date.</li>
@@ -157,7 +179,10 @@ export default function StartupProgramPage() {
             </div>
             <div className="border border-carbon-800 p-6 lg:p-8 space-y-6">
               <div>
-                <h3 className="text-h3-sm mb-3">What do you get?</h3>
+                <h3 className="text-h3-lg mb-3 flex gap-2">
+                  <Podcast size={32} />
+                  What Do You Get?
+                </h3>
                 <ul className="space-y-3 text-body-md text-carbon-300 leading-relaxed">
                   <li>• Financial Support: Up to $100,000 in TiDB Cloud credits.</li>
                   <li>
@@ -181,26 +206,15 @@ export default function StartupProgramPage() {
           background="red"
         />
 
-        <section className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-section-sm lg:py-section">
-          <SectionHeader align="left" h2Size="sm" title="Start Simple. Never Outgrow" />
-          <div className="grid md:grid-cols-2 gap-4">
-            {valueCards.map((card) => (
-              <article key={card.title} className="border border-carbon-800 p-6 lg:p-8">
-                <div className="mb-6">
-                  <Image
-                    src={card.image}
-                    alt={card.alt}
-                    width={64}
-                    height={64}
-                    className="w-14 h-14"
-                  />
-                </div>
-                <h3 className="text-h3-sm mb-3">{card.title}</h3>
-                <p className="text-body-md text-carbon-300 leading-relaxed">{card.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+        <FeatureGridSection
+          title="Start Simple. Never Outgrow"
+          columns={4}
+          features={valueCards.map((card) => ({
+            title: card.title,
+            description: card.body,
+            icon: card.image,
+          }))}
+        />
       </main>
       <Footer />
     </>

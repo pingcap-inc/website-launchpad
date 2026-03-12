@@ -7,7 +7,7 @@ import {
   SecondaryButton,
   ColorCard,
   SectionHeader,
-  FeaturesGrid,
+  FeatureGridSection,
   CtaSection,
 } from '@/components'
 import { Handshake, Award, Code2, BriefcaseBusiness, MessageCircle, AppWindow } from 'lucide-react'
@@ -178,8 +178,8 @@ export default function AboutUsPage() {
         </section>
 
         {/* ── 3. Company Values ───────────────────────────────────────────── */}
-        <FeaturesGrid
-          label="Our Values"
+        <FeatureGridSection
+          eyebrow="Our Values"
           title="The Principles That Guide Our Work"
           subtitle="Six principles define how we build products, support customers, and work together as a team."
           features={values}
@@ -239,7 +239,7 @@ export default function AboutUsPage() {
         <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <SectionHeader
-              label="Social Proof"
+              eyebrow="Social Proof"
               title="Customers Love TiDB"
               subtitle="Recognized by engineers worldwide on the industry's most trusted database review platforms."
               h2Size="md"
@@ -253,6 +253,7 @@ export default function AboutUsPage() {
                   text: 'Read Reviews',
                   href: 'https://www.gartner.com/reviews/market/cloud-database-management-systems/vendor/pingcap',
                 }}
+                icon={<Code2 className="w-12 h-12" />}
               />
               <ColorCard
                 variant="blue"
@@ -262,6 +263,7 @@ export default function AboutUsPage() {
                   text: 'See on G2',
                   href: 'https://www.g2.com/products/tidb/reviews',
                 }}
+                icon={<Code2 className="w-12 h-12" />}
               />
             </div>
           </div>
@@ -269,7 +271,7 @@ export default function AboutUsPage() {
 
         {/* ── 6. CTA ──────────────────────────────────────────────────────── */}
         <CtaSection
-          title="Transform your database infrastructure with TiDB."
+          title="Transform Your Database Infrastructure with TiDB."
           subtitle="Open-source, MySQL-compatible, and built to scale from gigabytes to petabytes."
           primaryCta={{ text: 'Book a Demo', href: 'https://www.pingcap.com/contact-us/' }}
           secondaryCta={{ text: 'Start for Free', href: 'https://tidbcloud.com/free-trial/' }}

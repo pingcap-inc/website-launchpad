@@ -106,12 +106,12 @@ const localOrCloud = [
 
 const goDeeperColumns = [
   {
-    title: 'Schema design',
+    title: 'Schema Design',
     items: [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Schema design overview',
+        title: 'Schema Design Overview',
         href: 'https://docs.pingcap.com/tidb/stable/dev-guide-overview/',
       },
       {
@@ -123,47 +123,47 @@ const goDeeperColumns = [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Create and manage database',
+        title: 'Create and Manage Database',
         href: 'https://docs.pingcap.com/tidb/stable/sql-statement-create-database/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Create and manage table',
+        title: 'Create and Manage Table',
         href: 'https://docs.pingcap.com/tidb/stable/sql-statement-create-table/',
       },
     ],
   },
   {
-    title: 'SQL reference',
+    title: 'SQL Reference',
     items: [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Explore SQL with TiDB (entry-level reference):',
+        title: 'Explore SQL with TiDB (Entry-Level Reference):',
         href: 'https://docs.pingcap.com/tidb/stable/basic-sql-operations/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Full SQL reference (language, statements, functions):',
+        title: 'Full SQL Reference (Language, Statements, Functions):',
         href: 'https://docs.pingcap.com/tidb/stable/sql-statements/',
       },
     ],
   },
   {
-    title: 'Indexing best practices',
+    title: 'Indexing Best Practices',
     items: [
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Index best practices (primary recommendation):',
+        title: 'Index Best Practices (Primary Recommendation):',
         href: 'https://docs.pingcap.com/tidb/stable/dev-guide-index-best-practice/',
       },
       {
         tag: 'Docs',
         tagClass: 'bg-brand-violet-medium',
-        title: 'Secondary index creation (supporting):',
+        title: 'Secondary Index Creation (Supporting):',
         href: 'https://docs.pingcap.com/tidb/stable/sql-statement-create-index/',
       },
     ],

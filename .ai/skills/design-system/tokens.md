@@ -83,7 +83,7 @@ Gradients (only for dark sections that are **not** Hero or CTA):
 | H2-md          | 56px        | 40px   | 700    | 1.1         | Sans        |
 | H2-sm          | 50px        | 40px   | 700    | 1.1         | Sans        |
 | H3             | 24px / 20px | same   | 700    | 1.3         | Sans        |
-| Body-xl        | 22px        | 22px   | 300    | 1.4         | Sans        |
+| body-2xl       | 22px        | 22px   | 300    | 1.4         | Sans        |
 | Body-lg        | 18px        | 18px   | 300    | 1.4         | Sans        |
 | Body-md        | 16px        | 16px   | 300    | 1.4         | Sans        |
 | Body-sm / Code | 14px        | 14px   | 300    | 1.4         | Sans / Mono |
@@ -151,7 +151,7 @@ const config: Config = {
         'h2-mb': ['40px', { lineHeight: '1.1', fontWeight: '700' }],
         'h3-lg': ['24px', { lineHeight: '1.3', fontWeight: '700' }],
         'h3-sm': ['20px', { lineHeight: '1.3', fontWeight: '700' }],
-        'body-xl': ['22px', { lineHeight: '1.4', fontWeight: '300' }],
+        'body-2xl': ['22px', { lineHeight: '1.4', fontWeight: '300' }],
         'body-lg': ['18px', { lineHeight: '1.4', fontWeight: '300' }],
         'body-md': ['16px', { lineHeight: '1.4', fontWeight: '300' }],
         'body-sm': ['14px', { lineHeight: '1.4', fontWeight: '300' }],

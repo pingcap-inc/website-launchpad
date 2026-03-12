@@ -170,13 +170,14 @@ export default function GlossaryPage() {
           eyebrow="GLOSSARY"
           headline="Database Terms, Defined"
           subheadline="Clear definitions of distributed database, cloud-native, and TiDB-specific terminology — written for engineers, not marketers."
+          centered
         />
 
         {/* Term sections */}
         {terms.map((category) => (
           <section
             key={category.category}
-            className="py-section-sm lg:py-section bg-bg-primary"
+            className="py-section-sm lg:pb-section bg-bg-primary"
             aria-labelledby={`section-${category.category.toLowerCase().replace(/\s+/g, '-')}`}
           >
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">

@@ -75,7 +75,7 @@
 }
 
 .root :global(.hs-button:hover) {
-  @apply bg-brand-red-primary text-text-inverse;
+  @apply bg-brand-red-medium text-text-inverse;
 }
 
 .root :global(.submitted-message) {
@@ -144,4 +144,27 @@
 .newsletter :global(.hs_recaptcha),
 .newsletter :global(.grecaptcha-badge) {
   display: none !important;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  height: 100%;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color: currentColor;
+  animation: hubspot-loading-spin 0.9s linear infinite;
+}
+
+@keyframes hubspot-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

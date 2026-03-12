@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Bot, TrendingUp, Globe, Truck, ShoppingCart, Wifi } from 'lucide-react'
 import {
   Header,
@@ -8,6 +9,7 @@ import {
   SectionHeader,
   PrimaryButton,
   CountUp,
+  FaqSection,
 } from '@/components'
 import { CreditTabs } from './_components/CreditTabs'
 
@@ -41,12 +43,12 @@ export const metadata: Metadata = {
 
 const steps = [
   {
-    title: 'Link your Github',
+    title: 'Link Your Github',
     description:
       'Sign in with your GitHub account. We calculate your credits based on your public open source contributions.',
   },
   {
-    title: 'Claim your Credits',
+    title: 'Claim Your Credits',
     description:
       'Connect your TiDB Cloud account and claim up to $2,000 in Serverless credits — instantly applied.',
   },
@@ -236,59 +238,6 @@ const tagMeta: Record<string, { icon: React.ReactNode; style: string }> = {
   Internet: { icon: <Wifi size={13} />, style: 'text-carbon-400 bg-carbon-800 border-carbon-700' },
 }
 
-function CapabilityIllustration() {
-  return (
-    <div className="bg-bg-primary">
-      <svg
-        viewBox="0 0 600 380"
-        className="w-full h-auto"
-        role="img"
-        aria-label="Isometric capability illustration"
-      >
-        <rect width="600" height="380" fill="#000000" />
-
-        {/* thin wireframe cube array */}
-        <g stroke="#D9E0E7" strokeWidth="0.9" fill="none" opacity="0.72">
-          <path d="M150 74 l42 -24 l42 24 l-42 24 z" />
-          <path d="M150 74 l0 48 l42 24 l0 -48 z" />
-          <path d="M234 74 l0 48 l-42 24 l0 -48 z" />
-
-          <path d="M210 106 l42 -24 l42 24 l-42 24 z" />
-          <path d="M210 106 l0 48 l42 24 l0 -48 z" />
-          <path d="M294 106 l0 48 l-42 24 l0 -48 z" />
-
-          <path d="M270 76 l42 -24 l42 24 l-42 24 z" />
-          <path d="M270 76 l0 48 l42 24 l0 -48 z" />
-          <path d="M354 76 l0 48 l-42 24 l0 -48 z" />
-
-          <path d="M330 108 l42 -24 l42 24 l-42 24 z" />
-          <path d="M330 108 l0 48 l42 24 l0 -48 z" />
-          <path d="M414 108 l0 48 l-42 24 l0 -48 z" />
-
-          <path d="M188 164 l42 -24 l42 24 l-42 24 z" />
-          <path d="M188 164 l0 48 l42 24 l0 -48 z" />
-          <path d="M272 164 l0 48 l-42 24 l0 -48 z" />
-
-          <path d="M248 196 l42 -24 l42 24 l-42 24 z" />
-          <path d="M248 196 l0 48 l42 24 l0 -48 z" />
-          <path d="M332 196 l0 48 l-42 24 l0 -48 z" />
-
-          <path d="M308 164 l42 -24 l42 24 l-42 24 z" />
-          <path d="M308 164 l0 48 l42 24 l0 -48 z" />
-          <path d="M392 164 l0 48 l-42 24 l0 -48 z" />
-        </g>
-
-        {/* single highlighted focal cube */}
-        <g transform="translate(315 220)">
-          <polygon points="42,0 84,24 42,48 0,24" fill="#FF4A4A" />
-          <polygon points="0,24 42,48 42,96 0,72" fill="#990606" />
-          <polygon points="84,24 42,48 42,96 84,72" fill="#E20F0F" />
-        </g>
-      </svg>
-    </div>
-  )
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function OpenSourceHeroesPage() {
@@ -299,9 +248,11 @@ export default function OpenSourceHeroesPage() {
         {/* ── 1. Hero ── */}
         <HeroSection
           eyebrow="Open Source Heroes Program"
-          headline="Fuel Your Next Big Idea: TiDB Cloud Serverless Credits for Open Source Heroes"
+          headline="Fuel Your Next Big Idea with TiDB Cloud Serverless"
           subheadline="TiDB loves open-source. We contribute code, sponsor projects and deeply appreciate developers who actively contribute to the community. As a token of our appreciation, we're offering up to $2,000 in free TiDB Cloud Serverless credits to fuel open-source heroes' next big idea. Simply log in with your GitHub account to calculate and claim your credits."
           primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
+          centered
+          backgroundImage={{ src: '/images/hero/c/bg-banner.svg' }}
         />
 
         {/* ── 2. How It Works ── */}
@@ -329,11 +280,11 @@ export default function OpenSourceHeroesPage() {
         {/* ── 3. Introduction ── */}
         <section className="py-section-sm lg:py-section bg-bg-primary">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-20">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-20">
               <div className="lg:col-span-7">
                 {/* Part A — capabilities */}
                 <SectionHeader
-                  title="With TiDB Cloud Serverless, you can:"
+                  title="With TiDB Cloud Serverless, You Can:"
                   align="left"
                   h2Size="sm"
                 />
@@ -359,8 +310,14 @@ export default function OpenSourceHeroesPage() {
                   <PrimaryButton href={CLAIM_URL}>Try Free</PrimaryButton>
                 </div>
               </div>
-              <div className="lg:col-span-5 bg-gradient-dark-top p-4 md:p-6">
-                <CapabilityIllustration />
+              <div className="lg:col-span-5 p-4 md:p-6">
+                <Image
+                  src="/images/hero/r/Graphic-10-Dk.png"
+                  alt="Capability"
+                  width={300}
+                  height={311}
+                  className="mx-auto"
+                />
                 <p className="mt-4 font-mono text-label text-carbon-500">
                   Built for open-source builders shipping production-grade apps.
                 </p>
@@ -369,7 +326,7 @@ export default function OpenSourceHeroesPage() {
 
             {/* Part B — credit tiers */}
             <SectionHeader
-              title="With TiDB Cloud Serverless credits, you can:"
+              title="With TiDB Cloud Serverless Credits, You Can:"
               align="left"
               h2Size="sm"
             />
@@ -380,7 +337,7 @@ export default function OpenSourceHeroesPage() {
         {/* ── 4. Reviews ── */}
         <section className="py-section-sm lg:py-section bg-gradient-dark-top border-t border-carbon-800">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-            <SectionHeader label="Community Stories" title="We Build with TiDB" />
+            <SectionHeader eyebrow="Community Stories" title="We Build with TiDB" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {reviews.map((review) => (
                 <article
@@ -453,24 +410,7 @@ export default function OpenSourceHeroesPage() {
         </section>
 
         {/* ── 6. FAQ ── */}
-        <section className="py-section-sm lg:py-section bg-gradient-dark-bottom border-t border-carbon-800">
-          <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 max-w-3xl">
-            <SectionHeader title="FAQ" align="left" h2Size="sm" />
-            <div className="space-y-3">
-              {faqs.map((faq) => (
-                <details key={faq.q} className="group border border-carbon-800 px-4 md:px-6">
-                  <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none text-body-lg font-medium text-text-inverse">
-                    {faq.q}
-                    <span className="shrink-0 font-mono text-carbon-500 group-open:rotate-45 transition-transform">
-                      +
-                    </span>
-                  </summary>
-                  <p className="text-body-md text-carbon-300 leading-relaxed pb-5">{faq.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
+        <FaqSection items={faqs} />
 
         {/* ── 7. CTA ── */}
         <CtaSection

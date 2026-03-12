@@ -6,6 +6,7 @@ import { GhostButton } from './GhostButton'
 import { PrimaryButton } from './PrimaryButton'
 import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
+import { isExternalHref } from '@/lib/links'
 
 const HeaderMegaMenu = dynamic(() => import('./HeaderMenus').then((mod) => mod.HeaderMegaMenu))
 const HeaderMobileMenu = dynamic(() => import('./HeaderMenus').then((mod) => mod.HeaderMobileMenu))
@@ -88,7 +89,9 @@ function Navbar() {
           <li key={item.label}>
             <a
               href={item.href}
-              {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              {...(item.external || isExternalHref(item.href)
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {})}
               className="px-3 py-2 hover:text-carbon-400 transition-colors duration-150 block"
             >
               {item.label}
@@ -121,7 +124,7 @@ export function Header() {
           className="max-w-container mx-auto h-full px-4 md:px-8 lg:px-16 flex items-center justify-between"
           aria-label="Main navigation"
         >
-          <a href="/tidb/" className="shrink-0">
+          <a href="/" className="shrink-0">
             <Image
               src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
               alt="TiDB"

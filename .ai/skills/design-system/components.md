@@ -337,7 +337,7 @@ export function SectionHeader({
 | --------------- | -------------------------------------------------------------------------------------------------------------- |
 | Eyebrow (label) | `font-mono text-eyebrow text-text-secondary block mb-8`                                                        |
 | H2              | `{h2SizeMap[h2Size]} font-bold leading-tight mb-4 text-text-inverse` + `max-w-section-title` when left-aligned |
-| Subtitle        | `text-body-xl leading-relaxed max-w-subtitle text-text-secondary` + `mx-auto` when centered                    |
+| Subtitle        | `text-body-2xl leading-relaxed max-w-subtitle text-text-secondary` + `mx-auto` when centered                   |
 | Wrapper         | `mb-16` (overridable via className)                                                                            |
 
 ```tsx
@@ -397,7 +397,454 @@ components/
     FeaturesGrid.tsx
     CtaSection.tsx
 lib/
-  utils.ts                  # cn() utility
+  utils.ts                  # cn() utility (uses clsx + tailwind-merge)
   gtm.ts                    # trackCTAClick, trackFormSubmit
   schema.ts                 # buildPageSchema and all schema builders
 ```
+
+---
+
+## shadcn Components (Radix UI Primitives)
+
+> These components are built on Radix UI for accessibility (keyboard nav, ARIA, focus management).
+> All are customized to use project brand tokens — no CSS variables required.
+
+### Badge
+
+```tsx
+import { Badge } from '@/components/ui/badge'
+
+// Outline (default) — category labels, eyebrow tags, filter chips
+<Badge>Open Source</Badge>
+<Badge variant="outline">Distributed SQL</Badge>
+
+// Primary (red) — "New", "Hot", highlighted
+<Badge variant="default">New</Badge>
+
+// Secondary (carbon) — "Beta", "Preview", status
+<Badge variant="secondary">Beta</Badge>
+```
+
+**Variants:** `default` (red) · `secondary` (carbon-800) · `outline` (border-carbon-700, default)
+
+**Rules:** Always use `font-bold` (built in). Place alongside section titles or inside cards. Never use for navigation.
+
+---
+
+### Accordion
+
+```tsx
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+
+// FAQ section pattern — always place before CtaSection
+;<section className="py-section-sm lg:py-section bg-bg-primary">
+  <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+    <SectionHeader label="FAQ" title="Frequently Asked Questions" className="mb-12" />
+    <div className="max-w-3xl mx-auto">
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="q1">
+          <AccordionTrigger>What is TiDB?</AccordionTrigger>
+          <AccordionContent>
+            TiDB is a distributed SQL database that supports HTAP workloads...
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="q2">
+          <AccordionTrigger>How does TiDB scale?</AccordionTrigger>
+          <AccordionContent>
+            TiDB uses a shared-nothing architecture with separate storage and compute layers...
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  </div>
+</section>
+```
+
+**Props:** `type="single"` (one open at a time) · `collapsible` (allow closing all)
+**Animation:** Accordion open/close uses CSS height animation via `animate-accordion-down` / `animate-accordion-up` keyframes (added to `tailwind.config.ts`).
+
+---
+
+### Dialog
+
+```tsx
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+
+// CTA modal pattern
+;<Dialog>
+  <DialogTrigger asChild>
+    <PrimaryButton>Start for Free</PrimaryButton>
+  </DialogTrigger>
+  <DialogContent className="sm:max-w-md">
+    <DialogHeader>
+      <DialogTitle>Get Started with TiDB Cloud</DialogTitle>
+      <DialogDescription>
+        Create your free cluster in under 5 minutes. No credit card required.
+      </DialogDescription>
+    </DialogHeader>
+    {/* form or HubSpot embed */}
+  </DialogContent>
+</Dialog>
+```
+
+**Styling:** Dark surface (`bg-bg-surface` #06111A) with `border-carbon-800`. Overlay: `bg-black/80`. Inherits Moderat font from site globals.
+
+---
+
+### Tooltip
+
+```tsx
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+
+// Wrap page or section in TooltipProvider (once per subtree)
+;<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <span className="underline decoration-dotted cursor-help">HTAP</span>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>Hybrid Transactional and Analytical Processing</p>
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+
+**When to use:** Technical terms on hover, icon button labels, truncated text explanations. Don't use for important information that must always be visible.
+
+---
+
+### Separator
+
+```tsx
+import { Separator } from '@/components/ui/separator'
+
+// Horizontal divider (default)
+<Separator className="my-8" />
+
+// Vertical divider (e.g., in stat rows)
+<Separator orientation="vertical" className="h-12 mx-4" />
+```
+
+**Color:** `bg-carbon-800` by default — subtle 1px divider for dark backgrounds.
+
+---
+
+## Section Components
+
+> Always import from `@/components` (barrel) or the direct path `@/components/sections/`.
+> All sections use `py-section-sm lg:py-section` vertical padding.
+> See `visual-design.md` § Section C for background rhythm guidelines.
+
+---
+
+### HeroSection
+
+Full-width hero. Supports `split` (default), `centered`, and `image-right` layouts.
+
+```tsx
+import { HeroSection } from '@/components/sections/HeroSection'
+
+interface HeroSectionProps {
+  layout?: 'split' | 'centered' | 'image-right' // default 'split'
+  eyebrow?: string
+  headline: string // supports \n for line breaks
+  subheadline?: string
+  primaryCta?: { text: string; href: string }
+  secondaryCta?: { text: string; href: string }
+  rightSlot?: React.ReactNode // split: right column (form, image, SVG cube)
+  heroImage?: {
+    // image-right layout
+    src: string
+    alt?: string
+    width: number
+    height: number
+    align?: 'right' | 'center'
+    priority?: boolean
+  }
+  className?: string
+}
+```
+
+**Rules:**
+
+- Split layout MUST have `rightSlot` or `heroImage` (auto-seeds SVG if omitted).
+- Use `noPb` when the next section has the same `bg-bg-primary` background.
+
+---
+
+### FeatureGridSection
+
+Clean feature grid with icon + title + description items, no card border.
+
+```tsx
+import { FeatureGridSection } from '@/components/sections/FeatureGridSection'
+
+interface FeatureGridSectionProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  features: Array<{
+    icon?: React.ReactNode
+    title: string
+    description: string
+    cta?: { text: string; href: string }
+  }>
+  columns?: 2 | 3 | 4 // default 3
+  viewMore?: { text?: string; href: string }
+  className?: string
+}
+```
+
+---
+
+### FeatureCardSection
+
+Feature grid using `<FeatureCard>` bordered cards. Supports links per card.
+
+```tsx
+import { FeatureCardSection } from '@/components/sections/FeatureCardSection'
+
+interface FeatureCardSectionProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  items: Array<{
+    icon?: React.ReactNode
+    title: string
+    description: string
+    borderColor?: string // e.g. 'border-brand-red-primary'
+    href?: string // enables hover float on the card
+    className?: string
+  }>
+  columns?: 2 | 3 | 4 // default 3
+  borderStyle?: 'gray' | 'color' // 'color' cycles brand colors
+  className?: string
+}
+```
+
+---
+
+### FeatureHighlightsSection
+
+Grid of `<ColorCard>` items with brand-color backgrounds. Use for showcase moments.
+
+```tsx
+import { FeatureHighlightsSection } from '@/components/sections/FeatureHighlightsSection'
+
+interface FeatureHighlightsSectionProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  items: Array<{
+    variant: 'red' | 'violet' | 'blue' | 'teal'
+    title: string
+    description: string
+    cta: { text: string; href: string }
+    icon: React.ReactNode // required — lucide icon, strokeWidth={1.5}
+  }>
+  columns?: 2 | 3 | 4 // default 3
+  viewMore?: { text?: string; href: string }
+  className?: string
+}
+```
+
+---
+
+### FeatureTabsSection
+
+Tabbed section with left text/bullets and right image. Auto-switches tabs. `'use client'`.
+
+```tsx
+import { FeatureTabsSection } from '@/components/sections/FeatureTabsSection'
+
+interface FeatureTabsSectionProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  tabs: Array<{
+    id: string
+    label: string
+    title?: string
+    description?: string
+    bullets?: string[]
+    primaryCta?: { text: string; href: string }
+    secondaryCta?: { text: string; href: string }
+    content?: React.ReactNode
+    image: { src: string; alt: string; width?: number; height?: number }
+  }>
+  autoSwitch?: boolean // default false
+  autoSwitchInterval?: number // ms, default 6000
+  className?: string
+}
+```
+
+**Rule:** Always use `autoSwitch={true} autoSwitchInterval={6000}`.
+
+---
+
+### StatsSection _(new)_
+
+Metrics grid with `<CountUp>` animation. Use for 3–6 key stats on product/landing pages. `'use client'`.
+
+```tsx
+import { StatsSection } from '@/components/sections/StatsSection'
+
+interface StatsSectionProps {
+  eyebrow?: string
+  title?: string
+  subtitle?: string
+  stats: Array<{
+    icon?: React.ReactNode // optional lucide icon, strokeWidth={1.5}
+    value: string // "99.9%", "$2M+", "10x" — parsed by CountUp
+    label: string // "Uptime SLA"
+    description?: string // additional context (carbon-400)
+  }>
+  columns?: 2 | 3 | 4 // default 3
+  className?: string
+}
+```
+
+**Background:** `bg-gradient-dark-top` (built in — follow alternating rhythm).
+**Rule:** Each `value` is passed to `<CountUp>` — use numeric-parseable strings (e.g. `"99.9%"`, `"10x"`, `"$2,000+"`).
+
+```tsx
+<StatsSection
+  eyebrow="BY THE NUMBERS"
+  title="Trusted at Scale"
+  stats={[
+    {
+      icon: <Zap strokeWidth={1.5} />,
+      value: '10x',
+      label: 'Faster Queries',
+      description: 'Compared to standard MySQL',
+    },
+    {
+      icon: <Shield strokeWidth={1.5} />,
+      value: '99.99%',
+      label: 'Uptime SLA',
+      description: 'Enterprise-grade availability',
+    },
+    {
+      icon: <Globe strokeWidth={1.5} />,
+      value: '5,000+',
+      label: 'Global Customers',
+      description: 'Across 60+ countries',
+    },
+  ]}
+/>
+```
+
+---
+
+### LogoCloudSection
+
+Logo grid or auto-scrolling marquee. Two visual variants.
+
+```tsx
+import { LogoCloudSection } from '@/components/sections/LogoCloudSection'
+
+interface LogoCloudSectionProps {
+  eyebrow?: string
+  title?: string
+  subtitle?: string
+  logos: Array<{
+    name: string
+    src: string
+    href?: string
+    width?: number // default 140
+    height?: number // default 48
+  }>
+  columns?: 2 | 3 | 4 | 5 | 6 // default 4 (grid mode only)
+  variant?: 'default' | 'minimal' // default 'default'
+  autoScroll?: boolean // default true (triggers when logos > 5)
+  scrollSpeedSeconds?: number // default 28
+  className?: string
+}
+```
+
+**Variants:**
+
+- `default` — bordered containers, color on hover, `grayscale` at rest
+- `minimal` — transparent, white inverted (`brightness-0 invert`)
+
+---
+
+### TestimonialsSection
+
+Auto-rotating testimonial carousel with pause-on-hover. `'use client'`.
+
+```tsx
+import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
+
+interface TestimonialsSectionProps {
+  eyebrow?: string // default "Testimonials"
+  title: string
+  testimonials: Array<{
+    quote: string
+    author: string
+    href?: string
+    cta?: string // link text (requires href)
+    logo?: { src: string; alt: string; size?: number }
+  }>
+  className?: string
+}
+```
+
+**Behavior:** Cycles every 4s with 700ms slide transition. Respects `prefers-reduced-motion`. Height is computed from the tallest card to avoid layout shift.
+
+---
+
+### FaqSection
+
+FAQ accordion. Always place immediately before `<CtaSection>`.
+
+```tsx
+import { FaqSection } from '@/components/sections/FaqSection'
+
+interface FaqSectionProps {
+  title?: string // default "FAQ"
+  items: Array<{ q: string; a: string }>
+  className?: string
+}
+```
+
+**Background:** `bg-gradient-dark-bottom` (built in).
+**Rule:** First item opens by default. Use `<FaqSection>` instead of raw `<Accordion>` for FAQ blocks.
+
+---
+
+### CtaSection
+
+Call-to-action banner. Always the last section before `<Footer>`.
+
+```tsx
+import { CtaSection } from '@/components/sections/CtaSection'
+
+interface CtaSectionProps {
+  label?: string
+  title: string
+  subtitle?: string
+  primaryCta: { text: string; href: string }
+  secondaryCta?: { text: string; href: string }
+  background?: 'red' | 'violet' | 'blue' | 'teal' // default 'red'
+  className?: string
+}
+```
+
+**Background color guidance** (from `visual-design.md`):
+
+- Product/technical pages → `red` or `violet`
+- Cloud/infrastructure pages → `blue`
+- Data/analytics pages → `teal`

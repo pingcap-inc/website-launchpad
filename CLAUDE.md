@@ -64,12 +64,13 @@ Wait for the user's reply before generating code.
 
 ### Step 3 — Read the Specs
 
-Once confirmed, read **all three** in parallel:
+Once confirmed, read **all four** in parallel:
 
 ```
-.ai/page-types/[type].md          ← page structure, schema, GTM, sitemap rules
-.ai/skills/design-system/SKILL.md ← components, tokens, layout rules
-.ai/skills/seo/SKILL.md           ← metadata, schema, canonical rules
+.ai/page-types/[type].md                       ← page structure, schema, GTM, sitemap rules
+.ai/skills/design-system/SKILL.md              ← components, tokens, layout rules
+.ai/skills/seo/SKILL.md                        ← metadata, schema, canonical rules
+.ai/skills/design-system/visual-design.md      ← icons, illustrations, animations, interactions
 ```
 
 Also read if relevant:
@@ -97,32 +98,62 @@ Generate the full file at `src/app/[path]/page.tsx`, then run the post-generatio
 ❌ Raw dataLayer      window.dataLayer.push() → import from '@/lib/gtm'
 ❌ External link      <Link href="https://..."> → <a href="...">
 
+Visual & Interaction (see visual-design.md for full guide)
+❌ FeatureCard without icon    → every FeatureCard MUST have icon={<LucideIcon strokeWidth={1.5} />}
+❌ ColorCard without icon      → every ColorCard MUST have icon or image prop
+❌ Hero split without visual   → rightSlot or heroImage required (auto-seeds if omitted)
+❌ All-black page              → at least one section must use non-bg-bg-primary background
+❌ Interactive card no hover   → clickable cards must have hover:-translate-y-2 transition-transform duration-200 ease-in-out
+❌ 3+ metrics without CountUp  → use <CountUp> for scroll-triggered stat display
+❌ Tabs without autoSwitch     → add autoSwitch={true} autoSwitchInterval={6000}
+❌ Stats section built inline  → use <StatsSection> component
+
 ✅ siteName must be exactly:   'TiDB'
 ✅ twitter.site must be:       '@PingCAP'
 ✅ og:image default:           https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png
 ✅ twitter:image default:      https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png
 ✅ canonical format:            https://www.pingcap.com/[path]/
 ✅ All paths: lowercase · hyphen-separated · trailing slash
+✅ Icon stroke width:           strokeWidth={1.5} on all lucide-react icons
+✅ Icon in card container:      className="w-full h-full" (fills the w-12 h-12 wrapper)
 ```
 
 ---
 
 ## 🧩 Component Quick Reference
 
-| Component           | Import from                          | Key Props                                                                        |
-| ------------------- | ------------------------------------ | -------------------------------------------------------------------------------- |
-| `<HeroSection>`     | `@/components/sections/HeroSection`  | `eyebrow` `headline` `subheadline` `primaryCta` `secondaryCta` `rightSlot`       |
-| `<FeaturesGrid>`    | `@/components/sections/FeaturesGrid` | `label` `title` `features` `columns={2\|3\|4}` `viewMore`                        |
-| `<CtaSection>`      | `@/components/sections/CtaSection`   | `variant` `title` `cta`                                                          |
-| `<FeatureCard>`     | `@/components/ui/FeatureCard`        | `icon?` `title` `description` `href?` `borderColor?`                             |
-| `<ColorCard>`       | `@/components/ui/ColorCard`          | `variant="red\|violet\|blue\|teal"` `title` `description` `cta` `icon?` `image?` |
-| `<SectionHeader>`   | `@/components/ui/SectionHeader`      | `label?` `title` `subtitle?` `h2Size="lg\|md\|sm"` `align="center\|left"`        |
-| `<Tabs>`            | `@/components/ui/Tabs`               | `tabs` `autoSwitch?` `autoSwitchInterval?` `defaultActiveTab?`                   |
-| `<CountUp>`         | `@/components/ui/CountUp`            | `value="$2,000+"` `className?` — triggers on scroll                              |
-| `<PrimaryButton>`   | `@/components/ui/PrimaryButton`      | `href?` `onClick?`                                                               |
-| `<SecondaryButton>` | `@/components/ui/SecondaryButton`    | `href?` `dark={true}` `onClick?`                                                 |
-| `<Navbar>`          | `@/components/ui/Header`             | no props — always include                                                        |
-| `<Footer>`          | `@/components/ui/Footer`             | no props — always include                                                        |
+**Section Components** (import from `@/components/sections/[Name]` or barrel `@/components`)
+
+| Component                    | Import from                                      | Key Props                                                                                        |
+| ---------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `<HeroSection>`              | `@/components/sections/HeroSection`              | `eyebrow` `headline` `subheadline` `primaryCta` `secondaryCta` `rightSlot` `heroImage` `layout`  |
+| `<FeatureGridSection>`       | `@/components/sections/FeatureGridSection`       | `title` `features={[{icon?,title,description,cta?}]}` `columns={2\|3\|4}` `viewMore?`            |
+| `<FeatureCardSection>`       | `@/components/sections/FeatureCardSection`       | `title` `items={[{icon?,title,description,href?,borderColor?}]}` `columns?` `borderStyle?`       |
+| `<FeatureHighlightsSection>` | `@/components/sections/FeatureHighlightsSection` | `title` `items={[{variant,title,description,cta,icon}]}` `columns?`                              |
+| `<FeatureTabsSection>`       | `@/components/sections/FeatureTabsSection`       | `title` `tabs={[{id,label,description?,image}]}` `autoSwitch={true}` `autoSwitchInterval={6000}` |
+| `<StatsSection>`             | `@/components/sections/StatsSection`             | `stats={[{icon?,value,label,description?}]}` `columns={2\|3\|4}` — uses CountUp, `'use client'`  |
+| `<LogoCloudSection>`         | `@/components/sections/LogoCloudSection`         | `logos={[{name,src,href?}]}` `variant="default\|minimal"` `autoScroll?`                          |
+| `<TestimonialsSection>`      | `@/components/sections/TestimonialsSection`      | `title` `testimonials={[{quote,author,logo?,href?,cta?}]}`                                       |
+| `<FaqSection>`               | `@/components/sections/FaqSection`               | `items={[{q,a}]}` `title?="FAQ"` — always before CtaSection                                      |
+| `<CtaSection>`               | `@/components/sections/CtaSection`               | `background="red\|violet\|blue\|teal"` `title` `subtitle?` `primaryCta` `secondaryCta?`          |
+
+**UI Components**
+
+| Component           | Import from                       | Key Props                                                                             |
+| ------------------- | --------------------------------- | ------------------------------------------------------------------------------------- |
+| `<FeatureCard>`     | `@/components/ui/FeatureCard`     | `icon={<LucideIcon strokeWidth={1.5}/>}` `title` `description` `href?` `borderColor?` |
+| `<ColorCard>`       | `@/components/ui/ColorCard`       | `variant="red\|violet\|blue\|teal"` `title` `description` `cta` `icon` (required)     |
+| `<SectionHeader>`   | `@/components/ui/SectionHeader`   | `label?` `title` `subtitle?` `h2Size="lg\|md\|sm"` `align="center\|left"`             |
+| `<Tabs>`            | `@/components/ui/Tabs`            | `tabs` `autoSwitch={true}` `autoSwitchInterval={6000}` `defaultActiveTab?`            |
+| `<CountUp>`         | `@/components/ui/CountUp`         | `value="$2,000+"` `className?` — triggers on scroll (use for ≥3 stats)                |
+| `<Badge>`           | `@/components/ui/badge`           | `variant="default\|secondary\|outline"` — feature tags, "New"/"Beta" labels           |
+| `<Accordion>`       | `@/components/ui/accordion`       | `type="single"` `collapsible` — FAQ sections (import Item/Trigger/Content too)        |
+| `<Dialog>`          | `@/components/ui/dialog`          | `<DialogTrigger>` `<DialogContent>` — CTA modals, video lightbox                      |
+| `<Tooltip>`         | `@/components/ui/tooltip`         | `<TooltipTrigger>` `<TooltipContent>` — technical term hints                          |
+| `<PrimaryButton>`   | `@/components/ui/PrimaryButton`   | `href?` `onClick?`                                                                    |
+| `<SecondaryButton>` | `@/components/ui/SecondaryButton` | `href?` `dark={true}` `onClick?`                                                      |
+| `<Navbar>`          | `@/components/ui/Header`          | no props — always include                                                             |
+| `<Footer>`          | `@/components/ui/Footer`          | no props — always include                                                             |
 
 Full specs: `.ai/skills/design-system/components.md`
 
@@ -158,29 +189,40 @@ Code Quality
 - [ ] No font-semibold (use font-bold)
 - [ ] All <Link> used only for internal Next.js navigation; external = <a>
 - [ ] Images use next/image <Image> component
+
+Visual Quality
+- [ ] Every FeatureCard item has icon prop (Lucide component, strokeWidth={1.5})
+- [ ] Every ColorCard item has icon or image prop
+- [ ] HeroSection split layout has rightSlot or heroImage (or rightSlot omitted → auto-seeds)
+- [ ] Page uses ≥2 distinct section backgrounds (not all bg-bg-primary)
+- [ ] Clickable cards have hover:-translate-y-2 transition-transform duration-200 ease-in-out
+- [ ] Metric sections with ≥3 stats use <CountUp> for scroll-triggered animation
+- [ ] Tabs component (if used) has autoSwitch={true} autoSwitchInterval={6000}
+- [ ] FAQ section (if present) uses <Accordion> component
 ```
 
 ---
 
 ## 🗺️ Key File Locations
 
-| What               | Where                                |
-| ------------------ | ------------------------------------ |
-| Page files         | `src/app/[path]/page.tsx`            |
-| UI components      | `src/components/ui/`                 |
-| Section components | `src/components/sections/`           |
-| Component barrel   | `src/components/index.ts`            |
-| Tailwind config    | `tailwind.config.ts`                 |
-| Global CSS         | `src/styles/globals.css`             |
-| Schema builders    | `src/lib/schema.ts`                  |
-| GTM helpers        | `src/lib/gtm.tsx`                    |
-| Sitemap            | `src/app/sitemap.ts`                 |
-| Design tokens      | `.ai/skills/design-system/tokens.md` |
-| Design rules       | `.ai/skills/design-system/SKILL.md`  |
-| SEO rules          | `.ai/skills/seo/SKILL.md`            |
-| Page type specs    | `.ai/page-types/`                    |
-| Brand guidelines   | `.ai/context/brand.md`               |
-| Ops user guide     | `.ai/HOW-TO-CREATE-PAGES.md`         |
+| What               | Where                                       |
+| ------------------ | ------------------------------------------- |
+| Page files         | `src/app/[path]/page.tsx`                   |
+| UI components      | `src/components/ui/`                        |
+| Section components | `src/components/sections/`                  |
+| Component barrel   | `src/components/index.ts`                   |
+| Tailwind config    | `tailwind.config.ts`                        |
+| Global CSS         | `src/styles/globals.css`                    |
+| Schema builders    | `src/lib/schema.ts`                         |
+| GTM helpers        | `src/lib/gtm.tsx`                           |
+| Sitemap            | `src/app/sitemap.ts`                        |
+| Design tokens      | `.ai/skills/design-system/tokens.md`        |
+| Design rules       | `.ai/skills/design-system/SKILL.md`         |
+| Visual design      | `.ai/skills/design-system/visual-design.md` |
+| SEO rules          | `.ai/skills/seo/SKILL.md`                   |
+| Page type specs    | `.ai/page-types/`                           |
+| Brand guidelines   | `.ai/context/brand.md`                      |
+| Ops user guide     | `.ai/HOW-TO-CREATE-PAGES.md`                |
 
 ---
 

@@ -1,0 +1,204 @@
+name: Broken Link Check
+
+on:
+  pull_request:
+    paths:
+      - 'src/app/**/*.tsx'
+
+permissions:
+  contents: read
+  pull-requests: write
+  deployments: read
+
+jobs:
+  broken-links:
+    name: Check broken links
+    runs-on: ubuntu-latest
+    environment: preview
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Buffer for Vercel deployment (Approx 30s)
+      - name: Wait for Vercel Deployment
+        run: sleep 40
+
+      # 1. Get Vercel Preview URL
+      - name: Vercel Preview URL
+        id: vercel_preview_url
+        uses: zentered/vercel-preview-url@v1.4.0
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
+
+      # 2. Extract Paths from PR Table
+      - name: Extract Paths
+        id: extract_paths
+        uses: actions/github-script@v7
+        env:
+          VERCEL_PREVIEW_URL: ${{ steps.vercel_preview_url.outputs.preview_url }}
+          VERCEL_PREVIEW_URL_ALT: ${{ steps.vercel_preview_url.outputs.url }}
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+            const rawBaseUrl = (process.env.VERCEL_PREVIEW_URL || process.env.VERCEL_PREVIEW_URL_ALT || "").trim();
+            const extractedUrl = (rawBaseUrl.match(/https?:\/\/[^\s)]+/)?.[0] || "").replace(/\/$/, "");
+            const extractedHost = rawBaseUrl.replace(/^\s*https?:\/\//, '').split(/[\s)]+/)[0].replace(/\/$/, "");
+            const baseUrl = extractedUrl || (extractedHost ? `https://${extractedHost}` : "");
+
+            if (!baseUrl || baseUrl === "" || baseUrl === "undefined") {
+              core.setFailed(`Vercel URL not found. raw output: "${rawBaseUrl || "empty"}"`);
+              return;
+            }
+
+            const previewHost = new URL(baseUrl).host;
+
+            const regex = /\|\s*URL path\s*\|\s*([^|]+)\s*\|/i;
+            const match = body.match(regex);
+
+            let urlList = [];
+            if (match && match[1]) {
+              const rawValue = match[1].replace(/`/g, '').trim();
+              if (rawValue && rawValue.toLowerCase() !== 'n/a') {
+                const paths = rawValue.split(/[\s,，]+/).filter(p => p.trim() !== "");
+                paths.forEach(path => {
+                  const value = path.trim();
+                  if (!value) return;
+                  const normalizedPath = value.startsWith('/') ? value : `/${value}`;
+                  const hasQueryOrHash = /[?#]/.test(normalizedPath);
+                  const looksLikeFile = /\.[^/]+$/.test(normalizedPath.split(/[?#]/)[0]);
+                  const formattedPath =
+                    !hasQueryOrHash && !looksLikeFile && !normalizedPath.endsWith('/')
+                      ? `${normalizedPath}/`
+                      : normalizedPath;
+                  urlList.push(`${baseUrl}${formattedPath}`);
+                });
+              }
+            }
+
+            if (urlList.length === 0) {
+              core.setOutput('has_urls', 'false');
+            } else {
+              core.setOutput('urls', urlList.join('\n'));
+              core.setOutput('has_urls', 'true');
+              core.setOutput('preview_host', previewHost);
+            }
+
+      # 3. Run Broken Link Check
+      - name: Run Broken Link Check
+        if: steps.extract_paths.outputs.has_urls == 'true'
+        id: link_check
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: |
+          URL_ARGS=$(echo "${{ steps.extract_paths.outputs.urls }}" | tr '\n' ' ')
+
+          HEADER_ARG=""
+          if [ -n "$VERCEL_AUTOMATION_BYPASS_SECRET" ]; then
+            HEADER_ARG="--header x-vercel-protection-bypass:$VERCEL_AUTOMATION_BYPASS_SECRET"
+          fi
+
+          npx --yes linkinator $URL_ARGS \
+            --format json \
+            --timeout 10000 \
+            --skip "twitter\.com|x\.com|linkedin\.com|github\.com|facebook\.com|instagram\.com|youtube\.com" \
+            $HEADER_ARG \
+            > link-results.json || true
+
+      # 4. Post Results Comment
+      - name: Post Results Comment
+        if: always() && steps.extract_paths.outputs.has_urls == 'true'
+        uses: actions/github-script@v7
+        env:
+          PREVIEW_HOST: ${{ steps.extract_paths.outputs.preview_host }}
+        with:
+          script: |
+            const fs = require('fs');
+            const previewHost = process.env.PREVIEW_HOST || '';
+
+            let results = { links: [] };
+            try {
+              const raw = fs.readFileSync('link-results.json', 'utf8').trim();
+              // linkinator outputs a single JSON object; try that first, fall back to NDJSON
+              try {
+                const obj = JSON.parse(raw);
+                if (obj.links) results.links = obj.links;
+              } catch {
+                const allLinks = [];
+                for (const line of raw.split('\n').filter(Boolean)) {
+                  try {
+                    const obj = JSON.parse(line);
+                    if (obj.links) allLinks.push(...obj.links);
+                  } catch {}
+                }
+                results.links = allLinks;
+              }
+            } catch (e) {
+              // file may not exist if step was skipped
+            }
+
+            const broken = results.links.filter(l => l.state === 'BROKEN');
+            const internalBroken = broken.filter(l => {
+              try { return new URL(l.url).host === previewHost; } catch { return false; }
+            });
+            const externalBroken = broken.filter(l => !internalBroken.includes(l));
+
+            const totalLinks = results.links.length;
+            const pageSet = new Set(results.links.map(l => l.parent).filter(Boolean));
+            const pageCount = pageSet.size || '?';
+
+            let body;
+            if (internalBroken.length === 0 && externalBroken.length === 0) {
+              body = [
+                '## 🔗 Broken Link Check',
+                '',
+                `Checked **${pageCount}** page(s) · **${totalLinks}** links scanned`,
+                '',
+                '✅ No broken links found!',
+              ].join('\n');
+            } else {
+              const lines = [
+                '## 🔗 Broken Link Check',
+                '',
+                `Checked **${pageCount}** page(s) · **${totalLinks}** links scanned`,
+                '',
+              ];
+
+              if (internalBroken.length > 0) {
+                lines.push(`❌ **${internalBroken.length} broken internal link(s) found:**`, '');
+                lines.push('| Page | Broken URL | Status |');
+                lines.push('|:-----|:-----------|:------:|');
+                for (const l of internalBroken) {
+                  const page = l.parent ? (() => { try { return new URL(l.parent).pathname; } catch { return l.parent; } })() : '—';
+                  const url = (() => { try { return new URL(l.url).pathname; } catch { return l.url; } })();
+                  lines.push(`| \`${page}\` | \`${url}\` | ${l.status || '???'} |`);
+                }
+                lines.push('');
+              }
+
+              if (externalBroken.length > 0) {
+                lines.push(`⚠️ **${externalBroken.length} broken external link(s)** (informational, not blocking):`, '');
+                lines.push('| Page | URL | Status |');
+                lines.push('|:-----|:----|:------:|');
+                for (const l of externalBroken) {
+                  const page = l.parent ? (() => { try { return new URL(l.parent).pathname; } catch { return l.parent; } })() : '—';
+                  lines.push(`| \`${page}\` | ${l.url} | ${l.status || '???'} |`);
+                }
+              }
+
+              body = lines.join('\n');
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
+            if (internalBroken.length > 0) {
+              core.setFailed(`Found ${internalBroken.length} broken internal link(s). See PR comment for details.`);
+            }

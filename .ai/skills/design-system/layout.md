@@ -42,7 +42,7 @@ Footer          Links: same rule — relative inside, full domain outside websit
         <h1 className="text-h1-mb md:text-h1 font-bold leading-tight text-text-inverse mb-6">
           Modern Database for Real-Time Workloads
         </h1>
-        <p className="text-body-xl text-carbon-400 max-w-subtitle mb-10">
+        <p className="text-body-2xl text-carbon-400 max-w-subtitle mb-10">
           Scale from gigabytes to petabytes without re-architecting your application.
         </p>
         <div className="flex items-center gap-4 flex-wrap">
@@ -108,8 +108,6 @@ Centered Hero defaults to no eyebrow.
 // Default fallback (centered mode): pick seeded image from /public/images/hero/c/
 <HeroSection centered />
 
-// Optional alternative: auto-generate from page content
-<HeroSection centered autoGenerateBackgroundImage />
 ```
 
 **Hero Rules:**

@@ -120,7 +120,7 @@ const basics = [
   {
     tag: 'Docs',
     tagColor: '#9E4EC4',
-    title: 'Transactional + analytical workloads (HTAP)',
+    title: 'Transactional + Analytical Workloads (HTAP)',
     href: 'https://www.pingcap.com/blog/htap-database/',
   },
   {
@@ -140,6 +140,7 @@ const basics = [
 const nextSteps = [
   {
     variant: 'red' as const,
+    icon: <Code2 className="w-12 h-12" />,
     title: 'Build a Data Application',
     description:
       'Design schemas, connect your app, and run scalable transactional and analytical queries.',
@@ -147,18 +148,21 @@ const nextSteps = [
   },
   {
     variant: 'violet' as const,
+    icon: <Code2 className="w-12 h-12" />,
     title: 'Build an AI Application',
     description: 'Store embeddings, run vector search, and build RAG or agentic AI systems.',
     cta: { text: 'Build AI Applications', href: '/developer/build-ai-apps/' },
   },
   {
     variant: 'teal' as const,
+    icon: <Code2 className="w-12 h-12" />,
     title: 'Migrate to TiDB',
     description: 'Evaluate compatibility, plan your migration, and move data safely.',
     cta: { text: 'Migration Center', href: '/developer/migration-center/' },
   },
   {
     variant: 'blue' as const,
+    icon: <Code2 className="w-12 h-12" />,
     title: 'Try TiDB Cloud for Free',
     description: 'Spin up a managed TiDB cluster in minutes.',
     cta: { text: 'Start Free Trial', href: '/signup/' },
@@ -266,6 +270,7 @@ export default function GetStartedPage() {
                     title={card.title}
                     description={card.description}
                     cta={card.cta}
+                    icon={card.icon}
                   />
                 ))}
               </div>

@@ -6,7 +6,6 @@ import styles from './HubSpotForm.module.css'
 
 const DEFAULT_PORTAL_ID = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID ?? '4466002'
 const DEFAULT_REGION = process.env.NEXT_PUBLIC_HUBSPOT_REGION ?? 'na1'
-const SCRIPT_SRC = 'https://js.hsforms.net/forms/v2.js'
 
 type HubSpotWindow = Window & {
   hbspt?: {
@@ -34,6 +33,8 @@ export interface HubSpotFormProps {
   className?: string
   loadingText?: string
   errorText?: string
+  /** Reserve this height (px) while the form is loading to prevent layout shift */
+  minHeight?: number
 }
 
 function bindEnterSubmit(containerId: string) {
@@ -59,6 +60,7 @@ export function HubSpotForm({
   className,
   loadingText = 'Loading form...',
   errorText = 'Unable to load form. Please try refreshing the page.',
+  minHeight,
 }: HubSpotFormProps) {
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const uid = useId()
@@ -88,8 +90,8 @@ export function HubSpotForm({
       if (cancelled) return
       const hsWindow = window as HubSpotWindow
       if (!hsWindow.hbspt?.forms) {
-        if (attempt < 2) {
-          retryTimer = setTimeout(() => renderForm(attempt + 1), 350)
+        if (attempt < 10) {
+          retryTimer = setTimeout(() => renderForm(attempt + 1), 300)
         } else {
           markError()
         }
@@ -121,55 +123,28 @@ export function HubSpotForm({
       }, 10_000)
     }
 
-    const hsWindow = window as HubSpotWindow
-    if (hsWindow.hbspt?.forms) {
-      renderForm()
-      return () => {
-        cancelled = true
-        if (retryTimer) clearTimeout(retryTimer)
-        if (readyTimeout) clearTimeout(readyTimeout)
-      }
-    }
-
-    const existingScript = document.querySelector<HTMLScriptElement>(
-      'script[data-hs-form-script="true"]'
-    )
-    let script = existingScript
-
-    // If a previous script tag exists but never initialized `window.hbspt`,
-    // replace it once to recover from a partial/failed load state.
-    if (script && !hsWindow.hbspt) {
-      script.remove()
-      script = null
-    }
-
-    script = script ?? document.createElement('script')
-    if (!existingScript || !document.head.contains(script)) {
-      script.src = SCRIPT_SRC
-      script.async = true
-      script.defer = true
-      script.dataset.hsFormScript = 'true'
-    }
-
-    const onScriptLoad = () => renderForm()
-    script.addEventListener('load', onScriptLoad)
-    script.addEventListener('error', markError)
-    if (!document.head.contains(script)) document.head.appendChild(script)
+    // Script is loaded globally via layout.tsx <Script strategy="afterInteractive">.
+    // Start polling immediately; retry up to 10 times (3s total) in case the
+    // global script hasn't executed yet when this component mounts.
+    renderForm()
 
     return () => {
       cancelled = true
       if (retryTimer) clearTimeout(retryTimer)
       if (readyTimeout) clearTimeout(readyTimeout)
-      script.removeEventListener('load', onScriptLoad)
-      script.removeEventListener('error', markError)
     }
   }, [containerId, formId, portalId, region, sfdcCampaignId, onFormSubmit])
 
   return (
-    <div className={cn(styles.root, isNewsletter && styles.newsletter, className)}>
+    <div
+      className={cn(styles.root, isNewsletter && styles.newsletter, className)}
+      style={status !== 'ready' && minHeight ? { minHeight } : undefined}
+    >
       <div id={containerId} />
       {status === 'loading' && (
-        <p className="text-body-md text-carbon-400 text-center">{loadingText}</p>
+        <div className={styles.loading} role="status" aria-label={loadingText}>
+          <span className={styles.spinner} />
+        </div>
       )}
       {status === 'error' && <p className="text-body-sm text-brand-red-light">{errorText}</p>}
     </div>

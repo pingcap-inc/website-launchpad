@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { ChevronRight, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { externalLinkProps, isExternalHref } from '@/lib/links'
 import {
   type IconProps,
   CloudTIcon,
@@ -85,17 +86,21 @@ const dropdowns: NavDropdown[] = [
       {
         title: 'Deployment Options',
         items: [
-          { label: 'TiDB Cloud', href: '/tidb/cloud/', icon: CloudTIcon },
-          { label: 'TiDB Self-Managed', href: '/tidb/self-managed/', icon: StackTIcon },
-          { label: 'Pricing', href: '/tidb/pricing/', icon: DollarTIcon },
+          { label: 'TiDB Cloud', href: 'https://www.pingcap.com/tidb/cloud/', icon: CloudTIcon },
+          {
+            label: 'TiDB Self-Managed',
+            href: 'https://www.pingcap.com/tidb/self-managed/',
+            icon: StackTIcon,
+          },
+          { label: 'Pricing', href: 'https://www.pingcap.com/pricing/', icon: DollarTIcon },
         ],
       },
       {
         title: 'Ecosystem',
         items: [
-          { label: 'Integrations', href: '/tidb/integrations/', icon: GearIcon },
-          { label: 'TiKV', href: '/tikv/', icon: SlidersIcon },
-          { label: 'TiSpark', href: '/tispark/', icon: StarIcon },
+          { label: 'Integrations', href: 'https://www.pingcap.com/integrations/', icon: GearIcon },
+          { label: 'TiKV', href: 'https://github.com/tikv/tikv', icon: SlidersIcon },
+          { label: 'TiSpark', href: 'https://github.com/pingcap/tispark', icon: StarIcon },
           { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
         ],
       },
@@ -110,34 +115,42 @@ const dropdowns: NavDropdown[] = [
         items: [
           {
             label: 'Lower Infrastructure Costs',
-            href: '/solutions/lower-infrastructure-costs/',
+            href: 'https://www.pingcap.com/solutions/lower-infrastructure-costs/',
             icon: ChartDownTIcon,
           },
           {
             label: 'Enable Operational Intelligence',
-            href: '/solutions/operational-intelligence/',
+            href: 'https://www.pingcap.com/solutions/enable-operational-intelligence/',
             icon: StarIcon,
           },
           {
             label: 'Modernize MySQL Workloads',
-            href: '/solutions/mysql-alternative/',
+            href: 'https://www.pingcap.com/solutions/modernize-mysql-workloads/',
             icon: CloudTIcon,
           },
-          { label: 'Build GenAI Applications', href: '/solutions/genai/', icon: AiTIcon },
+          { label: 'Build GenAI Applications', href: 'https://www.pingcap.com/ai/', icon: AiTIcon },
         ],
       },
       {
         title: 'By Industry',
         items: [
-          { label: 'AI', href: '/solutions/ai/', icon: AiTIcon },
-          { label: 'Fintech', href: '/solutions/fintech/', icon: WalletTIcon },
-          { label: 'eCommerce', href: '/solutions/ecommerce/', icon: BagT1Icon },
-          { label: 'SaaS', href: '/solutions/saas/', icon: DesktopTIcon },
+          { label: 'AI', href: 'https://www.pingcap.com/ai/', icon: AiTIcon },
+          {
+            label: 'Fintech',
+            href: 'https://www.pingcap.com/solutions/fintech/',
+            icon: WalletTIcon,
+          },
+          {
+            label: 'eCommerce',
+            href: 'https://www.pingcap.com/solutions/e-commerce/',
+            icon: BagT1Icon,
+          },
+          { label: 'SaaS', href: 'https://www.pingcap.com/solutions/saas/', icon: DesktopTIcon },
         ],
       },
       {
         title: 'Customer Stories',
-        titleHref: '/customers/',
+        titleHref: 'https://www.pingcap.com/customers/',
         description: 'Trusted and verified by innovation leaders around the world.',
         items: [],
       },
@@ -149,27 +162,47 @@ const dropdowns: NavDropdown[] = [
       {
         title: 'Learn',
         items: [
-          { label: 'Blog', href: '/blog/', icon: FileTIcon },
-          { label: 'eBooks & Whitepapers', href: '/resources/ebooks/', icon: BookTIcon },
-          { label: 'Videos & Replays', href: '/resources/videos/', icon: VideoIcon },
-          { label: 'Horizontal Scaling', href: '/resources/horizontal-scaling/', icon: ScaleTIcon },
+          { label: 'Blog', href: 'https://www.pingcap.com/blog/', icon: FileTIcon },
+          {
+            label: 'eBooks & Whitepapers',
+            href: 'https://www.pingcap.com/ebook-whitepaper/',
+            icon: BookTIcon,
+          },
+          { label: 'Videos & Replays', href: 'https://www.pingcap.com/videos/', icon: VideoIcon },
+          {
+            label: 'Horizontal Scaling',
+            href: 'https://www.pingcap.com/horizontal-scaling-vs-vertical-scaling/',
+            icon: ScaleTIcon,
+          },
         ],
       },
       {
         title: 'Engage',
         items: [
-          { label: 'Events & Webinars', href: '/events/', icon: CalendarTIcon },
+          {
+            label: 'Events & Webinars',
+            href: 'https://www.pingcap.com/event/',
+            icon: CalendarTIcon,
+          },
           { label: 'Discord Community', href: 'https://discord.gg/pingcap', icon: CommentsTIcon },
-          { label: 'Developer Hub', href: '/developer/', icon: CodeTIcon },
-          { label: 'TiDB SCaiLE', href: '/tidb-scaile/', icon: BookmarkTIcon },
+          { label: 'Developer Hub', href: 'https://www.pingcap.com/developers/', icon: CodeTIcon },
+          {
+            label: 'TiDB SCaiLE',
+            href: 'https://www.pingcap.com/tidb-scaile-summit/',
+            icon: BookmarkTIcon,
+          },
         ],
       },
       {
         title: 'PingCAP University',
         items: [
-          { label: 'Courses', href: '/university/courses/', icon: EducationIcon },
-          { label: 'Hands-on Labs', href: '/university/labs/', icon: AppWindowIcon },
-          { label: 'Certifications', href: '/university/certifications/', icon: AwardIcon },
+          { label: 'Courses', href: 'https://www.pingcap.com/education/', icon: EducationIcon },
+          { label: 'Hands-on Labs', href: 'https://labs.tidb.io/', icon: AppWindowIcon },
+          {
+            label: 'Certifications',
+            href: 'https://www.pingcap.com/education/certification/',
+            icon: AwardIcon,
+          },
         ],
       },
     ],
@@ -180,16 +213,20 @@ const dropdowns: NavDropdown[] = [
       {
         title: 'About',
         items: [
-          { label: 'Press Releases & News', href: '/news/', icon: NewspaperIcon },
-          { label: 'About Us', href: '/about/', icon: BuildingsIcon },
-          { label: 'Careers', href: '/careers/', icon: BriefcaseIcon },
-          { label: 'Partners', href: '/partners/', icon: HandshakeIcon },
-          { label: 'Contact Us', href: '/contact-us/', icon: AtIcon },
+          {
+            label: 'Press Releases & News',
+            href: 'https://www.pingcap.com/press-releases-news/',
+            icon: NewspaperIcon,
+          },
+          { label: 'About Us', href: 'https://www.pingcap.com/about-us/', icon: BuildingsIcon },
+          { label: 'Careers', href: 'https://www.pingcap.com/careers/', icon: BriefcaseIcon },
+          { label: 'Partners', href: 'https://www.pingcap.com/partners/', icon: HandshakeIcon },
+          { label: 'Contact Us', href: 'https://www.pingcap.com/contact-us/', icon: AtIcon },
         ],
       },
       {
         title: 'Trust Hub',
-        titleHref: '/trust-hub/',
+        titleHref: 'https://www.pingcap.com/trust-hub/',
         description: 'Explore how TiDB ensures the confidentiality and availability of your data',
         items: [],
       },
@@ -238,6 +275,7 @@ function MegaMenu({ item }: { item: NavDropdown }) {
               <a
                 href={item.featured.cta.href}
                 className="group/cta inline-flex items-center gap-2 text-body-md text-text-inverse font-medium"
+                {...externalLinkProps(item.featured.cta.href)}
               >
                 {item.featured.cta.label}
                 <span aria-hidden="true" className="inline-flex items-center">
@@ -263,6 +301,7 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                     <a
                       href={section.titleHref}
                       className="group/col inline-flex items-center gap-2 text-base text-text-inverse font-medium"
+                      {...externalLinkProps(section.titleHref)}
                     >
                       {section.title}
                       <span aria-hidden="true" className="inline-flex items-center">
@@ -283,6 +322,7 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                     key={sub.label}
                     href={sub.href}
                     className="flex items-start gap-3 text-carbon-400 hover:text-carbon-800 group/item font-medium"
+                    {...externalLinkProps(sub.href)}
                   >
                     {sub.icon && <sub.icon size={16} className="shrink-0 mt-0.5" />}
                     <span>
@@ -349,6 +389,7 @@ function MobileAccordionItem({
               <a
                 href={item.featured.cta.href}
                 className="inline-flex items-center gap-1 text-base font-medium text-text-inverse"
+                {...externalLinkProps(item.featured.cta.href)}
               >
                 {item.featured.cta.label} →
               </a>
@@ -362,6 +403,7 @@ function MobileAccordionItem({
                   <a
                     href={section.titleHref}
                     className="block text-base font-semibold text-text-inverse"
+                    {...externalLinkProps(section.titleHref)}
                   >
                     {section.title} →
                   </a>
@@ -378,6 +420,7 @@ function MobileAccordionItem({
                       key={sub.label}
                       href={sub.href}
                       className="flex items-center gap-2 text-base text-carbon-400 font-medium"
+                      {...externalLinkProps(sub.href)}
                     >
                       {sub.icon && <sub.icon size={14} className="shrink-0" />}
                       {sub.label}
@@ -430,7 +473,9 @@ export function HeaderMobileMenu({
                 <li key={item.label} className="py-1">
                   <a
                     href={item.href}
-                    {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    {...(item.external || isExternalHref(item.href)
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
                     className="flex items-center py-3 text-base font-medium text-text-inverse"
                   >
                     {item.label}
@@ -442,6 +487,7 @@ export function HeaderMobileMenu({
               <a
                 href="https://tidbcloud.com/signin"
                 className="flex items-center py-3 text-base font-medium text-text-inverse"
+                {...externalLinkProps('https://tidbcloud.com/signin')}
               >
                 Sign In
               </a>

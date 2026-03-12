@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { externalLinkProps } from '@/lib/links'
 
 interface GhostButtonProps {
   children: React.ReactNode
@@ -18,7 +19,7 @@ export function GhostButton({ children, className, onClick, href }: GhostButtonP
 
   if (href) {
     return (
-      <a href={href} className={classes}>
+      <a href={href} className={classes} {...externalLinkProps(href)}>
         {children}
       </a>
     )
