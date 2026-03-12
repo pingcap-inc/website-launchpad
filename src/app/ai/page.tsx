@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { Search, Bot, Brain, Network } from 'lucide-react'
+import { Search, Bot, Brain, Network, Layers, Workflow } from 'lucide-react'
 import {
   Header,
   Footer,
@@ -100,8 +100,17 @@ export default function AiPage() {
         <main>
           {/* 1. Hero — full-bleed animation background */}
           <section className="relative bg-bg-primary min-h-[600px] lg:min-h-[720px] flex items-center overflow-hidden pb-20">
-            {/* Background animation — canvas particle network */}
-            <HeroBackground />
+            {/* Background animation — canvas particle network, right-aligned within max-container */}
+            <div
+              className="absolute inset-0 pointer-events-none overflow-hidden"
+              aria-hidden="true"
+            >
+              <div className="relative h-full max-w-container mx-auto">
+                <div className="absolute inset-y-0 right-4 md:right-8 lg:right-16 left-[45%]">
+                  <HeroBackground />
+                </div>
+              </div>
+            </div>
             {/* Dot-grid background texture at 15% opacity (matches reference) */}
             <div
               className="absolute inset-0 pointer-events-none"
@@ -161,14 +170,16 @@ export default function AiPage() {
                   title="Search, Retrieval, and RAG"
                   description="Build accurate, context-aware AI experiences using semantic search, hybrid queries, and continuously fresh data."
                   cta={{ text: 'Explore Vector Search & RAG', href: '/ai/rag/' }}
-                  icon={<Search width={60} height={60} className="text-white" strokeWidth={1.25} />}
+                  icon={<Layers width={60} height={60} className="text-white" strokeWidth={1.25} />}
                 />
                 <ColorCard
                   variant="violet"
                   title="Stateful Agents and Autonomous Workflows"
                   description="Build agents that maintain memory, coordinate tools, and operate reliably across complex, multi-step processes."
                   cta={{ text: 'Explore Agentic AI', href: '/ai/agents/' }}
-                  icon={<Bot width={60} height={60} className="text-white" strokeWidth={1.25} />}
+                  icon={
+                    <Workflow width={60} height={60} className="text-white" strokeWidth={1.25} />
+                  }
                 />
               </div>
             </div>
