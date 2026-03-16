@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "title": "TiDB Cloud Free Trial – Start Building Today",
+    "description": "Try TiDB Cloud free for 30 days. No credit card required. Experience the distributed SQL database trusted by enterprises worldwide.",
+    "canonical": "/tidb-cloud/trial/"
+  },
+  "sections": [
+    {
+      "type": "hero",
+      "layout": "split",
+      "eyebrow": "Get Started in Minutes",
+      "headline": "Build Faster with TiDB Cloud",
+      "headlineClassName": "bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent",
+      "subheadline": "Experience the power of a distributed SQL database with automatic scaling, built-in resilience, and enterprise-grade performance. Start your free trial today.",
+      "heroForm": {
+        "formId": "a9f3e8c2-4b1d-4e9a-8f2c-1a3d5b7c9e1f",
+        "portalId": "4466002",
+        "region": "na1"
+      }
+    },
+    {
+      "type": "stats",
+      "title": "Why Thousands of Companies Choose TiDB",
+      "items": [
+        {
+          "icon": "https://static.pingcap.com/files/2026/01/21011757/bring-your-stack-1.svg",
+          "value": "99.99%",
+          "label": "Uptime SLA",
+          "description": "Enterprise-grade reliability you can count on"
+        },
+        {
+          "icon": "BarChart",
+          "value": "10x",
+          "label": "Faster Scaling",
+          "description": "Auto-scale compute and storage independently"
+        },
+        {
+          "icon": "Globe",
+          "value": "150+",
+          "label": "Countries",
+          "description": "Trusted globally by leading organizations"
+        },
+        {
+          "icon": "Shield",
+          "value": "$0",
+          "label": "Setup Cost",
+          "description": "Free tier includes everything you need to start"
+        }
+      ],
+      "columns": 4
+    },
+    {
+      "type": "featureGrid",
+      "eyebrow": "Powerful Features",
+      "title": "Everything You Need to Scale",
+      "subtitle": "Built for modern applications that demand reliability, performance, and simplicity",
+      "items": [
+        {
+          "icon": "Database",
+          "title": "Distributed SQL",
+          "description": "ACID transactions across distributed data with zero compromises",
+          "href": "/products/tidbcloud/"
+        },
+        {
+          "icon": "Cloud",
+          "title": "Multi-Cloud Deployment",
+          "description": "Deploy on AWS, Google Cloud, or Azure with a single click",
+          "href": "/products/tidbcloud/"
+        },
+        {
+          "icon": "Zap",
+          "title": "Automatic Scaling",
+          "description": "Scale compute and storage independently based on demand",
+          "href": "/products/tidbcloud/"
+        },
+        {
+          "icon": "Shield",
+          "title": "Enterprise Security",
+          "description": "End-to-end encryption, role-based access, and compliance certifications",
+          "href": "/products/tidbcloud/"
+        },
+        {
+          "icon": "Activity",
+          "title": "Real-Time Analytics",
+          "description": "Analyze operational data in real-time without ETL complexity",
+          "href": "/products/tidbcloud/"
+        },
+        {
+          "icon": "Layers",
+          "title": "Native MySQL Compatibility",
+          "description": "Drop-in replacement for MySQL with enhanced capabilities",
+          "href": "/products/tidbcloud/"
+        }
+      ],
+      "columns": 3
+    },
+    {
+      "type": "faq",
+      "title": "Common Questions About TiDB Cloud",
+      "items": [
+        {
+          "q": "What's included in the free trial?",
+          "a": "Your free trial includes 30 days of full access to TiDB Cloud with up to 1 TB of storage, 2 vCPUs for the default cluster, and all enterprise features. No credit card is required to start."
+        },
+        {
+          "q": "Do I need a credit card to sign up?",
+          "a": "No credit card is required for your free trial. You can explore all features at no cost. You'll only be charged if you upgrade to a paid plan after your trial ends."
+        },
+        {
+          "q": "How long does it take to get started?",
+          "a": "You can have a fully functional TiDB Cloud cluster running in minutes. Simply sign up, create a cluster, and connect your applications using standard MySQL tools and drivers."
+        },
+        {
+          "q": "Can I scale my cluster during the trial?",
+          "a": "Yes, you can adjust compute and storage resources at any time during your trial. Changes take effect immediately, allowing you to test TiDB Cloud under realistic workloads."
+        },
+        {
+          "q": "What happens when my trial ends?",
+          "a": "You'll receive a reminder email before your trial expires. You can then choose to upgrade to a paid plan or export your data. Your cluster will not be deleted without your consent."
+        },
+        {
+          "q": "Is there technical support during the trial?",
+          "a": "Yes, you get access to our support team during your trial. We also provide comprehensive documentation, tutorials, and a vibrant community forum."
+        }
+      ]
+    },
+    {
+      "type": "testimonials",
+      "title": "Trusted by Industry Leaders",
+      "items": [
+        {
+          "quote": "TiDB Cloud simplified our infrastructure. We eliminated ETL complexity and reduced operational overhead by 60%.",
+          "author": "CTO, Fortune 500 Fintech"
+        },
+        {
+          "quote": "With TiDB's distributed architecture, we scaled to handle 10x traffic growth without any downtime.",
+          "author": "Engineering Lead, Global E-Commerce Platform"
+        },
+        {
+          "quote": "The MySQL compatibility was a game-changer. We migrated in weeks instead of months.",
+          "author": "Database Architect, Healthcare Analytics"
+        }
+      ]
+    },
+    {
+      "type": "logoCloud",
+      "title": "Businesses of all sizes run on TiDB Cloud",
+      "logos": [
+        {
+          "name": "Shopee",
+          "src": "/images/logos/shopee.svg"
+        },
+        {
+          "name": "Grab",
+          "src": "/images/logos/grab.svg"
+        },
+        {
+          "name": "Delivery Hero",
+          "src": "/images/logos/delivery-hero.svg"
+        },
+        {
+          "name": "Trip.com",
+          "src": "/images/logos/trip-com.svg"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Ready to Transform Your Database Infrastructure?",
+      "subtitle": "Join thousands of companies already building faster with TiDB Cloud. Start your free trial today—no credit card required.",
+      "background": "blue",
+      "primaryCta": {
+        "text": "Start Free Trial",
+        "href": "/tidbcloud/trial/"
+      },
+      "secondaryCta": {
+        "text": "View Pricing",
+        "href": "/tidbcloud/pricing/"
+      }
+    }
+  ]
+}
