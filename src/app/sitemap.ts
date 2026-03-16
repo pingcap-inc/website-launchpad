@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Campaign / program pages
     // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
     // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
+    { url: '/tidb-cloud-trial/', priority: 0.7, changeFrequency: 'monthly' },
   ]
 
   return routes.map(({ url, priority, changeFrequency }) => ({
