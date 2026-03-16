@@ -36,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/tidb-cloud-trial/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/tidb-cloud/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/tidb-cloud/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/tidb-cloud/', priority: 0.7, changeFrequency: 'monthly' },
   ]
 
   return routes.map(({ url, priority, changeFrequency }) => ({
