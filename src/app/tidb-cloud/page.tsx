@@ -57,7 +57,7 @@ export default function GeneratedPage() {
         <HeroSection
           layout="split"
           eyebrow="Startup Program"
-          headline="Launch Fast. Scale without Limits. <span class=\"text-gradient-violet animate-glow\">$100,000</span> in TiDB Cloud Credits"
+          headline={"Launch Fast. Scale without Limits. <span class=\"text-gradient-violet animate-glow\">$100,000</span> in TiDB Cloud Credits"}
           subheadline="Apply now and start building with the distributed SQL database that grows with you—from MVP to millions of users."
           primaryCta={{ text: "Apply Now", href: "/tidbcloud/trial/" }}
           secondaryCta={{ text: "Learn More", href: "#benefits" }}
