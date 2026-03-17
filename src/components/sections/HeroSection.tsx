@@ -45,6 +45,12 @@ interface HeroSectionProps {
    */
   layout?: HeroLayout
   eyebrow?: string
+  /**
+   * Plain text, a React node, or an HTML string.
+   * HTML strings (detected by `<` tag) are rendered via `dangerouslySetInnerHTML`.
+   * Use CSS classes from globals.css for gradient effects, e.g.:
+   * `"Unlock <span class=\"text-gradient-violet animate-glow-sweep\">TiDB Cloud</span>"`
+   */
   headline: string | React.ReactNode
   subheadline?: string
   primaryCta?: { text: string; href: string }
@@ -71,16 +77,21 @@ function HeroTextBlock({
   HeroSectionProps,
   'eyebrow' | 'headline' | 'subheadline' | 'primaryCta' | 'secondaryCta'
 > & { centered?: boolean; className?: string }) {
+  // Detect HTML strings so we can use dangerouslySetInnerHTML
+  const isHtmlHeadline = typeof headline === 'string' && /<[a-z][\s\S]*>/i.test(headline)
+
   return (
     <div className={className}>
       {eyebrow && <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>}
       <h1
         className={cn(
-          'text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title mb-6 whitespace-pre-line',
+          'text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title mb-6',
+          !isHtmlHeadline && 'whitespace-pre-line',
           centered && 'mx-auto'
         )}
+        {...(isHtmlHeadline ? { dangerouslySetInnerHTML: { __html: headline as string } } : {})}
       >
-        {headline}
+        {!isHtmlHeadline ? headline : null}
       </h1>
       {subheadline && (
         <p
