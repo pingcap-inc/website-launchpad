@@ -123,6 +123,8 @@ export interface HeroNode {
    * <span class="text-gradient-blue">word</span>
    * <span class="text-gradient-teal">word</span>
    * <span class="text-gradient-red">word</span>
+   * Add animate-glow-sweep to the class for an animated glow sweep effect, e.g.
+   * <span class="text-gradient-violet animate-glow-sweep">word</span>
    */
   headline: string
   subheadline?: string
@@ -393,6 +395,8 @@ Available section types (choose appropriate mix):
     <span class="text-gradient-blue">word</span>
     <span class="text-gradient-teal">word</span>
     <span class="text-gradient-red">word</span>
+    Add animate-glow-sweep to the class for an animated glow sweep effect, e.g.
+    <span class="text-gradient-violet animate-glow-sweep">word</span>
   )
 - { type: "stats", title?, items: [{icon?, value, label, description?}], columns?: 2|3|4 }
 - { type: "featureGrid", eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}}], columns?: 2|3|4 }
