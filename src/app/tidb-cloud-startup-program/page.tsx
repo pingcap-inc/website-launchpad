@@ -127,6 +127,7 @@ export default function StartupProgramPage() {
       <Header />
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         <HeroSection
+          layout="split"
           eyebrow="TiDB Cloud Startup Program"
           headline={
             <>
