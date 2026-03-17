@@ -328,7 +328,11 @@ export default function CreatePage() {
   // Auto-derive slug from DSL canonical on first generate
   useEffect(() => {
     if (dsl?.meta?.canonical && !slug) {
-      const derived = dsl.meta.canonical.replace(/^\/|\/$/g, '').split('/')[0]
+      const segments = dsl.meta.canonical
+        .replace(/^\/|\/$/g, '')
+        .split('/')
+        .filter(Boolean)
+      const derived = segments.join('-')
       if (derived && /^[a-z0-9-]+$/.test(derived)) setSlug(derived)
     }
   }, [dsl, slug])
