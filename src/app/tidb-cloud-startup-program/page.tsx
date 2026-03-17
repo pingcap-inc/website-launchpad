@@ -11,7 +11,7 @@ import { CtaSection } from '@/components/sections/CtaSection'
 import { HubSpotForm } from '@/components/ui/HubSpotForm'
 import { JsonLd } from '@/components/ui/JsonLd'
 import { buildPageSchema } from '@/lib/schema'
-import { DollarSign, Users, Network, Zap, Scale, Shield, FileCode, CheckCircle, Rocket, TrendingUp, Clock } from 'lucide-react'
+import { FileCode, CheckCircle, Rocket, DollarSign, Users, Network, Zap, Scale, Shield, TrendingUp, Clock } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: "TiDB Cloud Startup Program | Free $100K Credits",
@@ -45,7 +45,7 @@ const schema = buildPageSchema({
   description: "Launch your startup fast with $100,000 in TiDB Cloud credits. Scale without limits. Join the TiDB Cloud Startup Program today.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Launch Fast. Scale <span class=\"text-gradient-violet\">without Limits</span>.", path: "/tidb-cloud/startup-program/" },
+    { name: "Launch Fast. Scale without Limits. Get <span class=\"text-gradient-violet animate-glow-sweep\">$100,000</span> in TiDB Cloud Credits", path: "/tidb-cloud/startup-program/" },
   ],
 })
 
@@ -58,7 +58,7 @@ export default function GeneratedPage() {
         <HeroSection
           layout="split"
           eyebrow="Startup Program"
-          headline={"Launch Fast. Scale <span class=\"text-gradient-violet\">without Limits</span>."}
+          headline={"Launch Fast. Scale without Limits. Get <span class=\"text-gradient-violet animate-glow-sweep\">$100,000</span> in TiDB Cloud Credits"}
           subheadline="Get $100,000 in TiDB Cloud credits to power your startup's growth. Build the database layer your application deserves."
           secondaryCta={{ text: "Learn More", href: "#benefits" }}
           heroImage={{ src: "/images/hero/r/Graphic-3-Dk.png", alt: "", width: 800, height: 500 }}
@@ -69,6 +69,16 @@ export default function GeneratedPage() {
               region="na1"
             />
           }
+        />
+        <FeatureCardSection
+          eyebrow="How It Works"
+          title="Three Steps to $100K Credits"
+          items={[
+          { icon: <FileCode className="" strokeWidth={1.5} />, title: "Apply", description: "Tell us about your startup. Share your vision, team, and current stage. Applications reviewed within 5 business days." },
+          { icon: <CheckCircle className="" strokeWidth={1.5} />, title: "Get Approved", description: "Once approved, receive your $100,000 credit voucher via email. Start using TiDB Cloud immediately." },
+          { icon: <Rocket className="" strokeWidth={1.5} />, title: "Build & Scale", description: "Deploy your database, build your application, and scale without worry. We're here to support your success." }
+          ]}
+          columns={3}
         />
         <FeatureGridSection
           eyebrow="Program Benefits"
@@ -84,25 +94,6 @@ export default function GeneratedPage() {
           ]}
           columns={3}
         />
-        <FeatureCardSection
-          eyebrow="How It Works"
-          title="Three Steps to $100K Credits"
-          items={[
-          { icon: <FileCode className="" strokeWidth={1.5} />, title: "Apply", description: "Tell us about your startup. Share your vision, team, and current stage. Applications reviewed within 5 business days." },
-          { icon: <CheckCircle className="" strokeWidth={1.5} />, title: "Get Approved", description: "Once approved, receive your $100,000 credit voucher via email. Start using TiDB Cloud immediately." },
-          { icon: <Rocket className="" strokeWidth={1.5} />, title: "Build & Scale", description: "Deploy your database, build your application, and scale without worry. We're here to support your success." }
-          ]}
-          columns={3}
-        />
-        <StatsSection
-          stats={[
-          { icon: /* eslint-disable-next-line @next/next/no-img-element */ <img src="https://static.pingcap.com/files/2025/09/03234615/data.svg" alt="" className="object-contain" />, value: "$100K", label: "TiDB Cloud Credits", description: "12 months of free database resources" },
-          { icon: <Rocket className="" strokeWidth={1.5} />, value: "500+", label: "Startups Joined", description: "Building the next generation of apps" },
-          { icon: <TrendingUp className="" strokeWidth={1.5} />, value: "10x", label: "Faster Scaling", description: "Compared to traditional databases" },
-          { icon: <Clock className="" strokeWidth={1.5} />, value: "0", label: "Setup Time", description: "Deploy in minutes, not weeks" }
-          ]}
-          columns={4}
-        />
         <FaqSection
           title="Frequently Asked Questions"
           items={[
@@ -113,6 +104,15 @@ export default function GeneratedPage() {
           { q: "Do the credits include technical support?", a: "Yes, all startup program participants receive priority support and access to our dedicated startup success team." },
           { q: "Can I transfer my credits to another company?", a: "Credits are non-transferable and tied to the company that applied. They cannot be sold or exchanged for cash." }
           ]}
+        />
+        <StatsSection
+          stats={[
+          { icon: /* eslint-disable-next-line @next/next/no-img-element */ <img src="https://static.pingcap.com/files/2025/09/03234615/data.svg" alt="" className="object-contain" />, value: "$100K", label: "TiDB Cloud Credits", description: "12 months of free database resources" },
+          { icon: <Rocket className="" strokeWidth={1.5} />, value: "500+", label: "Startups Joined", description: "Building the next generation of apps" },
+          { icon: <TrendingUp className="" strokeWidth={1.5} />, value: "10x", label: "Faster Scaling", description: "Compared to traditional databases" },
+          { icon: <Clock className="" strokeWidth={1.5} />, value: "0", label: "Setup Time", description: "Deploy in minutes, not weeks" }
+          ]}
+          columns={4}
         />
         <TestimonialsSection
           title="Trusted by Leading Startups"
