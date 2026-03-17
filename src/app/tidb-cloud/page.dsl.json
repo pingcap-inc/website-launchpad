@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "title": "TiDB Cloud Startup Program: $100k Credits & Fast Launch",
+    "description": "Join the TiDB Cloud Startup Program to launch faster and scale without limits. Get $100,000 in free credits, technical support, and go-to-market resources.",
+    "canonical": "/tidb-cloud/startup-program/"
+  },
+  "sections": [
+    {
+      "type": "hero",
+      "layout": "split",
+      "eyebrow": "Startup Program",
+      "headline": "Launch Fast. Scale <span class=\"text-gradient-violet\">without Limits</span>.",
+      "subheadline": "Join the TiDB Cloud Startup Program and get $100,000 in free credits to build your next generation application on a serverless, distributed SQL database.",
+      "primaryCta": {
+        "text": "Apply Now",
+        "href": "/tidbcloud/trial/"
+      },
+      "secondaryCta": {
+        "text": "Learn More",
+        "href": "/tidb-cloud/"
+      },
+      "heroImage": {
+        "src": "/images/hero/r/Graphic-1-Dk.png",
+        "alt": "TiDB Cloud Startup Program Dashboard",
+        "width": 800,
+        "height": 500,
+        "align": "right"
+      },
+      "heroForm": {
+        "formId": "8d439c40-4e6b-4192-a99b-a2c619ad4146",
+        "portalId": "4466002",
+        "region": "na1"
+      }
+    },
+    {
+      "type": "stats",
+      "title": "Why Startups Choose TiDB Cloud",
+      "items": [
+        {
+          "icon": "DollarSign",
+          "value": "$100,000",
+          "label": "Free Cloud Credits",
+          "description": "Get up to $100k in credits to cover your infrastructure costs for up to 12 months."
+        },
+        {
+          "icon": "Zap",
+          "value": "10x",
+          "label": "Faster Time to Market",
+          "description": "Eliminate sharding complexity and focus on building features, not database architecture."
+        },
+        {
+          "icon": "Shield",
+          "value": "99.99%",
+          "label": "High Availability",
+          "description": "Enterprise-grade reliability and automatic failover built into every cluster."
+        },
+        {
+          "icon": "TrendingUp",
+          "value": "Unlimited",
+          "label": "Elastic Scale",
+          "description": "Scale storage and compute independently to handle sudden traffic spikes instantly."
+        }
+      ],
+      "columns": 4
+    },
+    {
+      "type": "featureGrid",
+      "eyebrow": "Program Benefits",
+      "title": "Everything You Need to Grow",
+      "subtitle": "Our comprehensive startup program provides more than just credits. We offer the technical and business support you need to succeed.",
+      "items": [
+        {
+          "icon": "Cloud",
+          "title": "Massive Cloud Credits",
+          "description": "Receive up to $100,000 in TiDB Cloud credits to power your development, staging, and production environments."
+        },
+        {
+          "icon": "Cpu",
+          "title": "Serverless Architecture",
+          "description": "Pay only for what you use with our serverless compute. No capacity planning or over-provisioning required."
+        },
+        {
+          "icon": "Users",
+          "title": "Technical Mentorship",
+          "description": "Get direct access to TiDB engineers and solution architects to optimize your database performance."
+        },
+        {
+          "icon": "Rocket",
+          "title": "Go-to-Market Support",
+          "description": "Leverage our marketing channels, case studies, and co-marketing opportunities to accelerate growth."
+        },
+        {
+          "icon": "Lock",
+          "title": "Enterprise Security",
+          "description": "Built-in encryption at rest and in transit, VPC peering, and compliance certifications for secure scaling."
+        },
+        {
+          "icon": "Database",
+          "title": "MySQL Compatibility",
+          "description": "Drop-in compatibility with MySQL allows you to migrate existing applications with minimal code changes."
+        }
+      ],
+      "columns": 3
+    },
+    {
+      "type": "logoCloud",
+      "title": "Trusted by Fast-Growing Startups",
+      "logos": [
+        {
+          "name": "TechFlow",
+          "src": "/images/logos/techflow.svg"
+        },
+        {
+          "name": "DataScale",
+          "src": "/images/logos/datascale.svg"
+        },
+        {
+          "name": "CloudNative",
+          "src": "/images/logos/cloudnative.svg"
+        },
+        {
+          "name": "FinTechOne",
+          "src": "/images/logos/fintechone.svg"
+        },
+        {
+          "name": "StreamLine",
+          "src": "/images/logos/streamline.svg"
+        }
+      ],
+      "variant": "minimal"
+    },
+    {
+      "type": "testimonials",
+      "title": "What Our Startup Partners Say",
+      "items": [
+        {
+          "quote": "The TiDB Cloud Startup Program gave us the confidence to scale globally. The $100k credits covered our entire infrastructure for the first year, and the performance is unmatched.",
+          "author": "Sarah Chen, CTO at DataScale",
+          "href": "/case-studies/datascale"
+        },
+        {
+          "quote": "We needed a database that could handle unpredictable traffic spikes without complex sharding. TiDB Cloud's serverless architecture was the perfect fit.",
+          "author": "Michael Ross, Founder at StreamLine",
+          "href": "/case-studies/streamline"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "q": "Who is eligible for the TiDB Cloud Startup Program?",
+          "a": "The program is open to early-stage startups that are less than 5 years old, have not raised more than $20M in total funding, and are not a competitor to PingCAP."
+        },
+        {
+          "q": "How do I apply for the credits?",
+          "a": "Simply fill out the application form on this page. Our team will review your application and contact you within 48 hours to verify eligibility and distribute your credits."
+        },
+        {
+          "q": "Can I use the credits for production workloads?",
+          "a": "Yes, the credits can be used for any TiDB Cloud service, including production environments, as long as you adhere to the program terms and conditions."
+        },
+        {
+          "q": "Is there a limit to how much I can spend?",
+          "a": "The credits are capped at $100,000. Once the credits are exhausted or the 12-month period ends, you will be billed according to standard TiDB Cloud pricing."
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Ready to Scale Your Startup?",
+      "subtitle": "Join the TiDB Cloud Startup Program today and get $100,000 in credits to build your future.",
+      "background": "violet",
+      "primaryCta": {
+        "text": "Apply for Credits",
+        "href": "/tidbcloud/trial/"
+      },
+      "secondaryCta": {
+        "text": "Contact Sales",
+        "href": "/contact-us/"
+      }
+    }
+  ]
+}
