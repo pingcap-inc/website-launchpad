@@ -141,11 +141,11 @@ export function HubSpotForm({
       style={status !== 'ready' && minHeight ? { minHeight } : undefined}
     >
       <div id={containerId} />
-      {status === 'loading' && (
+      {/* {status === 'loading' && (
         <div className={styles.loading} role="status" aria-label={loadingText}>
           <span className={styles.spinner} />
         </div>
-      )}
+      )} */}
       {status === 'error' && <p className="text-body-sm text-brand-red-light">{errorText}</p>}
     </div>
   )

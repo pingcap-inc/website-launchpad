@@ -55,13 +55,24 @@ function TestimonialCard({
               size === 'lg' ? 'w-20 h-20' : 'w-14 h-14'
             )}
           >
-            <Image
-              src={logo.src}
-              alt={logo.alt}
-              width={logo.size ?? (size === 'lg' ? 64 : 44)}
-              height={logo.size ?? (size === 'lg' ? 64 : 44)}
-              className="object-contain"
-            />
+            {logo.src.startsWith('http://') || logo.src.startsWith('https://') ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                width={logo.size ?? (size === 'lg' ? 64 : 44)}
+                height={logo.size ?? (size === 'lg' ? 64 : 44)}
+                className="object-contain"
+              />
+            ) : (
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                width={logo.size ?? (size === 'lg' ? 64 : 44)}
+                height={logo.size ?? (size === 'lg' ? 64 : 44)}
+                className="object-contain"
+              />
+            )}
           </div>
         )}
         <div className="flex-1">

@@ -236,8 +236,10 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           quote:
             'We replaced a patchwork of caches with a single HTAP store and reduced latency by 38%.',
           author: 'Data Platform Lead · Fintech',
+
           href: '/customers/',
           cta: 'Read the Case Study',
+          logo: { src: '/images/tidb-cloud-startup-program/Dify.png', alt: 'Dify' },
         },
         {
           quote:
@@ -245,12 +247,14 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           author: 'Growth PM · SaaS',
           href: '/customers/',
           cta: 'See the Campaign',
+          logo: { src: '/images/tidb-cloud-startup-program/Rengage.png', alt: 'Rengage' },
         },
         {
           quote: 'Our team finally has a consistent way to narrate product value.',
           author: 'Head of Marketing · Dev Tools',
           href: '/customers/',
           cta: 'Explore Customer Stories',
+          logo: { src: '/images/tidb-cloud-startup-program/Manus.png', alt: 'Manus' },
         },
       ]}
       className="bg-gradient-dark-bottom"

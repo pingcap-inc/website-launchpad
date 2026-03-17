@@ -93,9 +93,74 @@
   }
 }
 
-.animate-glow-sweep {
+.animate-glow-sweep,
+.animate-pulse-glow,
+.animate-glow {
   background-size: 200% 100%;
   animation: glow-sweep 2.8s linear infinite;
+}
+
+/* ─── Gradient headline text ── use with animate-glow-sweep ─────────────── */
+/* Usage: <span class="text-gradient-violet animate-glow-sweep">word</span>  */
+
+.text-gradient-violet {
+  background: linear-gradient(
+    90deg,
+    #9e4ec4 0%,
+    #c76ff2 35%,
+    #f0d4ff 50%,
+    #c76ff2 65%,
+    #9e4ec4 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(
+    90deg,
+    #2c80ce 0%,
+    #509dea 35%,
+    #d0e8ff 50%,
+    #509dea 65%,
+    #2c80ce 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-teal {
+  background: linear-gradient(
+    90deg,
+    #1aa8a8 0%,
+    #50dbd9 35%,
+    #d0fffe 50%,
+    #50dbd9 65%,
+    #1aa8a8 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-red {
+  background: linear-gradient(
+    90deg,
+    #dc150b 0%,
+    #f35048 35%,
+    #ffd0ce 50%,
+    #f35048 65%,
+    #dc150b 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @media (prefers-reduced-motion: reduce) {
