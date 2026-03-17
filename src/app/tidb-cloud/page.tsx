@@ -4,23 +4,22 @@ import { Footer } from '@/components/ui/Footer'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { StatsSection } from '@/components/sections/StatsSection'
 import { FeatureGridSection } from '@/components/sections/FeatureGridSection'
-import { LogoCloudSection } from '@/components/sections/LogoCloudSection'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { FaqSection } from '@/components/sections/FaqSection'
 import { CtaSection } from '@/components/sections/CtaSection'
 import { HubSpotForm } from '@/components/ui/HubSpotForm'
 import { JsonLd } from '@/components/ui/JsonLd'
 import { buildPageSchema } from '@/lib/schema'
-import { DollarSign, Rocket, Gauge, Shield, Cloud, Database, Globe, Cpu } from 'lucide-react'
+import { DollarSign, Rocket, Gauge, Users, Cloud, Shield, Database, Brain } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: "TiDB Cloud Startup Program: Get $100k Credits",
-  description: "Join the TiDB Cloud Startup Program to launch fast and scale without limits. Apply today to receive $100,000 in free cloud credits for your database needs.",
+  title: "TiDB Cloud Startup Program - $100k Credits & Support",
+  description: "Join the TiDB Cloud Startup Program to launch fast and scale without limits. Get $100,000 in cloud credits, expert support, and go-to-market benefits.",
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/tidb-cloud/startup-program/' },
   openGraph: {
-    title: "TiDB Cloud Startup Program: Get $100k Credits",
-    description: "Join the TiDB Cloud Startup Program to launch fast and scale without limits. Apply today to receive $100,000 in free cloud credits for your database needs.",
+    title: "TiDB Cloud Startup Program - $100k Credits & Support",
+    description: "Join the TiDB Cloud Startup Program to launch fast and scale without limits. Get $100,000 in cloud credits, expert support, and go-to-market benefits.",
     url: 'https://www.pingcap.com/tidb-cloud/startup-program/',
     siteName: 'TiDB',
     images: [
@@ -41,11 +40,11 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: "/tidb-cloud/startup-program/",
-  title: "TiDB Cloud Startup Program: Get $100k Credits",
-  description: "Join the TiDB Cloud Startup Program to launch fast and scale without limits. Apply today to receive $100,000 in free cloud credits for your database needs.",
+  title: "TiDB Cloud Startup Program - $100k Credits & Support",
+  description: "Join the TiDB Cloud Startup Program to launch fast and scale without limits. Get $100,000 in cloud credits, expert support, and go-to-market benefits.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Launch Fast. Scale <span class=\"text-gradient-violet\">without Limits</span>.", path: "/tidb-cloud/startup-program/" },
+    { name: "Launch Fast. Scale without <span class=\"text-gradient-violet\">Limits</span>.", path: "/tidb-cloud/startup-program/" },
   ],
 })
 
@@ -58,10 +57,10 @@ export default function GeneratedPage() {
         <HeroSection
           layout="split"
           eyebrow="Startup Program"
-          headline={"Launch Fast. Scale <span class=\"text-gradient-violet\">without Limits</span>."}
-          subheadline="Get $100,000 in TiDB Cloud credits to build your next generation application on the world's most advanced open-source distributed database."
+          headline={"Launch Fast. Scale without <span class=\"text-gradient-violet\">Limits</span>."}
+          subheadline="Get $100,000 in TiDB Cloud credits, dedicated technical support, and go-to-market resources to accelerate your growth."
           primaryCta={{ text: "Apply Now", href: "/tidbcloud/trial/" }}
-          secondaryCta={{ text: "Learn More", href: "/tidb-cloud/startup-program/" }}
+          secondaryCta={{ text: "Learn How It Works", href: "#program-details" }}
           heroImage={{ src: "/images/hero/r/Graphic-1-Dk.png", alt: "TiDB Cloud Startup Program Dashboard", width: 800, height: 500, align: "right" }}
           rightSlot={
             <HubSpotForm
@@ -72,61 +71,49 @@ export default function GeneratedPage() {
           }
         />
         <StatsSection
-          title="Why Join the Program?"
+          title="Why Startups Choose TiDB"
           stats={[
-          { icon: <DollarSign className="" strokeWidth={1.5} />, value: "$100,000", label: "In Cloud Credits", description: "Free credits to power your development and production workloads." },
-          { icon: <Rocket className="" strokeWidth={1.5} />, value: "99.99%", label: "Uptime SLA", description: "Enterprise-grade reliability without the enterprise price tag." },
-          { icon: <Gauge className="" strokeWidth={1.5} />, value: "10x", label: "Faster Scaling", description: "Instantly scale storage and compute as your user base grows." },
-          { icon: <Shield className="" strokeWidth={1.5} />, value: "Free", label: "Security & Compliance", description: "Built-in encryption, audit logs, and compliance certifications." }
+          { icon: <DollarSign className="" strokeWidth={1.5} />, value: "$100,000", label: "Cloud Credits", description: "Free credits to build and scale your application on TiDB Cloud." },
+          { icon: <Rocket className="" strokeWidth={1.5} />, value: "10x", label: "Faster Launch", description: "Serverless architecture eliminates infrastructure setup time." },
+          { icon: <Gauge className="" strokeWidth={1.5} />, value: "99.99%", label: "SLA Uptime", description: "Enterprise-grade reliability for mission-critical data." },
+          { icon: <Users className="" strokeWidth={1.5} />, value: "24/7", label: "Expert Support", description: "Direct access to TiDB engineers and architects." }
           ]}
           columns={4}
         />
         <FeatureGridSection
           eyebrow="Program Benefits"
-          title="Everything You Need to Succeed"
-          subtitle="Our startup program provides more than just credits. We give you the tools and support to win."
+          title="Everything You Need to Scale"
+          subtitle="Our Startup Program provides more than just credits. We offer the tools and guidance to help you succeed."
           features={[
-          { icon: <Cloud className="" strokeWidth={1.5} />, title: "Serverless Architecture", description: "Separate storage and compute to optimize costs and handle unpredictable traffic spikes effortlessly.", cta: { text: "Explore Serverless", href: "/tidb-cloud/serverless/" } },
-          { icon: <Database className="" strokeWidth={1.5} />, title: "MySQL Compatible", description: "Drop-in compatibility with MySQL means you can migrate your existing apps with zero code changes.", cta: { text: "See Compatibility", href: "/features/mysql-compatibility/" } },
-          { icon: <Globe className="" strokeWidth={1.5} />, title: "Global Distribution", description: "Deploy across multiple regions with a single click to serve your users with low latency worldwide.", cta: { text: "View Regions", href: "/tidb-cloud/regions/" } },
-          { icon: <Cpu className="" strokeWidth={1.5} />, title: "HTAP Capabilities", description: "Run real-time analytics and transactional workloads on the same data without complex ETL pipelines.", cta: { text: "Learn HTAP", href: "/features/htap/" } }
+          { icon: <Cloud className="" strokeWidth={1.5} />, title: "Serverless Flexibility", description: "Pay only for what you use with our serverless tier. Automatically scale compute and storage without downtime." },
+          { icon: <Shield className="" strokeWidth={1.5} />, title: "Global Consistency", description: "Deploy globally with strong consistency. Serve users anywhere with low latency and high availability." },
+          { icon: <Database className="" strokeWidth={1.5} />, title: "MySQL Compatible", description: "Leverage your existing MySQL skills and tools. No code changes required to migrate to TiDB." },
+          { icon: <Brain className="" strokeWidth={1.5} />, title: "HTAP Capabilities", description: "Run transactions and analytics on the same data in real-time. Eliminate data silos and ETL pipelines." }
           ]}
           columns={2}
         />
-        <LogoCloudSection
-          title="Trusted by High-Growth Startups"
-          logos={[
-          { name: "TechFlow", src: "/images/logos/techflow.svg" },
-          { name: "DataScale", src: "/images/logos/datascale.svg" },
-          { name: "CloudNative", src: "/images/logos/cloudnative.svg" },
-          { name: "FinTechX", src: "/images/logos/fintechx.svg" },
-          { name: "GameStream", src: "/images/logos/gamestream.svg" }
-          ]}
-          variant="minimal"
-          autoScroll={true}
-        />
         <TestimonialsSection
-          title="What Founders Say"
+          title="Trusted by High-Growth Startups"
           testimonials={[
-          { quote: "The $100k credits from the TiDB Cloud Startup Program allowed us to scale our user base from 10k to 1M without worrying about database costs or performance bottlenecks.", author: "Sarah Chen, CTO at DataScale", href: "/customers/datascale" },
-          { quote: "Migrating to TiDB Cloud was seamless. The serverless architecture means we only pay for what we use, which is perfect for our variable traffic patterns.", author: "Marcus Johnson, Founder at TechFlow", href: "/customers/techflow" }
+          { quote: "The TiDB Cloud Startup Program gave us the runway we needed to scale globally. The $100k credits were a game-changer for our infrastructure budget.", author: "CTO, Fintech Unicorn", href: "/case-studies/fintech/" },
+          { quote: "We migrated from a traditional database in days, not months. The serverless architecture allowed us to handle our viral growth without a single outage.", author: "Lead Engineer, SaaS Platform", href: "/case-studies/saas/" }
           ]}
         />
         <FaqSection
           title="Frequently Asked Questions"
           items={[
-          { q: "Who is eligible for the TiDB Cloud Startup Program?", a: "The program is open to early-stage startups, typically those that are less than 5 years old, have less than $10M in funding, and are building cloud-native applications." },
-          { q: "How long are the credits valid?", a: "Credits are typically valid for 12 months from the date of approval, giving you ample time to grow your infrastructure." },
-          { q: "Do I need to provide financial information to apply?", a: "No, we do not require financial statements for the initial application. We focus on your product, team, and growth potential." },
-          { q: "Can I use the credits on the Serverless tier?", a: "Yes, the credits apply to all TiDB Cloud Serverless and Dedicated tiers, allowing you to choose the architecture that best fits your needs." }
+          { q: "Who is eligible for the TiDB Cloud Startup Program?", a: "We support early-stage startups, typically those that have raised seed or Series A funding, are less than 5 years old, and have fewer than 50 employees." },
+          { q: "How do I use the $100,000 in credits?", a: "Credits are applied directly to your TiDB Cloud account and can be used for Serverless or Dedicated clusters. They expire 12 months after approval." },
+          { q: "Do I need to pay anything to apply?", a: "No, the application process is completely free. If approved, you receive credits and support at no upfront cost." },
+          { q: "What kind of support is included?", a: "Startups get access to a dedicated Slack channel with TiDB engineers, priority ticket handling, and architectural reviews." }
           ]}
         />
         <CtaSection
           title="Ready to Scale Your Startup?"
-          subtitle="Join the TiDB Cloud Startup Program today and unlock $100,000 in credits to power your growth."
+          subtitle="Join hundreds of innovative companies building on TiDB Cloud. Apply today to secure your $100,000 in credits."
           background="violet"
-          primaryCta={{ text: "Apply for Credits", href: "/tidbcloud/trial/" }}
-          secondaryCta={{ text: "Contact Sales", href: "/contact-sales/" }}
+          primaryCta={{ text: "Apply for Startup Program", href: "/tidbcloud/trial/" }}
+          secondaryCta={{ text: "Contact Sales", href: "/contact-us/" }}
         />
       </main>
       <Footer />
