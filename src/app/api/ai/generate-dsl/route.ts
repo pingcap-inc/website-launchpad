@@ -9,7 +9,7 @@ ${DSL_SCHEMA_PROMPT}
 
 Rules:
 - siteName must be exactly "TiDB"
-- canonical must start and end with "/"
+- canonical must start and end with "/" and must reflect the specific page topic (not just the product name). e.g. for "TiDB Cloud startup program" use "/tidb-cloud/startup-program/", NOT "/tidb-cloud/"
 - primaryCta hrefs: use "/tidbcloud/trial/" for signup, real PingCAP paths for others
 - Every featureGrid/featureCard item must have an icon
 - Page must have 4-8 sections; always start with "hero"

@@ -45,9 +45,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
         <span className="w-2.5 h-2.5 rounded-full bg-brand-red-primary shrink-0" />
         {!collapsed && (
           <span className="text-body-sm font-bold text-gray-900 leading-tight whitespace-nowrap">
-            AI Website
-            <br />
-            Platform
+            AI Website Platform
           </span>
         )}
       </div>
