@@ -20,7 +20,7 @@ const NAV_ITEMS: {
   disabled?: boolean
 }[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { href: '/admin/pages', label: 'Pages', icon: FileText },
+  { href: '/admin/pages', label: 'Pages', icon: FileText, disabled: true },
   { href: '/admin/create', label: 'Create Page', icon: PlusSquare },
   // { href: '/admin/assistant', label: 'AI Assistant', icon: MessageSquare, disabled: true },
   // { href: '/admin/builds', label: 'Preview Builds', icon: Layers, disabled: true },

@@ -273,6 +273,7 @@ export interface FeatureTabsProps {
 export interface FeatureTab {
   id: string
   label: string
+  title?: string
   description?: string
   bullets?: string[]
   primaryCta?: Cta
@@ -487,6 +488,20 @@ export type SectionPropsMap = {
   agenda: AgendaProps
   speakers: SpeakersProps
   comparisonTable: ComparisonTableProps
+}
+
+export type SectionPropsMap = {
+  hero: HeroProps
+  stats: StatsProps
+  featureGrid: FeatureGridProps
+  featureCard: FeatureCardProps
+  featureTabs: FeatureTabsProps
+  featureHighlights: FeatureHighlightsProps
+  logoCloud: LogoCloudProps
+  testimonials: TestimonialsProps
+  faq: FaqProps
+  cta: CtaProps
+  form: FormProps
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
