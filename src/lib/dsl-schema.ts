@@ -527,7 +527,7 @@ Available section types (choose appropriate mix):
 - { type: "form", props: { title?, subtitle?, portalId: "YOUR_PORTAL_ID", formId: "YOUR_FORM_ID", region?: "na1" } }
 
 Icon names (use for icon fields): ${ALL_ICON_NAMES.join(', ')}
-CTA hrefs: use real PingCAP URLs or "/tidbcloud/trial/" for signup CTAs.
+CTA hrefs: use real PingCAP URLs or "https://tidbcloud.com/free-trial/" for signup CTAs.
 Always start with a "hero" section and end with a "cta" section.
 Return ONLY the JSON object, no markdown, no code blocks.
 IMPORTANT: style.background MUST be one of the exact values listed above. Do not invent other values.
