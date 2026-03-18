@@ -37,27 +37,23 @@ export function StatsSection({
   const hasHeader = Boolean(eyebrow || title || subtitle)
 
   return (
-    <section className={cn('py-section-sm lg:py-section bg-gradient-dark-top', className)}>
-      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-        {hasHeader && title && (
-          <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
-        )}
-        <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
-          {stats.map((stat, i) => (
-            <div key={i} className="px-8 py-8 flex flex-col gap-4">
-              {stat.icon && <div className="w-12 h-12 text-text-inverse">{stat.icon}</div>}
-              <CountUp
-                value={stat.value}
-                className="text-h2-mb md:text-h2-sm font-bold text-text-inverse leading-none"
-              />
-              <p className="text-body-md font-bold text-text-inverse">{stat.label}</p>
-              {stat.description && (
-                <p className="text-body-sm text-carbon-400 leading-relaxed">{stat.description}</p>
-              )}
-            </div>
-          ))}
-        </div>
+    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
+      {hasHeader && title && <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />}
+      <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
+        {stats.map((stat, i) => (
+          <div key={i} className="px-8 py-8 flex flex-col gap-4">
+            {stat.icon && <div className="w-12 h-12 text-text-inverse">{stat.icon}</div>}
+            <CountUp
+              value={stat.value}
+              className="text-h2-mb md:text-h2-sm font-bold text-text-inverse leading-none"
+            />
+            <p className="text-body-md font-bold text-text-inverse">{stat.label}</p>
+            {stat.description && (
+              <p className="text-body-sm text-carbon-400 leading-relaxed">{stat.description}</p>
+            )}
+          </div>
+        ))}
       </div>
-    </section>
+    </div>
   )
 }

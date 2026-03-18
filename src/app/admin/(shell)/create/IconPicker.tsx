@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, createElement } from 'react'
+import { useState, createElement, type ComponentType } from 'react'
 import {
   Zap,
   Shield,
@@ -53,10 +53,10 @@ import {
   Network,
 } from 'lucide-react'
 import type { LucideProps } from 'lucide-react'
-import { ALL_ICON_NAMES, type IconName } from '@/lib/dsl-schema'
+import { ALL_ICON_NAMES, type IconName, type IconValue } from '@/lib/dsl-schema'
 import { ImageField } from './ImageField'
 
-type IconComponent = React.ComponentType<LucideProps>
+type IconComponent = ComponentType<LucideProps>
 
 const ICON_MAP: Record<IconName, IconComponent> = {
   Zap,
@@ -111,8 +111,8 @@ const ICON_MAP: Record<IconName, IconComponent> = {
 }
 
 interface IconPickerProps {
-  value?: string
-  onChange: (value: string) => void
+  value?: IconValue
+  onChange: (value?: IconValue) => void
   slug?: string
 }
 
@@ -124,9 +124,17 @@ function isImagePath(v: string) {
 
 export function IconPicker({ value, onChange, slug }: IconPickerProps) {
   const [open, setOpen] = useState(false)
-  const [tab, setTab] = useState<Tab>(value && isImagePath(value) ? 'image' : 'lucide')
+  const [tab, setTab] = useState<Tab>(
+    value && typeof value === 'object'
+      ? 'image'
+      : value && isImagePath(value as string)
+        ? 'image'
+        : 'lucide'
+  )
 
-  const currentIsImage = value && isImagePath(value)
+  const currentIsImage = Boolean(
+    value && typeof value === 'object' ? true : value && isImagePath(value as string)
+  )
   const CurrentIcon = value && !currentIsImage ? (ICON_MAP[value as IconName] ?? Zap) : null
 
   return (
@@ -137,7 +145,11 @@ export function IconPicker({ value, onChange, slug }: IconPickerProps) {
         <div className="w-10 h-10 border border-gray-200 rounded flex items-center justify-center bg-gray-50 shrink-0">
           {currentIsImage ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={value} alt="" className="w-full h-full object-contain p-1" />
+            <img
+              src={typeof value === 'object' && value ? value.url : (value as string)}
+              alt=""
+              className="w-full h-full object-contain p-1"
+            />
           ) : CurrentIcon ? (
             createElement(CurrentIcon, { size: 18, strokeWidth: 1.5, className: 'text-gray-700' })
           ) : (
@@ -149,7 +161,7 @@ export function IconPicker({ value, onChange, slug }: IconPickerProps) {
           onClick={() => setOpen(!open)}
           className="flex-1 text-left border border-gray-200 rounded px-3 py-2 text-body-sm text-gray-600 hover:border-gray-400 transition-colors bg-white"
         >
-          {value || 'Choose icon…'}
+          {(typeof value === 'string' ? value : value?.url) || 'Choose icon…'}
         </button>
       </div>
 
@@ -199,10 +211,16 @@ export function IconPicker({ value, onChange, slug }: IconPickerProps) {
           ) : (
             <div className="p-3">
               <ImageField
-                value={currentIsImage ? value : ''}
+                value={
+                  currentIsImage
+                    ? typeof value === 'object'
+                      ? value
+                      : { url: value as string }
+                    : undefined
+                }
                 onChange={(v) => {
                   onChange(v)
-                  if (v) setOpen(false)
+                  if (v?.url) setOpen(false)
                 }}
                 slug={slug}
                 label=""

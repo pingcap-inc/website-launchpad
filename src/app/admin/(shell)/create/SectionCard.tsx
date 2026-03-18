@@ -13,21 +13,20 @@ import {
 } from 'lucide-react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import type { SectionNode } from '@/lib/dsl-schema'
+import type {
+  CtaProps,
+  FaqProps,
+  FeatureGridProps,
+  FeatureHighlightsProps,
+  FeatureTabsProps,
+  HeroProps,
+  LogoCloudProps,
+  SectionNode,
+  StatsProps,
+  TestimonialsProps,
+} from '@/lib/dsl-schema'
+import { getSectionLabel } from '@/lib/section-registry'
 import { SectionFieldEditor } from './SectionFieldEditor'
-
-const SECTION_LABELS: Record<string, string> = {
-  hero: 'Hero',
-  stats: 'Stats',
-  featureGrid: 'Feature Grid',
-  featureCard: 'Feature Cards',
-  featureTabs: 'Feature Tabs',
-  logoCloud: 'Logo Cloud',
-  testimonials: 'Testimonials',
-  faq: 'FAQ',
-  cta: 'CTA',
-  form: 'Form',
-}
 
 const SECTION_COLORS: Record<string, string> = {
   hero: 'bg-violet-100 text-violet-700',
@@ -35,6 +34,7 @@ const SECTION_COLORS: Record<string, string> = {
   featureGrid: 'bg-emerald-100 text-emerald-700',
   featureCard: 'bg-teal-100 text-teal-700',
   featureTabs: 'bg-cyan-100 text-cyan-700',
+  featureHighlights: 'bg-fuchsia-100 text-fuchsia-700',
   logoCloud: 'bg-orange-100 text-orange-700',
   testimonials: 'bg-yellow-100 text-yellow-700',
   faq: 'bg-pink-100 text-pink-700',
@@ -45,24 +45,39 @@ const SECTION_COLORS: Record<string, string> = {
 function sectionSummary(node: SectionNode): string {
   switch (node.type) {
     case 'hero':
-      return node.headline.slice(0, 60) + (node.headline.length > 60 ? '…' : '')
+      const heroProps = node.props as HeroProps
+      return (
+        String(heroProps.headline ?? '')
+          .slice(0, 60)
+          .trim() + (String(heroProps.headline ?? '').length > 60 ? '…' : '')
+      )
     case 'stats':
-      return `${node.items.length} stats`
+      const statsProps = node.props as StatsProps
+      return `${statsProps.items.length} stats`
     case 'featureGrid':
     case 'featureCard':
-      return node.title
+      const featureProps = node.props as FeatureGridProps
+      return featureProps.title
     case 'featureTabs':
-      return `${node.tabs.length} tabs — ${node.title}`
+      const featureTabsProps = node.props as FeatureTabsProps
+      return `${featureTabsProps.tabs.length} tabs — ${featureTabsProps.title}`
+    case 'featureHighlights':
+      const featureHighlightsProps = node.props as FeatureHighlightsProps
+      return `${featureHighlightsProps.items.length} highlights — ${featureHighlightsProps.title}`
     case 'logoCloud':
-      return `${node.logos.length} logos`
+      const logoCloudProps = node.props as LogoCloudProps
+      return `${logoCloudProps.logos.length} logos`
     case 'testimonials':
-      return `${node.items.length} testimonials — ${node.title}`
+      const testimonialsProps = node.props as TestimonialsProps
+      return `${testimonialsProps.items.length} testimonials — ${testimonialsProps.title}`
     case 'faq':
-      return `${node.items.length} Q&A`
+      const faqProps = node.props as FaqProps
+      return `${faqProps.items.length} Q&A`
     case 'cta':
-      return node.title
+      const ctaProps = node.props as CtaProps
+      return ctaProps.title
     case 'form':
-      return node.title ?? 'HubSpot Form'
+      return 'HubSpot Form'
     default:
       return ''
   }
@@ -115,7 +130,7 @@ export function SectionCard({
     }
   }
 
-  const label = SECTION_LABELS[node.type] ?? node.type
+  const label = getSectionLabel(node.type)
   const badgeClass = SECTION_COLORS[node.type] ?? 'bg-gray-100 text-gray-600'
   const summary = sectionSummary(node)
 

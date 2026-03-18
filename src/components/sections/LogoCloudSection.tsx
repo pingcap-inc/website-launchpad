@@ -2,10 +2,11 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { externalLinkProps } from '@/lib/links'
+import type { ImageRef } from '@/lib/dsl-schema'
 
 export interface LogoCloudItem {
   name: string
-  src: string
+  image: ImageRef
   href?: string
   width?: number
   height?: number
@@ -42,7 +43,7 @@ export function LogoCloudSection({
   scrollSpeedSeconds = 28,
   className,
 }: LogoCloudSectionProps) {
-  const shouldScroll = autoScroll && logos.length > 5
+  const shouldScroll = autoScroll && logos.length > 4
 
   const renderLogo = (logo: LogoCloudItem, key: string) => {
     const containerClasses =
@@ -56,7 +57,7 @@ export function LogoCloudSection({
     const content = (
       <div className={containerClasses}>
         <Image
-          src={logo.src}
+          src={logo.image.url}
           alt={logo.name}
           width={logo.width ?? 140}
           height={logo.height ?? 48}
@@ -87,41 +88,39 @@ export function LogoCloudSection({
   }
 
   return (
-    <section className={cn('py-section-sm lg:py-section', className)}>
-      <div className="max-w-screen-xl mx-auto px-4 md:px-8 lg:px-16">
-        {(title || subtitle || eyebrow) && (
-          <SectionHeader
-            h2Size="sm"
-            align={variant === 'minimal' ? 'center' : 'left'}
-            eyebrow={eyebrow}
-            title={title ?? ''}
-            subtitle={subtitle}
-          />
-        )}
-        {shouldScroll ? (
-          <div className="relative overflow-hidden flex justify-center">
-            <div
-              className="flex w-max items-center gap-6 animate-logo-marquee"
-              style={{ animationDuration: `${scrollSpeedSeconds}s` }}
-            >
-              {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}-a`))}
-              {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}-b`))}
-            </div>
+    <div className={cn('max-w-screen-xl mx-auto px-4 md:px-8 lg:px-16', className)}>
+      {(title || subtitle || eyebrow) && (
+        <SectionHeader
+          h2Size="sm"
+          align={variant === 'minimal' ? 'center' : 'left'}
+          eyebrow={eyebrow}
+          title={title ?? ''}
+          subtitle={subtitle}
+        />
+      )}
+      {shouldScroll ? (
+        <div className="relative overflow-hidden flex justify-center mx-auto w-3/4">
+          <div
+            className="flex w-max items-center gap-6 animate-logo-marquee"
+            style={{ animationDuration: `${scrollSpeedSeconds}s` }}
+          >
+            {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}-a`))}
+            {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}-b`))}
           </div>
-        ) : (
-          <>
-            {variant === 'minimal' ? (
-              <div className="flex flex-wrap items-center justify-center gap-6">
-                {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}`))}
-              </div>
-            ) : (
-              <div className={cn('grid gap-6 items-center', colsMap[columns])}>
-                {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}`))}
-              </div>
-            )}
-          </>
-        )}
-      </div>
-    </section>
+        </div>
+      ) : (
+        <>
+          {variant === 'minimal' ? (
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}`))}
+            </div>
+          ) : (
+            <div className={cn('grid gap-6 items-center', colsMap[columns])}>
+              {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}`))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
   )
 }
