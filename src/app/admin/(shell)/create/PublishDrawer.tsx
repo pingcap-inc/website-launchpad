@@ -209,7 +209,7 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
           </button>
 
           {/* Local generate button */}
-          {process.env.NODE_ENV !== 'development' && (
+          {process.env.NODE_ENV === 'development' && (
             <button
               onClick={handleLocalGenerate}
               disabled={!slugValid || localGenerating}
