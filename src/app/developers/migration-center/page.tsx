@@ -21,10 +21,12 @@ import {
 
 export const metadata: Metadata = {
   title: 'Migration Center | TiDB Developer Hub',
-  description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+  description:
+    'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
   openGraph: {
     title: 'Migration Center | TiDB Developer Hub',
-    description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+    description:
+      'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
     url: 'https://www.pingcap.com/developers/migration-center/',
     siteName: 'TiDB',
     images: [
@@ -40,7 +42,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Migration Center | TiDB Developer Hub',
-    description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+    description:
+      'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
     images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
     site: '@PingCAP',
   },
@@ -51,7 +54,8 @@ export const metadata: Metadata = {
 const schema = buildPageSchema({
   path: '/developers/migration-center/',
   title: 'Migration Center | TiDB Developer Hub',
-  description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+  description:
+    'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
   pageType: 'WebPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
@@ -62,7 +66,8 @@ const schema = buildPageSchema({
   extraSchemas: [
     techArticleSchema({
       title: 'Migration Center | TiDB Developer Hub',
-      description: 'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
+      description:
+        'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
       url: '/developers/migration-center/',
       image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
       proficiencyLevel: 'Intermediate',
@@ -140,8 +145,7 @@ const journey = [
   {
     title: 'Step 3: Execute',
     subtitle: 'Move data using the right tools for your scenario.',
-    description:
-      'High-level guidance on what tool to use when with links to step-by-step docs.',
+    description: 'High-level guidance on what tool to use when with links to step-by-step docs.',
     cards: [
       {
         title: 'Migrate from MySQL Using Data Migration (DM)',
@@ -212,28 +216,33 @@ export default function MigrationCenterPage() {
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
         <main>
-          <HeroSection
-            layout="image-right"
-            eyebrow="TiDB Developer Hub"
-            headline="Migrate to TiDB with Confidence"
-            subheadline="Coming from MySQL? Check compatibility first, then follow the guided path from staging to cutover. Nothing touches production until you say so."
-            className="pb-8"
-            heroImage={{
-              src: '/images/developers/migrate-banner.svg',
-              alt: 'Migration Center Banner',
-              width: 431,
-              height: 329,
-              align: 'right',
-            }}
-          />
+          <section className="bg-bg-primary py-10 md:py-0">
+            <HeroSection
+              layout="image-right"
+              eyebrow="TiDB Developer Hub"
+              headline="Migrate to TiDB with Confidence"
+              subheadline="Coming from MySQL? Check compatibility first, then follow the guided path from staging to cutover. Nothing touches production until you say so."
+              className="pb-8"
+              heroImage={{
+                image: { url: '/images/developers/migrate-banner.svg' },
+                alt: 'Migration Center Banner',
+                width: 431,
+                height: 329,
+                align: 'right',
+              }}
+            />
+          </section>
 
           {/* ── How-To Guides ── */}
-          <section id="how-to-guides" className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+          <section
+            id="how-to-guides"
+            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+          >
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
                 <div className="lg:pt-2">
                   <SectionHeader
-                    title={"How-To\nGuides"}
+                    title={'How-To\nGuides'}
                     h2Size="md"
                     align="left"
                     className="md:!mb-0"
@@ -277,7 +286,9 @@ export default function MigrationCenterPage() {
                       <h4 className="text-h3-lg font-bold text-text-inverse leading-snug mb-3">
                         {stage.subtitle}
                       </h4>
-                      <p className="text-body-md text-carbon-400 leading-relaxed">{stage.description}</p>
+                      <p className="text-body-md text-carbon-400 leading-relaxed">
+                        {stage.description}
+                      </p>
                     </div>
                     <div className="flex flex-wrap gap-3">
                       {stage.cards.map((card) => (

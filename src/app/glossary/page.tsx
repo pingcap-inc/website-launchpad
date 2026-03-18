@@ -166,12 +166,14 @@ export default function GlossaryPage() {
       <Header />
       <main className="pt-[62px] lg:pt-20">
         {/* Hero */}
-        <HeroSection
-          eyebrow="GLOSSARY"
-          headline="Database Terms, Defined"
-          subheadline="Clear definitions of distributed database, cloud-native, and TiDB-specific terminology — written for engineers, not marketers."
-          layout="centered"
-        />
+        <section className="bg-bg-primary py-10 md:py-0">
+          <HeroSection
+            eyebrow="GLOSSARY"
+            headline="Database Terms, Defined"
+            subheadline="Clear definitions of distributed database, cloud-native, and TiDB-specific terminology — written for engineers, not marketers."
+            layout="centered"
+          />
+        </section>
 
         {/* Term sections */}
         {terms.map((category) => (
@@ -220,13 +222,22 @@ export default function GlossaryPage() {
         ))}
 
         {/* CTA */}
-        <CtaSection
-          title="Ready to Put These Concepts Into Practice?"
-          subtitle="TiDB Cloud brings HTAP, elastic scaling, and MySQL compatibility to a fully managed service."
-          primaryCta={{ text: 'Start for Free', href: '/signup/' }}
-          secondaryCta={{ text: 'Read the Docs', href: '/docs/' }}
-          background="red"
-        />
+        <section className="py-section-sm lg:py-section-md bg-brand-red-bg">
+          <CtaSection
+            title="Ready to Put These Concepts Into Practice?"
+            subtitle="TiDB Cloud brings HTAP, elastic scaling, and MySQL compatibility to a fully managed service."
+            primaryCta={{ text: 'Start for Free', href: '/signup/' }}
+            secondaryCta={{ text: 'Read the Docs', href: '/docs/' }}
+            image={{
+              image: {
+                url: 'https://static.pingcap.com/files/2025/04/27224533/CTA-cube-red-mini.svg',
+              },
+              alt: 'CTA cube',
+              width: 278,
+              height: 256,
+            }}
+          />
+        </section>
       </main>
       <Footer />
     </>

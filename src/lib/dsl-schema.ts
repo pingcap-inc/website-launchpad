@@ -3,7 +3,7 @@
 
 export interface PageDSL {
   meta: PageMeta
-  sections: SectionNode[]
+  sections: SectionDefinition[]
 }
 
 export interface PageMeta {
@@ -16,6 +16,14 @@ export interface PageMeta {
 export interface Cta {
   text: string
   href: string
+}
+
+export interface ImageRef {
+  assetId?: string
+  url: string
+  alt?: string
+  width?: number
+  height?: number
 }
 
 export type IconName =
@@ -73,36 +81,74 @@ export type IconName =
   | 'Puzzle'
   | 'Network'
 
-export type SectionNode =
-  | HeroNode
-  | StatsNode
-  | FeatureGridNode
-  | FeatureCardNode
-  | FeatureTabsNode
-  | LogoCloudNode
-  | TestimonialsNode
-  | FaqNode
-  | CtaNode
-  | FormNode
+export type IconValue = IconName | ImageRef
+
+export type SectionType =
+  | 'hero'
+  | 'stats'
+  | 'featureGrid'
+  | 'featureCard'
+  | 'featureTabs'
+  | 'featureHighlights'
+  | 'logoCloud'
+  | 'testimonials'
+  | 'faq'
+  | 'cta'
+  | 'form'
+
+export interface SectionStyle {
+  background?:
+    | 'primary'
+    | 'inverse'
+    | 'gradient-dark-top'
+    | 'gradient-dark-bottom'
+    | 'brand-red'
+    | 'brand-violet'
+    | 'brand-blue'
+    | 'brand-teal'
+    | 'none'
+  spacing?: 'none' | 'sm' | 'md' | 'lg' | 'section' | 'hero'
+  /** When true, collapse top padding if adjacent sections share the same background. */
+  collapse?: boolean
+  className?: string
+  backgroundImage?: {
+    image: ImageRef
+  }
+}
+
+export interface SectionDefinition<TType extends SectionType = SectionType> {
+  id: string
+  type: TType
+  props: SectionPropsMap[TType]
+  style?: SectionStyle
+}
+
+export type SectionNode = SectionDefinition
 
 // ─── Hero ───────────────────────────────────────────────────────────────────
 
 /** Used with layout="image-right" */
 export interface HeroImage {
-  src: string
+  image: ImageRef
   alt?: string
-  width: number
-  height: number
+  width?: number
+  height?: number
   /** Desktop alignment. Defaults to 'right'. */
   align?: 'right' | 'center'
+  priority?: boolean
 }
 
 /** Used with layout="centered" */
 export interface HeroBackgroundImage {
-  src: string
+  image: ImageRef
   alt?: string
+  priority?: boolean
   /** Tailwind opacity class, e.g. "opacity-30". Defaults to "opacity-40". */
   opacityClassName?: string
+  /** Optional overlay class. */
+  overlayClassName?: string
+  /** Defaults to object-center / bg-center */
+  positionClassName?: string
 }
 
 export interface HeroForm {
@@ -111,8 +157,7 @@ export interface HeroForm {
   region?: string // default 'na1'
 }
 
-export interface HeroNode {
-  type: 'hero'
+export interface HeroProps {
   layout?: 'split' | 'centered' | 'image-right'
   eyebrow?: string
   /**
@@ -140,8 +185,8 @@ export interface HeroNode {
 
 // ─── Stats ──────────────────────────────────────────────────────────────────
 
-export interface StatsNode {
-  type: 'stats'
+export interface StatsProps {
+  eyebrow?: string
   title?: string
   subtitle?: string
   items: StatsItem[]
@@ -150,7 +195,7 @@ export interface StatsNode {
 
 export interface StatsItem {
   /** Lucide icon name OR an image path string */
-  icon?: IconName | string
+  icon?: IconValue
   value: string
   label: string
   description?: string
@@ -158,18 +203,18 @@ export interface StatsItem {
 
 // ─── Feature Grid ────────────────────────────────────────────────────────────
 
-export interface FeatureGridNode {
-  type: 'featureGrid'
+export interface FeatureGridProps {
   eyebrow?: string
   title: string
   subtitle?: string
   items: FeatureGridItem[]
   columns?: 2 | 3 | 4
+  viewMore?: { text: string; href: string }
 }
 
 export interface FeatureGridItem {
   /** Lucide icon name OR an image path string (e.g. "/images/..." or "https://...") */
-  icon?: IconName | string
+  icon?: IconValue
   title: string
   description: string
   cta?: Cta
@@ -177,8 +222,7 @@ export interface FeatureGridItem {
 
 // ─── Feature Card ────────────────────────────────────────────────────────────
 
-export interface FeatureCardNode {
-  type: 'featureCard'
+export interface FeatureCardProps {
   eyebrow?: string
   title: string
   subtitle?: string
@@ -188,7 +232,7 @@ export interface FeatureCardNode {
 
 export interface FeatureCardItem {
   /** Lucide icon name OR an image path string (e.g. "/images/..." or "https://...") */
-  icon?: IconName | string
+  icon?: IconValue
   title: string
   description: string
   href?: string
@@ -196,8 +240,7 @@ export interface FeatureCardItem {
 
 // ─── Feature Tabs ────────────────────────────────────────────────────────────
 
-export interface FeatureTabsNode {
-  type: 'featureTabs'
+export interface FeatureTabsProps {
   eyebrow?: string
   title: string
   subtitle?: string
@@ -209,32 +252,55 @@ export interface FeatureTabsNode {
 export interface FeatureTab {
   id: string
   label: string
+  title?: string
   description?: string
   bullets?: string[]
   primaryCta?: Cta
+  secondaryCta?: Cta
   image: {
-    src: string
-    alt: string
-    width: number
-    height: number
+    image: ImageRef
+    alt?: string
+    width?: number
+    height?: number
   }
+}
+
+// ─── Feature Highlights ──────────────────────────────────────────────────────
+
+export type ColorCardVariant = 'red' | 'violet' | 'blue' | 'teal'
+
+export interface FeatureHighlightsProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  items: FeatureHighlightItem[]
+  columns?: 2 | 3 | 4
+  viewMore?: { text: string; href: string }
+}
+
+export interface FeatureHighlightItem {
+  variant: ColorCardVariant
+  title: string
+  description: string
+  cta: Cta
+  icon?: IconValue
 }
 
 // ─── Logo Cloud ──────────────────────────────────────────────────────────────
 
-export interface LogoCloudNode {
-  type: 'logoCloud'
+export interface LogoCloudProps {
   eyebrow?: string
   title?: string
   subtitle?: string
   logos: Logo[]
   variant?: 'default' | 'minimal'
   autoScroll?: boolean
+  scrollSpeedSeconds?: number
 }
 
 export interface Logo {
   name: string
-  src: string
+  image: ImageRef
   href?: string
   width?: number
   height?: number
@@ -242,8 +308,7 @@ export interface Logo {
 
 // ─── Testimonials ────────────────────────────────────────────────────────────
 
-export interface TestimonialsNode {
-  type: 'testimonials'
+export interface TestimonialsProps {
   eyebrow?: string
   title: string
   items: Testimonial[]
@@ -255,16 +320,15 @@ export interface Testimonial {
   href?: string
   cta?: string
   logo?: {
-    src: string
-    alt: string
+    image: ImageRef
+    alt?: string
     size?: number
   }
 }
 
 // ─── FAQ ─────────────────────────────────────────────────────────────────────
 
-export interface FaqNode {
-  type: 'faq'
+export interface FaqProps {
   title?: string
   items: FaqItem[]
 }
@@ -276,24 +340,42 @@ export interface FaqItem {
 
 // ─── CTA ─────────────────────────────────────────────────────────────────────
 
-export interface CtaNode {
-  type: 'cta'
+export interface CtaProps {
   title: string
   subtitle?: string
-  background?: 'red' | 'violet' | 'blue' | 'teal'
+  label?: string
+  image?: {
+    image: ImageRef
+    alt?: string
+    width?: number
+    height?: number
+  }
   primaryCta: Cta
   secondaryCta?: Cta
 }
 
 // ─── HubSpot Form ────────────────────────────────────────────────────────────
 
-export interface FormNode {
-  type: 'form'
+export interface FormProps {
   title?: string
   subtitle?: string
   portalId: string // HubSpot portal ID — replace placeholder before publishing
   formId: string // HubSpot form ID — replace placeholder before publishing
   region?: string // default 'na1'
+}
+
+export type SectionPropsMap = {
+  hero: HeroProps
+  stats: StatsProps
+  featureGrid: FeatureGridProps
+  featureCard: FeatureCardProps
+  featureTabs: FeatureTabsProps
+  featureHighlights: FeatureHighlightsProps
+  logoCloud: LogoCloudProps
+  testimonials: TestimonialsProps
+  faq: FaqProps
+  cta: CtaProps
+  form: FormProps
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -365,9 +447,18 @@ export function sanitizeIconName(name: string | undefined): IconName {
 /** Walk a parsed DSL and replace any invalid icon names with 'Zap'. */
 export function sanitizeDSLIcons(dsl: PageDSL): void {
   for (const section of dsl.sections) {
-    if ('items' in section && Array.isArray(section.items)) {
-      for (const item of section.items as Array<{ icon?: string }>) {
-        if ('icon' in item) item.icon = sanitizeIconName(item.icon)
+    const props = section.props as unknown as Record<string, unknown>
+    if ('items' in props && Array.isArray(props.items)) {
+      for (const item of props.items as Array<{ icon?: IconValue }>) {
+        if (typeof item.icon === 'string') {
+          const original = item.icon
+          item.icon = sanitizeIconName(item.icon)
+          if (item.icon !== original) {
+            console.warn(
+              `[DSL] Unknown icon "${original}" on section "${section.id}", replaced with "Zap"`
+            )
+          }
+        }
       }
     }
   }
@@ -382,14 +473,40 @@ Generate a PageDSL JSON object with this exact structure:
     "description": string,  // 120-160 chars, full sentence
     "canonical": string     // e.g. "/tidb-cloud/"
   },
-  "sections": [SectionNode, ...]  // 4-8 sections
+  "sections": [
+    {
+      "id": string,
+      "type": string,
+      "props": object,
+      "style": {
+        "background"?: "primary"|"inverse"|"gradient-dark-top"|"gradient-dark-bottom"|"brand-red"|"brand-violet"|"brand-blue"|"brand-teal"|"none",
+        "spacing"?: "none"|"sm"|"md"|"lg"|"section"|"hero",
+        "collapse"?: boolean,
+        "backgroundImage"?: { "image": {assetId?: string, url: string} }
+      }
+    }
+  ]
 }
 
+Image fields must use this structure:
+{ "assetId"?: string, "url": string }
+
 Available section types (choose appropriate mix):
-- { type: "hero", layout?: "split"|"centered"|"image-right", eyebrow?, headline, subheadline?, primaryCta?: {text,href}, secondaryCta?: {text,href}, heroImage?: {src,alt?,width,height,align?:"right"|"center"}, backgroundImage?: {src,alt?,opacityClassName?}, heroForm?: {formId, portalId?, region?} }
-  DEFAULT layout is "image-right". Always include heroImage when using image-right layout; default image: { src: "/images/hero/r/Graphic-1-Dk.png", alt: "", width: 800, height: 500 }
-  (heroImage: used when layout="image-right"; backgroundImage: used when layout="centered")
-  (heroForm: embeds a HubSpot form in the hero right slot — auto-sets layout="split"; portalId defaults to "4466002"; use when page intent mentions a form/signup in the hero)
+- {
+    type: "hero",
+    props: {
+      layout?: "centered"|"image-right"|"split",
+      eyebrow?,
+      headline,
+      subheadline?,
+      primaryCta?: {text,href},
+      secondaryCta?: {text,href},
+      heroImage?: { image: {assetId?, url}, alt?, width?, height?, align?:"right"|"center" },
+      backgroundImage?: { image: {assetId?, url}, alt?, opacityClassName?, overlayClassName?, positionClassName? },
+      heroForm?: {formId, portalId?, region?}
+    }
+  }
+  (heroForm: embeds a HubSpot form in the hero right slot — auto-sets layout="split")
   (headline supports gradient spans; use sparingly on 1-2 words max:
     <span class="text-gradient-violet">word</span>
     <span class="text-gradient-blue">word</span>
@@ -398,17 +515,21 @@ Available section types (choose appropriate mix):
     Add animate-glow-sweep to the class for an animated glow sweep effect, e.g.
     <span class="text-gradient-violet animate-glow-sweep">word</span>
   )
-- { type: "stats", title?, items: [{icon?, value, label, description?}], columns?: 2|3|4 }
-- { type: "featureGrid", eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}}], columns?: 2|3|4 }
-- { type: "featureCard", eyebrow?, title, subtitle?, items: [{icon?, title, description, href?}], columns?: 2|3|4 }
-- { type: "faq", title?, items: [{q, a}] }
-- { type: "cta", title, subtitle?, background?: "red"|"violet"|"blue"|"teal", primaryCta: {text,href}, secondaryCta?: {text,href} }
-- { type: "testimonials", title, items: [{quote, author, href?, cta?}] }
-- { type: "logoCloud", title?, logos: [{name, src, href?}], variant?: "default"|"minimal" }
-- { type: "form", title?, subtitle?, portalId: "YOUR_PORTAL_ID", formId: "YOUR_FORM_ID", region?: "na1" }
+- { type: "stats", props: { title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4 } }
+- { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}}], columns?: 2|3|4 } }
+- { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, href?}], columns?: 2|3|4 } }
+- { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval? } }
+- { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href} } }
+- { type: "faq", props: { title?, items: [{q, a}] } }
+- { type: "cta", props: { title, subtitle?, primaryCta: {text,href}, secondaryCta?: {text,href}, image?: { image: {assetId?, url}, alt?, width?, height? } } }
+- { type: "testimonials", props: { title, items: [{quote, author, href?, cta?, logo?: { image: {assetId?, url}, alt?, size? }}] } }
+- { type: "logoCloud", props: { title?, logos: [{name, image: {assetId?, url}, href?}], variant?: "default"|"minimal" } }
+- { type: "form", props: { title?, subtitle?, portalId: "YOUR_PORTAL_ID", formId: "YOUR_FORM_ID", region?: "na1" } }
 
 Icon names (use for icon fields): ${ALL_ICON_NAMES.join(', ')}
 CTA hrefs: use real PingCAP URLs or "/tidbcloud/trial/" for signup CTAs.
 Always start with a "hero" section and end with a "cta" section.
 Return ONLY the JSON object, no markdown, no code blocks.
+IMPORTANT: style.background MUST be one of the exact values listed above. Do not invent other values.
+IMPORTANT: style.spacing MUST be one of the exact values listed above. Do not invent other values.
 `.trim()

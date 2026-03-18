@@ -218,19 +218,21 @@ export default function BuildDataApplicationsPage() {
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
         <main>
-          <HeroSection
-            layout="image-right"
-            eyebrow="TiDB Developer Hub"
-            headline="Build Data-Intensive Apps with No Scale Limits"
-            subheadline="Connection guides by language and ORM, schema patterns, and demo apps you can run locally or fork on GitHub."
-            heroImage={{
-              src: '/images/developers/build-data-apps-banner.png',
-              alt: 'Build Data Applications Banner',
-              width: 404,
-              height: 388,
-              align: 'center',
-            }}
-          />
+          <section className="bg-bg-primary py-10 md:py-0">
+            <HeroSection
+              layout="image-right"
+              eyebrow="TiDB Developer Hub"
+              headline="Build Data-Intensive Apps with No Scale Limits"
+              subheadline="Connection guides by language and ORM, schema patterns, and demo apps you can run locally or fork on GitHub."
+              heroImage={{
+                image: { url: '/images/developers/build-data-apps-banner.png' },
+                alt: 'Build Data Applications Banner',
+                width: 404,
+                height: 388,
+                align: 'center',
+              }}
+            />
+          </section>
 
           {/* ── How-To Guides ── */}
           <section

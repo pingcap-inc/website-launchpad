@@ -15,7 +15,7 @@ interface FeaturesGridProps {
   subtitle?: string
   features: Feature[]
   columns?: 2 | 3 | 4
-  viewMore?: { text?: string; href: string }
+  viewMore?: { text: string; href: string }
   className?: string
   dark?: boolean
 }
@@ -36,29 +36,27 @@ export function FeatureGridSection({
   className,
 }: FeaturesGridProps) {
   return (
-    <section className={cn('py-section-sm lg:py-section', className)}>
-      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-        <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
-        <div className={cn('grid grid-cols-1 gap-8', colsMap[columns])}>
-          {features.map((feature, i) => (
-            <div key={i} className="space-y-4">
-              {feature.icon && <div className="text-text-inverse">{feature.icon}</div>}
-              <h3 className="text-h3-lg font-bold text-text-inverse">{feature.title}</h3>
-              <p className="text-body-md text-carbon-300 leading-relaxed">{feature.description}</p>
-              {feature.cta && (
-                <SecondaryButton href={feature.cta.href}>{feature.cta.text}</SecondaryButton>
-              )}
-            </div>
-          ))}
-        </div>
-        {viewMore && (
-          <div className="mt-12 flex justify-center">
-            <SecondaryButton href={viewMore.href} dark={false}>
-              {viewMore.text ?? 'View More'}
-            </SecondaryButton>
+    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
+      <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
+      <div className={cn('grid grid-cols-1 gap-8', colsMap[columns])}>
+        {features.map((feature, i) => (
+          <div key={i} className="space-y-4">
+            {feature.icon && <div className="text-text-inverse">{feature.icon}</div>}
+            <h3 className="text-h3-lg font-bold text-text-inverse">{feature.title}</h3>
+            <p className="text-body-md text-carbon-300 leading-relaxed">{feature.description}</p>
+            {feature.cta && (
+              <SecondaryButton href={feature.cta.href}>{feature.cta.text}</SecondaryButton>
+            )}
           </div>
-        )}
+        ))}
       </div>
-    </section>
+      {viewMore && (
+        <div className="mt-12 flex justify-center">
+          <SecondaryButton href={viewMore.href} dark={false}>
+            {viewMore.text}
+          </SecondaryButton>
+        </div>
+      )}
+    </div>
   )
 }

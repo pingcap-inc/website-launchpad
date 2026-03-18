@@ -241,21 +241,23 @@ export default function DeveloperHubPage() {
         <DeveloperSubnav />
         <main>
           {/* ── Hero ── */}
-          <HeroSection
-            layout="image-right"
-            eyebrow="TiDB Developer Hub"
-            headline="Everything You Need to Build on TiDB"
-            subheadline="Working examples, connection guides, migration paths, and courses — pick a section based on where you are."
-            primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
-            secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
-            heroImage={{
-              src: '/images/developers/developers-banner.svg',
-              alt: 'Developers Banner',
-              width: 570,
-              height: 444,
-              align: 'right',
-            }}
-          />
+          <section className="bg-bg-primary py-10 md:py-0">
+            <HeroSection
+              layout="image-right"
+              eyebrow="TiDB Developer Hub"
+              headline="Everything You Need to Build on TiDB"
+              subheadline="Working examples, connection guides, migration paths, and courses — pick a section based on where you are."
+              primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
+              secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
+              heroImage={{
+                image: { url: '/images/developers/developers-banner.svg' },
+                alt: 'Developers Banner',
+                width: 570,
+                height: 444,
+                align: 'right',
+              }}
+            />
+          </section>
 
           {/* ── Choose Your Path ── */}
           <section className="py-section-sm lg:pb-section bg-bg-primary">

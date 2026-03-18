@@ -246,14 +246,16 @@ export default function OpenSourceHeroesPage() {
       <Header />
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         {/* ── 1. Hero ── */}
-        <HeroSection
-          eyebrow="Open Source Heroes Program"
-          headline="Fuel Your Next Big Idea with TiDB Cloud Serverless"
-          subheadline="TiDB loves open-source. We contribute code, sponsor projects and deeply appreciate developers who actively contribute to the community. As a token of our appreciation, we're offering up to $2,000 in free TiDB Cloud Serverless credits to fuel open-source heroes' next big idea. Simply log in with your GitHub account to calculate and claim your credits."
-          primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
-          layout="centered"
-          backgroundImage={{ src: '/images/hero/c/bg-banner.svg' }}
-        />
+        <section className="py-10 md:py-0">
+          <HeroSection
+            eyebrow="Open Source Heroes Program"
+            headline="Fuel Your Next Big Idea with TiDB Cloud Serverless"
+            subheadline="TiDB loves open-source. We contribute code, sponsor projects and deeply appreciate developers who actively contribute to the community. As a token of our appreciation, we're offering up to $2,000 in free TiDB Cloud Serverless credits to fuel open-source heroes' next big idea. Simply log in with your GitHub account to calculate and claim your credits."
+            primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
+            layout="centered"
+            backgroundImage={{ image: { url: '/images/hero/c/bg-banner.svg' } }}
+          />
+        </section>
 
         {/* ── 2. How It Works ── */}
         <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
@@ -410,15 +412,26 @@ export default function OpenSourceHeroesPage() {
         </section>
 
         {/* ── 6. FAQ ── */}
-        <FaqSection items={faqs} />
+        <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+          <FaqSection items={faqs} />
+        </section>
 
         {/* ── 7. CTA ── */}
-        <CtaSection
-          title="Ready to Claim Your Credits?"
-          subtitle="Link your GitHub, check your contribution score, and get up to $2,000 in TiDB Cloud Serverless credits — in under 3 minutes."
-          primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
-          background="teal"
-        />
+        <section className="py-section-sm lg:py-section-md bg-brand-teal-bg">
+          <CtaSection
+            title="Ready to Claim Your Credits?"
+            subtitle="Link your GitHub, check your contribution score, and get up to $2,000 in TiDB Cloud Serverless credits — in under 3 minutes."
+            primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
+            image={{
+              image: {
+                url: 'https://static.pingcap.com/files/2025/04/27224533/CTA-cube-teal-mini.svg',
+              },
+              alt: 'CTA cube',
+              width: 278,
+              height: 256,
+            }}
+          />
+        </section>
 
         {/* ── 8. Legal ── */}
         <section className="py-12 bg-bg-primary border-t border-carbon-800">

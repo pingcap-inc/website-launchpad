@@ -92,20 +92,22 @@ export default function LearnPage() {
         <DeveloperSubnav />
 
         <main>
-          <HeroSection
-            layout="image-right"
-            eyebrow="TiDB Developer Hub"
-            headline="Learn How TiDB Works"
-            subheadline="Learn the core architecture concepts, validate compatibility assumptions, and evaluate performance characteristics through guided courses and hands-on labs."
-            className="pb-10"
-            heroImage={{
-              src: '/images/developers/learn-banner.svg',
-              alt: 'Learn Banner',
-              width: 463,
-              height: 332,
-              align: 'right',
-            }}
-          />
+          <section className="bg-bg-primary py-10 md:py-0">
+            <HeroSection
+              layout="image-right"
+              eyebrow="TiDB Developer Hub"
+              headline="Learn How TiDB Works"
+              subheadline="Learn the core architecture concepts, validate compatibility assumptions, and evaluate performance characteristics through guided courses and hands-on labs."
+              className="pb-10"
+              heroImage={{
+                image: { url: '/images/developers/learn-banner.svg' },
+                alt: 'Learn Banner',
+                width: 463,
+                height: 332,
+                align: 'right',
+              }}
+            />
+          </section>
 
           <section className="pb-section-sm lg:py-section bg-bg-primary">
             <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { PrimaryButton } from '@/components/ui/PrimaryButton'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
+import type { ImageRef } from '@/lib/dsl-schema'
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -14,10 +15,10 @@ import { SecondaryButton } from '@/components/ui/SecondaryButton'
 export type HeroLayout = 'centered' | 'split' | 'image-right'
 
 interface HeroBackgroundImage {
-  src?: string
+  image: ImageRef
   alt?: string
   priority?: boolean
-  /** Defaults to opacity-40 */
+  /** Defaults to opacity-80 */
   opacityClassName?: string
   /** Optional overlay class. No overlay is applied unless this is provided. */
   overlayClassName?: string
@@ -27,10 +28,10 @@ interface HeroBackgroundImage {
 
 /** Used with `layout="image-right"` */
 export interface HeroImageSlot {
-  src: string
+  image: ImageRef
   alt?: string
-  width: number
-  height: number
+  width?: number
+  height?: number
   /** Desktop image alignment. Defaults to `'right'`. */
   align?: 'right' | 'center'
   priority?: boolean
@@ -120,15 +121,6 @@ function HeroTextBlock({
   )
 }
 
-// ─── Defaults ──────────────────────────────────────────────────────────────────
-
-const DEFAULT_HERO_IMAGE: HeroImageSlot = {
-  src: '/images/hero/r/Graphic-1-Dk.png',
-  alt: '',
-  width: 800,
-  height: 500,
-}
-
 // ─── Component ─────────────────────────────────────────────────────────────────
 
 export function HeroSection({
@@ -145,27 +137,22 @@ export function HeroSection({
 }: HeroSectionProps) {
   const resolvedLayout: HeroLayout = layout ?? 'image-right'
   const isCentered = resolvedLayout === 'centered'
-  const resolvedHeroImage = heroImage ?? DEFAULT_HERO_IMAGE
-
-  const resolvedBackgroundSrc = backgroundImage?.src
-  const heroBackgroundImage = resolvedBackgroundSrc
-    ? { ...backgroundImage, src: resolvedBackgroundSrc }
-    : null
+  const heroBackgroundImage = backgroundImage?.image?.url ? backgroundImage : undefined
   const useCssBackgroundForCentered = isCentered && !!heroBackgroundImage
 
   // Right slot for split layout
   const resolvedRightSlot = resolvedLayout === 'split' ? (rightSlot ?? null) : null
 
   return (
-    <section
+    <div
       className={cn(
-        'bg-bg-primary text-text-inverse relative overflow-hidden py-10 md:py-0',
+        'text-text-inverse relative overflow-hidden',
         isCentered && 'text-center',
         className
       )}
     >
       {/* ── Background layer ── */}
-      {heroBackgroundImage && (
+      {isCentered && heroBackgroundImage && (
         <>
           {useCssBackgroundForCentered ? (
             <div
@@ -173,13 +160,13 @@ export function HeroSection({
               className={cn(
                 'pointer-events-none absolute inset-0 bg-cover',
                 heroBackgroundImage.positionClassName ?? 'bg-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-40'
+                heroBackgroundImage.opacityClassName ?? 'opacity-80'
               )}
-              style={{ backgroundImage: `url("${heroBackgroundImage.src}")` }}
+              style={{ backgroundImage: `url("${heroBackgroundImage.image.url}")` }}
             />
           ) : (
             <Image
-              src={heroBackgroundImage.src}
+              src={heroBackgroundImage.image.url}
               alt={heroBackgroundImage.alt ?? ''}
               fill
               priority={heroBackgroundImage.priority}
@@ -187,7 +174,7 @@ export function HeroSection({
               className={cn(
                 'pointer-events-none object-cover',
                 heroBackgroundImage.positionClassName ?? 'object-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-40'
+                heroBackgroundImage.opacityClassName ?? 'opacity-80'
               )}
             />
           )}
@@ -229,9 +216,9 @@ export function HeroSection({
               subheadline={subheadline}
               primaryCta={primaryCta}
               secondaryCta={secondaryCta}
-              className="pt-10 md:py-20"
+              className="pt-10 md:pt-20 lg:py-20"
             />
-            <div className="py-4">{resolvedRightSlot}</div>
+            <div className="py-4 md:pb-20 lg:py-0">{resolvedRightSlot}</div>
           </div>
         )}
 
@@ -244,26 +231,30 @@ export function HeroSection({
               subheadline={subheadline}
               primaryCta={primaryCta}
               secondaryCta={secondaryCta}
-              className="md:py-20 w-full lg:max-w-[780px] lg:shrink-0"
+              className="md:pt-20 lg:py-20 w-full lg:max-w-[780px] xlg:shrink-0"
             />
             <div
               className={cn(
                 'pt-4 lg:py-4 flex-1 flex items-center justify-center',
-                resolvedHeroImage.align === 'center' ? 'lg:justify-center' : 'lg:justify-end'
+                heroImage?.align === 'center'
+                  ? 'lg:justify-center'
+                  : 'md:pb-10 lg:pb-0 lg:justify-end lg:min-w-[300px]'
               )}
             >
-              <Image
-                src={resolvedHeroImage.src}
-                alt={resolvedHeroImage.alt ?? ''}
-                width={resolvedHeroImage.width}
-                height={resolvedHeroImage.height}
-                className="max-w-full h-auto"
-                priority={resolvedHeroImage.priority ?? true}
-              />
+              {heroImage && (
+                <Image
+                  src={heroImage.image.url}
+                  alt={heroImage.alt ?? ''}
+                  width={heroImage.width || 800}
+                  height={heroImage.height || 500}
+                  className="max-w-full h-auto"
+                  priority={heroImage.priority ?? true}
+                />
+              )}
             </div>
           </div>
         )}
       </div>
-    </section>
+    </div>
   )
 }
