@@ -1,0 +1,290 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: "TiDB for Agentic AI: Scale Stateful Agent Workloads",
+  description: "TiDB supports branching, durable state, and concurrency for agent systems. Build scalable agentic AI applications with instant isolation and transactional consistency.",
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/agentic-ai/' },
+  openGraph: {
+    title: "TiDB for Agentic AI: Scale Stateful Agent Workloads",
+    description: "TiDB supports branching, durable state, and concurrency for agent systems. Build scalable agentic AI applications with instant isolation and transactional consistency.",
+    url: 'https://www.pingcap.com/agentic-ai/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: "/agentic-ai/",
+  title: "TiDB for Agentic AI: Scale Stateful Agent Workloads",
+  description: "TiDB supports branching, durable state, and concurrency for agent systems. Build scalable agentic AI applications with instant isolation and transactional consistency.",
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    { name: "The Database Built for <span class=\"text-gradient-violet\">Agentic Workloads</span>", path: "/agentic-ai/" },
+  ],
+})
+
+const dsl: PageDSL = {
+  "meta": {
+    "title": "TiDB for Agentic AI: Scale Stateful Agent Workloads",
+    "description": "TiDB supports branching, durable state, and concurrency for agent systems. Build scalable agentic AI applications with instant isolation and transactional consistency.",
+    "canonical": "/agentic-ai/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "The Database Built for <span class=\"text-gradient-violet\">Agentic Workloads</span>",
+        "subheadline": "Agent systems create bursts of isolated work, memory, and state that traditional databases were not designed to handle. TiDB supports branching, durable state, and concurrency for agents operating independently at scale.",
+        "primaryCta": {
+          "text": "Start Building for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "background": "gradient-dark-top",
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "why-tidb",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "",
+        "title": "Purpose-Built for Agentic Scale",
+        "subtitle": "Designed to keep branching, state, and transactional consistency together as agents operate across multiple tasks and sessions.",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "Instant Branching",
+            "description": "Create isolated database environments in milliseconds for parallel tasks, agent sessions, and experimentation.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "GitBranch"
+          },
+          {
+            "variant": "blue",
+            "title": "Durable Agent State",
+            "description": "Persist memory, intermediate outputs, and workflow progress across long-running agent interactions.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Database"
+          },
+          {
+            "variant": "teal",
+            "title": "Concurrent Execution at Scale",
+            "description": "Support growing agent activity across sessions and branches while maintaining transactional consistency.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Cpu"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "proven-scale",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "",
+        "title": "Proven at Scale",
+        "subtitle": "Leading AI teams use TiDB to power stateful agent systems.",
+        "items": [
+          {
+            "icon": "Brain",
+            "title": "Manus",
+            "description": "Scaled autonomous agent orchestration with instant branching for parallel task execution."
+          },
+          {
+            "icon": "Bot",
+            "title": "Dify",
+            "description": "Built end-to-end agent workflows with persistent state management across complex multi-step operations."
+          },
+          {
+            "icon": "Sparkles",
+            "title": "Rengage",
+            "description": "Deployed concurrent agent sessions with ACID guarantees for reliable state tracking."
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "build-features",
+      "type": "featureTabs",
+      "props": {
+        "eyebrow": "Developer Resources",
+        "title": "Build, Test, and Scale Agent Systems",
+        "subtitle": "Explore practical examples, runnable demos, and developer resources for building stateful agent workflows on TiDB.",
+        "tabs": [
+          {
+            "id": "database-branching",
+            "label": "Database Branching",
+            "description": "Instant isolated environments for parallel agent execution",
+            "bullets": [
+              "Create branches in milliseconds without data duplication",
+              "Run independent agent sessions simultaneously",
+              "Merge changes back safely with conflict resolution",
+              "Full ACID transactions within each branch"
+            ],
+            "primaryCta": {
+              "text": "View Documentation",
+              "href": "/docs/tidb-cloud/branch-management/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "persistent-state",
+            "label": "Persistent State",
+            "description": "Store intermediate outputs and long-running memory reliably",
+            "bullets": [
+              "Durably persist agent memory across sessions",
+              "Track tool outputs and decision logs",
+              "Support long-running workflows without data loss",
+              "Query historical state for analysis and debugging"
+            ],
+            "primaryCta": {
+              "text": "Explore Patterns",
+              "href": "/docs/tidb-cloud/agent-patterns/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "concurrent-transactions",
+            "label": "Concurrent Transactions",
+            "description": "Maintain correctness across simultaneous actions",
+            "bullets": [
+              "Multiple agents write safely to shared systems",
+              "Serializable isolation prevents conflicts",
+              "Lock-free reads scale with agent workload",
+              "Automatic deadlock detection and retry"
+            ],
+            "primaryCta": {
+              "text": "Learn Concurrency",
+              "href": "/docs/tidb-cloud/concurrency/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          }
+        ],
+        "autoSwitch": false
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "examples",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Runnable Examples",
+        "title": "Common Agentic Patterns",
+        "subtitle": "Practical code examples and architectural patterns for agent systems on TiDB.",
+        "items": [
+          {
+            "icon": "GitBranch",
+            "title": "Branch-per-Agent Pattern",
+            "description": "Map independent agent tasks to isolated branches for parallel execution without interference.",
+            "cta": {
+              "text": "View Example",
+              "href": "/docs/tidb-cloud/branch-per-agent-pattern/"
+            }
+          },
+          {
+            "icon": "Activity",
+            "title": "Stateful Workflow Tracking",
+            "description": "Persist tool outputs and decisions across steps with queryable workflow history.",
+            "cta": {
+              "text": "View Example",
+              "href": "/docs/tidb-cloud/stateful-workflow-tracking/"
+            }
+          },
+          {
+            "icon": "Network",
+            "title": "Multi-Agent Coordination",
+            "description": "Patterns for multiple agents writing safely to shared systems with strong consistency.",
+            "cta": {
+              "text": "View Example",
+              "href": "/docs/tidb-cloud/multi-agent-coordination/"
+            }
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section"
+      }
+    }
+  ]
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}
