@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'static.pingcap.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.pingcap.com',
+      },
     ],
   },
   // Trailing slash for SEO canonical consistency

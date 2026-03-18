@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileText, PlusSquare, Layers, ArrowRight } from 'lucide-react'
+import { FileText, PlusSquare, Layers, ArrowRight, Lock } from 'lucide-react'
 
 export default function AdminDashboard() {
   return (
@@ -31,35 +31,23 @@ export default function AdminDashboard() {
           />
         </Link>
 
-        <Link
-          href="/admin/pages"
-          className="group flex flex-col gap-3 p-6 bg-white border border-gray-200 rounded hover:border-gray-400 transition-colors"
-        >
-          <FileText size={24} className="text-brand-blue-medium" strokeWidth={1.5} />
+        <div className="flex flex-col gap-3 p-6 bg-gray-50 border border-gray-200 rounded cursor-not-allowed">
+          <FileText size={24} className="text-gray-300" strokeWidth={1.5} />
           <div>
-            <p className="text-body-md font-bold text-gray-900">All Pages</p>
-            <p className="text-body-sm text-gray-500 mt-0.5">View and edit published pages</p>
+            <p className="text-body-md font-bold text-gray-300">All Pages</p>
+            <p className="text-body-sm text-gray-300 mt-0.5">View and edit published pages</p>
           </div>
-          <ArrowRight
-            size={16}
-            className="text-gray-300 group-hover:text-gray-500 mt-auto self-end transition-colors"
-          />
-        </Link>
+          <Lock size={14} className="text-gray-300 mt-auto self-end" strokeWidth={1.5} />
+        </div>
 
-        <Link
-          href="/admin/builds"
-          className="group flex flex-col gap-3 p-6 bg-white border border-gray-200 rounded hover:border-gray-400 transition-colors"
-        >
-          <Layers size={24} className="text-brand-teal-medium" strokeWidth={1.5} />
+        {/* <div className="flex flex-col gap-3 p-6 bg-gray-50 border border-gray-200 rounded cursor-not-allowed">
+          <Layers size={24} className="text-gray-300" strokeWidth={1.5} />
           <div>
-            <p className="text-body-md font-bold text-gray-900">Preview Builds</p>
-            <p className="text-body-sm text-gray-500 mt-0.5">Vercel deployment status</p>
+            <p className="text-body-md font-bold text-gray-300">Preview Builds</p>
+            <p className="text-body-sm text-gray-300 mt-0.5">Vercel deployment status</p>
           </div>
-          <ArrowRight
-            size={16}
-            className="text-gray-300 group-hover:text-gray-500 mt-auto self-end transition-colors"
-          />
-        </Link>
+          <Lock size={14} className="text-gray-300 mt-auto self-end" strokeWidth={1.5} />
+        </div> */}
       </div>
 
       {/* Workflow overview */}
@@ -76,13 +64,13 @@ export default function AdminDashboard() {
             {
               step: '02',
               title: 'Generate DSL',
-              desc: 'Qwen AI produces a Page DSL (JSON) — no code',
+              desc: 'AI produces a structured Page DSL — no coding required',
               color: 'text-brand-violet-medium',
             },
             {
               step: '03',
               title: 'Preview',
-              desc: 'Instantly see the rendered page at 1440px scale',
+              desc: 'Instantly see the rendered page in browser preview',
               color: 'text-brand-blue-medium',
             },
             {

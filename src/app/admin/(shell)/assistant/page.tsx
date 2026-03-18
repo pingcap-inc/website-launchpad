@@ -1,56 +1,9 @@
 'use client'
 
-import { useState, useEffect, useRef, createElement } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
-  Zap,
-  Shield,
-  Globe,
-  Database,
-  Server,
-  Cloud,
-  Lock,
-  Activity,
-  Layers,
-  Cpu,
-  Rocket,
-  BarChart,
-  CheckCircle,
-  Star,
-  ArrowRight,
-  GitBranch,
-  Package,
-  RefreshCw,
-  Gauge,
-  Code2,
-  Brain,
   Sparkles,
   Bot,
-  MessageSquare,
-  Search,
-  Settings,
-  Wrench,
-  Terminal,
-  FileCode,
-  GitMerge,
-  LayoutGrid,
-  Table,
-  BarChart2,
-  LineChart,
-  PieChart,
-  TrendingUp,
-  Filter,
-  Clock,
-  Repeat,
-  Scale,
-  DollarSign,
-  Users,
-  Building,
-  Briefcase,
-  Award,
-  Target,
-  Lightbulb,
-  Puzzle,
-  Network,
   Send,
   User,
   AlertCircle,
@@ -60,145 +13,9 @@ import {
   Maximize2,
   Minimize2,
 } from 'lucide-react'
-import type { LucideProps } from 'lucide-react'
-import {
-  HeroSection,
-  FeatureGridSection,
-  FeatureCardSection,
-  StatsSection,
-  CtaSection,
-  FaqSection,
-} from '@/components'
-import type { PageDSL, SectionNode, IconName } from '@/lib/dsl-schema'
-
-// Icon map
-type IconComp = React.ComponentType<LucideProps>
-const ICON_MAP: Record<IconName, IconComp> = {
-  Zap,
-  Shield,
-  Globe,
-  Database,
-  Server,
-  Cloud,
-  Lock,
-  Activity,
-  Layers,
-  Cpu,
-  Rocket,
-  BarChart,
-  CheckCircle,
-  Star,
-  ArrowRight,
-  GitBranch,
-  Package,
-  RefreshCw,
-  Gauge,
-  Code2,
-  Brain,
-  Sparkles,
-  Bot,
-  MessageSquare,
-  Search,
-  Settings,
-  Wrench,
-  Terminal,
-  FileCode,
-  GitMerge,
-  LayoutGrid,
-  Table,
-  BarChart2,
-  LineChart,
-  PieChart,
-  TrendingUp,
-  Filter,
-  Clock,
-  Repeat,
-  Scale,
-  DollarSign,
-  Users,
-  Building,
-  Briefcase,
-  Award,
-  Target,
-  Lightbulb,
-  Puzzle,
-  Network,
-}
-function renderIcon(name?: IconName | string) {
-  if (!name) return undefined
-  if (name.startsWith('/') || name.startsWith('http')) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={name} alt="" className="object-contain" />
-  }
-  const C = ICON_MAP[name as IconName] ?? Zap
-  return createElement(C, { className: '', strokeWidth: 1.5 })
-}
-
-function RenderSection({ node, index }: { node: SectionNode; index: number }) {
-  switch (node.type) {
-    case 'hero':
-      return (
-        <HeroSection
-          key={index}
-          layout={node.layout}
-          eyebrow={node.eyebrow}
-          headline={node.headline}
-          subheadline={node.subheadline}
-          primaryCta={node.primaryCta}
-          secondaryCta={node.secondaryCta}
-        />
-      )
-    case 'stats':
-      return (
-        <StatsSection
-          key={index}
-          title={node.title}
-          stats={node.items.map((s) => ({ ...s, icon: renderIcon(s.icon) }))}
-          columns={node.columns}
-        />
-      )
-    case 'featureGrid':
-      return (
-        <FeatureGridSection
-          key={index}
-          title={node.title}
-          features={node.items.map((f) => ({ ...f, icon: renderIcon(f.icon) }))}
-          columns={node.columns}
-        />
-      )
-    case 'featureCard':
-      return (
-        <FeatureCardSection
-          key={index}
-          title={node.title}
-          items={node.items.map((f) => ({ ...f, icon: renderIcon(f.icon) }))}
-          columns={node.columns}
-        />
-      )
-    case 'faq':
-      return <FaqSection key={index} title={node.title} items={node.items} />
-    case 'cta':
-      return (
-        <CtaSection
-          key={index}
-          title={node.title}
-          subtitle={node.subtitle}
-          background={node.background}
-          primaryCta={node.primaryCta}
-          secondaryCta={node.secondaryCta}
-        />
-      )
-    default:
-      return (
-        <div
-          key={index}
-          className="py-8 bg-gray-100 text-center text-gray-500 text-body-sm border-y border-gray-200"
-        >
-          {node.type} section
-        </div>
-      )
-  }
-}
+import type { PageDSL } from '@/lib/dsl-schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import { normalizeDSL } from '@/lib/dsl-utils'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -289,12 +106,13 @@ export default function AssistantPage() {
           'Page DSL not found — only pages published via this platform can be edited.'
         )
       const data = await res.json()
-      setDsl(data)
+      const normalized = normalizeDSL(data)
+      setDsl(normalized)
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
-          content: `Loaded **${data.meta.title}** (/${slug}/). It has ${data.sections.length} sections: ${data.sections.map((s: SectionNode) => s.type).join(', ')}. What would you like to change?`,
+          content: `Loaded **${normalized.meta.title}** (/${slug}/). It has ${normalized.sections.length} sections: ${normalized.sections.map((s) => s.type).join(', ')}. What would you like to change?`,
         },
       ])
     } catch (err) {
@@ -320,7 +138,7 @@ export default function AssistantPage() {
       })
       const data = await res.json()
       if (!res.ok || data.error) throw new Error(data.error ?? 'Edit failed')
-      setDsl(data)
+      setDsl(normalizeDSL(data))
       setMessages((prev) => [
         ...prev,
         {
@@ -362,9 +180,9 @@ export default function AssistantPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden flex-col lg:flex-row">
       {/* Left: chat panel */}
-      <div className="w-[420px] shrink-0 flex flex-col border-r border-gray-200 bg-white">
+      <div className="w-full lg:w-[420px] shrink-0 flex flex-col border-b border-gray-200 lg:border-b-0 lg:border-r bg-white">
         {/* Header */}
         <div className="px-5 py-4 border-b border-gray-200 space-y-3 shrink-0">
           <div>
@@ -486,7 +304,7 @@ export default function AssistantPage() {
       {/* Right: live preview */}
       <div
         ref={previewRef}
-        className="flex-1 overflow-hidden flex flex-col bg-gray-50 border-l border-gray-200"
+        className="flex-1 overflow-hidden flex flex-col bg-gray-50 border-t border-gray-200 lg:border-t-0 lg:border-l"
       >
         {/* Viewport toggle */}
         <div className="flex items-center gap-1 border-b border-gray-200 px-3 py-2 shrink-0 bg-white">
@@ -516,21 +334,25 @@ export default function AssistantPage() {
             <p className="text-body-sm text-gray-400">Select a page to see its live preview here</p>
           </div>
         ) : (
-          <div className="flex-1 overflow-y-auto" style={{ contain: 'paint' }}>
+          <div className="flex-1 overflow-y-auto overflow-x-hidden" style={{ contain: 'paint' }}>
             {viewport === 'mobile' ? (
-              <div className="flex justify-center bg-gray-100 min-h-full py-4">
+              <div className="flex justify-center bg-gray-100 min-h-full py-4 px-3">
                 <iframe
                   key={previewKey}
                   src="/admin/preview"
-                  style={{ width: 390, height: iframeHeight, border: 'none', display: 'block' }}
+                  style={{
+                    width: '100%',
+                    maxWidth: 390,
+                    height: iframeHeight,
+                    border: 'none',
+                    display: 'block',
+                  }}
                   title="Mobile preview"
                 />
               </div>
             ) : (
-              <div className="w-full">
-                {dsl.sections.map((node, i) => (
-                  <RenderSection key={i} node={node} index={i} />
-                ))}
+              <div className="w-full max-w-[1440px] mx-auto">
+                <PageRenderer dsl={dsl} />
               </div>
             )}
           </div>

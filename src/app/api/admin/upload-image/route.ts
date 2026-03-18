@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3'
+
+const CDN_BASE = 'https://static.pingcap.com'
+const TAGS_KEY = 'media/tags.json'
 
 /**
  * POST /api/admin/upload-image
@@ -10,10 +14,6 @@ export async function POST(req: NextRequest) {
   const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env
   const branch = 'drafts/ai'
 
-  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-    return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
-  }
-
   let formData: FormData
   try {
     formData = await req.formData()
@@ -23,6 +23,12 @@ export async function POST(req: NextRequest) {
 
   const file = formData.get('file') as File | null
   const slug = (formData.get('slug') as string | null) ?? 'admin'
+  const source = (formData.get('source') as string | null) ?? ''
+  const tagsRaw = (formData.get('tags') as string | null) ?? ''
+  const tags = tagsRaw
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean)
 
   if (!file) {
     return NextResponse.json({ error: 'file is required' }, { status: 400 })
@@ -43,6 +49,56 @@ export async function POST(req: NextRequest) {
   const hash = crypto.createHash('sha1').update(buffer).digest('hex').slice(0, 8)
   const safeName = file.name.replace(/[^a-z0-9._-]/gi, '_').toLowerCase()
   const filename = `${hash}-${safeName}`
+
+  // ── Media Center path: upload to S3 ──────────────────────────────────────
+  if (source === 'media') {
+    const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_S3_BUCKET } = process.env
+    if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY || !AWS_REGION || !AWS_S3_BUCKET) {
+      return NextResponse.json({ error: 'AWS env vars not configured' }, { status: 500 })
+    }
+    const s3 = new S3Client({
+      region: AWS_REGION,
+      credentials: { accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY },
+      followRegionRedirects: true,
+    })
+    const s3Key = `images/${filename}`
+    await s3.send(
+      new PutObjectCommand({
+        Bucket: AWS_S3_BUCKET,
+        Key: s3Key,
+        Body: buffer,
+        ContentType: file.type,
+      })
+    )
+    const publicUrl = `${CDN_BASE}/${s3Key}`
+
+    // Update tags.json
+    let tagsMap: Record<string, string[]> = {}
+    try {
+      const res = await s3.send(new GetObjectCommand({ Bucket: AWS_S3_BUCKET, Key: TAGS_KEY }))
+      const body = await res.Body?.transformToString()
+      if (body) tagsMap = JSON.parse(body) as Record<string, string[]>
+    } catch {
+      // tags.json doesn't exist yet — start fresh
+    }
+    tagsMap[publicUrl] = tags
+    await s3.send(
+      new PutObjectCommand({
+        Bucket: AWS_S3_BUCKET,
+        Key: TAGS_KEY,
+        Body: JSON.stringify(tagsMap, null, 2),
+        ContentType: 'application/json',
+      })
+    )
+
+    return NextResponse.json({ path: publicUrl })
+  }
+
+  // ── Default path: upload to GitHub (page-specific images) ────────────────
+  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+    return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
+  }
+
   const filePath = `public/images/admin-uploads/${slug}/${filename}`
   const publicPath = `/images/admin-uploads/${slug}/${filename}`
 

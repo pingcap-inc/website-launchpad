@@ -17,7 +17,7 @@ interface ColorCardProps {
   description: string
   cta: { text: string; href: string }
   /** Lucide icon or any SVG node */
-  icon: React.ReactNode
+  icon?: React.ReactNode
 }
 
 export function ColorCard({ variant, title, description, cta, icon }: ColorCardProps) {

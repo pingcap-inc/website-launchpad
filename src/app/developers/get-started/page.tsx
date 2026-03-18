@@ -220,19 +220,21 @@ export default function GetStartedPage() {
         <DeveloperSubnav />
         <main>
           {/* ── Hero ── */}
-          <HeroSection
-            layout="image-right"
-            eyebrow="TiDB Developer Hub"
-            headline="Get Started with TiDB"
-            subheadline="New to TiDB? Start by spinning up a free cluster, then pick a path based on what you want to build."
-            heroImage={{
-              src: '/images/developers/get-started-banner.svg',
-              alt: 'Get Started Banner',
-              width: 517,
-              height: 200,
-              align: 'right',
-            }}
-          />
+          <section className="bg-bg-primary py-10 md:py-0">
+            <HeroSection
+              layout="image-right"
+              eyebrow="TiDB Developer Hub"
+              headline="Get Started with TiDB"
+              subheadline="New to TiDB? Start by spinning up a free cluster, then pick a path based on what you want to build."
+              heroImage={{
+                image: { url: '/images/developers/get-started-banner.svg' },
+                alt: 'Get Started Banner',
+                width: 517,
+                height: 200,
+                align: 'right',
+              }}
+            />
+          </section>
 
           {/* ── Why TiDB ── */}
           <section className="py-section-sm lg:pb-section bg-bg-primary">

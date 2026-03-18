@@ -24,12 +24,9 @@ function injectSitemapEntry(
 }
 
 export async function POST(request: NextRequest) {
-  const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env
-  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-    return NextResponse.json(
-      { error: 'GitHub env vars not configured (GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO)' },
-      { status: 500 }
-    )
+  const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, VERCEL_OWNER } = process.env
+  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO || !VERCEL_OWNER) {
+    return NextResponse.json({ error: 'Environment variables not configured' }, { status: 500 })
   }
 
   const {
@@ -40,6 +37,13 @@ export async function POST(request: NextRequest) {
     priority = 0.7,
     changeFrequency = 'monthly',
   } = (await request.json()) as PublishRequest
+
+  if (branch === 'main') {
+    return NextResponse.json(
+      { error: 'Publishing directly to main is currently disabled.' },
+      { status: 403 }
+    )
+  }
 
   if (!slug || !/^[a-z0-9-]+$/.test(slug)) {
     return NextResponse.json(
@@ -178,7 +182,7 @@ export async function POST(request: NextRequest) {
   const deployUrl =
     branch === 'main'
       ? `https://www.pingcap.com/${slug}/`
-      : `https://${GITHUB_REPO}-git-${branch.replace(/[^a-z0-9]/g, '-')}-${GITHUB_OWNER}.vercel.app/${slug}/`
+      : `https://${GITHUB_REPO}-git-${branch.replace(/[^a-z0-9]/g, '-')}-${VERCEL_OWNER}.vercel.app/${slug}/`
 
   return NextResponse.json({
     success: true,

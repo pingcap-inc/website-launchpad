@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
 import { SlideIn } from '../ui/SlideIn'
+import type { ImageRef } from '@/lib/dsl-schema'
 
 interface TestimonialCard {
   quote: string
@@ -12,8 +13,8 @@ interface TestimonialCard {
   href?: string
   cta?: string
   logo?: {
-    src: string
-    alt: string
+    image: ImageRef
+    alt?: string
     size?: number
   }
 }
@@ -55,19 +56,19 @@ function TestimonialCard({
               size === 'lg' ? 'w-20 h-20' : 'w-14 h-14'
             )}
           >
-            {logo.src.startsWith('http://') || logo.src.startsWith('https://') ? (
+            {logo.image.url.startsWith('http://') || logo.image.url.startsWith('https://') ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={logo.src}
-                alt={logo.alt}
+                src={logo.image.url}
+                alt={logo.alt ?? ''}
                 width={logo.size ?? (size === 'lg' ? 64 : 44)}
                 height={logo.size ?? (size === 'lg' ? 64 : 44)}
                 className="object-contain"
               />
             ) : (
               <Image
-                src={logo.src}
-                alt={logo.alt}
+                src={logo.image.url}
+                alt={logo.alt ?? ''}
                 width={logo.size ?? (size === 'lg' ? 64 : 44)}
                 height={logo.size ?? (size === 'lg' ? 64 : 44)}
                 className="object-contain"
@@ -106,7 +107,7 @@ function TestimonialCard({
 }
 
 export function TestimonialsSection({
-  eyebrow = 'Testimonials',
+  eyebrow,
   title,
   testimonials,
   className,
@@ -208,64 +209,64 @@ export function TestimonialsSection({
   }, [shouldFlip, reducedMotion, paused, testimonials.length, stepHeight])
 
   return (
-    <section className={cn('py-section-sm lg:py-section', className)}>
-      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-        <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
-          <div className="md:col-span-5">
-            <SlideIn direction="up">
+    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
+      <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="md:col-span-5">
+          <SlideIn direction="up">
+            {eyebrow && (
               <p className="text-body-sm text-carbon-400 tracking-wide uppercase mb-4">{eyebrow}</p>
-              <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-text-inverse">
-                {title}
-              </h2>
-            </SlideIn>
-          </div>
-          <div className="md:col-span-7">
+            )}
+            <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-text-inverse">
+              {title}
+            </h2>
+          </SlideIn>
+        </div>
+        <div className="md:col-span-7">
+          <div
+            ref={wrapperRef}
+            className={cn('relative overflow-hidden', shouldFlip && 'mask-bottom-fade')}
+            style={shouldFlip && wrapperHeight ? { height: `${wrapperHeight}px` } : undefined}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
             <div
-              ref={wrapperRef}
-              className={cn('relative overflow-hidden', shouldFlip && 'mask-bottom-fade')}
-              style={shouldFlip && wrapperHeight ? { height: `${wrapperHeight}px` } : undefined}
-              onMouseEnter={() => setPaused(true)}
-              onMouseLeave={() => setPaused(false)}
+              ref={listRef}
+              className={cn(
+                'flex flex-col gap-6',
+                shouldFlip && animating
+                  ? 'transition-transform duration-700 ease-in-out'
+                  : 'transition-none'
+              )}
+              style={
+                shouldFlip && stepHeight
+                  ? {
+                      transform: animating ? `translateY(-${stepHeight}px)` : 'translateY(0)',
+                    }
+                  : undefined
+              }
             >
+              {items.map((card, itemIndex) => (
+                <div key={`${card.quote}-${itemIndex}`}>
+                  <TestimonialCard {...card} size="lg" />
+                </div>
+              ))}
+            </div>
+            {shouldFlip && (
               <div
-                ref={listRef}
-                className={cn(
-                  'flex flex-col gap-6',
-                  shouldFlip && animating
-                    ? 'transition-transform duration-700 ease-in-out'
-                    : 'transition-none'
-                )}
-                style={
-                  shouldFlip && stepHeight
-                    ? {
-                        transform: animating ? `translateY(-${stepHeight}px)` : 'translateY(0)',
-                      }
-                    : undefined
-                }
+                ref={measureRef}
+                className="absolute left-0 top-0 -z-10 opacity-0 pointer-events-none"
+                style={measureWidth ? { width: `${measureWidth}px` } : undefined}
               >
-                {items.map((card, itemIndex) => (
-                  <div key={`${card.quote}-${itemIndex}`}>
+                {testimonials.map((card, itemIndex) => (
+                  <div key={`${card.quote}-measure-${itemIndex}`} className="mb-4 last:mb-0">
                     <TestimonialCard {...card} size="lg" />
                   </div>
                 ))}
               </div>
-              {shouldFlip && (
-                <div
-                  ref={measureRef}
-                  className="absolute left-0 top-0 -z-10 opacity-0 pointer-events-none"
-                  style={measureWidth ? { width: `${measureWidth}px` } : undefined}
-                >
-                  {testimonials.map((card, itemIndex) => (
-                    <div key={`${card.quote}-measure-${itemIndex}`} className="mb-4 last:mb-0">
-                      <TestimonialCard {...card} size="lg" />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

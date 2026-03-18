@@ -43,9 +43,8 @@ const DEPLOY_STEPS = (
 ]
 
 export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawerProps) {
-  const [branch, setBranch] = useState<'staging' | 'main'>('staging')
+  const [branch, setBranch] = useState('staging')
   const [addToSitemap, setAddToSitemap] = useState(true)
-  const [confirmSlug, setConfirmSlug] = useState('')
   const [publishing, setPublishing] = useState(false)
   const [result, setResult] = useState<PublishResult | null>(null)
   const [deployStatus, setDeployStatus] = useState<DeployStatus>('idle')
@@ -53,18 +52,10 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
   const [localGenerating, setLocalGenerating] = useState(false)
   const [localResult, setLocalResult] = useState<LocalGenerateResult | null>(null)
 
-  // Promote staging → production state
-  const [promoteConfirmSlug, setPromoteConfirmSlug] = useState('')
-  const [promoting, setPromoting] = useState(false)
-  const [promoteResult, setPromoteResult] = useState<PublishResult | null>(null)
-  const [promoteDeployStatus, setPromoteDeployStatus] = useState<DeployStatus>('idle')
-  const [promoteDeployUrl, setPromoteDeployUrl] = useState('')
-
   const localSlug = slug.replace(/^\/|\/$/g, '')
   const slugValid = /^[a-z0-9-]+$/.test(localSlug)
-  const mainConfirmed = branch !== 'main' || confirmSlug === localSlug
 
-  const canPublish = slugValid && !publishing && mainConfirmed
+  const canPublish = slugValid && !publishing
 
   const pollDeploy = () => {
     const start = Date.now()
@@ -94,55 +85,6 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
     setTimeout(tick, 8000)
   }
 
-  const pollPromoteDeploy = () => {
-    const start = Date.now()
-    const MAX = 3 * 60 * 1000
-    const tick = async () => {
-      if (Date.now() - start > MAX) {
-        setPromoteDeployStatus('error')
-        return
-      }
-      try {
-        const res = await fetch('/api/deploy-status')
-        const { status } = (await res.json()) as { status: string }
-        if (status === 'ready') {
-          setPromoteDeployStatus('ready')
-          return
-        }
-        if (status === 'error') {
-          setPromoteDeployStatus('error')
-          return
-        }
-        setPromoteDeployStatus('building')
-        setTimeout(tick, 5000)
-      } catch {
-        setTimeout(tick, 5000)
-      }
-    }
-    setTimeout(tick, 8000)
-  }
-
-  const handlePromote = async () => {
-    setPromoting(true)
-    setPromoteResult(null)
-    try {
-      const res = await fetch('/api/publish', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: localSlug, dsl, branch: 'main', addToSitemap }),
-      })
-      const data = (await res.json()) as PublishResult
-      setPromoteResult(data)
-      if (data.success) {
-        setPromoteDeployUrl(data.deployUrl ?? '')
-        setPromoteDeployStatus('building')
-        pollPromoteDeploy()
-      }
-    } finally {
-      setPromoting(false)
-    }
-  }
-
   const handlePublish = async () => {
     setPublishing(true)
     setResult(null)
@@ -150,7 +92,7 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
       const res = await fetch('/api/publish', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: localSlug, dsl, branch, addToSitemap }),
+        body: JSON.stringify({ slug: localSlug, dsl, branch: 'staging', addToSitemap }),
       })
       const data = (await res.json()) as PublishResult
       setResult(data)
@@ -223,72 +165,7 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
             )}
           </div>
 
-          {/* Branch */}
-          <div className="space-y-1.5">
-            <label className="block text-body-sm font-bold text-gray-700">Target Branch</label>
-            <div className="space-y-2">
-              {(['staging', 'main'] as const).map((b) => (
-                <label key={b} className="flex items-start gap-3 cursor-pointer group">
-                  <input
-                    type="radio"
-                    value={b}
-                    checked={branch === b}
-                    onChange={() => {
-                      setBranch(b)
-                      setConfirmSlug('')
-                    }}
-                    className="mt-0.5"
-                  />
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-body-sm font-bold text-gray-700">{b}</span>
-                      {b === 'staging' && (
-                        <span className="text-label text-brand-teal-medium bg-brand-teal-bg/20 border border-brand-teal-dark/30 px-1.5 py-0.5 rounded">
-                          Safe preview
-                        </span>
-                      )}
-                      {b === 'main' && (
-                        <span className="text-label text-red-600 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded">
-                          ⚠️ Production
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-label text-gray-400 mt-0.5">
-                      {b === 'staging'
-                        ? 'Deploys to preview URL only'
-                        : 'Goes live on pingcap.com immediately'}
-                    </p>
-                  </div>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Main branch warning + confirm */}
-          {branch === 'main' && (
-            <div className="border border-red-200 bg-red-50 rounded p-3 space-y-2">
-              <div className="flex items-start gap-2 text-red-700">
-                <AlertTriangle size={14} className="mt-0.5 shrink-0" />
-                <p className="text-body-sm font-bold">Publishing to Production</p>
-              </div>
-              <p className="text-body-sm text-red-600">
-                This will immediately go live at <strong>pingcap.com/{localSlug}/</strong> and
-                trigger a Vercel production build.
-              </p>
-              <div className="space-y-1">
-                <label className="block text-label text-red-700 font-bold">
-                  Type <code className="bg-red-100 px-1 rounded">{localSlug}</code> to confirm
-                </label>
-                <input
-                  type="text"
-                  value={confirmSlug}
-                  onChange={(e) => setConfirmSlug(e.target.value)}
-                  placeholder={localSlug}
-                  className="w-full border border-red-300 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-red-500 transition-colors"
-                />
-              </div>
-            </div>
-          )}
+          {/* Branch — main publish disabled */}
 
           {/* Sitemap toggle */}
           <label className="flex items-center gap-3 cursor-pointer">
@@ -431,89 +308,7 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
             </div>
           )}
 
-          {/* Promote to Production — only shown after staging deploy is ready */}
-          {branch === 'staging' && deployStatus === 'ready' && result?.success && (
-            <div className="border border-orange-200 bg-orange-50 rounded p-4 space-y-3">
-              <div className="flex items-start gap-2 text-orange-800">
-                <AlertTriangle size={14} className="mt-0.5 shrink-0" />
-                <p className="text-body-sm font-bold">Promote to Production</p>
-              </div>
-              <p className="text-body-sm text-orange-700">
-                Staging looks good? This will push the same page directly to{' '}
-                <strong>pingcap.com/{localSlug}/</strong> and trigger a production build.
-              </p>
-
-              {promoteDeployStatus === 'idle' && (
-                <div className="space-y-2">
-                  <label className="block text-label text-orange-800 font-bold">
-                    Type <code className="bg-orange-100 px-1 rounded">{localSlug}</code> to confirm
-                  </label>
-                  <input
-                    type="text"
-                    value={promoteConfirmSlug}
-                    onChange={(e) => setPromoteConfirmSlug(e.target.value)}
-                    placeholder={localSlug}
-                    className="w-full border border-orange-300 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-orange-500 transition-colors bg-white"
-                  />
-                  <button
-                    onClick={handlePromote}
-                    disabled={promoteConfirmSlug !== localSlug || promoting}
-                    className="w-full bg-red-600 text-white font-bold px-4 py-2 text-body-sm rounded hover:bg-red-700 disabled:opacity-40 transition-colors flex items-center justify-center gap-2"
-                  >
-                    {promoting ? (
-                      <>
-                        <Loader2 size={14} className="animate-spin" /> Promoting…
-                      </>
-                    ) : (
-                      '⚠️ Promote to Production'
-                    )}
-                  </button>
-                </div>
-              )}
-
-              {promoteDeployStatus !== 'idle' && (
-                <div className="space-y-2">
-                  {promoteResult?.pageCommitUrl && (
-                    <a
-                      href={promoteResult.pageCommitUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-body-sm text-brand-blue-medium hover:underline"
-                    >
-                      <ExternalLink size={13} /> View commit on GitHub
-                    </a>
-                  )}
-                  {promoteDeployStatus === 'building' && (
-                    <div className="flex items-center gap-2 text-body-sm text-orange-700">
-                      <Loader2 size={14} className="animate-spin" /> Production build in progress…
-                    </div>
-                  )}
-                  {promoteDeployStatus === 'ready' && promoteDeployUrl && (
-                    <a
-                      href={promoteDeployUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-brand-teal-bg/20 border border-brand-teal-medium/50 text-brand-teal-medium font-bold px-4 py-2.5 rounded text-body-sm hover:bg-brand-teal-bg/30 transition-colors"
-                    >
-                      <ExternalLink size={14} /> View live on pingcap.com
-                    </a>
-                  )}
-                  {promoteDeployStatus === 'error' && (
-                    <div className="flex gap-2 items-start text-red-600 text-body-sm p-3 bg-red-50 border border-red-200 rounded">
-                      <AlertTriangle size={14} className="mt-0.5 shrink-0" />
-                      <p>Production deploy timed out. Check Vercel dashboard.</p>
-                    </div>
-                  )}
-                  {promoteResult?.error && (
-                    <div className="flex gap-2 items-start text-red-600 text-body-sm p-3 bg-red-50 border border-red-200 rounded">
-                      <AlertTriangle size={14} className="mt-0.5 shrink-0" />
-                      <p>{promoteResult.error}</p>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
+          {/* Promote to Production — disabled */}
         </div>
       </div>
     </div>

@@ -199,19 +199,21 @@ export default function BuildAiAppsPage() {
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
         <main>
-          <HeroSection
-            layout="image-right"
-            eyebrow="TiDB Developer Hub"
-            headline="Build Complete AI Apps Fast with One Database to Serve Agent Context, Branching and Search"
-            subheadline="Vector search, RAG patterns, and LLM integrations — with working code for LangChain, LlamaIndex, and raw SQL."
-            heroImage={{
-              src: '/images/developers/build-ai-apps-banner.svg',
-              alt: 'Build AI Applications Banner',
-              width: 427,
-              height: 444,
-              align: 'right',
-            }}
-          />
+          <section className="bg-bg-primary py-10 md:py-0">
+            <HeroSection
+              layout="image-right"
+              eyebrow="TiDB Developer Hub"
+              headline="Build Complete AI Apps Fast with One Database to Serve Agent Context, Branching and Search"
+              subheadline="Vector search, RAG patterns, and LLM integrations — with working code for LangChain, LlamaIndex, and raw SQL."
+              heroImage={{
+                image: { url: '/images/developers/build-ai-apps-banner.svg' },
+                alt: 'Build AI Applications Banner',
+                width: 427,
+                height: 444,
+                align: 'right',
+              }}
+            />
+          </section>
 
           {/* ── How-To Guides ── */}
           <section

@@ -44,28 +44,26 @@ export function FeatureCardSection({
   className,
 }: FeatureCardSectionProps) {
   return (
-    <section className={cn('py-section-sm lg:py-section', className)}>
-      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-        <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
-        <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
-          {items.map((item, index) => (
-            <FeatureCard
-              key={item.title}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-              borderColor={
-                item.borderColor ??
-                (borderStyle === 'color'
-                  ? borderColorOrder[index % borderColorOrder.length]
-                  : undefined)
-              }
-              href={item.href}
-              className={item.className}
-            />
-          ))}
-        </div>
+    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
+      <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
+      <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
+        {items.map((item, index) => (
+          <FeatureCard
+            key={item.title}
+            icon={item.icon}
+            title={item.title}
+            description={item.description}
+            borderColor={
+              item.borderColor ??
+              (borderStyle === 'color'
+                ? borderColorOrder[index % borderColorOrder.length]
+                : undefined)
+            }
+            href={item.href}
+            className={item.className}
+          />
+        ))}
       </div>
-    </section>
+    </div>
   )
 }
