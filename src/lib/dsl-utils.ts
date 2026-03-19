@@ -336,6 +336,7 @@ function normalizeLogoCloudProps(value: unknown): LogoCloudProps {
     subtitle: v.subtitle,
     logos: logos as Logo[],
     variant: v.variant,
+    align: v.align,
     autoScroll: v.autoScroll,
     scrollSpeedSeconds: v.scrollSpeedSeconds,
   }

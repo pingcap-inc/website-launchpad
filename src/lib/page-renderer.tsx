@@ -318,6 +318,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       subtitle: props.subtitle,
       logos: props.logos,
       variant: props.variant,
+      align: props.align,
       autoScroll: props.autoScroll,
       scrollSpeedSeconds: props.scrollSpeedSeconds,
     }),
