@@ -293,6 +293,7 @@ export interface LogoCloudProps {
   subtitle?: string
   logos: Logo[]
   variant?: 'default' | 'minimal'
+  align?: 'center' | 'left'
   autoScroll?: boolean
   scrollSpeedSeconds?: number
 }
@@ -521,7 +522,7 @@ Available section types (choose appropriate mix):
 - { type: "faq", props: { title?, items: [{q, a}] } }
 - { type: "cta", props: { title, subtitle?, primaryCta: {text,href}, secondaryCta?: {text,href}, image?: { image: {assetId?, url}, alt?, width?, height? } } }
 - { type: "testimonials", props: { title, items: [{quote, author, href?, cta?, logo?: { image: {assetId?, url}, alt?, size? }}] } }
-- { type: "logoCloud", props: { title?, logos: [{name, image: {assetId?, url}, href?}], variant?: "default"|"minimal" } }
+- { type: "logoCloud", props: { title?, logos: [{name, image: {assetId?, url}, href?}], variant?: "default"|"minimal", align?: "center"|"left", autoScroll?, scrollSpeedSeconds? } }
 - { type: "form", props: { title?, subtitle?, portalId: "YOUR_PORTAL_ID", formId: "YOUR_FORM_ID", region?: "na1" } }
 
 Icon names (use for icon fields): ${ALL_ICON_NAMES.join(', ')}

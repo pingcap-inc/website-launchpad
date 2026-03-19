@@ -17,19 +17,11 @@ interface LogoCloudSectionProps {
   title?: string
   subtitle?: string
   logos: LogoCloudItem[]
-  columns?: 2 | 3 | 4 | 5 | 6
   variant?: 'default' | 'minimal'
+  align?: 'center' | 'left'
   autoScroll?: boolean
   scrollSpeedSeconds?: number
   className?: string
-}
-
-const colsMap = {
-  2: 'grid-cols-2',
-  3: 'grid-cols-2 md:grid-cols-3',
-  4: 'grid-cols-2 md:grid-cols-4',
-  5: 'grid-cols-2 md:grid-cols-5',
-  6: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6',
 }
 
 export function LogoCloudSection({
@@ -37,23 +29,22 @@ export function LogoCloudSection({
   title,
   subtitle,
   logos,
-  columns = 4,
   variant = 'default',
+  align = 'center',
   autoScroll = true,
   scrollSpeedSeconds = 28,
   className,
 }: LogoCloudSectionProps) {
   const shouldScroll = autoScroll && logos.length > 4
+  const headerAlign = align === 'center' ? 'center' : 'left'
+  const contentAlign = align === 'center' ? 'justify-center' : 'justify-start'
 
   const renderLogo = (logo: LogoCloudItem, key: string) => {
-    const containerClasses =
-      variant === 'minimal'
-        ? 'flex items-center justify-center'
-        : 'flex items-center justify-center rounded-xl border border-carbon-800 bg-bg-surface/40 px-6 py-5 transition-transform duration-200 ease-in-out hover:-translate-y-1'
+    const containerClasses = 'flex items-center justify-center'
     const imageClasses =
       variant === 'minimal'
-        ? 'h-8 w-auto object-contain opacity-90 transition-opacity duration-200 ease-in-out hover:opacity-100 brightness-0 invert'
-        : 'h-10 w-auto object-contain opacity-80 grayscale transition-all duration-200 ease-in-out hover:opacity-100 hover:grayscale-0'
+        ? 'h-8 w-auto object-contain opacity-70 transition-opacity duration-200 ease-in-out hover:opacity-100 brightness-0 invert'
+        : 'h-10 w-auto object-contain opacity-75 transition-opacity duration-200 ease-in-out hover:opacity-100 brightness-0 invert'
     const content = (
       <div className={containerClasses}>
         <Image
@@ -92,16 +83,16 @@ export function LogoCloudSection({
       {(title || subtitle || eyebrow) && (
         <SectionHeader
           h2Size="sm"
-          align={variant === 'minimal' ? 'center' : 'left'}
+          align={headerAlign}
           eyebrow={eyebrow}
           title={title ?? ''}
           subtitle={subtitle}
         />
       )}
       {shouldScroll ? (
-        <div className="relative overflow-hidden flex justify-center mx-auto w-3/4">
+        <div className="relative overflow-hidden">
           <div
-            className="flex w-max items-center gap-6 animate-logo-marquee"
+            className={cn('flex w-max items-center gap-10 animate-logo-marquee', contentAlign)}
             style={{ animationDuration: `${scrollSpeedSeconds}s` }}
           >
             {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}-a`))}
@@ -110,15 +101,9 @@ export function LogoCloudSection({
         </div>
       ) : (
         <>
-          {variant === 'minimal' ? (
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}`))}
-            </div>
-          ) : (
-            <div className={cn('grid gap-6 items-center', colsMap[columns])}>
-              {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}`))}
-            </div>
-          )}
+          <div className={cn('flex flex-wrap items-center gap-10', contentAlign)}>
+            {logos.map((logo, index) => renderLogo(logo, `${logo.name}-${index}`))}
+          </div>
         </>
       )}
     </div>

@@ -145,6 +145,7 @@ const defaultLogoCloudProps: LogoCloudProps = {
   title: '',
   logos: [],
   variant: 'default',
+  align: 'center',
   autoScroll: true,
 }
 
@@ -451,6 +452,17 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
+      {
+        type: 'select',
+        key: 'align',
+        label: 'Alignment',
+        options: [
+          { label: 'Center', value: 'center' },
+          { label: 'Left', value: 'left' },
+        ],
+      },
+      { type: 'toggle', key: 'autoScroll', label: 'Auto-scroll logos' },
+      { type: 'number', key: 'scrollSpeedSeconds', label: 'Scroll speed (seconds)' },
       {
         type: 'array',
         key: 'logos',
