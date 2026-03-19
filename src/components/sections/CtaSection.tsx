@@ -6,7 +6,6 @@ import { SlideIn } from '@/components/ui/SlideIn'
 import type { ImageRef } from '@/lib/dsl-schema'
 
 interface CtaSectionProps {
-  label?: string
   title: string
   subtitle?: string
   image?: { image: ImageRef; alt?: string; width?: number; height?: number }

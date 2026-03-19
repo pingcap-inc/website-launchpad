@@ -135,7 +135,6 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           {
             id: 'scale',
             label: 'Scale',
-            title: 'Scale Without Re-Architecture',
             description:
               'Keep your existing MySQL-compatible workflows while scaling from GB to PB.',
             bullets: ['Horizontal scaling', 'Strong consistency', 'HTAP-ready'],
@@ -150,7 +149,6 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           {
             id: 'speed',
             label: 'Speed',
-            title: 'Fast Queries, Low Latency',
             description: 'Serve transactional and analytical workloads in a single system.',
             bullets: ['Real-time insights', 'Elastic compute', 'Optimized storage'],
             secondaryCta: { text: 'See Docs', href: '/developers/' },

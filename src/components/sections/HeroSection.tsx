@@ -49,6 +49,7 @@ interface HeroSectionProps {
   /**
    * Plain text, a React node, or an HTML string.
    * HTML strings (detected by `<` tag) are rendered via `dangerouslySetInnerHTML`.
+   * SECURITY: HTML headline strings must be code-owned/trusted (not user/CMS input).
    * Use CSS classes from globals.css for gradient effects, e.g.:
    * `"Unlock <span class=\"text-gradient-violet animate-glow-sweep\">TiDB Cloud</span>"`
    */
