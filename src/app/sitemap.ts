@@ -37,6 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/tidb-cloud-startup-program/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/tidb-test/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/agentic-ai/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/ai-test/', priority: 0.7, changeFrequency: 'monthly' },
   ]
 
   return routes.map(({ url, priority, changeFrequency }) => ({
