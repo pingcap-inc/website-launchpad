@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "TiDB: Scale AI Applications with Real-Time Data",
-    "description": "See how leading AI companies scale with TiDB. Real-time database for vector search, embeddings, and AI workloads. Start free today.",
-    "canonical": "/ai-scale/"
+    "title": "TiDB: Modern Database for Intelligent Applications",
+    "description": "Scale your data infrastructure with TiDB. Real-time analytics, enterprise-grade reliability, and seamless MySQL compatibility for your most demanding workloads.",
+    "canonical": "/database-for-modern-apps/"
   },
   "sections": [
     {
@@ -10,16 +10,16 @@
       "type": "hero",
       "props": {
         "layout": "centered",
-        "eyebrow": "Built for AI Scale",
-        "headline": "Power AI Applications with <span class=\"text-gradient-violet animate-glow-sweep\">Real-Time Data</span>",
-        "subheadline": "TiDB enables AI companies to process, store, and search vector embeddings at scale. Used by leading AI/ML teams to accelerate inference and fine-tuning pipelines.",
+        "eyebrow": "Next-Generation Database",
+        "headline": "Build Fast, Scale Infinitely with <span class=\"text-gradient-violet\">TiDB</span>",
+        "subheadline": "The open-source, distributed SQL database designed for modern applications. Real-time analytics meets transactional consistency at any scale.",
         "primaryCta": {
           "text": "Start Free Trial",
           "href": "https://tidbcloud.com/free-trial/"
         },
         "secondaryCta": {
-          "text": "Watch Demo",
-          "href": "/resources/"
+          "text": "View Documentation",
+          "href": "https://docs.pingcap.com/"
         },
         "heroImage": {
           "image": {
@@ -31,7 +31,7 @@
         }
       },
       "style": {
-        "background": "gradient-dark-top",
+        "background": "gradient-dark-bottom",
         "spacing": "hero"
       }
     },
@@ -39,32 +39,32 @@
       "id": "stats",
       "type": "stats",
       "props": {
-        "title": "Trusted by AI Leaders",
-        "subtitle": "See why top AI companies rely on TiDB",
+        "title": "Trusted by Industry Leaders",
+        "subtitle": "Deploy with confidence using TiDB's proven infrastructure",
         "items": [
           {
             "icon": "Zap",
-            "value": "10x",
-            "label": "Faster Queries",
-            "description": "Sub-millisecond latency for vector search"
-          },
-          {
-            "icon": "Scale",
             "value": "99.99%",
-            "label": "Availability",
+            "label": "Uptime SLA",
             "description": "Enterprise-grade reliability"
           },
           {
-            "icon": "Database",
-            "value": "1M+",
-            "label": "Ops/sec",
-            "description": "Throughput for AI workloads"
+            "icon": "Globe",
+            "value": "150+",
+            "label": "Deployments",
+            "description": "Across global enterprises"
           },
           {
-            "icon": "Globe",
-            "value": "50+",
-            "label": "Countries",
-            "description": "Global deployment ready"
+            "icon": "BarChart",
+            "value": "10x",
+            "label": "Performance Gain",
+            "description": "vs. traditional databases"
+          },
+          {
+            "icon": "Shield",
+            "value": "$0",
+            "label": "Setup Cost",
+            "description": "Open-source and free to start"
           }
         ],
         "columns": 4
@@ -78,63 +78,39 @@
       "id": "features",
       "type": "featureGrid",
       "props": {
-        "eyebrow": "Purpose-Built for AI",
-        "title": "Everything Your AI Team Needs",
-        "subtitle": "From embeddings storage to real-time inference optimization",
+        "eyebrow": "Core Capabilities",
+        "title": "Everything You Need to Compete",
+        "subtitle": "TiDB combines OLTP and OLAP in one platform",
         "items": [
           {
-            "icon": "Brain",
-            "title": "Vector Search at Scale",
-            "description": "Native vector storage and similarity search. Process millions of embeddings with sub-millisecond latency for RAG systems.",
-            "cta": {
-              "text": "Learn More",
-              "href": "/features/vector-search/"
-            }
+            "icon": "Database",
+            "title": "Horizontal Scalability",
+            "description": "Scale compute and storage independently without downtime. Handle petabytes of data seamlessly."
           },
           {
-            "icon": "Sparkles",
-            "title": "Real-Time Feature Store",
-            "description": "Unified feature storage for training and inference. Keep your ML models fresh with live feature updates.",
-            "cta": {
-              "text": "Learn More",
-              "href": "/features/feature-store/"
-            }
+            "icon": "Zap",
+            "title": "Microsecond Latency",
+            "description": "Sub-millisecond response times for mission-critical queries and transactions."
           },
           {
-            "icon": "Cpu",
-            "title": "High Throughput Writes",
-            "description": "Ingest training data at scale. Handle millions of events per second from data pipelines and model training loops.",
-            "cta": {
-              "text": "Learn More",
-              "href": "/features/performance/"
-            }
+            "icon": "RefreshCw",
+            "title": "HTAP Architecture",
+            "description": "Real-time analytics and transaction processing in a single system. No ETL delays."
           },
           {
             "icon": "Lock",
-            "title": "ACID Transactions",
-            "description": "Maintain data consistency across AI pipelines. Prevent data drift and ensure model training integrity.",
-            "cta": {
-              "text": "Learn More",
-              "href": "/features/transactions/"
-            }
+            "title": "ACID Compliance",
+            "description": "Distributed transactions with full ACID guarantees across all regions."
+          },
+          {
+            "icon": "CheckCircle",
+            "title": "MySQL Compatible",
+            "description": "Drop-in replacement for MySQL. Migrate existing applications instantly."
           },
           {
             "icon": "Globe",
-            "title": "Global Distribution",
-            "description": "Deploy AI services worldwide. Multi-region replication with low latency inference access.",
-            "cta": {
-              "text": "Learn More",
-              "href": "/features/global-scale/"
-            }
-          },
-          {
-            "icon": "Shield",
-            "title": "Enterprise Security",
-            "description": "SOC 2 compliance, encryption at rest and in transit, role-based access control for sensitive AI datasets.",
-            "cta": {
-              "text": "Learn More",
-              "href": "/security/"
-            }
+            "title": "Multi-Region Resilience",
+            "description": "Geographic distribution with automatic failover and disaster recovery."
           }
         ],
         "columns": 3
@@ -148,49 +124,49 @@
       "id": "usecases",
       "type": "featureHighlights",
       "props": {
-        "eyebrow": "AI Use Cases",
-        "title": "Purpose-Built for Today's AI",
-        "subtitle": "Optimize every stage of your AI pipeline with real-time data infrastructure",
+        "eyebrow": "Use Cases",
+        "title": "Purpose-Built for Complex Workloads",
+        "subtitle": "From fintech to e-commerce, TiDB powers demanding applications",
         "items": [
           {
             "variant": "violet",
-            "title": "LLM Applications",
-            "description": "Power retrieval-augmented generation with fast semantic search over millions of documents and vectors.",
-            "cta": {
-              "text": "Explore LLM Stack",
-              "href": "/use-cases/llm/"
-            },
-            "icon": "Bot"
-          },
-          {
-            "variant": "blue",
             "title": "Real-Time Analytics",
-            "description": "Stream AI model outputs and predictions to analytics dashboards. Serve millions of queries per second.",
+            "description": "Analyze streaming data instantly without separate warehouses. Cut infrastructure costs by 60%.",
             "cta": {
               "text": "Learn More",
-              "href": "/use-cases/analytics/"
+              "href": "https://pingcap.com/use-cases/real-time-analytics/"
             },
             "icon": "BarChart2"
           },
           {
-            "variant": "teal",
-            "title": "Feature Engineering",
-            "description": "Unified platform for computing, storing, and serving features. Reduce training-serving skew with real-time consistency.",
+            "variant": "blue",
+            "title": "Financial Services",
+            "description": "Real-time fraud detection, settlements, and compliance reporting with guaranteed consistency.",
             "cta": {
-              "text": "View Architecture",
-              "href": "/use-cases/ml-features/"
+              "text": "Explore Solution",
+              "href": "https://pingcap.com/use-cases/fintech/"
             },
-            "icon": "Layers"
+            "icon": "TrendingUp"
+          },
+          {
+            "variant": "teal",
+            "title": "E-Commerce Scale",
+            "description": "Handle peak traffic with 100x growth. Pay only for what you use with dynamic scaling.",
+            "cta": {
+              "text": "See Case Study",
+              "href": "https://pingcap.com/case-studies/"
+            },
+            "icon": "Zap"
           },
           {
             "variant": "red",
-            "title": "Recommendation Engines",
-            "description": "Build personalized AI recommendations with sub-second latency. Update embeddings in real-time.",
+            "title": "Operational Intelligence",
+            "description": "Unified monitoring, metrics, and logs in one queryable system. Real-time insights at scale.",
             "cta": {
-              "text": "See How",
-              "href": "/use-cases/recommendations/"
+              "text": "Discover Benefits",
+              "href": "https://pingcap.com/use-cases/operational-analytics/"
             },
-            "icon": "TrendingUp"
+            "icon": "Activity"
           }
         ],
         "columns": 2
@@ -204,11 +180,11 @@
       "id": "testimonials",
       "type": "testimonials",
       "props": {
-        "title": "AI Companies Scale with TiDB",
+        "title": "Powering Today's Most Innovative Companies",
         "items": [
           {
-            "quote": "TiDB's vector search capabilities reduced our RAG pipeline latency by 80%. We're now serving AI features 10x faster than before.",
-            "author": "Head of ML, Leading AI Startup",
+            "quote": "TiDB replaced our Elasticsearch cluster and data warehouse with a single, unified platform. We cut infrastructure costs by 65% while improving query latency.",
+            "author": "Engineering Lead, ML Platform Company",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/712552a8-dify.png"
@@ -217,8 +193,8 @@
             }
           },
           {
-            "quote": "We needed a real-time feature store that could handle our scale. TiDB's consistency guarantees gave us confidence in production ML.",
-            "author": "Engineering Lead, AI Infrastructure",
+            "quote": "With TiDB's real-time analytics, we went from hours to milliseconds for fraud detection. Our transaction monitoring is now truly instantaneous.",
+            "author": "Risk Officer, Financial Services",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/712552a8-dify.png"
@@ -227,8 +203,8 @@
             }
           },
           {
-            "quote": "Switching to TiDB cut our inference latency from 500ms to 20ms. Our recommendation engine is now responsive at production scale.",
-            "author": "ML Engineering Manager, Scale-up",
+            "quote": "Scaling was our biggest pain point. TiDB lets us handle 10x traffic spikes automatically without resharding or downtime. Game changer.",
+            "author": "Infrastructure Lead, E-Commerce Platform",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/712552a8-dify.png"
@@ -247,31 +223,31 @@
       "id": "faq",
       "type": "faq",
       "props": {
-        "title": "AI & Machine Learning FAQs",
+        "title": "Common Questions",
         "items": [
           {
-            "q": "Can TiDB handle vector similarity search at scale?",
-            "a": "Yes. TiDB supports HNSW-based vector indexes optimized for semantic search. Query millions of embeddings with sub-millisecond latency, perfect for RAG systems and similarity-based recommendations."
+            "q": "How is TiDB different from PostgreSQL or MySQL?",
+            "a": "TiDB is a distributed, horizontally scalable database with true HTAP capabilities. Unlike traditional SQL databases, it handles both transactional and analytical workloads in real-time without performance degradation. It's fully MySQL-compatible for easy migration."
           },
           {
-            "q": "How does TiDB compare to vector-only databases?",
-            "a": "TiDB combines vector search with full OLTP/OLAP capabilities in one platform. You get real-time transactions, analytics, and vectors—eliminating complex multi-database architectures."
+            "q": "Can I migrate my existing MySQL database to TiDB?",
+            "a": "Yes. TiDB is wire-compatible with MySQL 5.7 and 8.0 protocols. Most applications require zero code changes. We provide migration tools and guidance for seamless transition with zero downtime."
           },
           {
-            "q": "Can we use TiDB as a feature store?",
-            "a": "Absolutely. TiDB's low-latency reads and high-throughput writes make it ideal for feature stores. Serve features in real-time while maintaining consistency between training and inference."
+            "q": "What's the pricing model for TiDB Cloud?",
+            "a": "TiDB Cloud uses consumption-based pricing for compute and storage. You pay only for what you use, with no minimum commitments. Reserve capacity plans are available for 30-50% savings on predictable workloads."
           },
           {
-            "q": "What's the latency for vector search queries?",
-            "a": "Sub-millisecond latency for millions of vector queries. Exact numbers depend on vector dimension and dataset size, but typical deployments see <5ms p99 latencies."
+            "q": "Is TiDB suitable for high-frequency trading or real-time systems?",
+            "a": "Absolutely. TiDB provides sub-millisecond latency, ACID compliance, and Jepsen-verified correctness. It's battle-tested for mission-critical financial systems and operational workloads."
           },
           {
-            "q": "How do we migrate from our current solution?",
-            "a": "Our team provides migration guides and support for common stacks (Pinecone, Weaviate, specialized feature stores). Most migrations complete in weeks with zero downtime."
+            "q": "How does TiDB handle disaster recovery?",
+            "a": "TiDB offers multi-region replication with automatic failover, configurable RPO/RTO, and integrated backup/restore. All data is automatically distributed across availability zones."
           },
           {
-            "q": "Is TiDB ACID compliant?",
-            "a": "Yes. Full ACID transactions ensure data consistency—critical for ML pipelines where data drift can break models. Strong consistency prevents training-serving skew."
+            "q": "What support options are available?",
+            "a": "We offer community support (free), professional support with SLA guarantees, and dedicated enterprise support. All tiers include access to our engineering team."
           }
         ]
       },
@@ -281,11 +257,11 @@
       }
     },
     {
-      "id": "cta-final",
+      "id": "cta",
       "type": "cta",
       "props": {
-        "title": "Ready to Scale Your AI?",
-        "subtitle": "Join leading AI companies optimizing their data infrastructure with TiDB.",
+        "title": "Ready to Transform Your Data Infrastructure?",
+        "subtitle": "Join hundreds of companies scaling with TiDB. Start free today—no credit card required.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -299,8 +275,8 @@
           "href": "https://tidbcloud.com/free-trial/"
         },
         "secondaryCta": {
-          "text": "Schedule Demo",
-          "href": "/contact/sales/"
+          "text": "Schedule a Demo",
+          "href": "https://pingcap.com/contact/"
         }
       },
       "style": {
