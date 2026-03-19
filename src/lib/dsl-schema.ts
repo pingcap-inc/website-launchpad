@@ -273,7 +273,6 @@ export interface FeatureTabsProps {
 export interface FeatureTab {
   id: string
   label: string
-  title?: string
   description?: string
   bullets?: string[]
   primaryCta?: Cta
