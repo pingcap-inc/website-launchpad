@@ -11,7 +11,6 @@ import type { ImageRef } from '@/lib/dsl-schema'
 export interface FeatureTabItem {
   id: string
   label: string
-  title?: string
   description?: string
   bullets?: string[]
   primaryCta?: { text: string; href: string }

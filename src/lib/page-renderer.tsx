@@ -345,7 +345,6 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     mapProps: (props: SectionPropsMap['cta']) => ({
       title: props.title,
       subtitle: props.subtitle,
-      label: props.label,
       image: props.image,
       primaryCta: props.primaryCta,
       secondaryCta: props.secondaryCta,

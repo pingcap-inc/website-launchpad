@@ -186,7 +186,6 @@ function normalizeFeatureTab(value: unknown): FeatureTab | null {
   return {
     id: v.id ?? '',
     label: v.label ?? '',
-    title: v.title,
     description: v.description,
     bullets: Array.isArray(v.bullets) ? (v.bullets as string[]) : undefined,
     primaryCta: v.primaryCta,
@@ -366,7 +365,6 @@ function normalizeCtaProps(value: unknown): CtaProps {
   return {
     title: v.title ?? '',
     subtitle: v.subtitle,
-    label: v.label,
     image: image
       ? {
           image,

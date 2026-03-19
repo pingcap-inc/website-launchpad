@@ -121,6 +121,7 @@ export function TestimonialsSection({
   const listRef = useRef<HTMLDivElement>(null)
   const measureRef = useRef<HTMLDivElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const timeoutRef = useRef<number | null>(null)
   const [measureWidth, setMeasureWidth] = useState<number | null>(null)
   const shouldFlip = testimonials.length > 1
   const items = useMemo(() => {
@@ -200,12 +201,21 @@ export function TestimonialsSection({
     const interval = window.setInterval(() => {
       if (!stepHeight) return
       setAnimating(true)
-      window.setTimeout(() => {
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current)
+      }
+      timeoutRef.current = window.setTimeout(() => {
         setIndex((prev) => (prev + 1) % testimonials.length)
         setAnimating(false)
       }, 700)
     }, 4000)
-    return () => window.clearInterval(interval)
+    return () => {
+      window.clearInterval(interval)
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current)
+        timeoutRef.current = null
+      }
+    }
   }, [shouldFlip, reducedMotion, paused, testimonials.length, stepHeight])
 
   return (

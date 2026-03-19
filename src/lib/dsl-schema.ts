@@ -252,7 +252,6 @@ export interface FeatureTabsProps {
 export interface FeatureTab {
   id: string
   label: string
-  title?: string
   description?: string
   bullets?: string[]
   primaryCta?: Cta
@@ -343,7 +342,6 @@ export interface FaqItem {
 export interface CtaProps {
   title: string
   subtitle?: string
-  label?: string
   image?: {
     image: ImageRef
     alt?: string
