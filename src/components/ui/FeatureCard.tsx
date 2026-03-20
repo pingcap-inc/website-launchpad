@@ -28,9 +28,9 @@ export function FeatureCard({
 
   const content = (
     <>
-      {icon && <div className="relative text-text-inverse">{icon}</div>}
-      <h3 className="text-h3-lg font-bold leading-normal m-0 text-text-inverse">{title}</h3>
-      <p className="text-body-md leading-relaxed m-0 text-text-inverse">{description}</p>
+      {icon && <div className="relative text-current">{icon}</div>}
+      <h3 className="text-h3-lg font-bold leading-normal m-0 text-current">{title}</h3>
+      <p className="text-body-md leading-relaxed m-0 text-secondary">{description}</p>
     </>
   )
 

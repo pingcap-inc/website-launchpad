@@ -137,12 +137,27 @@ function normalizeSectionStyle(style?: SectionStyle): SectionStyle | undefined {
   const background = v.background || undefined
   const spacing = v.spacing || undefined
   const className = v.className || undefined
+  const backgroundImageOpacityClassName =
+    typeof v.backgroundImageOpacityClassName === 'string'
+      ? v.backgroundImageOpacityClassName
+      : undefined
+  const backgroundImageOverlayClassName =
+    typeof v.backgroundImageOverlayClassName === 'string'
+      ? v.backgroundImageOverlayClassName
+      : undefined
+
+  const removePaddingTop = typeof v.removePaddingTop === 'boolean' ? v.removePaddingTop : undefined
+  const removePaddingBottom =
+    typeof v.removePaddingBottom === 'boolean' ? v.removePaddingBottom : undefined
 
   return {
     background,
     spacing,
-    collapse: v.collapse,
+    removePaddingTop,
+    removePaddingBottom,
     className,
+    backgroundImageOpacityClassName,
+    backgroundImageOverlayClassName,
     backgroundImage,
   }
 }
@@ -166,6 +181,7 @@ function normalizeFeatureGridItem(value: unknown): FeatureGridItem | null {
     title: v.title ?? '',
     description: v.description ?? '',
     cta: v.cta,
+    layout: v.layout,
   }
 }
 
@@ -284,6 +300,7 @@ function normalizeFeatureGridProps(value: unknown): FeatureGridProps {
     items: items as FeatureGridItem[],
     columns: v.columns,
     viewMore: v.viewMore,
+    itemLayout: v.itemLayout,
   }
 }
 
@@ -339,6 +356,8 @@ function normalizeLogoCloudProps(value: unknown): LogoCloudProps {
     align: v.align,
     autoScroll: v.autoScroll,
     scrollSpeedSeconds: v.scrollSpeedSeconds,
+    scrollContentMaxWidth:
+      typeof v.scrollContentMaxWidth === 'number' ? v.scrollContentMaxWidth : undefined,
   }
 }
 

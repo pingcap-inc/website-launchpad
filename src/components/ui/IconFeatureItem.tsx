@@ -25,8 +25,8 @@ export function IconFeatureItem({
     >
       {icon && <div className="shrink-0 flex justify-center">{icon}</div>}
       <div>
-        <h3 className="text-h3-lg font-bold text-text-inverse mb-2">{title}</h3>
-        <p className="text-body-md text-carbon-400 leading-relaxed">{description}</p>
+        <h3 className="text-h3-lg font-bold text-current mb-2">{title}</h3>
+        <p className="text-body-md text-secondary leading-relaxed">{description}</p>
       </div>
     </div>
   )

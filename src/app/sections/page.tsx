@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Fragment } from 'react'
 import { Compass, Layers, Rocket } from 'lucide-react'
 import {
   CtaSection,
@@ -13,6 +14,8 @@ import {
   LogoCloudSection,
   TestimonialsSection,
   StatsSection,
+  FormSection,
+  SectionWrapper,
 } from '@/components'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
@@ -50,22 +53,32 @@ async function getSectionComponents() {
 
 const demoRenderers: Record<string, () => React.ReactNode> = {
   HeroSection: () => (
-    <section className="bg-bg-primary py-10 md:py-0">
+    <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>
       <HeroSection
+        layout="image-right"
         eyebrow="Section Demo"
         headline="Hero Section Demo"
         subheadline="Swap the copy and CTAs to fit any campaign."
         primaryCta={{ text: 'Primary Action', href: '/' }}
         secondaryCta={{ text: 'Secondary', href: '/' }}
+        heroImage={{
+          image: {
+            url: 'https://static.pingcap.com/images/f54533cc-1000011158.svg',
+          },
+          alt: 'Hero image',
+          width: 300,
+          height: 300,
+        }}
       />
-    </section>
+    </SectionWrapper>
   ),
   FeatureGridSection: () => (
-    <section className="py-section-sm lg:py-section bg-gradient-dark-top">
+    <SectionWrapper style={{ background: 'gradient-dark-top', spacing: 'section' }}>
       <FeatureGridSection
         eyebrow="Features Grid"
         title="Highlight key benefits"
         subtitle="A flexible grid that scales from 2 to 4 columns."
+        itemLayout="horizontal"
         features={[
           {
             title: 'Fast Setup',
@@ -90,10 +103,10 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
         ]}
         columns={4}
       />
-    </section>
+    </SectionWrapper>
   ),
   FeatureCardSection: () => (
-    <section className="py-section-sm lg:py-section bg-bg-primary">
+    <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
       <FeatureCardSection
         eyebrow="Feature Cards"
         title="Bordered Cards with Color Accents"
@@ -123,10 +136,10 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
         columns={4}
         borderStyle="color"
       />
-    </section>
+    </SectionWrapper>
   ),
   FeatureTabsSection: () => (
-    <section className="py-section-sm lg:py-section bg-gradient-dark-top">
+    <SectionWrapper style={{ background: 'gradient-dark-top', spacing: 'section' }}>
       <FeatureTabsSection
         eyebrow="Feature Tabs"
         title="Deep Dives with Auto-Switching Tabs"
@@ -196,12 +209,13 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
         autoSwitch={true}
         autoSwitchInterval={6000}
       />
-    </section>
+    </SectionWrapper>
   ),
   LogoCloudSection: () => (
-    <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+    <SectionWrapper style={{ background: 'gradient-dark-bottom', spacing: 'section' }}>
       <LogoCloudSection
         title="Trusted by"
+        scrollContentMaxWidth={800}
         logos={[
           {
             name: 'Dify',
@@ -230,10 +244,10 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
         ]}
         variant="minimal"
       />
-    </section>
+    </SectionWrapper>
   ),
   TestimonialsSection: () => (
-    <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+    <SectionWrapper style={{ background: 'gradient-dark-bottom', spacing: 'section' }}>
       <TestimonialsSection
         eyebrow="Social Proof"
         title="What Teams Are Saying"
@@ -266,10 +280,10 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           },
         ]}
       />
-    </section>
+    </SectionWrapper>
   ),
   CtaSection: () => (
-    <section className="py-section-sm lg:py-section-md bg-brand-violet-bg">
+    <SectionWrapper style={{ background: 'brand-violet', spacing: 'md' }}>
       <CtaSection
         title="Ready to Assemble Your Next Page?"
         subtitle="Pick the sections you need, swap the copy, and go live fast."
@@ -284,10 +298,10 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           height: 256,
         }}
       />
-    </section>
+    </SectionWrapper>
   ),
   FeatureHighlightsSection: () => (
-    <section className="py-section-sm lg:py-section bg-bg-primary">
+    <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
       <FeatureHighlightsSection
         eyebrow="Color Cards"
         title="Highlight Key Initiatives"
@@ -318,10 +332,10 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
         columns={3}
         viewMore={{ text: 'View all initiatives', href: '/about-us/' }}
       />
-    </section>
+    </SectionWrapper>
   ),
   StatsSection: () => (
-    <section className="py-section-sm lg:py-section bg-gradient-dark-top">
+    <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
       <StatsSection
         eyebrow="BY THE NUMBERS"
         title="Performance You Can Measure"
@@ -346,10 +360,10 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           },
         ]}
       />
-    </section>
+    </SectionWrapper>
   ),
   FaqSection: () => (
-    <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+    <SectionWrapper style={{ background: 'inverse', spacing: 'section' }}>
       <FaqSection
         items={[
           {
@@ -366,7 +380,18 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           },
         ]}
       />
-    </section>
+    </SectionWrapper>
+  ),
+  FormSection: () => (
+    <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
+      <FormSection
+        title="Talk to Us"
+        subtitle="Drop your info and we’ll get back within 24 hours."
+        portalId="4466002"
+        formId="8d439c40-4e6b-4192-a99b-a2c619ad4146"
+        region="na1"
+      />
+    </SectionWrapper>
   ),
 }
 
@@ -376,7 +401,7 @@ export default async function SectionsPage() {
     <>
       <Header />
       <div className="pt-[62px] lg:pt-20">
-        <section className="bg-bg-primary py-10 md:py-0">
+        <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>
           <HeroSection
             eyebrow="Section Library"
             headline="Preview Reusable Landing Sections"
@@ -384,40 +409,42 @@ export default async function SectionsPage() {
             primaryCta={{ text: 'Use These Sections', href: '/' }}
             secondaryCta={{ text: 'See More Pages', href: '/' }}
           />
-        </section>
-        <section className="py-section-sm lg:py-section bg-gradient-dark-top">
-          <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {sections.map((section) => (
-                <a
-                  key={section.name}
-                  href={`#${section.name}`}
-                  className="rounded-2xl border border-carbon-800 bg-bg-surface/60 p-6 transition-colors hover:border-brand-red-primary hover:text-brand-red-primary"
-                >
-                  <p className="text-body-lg font-bold text-text-inverse">{section.label}</p>
-                  <p className="mt-2 text-body-sm text-carbon-400">
-                    {`/components/sections/${section.name}.tsx`}
-                  </p>
-                </a>
-              ))}
-            </div>
+        </SectionWrapper>
+        <SectionWrapper style={{ background: 'gradient-dark-top', spacing: 'section' }}>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {sections.map((section) => (
+              <a
+                key={section.name}
+                href={`#${section.name}`}
+                className="rounded-2xl border border-carbon-800 bg-bg-surface/60 p-6 transition-colors hover:border-brand-red-primary hover:text-brand-red-primary"
+              >
+                <p className="text-body-lg font-bold text-text-inverse">{section.label}</p>
+                <p className="mt-2 text-body-sm text-text-secondary">
+                  {`/components/sections/${section.name}.tsx`}
+                </p>
+              </a>
+            ))}
           </div>
-        </section>
+        </SectionWrapper>
 
-        {sections.map((section) => (
-          <div key={`demo-${section.name}`} id={section.name}>
-            {demoRenderers[section.name]?.() ?? (
-              <section className="py-section-sm lg:py-section bg-bg-primary">
-                <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-                  <h2 className="text-h2-mb md:text-h2-md font-bold text-text-inverse">
-                    {section.label}
-                  </h2>
-                  <p className="mt-3 text-body-md text-carbon-400">Demo not available yet.</p>
-                </div>
-              </section>
-            )}
-          </div>
-        ))}
+        {sections.map((section) => {
+          const demo = demoRenderers[section.name]
+          if (demo) {
+            return <Fragment key={section.name}>{demo()}</Fragment>
+          }
+          return (
+            <SectionWrapper
+              key={section.name}
+              id={section.name}
+              style={{ background: 'primary', spacing: 'section' }}
+            >
+              <h2 className="text-h2-mb md:text-h2-md font-bold text-text-inverse">
+                {section.label}
+              </h2>
+              <p className="mt-3 text-body-md text-text-secondary">Demo not available yet.</p>
+            </SectionWrapper>
+          )
+        })}
       </div>
       <Footer />
     </>

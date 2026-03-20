@@ -108,9 +108,15 @@ export interface SectionStyle {
     | 'brand-teal'
     | 'none'
   spacing?: 'none' | 'sm' | 'md' | 'lg' | 'section' | 'hero'
-  /** When true, collapse top padding if adjacent sections share the same background. */
-  collapse?: boolean
+  /** Remove top padding on this section. */
+  removePaddingTop?: boolean
+  /** Remove bottom padding on this section. */
+  removePaddingBottom?: boolean
   className?: string
+  /** Tailwind opacity class for section background image, e.g. "opacity-60". */
+  backgroundImageOpacityClassName?: string
+  /** Optional overlay class (e.g. "bg-black/40"). No overlay unless provided. */
+  backgroundImageOverlayClassName?: string
   backgroundImage?: {
     image: ImageRef
   }
@@ -210,6 +216,7 @@ export interface FeatureGridProps {
   items: FeatureGridItem[]
   columns?: 2 | 3 | 4
   viewMore?: { text: string; href: string }
+  itemLayout?: 'horizontal' | 'vertical'
 }
 
 export interface FeatureGridItem {
@@ -218,6 +225,7 @@ export interface FeatureGridItem {
   title: string
   description: string
   cta?: Cta
+  layout?: 'horizontal' | 'vertical'
 }
 
 // ─── Feature Card ────────────────────────────────────────────────────────────
@@ -296,6 +304,7 @@ export interface LogoCloudProps {
   align?: 'center' | 'left'
   autoScroll?: boolean
   scrollSpeedSeconds?: number
+  scrollContentMaxWidth?: number
 }
 
 export interface Logo {
@@ -480,8 +489,11 @@ Generate a PageDSL JSON object with this exact structure:
       "style": {
         "background"?: "primary"|"inverse"|"gradient-dark-top"|"gradient-dark-bottom"|"brand-red"|"brand-violet"|"brand-blue"|"brand-teal"|"none",
         "spacing"?: "none"|"sm"|"md"|"lg"|"section"|"hero",
-        "collapse"?: boolean,
-        "backgroundImage"?: { "image": {assetId?: string, url: string} }
+        "removePaddingTop"?: boolean,
+        "removePaddingBottom"?: boolean,
+        "backgroundImage"?: { "image": {assetId?: string, url: string} },
+        "backgroundImageOpacityClassName"?: string,
+        "backgroundImageOverlayClassName"?: string
       }
     }
   ]
@@ -515,7 +527,7 @@ Available section types (choose appropriate mix):
     <span class="text-gradient-violet animate-glow-sweep">word</span>
   )
 - { type: "stats", props: { title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4 } }
-- { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}}], columns?: 2|3|4 } }
+- { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, itemLayout?: "horizontal"|"vertical" } }
 - { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, href?}], columns?: 2|3|4 } }
 - { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval? } }
 - { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href} } }
