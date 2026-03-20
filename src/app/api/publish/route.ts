@@ -10,6 +10,7 @@ interface PublishRequest {
   addToSitemap?: boolean
   priority?: number
   changeFrequency?: string
+  triggerScore?: boolean
 }
 
 function injectSitemapEntry(
@@ -57,6 +58,7 @@ export async function POST(request: NextRequest) {
     addToSitemap: _addToSitemapLegacy,
     priority = 0.7,
     changeFrequency = 'monthly',
+    triggerScore,
   } = (await request.json()) as PublishRequest
 
   // Auto-add to sitemap when publishing to main; skip for feature/staging branches
@@ -218,5 +220,9 @@ export async function POST(request: NextRequest) {
     pageCommitUrl: commitHtmlUrl,
     sitemapCommitUrl: hasSitemap ? commitHtmlUrl : undefined,
     deployUrl,
+    scoreTriggered,
+    scoreTriggerError,
+    scoreTriggerSkipped,
+    scoreTriggerReason,
   })
 }

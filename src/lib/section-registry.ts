@@ -1,3 +1,4 @@
+import image from 'next/image'
 import type {
   AgendaProps,
   ComparisonTableProps,
