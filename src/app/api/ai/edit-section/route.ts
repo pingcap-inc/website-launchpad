@@ -97,16 +97,13 @@ function validateSection(s: unknown, originalType: string): string[] {
 
 const VALID_BG = new Set([
   'primary',
-  'surface',
   'inverse',
   'gradient-dark-top',
   'gradient-dark-bottom',
-  'gradient-dark',
   'brand-red',
   'brand-violet',
   'brand-blue',
   'brand-teal',
-  'none',
 ])
 const VALID_SPACING = new Set(['none', 'sm', 'md', 'lg', 'section', 'hero'])
 
