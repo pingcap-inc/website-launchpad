@@ -10,7 +10,7 @@ ${DSL_SCHEMA_PROMPT}
 
 Rules:
 - siteName must be exactly "TiDB"
-- canonical must start and end with "/" and must reflect the specific page topic (not just the product name). e.g. for "TiDB Cloud startup program" use "/tidb-cloud/startup-program/", NOT "/tidb-cloud/"
+- canonical must start and end with "/" and be a single top-level path segment only (no subpaths). It must reflect the specific page topic (not just the product name). e.g. for "TiDB Cloud startup program" use "/startup-program/", NOT "/tidb-cloud/startup-program/" or "/tidb-cloud/"
 - primaryCta hrefs: use "https://tidbcloud.com/free-trial/" for signup, real PingCAP paths for others
 - Do NOT include any image fields; leave all images out entirely (the system fills defaults)
 - Every featureGrid/featureCard item must have an icon
@@ -26,7 +26,7 @@ const MOCK_DSL: PageDSL = {
     title: 'TiDB Cloud Startup Program',
     description:
       'Build fast with the TiDB Cloud Startup Program. Get credits, support, and a scalable database built for modern teams.',
-    canonical: '/tidb-cloud/startup-program/',
+    canonical: '/startup-program/',
   },
   sections: [
     {

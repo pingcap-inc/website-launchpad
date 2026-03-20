@@ -14,7 +14,7 @@ import {
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { href: '/admin/pages', label: 'Pages', icon: FileText, disabled: true },
+  { href: '/admin/pages', label: 'Pages', icon: FileText },
   { href: '/admin/create', label: 'Create Page', icon: PlusSquare },
   { href: '/admin/assistant', label: 'AI Assistant', icon: MessageSquare, disabled: true },
   { href: '/admin/builds', label: 'Preview Builds', icon: Layers, disabled: true },
@@ -67,7 +67,13 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
       <nav className="flex-1 overflow-y-auto py-4 px-2">
         <ul className="space-y-1">
           {NAV_ITEMS.map(({ href, label, icon: Icon, exact, disabled }) => {
-            const isActive = !disabled && (exact ? pathname === href : pathname.startsWith(href))
+            const normalizedPath = pathname.replace(/\/$/, '')
+            const normalizedHref = href.replace(/\/$/, '')
+            const isActive =
+              !disabled &&
+              (exact
+                ? normalizedPath === normalizedHref
+                : normalizedPath.startsWith(normalizedHref))
             const baseClass = [
               'flex items-center rounded text-body-sm transition-colors duration-150',
               collapsed ? 'justify-center p-2' : 'gap-3 px-3 py-2',

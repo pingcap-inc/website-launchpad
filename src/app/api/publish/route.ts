@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { dslToTsx } from '@/lib/dsl-to-tsx'
+import { SITE_BASE_URL } from '@/lib/env'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 interface PublishRequest {
@@ -9,6 +10,7 @@ interface PublishRequest {
   addToSitemap?: boolean
   priority?: number
   changeFrequency?: string
+  triggerScore?: boolean
 }
 
 function injectSitemapEntry(
@@ -23,8 +25,29 @@ function injectSitemapEntry(
   return source.slice(0, insertPoint) + '\n' + newEntry + source.slice(insertPoint)
 }
 
+function isValidSlugPath(slug: string) {
+  if (!slug) return false
+  const segments = slug.split('/').filter(Boolean)
+  return segments.length > 0 && segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
+}
+
 export async function POST(request: NextRequest) {
   const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, VERCEL_OWNER } = process.env
+  const mainPublishToken = process.env.PUBLISH_MAIN_TOKEN
+  if (process.env.MOCK_PUBLISH_SUCCESS === '1') {
+    const body = (await request.json().catch(() => ({}))) as PublishRequest
+    const slug = body.slug ?? 'mock-page'
+    const host = request.headers.get('host')
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_BASE_URL ?? (host ? `http://${host}` : '')
+    const mockDeployUrl = `${baseUrl.replace(/\/$/, '')}/${slug}/`
+    return NextResponse.json({
+      success: true,
+      pageCommitUrl: 'https://example.com/mock-commit',
+      sitemapCommitUrl: body.addToSitemap ? 'https://example.com/mock-sitemap-commit' : undefined,
+      deployUrl: mockDeployUrl,
+      scoreTriggered: false,
+    })
+  }
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO || !VERCEL_OWNER) {
     return NextResponse.json({ error: 'Environment variables not configured' }, { status: 500 })
   }
@@ -32,22 +55,28 @@ export async function POST(request: NextRequest) {
   const {
     slug,
     dsl,
-    branch = process.env.GITHUB_BRANCH ?? 'main',
+    branch = process.env.GITHUB_BRANCH ?? 'staging',
     addToSitemap = false,
     priority = 0.7,
     changeFrequency = 'monthly',
+    triggerScore,
   } = (await request.json()) as PublishRequest
 
   if (branch === 'main') {
-    return NextResponse.json(
-      { error: 'Publishing directly to main is currently disabled.' },
-      { status: 403 }
-    )
+    const providedToken = request.headers.get('x-publish-main-token')
+    if (!mainPublishToken || !providedToken || providedToken !== mainPublishToken) {
+      return NextResponse.json(
+        {
+          error: 'Publishing to main is restricted. Provide a valid x-publish-main-token header.',
+        },
+        { status: 403 }
+      )
+    }
   }
 
-  if (!slug || !/^[a-z0-9-]+$/.test(slug)) {
+  if (!isValidSlugPath(slug)) {
     return NextResponse.json(
-      { error: 'Invalid slug. Use lowercase letters, numbers, and hyphens only.' },
+      { error: 'Invalid slug. Use lowercase letters, numbers, hyphens, and slashes only.' },
       { status: 400 }
     )
   }
@@ -182,12 +211,63 @@ export async function POST(request: NextRequest) {
   const deployUrl =
     branch === 'main'
       ? `https://www.pingcap.com/${slug}/`
-      : `https://${GITHUB_REPO}-git-${branch.replace(/[^a-z0-9]/g, '-')}-${VERCEL_OWNER}.vercel.app/${slug}/`
+      : `${SITE_BASE_URL.replace(/\/$/, '') || `https://${GITHUB_REPO}-git-${branch.replace(/[^a-z0-9]/g, '-')}-${VERCEL_OWNER}.vercel.app`}/${slug}/`
+
+  const shouldTriggerScore = triggerScore ?? process.env.ENABLE_PAGE_SCORING_ON_PUBLISH === '1'
+  let scoreTriggered = false
+  let scoreTriggerError: string | undefined
+  let scoreTriggerSkipped = false
+  let scoreTriggerReason: string | undefined
+
+  if (shouldTriggerScore) {
+    const sampleEveryRaw = process.env.SCORE_PUBLISH_EVERY_N
+    const sampleEvery = sampleEveryRaw ? Number(sampleEveryRaw) : 0
+    if (sampleEveryRaw && (!Number.isFinite(sampleEvery) || sampleEvery < 1)) {
+      scoreTriggerError = 'Invalid SCORE_PUBLISH_EVERY_N'
+    } else if (sampleEvery >= 2) {
+      const seed = parseInt(newCommitSha.slice(-2), 16)
+      if (!Number.isFinite(seed) || seed % sampleEvery !== 0) {
+        scoreTriggerSkipped = true
+        scoreTriggerReason = `Skipped by sampling rule (every ${sampleEvery} publishes)`
+      }
+    }
+  }
+
+  if (shouldTriggerScore && !scoreTriggerSkipped && !scoreTriggerError) {
+    const host = request.headers.get('host')
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_BASE_URL ?? (host ? `http://${host}` : null)
+    const triggerToken = process.env.SCORE_TRIGGER_TOKEN
+    if (baseUrl && triggerToken) {
+      try {
+        const res = await fetch(`${baseUrl.replace(/\/$/, '')}/api/score-trigger`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-score-token': triggerToken,
+          },
+          body: JSON.stringify({ slug, baseUrl }),
+        })
+        if (res.ok) {
+          scoreTriggered = true
+        } else {
+          scoreTriggerError = 'Failed to trigger scoring'
+        }
+      } catch {
+        scoreTriggerError = 'Failed to trigger scoring'
+      }
+    } else {
+      scoreTriggerError = 'Scoring not configured'
+    }
+  }
 
   return NextResponse.json({
     success: true,
     pageCommitUrl: commitHtmlUrl,
     sitemapCommitUrl: hasSitemap ? commitHtmlUrl : undefined,
     deployUrl,
+    scoreTriggered,
+    scoreTriggerError,
+    scoreTriggerSkipped,
+    scoreTriggerReason,
   })
 }

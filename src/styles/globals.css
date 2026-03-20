@@ -123,6 +123,21 @@
   animation: logo-marquee 28s linear infinite;
 }
 
+@keyframes slide-in-right {
+  from {
+    transform: translateX(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 240ms ease-out;
+}
+
 @keyframes glow-sweep {
   from {
     background-position: 200% 50%;

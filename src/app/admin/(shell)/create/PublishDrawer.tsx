@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { X, Loader2, Check, ExternalLink, AlertTriangle } from 'lucide-react'
 import type { PageDSL } from '@/lib/dsl-schema'
+import { SITE_BASE_URL } from '@/lib/env'
 
 type DeployStatus = 'idle' | 'building' | 'ready' | 'error'
 
@@ -11,6 +12,10 @@ interface PublishResult {
   pageCommitUrl?: string
   sitemapCommitUrl?: string
   deployUrl?: string
+  scoreTriggered?: boolean
+  scoreTriggerError?: string
+  scoreTriggerSkipped?: boolean
+  scoreTriggerReason?: string
   error?: string
 }
 
@@ -21,17 +26,28 @@ interface LocalGenerateResult {
   error?: string
 }
 
+interface PageScore {
+  slug: string
+  ux: number
+  seo: number
+  consistency: number
+  overall: number
+}
+
 interface PublishDrawerProps {
   dsl: PageDSL
   slug: string
+  slugLocked?: boolean
   onSlugChange: (slug: string) => void
+  onMetaChange: (patch: Partial<PageDSL['meta']>) => void
   onClose: () => void
 }
 
 const DEPLOY_STEPS = (
   result: PublishResult | null,
   addToSitemap: boolean,
-  deployStatus: DeployStatus
+  deployStatus: DeployStatus,
+  scoreStatus: 'idle' | 'queued' | 'loading' | 'ready' | 'error' | 'skipped'
 ) => [
   { label: 'Pushed to GitHub', done: !!result?.success },
   {
@@ -40,10 +56,29 @@ const DEPLOY_STEPS = (
   },
   { label: 'Vercel rebuilding', done: deployStatus === 'ready' || deployStatus === 'error' },
   { label: 'Live globally', done: deployStatus === 'ready' },
+  { label: 'Page scored', done: scoreStatus === 'ready' },
 ]
 
-export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawerProps) {
-  const [branch, setBranch] = useState('staging')
+function scoreBadgeClass(score: number) {
+  const base = 'px-2 py-0.5 rounded-full text-label font-bold border'
+  if (score >= 85) {
+    return `${base} border-emerald-200 text-emerald-700 bg-emerald-50`
+  }
+  if (score >= 70) {
+    return `${base} border-amber-200 text-amber-700 bg-amber-50`
+  }
+  return `${base} border-red-200 text-red-600 bg-red-50`
+}
+
+export function PublishDrawer({
+  dsl,
+  slug,
+  slugLocked = false,
+  onSlugChange,
+  onMetaChange,
+  onClose,
+}: PublishDrawerProps) {
+  const branch = 'staging'
   const [addToSitemap, setAddToSitemap] = useState(true)
   const [publishing, setPublishing] = useState(false)
   const [result, setResult] = useState<PublishResult | null>(null)
@@ -51,9 +86,29 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
   const [deployUrl, setDeployUrl] = useState('')
   const [localGenerating, setLocalGenerating] = useState(false)
   const [localResult, setLocalResult] = useState<LocalGenerateResult | null>(null)
+  const [scoreStatus, setScoreStatus] = useState<
+    'idle' | 'queued' | 'loading' | 'ready' | 'error' | 'skipped'
+  >('idle')
+  const [score, setScore] = useState<PageScore | null>(null)
+  const [scoreError, setScoreError] = useState('')
+  const scorePollRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const scorePollAttempts = useRef(0)
+  const [showScoreNotice, setShowScoreNotice] = useState(false)
+  const scoreNoticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const localSlug = slug.replace(/^\/|\/$/g, '')
-  const slugValid = /^[a-z0-9-]+$/.test(localSlug)
+  const slugValid = (() => {
+    if (!localSlug) return false
+    const segments = localSlug.split('/').filter(Boolean)
+    return segments.length > 0 && segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
+  })()
+
+  const normalizeSlugInput = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/[^a-z0-9-/]/g, '')
+      .replace(/\/{2,}/g, '/')
+      .replace(/^\/|\/$/g, '')
 
   const canPublish = slugValid && !publishing
 
@@ -88,11 +143,20 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
   const handlePublish = async () => {
     setPublishing(true)
     setResult(null)
+    setScore(null)
+    setScoreError('')
+    setScoreStatus('idle')
     try {
       const res = await fetch('/api/publish', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: localSlug, dsl, branch: 'staging', addToSitemap }),
+        body: JSON.stringify({
+          slug: localSlug,
+          dsl,
+          branch: 'staging',
+          addToSitemap,
+          triggerScore: false,
+        }),
       })
       const data = (await res.json()) as PublishResult
       setResult(data)
@@ -122,7 +186,91 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
     }
   }
 
-  const steps = DEPLOY_STEPS(result, addToSitemap, deployStatus)
+  const steps = DEPLOY_STEPS(result, addToSitemap, deployStatus, scoreStatus)
+
+  const fetchScoreOnce = async (silenceErrors = false) => {
+    try {
+      const res = await fetch('/api/page-scores')
+      const data = await res.json()
+      const entry = (data.scores ?? []).find((item: PageScore) => item.slug === localSlug) as
+        | PageScore
+        | undefined
+      if (entry) {
+        setScore(entry)
+        setScoreStatus('ready')
+        return true
+      }
+      setScoreStatus((prev) => (prev === 'error' ? prev : 'loading'))
+      return false
+    } catch (err) {
+      if (!silenceErrors) {
+        setScoreStatus('error')
+        setScoreError(err instanceof Error ? err.message : 'Failed to load score')
+      }
+      return false
+    }
+  }
+
+  const triggerScore = async () => {
+    setScoreError('')
+    setScoreStatus('queued')
+    try {
+      const res = await fetch('/api/page-scores/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: localSlug }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Failed to trigger scoring')
+      setTimeout(() => {
+        fetchScoreOnce(true).catch(() => {})
+      }, 10_000)
+    } catch (err) {
+      setScoreStatus('error')
+      setScoreError(err instanceof Error ? err.message : 'Failed to trigger scoring')
+    }
+  }
+
+  useEffect(() => {
+    if (!result?.success) return
+    if (scoreStatus !== 'queued' && scoreStatus !== 'loading') return
+
+    if (!scorePollRef.current) {
+      scorePollAttempts.current = 0
+      scorePollRef.current = setInterval(async () => {
+        scorePollAttempts.current += 1
+        const found = await fetchScoreOnce(true)
+        if (found || scorePollAttempts.current >= 20) {
+          if (scorePollRef.current) {
+            clearInterval(scorePollRef.current)
+            scorePollRef.current = null
+          }
+        }
+      }, 15_000)
+    }
+
+    return () => {
+      if (scorePollRef.current) {
+        clearInterval(scorePollRef.current)
+        scorePollRef.current = null
+      }
+    }
+  }, [result?.success, scoreStatus, localSlug])
+
+  useEffect(() => {
+    if (scoreStatus !== 'ready' || !score) return
+    setShowScoreNotice(true)
+    if (scoreNoticeTimer.current) clearTimeout(scoreNoticeTimer.current)
+    scoreNoticeTimer.current = setTimeout(() => {
+      setShowScoreNotice(false)
+    }, 4500)
+    return () => {
+      if (scoreNoticeTimer.current) {
+        clearTimeout(scoreNoticeTimer.current)
+        scoreNoticeTimer.current = null
+      }
+    }
+  }, [scoreStatus, score])
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
@@ -130,7 +278,26 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
       <div className="flex-1 bg-black/30" onClick={onClose} />
 
       {/* Drawer */}
-      <div className="w-96 bg-white h-full shadow-xl flex flex-col overflow-y-auto">
+      {showScoreNotice && score && (
+        <div className="fixed top-4 right-4 z-50 w-[22rem] max-w-[calc(100%-2rem)] rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 shadow-sm animate-slide-in-right">
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <p className="text-body-sm font-bold text-emerald-800">Scoring complete</p>
+              <p className="text-label text-emerald-700">
+                Overall {score.overall} · UX {score.ux} · SEO {score.seo} · Cons {score.consistency}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowScoreNotice(false)}
+              className="text-emerald-700 hover:text-emerald-900 text-label font-bold"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
+      <div className="w-96 bg-white h-full shadow-xl flex flex-col overflow-y-auto relative">
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <h2 className="text-h3-sm font-bold text-gray-900">Publish Page</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-700 transition-colors">
@@ -138,7 +305,7 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
           </button>
         </div>
 
-        <div className="flex-1 p-5 space-y-5">
+        <div className="flex-1 p-5 space-y-5 pb-20">
           {/* Slug */}
           <div className="space-y-1.5">
             <label className="block text-body-sm font-bold text-gray-700">URL Slug</label>
@@ -147,17 +314,20 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
               <input
                 type="text"
                 value={localSlug}
-                onChange={(e) =>
-                  onSlugChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))
-                }
+                onChange={(e) => onSlugChange(normalizeSlugInput(e.target.value))}
                 placeholder="page-slug"
-                className="flex-1 bg-transparent text-gray-900 text-body-sm focus:outline-none"
+                className={[
+                  'flex-1 bg-transparent text-body-sm focus:outline-none',
+                  slugLocked ? 'text-gray-400 cursor-not-allowed' : 'text-gray-900',
+                ].join(' ')}
+                disabled={slugLocked}
               />
               <span className="text-gray-400 text-body-sm">/</span>
             </div>
             {localSlug && slugValid && (
               <p className="text-label text-gray-400">
-                https://www.pingcap.com/<span className="text-gray-700">{localSlug}</span>/
+                {SITE_BASE_URL.replace(/\/$/, '')}/
+                <span className="text-gray-700">{localSlug}</span>/
               </p>
             )}
             {localSlug && !slugValid && (
@@ -165,7 +335,51 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
             )}
           </div>
 
+          {/* SEO */}
+          <div className="space-y-2">
+            <p className="text-body-sm font-bold text-gray-700">Meta Title</p>
+            <input
+              type="text"
+              value={dsl.meta.title ?? ''}
+              onChange={(e) => onMetaChange({ title: e.target.value })}
+              placeholder="Meta title (50–60 chars)"
+              className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
+            />
+            <p className="text-label text-gray-400">
+              {(dsl.meta.title ?? '').length}/60 characters
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-body-sm font-bold text-gray-700">Meta Description</p>
+            <textarea
+              value={dsl.meta.description ?? ''}
+              onChange={(e) => onMetaChange({ description: e.target.value })}
+              rows={3}
+              placeholder="Meta description (120–160 chars)"
+              className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors resize-none placeholder:text-gray-300"
+            />
+            <p className="text-label text-gray-400">
+              {(dsl.meta.description ?? '').length}/160 characters · OG/Twitter will be auto
+              generated
+            </p>
+          </div>
+
           {/* Branch — main publish disabled */}
+          <div className="space-y-2">
+            <p className="text-body-sm font-bold text-gray-700">Publish Branch</p>
+            <div className="flex items-center justify-between rounded border border-gray-200 px-3 py-2">
+              <span className="text-body-sm text-gray-900">staging</span>
+              <span className="text-label text-gray-400">default</span>
+            </div>
+            <div className="flex items-start gap-2 text-amber-700 text-body-sm bg-amber-50 border border-amber-200 rounded p-3">
+              <AlertTriangle size={14} className="mt-0.5 shrink-0" />
+              <p>
+                Publishing to <span className="font-bold">main</span> is restricted to developers.
+                Ask a developer to publish to production.
+              </p>
+            </div>
+          </div>
 
           {/* Sitemap toggle */}
           <label className="flex items-center gap-3 cursor-pointer">
@@ -192,17 +406,13 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
             disabled={!canPublish}
             className={[
               'w-full font-bold px-4 py-2.5 text-body-sm rounded transition-colors flex items-center justify-center gap-2',
-              branch === 'main'
-                ? 'bg-red-600 text-white hover:bg-red-700 disabled:opacity-40'
-                : 'bg-gray-900 text-white hover:bg-gray-700 disabled:opacity-40',
+              'bg-gray-900 text-white hover:bg-gray-700 disabled:opacity-40',
             ].join(' ')}
           >
             {publishing ? (
               <>
                 <Loader2 size={15} className="animate-spin" /> Publishing…
               </>
-            ) : branch === 'main' ? (
-              '⚠️ Publish to Production'
             ) : (
               '→ Publish to Staging'
             )}
@@ -305,6 +515,79 @@ export function PublishDrawer({ dsl, slug, onSlugChange, onClose }: PublishDrawe
                   <p>{result.error}</p>
                 </div>
               )}
+
+              {/* Score status */}
+              <div className="space-y-2 pt-2">
+                <p className="text-body-sm font-bold text-gray-700">Page Score</p>
+                {score ? (
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className={scoreBadgeClass(score.overall)}>Overall {score.overall}</span>
+                    <span className="text-label text-gray-500">
+                      UX {score.ux} · SEO {score.seo} · Cons {score.consistency}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => fetchScoreOnce()}
+                      className="text-gray-400 hover:text-gray-900 text-label font-bold"
+                    >
+                      Refresh
+                    </button>
+                  </div>
+                ) : scoreStatus === 'error' ? (
+                  <div className="flex items-start gap-2 text-red-600 text-body-sm p-3 bg-red-50 border border-red-200 rounded">
+                    <AlertTriangle size={14} className="mt-0.5 shrink-0" />
+                    <div>
+                      <p>{scoreError || 'Failed to load score'}</p>
+                      <button
+                        type="button"
+                        onClick={triggerScore}
+                        className="text-red-700 underline text-label font-bold mt-1"
+                      >
+                        Try again
+                      </button>
+                    </div>
+                  </div>
+                ) : scoreStatus === 'queued' || scoreStatus === 'loading' ? (
+                  <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
+                    <p>
+                      Scoring queued. It can take a few minutes after publish. This panel will
+                      refresh automatically.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => fetchScoreOnce()}
+                      className="text-gray-700 underline text-label font-bold mt-2"
+                    >
+                      Check now
+                    </button>
+                  </div>
+                ) : scoreStatus === 'skipped' ? (
+                  <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
+                    <p>{scoreError || 'Scoring skipped by sampling rule.'}</p>
+                    <button
+                      type="button"
+                      onClick={triggerScore}
+                      className="text-gray-700 underline text-label font-bold mt-2"
+                    >
+                      Run scoring now
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="text-body-sm text-gray-400">No score yet.</span>
+                    <button
+                      type="button"
+                      onClick={triggerScore}
+                      className="text-gray-700 underline text-label font-bold"
+                    >
+                      Run scoring now.
+                    </button>
+                  </div>
+                )}
+                <p className="text-label text-gray-400">
+                  Scores are based on Lighthouse Performance/SEO.
+                </p>
+              </div>
             </div>
           )}
 

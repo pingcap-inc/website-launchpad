@@ -38,7 +38,7 @@ export function ColorCard({ variant, title, description, cta, icon }: ColorCardP
       <p className="text-body-md text-text-inverse leading-relaxed flex-1">{description}</p>
 
       {/* SecondaryButton — triggered by card group hover */}
-      {cta && (
+      {cta.text && (
         <div className="mt-8">
           <SecondaryButton
             className="group-hover:bg-transparent group-hover:text-text-inverse"

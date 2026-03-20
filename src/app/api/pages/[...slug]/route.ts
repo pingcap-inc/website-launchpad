@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import type { PageDSL } from '@/lib/dsl-schema'
 
-const SKIP_SLUGS = new Set(['api', 'admin', 'sections', 'developer', 'developers'])
+const SKIP_SLUGS = new Set(['api', 'admin', 'sections'])
+
+function isValidSlugPath(slug: string) {
+  if (!slug) return false
+  const segments = slug.split('/').filter(Boolean)
+  if (segments.length === 0) return false
+  if (SKIP_SLUGS.has(segments[0])) return false
+  return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
+}
 
 function getGitHubHeaders() {
   const { GITHUB_TOKEN } = process.env
@@ -13,19 +21,24 @@ function getGitHubHeaders() {
   }
 }
 
+function getSlug(params: { slug?: string[] }) {
+  return (params.slug ?? []).join('/')
+}
+
 /**
- * GET /api/pages/[slug]
- * Fetches the page.dsl.json for the given slug from GitHub.
+ * GET /api/pages/[...slug]
+ * Fetches the page.dsl.json for the given slug path from GitHub.
  */
-export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string[] }> }) {
+  const { slug: slugParts } = await params
+  const slug = getSlug({ slug: slugParts })
   const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env
-  const branch = req.nextUrl.searchParams.get('branch') ?? process.env.GITHUB_BRANCH ?? 'main'
+  const branch = req.nextUrl.searchParams.get('branch') ?? process.env.GITHUB_BRANCH ?? 'staging'
 
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
-  if (!slug || SKIP_SLUGS.has(slug) || !/^[a-z0-9-]+$/.test(slug)) {
+  if (!isValidSlugPath(slug)) {
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 })
   }
 
@@ -52,18 +65,19 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 }
 
 /**
- * PUT /api/pages/[slug]
+ * PUT /api/pages/[...slug]
  * Saves an updated page.dsl.json to GitHub (draft save — does not publish page.tsx).
  */
-export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug: string[] }> }) {
+  const { slug: slugParts } = await params
+  const slug = getSlug({ slug: slugParts })
   const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env
-  const branch = process.env.GITHUB_BRANCH ?? 'main'
+  const branch = process.env.GITHUB_BRANCH ?? 'staging'
 
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
-  if (!slug || SKIP_SLUGS.has(slug) || !/^[a-z0-9-]+$/.test(slug)) {
+  if (!isValidSlugPath(slug)) {
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 })
   }
 

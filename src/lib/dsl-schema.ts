@@ -2,6 +2,7 @@
 // AI generates this JSON; dsl-renderer.tsx renders it; dsl-to-tsx.ts publishes it.
 
 export interface PageDSL {
+  pageName?: string
   meta: PageMeta
   sections: SectionDefinition[]
 }
