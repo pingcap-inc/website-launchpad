@@ -79,7 +79,7 @@ function TestimonialCard({
         <div className="flex-1">
           <p
             className={cn(
-              'text-text-inverse leading-relaxed',
+              'text-text-inverse group-data-[tone=dark]/section:text-text-primary',
               size === 'lg' ? 'text-body-2xl' : 'text-lg'
             )}
           >
@@ -87,7 +87,7 @@ function TestimonialCard({
           </p>
           <p
             className={cn(
-              'text-carbon-400',
+              'text-text-inverse group-data-[tone=dark]/section:text-text-primary',
               size === 'lg' ? 'text-body-md mt-4' : 'text-body-md mt-3'
             )}
           >
@@ -219,62 +219,58 @@ export function TestimonialsSection({
   }, [shouldFlip, reducedMotion, paused, testimonials.length, stepHeight])
 
   return (
-    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
-      <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
-        <div className="md:col-span-5">
-          <SlideIn direction="up">
-            {eyebrow && (
-              <p className="text-body-sm text-carbon-400 tracking-wide uppercase mb-4">{eyebrow}</p>
-            )}
-            <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-text-inverse">
-              {title}
-            </h2>
-          </SlideIn>
-        </div>
-        <div className="md:col-span-7">
+    <div className={cn('grid md:grid-cols-12 gap-8 lg:gap-12 items-start', className)}>
+      <div className="md:col-span-5">
+        <SlideIn direction="up">
+          {eyebrow && (
+            <p className="text-body-sm text-secondary tracking-wide uppercase mb-4">{eyebrow}</p>
+          )}
+          <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-current">{title}</h2>
+        </SlideIn>
+      </div>
+      <div className="md:col-span-7">
+        <div
+          ref={wrapperRef}
+          className={cn('relative overflow-hidden', shouldFlip && 'mask-bottom-fade')}
+          style={shouldFlip && wrapperHeight ? { height: `${wrapperHeight}px` } : undefined}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
           <div
-            ref={wrapperRef}
-            className={cn('relative overflow-hidden', shouldFlip && 'mask-bottom-fade')}
-            style={shouldFlip && wrapperHeight ? { height: `${wrapperHeight}px` } : undefined}
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
+            ref={listRef}
+            className={cn(
+              'flex flex-col gap-6',
+              shouldFlip && animating
+                ? 'transition-transform duration-700 ease-in-out'
+                : 'transition-none'
+            )}
+            style={
+              shouldFlip && stepHeight
+                ? {
+                    transform: animating ? `translateY(-${stepHeight}px)` : 'translateY(0)',
+                  }
+                : undefined
+            }
           >
+            {items.map((card, itemIndex) => (
+              <div key={`${card.quote}-${itemIndex}`}>
+                <TestimonialCard {...card} size="lg" />
+              </div>
+            ))}
+          </div>
+          {shouldFlip && (
             <div
-              ref={listRef}
-              className={cn(
-                'flex flex-col gap-6',
-                shouldFlip && animating
-                  ? 'transition-transform duration-700 ease-in-out'
-                  : 'transition-none'
-              )}
-              style={
-                shouldFlip && stepHeight
-                  ? {
-                      transform: animating ? `translateY(-${stepHeight}px)` : 'translateY(0)',
-                    }
-                  : undefined
-              }
+              ref={measureRef}
+              className="absolute left-0 top-0 -z-10 opacity-0 pointer-events-none"
+              style={measureWidth ? { width: `${measureWidth}px` } : undefined}
             >
-              {items.map((card, itemIndex) => (
-                <div key={`${card.quote}-${itemIndex}`}>
+              {testimonials.map((card, itemIndex) => (
+                <div key={`${card.quote}-measure-${itemIndex}`} className="mb-4 last:mb-0">
                   <TestimonialCard {...card} size="lg" />
                 </div>
               ))}
             </div>
-            {shouldFlip && (
-              <div
-                ref={measureRef}
-                className="absolute left-0 top-0 -z-10 opacity-0 pointer-events-none"
-                style={measureWidth ? { width: `${measureWidth}px` } : undefined}
-              >
-                {testimonials.map((card, itemIndex) => (
-                  <div key={`${card.quote}-measure-${itemIndex}`} className="mb-4 last:mb-0">
-                    <TestimonialCard {...card} size="lg" />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </div>

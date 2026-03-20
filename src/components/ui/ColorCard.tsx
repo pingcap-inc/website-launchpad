@@ -32,20 +32,22 @@ export function ColorCard({ variant, title, description, cta, icon }: ColorCardP
       {...externalLinkProps(cta.href)}
     >
       {/* Icon or image */}
-      {icon && <div className="mb-6 text-white shrink-0">{icon}</div>}
+      {icon && <div className="mb-6 text-text-inverse shrink-0">{icon}</div>}
 
       <h3 className="text-h3-lg font-bold text-text-inverse mb-4">{title}</h3>
-      <p className="text-body-md text-white leading-relaxed flex-1">{description}</p>
+      <p className="text-body-md text-text-inverse leading-relaxed flex-1">{description}</p>
 
       {/* SecondaryButton — triggered by card group hover */}
-      <div className="mt-8">
-        <SecondaryButton
-          className="group-hover:bg-transparent group-hover:text-text-inverse"
-          as="span"
-        >
-          {cta.text}
-        </SecondaryButton>
-      </div>
+      {cta && (
+        <div className="mt-8">
+          <SecondaryButton
+            className="group-hover:bg-transparent group-hover:text-text-inverse"
+            as="span"
+          >
+            {cta.text}
+          </SecondaryButton>
+        </div>
+      )}
     </a>
   )
 }

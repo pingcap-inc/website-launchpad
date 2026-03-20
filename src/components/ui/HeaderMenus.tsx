@@ -402,13 +402,13 @@ function MobileAccordionItem({
                 (section.titleHref ? (
                   <a
                     href={section.titleHref}
-                    className="block text-base font-semibold text-text-inverse"
+                    className="block text-base font-medium text-text-inverse"
                     {...externalLinkProps(section.titleHref)}
                   >
                     {section.title} →
                   </a>
                 ) : (
-                  <p className="text-base font-semibold text-text-inverse">{section.title}</p>
+                  <p className="text-base font-medium text-text-inverse">{section.title}</p>
                 ))}
               {section.description && section.items.length === 0 && (
                 <p className="text-base text-carbon-400 leading-relaxed">{section.description}</p>

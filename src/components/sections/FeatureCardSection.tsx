@@ -44,7 +44,7 @@ export function FeatureCardSection({
   className,
 }: FeatureCardSectionProps) {
   return (
-    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
+    <div className={cn('space-y-16', className)}>
       <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
       <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
         {items.map((item, index) => (

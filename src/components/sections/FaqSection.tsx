@@ -1,4 +1,5 @@
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import { cn } from '@/lib/utils'
 import {
   Accordion,
   AccordionContent,
@@ -19,23 +20,15 @@ interface SectionFaqProps {
 
 export function FaqSection({ items, title, className }: SectionFaqProps) {
   return (
-    <div
-      className={['max-w-container mx-auto px-4 md:px-8 lg:px-16 max-w-3xl', className]
-        .filter(Boolean)
-        .join(' ')}
-    >
+    <div className={cn('space-y-16', className)}>
       {title && <SectionHeader title={title} align="left" h2Size="sm" />}
-      <Accordion type="single" defaultValue="faq-0" collapsible className="space-y-3">
+      <Accordion type="single" defaultValue="faq-0" collapsible>
         {items.map((faq, index) => (
-          <AccordionItem
-            key={faq.q}
-            value={`faq-${index}`}
-            className="border-b border-carbon-800 px-4 md:px-6"
-          >
-            <AccordionTrigger className="text-text-inverse hover:text-text-inverse">
+          <AccordionItem key={faq.q} value={`faq-${index}`} className="first:border-t">
+            <AccordionTrigger className="text-text-inverse group-data-[tone=dark]/section:text-text-primary hover:text-current">
               {faq.q}
             </AccordionTrigger>
-            <AccordionContent>{faq.a}</AccordionContent>
+            <AccordionContent className="text-secondary">{faq.a}</AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>

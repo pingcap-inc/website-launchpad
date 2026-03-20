@@ -21,6 +21,7 @@ interface LogoCloudSectionProps {
   align?: 'center' | 'left'
   autoScroll?: boolean
   scrollSpeedSeconds?: number
+  scrollContentMaxWidth?: number
   className?: string
 }
 
@@ -33,11 +34,13 @@ export function LogoCloudSection({
   align = 'center',
   autoScroll = true,
   scrollSpeedSeconds = 28,
+  scrollContentMaxWidth,
   className,
 }: LogoCloudSectionProps) {
   const shouldScroll = autoScroll && logos.length > 4
   const headerAlign = align === 'center' ? 'center' : 'left'
   const contentAlign = align === 'center' ? 'justify-center' : 'justify-start'
+  const useCustomScrollWidth = typeof scrollContentMaxWidth === 'number'
 
   const renderLogo = (logo: LogoCloudItem, key: string) => {
     const containerClasses = 'flex items-center justify-center'
@@ -79,7 +82,7 @@ export function LogoCloudSection({
   }
 
   return (
-    <div className={cn('max-w-screen-xl mx-auto px-4 md:px-8 lg:px-16', className)}>
+    <div className={cn('space-y-16', className)}>
       {(title || subtitle || eyebrow) && (
         <SectionHeader
           h2Size="sm"
@@ -90,7 +93,12 @@ export function LogoCloudSection({
         />
       )}
       {shouldScroll ? (
-        <div className="relative overflow-hidden">
+        <div
+          className="relative overflow-hidden"
+          style={
+            useCustomScrollWidth ? { maxWidth: scrollContentMaxWidth, margin: '0 auto' } : undefined
+          }
+        >
           <div
             className={cn('flex w-max items-center gap-10 animate-logo-marquee', contentAlign)}
             style={{ animationDuration: `${scrollSpeedSeconds}s` }}
