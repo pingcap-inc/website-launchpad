@@ -14,12 +14,11 @@ const BACKGROUND_CLASS: Record<string, string> = {
 }
 
 const SPACING_CLASS: Record<string, string> = {
-  none: '',
   sm: 'py-section-sm',
   md: 'py-section-sm lg:py-section-md',
   lg: 'py-section-sm lg:py-section',
   section: 'py-section-sm lg:py-section',
-  hero: 'py-10 md:py-0',
+  hero: '',
 }
 
 export function resolveSectionStyle(style?: SectionStyle, defaults?: SectionStyle): SectionStyle {

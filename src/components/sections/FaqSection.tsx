@@ -24,7 +24,7 @@ export function FaqSection({ items, title, className }: SectionFaqProps) {
       {title && <SectionHeader title={title} align="left" h2Size="sm" />}
       <Accordion type="single" defaultValue="faq-0" collapsible>
         {items.map((faq, index) => (
-          <AccordionItem key={faq.q} value={`faq-${index}`} className="first:border-t">
+          <AccordionItem key={faq.q} value={`faq-${index}`}>
             <AccordionTrigger className="text-text-inverse group-data-[tone=dark]/section:text-text-primary hover:text-current">
               {faq.q}
             </AccordionTrigger>

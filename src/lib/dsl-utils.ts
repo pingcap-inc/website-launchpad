@@ -28,6 +28,7 @@ import type {
   Testimonial,
   TestimonialsProps,
 } from './dsl-schema'
+import { schemaMap } from './section-registry'
 
 export type LegacySectionNode = {
   type: SectionType
@@ -66,6 +67,62 @@ function normalizeImageRef(value: unknown): ImageRef | undefined {
     if (typeof v.src === 'string') return { url: v.src, assetId: v.assetId as string | undefined }
   }
   return undefined
+}
+
+function isImageRefWithUrl(value: unknown): value is ImageRef {
+  return isImageRef(value) && typeof value.url === 'string' && value.url.length > 0
+}
+
+function isImageContainerWithImage(value: unknown): value is { image: ImageRef } {
+  return (
+    !!value &&
+    typeof value === 'object' &&
+    'image' in (value as object) &&
+    isImageRefWithUrl((value as { image?: unknown }).image)
+  )
+}
+
+function fillMissingImages(
+  target: Record<string, unknown>,
+  defaults: Record<string, unknown>
+): void {
+  for (const key of Object.keys(defaults)) {
+    const defVal = defaults[key]
+    const tgtVal = target[key]
+
+    if (!defVal || typeof defVal !== 'object') continue
+
+    if (isImageRefWithUrl(defVal)) {
+      if (!isImageRefWithUrl(tgtVal)) target[key] = defVal
+      continue
+    }
+
+    if (isImageContainerWithImage(defVal)) {
+      if (!isImageContainerWithImage(tgtVal)) target[key] = defVal
+      continue
+    }
+
+    if (Array.isArray(defVal)) {
+      if (Array.isArray(tgtVal) && defVal[0] && typeof defVal[0] === 'object') {
+        for (const item of tgtVal) {
+          if (item && typeof item === 'object') {
+            fillMissingImages(item as Record<string, unknown>, defVal[0] as Record<string, unknown>)
+          }
+        }
+      }
+      continue
+    }
+
+    if (tgtVal && typeof tgtVal === 'object' && !Array.isArray(tgtVal)) {
+      fillMissingImages(tgtVal as Record<string, unknown>, defVal as Record<string, unknown>)
+    }
+  }
+}
+
+function applyDefaultImages(type: SectionType, props: Record<string, unknown>): void {
+  const defaults = schemaMap[type]?.defaultProps as Record<string, unknown> | undefined
+  if (!defaults) return
+  fillMissingImages(props, defaults)
 }
 
 function normalizeIconValue(value: unknown): IconValue | undefined {
@@ -192,7 +249,9 @@ function normalizeFeatureCardItem(value: unknown): FeatureCardItem | null {
     icon: normalizeIconValue(v.icon),
     title: v.title ?? '',
     description: v.description ?? '',
+    borderColor: typeof v.borderColor === 'string' ? v.borderColor : undefined,
     href: v.href,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -206,6 +265,7 @@ function normalizeFeatureTab(value: unknown): FeatureTab | null {
     bullets: Array.isArray(v.bullets) ? (v.bullets as string[]) : undefined,
     primaryCta: v.primaryCta,
     secondaryCta: v.secondaryCta,
+    content: typeof v.content === 'string' ? v.content : undefined,
     image: {
       image: normalizeImageRef(v.image?.image ?? v.image?.src ?? (v as any).image) ?? { url: '' },
       alt: v.image?.alt ?? (v as any).alt,
@@ -275,6 +335,7 @@ function normalizeHeroProps(value: unknown): HeroProps {
     heroImage: normalizeHeroImage(v.heroImage),
     backgroundImage: normalizeHeroBackgroundImage(v.backgroundImage),
     heroForm: v.heroForm,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -287,6 +348,7 @@ function normalizeStatsProps(value: unknown): StatsProps {
     subtitle: v.subtitle,
     items: items as StatsItem[],
     columns: v.columns,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -301,6 +363,7 @@ function normalizeFeatureGridProps(value: unknown): FeatureGridProps {
     columns: v.columns,
     viewMore: v.viewMore,
     itemLayout: v.itemLayout,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -313,6 +376,8 @@ function normalizeFeatureCardProps(value: unknown): FeatureCardProps {
     subtitle: v.subtitle,
     items: items as FeatureCardItem[],
     columns: v.columns,
+    borderStyle: v.borderStyle,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -326,6 +391,7 @@ function normalizeFeatureTabsProps(value: unknown): FeatureTabsProps {
     tabs: tabs as FeatureTab[],
     autoSwitch: v.autoSwitch,
     autoSwitchInterval: v.autoSwitchInterval,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -341,6 +407,7 @@ function normalizeFeatureHighlightsProps(value: unknown): FeatureHighlightsProps
     items: items as FeatureHighlightItem[],
     columns: v.columns,
     viewMore: v.viewMore,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -358,6 +425,7 @@ function normalizeLogoCloudProps(value: unknown): LogoCloudProps {
     scrollSpeedSeconds: v.scrollSpeedSeconds,
     scrollContentMaxWidth:
       typeof v.scrollContentMaxWidth === 'number' ? v.scrollContentMaxWidth : undefined,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -368,6 +436,7 @@ function normalizeTestimonialsProps(value: unknown): TestimonialsProps {
     eyebrow: v.eyebrow,
     title: v.title ?? '',
     items: items as Testimonial[],
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -376,6 +445,7 @@ function normalizeFaqProps(value: unknown): FaqProps {
   return {
     title: v.title,
     items: Array.isArray(v.items) ? v.items : [],
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -395,6 +465,7 @@ function normalizeCtaProps(value: unknown): CtaProps {
       : undefined,
     primaryCta: v.primaryCta ?? { text: '', href: '' },
     secondaryCta: v.secondaryCta,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -406,6 +477,7 @@ function normalizeFormProps(value: unknown): FormProps {
     portalId: v.portalId ?? '',
     formId: v.formId ?? '',
     region: v.region,
+    className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
 
@@ -438,20 +510,26 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
 
 function normalizeLegacySection(section: LegacySectionNode, index: number): SectionDefinition {
   const { type, style, id: sectionId, ...rest } = section
+  const legacyProps = rest as Record<string, unknown>
+  applyDefaultImages(type, legacyProps)
   return {
     id: sectionId ?? `${type}-${index + 1}`,
     type,
-    props: normalizePropsByType(type, rest),
+    props: normalizePropsByType(type, legacyProps),
     style: normalizeSectionStyle(style),
   }
 }
 
 export function normalizeSection(section: SectionDefinition | LegacySectionNode, index: number) {
   if (isSectionDefinition(section)) {
+    const props = (
+      section.props && typeof section.props === 'object' ? section.props : {}
+    ) as Record<string, unknown>
+    applyDefaultImages(section.type, props)
     return {
       id: section.id ?? `${section.type}-${index + 1}`,
       type: section.type,
-      props: normalizePropsByType(section.type, section.props),
+      props: normalizePropsByType(section.type, props),
       style: normalizeSectionStyle(section.style),
     }
   }

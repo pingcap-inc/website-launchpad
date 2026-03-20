@@ -116,6 +116,7 @@ const defaultFeatureCardProps: FeatureCardProps = {
   title: '',
   items: [{ title: '', description: '' }],
   columns: 2,
+  borderStyle: 'gray',
 }
 
 const defaultFeatureTabsProps: FeatureTabsProps = {
@@ -345,6 +346,15 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
+      {
+        type: 'select',
+        key: 'borderStyle',
+        label: 'Border Style',
+        options: [
+          { label: 'Gray', value: 'gray' },
+          { label: 'Color', value: 'color' },
+        ],
+      },
       {
         type: 'array',
         key: 'items',

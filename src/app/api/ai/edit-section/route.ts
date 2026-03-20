@@ -2,19 +2,74 @@ import { NextRequest, NextResponse } from 'next/server'
 import { AI_PROVIDER, generateJSON } from '@/lib/ai-client'
 import { sanitizeDSLIcons, DSL_SCHEMA_PROMPT } from '@/lib/dsl-schema'
 import type { SectionNode, PageMeta } from '@/lib/dsl-schema'
+import { schemaMap } from '@/lib/section-registry'
+
+function isImageRef(value: unknown): value is { url: string } {
+  return (
+    !!value &&
+    typeof value === 'object' &&
+    'url' in (value as { url?: unknown }) &&
+    typeof (value as { url?: unknown }).url === 'string'
+  )
+}
+
+function isImageContainer(value: unknown): value is { image: { url: string } } {
+  return (
+    !!value &&
+    typeof value === 'object' &&
+    'image' in (value as object) &&
+    isImageRef((value as { image?: unknown }).image)
+  )
+}
+
+function stripImageFields(target: Record<string, unknown>): void {
+  for (const [key, value] of Object.entries(target)) {
+    if (isImageRef(value) || isImageContainer(value)) {
+      delete target[key]
+      continue
+    }
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        if (item && typeof item === 'object') stripImageFields(item as Record<string, unknown>)
+      }
+      continue
+    }
+    if (value && typeof value === 'object') {
+      stripImageFields(value as Record<string, unknown>)
+    }
+  }
+}
+
+function stripSectionBackground(section: Record<string, unknown>): void {
+  if (!section.style || typeof section.style !== 'object') return
+  const style = section.style as Record<string, unknown>
+  if ('background' in style) {
+    delete style.background
+    if (Object.keys(style).length === 0) {
+      delete section.style
+    }
+  }
+}
+
+function applyFeatureTabsDefaultsToSection(section: Record<string, unknown>): void {
+  if (section.type !== 'featureTabs') return
+  const defaults = schemaMap.featureTabs?.defaultProps
+  if (!defaults) return
+  const props = section.props as Record<string, unknown>
+  if (!props || typeof props !== 'object') return
+  if (props.autoSwitch === undefined) props.autoSwitch = defaults.autoSwitch
+  if (props.autoSwitchInterval === undefined) props.autoSwitchInterval = defaults.autoSwitchInterval
+}
 
 const VALID_BG = new Set([
   'primary',
-  'surface',
   'inverse',
   'gradient-dark-top',
   'gradient-dark-bottom',
-  'gradient-dark',
   'brand-red',
   'brand-violet',
   'brand-blue',
   'brand-teal',
-  'none',
 ])
 const VALID_SPACING = new Set(['none', 'sm', 'md', 'lg', 'section', 'hero'])
 
@@ -115,6 +170,9 @@ Keep all fields that don't need changing. Preserve the "type" field exactly.${
       }
     }
 
+    stripImageFields(candidate)
+    stripSectionBackground(candidate)
+    applyFeatureTabsDefaultsToSection(candidate)
     const updated = candidate as unknown as SectionNode
 
     // Preserve id/style if missing

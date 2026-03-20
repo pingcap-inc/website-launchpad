@@ -54,10 +54,9 @@ export function FeatureCardSection({
             title={item.title}
             description={item.description}
             borderColor={
-              item.borderColor ??
-              (borderStyle === 'color'
+              borderStyle === 'color'
                 ? borderColorOrder[index % borderColorOrder.length]
-                : undefined)
+                : item.borderColor
             }
             href={item.href}
             className={item.className}

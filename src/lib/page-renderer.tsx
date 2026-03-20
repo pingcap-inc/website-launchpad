@@ -72,7 +72,6 @@ import type {
   IconName,
   IconValue,
   PageDSL,
-  SectionDefinition,
   SectionPropsMap,
   SectionStyle,
   SectionType,
@@ -140,6 +139,45 @@ const ICON_MAP: Record<IconName, IconComponent> = {
   Network,
 }
 
+const DEFAULT_ALLOWED_BG = new Set<SectionStyle['background']>([
+  'primary',
+  'gradient-dark-top',
+  'gradient-dark-bottom',
+  'inverse',
+])
+
+const ALLOWED_BG_BY_SECTION: Record<SectionType, Set<SectionStyle['background']>> = {
+  hero: new Set(['primary']),
+  cta: new Set(['brand-violet', 'brand-blue', 'brand-red', 'brand-teal', 'primary']),
+  testimonials: new Set(['gradient-dark-top', 'gradient-dark-bottom', 'primary']),
+  stats: DEFAULT_ALLOWED_BG,
+  featureGrid: DEFAULT_ALLOWED_BG,
+  featureCard: DEFAULT_ALLOWED_BG,
+  featureTabs: DEFAULT_ALLOWED_BG,
+  featureHighlights: DEFAULT_ALLOWED_BG,
+  logoCloud: DEFAULT_ALLOWED_BG,
+  faq: DEFAULT_ALLOWED_BG,
+  form: DEFAULT_ALLOWED_BG,
+}
+
+function getDefaultBackground(type: SectionType): SectionStyle['background'] {
+  const allowed = ALLOWED_BG_BY_SECTION[type]
+  return allowed.values().next().value ?? 'primary'
+}
+
+function sanitizeBackgroundBySection(
+  type: SectionType,
+  style?: SectionStyle
+): SectionStyle | undefined {
+  if (!style?.background) return style
+  const allowed = ALLOWED_BG_BY_SECTION[type]
+  if (!allowed.has(style.background)) {
+    const { background, ...rest } = style
+    return Object.keys(rest).length > 0 ? rest : undefined
+  }
+  return style
+}
+
 function renderIcon(value?: IconValue) {
   if (!value) return undefined
   if (typeof value === 'object' && 'url' in value) {
@@ -165,14 +203,15 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     Component: HeroSection,
     mapProps: (props: SectionPropsMap['hero']) => ({
       ...props,
-      layout: props.heroForm ? 'split' : props.layout,
-      rightSlot: props.heroForm ? (
-        <HubSpotForm
-          formId={props.heroForm.formId}
-          portalId={props.heroForm.portalId}
-          region={props.heroForm.region}
-        />
-      ) : undefined,
+      layout: props.layout,
+      rightSlot:
+        props.layout === 'split' && props.heroForm ? (
+          <HubSpotForm
+            formId={props.heroForm.formId}
+            portalId={props.heroForm.portalId}
+            region={props.heroForm.region}
+          />
+        ) : undefined,
     }),
     defaultStyle: { background: 'primary', spacing: 'hero' },
   },
@@ -184,6 +223,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       subtitle: props.subtitle,
       stats: props.items.map((s) => ({ ...s, icon: renderIcon(s.icon) })),
       columns: props.columns,
+      className: props.className,
     }),
     defaultStyle: { background: 'gradient-dark-top', spacing: 'section' },
   },
@@ -197,6 +237,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       columns: props.columns,
       viewMore: props.viewMore,
       itemLayout: props.itemLayout,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -208,6 +249,8 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       subtitle: props.subtitle,
       items: props.items.map((f) => ({ ...f, icon: renderIcon(f.icon) })),
       columns: props.columns,
+      borderStyle: props.borderStyle,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -220,6 +263,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       tabs: props.tabs,
       autoSwitch: props.autoSwitch,
       autoSwitchInterval: props.autoSwitchInterval,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -232,6 +276,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       items: props.items.map((item) => ({ ...item, icon: renderIcon(item.icon) })),
       columns: props.columns,
       viewMore: props.viewMore,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -246,6 +291,8 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       align: props.align,
       autoScroll: props.autoScroll,
       scrollSpeedSeconds: props.scrollSpeedSeconds,
+      scrollContentMaxWidth: props.scrollContentMaxWidth,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -255,6 +302,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       eyebrow: props.eyebrow,
       title: props.title,
       testimonials: props.items,
+      className: props.className,
     }),
     defaultStyle: { background: 'gradient-dark-top', spacing: 'section' },
   },
@@ -263,6 +311,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     mapProps: (props: SectionPropsMap['faq']) => ({
       title: props.title,
       items: props.items,
+      className: props.className,
     }),
     defaultStyle: { background: 'gradient-dark-bottom', spacing: 'section' },
   },
@@ -274,6 +323,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       image: props.image,
       primaryCta: props.primaryCta,
       secondaryCta: props.secondaryCta,
+      className: props.className,
     }),
     defaultStyle: { background: 'brand-violet', spacing: 'section' },
   },
@@ -285,6 +335,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       portalId: props.portalId,
       formId: props.formId,
       region: props.region,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -304,12 +355,14 @@ export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
     const entry = componentMap[section.type]
     if (!entry) return null
     const props = entry.mapProps ? entry.mapProps(section.props as any) : (section.props as any)
-    if (section.type === 'hero') {
-      return <entry.Component key={section.id} {...props} />
+    const resolvedStyle = sanitizeBackgroundBySection(section.type, section.style)
+    const defaultStyle: SectionStyle = {
+      ...(entry.defaultStyle ?? {}),
+      background: getDefaultBackground(section.type),
     }
 
     return (
-      <SectionWrapper key={section.id} style={section.style} defaultStyle={entry.defaultStyle}>
+      <SectionWrapper key={section.id} style={resolvedStyle} defaultStyle={defaultStyle}>
         <entry.Component {...props} />
       </SectionWrapper>
     )
