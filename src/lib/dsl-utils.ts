@@ -38,6 +38,7 @@ export type LegacySectionNode = {
 }
 
 export type LegacyPageDSL = {
+  pageName?: string
   meta: PageMeta
   sections: LegacySectionNode[]
 }
@@ -538,6 +539,7 @@ export function normalizeSection(section: SectionDefinition | LegacySectionNode,
 
 export function normalizeDSL(dsl: PageDSLInput): PageDSL {
   return {
+    pageName: dsl.pageName ?? dsl.meta?.title ?? '',
     meta: dsl.meta,
     sections: dsl.sections.map((section, index) => normalizeSection(section, index)),
   }

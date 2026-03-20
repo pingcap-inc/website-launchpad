@@ -1,3 +1,4 @@
+import image from 'next/image'
 import type {
   CtaProps,
   FeatureCardProps,
@@ -145,7 +146,12 @@ const defaultFeatureHighlightsProps: FeatureHighlightsProps = {
 
 const defaultLogoCloudProps: LogoCloudProps = {
   title: '',
-  logos: [],
+  logos: [
+    {
+      image: { url: 'https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg' },
+      name: 'catalyst',
+    },
+  ],
   variant: 'default',
   align: 'center',
   autoScroll: true,

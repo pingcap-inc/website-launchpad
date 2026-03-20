@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
   Loader2,
   AlertCircle,
@@ -83,15 +84,51 @@ function loadFromLocalStorage(slug: string): PageDSL | null {
   }
 }
 
+function isValidSlugPath(slug: string) {
+  if (!slug) return false
+  const segments = slug.split('/').filter(Boolean)
+  if (segments.length === 0) return false
+  return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
+}
+
+function normalizeSlugInput(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9-/]/g, '')
+    .replace(/\/{2,}/g, '/')
+    .replace(/^\/|\/$/g, '')
+}
+
+function makeUniqueSlug(base: string, existing: Set<string>) {
+  if (!existing.has(base)) return base
+  const segments = base.split('/').filter(Boolean)
+  const last = segments.pop() ?? base
+  let i = 2
+  while (i < 100) {
+    const candidate = `${last}-${i}`
+    const next = [...segments, candidate].join('/')
+    if (!existing.has(next)) return next
+    i += 1
+  }
+  return base
+}
+
 // ── TopBar ───────────────────────────────────────────────────────────────────
 
 interface TopBarProps {
   dsl: PageDSL | null
   slug: string
   saveStatus: 'idle' | 'saving' | 'saved' | 'error'
+  draftAvailable: boolean
+  parentSlug: string
+  childSlug: string
+  parentOptions: { slug: string; title: string }[]
+  moveStatus: 'idle' | 'moving' | 'moved' | 'error'
+  onPageNameChange: (v: string) => void
   onSlugChange: (v: string) => void
-  onMetaChange: (patch: Partial<PageDSL['meta']>) => void
+  onParentChange: (v: string) => void
   onSaveDraft: () => void
+  onLoadDraft: () => void
   onPublish: () => void
 }
 
@@ -99,35 +136,63 @@ function TopBar({
   dsl,
   slug,
   saveStatus,
+  draftAvailable,
+  parentSlug,
+  childSlug,
+  parentOptions,
+  moveStatus,
+  onPageNameChange,
   onSlugChange,
-  onMetaChange,
+  onParentChange,
   onSaveDraft,
+  onLoadDraft,
   onPublish,
 }: TopBarProps) {
-  const slugValid = /^[a-z0-9-]+$/.test(slug)
+  const slugValid = isValidSlugPath(slug)
 
   return (
     <div className="flex items-center gap-3 px-4 py-2.5 border-b border-gray-200 bg-white shrink-0 min-w-0 h-14">
-      {/* Page title */}
+      {/* Page name */}
       <div className="flex-1 flex items-center gap-2 min-w-0">
         <input
           type="text"
-          value={dsl?.meta?.title ?? ''}
-          onChange={(e) => onMetaChange({ title: e.target.value })}
-          placeholder="Page title (50–60 chars)"
+          value={dsl?.pageName ?? ''}
+          onChange={(e) => onPageNameChange(e.target.value)}
+          placeholder="Page name"
           className="flex-1 text-body-sm text-gray-800 border border-gray-200 rounded px-2.5 py-1.5 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300 min-w-0"
         />
         {/* Slug */}
-        <div className="flex items-center gap-1 border border-gray-200 rounded px-2 py-1.5 bg-white focus-within:border-gray-400 transition-colors shrink-0">
-          <span className="text-gray-400 text-body-sm">/</span>
-          <input
-            type="text"
-            value={slug}
-            onChange={(e) => onSlugChange(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-            placeholder="page-slug"
-            className="w-28 bg-transparent text-gray-800 text-body-sm focus:outline-none"
-          />
-          <span className="text-gray-400 text-body-sm">/</span>
+        <div className="flex items-center gap-2 shrink-0">
+          <select
+            value={parentSlug}
+            onChange={(e) => onParentChange(e.target.value)}
+            className="bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors shrink-0"
+            title="Parent route (optional)"
+          >
+            <option value="">No parent</option>
+            {parentOptions.map((option) => (
+              <option key={option.slug} value={option.slug}>
+                /{option.slug}/
+              </option>
+            ))}
+          </select>
+          <div className="flex items-center gap-1 border border-gray-200 rounded px-2 py-1.5 bg-white focus-within:border-gray-400 transition-colors shrink-0">
+            <span className="text-gray-400 text-body-sm">/</span>
+            <input
+              type="text"
+              value={childSlug}
+              onChange={(e) =>
+                onSlugChange(
+                  parentSlug
+                    ? `${parentSlug}/${normalizeSlugInput(e.target.value)}`
+                    : normalizeSlugInput(e.target.value)
+                )
+              }
+              placeholder="child-slug"
+              className="w-28 bg-transparent text-gray-800 text-body-sm focus:outline-none"
+            />
+            <span className="text-gray-400 text-body-sm">/</span>
+          </div>
         </div>
         {slug && !slugValid && (
           <span className="text-red-500 text-label shrink-0">invalid slug</span>
@@ -147,6 +212,24 @@ function TopBar({
           </span>
         )}
         {saveStatus === 'error' && <span className="text-label text-red-500">Save failed</span>}
+        {moveStatus === 'moving' && (
+          <span className="text-label text-gray-400 flex items-center gap-1">
+            <Loader2 size={11} className="animate-spin" /> Moving…
+          </span>
+        )}
+        {moveStatus === 'moved' && (
+          <span className="text-label text-brand-teal-medium flex items-center gap-1">
+            <CheckCircle2 size={11} /> Moved
+          </span>
+        )}
+        {moveStatus === 'error' && <span className="text-label text-red-500">Move failed</span>}
+        <button
+          onClick={onSaveDraft}
+          disabled={!dsl || !slug || !slugValid}
+          className="flex items-center gap-1.5 border border-gray-300 text-gray-700 font-bold px-3 py-1.5 text-body-sm rounded hover:border-gray-400 disabled:opacity-40 transition-colors"
+        >
+          Save Draft
+        </button>
 
         <button
           onClick={onPublish}
@@ -171,12 +254,14 @@ interface LeftPanelProps {
   localJson: string
   localJsonError: string
   dsl: PageDSL | null
+  metaDescription: string
   slug: string
   onPageTypeChange: (v: string) => void
   onIntentChange: (v: string) => void
   onGenerate: () => void
   onLocalJsonChange: (v: string) => void
   onLocalJsonLoad: () => void
+  onMetaChange: (patch: Partial<PageDSL['meta']>) => void
   onSectionChange: (index: number, updated: SectionNode) => void
   onSectionDelete: (index: number) => void
   onSectionRegenerate: (index: number, instruction: string) => Promise<void>
@@ -193,12 +278,14 @@ function LeftPanel({
   localJson,
   localJsonError,
   dsl,
+  metaDescription,
   slug,
   onPageTypeChange,
   onIntentChange,
   onGenerate,
   onLocalJsonChange,
   onLocalJsonLoad,
+  onMetaChange,
   onSectionChange,
   onSectionDelete,
   onSectionRegenerate,
@@ -339,6 +426,9 @@ function LeftPanel({
 // ── Main page ────────────────────────────────────────────────────────────────
 
 export default function CreatePage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const editMode = searchParams.get('mode') === 'edit'
   const mockMode = process.env.NEXT_PUBLIC_USE_MOCK_DSL === '1'
   const [pageType, setPageType] = useState(PAGE_TYPES[0])
   const [intent, setIntent] = useState('')
@@ -355,11 +445,30 @@ export default function CreatePage() {
   const [leftCollapsed, setLeftCollapsed] = useState(false)
   const [iframeHeight, setIframeHeight] = useState(3000)
   const [previewKey, setPreviewKey] = useState(0)
+  const [draftAvailable, setDraftAvailable] = useState(false)
+  const [checkingDraft, setCheckingDraft] = useState(false)
+  const [parentOptions, setParentOptions] = useState<{ slug: string; title: string }[]>([])
+  const [existingSlugs, setExistingSlugs] = useState<Set<string>>(new Set())
+  const [moveStatus, setMoveStatus] = useState<'idle' | 'moving' | 'moved' | 'error'>('idle')
+  const [initialSlug, setInitialSlug] = useState('')
+  const [pendingMoveAction, setPendingMoveAction] = useState<null | { type: 'save' | 'publish' }>(
+    null
+  )
+  const [isDirty, setIsDirty] = useState(false)
+  const [pendingNavigation, setPendingNavigation] = useState<
+    null | { type: 'href'; href: string } | { type: 'back' }
+  >(null)
 
   const previewRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const iframeReadyRef = useRef(false)
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const initialSlugRef = useRef<string | null>(null)
+  const autoLoadedDraftRef = useRef(false)
+  const initializedFromQueryRef = useRef(false)
+  const lastSavedRef = useRef<string>('')
+  const allowPopRef = useRef(false)
+  const lastQuerySlugRef = useRef<string | null>(null)
 
   // Listen for height + ready signals from iframe
   useEffect(() => {
@@ -409,10 +518,34 @@ export default function CreatePage() {
         .replace(/^\/|\/$/g, '')
         .split('/')
         .filter(Boolean)
-      const derived = segments.join('-')
-      if (derived && /^[a-z0-9-]+$/.test(derived)) setSlug(derived)
+      const derived = segments[0]
+      if (derived && /^[a-z0-9-]+$/.test(derived)) {
+        setSlug(makeUniqueSlug(derived, existingSlugs))
+        const normalizedCanonical = `/${derived}/`
+        if (dsl.meta.canonical !== normalizedCanonical) {
+          updateDsl((prev) => ({ ...prev, meta: { ...prev.meta, canonical: normalizedCanonical } }))
+        }
+      }
     }
-  }, [dsl, slug])
+  }, [dsl, slug, existingSlugs])
+
+  useEffect(() => {
+    const loadParents = async () => {
+      try {
+        const res = await fetch('/api/pages')
+        if (!res.ok) return
+        const data = (await res.json()) as { pages?: { slug: string; title: string }[] }
+        const options =
+          data.pages?.map((page) => ({ slug: page.slug, title: page.title ?? page.slug })) ?? []
+        options.sort((a, b) => a.slug.localeCompare(b.slug))
+        setParentOptions(options)
+        setExistingSlugs(new Set(options.map((option) => option.slug)))
+      } catch {
+        // ignore
+      }
+    }
+    loadParents()
+  }, [])
 
   // Auto-save to localStorage on DSL change (debounced 2s)
   useEffect(() => {
@@ -425,6 +558,142 @@ export default function CreatePage() {
       if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
     }
   }, [dsl, slug])
+
+  const snapshotState = (nextDsl: PageDSL, nextSlug: string) =>
+    JSON.stringify({ dsl: nextDsl, slug: nextSlug })
+
+  const setBaselineState = (nextDsl: PageDSL, nextSlug: string) => {
+    lastSavedRef.current = snapshotState(nextDsl, nextSlug)
+    setIsDirty(false)
+  }
+
+  useEffect(() => {
+    if (!dsl) return
+    const current = snapshotState(dsl, slug)
+    setIsDirty(!!lastSavedRef.current && current !== lastSavedRef.current)
+  }, [dsl, slug])
+
+  useEffect(() => {
+    if (!isDirty) return
+    const handler = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [isDirty])
+
+  useEffect(() => {
+    if (!isDirty) return
+    const handleClick = (event: MouseEvent) => {
+      if (event.defaultPrevented) return
+      if (event.button !== 0) return
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+      const target = event.target as HTMLElement | null
+      const anchor = target?.closest('a')
+      if (!anchor) return
+      const href = anchor.getAttribute('href')
+      const targetAttr = anchor.getAttribute('target')
+      if (!href || targetAttr === '_blank') return
+      if (href.startsWith('mailto:') || href.startsWith('tel:')) return
+      const url = new URL(href, window.location.href)
+      if (url.origin !== window.location.origin) return
+      const nextHref = `${url.pathname}${url.search}${url.hash}`
+      if (
+        nextHref === `${window.location.pathname}${window.location.search}${window.location.hash}`
+      )
+        return
+      event.preventDefault()
+      setPendingNavigation({ type: 'href', href: nextHref })
+    }
+    document.addEventListener('click', handleClick, true)
+    return () => document.removeEventListener('click', handleClick, true)
+  }, [isDirty])
+
+  useEffect(() => {
+    if (!isDirty) return
+    const handlePop = () => {
+      if (allowPopRef.current) {
+        allowPopRef.current = false
+        return
+      }
+      setPendingNavigation({ type: 'back' })
+      window.history.pushState(null, '', window.location.href)
+    }
+    window.addEventListener('popstate', handlePop)
+    return () => window.removeEventListener('popstate', handlePop)
+  }, [isDirty])
+
+  const resetEditorState = useCallback(() => {
+    setDsl(null)
+    setSlug('')
+    setInitialSlug('')
+    initialSlugRef.current = null
+    autoLoadedDraftRef.current = false
+    initializedFromQueryRef.current = false
+    lastSavedRef.current = ''
+    setLocalJson('')
+    setLocalJsonError('')
+    setDraftAvailable(false)
+    setCheckingDraft(false)
+    setIsDirty(false)
+    setSaveStatus('idle')
+  }, [])
+
+  // Initialize slug from query param (e.g. /admin/create?slug=foo)
+  useEffect(() => {
+    const querySlug = searchParams.get('slug')
+    const normalized = querySlug ? normalizeSlugInput(querySlug) : ''
+
+    if (!normalized) {
+      if (lastQuerySlugRef.current) {
+        resetEditorState()
+      }
+      lastQuerySlugRef.current = null
+      return
+    }
+
+    if (initializedFromQueryRef.current && lastQuerySlugRef.current === normalized) return
+    lastQuerySlugRef.current = normalized
+    if (!slug) setSlug(normalized)
+    initialSlugRef.current = normalized
+    setInitialSlug(normalized)
+    initializedFromQueryRef.current = true
+  }, [searchParams, slug, resetEditorState])
+
+  // Check draft availability when slug changes
+  useEffect(() => {
+    if (!slug || !isValidSlugPath(slug)) {
+      setDraftAvailable(false)
+      return
+    }
+
+    setCheckingDraft(false)
+    const localDraft = loadFromLocalStorage(slug)
+    if (localDraft) {
+      setDraftAvailable(true)
+      return
+    }
+
+    let aborted = false
+    setCheckingDraft(true)
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/pages/${slug}?branch=${encodeURIComponent(DRAFT_BRANCH)}`)
+        if (!aborted) setDraftAvailable(res.ok)
+      } catch {
+        if (!aborted) setDraftAvailable(false)
+      } finally {
+        if (!aborted) setCheckingDraft(false)
+      }
+    }, 400)
+
+    return () => {
+      aborted = true
+      clearTimeout(timer)
+      setCheckingDraft(false)
+    }
+  }, [slug])
 
   const handleGenerate = async () => {
     setGenerating(true)
@@ -439,6 +708,7 @@ export default function CreatePage() {
       if (!res.ok || data.error) throw new Error(data.error ?? 'Generation failed')
       const normalized = normalizeDSL(data)
       setDsl(normalized)
+      setBaselineState(normalized, slug)
       setLocalJson(JSON.stringify(normalized, null, 2))
       setLocalJsonError('')
     } catch (err) {
@@ -452,7 +722,9 @@ export default function CreatePage() {
     setLocalJsonError('')
     try {
       const parsed = JSON.parse(localJson) as PageDSL
-      setDsl(normalizeDSL(parsed))
+      const normalized = normalizeDSL(parsed)
+      setDsl(normalized)
+      setBaselineState(normalized, slug)
     } catch (err) {
       setLocalJsonError(err instanceof Error ? err.message : 'Invalid JSON')
     }
@@ -461,6 +733,13 @@ export default function CreatePage() {
   const updateDsl = useCallback((updater: (prev: PageDSL) => PageDSL) => {
     setDsl((prev) => (prev ? updater(prev) : prev))
   }, [])
+
+  const handlePageNameChange = useCallback(
+    (pageName: string) => {
+      updateDsl((prev) => ({ ...prev, pageName }))
+    },
+    [updateDsl]
+  )
 
   const handleMetaChange = useCallback(
     (patch: Partial<PageDSL['meta']>) => {
@@ -534,6 +813,10 @@ export default function CreatePage() {
 
   const handleSaveDraft = async () => {
     if (!dsl || !slug) return
+    if (editMode && initialSlug && initialSlug !== slug) {
+      setPendingMoveAction({ type: 'save' })
+      return
+    }
     setSaveStatus('saving')
     try {
       const res = await fetch(`/api/pages/${slug}`, {
@@ -542,6 +825,7 @@ export default function CreatePage() {
         body: JSON.stringify({ dsl, branch: DRAFT_BRANCH }),
       })
       if (!res.ok) throw new Error('Save failed')
+      setBaselineState(dsl, slug)
       setSaveStatus('saved')
       setTimeout(() => setSaveStatus('idle'), 3000)
     } catch {
@@ -549,6 +833,135 @@ export default function CreatePage() {
       setTimeout(() => setSaveStatus('idle'), 3000)
     }
   }
+
+  const getParentSlug = (value: string) => {
+    const parts = value.split('/').filter(Boolean)
+    return parts.length > 1 ? parts.slice(0, -1).join('/') : ''
+  }
+
+  const getLeafSlug = (value: string) => {
+    const parts = value.split('/').filter(Boolean)
+    return parts.at(-1) ?? ''
+  }
+
+  const handleParentChange = (parent: string) => {
+    const leaf = getLeafSlug(slug) || 'page'
+    const next = parent ? `${parent}/${leaf}` : leaf
+    setSlug(normalizeSlugInput(next))
+  }
+
+  const canMove =
+    editMode &&
+    !!initialSlug &&
+    initialSlug !== slug &&
+    isValidSlugPath(initialSlug) &&
+    isValidSlugPath(slug)
+
+  const handleMovePage = async () => {
+    if (!canMove) return false
+    setMoveStatus('moving')
+    try {
+      const res = await fetch('/api/pages/move', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ from: initialSlug, to: slug }),
+      })
+      const data = (await res.json()) as { error?: string }
+      if (!res.ok) throw new Error(data.error ?? 'Move failed')
+      setInitialSlug(slug)
+      initialSlugRef.current = slug
+      if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href)
+        url.searchParams.set('slug', slug)
+        window.history.replaceState(null, '', url.toString())
+      }
+      setMoveStatus('moved')
+      setTimeout(() => setMoveStatus('idle'), 3000)
+      return true
+    } catch {
+      setMoveStatus('error')
+      setTimeout(() => setMoveStatus('idle'), 3000)
+      return false
+    }
+  }
+
+  const handlePublishRequest = async () => {
+    if (editMode && initialSlug && initialSlug !== slug) {
+      setPendingMoveAction({ type: 'publish' })
+      return
+    }
+    setShowPublish(true)
+  }
+
+  const confirmMoveAndContinue = async () => {
+    if (!pendingMoveAction) return
+    const moved = await handleMovePage()
+    if (!moved) return
+    if (pendingMoveAction.type === 'publish') setShowPublish(true)
+    else handleSaveDraft()
+    setPendingMoveAction(null)
+  }
+
+  const handleLeaveConfirm = () => {
+    if (!pendingNavigation) return
+    const nav = pendingNavigation
+    setPendingNavigation(null)
+    if (nav.type === 'href') {
+      router.push(nav.href)
+      return
+    }
+    allowPopRef.current = true
+    window.history.back()
+  }
+
+  const handleLoadDraft = useCallback(async () => {
+    if (!slug || !isValidSlugPath(slug)) return
+    const localDraft = loadFromLocalStorage(slug)
+    if (localDraft) {
+      setDsl(localDraft)
+      setBaselineState(localDraft, slug)
+      setLocalJson(JSON.stringify(localDraft, null, 2))
+      return
+    }
+
+    try {
+      const draftRes = await fetch(`/api/pages/${slug}?branch=${encodeURIComponent(DRAFT_BRANCH)}`)
+      if (draftRes.ok) {
+        const remoteDraft = (await draftRes.json()) as PageDSL
+        const normalized = normalizeDSL(remoteDraft)
+        setDsl(normalized)
+        setBaselineState(normalized, slug)
+        setLocalJson(JSON.stringify(normalized, null, 2))
+        return
+      }
+
+      if (draftRes.status === 404) {
+        const publishedRes = await fetch(`/api/pages/${slug}`)
+        if (publishedRes.ok) {
+          const published = (await publishedRes.json()) as PageDSL
+          const normalized = normalizeDSL(published)
+          setDsl(normalized)
+          setBaselineState(normalized, slug)
+          setLocalJson(JSON.stringify(normalized, null, 2))
+          return
+        }
+      }
+
+      throw new Error('Draft not found')
+    } catch {
+      setSaveStatus('error')
+      setTimeout(() => setSaveStatus('idle'), 3000)
+    }
+  }, [slug])
+
+  // Auto-load draft when arriving with a slug param
+  useEffect(() => {
+    if (autoLoadedDraftRef.current) return
+    if (!slug || !isValidSlugPath(slug)) return
+    if (initialSlugRef.current !== slug) return
+    autoLoadedDraftRef.current = true
+    handleLoadDraft()
+  }, [slug, handleLoadDraft])
 
   const toggleFullscreen = () => {
     if (!previewRef.current) return
@@ -562,10 +975,17 @@ export default function CreatePage() {
         dsl={dsl}
         slug={slug}
         saveStatus={saveStatus}
+        draftAvailable={draftAvailable && !checkingDraft}
+        parentSlug={getParentSlug(slug)}
+        childSlug={getLeafSlug(slug)}
+        parentOptions={parentOptions}
+        moveStatus={moveStatus}
+        onPageNameChange={handlePageNameChange}
         onSlugChange={setSlug}
-        onMetaChange={handleMetaChange}
+        onParentChange={handleParentChange}
         onSaveDraft={handleSaveDraft}
-        onPublish={() => setShowPublish(true)}
+        onLoadDraft={handleLoadDraft}
+        onPublish={handlePublishRequest}
       />
 
       {/* Dual panel body */}
@@ -586,12 +1006,14 @@ export default function CreatePage() {
             localJson={localJson}
             localJsonError={localJsonError}
             dsl={dsl}
+            metaDescription={dsl?.meta?.description ?? ''}
             slug={slug}
             onPageTypeChange={setPageType}
             onIntentChange={setIntent}
             onGenerate={handleGenerate}
             onLocalJsonChange={setLocalJson}
             onLocalJsonLoad={handleLocalJsonLoad}
+            onMetaChange={handleMetaChange}
             onSectionChange={handleSectionChange}
             onSectionDelete={handleSectionDelete}
             onSectionRegenerate={handleSectionRegenerate}
@@ -679,9 +1101,76 @@ export default function CreatePage() {
         <PublishDrawer
           dsl={dsl}
           slug={slug}
+          slugLocked={editMode}
           onSlugChange={setSlug}
+          onMetaChange={handleMetaChange}
           onClose={() => setShowPublish(false)}
         />
+      )}
+
+      {pendingMoveAction && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => (moveStatus === 'moving' ? null : setPendingMoveAction(null))}
+          />
+          <div className="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+            <h3 className="text-body-md font-bold text-gray-900 mb-2">Move Page</h3>
+            <p className="text-body-sm text-gray-600">
+              The URL has changed. Move the page to the new URL before you{' '}
+              {pendingMoveAction.type === 'publish' ? 'publish' : 'save'}?
+            </p>
+            <div className="mt-6 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setPendingMoveAction(null)}
+                disabled={moveStatus === 'moving'}
+                className="border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-400 px-4 py-2 text-body-sm font-bold rounded transition-colors disabled:opacity-40"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmMoveAndContinue}
+                disabled={moveStatus === 'moving'}
+                className="bg-gray-900 text-white hover:bg-gray-700 px-4 py-2 text-body-sm font-bold rounded transition-colors disabled:opacity-40"
+              >
+                {moveStatus === 'moving' ? 'Moving…' : 'Move and continue'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {pendingNavigation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setPendingNavigation(null)}
+          />
+          <div className="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+            <h3 className="text-body-md font-bold text-gray-900 mb-2">Leave Page?</h3>
+            <p className="text-body-sm text-gray-600">
+              You have unsaved changes. Are you sure you want to leave?
+            </p>
+            <div className="mt-6 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setPendingNavigation(null)}
+                className="border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-400 px-4 py-2 text-body-sm font-bold rounded transition-colors"
+              >
+                Stay
+              </button>
+              <button
+                type="button"
+                onClick={handleLeaveConfirm}
+                className="bg-gray-900 text-white hover:bg-gray-700 px-4 py-2 text-body-sm font-bold rounded transition-colors"
+              >
+                Leave
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

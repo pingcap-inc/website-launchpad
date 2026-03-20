@@ -1,0 +1,52 @@
+name: Score Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Slug to score (e.g., developers/get-started)"
+        required: true
+      baseUrl:
+        description: "Base URL (e.g., https://website-launchpad-git-staging-pingcap.vercel.app)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run scoring
+        run: pnpm run score:pages -- ${{ inputs.baseUrl }} --slug=${{ inputs.slug }}
+
+      - name: Commit score report
+        run: |
+          if git diff --quiet; then
+            echo "No score changes."
+            exit 0
+          fi
+          git config user.name "score-bot"
+          git config user.email "score-bot@users.noreply.github.com"
+          git add reports/page-scorecards.json reports/page-scorecards.md
+          git commit -m "chore: update scorecards for ${{ inputs.slug }}"
+          git push

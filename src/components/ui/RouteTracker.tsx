@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { trackPageView, type PageType } from '@/lib/gtm'
+import { trackPageView, type PageType } from '@/lib/gtm.client'
 
 interface RouteTrackerProps {
   /** Default page_type when not specified at page level. */
