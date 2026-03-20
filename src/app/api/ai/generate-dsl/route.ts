@@ -12,6 +12,7 @@ Rules:
 - siteName must be exactly "TiDB"
 - canonical must start and end with "/" and must reflect the specific page topic (not just the product name). e.g. for "TiDB Cloud startup program" use "/tidb-cloud/startup-program/", NOT "/tidb-cloud/"
 - primaryCta hrefs: use "https://tidbcloud.com/free-trial/" for signup, real PingCAP paths for others
+- Do NOT include any image fields; leave all images out entirely (the system fills defaults)
 - Every featureGrid/featureCard item must have an icon
 - Page must have 4-8 sections; always start with "hero"
 - Stats values should be impressive and realistic (e.g. "99.99%", "10x", "$0")
@@ -214,52 +215,64 @@ function repairJson(raw: string) {
   return escaped.replace(/,\s*([}\]])/g, '$1')
 }
 
-// ─── Default image fill ───────────────────────────────────────────────────────
+// ─── AI image stripping ───────────────────────────────────────────────────────
 
-function isImageContainer(val: unknown): val is { image: { url: string } } {
+function isImageRef(value: unknown): value is { url: string } {
   return (
-    !!val &&
-    typeof val === 'object' &&
-    'image' in (val as object) &&
-    typeof (val as { image: unknown }).image === 'object'
+    !!value &&
+    typeof value === 'object' &&
+    'url' in (value as { url?: unknown }) &&
+    typeof (value as { url?: unknown }).url === 'string'
   )
 }
 
-function fillImageFields(target: Record<string, unknown>, defaults: Record<string, unknown>): void {
-  for (const key of Object.keys(defaults)) {
-    const defVal = defaults[key]
-    const tgtVal = target[key]
+function isImageContainer(value: unknown): value is { image: { url: string } } {
+  return (
+    !!value &&
+    typeof value === 'object' &&
+    'image' in (value as object) &&
+    isImageRef((value as { image?: unknown }).image)
+  )
+}
 
-    if (!defVal || typeof defVal !== 'object') continue
-
-    if (isImageContainer(defVal)) {
-      // Always use registry default — AI-generated image URLs are unreliable
-      target[key] = defVal
-    } else if (Array.isArray(defVal)) {
-      // For arrays (e.g. tabs), use first default element as template for each item
-      if (Array.isArray(tgtVal) && defVal[0] && typeof defVal[0] === 'object') {
-        for (const item of tgtVal) {
-          if (item && typeof item === 'object') {
-            fillImageFields(item as Record<string, unknown>, defVal[0] as Record<string, unknown>)
-          }
-        }
+function stripImageFields(target: Record<string, unknown>): void {
+  for (const [key, value] of Object.entries(target)) {
+    if (isImageRef(value) || isImageContainer(value)) {
+      delete target[key]
+      continue
+    }
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        if (item && typeof item === 'object') stripImageFields(item as Record<string, unknown>)
       }
-    } else if (!Array.isArray(defVal)) {
-      // Recurse into plain nested objects
-      if (!tgtVal || typeof tgtVal !== 'object' || Array.isArray(tgtVal)) continue
-      fillImageFields(tgtVal as Record<string, unknown>, defVal as Record<string, unknown>)
+      continue
+    }
+    if (value && typeof value === 'object') {
+      stripImageFields(value as Record<string, unknown>)
     }
   }
 }
 
-function fillDefaultImages(dsl: PageDSL): void {
+function stripBackgroundFields(dsl: PageDSL): void {
   for (const section of dsl.sections) {
-    const defaults = schemaMap[section.type as SectionType]?.defaultProps
-    if (!defaults) continue
-    fillImageFields(
-      section.props as unknown as Record<string, unknown>,
-      defaults as unknown as Record<string, unknown>
-    )
+    if (section.style && 'background' in section.style) {
+      delete section.style.background
+      if (Object.keys(section.style).length === 0) {
+        delete section.style
+      }
+    }
+  }
+}
+
+function applyFeatureTabsDefaults(dsl: PageDSL): void {
+  const defaults = schemaMap.featureTabs?.defaultProps
+  if (!defaults) return
+  for (const section of dsl.sections) {
+    if (section.type !== 'featureTabs') continue
+    const props = section.props as unknown as Record<string, unknown>
+    if (props.autoSwitch === undefined) props.autoSwitch = defaults.autoSwitch
+    if (props.autoSwitchInterval === undefined)
+      props.autoSwitchInterval = defaults.autoSwitchInterval
   }
 }
 
@@ -267,16 +280,13 @@ function fillDefaultImages(dsl: PageDSL): void {
 
 const VALID_BG = new Set([
   'primary',
-  'surface',
   'inverse',
   'gradient-dark-top',
   'gradient-dark-bottom',
-  'gradient-dark',
   'brand-red',
   'brand-violet',
   'brand-blue',
   'brand-teal',
-  'none',
 ])
 const VALID_SPACING = new Set(['none', 'sm', 'md', 'lg', 'section', 'hero'])
 
@@ -284,7 +294,7 @@ function sanitizeDSLStyles(dsl: PageDSL): void {
   for (const section of dsl.sections) {
     const style = section.style as Record<string, unknown> | undefined
     if (!style) continue
-    // Strip invalid background token → SectionWrapper falls back to componentMap defaultStyle
+    // Strip invalid/none background token → SectionWrapper falls back to componentMap defaultStyle
     if (style.background && !VALID_BG.has(style.background as string)) {
       console.warn(
         `[DSL] Invalid background "${style.background}" on section "${section.id}", stripped`
@@ -402,6 +412,9 @@ export async function POST(request: NextRequest) {
   try {
     let text = await generateJSON(messages, { maxTokens: 4096 })
     let dsl = JSON.parse(repairJson(text)) as PageDSL
+    stripImageFields(dsl as unknown as Record<string, unknown>)
+    stripBackgroundFields(dsl)
+    applyFeatureTabsDefaults(dsl)
 
     // Validate; retry once with error feedback if needed
     let errors = validateDSL(dsl)
@@ -417,6 +430,9 @@ export async function POST(request: NextRequest) {
       ]
       text = await generateJSON(retryMessages, { maxTokens: 4096 })
       dsl = JSON.parse(repairJson(text)) as PageDSL
+      stripImageFields(dsl as unknown as Record<string, unknown>)
+      stripBackgroundFields(dsl)
+      applyFeatureTabsDefaults(dsl)
       errors = validateDSL(dsl)
       if (errors.length > 0) {
         console.error('[DSL] Retry still has validation errors:', errors)
@@ -424,7 +440,6 @@ export async function POST(request: NextRequest) {
     }
 
     sanitizeDSLIcons(dsl)
-    fillDefaultImages(dsl)
     sanitizeDSLStyles(dsl)
     // Ensure CTA sections default to brand-violet background
     for (const section of dsl.sections) {

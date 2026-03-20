@@ -149,7 +149,7 @@ export interface HeroBackgroundImage {
   image: ImageRef
   alt?: string
   priority?: boolean
-  /** Tailwind opacity class, e.g. "opacity-30". Defaults to "opacity-40". */
+  /** Tailwind opacity class, e.g. "opacity-80". Defaults to "opacity-80". */
   opacityClassName?: string
   /** Optional overlay class. */
   overlayClassName?: string
@@ -187,6 +187,7 @@ export interface HeroProps {
   backgroundImage?: HeroBackgroundImage
   /** Embeds a HubSpot form in the hero right slot. Auto-sets layout="split". */
   heroForm?: HeroForm
+  className?: string
 }
 
 // ─── Stats ──────────────────────────────────────────────────────────────────
@@ -197,6 +198,7 @@ export interface StatsProps {
   subtitle?: string
   items: StatsItem[]
   columns?: 2 | 3 | 4
+  className?: string
 }
 
 export interface StatsItem {
@@ -217,6 +219,7 @@ export interface FeatureGridProps {
   columns?: 2 | 3 | 4
   viewMore?: { text: string; href: string }
   itemLayout?: 'horizontal' | 'vertical'
+  className?: string
 }
 
 export interface FeatureGridItem {
@@ -236,6 +239,8 @@ export interface FeatureCardProps {
   subtitle?: string
   items: FeatureCardItem[]
   columns?: 2 | 3 | 4
+  borderStyle?: 'gray' | 'color'
+  className?: string
 }
 
 export interface FeatureCardItem {
@@ -243,7 +248,9 @@ export interface FeatureCardItem {
   icon?: IconValue
   title: string
   description: string
+  borderColor?: string
   href?: string
+  className?: string
 }
 
 // ─── Feature Tabs ────────────────────────────────────────────────────────────
@@ -255,6 +262,7 @@ export interface FeatureTabsProps {
   tabs: FeatureTab[]
   autoSwitch?: boolean
   autoSwitchInterval?: number
+  className?: string
 }
 
 export interface FeatureTab {
@@ -264,6 +272,8 @@ export interface FeatureTab {
   bullets?: string[]
   primaryCta?: Cta
   secondaryCta?: Cta
+  /** Optional plain text override for the left content column. */
+  content?: string
   image: {
     image: ImageRef
     alt?: string
@@ -283,6 +293,7 @@ export interface FeatureHighlightsProps {
   items: FeatureHighlightItem[]
   columns?: 2 | 3 | 4
   viewMore?: { text: string; href: string }
+  className?: string
 }
 
 export interface FeatureHighlightItem {
@@ -305,6 +316,7 @@ export interface LogoCloudProps {
   autoScroll?: boolean
   scrollSpeedSeconds?: number
   scrollContentMaxWidth?: number
+  className?: string
 }
 
 export interface Logo {
@@ -321,6 +333,7 @@ export interface TestimonialsProps {
   eyebrow?: string
   title: string
   items: Testimonial[]
+  className?: string
 }
 
 export interface Testimonial {
@@ -340,6 +353,7 @@ export interface Testimonial {
 export interface FaqProps {
   title?: string
   items: FaqItem[]
+  className?: string
 }
 
 export interface FaqItem {
@@ -360,6 +374,7 @@ export interface CtaProps {
   }
   primaryCta: Cta
   secondaryCta?: Cta
+  className?: string
 }
 
 // ─── HubSpot Form ────────────────────────────────────────────────────────────
@@ -370,6 +385,7 @@ export interface FormProps {
   portalId: string // HubSpot portal ID — replace placeholder before publishing
   formId: string // HubSpot form ID — replace placeholder before publishing
   region?: string // default 'na1'
+  className?: string
 }
 
 export type SectionPropsMap = {
@@ -487,7 +503,7 @@ Generate a PageDSL JSON object with this exact structure:
       "type": string,
       "props": object,
       "style": {
-        "background"?: "primary"|"inverse"|"gradient-dark-top"|"gradient-dark-bottom"|"brand-red"|"brand-violet"|"brand-blue"|"brand-teal"|"none",
+        "background"?: "primary"|"inverse"|"gradient-dark-top"|"gradient-dark-bottom"|"brand-red"|"brand-violet"|"brand-blue"|"brand-teal",
         "spacing"?: "none"|"sm"|"md"|"lg"|"section"|"hero",
         "removePaddingTop"?: boolean,
         "removePaddingBottom"?: boolean,
@@ -501,6 +517,7 @@ Generate a PageDSL JSON object with this exact structure:
 
 Image fields must use this structure:
 { "assetId"?: string, "url": string }
+Do NOT include any image fields in AI output. Leave all image fields out entirely; the system will fill component defaults.
 
 Available section types (choose appropriate mix):
 - {
@@ -512,9 +529,10 @@ Available section types (choose appropriate mix):
       subheadline?,
       primaryCta?: {text,href},
       secondaryCta?: {text,href},
-      heroImage?: { image: {assetId?, url}, alt?, width?, height?, align?:"right"|"center" },
-      backgroundImage?: { image: {assetId?, url}, alt?, opacityClassName?, overlayClassName?, positionClassName? },
-      heroForm?: {formId, portalId?, region?}
+      heroImage?: { image: {assetId?, url}, alt?, width?, height?, align?:"right"|"center", priority? },
+      backgroundImage?: { image: {assetId?, url}, alt?, opacityClassName?, overlayClassName?, positionClassName?, priority? },
+      heroForm?: {formId, portalId?, region?},
+      className?
     }
   }
   (heroForm: embeds a HubSpot form in the hero right slot — auto-sets layout="split")
@@ -526,16 +544,16 @@ Available section types (choose appropriate mix):
     Add animate-glow-sweep to the class for an animated glow sweep effect, e.g.
     <span class="text-gradient-violet animate-glow-sweep">word</span>
   )
-- { type: "stats", props: { title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4 } }
-- { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, itemLayout?: "horizontal"|"vertical" } }
-- { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, href?}], columns?: 2|3|4 } }
-- { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval? } }
-- { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href} } }
-- { type: "faq", props: { title?, items: [{q, a}] } }
-- { type: "cta", props: { title, subtitle?, primaryCta: {text,href}, secondaryCta?: {text,href}, image?: { image: {assetId?, url}, alt?, width?, height? } } }
-- { type: "testimonials", props: { title, items: [{quote, author, href?, cta?, logo?: { image: {assetId?, url}, alt?, size? }}] } }
-- { type: "logoCloud", props: { title?, logos: [{name, image: {assetId?, url}, href?}], variant?: "default"|"minimal", align?: "center"|"left", autoScroll?, scrollSpeedSeconds? } }
-- { type: "form", props: { title?, subtitle?, portalId: "YOUR_PORTAL_ID", formId: "YOUR_FORM_ID", region?: "na1" } }
+- { type: "stats", props: { eyebrow?, title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4, className? } }
+- { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, viewMore?: {text, href}, itemLayout?: "horizontal"|"vertical", className? } }
+- { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
+- { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, content?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval?, className? } }
+- { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href}, className? } }
+- { type: "faq", props: { title?, items: [{q, a}], className? } }
+- { type: "cta", props: { title, subtitle?, primaryCta: {text,href}, secondaryCta?: {text,href}, image?: { image: {assetId?, url}, alt?, width?, height? }, className? } }
+- { type: "testimonials", props: { eyebrow?, title, items: [{quote, author, href?, cta?, logo?: { image: {assetId?, url}, alt?, size? }}], className? } }
+- { type: "logoCloud", props: { eyebrow?, title?, subtitle?, logos: [{name, image: {assetId?, url}, href?, width?, height?}], variant?: "default"|"minimal", align?: "center"|"left", autoScroll?, scrollSpeedSeconds?, scrollContentMaxWidth?, className? } }
+- { type: "form", props: { title?, subtitle?, portalId: "YOUR_PORTAL_ID", formId: "YOUR_FORM_ID", region?: "na1", className? } }
 
 Icon names (use for icon fields): ${ALL_ICON_NAMES.join(', ')}
 CTA hrefs: use real PingCAP URLs or "https://tidbcloud.com/free-trial/" for signup CTAs.
