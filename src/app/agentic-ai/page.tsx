@@ -41,6 +41,7 @@ const schema = buildPageSchema({
 })
 
 const dsl: PageDSL = {
+  "pageName": "TiDB for Agentic AI: Scale Stateful Agent Workloads",
   "meta": {
     "title": "TiDB for Agentic AI: Scale Stateful Agent Workloads",
     "description": "TiDB supports branching, durable state, and concurrency for agent systems. Build scalable agentic AI applications with instant isolation and transactional consistency.",
@@ -227,7 +228,7 @@ const dsl: PageDSL = {
             }
           }
         ],
-        "autoSwitch": false
+        "autoSwitch": true
       },
       "style": {
         "background": "none",
