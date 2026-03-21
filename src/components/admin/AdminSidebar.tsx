@@ -17,7 +17,7 @@ const NAV_ITEMS = [
   { href: '/admin/pages', label: 'Pages', icon: FileText },
   { href: '/admin/create', label: 'Create Page', icon: PlusSquare },
   { href: '/admin/assistant', label: 'AI Assistant', icon: MessageSquare, disabled: true },
-  { href: '/admin/builds', label: 'Preview Builds', icon: Layers, disabled: true },
+  // { href: '/admin/builds', label: 'Preview Builds', icon: Layers, disabled: true },
 ]
 
 interface AdminSidebarProps {

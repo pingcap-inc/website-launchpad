@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
   Loader2,
@@ -425,7 +425,7 @@ function LeftPanel({
 
 // ── Main page ────────────────────────────────────────────────────────────────
 
-export default function CreatePage() {
+function CreatePageInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const editMode = searchParams.get('mode') === 'edit'
@@ -1173,5 +1173,13 @@ export default function CreatePage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function CreatePage() {
+  return (
+    <Suspense fallback={<div className="p-6 text-body-sm text-gray-500">Loading editor…</div>}>
+      <CreatePageInner />
+    </Suspense>
   )
 }
