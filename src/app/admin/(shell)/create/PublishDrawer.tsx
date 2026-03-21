@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   X,
   Loader2,
@@ -23,10 +23,6 @@ interface PublishResult {
   pageCommitUrl?: string
   sitemapCommitUrl?: string
   deployUrl?: string
-  scoreTriggered?: boolean
-  scoreTriggerError?: string
-  scoreTriggerSkipped?: boolean
-  scoreTriggerReason?: string
   error?: string
 }
 
@@ -35,14 +31,6 @@ interface LocalGenerateResult {
   pagePath?: string
   dslPath?: string
   error?: string
-}
-
-interface PageScore {
-  slug: string
-  ux: number
-  seo: number
-  consistency: number
-  overall: number
 }
 
 interface PublishDrawerProps {
@@ -60,8 +48,7 @@ type PrePublishCheck = { label: string; status: CheckStatus; detail?: string }
 const DEPLOY_STEPS = (
   result: PublishResult | null,
   addToSitemap: boolean,
-  deployStatus: DeployStatus,
-  scoreStatus: 'idle' | 'queued' | 'loading' | 'ready' | 'error' | 'skipped'
+  deployStatus: DeployStatus
 ) => [
   { label: 'Pushed to GitHub', done: !!result?.success },
   {
@@ -70,19 +57,7 @@ const DEPLOY_STEPS = (
   },
   { label: 'Vercel rebuilding', done: deployStatus === 'ready' || deployStatus === 'error' },
   { label: 'Live globally', done: deployStatus === 'ready' },
-  { label: 'Page scored', done: scoreStatus === 'ready' },
 ]
-
-function scoreBadgeClass(score: number) {
-  const base = 'px-2 py-0.5 rounded-full text-label font-bold border'
-  if (score >= 85) {
-    return `${base} border-emerald-200 text-emerald-700 bg-emerald-50`
-  }
-  if (score >= 70) {
-    return `${base} border-amber-200 text-amber-700 bg-amber-50`
-  }
-  return `${base} border-red-200 text-red-600 bg-red-50`
-}
 
 export function PublishDrawer({
   dsl,
@@ -100,15 +75,6 @@ export function PublishDrawer({
   const [deployUrl, setDeployUrl] = useState('')
   const [localGenerating, setLocalGenerating] = useState(false)
   const [localResult, setLocalResult] = useState<LocalGenerateResult | null>(null)
-  const [scoreStatus, setScoreStatus] = useState<
-    'idle' | 'queued' | 'loading' | 'ready' | 'error' | 'skipped'
-  >('idle')
-  const [score, setScore] = useState<PageScore | null>(null)
-  const [scoreError, setScoreError] = useState('')
-  const scorePollRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const scorePollAttempts = useRef(0)
-  const [showScoreNotice, setShowScoreNotice] = useState(false)
-  const scoreNoticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [aiScoreStatus, setAiScoreStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle')
   const [showChecklist, setShowChecklist] = useState(false)
   const [aiScore, setAiScore] = useState<PageScoreResult | null>(null)
@@ -161,9 +127,6 @@ export function PublishDrawer({
   const handlePublish = async () => {
     setPublishing(true)
     setResult(null)
-    setScore(null)
-    setScoreError('')
-    setScoreStatus('idle')
     try {
       const res = await fetch('/api/publish', {
         method: 'POST',
@@ -173,7 +136,6 @@ export function PublishDrawer({
           dsl,
           branch: 'staging',
           addToSitemap,
-          triggerScore: false,
         }),
       })
       const data = (await res.json()) as PublishResult
@@ -223,8 +185,7 @@ export function PublishDrawer({
     }
   }
 
-  const steps = DEPLOY_STEPS(result, addToSitemap, deployStatus, scoreStatus)
-  const canScore = deployStatus === 'ready'
+  const steps = DEPLOY_STEPS(result, addToSitemap, deployStatus)
 
   const { seoChecks, lintChecks, hasBlockingChecks } = useMemo(() => {
     const nextSeo: PrePublishCheck[] = []
@@ -445,116 +406,12 @@ export function PublishDrawer({
 
   const canPublishNow = canPublish && !hasBlockingChecks
 
-  const fetchScoreOnce = async (silenceErrors = false) => {
-    try {
-      const res = await fetch('/api/page-scores')
-      const data = await res.json()
-      const entry = (data.scores ?? []).find((item: PageScore) => item.slug === localSlug) as
-        | PageScore
-        | undefined
-      if (entry) {
-        setScore(entry)
-        setScoreStatus('ready')
-        return true
-      }
-      setScoreStatus((prev) => (prev === 'error' ? prev : 'loading'))
-      return false
-    } catch (err) {
-      if (!silenceErrors) {
-        setScoreStatus('error')
-        setScoreError(err instanceof Error ? err.message : 'Failed to load score')
-      }
-      return false
-    }
-  }
-
-  const triggerScore = async () => {
-    if (!canScore) return
-    setScoreError('')
-    setScoreStatus('queued')
-    try {
-      const res = await fetch('/api/page-scores/run', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: localSlug }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error ?? 'Failed to trigger scoring')
-      setTimeout(() => {
-        fetchScoreOnce(true).catch(() => {})
-      }, 10_000)
-    } catch (err) {
-      setScoreStatus('error')
-      setScoreError(err instanceof Error ? err.message : 'Failed to trigger scoring')
-    }
-  }
-
-  useEffect(() => {
-    if (!result?.success) return
-    if (scoreStatus !== 'queued' && scoreStatus !== 'loading') return
-
-    if (!scorePollRef.current) {
-      scorePollAttempts.current = 0
-      scorePollRef.current = setInterval(async () => {
-        scorePollAttempts.current += 1
-        const found = await fetchScoreOnce(true)
-        if (found || scorePollAttempts.current >= 20) {
-          if (scorePollRef.current) {
-            clearInterval(scorePollRef.current)
-            scorePollRef.current = null
-          }
-        }
-      }, 15_000)
-    }
-
-    return () => {
-      if (scorePollRef.current) {
-        clearInterval(scorePollRef.current)
-        scorePollRef.current = null
-      }
-    }
-  }, [result?.success, scoreStatus, localSlug])
-
-  useEffect(() => {
-    if (scoreStatus !== 'ready' || !score) return
-    setShowScoreNotice(true)
-    if (scoreNoticeTimer.current) clearTimeout(scoreNoticeTimer.current)
-    scoreNoticeTimer.current = setTimeout(() => {
-      setShowScoreNotice(false)
-    }, 4500)
-    return () => {
-      if (scoreNoticeTimer.current) {
-        clearTimeout(scoreNoticeTimer.current)
-        scoreNoticeTimer.current = null
-      }
-    }
-  }, [scoreStatus, score])
-
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       {/* Backdrop */}
       <div className="flex-1 bg-black/30" onClick={onClose} />
 
       {/* Drawer */}
-      {showScoreNotice && score && (
-        <div className="fixed top-4 right-4 z-50 w-[22rem] max-w-[calc(100%-2rem)] rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 shadow-sm animate-slide-in-right">
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <p className="text-body-sm font-bold text-emerald-800">Scoring complete</p>
-              <p className="text-label text-emerald-700">
-                Overall {score.overall} · UX {score.ux} · SEO {score.seo} · Cons {score.consistency}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowScoreNotice(false)}
-              className="text-emerald-700 hover:text-emerald-900 text-label font-bold"
-            >
-              Dismiss
-            </button>
-          </div>
-        </div>
-      )}
       <div className="w-96 bg-white h-full shadow-xl flex flex-col overflow-y-auto relative">
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <h2 className="text-h3-sm font-bold text-gray-900">Publish Page</h2>
@@ -973,83 +830,6 @@ export function PublishDrawer({
                   <p>{result.error}</p>
                 </div>
               )}
-
-              {/* Score status */}
-              <div className="space-y-2 pt-2">
-                <p className="text-body-sm font-bold text-gray-700">Page Score</p>
-                {!canScore ? (
-                  <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
-                    <p>Scoring becomes available after the publish deploy is live.</p>
-                  </div>
-                ) : score ? (
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className={scoreBadgeClass(score.overall)}>Overall {score.overall}</span>
-                    <span className="text-label text-gray-500">
-                      UX {score.ux} · SEO {score.seo} · Cons {score.consistency}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => fetchScoreOnce()}
-                      className="text-gray-400 hover:text-gray-900 text-label font-bold"
-                    >
-                      Refresh
-                    </button>
-                  </div>
-                ) : scoreStatus === 'error' ? (
-                  <div className="flex items-start gap-2 text-red-600 text-body-sm p-3 bg-red-50 border border-red-200 rounded">
-                    <AlertTriangle size={14} className="mt-0.5 shrink-0" />
-                    <div>
-                      <p>{scoreError || 'Failed to load score'}</p>
-                      <button
-                        type="button"
-                        onClick={triggerScore}
-                        className="text-red-700 underline text-label font-bold mt-1"
-                      >
-                        Try again
-                      </button>
-                    </div>
-                  </div>
-                ) : scoreStatus === 'queued' || scoreStatus === 'loading' ? (
-                  <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
-                    <p>
-                      Scoring queued. It can take a few minutes after publish. This panel will
-                      refresh automatically.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => fetchScoreOnce()}
-                      className="text-gray-700 underline text-label font-bold mt-2"
-                    >
-                      Check now
-                    </button>
-                  </div>
-                ) : scoreStatus === 'skipped' ? (
-                  <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
-                    <p>{scoreError || 'Scoring skipped by sampling rule.'}</p>
-                    <button
-                      type="button"
-                      onClick={triggerScore}
-                      className="text-gray-700 underline text-label font-bold mt-2"
-                    >
-                      Run scoring now
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <span className="text-body-sm text-gray-400">No score yet.</span>
-                    <button
-                      type="button"
-                      onClick={triggerScore}
-                      className="text-gray-700 underline text-label font-bold"
-                    >
-                      Run scoring now.
-                    </button>
-                  </div>
-                )}
-                <p className="text-label text-gray-400">
-                  Scores are based on Lighthouse Performance/SEO.
-                </p>
-              </div>
             </div>
           )}
 
