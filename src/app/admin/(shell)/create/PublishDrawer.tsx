@@ -25,10 +25,6 @@ interface PublishResult {
   pageCommitUrl?: string
   sitemapCommitUrl?: string
   deployUrl?: string
-  scoreTriggered?: boolean
-  scoreTriggerError?: string
-  scoreTriggerSkipped?: boolean
-  scoreTriggerReason?: string
   error?: string
 }
 
@@ -37,14 +33,6 @@ interface LocalGenerateResult {
   pagePath?: string
   dslPath?: string
   error?: string
-}
-
-interface PageScore {
-  slug: string
-  ux: number
-  seo: number
-  consistency: number
-  overall: number
 }
 
 interface PublishDrawerProps {
@@ -63,7 +51,6 @@ const DEPLOY_STEPS = (result: PublishResult | null, deployStatus: DeployStatus) 
   { label: 'Pushed to GitHub', done: !!result?.success },
   { label: 'Vercel rebuilding', done: deployStatus === 'ready' || deployStatus === 'error' },
   { label: 'Live globally', done: deployStatus === 'ready' },
-  { label: 'Page scored', done: scoreStatus === 'ready' },
 ]
 
 function getScoreColor(score: number) {
@@ -146,9 +133,6 @@ export function PublishDrawer({
   const handlePublish = async () => {
     setPublishing(true)
     setResult(null)
-    setScore(null)
-    setScoreError('')
-    setScoreStatus('idle')
     try {
       const res = await fetch('/api/publish', {
         method: 'POST',
@@ -1351,83 +1335,6 @@ export function PublishDrawer({
                   <p>{result.error}</p>
                 </div>
               )}
-
-              {/* Score status */}
-              <div className="space-y-2 pt-2">
-                <p className="text-body-sm font-bold text-gray-700">Page Score</p>
-                {!canScore ? (
-                  <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
-                    <p>Scoring becomes available after the publish deploy is live.</p>
-                  </div>
-                ) : score ? (
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className={scoreBadgeClass(score.overall)}>Overall {score.overall}</span>
-                    <span className="text-label text-gray-500">
-                      UX {score.ux} · SEO {score.seo} · Cons {score.consistency}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => fetchScoreOnce()}
-                      className="text-gray-400 hover:text-gray-900 text-label font-bold"
-                    >
-                      Refresh
-                    </button>
-                  </div>
-                ) : scoreStatus === 'error' ? (
-                  <div className="flex items-start gap-2 text-red-600 text-body-sm p-3 bg-red-50 border border-red-200 rounded">
-                    <AlertTriangle size={14} className="mt-0.5 shrink-0" />
-                    <div>
-                      <p>{scoreError || 'Failed to load score'}</p>
-                      <button
-                        type="button"
-                        onClick={triggerScore}
-                        className="text-red-700 underline text-label font-bold mt-1"
-                      >
-                        Try again
-                      </button>
-                    </div>
-                  </div>
-                ) : scoreStatus === 'queued' || scoreStatus === 'loading' ? (
-                  <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
-                    <p>
-                      Scoring queued. It can take a few minutes after publish. This panel will
-                      refresh automatically.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => fetchScoreOnce()}
-                      className="text-gray-700 underline text-label font-bold mt-2"
-                    >
-                      Check now
-                    </button>
-                  </div>
-                ) : scoreStatus === 'skipped' ? (
-                  <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
-                    <p>{scoreError || 'Scoring skipped by sampling rule.'}</p>
-                    <button
-                      type="button"
-                      onClick={triggerScore}
-                      className="text-gray-700 underline text-label font-bold mt-2"
-                    >
-                      Run scoring now
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <span className="text-body-sm text-gray-400">No score yet.</span>
-                    <button
-                      type="button"
-                      onClick={triggerScore}
-                      className="text-gray-700 underline text-label font-bold"
-                    >
-                      Run scoring now.
-                    </button>
-                  </div>
-                )}
-                <p className="text-label text-gray-400">
-                  Scores are based on Lighthouse Performance/SEO.
-                </p>
-              </div>
             </div>
           )}
 
