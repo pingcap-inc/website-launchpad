@@ -20,7 +20,7 @@ export function DeveloperSubnav() {
       className="sticky top-[62px] lg:top-20 z-40 bg-bg-primary"
       aria-label="Developer Hub navigation"
     >
-      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 overflow-x-auto scrollbar-none">
+      <div className="contain overflow-x-auto scrollbar-none">
         <ul className="flex -ml-4">
           {navItems.map((item) => {
             const isActive = pathname === item.href || pathname === item.href.slice(0, -1)

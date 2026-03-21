@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Header, Footer, JsonLd, HeroSection, ColorCard } from '@/components'
+import { Header, Footer, JsonLd, HeroSection, ColorCard, SectionWrapper } from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { GraduationCap, FlaskConical } from 'lucide-react'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
@@ -92,7 +92,9 @@ export default function LearnPage() {
         <DeveloperSubnav />
 
         <main>
-          <section className="bg-bg-primary py-10 md:py-0">
+          <SectionWrapper
+            style={{ background: 'primary', spacing: 'hero', className: 'py-10 md:py-0' }}
+          >
             <HeroSection
               layout="image-right"
               eyebrow="TiDB Developer Hub"
@@ -107,10 +109,16 @@ export default function LearnPage() {
                 align: 'right',
               }}
             />
-          </section>
+          </SectionWrapper>
 
-          <section className="pb-section-sm lg:py-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper
+            style={{
+              background: 'primary',
+              spacing: 'hero',
+              className: 'pb-section-sm lg:py-section',
+            }}
+          >
+            <div className="space-y-16">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {learnCards.map((card) => (
                   <ColorCard
@@ -124,7 +132,7 @@ export default function LearnPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
         </main>
       </div>
 

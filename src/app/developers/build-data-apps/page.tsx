@@ -1,6 +1,14 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { Header, Footer, JsonLd, SectionHeader, SecondaryButton, HeroSection } from '@/components'
+import {
+  Header,
+  Footer,
+  JsonLd,
+  SectionHeader,
+  SecondaryButton,
+  HeroSection,
+  SectionWrapper,
+} from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
 import { FrameworkSelector } from '../_components/FrameworkSelector'
@@ -218,7 +226,9 @@ export default function BuildDataApplicationsPage() {
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
         <main>
-          <section className="bg-bg-primary py-10 md:py-0">
+          <SectionWrapper
+            style={{ background: 'primary', spacing: 'hero', className: 'py-10 md:py-0' }}
+          >
             <HeroSection
               layout="image-right"
               eyebrow="TiDB Developer Hub"
@@ -232,14 +242,14 @@ export default function BuildDataApplicationsPage() {
                 align: 'center',
               }}
             />
-          </section>
+          </SectionWrapper>
 
           {/* ── How-To Guides ── */}
-          <section
+          <SectionWrapper
             id="how-to-guides"
-            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+            style={{ background: 'gradient-dark-bottom', spacing: 'section' }}
           >
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+            <div className="space-y-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
                 <div className="lg:pt-2">
                   <SectionHeader
@@ -269,10 +279,16 @@ export default function BuildDataApplicationsPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
-          <section className="py-section-sm lg:pb-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper
+            style={{
+              background: 'primary',
+              spacing: 'hero',
+              className: 'py-section-sm lg:pb-section',
+            }}
+          >
+            <div className="space-y-16">
               <SectionHeader title="Start with a Working Example" align="left" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {demoCards.map((card) => (
@@ -285,10 +301,10 @@ export default function BuildDataApplicationsPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
-          <section className="py-section-sm lg:py-section-sm bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'primary', spacing: 'sm' }}>
+            <div className="space-y-16">
               <SectionHeader title="Try It Locally or in the Cloud" align="left" />
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
                 {/* Left: two resource cards */}
@@ -323,17 +339,17 @@ export default function BuildDataApplicationsPage() {
                 </a>
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
-          <section className="py-section-sm lg:py-section-sm bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'primary', spacing: 'sm' }}>
+            <div className="space-y-16">
               <SectionHeader title="Connect Your Application Framework" align="left" />
               <FrameworkSelector highlightClassName="text-brand-violet-medium" />
             </div>
-          </section>
+          </SectionWrapper>
 
-          <section className="py-section-sm lg:py-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
+            <div className="space-y-16">
               <SectionHeader title="Go Deeper" align="left" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {goDeeperColumns.map((column) => (
@@ -348,7 +364,7 @@ export default function BuildDataApplicationsPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
         </main>
       </div>
       <Footer />
