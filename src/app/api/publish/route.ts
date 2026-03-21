@@ -10,7 +10,6 @@ interface PublishRequest {
   addToSitemap?: boolean
   priority?: number
   changeFrequency?: string
-  triggerScore?: boolean
 }
 
 function injectSitemapEntry(
@@ -45,7 +44,6 @@ export async function POST(request: NextRequest) {
       pageCommitUrl: 'https://example.com/mock-commit',
       sitemapCommitUrl: body.addToSitemap ? 'https://example.com/mock-sitemap-commit' : undefined,
       deployUrl: mockDeployUrl,
-      scoreTriggered: false,
     })
   }
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO || !VERCEL_OWNER) {
@@ -59,7 +57,6 @@ export async function POST(request: NextRequest) {
     addToSitemap = false,
     priority = 0.7,
     changeFrequency = 'monthly',
-    triggerScore,
   } = (await request.json()) as PublishRequest
 
   if (branch === 'main') {
@@ -213,61 +210,10 @@ export async function POST(request: NextRequest) {
       ? `https://www.pingcap.com/${slug}/`
       : `${SITE_BASE_URL.replace(/\/$/, '') || `https://${GITHUB_REPO}-git-${branch.replace(/[^a-z0-9]/g, '-')}-${VERCEL_OWNER}.vercel.app`}/${slug}/`
 
-  const shouldTriggerScore = triggerScore ?? process.env.ENABLE_PAGE_SCORING_ON_PUBLISH === '1'
-  let scoreTriggered = false
-  let scoreTriggerError: string | undefined
-  let scoreTriggerSkipped = false
-  let scoreTriggerReason: string | undefined
-
-  if (shouldTriggerScore) {
-    const sampleEveryRaw = process.env.SCORE_PUBLISH_EVERY_N
-    const sampleEvery = sampleEveryRaw ? Number(sampleEveryRaw) : 0
-    if (sampleEveryRaw && (!Number.isFinite(sampleEvery) || sampleEvery < 1)) {
-      scoreTriggerError = 'Invalid SCORE_PUBLISH_EVERY_N'
-    } else if (sampleEvery >= 2) {
-      const seed = parseInt(newCommitSha.slice(-2), 16)
-      if (!Number.isFinite(seed) || seed % sampleEvery !== 0) {
-        scoreTriggerSkipped = true
-        scoreTriggerReason = `Skipped by sampling rule (every ${sampleEvery} publishes)`
-      }
-    }
-  }
-
-  if (shouldTriggerScore && !scoreTriggerSkipped && !scoreTriggerError) {
-    const host = request.headers.get('host')
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_BASE_URL ?? (host ? `http://${host}` : null)
-    const triggerToken = process.env.SCORE_TRIGGER_TOKEN
-    if (baseUrl && triggerToken) {
-      try {
-        const res = await fetch(`${baseUrl.replace(/\/$/, '')}/api/score-trigger`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-score-token': triggerToken,
-          },
-          body: JSON.stringify({ slug, baseUrl }),
-        })
-        if (res.ok) {
-          scoreTriggered = true
-        } else {
-          scoreTriggerError = 'Failed to trigger scoring'
-        }
-      } catch {
-        scoreTriggerError = 'Failed to trigger scoring'
-      }
-    } else {
-      scoreTriggerError = 'Scoring not configured'
-    }
-  }
-
   return NextResponse.json({
     success: true,
     pageCommitUrl: commitHtmlUrl,
     sitemapCommitUrl: hasSitemap ? commitHtmlUrl : undefined,
     deployUrl,
-    scoreTriggered,
-    scoreTriggerError,
-    scoreTriggerSkipped,
-    scoreTriggerReason,
   })
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import {
   FileText,
@@ -12,8 +12,6 @@ import {
   ChevronRight,
   ChevronDown,
   Trash2,
-  Info,
-  RotateCw,
 } from 'lucide-react'
 import { SITE_BASE_URL } from '@/lib/env'
 
@@ -25,15 +23,6 @@ interface PageItem {
   hasPublished: boolean
   hasDraft: boolean
   isCode: boolean
-}
-
-interface PageScore {
-  slug: string
-  ux: number
-  seo: number
-  consistency: number
-  overall: number
-  error?: string
 }
 
 function timeAgo(dateStr: string | null): string {
@@ -127,32 +116,6 @@ function buildVisibleRows(
   return rows
 }
 
-function scoreBadgeClass(score: number, variant: 'overall' | 'detail' = 'detail') {
-  const base = 'px-2 py-0.5 rounded-full text-label font-bold border transition-colors'
-  if (score >= 85) {
-    return [
-      base,
-      variant === 'overall'
-        ? 'border-emerald-300 text-emerald-800 bg-emerald-50'
-        : 'border-emerald-200 text-emerald-700 bg-emerald-50',
-    ].join(' ')
-  }
-  if (score >= 70) {
-    return [
-      base,
-      variant === 'overall'
-        ? 'border-amber-300 text-amber-800 bg-amber-50'
-        : 'border-amber-200 text-amber-700 bg-amber-50',
-    ].join(' ')
-  }
-  return [
-    base,
-    variant === 'overall'
-      ? 'border-red-300 text-red-700 bg-red-50'
-      : 'border-red-200 text-red-600 bg-red-50',
-  ].join(' ')
-}
-
 export default function PagesPage() {
   const [pages, setPages] = useState<PageItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -161,12 +124,6 @@ export default function PagesPage() {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set())
   const [deletingSlug, setDeletingSlug] = useState('')
   const [pendingDeleteSlug, setPendingDeleteSlug] = useState('')
-  const [rescoringSlug, setRescoringSlug] = useState('')
-  const [rescoreCooldowns, setRescoreCooldowns] = useState<Map<string, number>>(new Map())
-  const [scores, setScores] = useState<Map<string, PageScore>>(new Map())
-  const rescorePollRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const rescorePollAttempts = useRef(0)
-
   const fetchPages = async (options?: { includeTitle?: boolean; includeUpdated?: boolean }) => {
     setLoading(true)
     setError('')
@@ -189,25 +146,10 @@ export default function PagesPage() {
   useEffect(() => {
     const load = async () => {
       await fetchPages({ includeTitle: false, includeUpdated: false })
-      fetchScores()
       fetchPages()
     }
     load()
   }, [])
-
-  const fetchScores = async () => {
-    try {
-      const res = await fetch('/api/page-scores')
-      const data = await res.json()
-      const map = new Map<string, PageScore>()
-      ;(data.scores ?? []).forEach((score: PageScore) => {
-        map.set(score.slug, score)
-      })
-      setScores(map)
-    } catch {
-      // ignore
-    }
-  }
 
   const handleDelete = async () => {
     if (!pendingDeleteSlug) return
@@ -229,53 +171,6 @@ export default function PagesPage() {
       setPendingDeleteSlug('')
     }
   }
-
-  const handleRescore = async (slug: string) => {
-    const now = Date.now()
-    const last = rescoreCooldowns.get(slug) ?? 0
-    if (now - last < 60_000) return
-    setRescoreCooldowns((prev) => new Map(prev).set(slug, now))
-    setRescoringSlug(slug)
-    try {
-      const res = await fetch('/api/page-scores/run', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error ?? 'Failed to trigger scoring')
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to trigger scoring')
-    }
-  }
-
-  useEffect(() => {
-    if (!rescoringSlug) return
-    if (rescorePollRef.current) {
-      clearInterval(rescorePollRef.current)
-      rescorePollRef.current = null
-    }
-    rescorePollAttempts.current = 0
-    rescorePollRef.current = setInterval(async () => {
-      rescorePollAttempts.current += 1
-      await fetchScores()
-      const score = scores.get(rescoringSlug)
-      if (score || rescorePollAttempts.current >= 20) {
-        if (rescorePollRef.current) {
-          clearInterval(rescorePollRef.current)
-          rescorePollRef.current = null
-        }
-        setRescoringSlug('')
-      }
-    }, 15_000)
-
-    return () => {
-      if (rescorePollRef.current) {
-        clearInterval(rescorePollRef.current)
-        rescorePollRef.current = null
-      }
-    }
-  }, [rescoringSlug, scores])
 
   const normalizedQuery = query.trim().toLowerCase()
   const matchSet = normalizedQuery
@@ -329,7 +224,6 @@ export default function PagesPage() {
           <button
             onClick={() => {
               fetchPages()
-              fetchScores()
             }}
             className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 px-4 py-2 text-body-sm font-bold transition-colors rounded flex items-center gap-2"
           >
