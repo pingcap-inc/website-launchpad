@@ -44,6 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/agentic-ai/mem9-openclaw/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/tidb-test/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/agentic-ai/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/tidb-test/', priority: 0.7, changeFrequency: 'monthly' },
   ]
 
   return routes.map(({ url, priority, changeFrequency }) => ({
