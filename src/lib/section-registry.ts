@@ -1,3 +1,4 @@
+import image from 'next/image'
 import type {
   CtaProps,
   FeatureCardProps,
@@ -109,12 +110,14 @@ const defaultFeatureGridProps: FeatureGridProps = {
   title: '',
   items: [{ title: '', description: '' }],
   columns: 3,
+  itemLayout: 'vertical',
 }
 
 const defaultFeatureCardProps: FeatureCardProps = {
   title: '',
   items: [{ title: '', description: '' }],
   columns: 2,
+  borderStyle: 'gray',
 }
 
 const defaultFeatureTabsProps: FeatureTabsProps = {
@@ -143,8 +146,14 @@ const defaultFeatureHighlightsProps: FeatureHighlightsProps = {
 
 const defaultLogoCloudProps: LogoCloudProps = {
   title: '',
-  logos: [],
+  logos: [
+    {
+      image: { url: 'https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg' },
+      name: 'catalyst',
+    },
+  ],
   variant: 'default',
+  align: 'center',
   autoScroll: true,
 }
 
@@ -250,7 +259,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
     label: 'Stats',
     description: 'Key metrics with CountUp animation',
     defaultProps: defaultStatsProps,
-    defaultStyle: { background: 'gradient-dark-top', spacing: 'section', collapse: true },
+    defaultStyle: { background: 'gradient-dark-top', spacing: 'section' },
     fields: [
       { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
       { type: 'text', key: 'title', label: 'Title' },
@@ -291,6 +300,15 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
       {
+        type: 'select',
+        key: 'itemLayout',
+        label: 'Item Layout',
+        options: [
+          { label: 'Vertical', value: 'vertical' },
+          { label: 'Horizontal', value: 'horizontal' },
+        ],
+      },
+      {
         type: 'array',
         key: 'items',
         label: 'Features',
@@ -301,6 +319,15 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
           { type: 'text', key: 'title', label: 'Title' },
           { type: 'textarea', key: 'description', label: 'Description', rows: 2 },
           { type: 'cta', key: 'cta', label: 'CTA' },
+          {
+            type: 'select',
+            key: 'layout',
+            label: 'Layout Override',
+            options: [
+              { label: 'Vertical', value: 'vertical' },
+              { label: 'Horizontal', value: 'horizontal' },
+            ],
+          },
         ],
       },
       {
@@ -325,6 +352,15 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
+      {
+        type: 'select',
+        key: 'borderStyle',
+        label: 'Border Style',
+        options: [
+          { label: 'Gray', value: 'gray' },
+          { label: 'Color', value: 'color' },
+        ],
+      },
       {
         type: 'array',
         key: 'items',
@@ -452,6 +488,23 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
       {
+        type: 'select',
+        key: 'align',
+        label: 'Alignment',
+        options: [
+          { label: 'Center', value: 'center' },
+          { label: 'Left', value: 'left' },
+        ],
+      },
+      { type: 'toggle', key: 'autoScroll', label: 'Auto-scroll logos' },
+      { type: 'number', key: 'scrollSpeedSeconds', label: 'Scroll speed (seconds)' },
+      {
+        type: 'number',
+        key: 'scrollContentMaxWidth',
+        label: 'Custom scroll max width (px)',
+        showWhen: (props) => Boolean(props.autoScroll),
+      },
+      {
         type: 'array',
         key: 'logos',
         label: 'Logos',
@@ -504,7 +557,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
     label: 'FAQ',
     description: 'Accordion Q&A section',
     defaultProps: defaultFaqProps,
-    defaultStyle: { background: 'gradient-dark-bottom', spacing: 'section', collapse: true },
+    defaultStyle: { background: 'gradient-dark-bottom', spacing: 'section' },
     fields: [
       { type: 'text', key: 'title', label: 'Title' },
       {

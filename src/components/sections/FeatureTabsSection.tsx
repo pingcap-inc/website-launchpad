@@ -11,7 +11,6 @@ import type { ImageRef } from '@/lib/dsl-schema'
 export interface FeatureTabItem {
   id: string
   label: string
-  title?: string
   description?: string
   bullets?: string[]
   primaryCta?: { text: string; href: string }
@@ -41,7 +40,7 @@ export function FeatureTabsSection({
   className,
 }: FeatureTabsSectionProps) {
   return (
-    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
+    <div className={cn('space-y-16', className)}>
       <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
       <Tabs
         tabs={tabs.map((tab) => ({
@@ -53,12 +52,12 @@ export function FeatureTabsSection({
                 {tab.content ?? (
                   <>
                     {tab.description && (
-                      <p className="text-body-xl text-carbon-300 leading-relaxed mb-6">
+                      <p className="text-body-xl text-current leading-relaxed mb-6">
                         {tab.description}
                       </p>
                     )}
                     {tab.bullets && tab.bullets.length > 0 && (
-                      <ul className="space-y-2 text-body-md text-carbon-300 mb-6">
+                      <ul className="space-y-2 text-body-md text-secondary mb-6">
                         {tab.bullets.map((bullet) => (
                           <li key={bullet} className="flex items-start gap-2">
                             <span className="mt-2 h-1 w-1 rounded-full bg-text-secondary" />

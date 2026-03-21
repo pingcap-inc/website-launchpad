@@ -26,15 +26,19 @@ export function SectionHeader({
   align = 'left',
   className,
 }: SectionHeaderProps) {
+  const titleTone = 'text-text-inverse group-data-[tone=dark]/section:text-text-primary'
+  const eyebrowTone = 'text-secondary'
+  const subtitleTone = 'text-secondary'
   return (
-    <div className={cn('mb-16', align === 'center' && 'text-center', className)}>
+    <div className={cn(align === 'center' && 'text-center', className)}>
       {eyebrow && (
-        <div className="font-mono text-eyebrow text-text-secondary block mb-4">{eyebrow}</div>
+        <div className={cn('font-mono text-eyebrow block mb-4', eyebrowTone)}>{eyebrow}</div>
       )}
       <h2
         className={cn(
           h2SizeMap[h2Size],
-          'font-bold leading-tight mb-6 text-text-inverse',
+          'font-bold leading-tight mb-6',
+          titleTone,
           align === 'left' && 'max-w-section-title'
         )}
       >
@@ -43,7 +47,8 @@ export function SectionHeader({
       {subtitle && (
         <p
           className={cn(
-            'text-body-2xl leading-relaxed max-w-subtitle text-text-secondary',
+            'text-body-2xl leading-relaxed max-w-subtitle',
+            subtitleTone,
             align === 'center' && 'mx-auto'
           )}
         >

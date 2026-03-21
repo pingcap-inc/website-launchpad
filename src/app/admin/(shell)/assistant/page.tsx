@@ -84,7 +84,7 @@ export default function AssistantPage() {
 
   // Load pages list
   useEffect(() => {
-    fetch('/api/pages')
+    fetch('/api/pages?onlyDsl=1')
       .then((r) => r.json())
       .then((d) => setPages(d.pages ?? []))
       .catch(() => {})

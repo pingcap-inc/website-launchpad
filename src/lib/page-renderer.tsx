@@ -1,4 +1,4 @@
-import { createElement, type ComponentType, type ReactNode } from 'react'
+import { createElement, type ComponentType } from 'react'
 import type { LucideProps } from 'lucide-react'
 import {
   Zap,
@@ -67,16 +67,16 @@ import {
 import { HubSpotForm } from '@/components/ui/HubSpotForm'
 import { Header } from '@/components/ui/Header'
 import { Footer } from '@/components/ui/Footer'
-import { cn } from '@/lib/utils'
+import { SectionWrapper, resolveSectionStyle } from '@/components/ui/SectionWrapper'
 import type {
   IconName,
   IconValue,
   PageDSL,
-  SectionDefinition,
   SectionPropsMap,
   SectionStyle,
   SectionType,
 } from './dsl-schema'
+import { ALLOWED_BG_BY_SECTION, ALLOWED_SPACING_BY_SECTION } from './section-style'
 import type { PageDSLInput } from './dsl-utils'
 import { normalizeDSL } from './dsl-utils'
 
@@ -140,6 +140,37 @@ const ICON_MAP: Record<IconName, IconComponent> = {
   Network,
 }
 
+function getDefaultBackground(type: SectionType): SectionStyle['background'] {
+  const allowed = ALLOWED_BG_BY_SECTION[type]
+  return allowed.values().next().value ?? 'primary'
+}
+
+function sanitizeBackgroundBySection(
+  type: SectionType,
+  style?: SectionStyle
+): SectionStyle | undefined {
+  if (!style?.background) return style
+  const allowed = ALLOWED_BG_BY_SECTION[type]
+  if (!allowed.has(style.background)) {
+    const { background, ...rest } = style
+    return Object.keys(rest).length > 0 ? rest : undefined
+  }
+  return style
+}
+
+function sanitizeSpacingBySection(
+  type: SectionType,
+  style?: SectionStyle
+): SectionStyle | undefined {
+  if (!style?.spacing) return style
+  const allowed = ALLOWED_SPACING_BY_SECTION[type]
+  if (!allowed.has(style.spacing)) {
+    const { spacing, ...rest } = style
+    return Object.keys(rest).length > 0 ? rest : undefined
+  }
+  return style
+}
+
 function renderIcon(value?: IconValue) {
   if (!value) return undefined
   if (typeof value === 'object' && 'url' in value) {
@@ -150,83 +181,7 @@ function renderIcon(value?: IconValue) {
   return createElement(Icon, { className: '', strokeWidth: 1.5 })
 }
 
-// ─── Section wrapper ─────────────────────────────────────────────────────────
-
-const BACKGROUND_CLASS: Record<string, string> = {
-  primary: 'bg-bg-primary',
-  inverse: 'bg-bg-inverse',
-  'gradient-dark-top': 'bg-gradient-dark-top',
-  'gradient-dark-bottom': 'bg-gradient-dark-bottom',
-  'brand-red': 'bg-brand-red-bg',
-  'brand-violet': 'bg-brand-violet-bg',
-  'brand-blue': 'bg-brand-blue-bg',
-  'brand-teal': 'bg-brand-teal-bg',
-  none: '',
-}
-
-const SPACING_CLASS: Record<string, string> = {
-  none: '',
-  sm: 'py-section-sm',
-  md: 'py-section-md',
-  lg: 'py-section',
-  section: 'py-section-sm lg:py-section',
-  hero: 'py-10 md:py-0',
-}
-
-function resolveSectionStyle(style?: SectionStyle, defaults?: SectionStyle): SectionStyle {
-  return {
-    background: style?.background ?? defaults?.background ?? 'primary',
-    spacing: style?.spacing ?? defaults?.spacing ?? 'section',
-    collapse: style?.collapse ?? defaults?.collapse ?? false,
-    className: style?.className ?? defaults?.className,
-    backgroundImage: style?.backgroundImage ?? defaults?.backgroundImage,
-  }
-}
-
-interface SectionWrapperProps {
-  style?: SectionStyle
-  defaultStyle?: SectionStyle
-  previousStyle?: SectionStyle
-  children: ReactNode
-}
-
-export function SectionWrapper({
-  style,
-  defaultStyle,
-  previousStyle,
-  children,
-}: SectionWrapperProps) {
-  const resolved = resolveSectionStyle(style, defaultStyle)
-  const background = resolved.background ?? 'primary'
-  const backgroundImage = resolved.backgroundImage?.image?.url
-    ? resolved.backgroundImage
-    : undefined
-  const collapseTop =
-    resolved.collapse && previousStyle?.background && previousStyle.background === background
-
-  return (
-    <section
-      className={cn(
-        BACKGROUND_CLASS[background] ?? '',
-        SPACING_CLASS[resolved.spacing ?? 'section'] ?? '',
-        collapseTop && 'pt-0',
-        backgroundImage && 'relative overflow-hidden',
-        resolved.className
-      )}
-    >
-      {backgroundImage && (
-        <>
-          <div
-            aria-hidden="true"
-            className={cn('pointer-events-none absolute inset-0 bg-cover bg-center opacity-80')}
-            style={{ backgroundImage: `url("${backgroundImage.image.url}")` }}
-          />
-        </>
-      )}
-      <div className={cn(backgroundImage && 'relative z-10')}>{children}</div>
-    </section>
-  )
-}
+// SectionWrapper now lives in components/ui for reuse outside the renderer.
 
 // ─── Component map ───────────────────────────────────────────────────────────
 
@@ -241,14 +196,15 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     Component: HeroSection,
     mapProps: (props: SectionPropsMap['hero']) => ({
       ...props,
-      layout: props.heroForm ? 'split' : props.layout,
-      rightSlot: props.heroForm ? (
-        <HubSpotForm
-          formId={props.heroForm.formId}
-          portalId={props.heroForm.portalId}
-          region={props.heroForm.region}
-        />
-      ) : undefined,
+      layout: props.layout,
+      rightSlot:
+        props.layout === 'split' && props.heroForm ? (
+          <HubSpotForm
+            formId={props.heroForm.formId}
+            portalId={props.heroForm.portalId}
+            region={props.heroForm.region}
+          />
+        ) : undefined,
     }),
     defaultStyle: { background: 'primary', spacing: 'hero' },
   },
@@ -260,8 +216,9 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       subtitle: props.subtitle,
       stats: props.items.map((s) => ({ ...s, icon: renderIcon(s.icon) })),
       columns: props.columns,
+      className: props.className,
     }),
-    defaultStyle: { background: 'gradient-dark-top', spacing: 'section', collapse: true },
+    defaultStyle: { background: 'gradient-dark-top', spacing: 'section' },
   },
   featureGrid: {
     Component: FeatureGridSection,
@@ -272,6 +229,8 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       features: props.items.map((f) => ({ ...f, icon: renderIcon(f.icon) })),
       columns: props.columns,
       viewMore: props.viewMore,
+      itemLayout: props.itemLayout,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -283,6 +242,8 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       subtitle: props.subtitle,
       items: props.items.map((f) => ({ ...f, icon: renderIcon(f.icon) })),
       columns: props.columns,
+      borderStyle: props.borderStyle,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -295,6 +256,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       tabs: props.tabs,
       autoSwitch: props.autoSwitch,
       autoSwitchInterval: props.autoSwitchInterval,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -307,6 +269,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       items: props.items.map((item) => ({ ...item, icon: renderIcon(item.icon) })),
       columns: props.columns,
       viewMore: props.viewMore,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -318,8 +281,11 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       subtitle: props.subtitle,
       logos: props.logos,
       variant: props.variant,
+      align: props.align,
       autoScroll: props.autoScroll,
       scrollSpeedSeconds: props.scrollSpeedSeconds,
+      scrollContentMaxWidth: props.scrollContentMaxWidth,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -329,6 +295,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       eyebrow: props.eyebrow,
       title: props.title,
       testimonials: props.items,
+      className: props.className,
     }),
     defaultStyle: { background: 'gradient-dark-top', spacing: 'section' },
   },
@@ -337,18 +304,19 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     mapProps: (props: SectionPropsMap['faq']) => ({
       title: props.title,
       items: props.items,
+      className: props.className,
     }),
-    defaultStyle: { background: 'gradient-dark-bottom', spacing: 'section', collapse: true },
+    defaultStyle: { background: 'gradient-dark-bottom', spacing: 'section' },
   },
   cta: {
     Component: CtaSection,
     mapProps: (props: SectionPropsMap['cta']) => ({
       title: props.title,
       subtitle: props.subtitle,
-      label: props.label,
       image: props.image,
       primaryCta: props.primaryCta,
       secondaryCta: props.secondaryCta,
+      className: props.className,
     }),
     defaultStyle: { background: 'brand-violet', spacing: 'section' },
   },
@@ -360,6 +328,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       portalId: props.portalId,
       formId: props.formId,
       region: props.region,
+      className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
@@ -379,22 +348,17 @@ export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
     const entry = componentMap[section.type]
     if (!entry) return null
     const props = entry.mapProps ? entry.mapProps(section.props as any) : (section.props as any)
-    const previous = index > 0 ? sections[index - 1] : undefined
-    const previousStyle = previous
-      ? resolveSectionStyle(previous.style, componentMap[previous.type]?.defaultStyle)
-      : undefined
-
-    if (section.type === 'hero') {
-      return <entry.Component key={section.id} {...props} />
+    const resolvedStyle = sanitizeSpacingBySection(
+      section.type,
+      sanitizeBackgroundBySection(section.type, section.style)
+    )
+    const defaultStyle: SectionStyle = {
+      ...(entry.defaultStyle ?? {}),
+      background: getDefaultBackground(section.type),
     }
 
     return (
-      <SectionWrapper
-        key={section.id}
-        style={section.style}
-        defaultStyle={entry.defaultStyle}
-        previousStyle={previousStyle}
-      >
+      <SectionWrapper key={section.id} style={resolvedStyle} defaultStyle={defaultStyle}>
         <entry.Component {...props} />
       </SectionWrapper>
     )

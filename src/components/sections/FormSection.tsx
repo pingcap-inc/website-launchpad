@@ -20,13 +20,11 @@ export function FormSection({
   className,
 }: FormSectionProps) {
   return (
-    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8">
-        {(title || subtitle) && (
-          <SectionHeader title={title ?? ''} subtitle={subtitle} className="mb-8" />
-        )}
-        <LazyHubSpotForm portalId={portalId} formId={formId} region={region} />
-      </div>
+    <div className={cn('grid grid-cols-1 md:grid-cols-2 md:gap-8', className)}>
+      {(title || subtitle) && (
+        <SectionHeader title={title ?? ''} subtitle={subtitle} className="mb-8" />
+      )}
+      <LazyHubSpotForm portalId={portalId} formId={formId} region={region} />
     </div>
   )
 }

@@ -31,14 +31,20 @@ export default function AdminDashboard() {
           />
         </Link>
 
-        <div className="flex flex-col gap-3 p-6 bg-gray-50 border border-gray-200 rounded cursor-not-allowed">
-          <FileText size={24} className="text-gray-300" strokeWidth={1.5} />
+        <Link
+          href="/admin/pages"
+          className="group flex flex-col gap-3 p-6 bg-white border border-gray-200 rounded hover:border-gray-400 transition-colors"
+        >
+          <FileText size={24} className="text-brand-violet-medium" strokeWidth={1.5} />
           <div>
-            <p className="text-body-md font-bold text-gray-300">All Pages</p>
-            <p className="text-body-sm text-gray-300 mt-0.5">View and edit published pages</p>
+            <p className="text-body-md font-bold text-gray-900">All Pages</p>
+            <p className="text-body-sm text-gray-500 mt-0.5">View and edit published pages</p>
           </div>
-          <Lock size={14} className="text-gray-300 mt-auto self-end" strokeWidth={1.5} />
-        </div>
+          <ArrowRight
+            size={16}
+            className="text-gray-300 group-hover:text-gray-500 mt-auto self-end transition-colors"
+          />
+        </Link>
 
         {/* <div className="flex flex-col gap-3 p-6 bg-gray-50 border border-gray-200 rounded cursor-not-allowed">
           <Layers size={24} className="text-gray-300" strokeWidth={1.5} />

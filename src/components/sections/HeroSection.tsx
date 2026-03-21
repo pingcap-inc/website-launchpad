@@ -49,6 +49,7 @@ interface HeroSectionProps {
   /**
    * Plain text, a React node, or an HTML string.
    * HTML strings (detected by `<` tag) are rendered via `dangerouslySetInnerHTML`.
+   * SECURITY: HTML headline strings must be code-owned/trusted (not user/CMS input).
    * Use CSS classes from globals.css for gradient effects, e.g.:
    * `"Unlock <span class=\"text-gradient-violet animate-glow-sweep\">TiDB Cloud</span>"`
    */
@@ -83,7 +84,7 @@ function HeroTextBlock({
 
   return (
     <div className={className}>
-      {eyebrow && <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>}
+      {eyebrow && <p className="font-mono text-eyebrow text-secondary mb-8">{eyebrow}</p>}
       <h1
         className={cn(
           'text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title mb-6',
@@ -97,7 +98,7 @@ function HeroTextBlock({
       {subheadline && (
         <p
           className={cn(
-            'text-body-2xl leading-relaxed text-text-secondary max-w-subtitle',
+            'text-body-2xl leading-relaxed text-secondary max-w-subtitle',
             centered && 'mx-auto mb-10'
           )}
         >
@@ -144,13 +145,7 @@ export function HeroSection({
   const resolvedRightSlot = resolvedLayout === 'split' ? (rightSlot ?? null) : null
 
   return (
-    <div
-      className={cn(
-        'text-text-inverse relative overflow-hidden',
-        isCentered && 'text-center',
-        className
-      )}
-    >
+    <div className={cn('relative overflow-hidden', isCentered && 'text-center', className)}>
       {/* ── Background layer ── */}
       {isCentered && heroBackgroundImage && (
         <>
@@ -188,12 +183,7 @@ export function HeroSection({
       )}
 
       {/* ── Content ── */}
-      <div
-        className={cn(
-          'max-w-container mx-auto px-4 md:px-8 lg:px-16',
-          heroBackgroundImage && 'relative z-10'
-        )}
-      >
+      <div className={cn(heroBackgroundImage && 'relative z-10')}>
         {/* Layout 1: centered */}
         {resolvedLayout === 'centered' && (
           <HeroTextBlock

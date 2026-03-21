@@ -1,5 +1,6 @@
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
+import { IconFeatureItem } from '@/components/ui/IconFeatureItem'
 import { cn } from '@/lib/utils'
 
 interface Feature {
@@ -7,6 +8,7 @@ interface Feature {
   title: string
   description: string
   cta?: { text: string; href: string }
+  layout?: 'horizontal' | 'vertical'
 }
 
 interface FeaturesGridProps {
@@ -17,7 +19,7 @@ interface FeaturesGridProps {
   columns?: 2 | 3 | 4
   viewMore?: { text: string; href: string }
   className?: string
-  dark?: boolean
+  itemLayout?: 'horizontal' | 'vertical'
 }
 
 const colsMap = {
@@ -34,21 +36,28 @@ export function FeatureGridSection({
   columns = 3,
   viewMore,
   className,
+  itemLayout = 'vertical',
 }: FeaturesGridProps) {
   return (
-    <div className={cn('max-w-container mx-auto px-4 md:px-8 lg:px-16', className)}>
+    <div className={cn('space-y-16', className)}>
       <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
       <div className={cn('grid grid-cols-1 gap-8', colsMap[columns])}>
-        {features.map((feature, i) => (
-          <div key={i} className="space-y-4">
-            {feature.icon && <div className="text-text-inverse">{feature.icon}</div>}
-            <h3 className="text-h3-lg font-bold text-text-inverse">{feature.title}</h3>
-            <p className="text-body-md text-carbon-300 leading-relaxed">{feature.description}</p>
-            {feature.cta && (
-              <SecondaryButton href={feature.cta.href}>{feature.cta.text}</SecondaryButton>
-            )}
-          </div>
-        ))}
+        {features.map((feature) => {
+          const resolvedLayout = feature.layout ?? itemLayout
+          return (
+            <div key={`${feature.title}-${feature.description}`} className="space-y-4">
+              <IconFeatureItem
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
+                layout={resolvedLayout}
+              />
+              {feature.cta && (
+                <SecondaryButton href={feature.cta.href}>{feature.cta.text}</SecondaryButton>
+              )}
+            </div>
+          )
+        })}
       </div>
       {viewMore && (
         <div className="mt-12 flex justify-center">
