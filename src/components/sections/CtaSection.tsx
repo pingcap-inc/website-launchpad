@@ -43,7 +43,9 @@ export function CtaSection({
         </h2>
         {subtitle && <p className="text-2xl text-secondary leading-relaxed">{subtitle}</p>}
         <div className="flex items-center gap-4 flex-wrap mt-8">
-          {primaryCta && <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>}
+          {primaryCta.text && (
+            <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>
+          )}
           {secondaryCta && (
             <SecondaryButton href={secondaryCta.href}>{secondaryCta.text}</SecondaryButton>
           )}

@@ -1,5 +1,13 @@
 import type { Metadata } from 'next'
-import { Header, Footer, JsonLd, SectionHeader, HeroSection, SecondaryButton } from '@/components'
+import {
+  Header,
+  Footer,
+  JsonLd,
+  SectionHeader,
+  HeroSection,
+  SecondaryButton,
+  SectionWrapper,
+} from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { Bot, Icon } from 'lucide-react'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
@@ -199,7 +207,9 @@ export default function BuildAiAppsPage() {
       <div className="pt-[62px] lg:pt-20">
         <DeveloperSubnav />
         <main>
-          <section className="bg-bg-primary py-10 md:py-0">
+          <SectionWrapper
+            style={{ background: 'primary', spacing: 'hero', className: 'py-10 md:py-0' }}
+          >
             <HeroSection
               layout="image-right"
               eyebrow="TiDB Developer Hub"
@@ -213,14 +223,14 @@ export default function BuildAiAppsPage() {
                 align: 'right',
               }}
             />
-          </section>
+          </SectionWrapper>
 
           {/* ── How-To Guides ── */}
-          <section
+          <SectionWrapper
             id="how-to-guides"
-            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+            style={{ background: 'gradient-dark-bottom', spacing: 'section' }}
           >
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+            <div className="space-y-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
                 <div className="lg:pt-2">
                   <SectionHeader
@@ -250,10 +260,16 @@ export default function BuildAiAppsPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
-          <section className="py-section-sm lg:pb-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper
+            style={{
+              background: 'primary',
+              spacing: 'hero',
+              className: 'py-section-sm lg:pb-section',
+            }}
+          >
+            <div className="space-y-16">
               <SectionHeader
                 title="Explore Real AI Use Cases"
                 subtitle="See how teams build end-to-end AI systems on TiDB, from data ingestion to intelligent user experiences."
@@ -282,10 +298,10 @@ export default function BuildAiAppsPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
-          <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'gradient-dark-bottom', spacing: 'section' }}>
+            <div className="space-y-16">
               <div className="mb-8 md:mb-16">
                 <h2 className="text-h2-mb md:text-h2-lg font-bold leading-tight mb-4 text-text-inverse">
                   Get Hands-On with Vector Search
@@ -301,10 +317,10 @@ export default function BuildAiAppsPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
-          <section className="py-section-sm lg:py-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
+            <div className="space-y-16">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-5">
                   <SectionHeader
@@ -346,10 +362,10 @@ export default function BuildAiAppsPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
-          <section className="py-section-sm lg:py-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
+            <div className="space-y-16">
               <div className="mb-8 md:mb-16">
                 <h2 className="text-h2-mb md:text-h2-lg font-bold leading-tight mb-4 text-text-inverse">
                   Tune and Scale Vector Search
@@ -364,7 +380,7 @@ export default function BuildAiAppsPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
         </main>
       </div>
       <Footer />

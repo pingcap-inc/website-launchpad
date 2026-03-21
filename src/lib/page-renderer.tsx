@@ -76,6 +76,7 @@ import type {
   SectionStyle,
   SectionType,
 } from './dsl-schema'
+import { ALLOWED_BG_BY_SECTION, ALLOWED_SPACING_BY_SECTION } from './section-style'
 import type { PageDSLInput } from './dsl-utils'
 import { normalizeDSL } from './dsl-utils'
 
@@ -139,27 +140,6 @@ const ICON_MAP: Record<IconName, IconComponent> = {
   Network,
 }
 
-const DEFAULT_ALLOWED_BG = new Set<SectionStyle['background']>([
-  'primary',
-  'gradient-dark-top',
-  'gradient-dark-bottom',
-  'inverse',
-])
-
-const ALLOWED_BG_BY_SECTION: Record<SectionType, Set<SectionStyle['background']>> = {
-  hero: new Set(['primary']),
-  cta: new Set(['brand-violet', 'brand-blue', 'brand-red', 'brand-teal', 'primary']),
-  testimonials: new Set(['gradient-dark-top', 'gradient-dark-bottom', 'primary']),
-  stats: DEFAULT_ALLOWED_BG,
-  featureGrid: DEFAULT_ALLOWED_BG,
-  featureCard: DEFAULT_ALLOWED_BG,
-  featureTabs: DEFAULT_ALLOWED_BG,
-  featureHighlights: DEFAULT_ALLOWED_BG,
-  logoCloud: DEFAULT_ALLOWED_BG,
-  faq: DEFAULT_ALLOWED_BG,
-  form: DEFAULT_ALLOWED_BG,
-}
-
 function getDefaultBackground(type: SectionType): SectionStyle['background'] {
   const allowed = ALLOWED_BG_BY_SECTION[type]
   return allowed.values().next().value ?? 'primary'
@@ -173,6 +153,19 @@ function sanitizeBackgroundBySection(
   const allowed = ALLOWED_BG_BY_SECTION[type]
   if (!allowed.has(style.background)) {
     const { background, ...rest } = style
+    return Object.keys(rest).length > 0 ? rest : undefined
+  }
+  return style
+}
+
+function sanitizeSpacingBySection(
+  type: SectionType,
+  style?: SectionStyle
+): SectionStyle | undefined {
+  if (!style?.spacing) return style
+  const allowed = ALLOWED_SPACING_BY_SECTION[type]
+  if (!allowed.has(style.spacing)) {
+    const { spacing, ...rest } = style
     return Object.keys(rest).length > 0 ? rest : undefined
   }
   return style
@@ -355,7 +348,10 @@ export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
     const entry = componentMap[section.type]
     if (!entry) return null
     const props = entry.mapProps ? entry.mapProps(section.props as any) : (section.props as any)
-    const resolvedStyle = sanitizeBackgroundBySection(section.type, section.style)
+    const resolvedStyle = sanitizeSpacingBySection(
+      section.type,
+      sanitizeBackgroundBySection(section.type, section.style)
+    )
     const defaultStyle: SectionStyle = {
       ...(entry.defaultStyle ?? {}),
       background: getDefaultBackground(section.type),

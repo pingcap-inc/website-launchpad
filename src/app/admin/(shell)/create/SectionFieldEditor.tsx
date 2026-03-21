@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Trash2, Plus } from 'lucide-react'
 import type { SectionNode } from '@/lib/dsl-schema'
@@ -7,6 +8,7 @@ import type { FieldSchema } from '@/lib/section-registry'
 import { schemaMap } from '@/lib/section-registry'
 import { IconPicker } from './IconPicker'
 import { ImageField } from './ImageField'
+import { ALLOWED_BG_BY_SECTION, ALLOWED_SPACING_BY_SECTION } from '@/lib/section-style'
 
 // ── Shared primitives ────────────────────────────────────────────────────────
 
@@ -367,6 +369,55 @@ function renderField({
   }
 }
 
+const SECTION_BACKGROUND_OPTIONS = [
+  { label: 'Primary', value: 'primary' },
+  { label: 'Inverse', value: 'inverse' },
+  { label: 'Gradient Dark Top', value: 'gradient-dark-top' },
+  { label: 'Gradient Dark Bottom', value: 'gradient-dark-bottom' },
+  { label: 'Brand Red', value: 'brand-red' },
+  { label: 'Brand Violet', value: 'brand-violet' },
+  { label: 'Brand Blue', value: 'brand-blue' },
+  { label: 'Brand Teal', value: 'brand-teal' },
+  { label: 'None', value: 'none' },
+]
+
+const SECTION_SPACING_OPTIONS = [
+  { label: 'Small', value: 'sm' },
+  { label: 'Medium', value: 'md' },
+  { label: 'Large', value: 'lg' },
+  { label: 'Section', value: 'section' },
+  { label: 'Hero', value: 'hero' },
+]
+
+const BG_IMAGE_OPACITY_OPTIONS = [
+  { label: 'None', value: '' },
+  { label: 'Opacity 90%', value: 'opacity-90' },
+  { label: 'Opacity 80%', value: 'opacity-80' },
+  { label: 'Opacity 70%', value: 'opacity-70' },
+  { label: 'Opacity 60%', value: 'opacity-60' },
+  { label: 'Opacity 50%', value: 'opacity-50' },
+  { label: 'Opacity 40%', value: 'opacity-40' },
+  { label: 'Opacity 30%', value: 'opacity-30' },
+  { label: 'Opacity 20%', value: 'opacity-20' },
+]
+
+const BG_IMAGE_OVERLAY_OPTIONS = [
+  { label: 'None', value: '' },
+  { label: 'Black 20%', value: 'bg-black/20' },
+  { label: 'Black 30%', value: 'bg-black/30' },
+  { label: 'Black 40%', value: 'bg-black/40' },
+  { label: 'Black 50%', value: 'bg-black/50' },
+  { label: 'Black 60%', value: 'bg-black/60' },
+  {
+    label: 'Dark Gradient Top',
+    value: 'bg-gradient-to-b from-black/60 via-black/30 to-transparent',
+  },
+  {
+    label: 'Dark Gradient Bottom',
+    value: 'bg-gradient-to-t from-black/60 via-black/30 to-transparent',
+  },
+]
+
 interface SectionFieldEditorProps {
   node: SectionNode
   onChange: (updated: SectionNode) => void
@@ -375,6 +426,24 @@ interface SectionFieldEditorProps {
 
 export function SectionFieldEditor({ node, onChange, slug }: SectionFieldEditorProps) {
   const schema = schemaMap[node.type]
+  const [activeTab, setActiveTab] = useState<'content' | 'style'>('content')
+  const allowedBackgrounds = ALLOWED_BG_BY_SECTION[node.type] ?? new Set()
+  const backgroundOptions = SECTION_BACKGROUND_OPTIONS.filter((option) =>
+    allowedBackgrounds.has(option.value as any)
+  )
+  const allowedSpacing = ALLOWED_SPACING_BY_SECTION[node.type] ?? new Set()
+  const spacingOptions = SECTION_SPACING_OPTIONS.filter((option) =>
+    allowedSpacing.has(option.value as any)
+  )
+  const defaultSpacing = node.type === 'hero' ? 'hero' : node.type === 'cta' ? 'md' : 'section'
+  const resolvedSpacing = node.style?.spacing ?? defaultSpacing
+
+  useEffect(() => {
+    if (node.type !== 'cta') return
+    if (!node.style?.spacing) {
+      onChange({ ...node, style: { ...node.style, spacing: 'md' } })
+    }
+  }, [node, onChange])
 
   if (!schema) {
     return <p className="text-body-sm text-gray-400">No editor for this section type.</p>
@@ -396,20 +465,195 @@ export function SectionFieldEditor({ node, onChange, slug }: SectionFieldEditorP
 
   return (
     <div className="space-y-3">
-      {schema.fields.map((field) => {
-        if (field.showWhen && !field.showWhen(node.props as unknown as Record<string, unknown>))
-          return null
-        return (
-          <div key={field.key}>
-            {renderField({
-              field,
-              value: node.props as any,
-              onChange: handleChange,
-              slug,
-            })}
-          </div>
-        )
-      })}
+      <div className="flex items-center gap-1">
+        <button
+          type="button"
+          onClick={() => setActiveTab('content')}
+          className={`px-2.5 py-1 text-body-sm rounded border transition-colors ${
+            activeTab === 'content'
+              ? 'bg-white border-gray-300 text-gray-800'
+              : 'bg-gray-50 border-gray-200 text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Content
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('style')}
+          className={`px-2.5 py-1 text-body-sm rounded border transition-colors ${
+            activeTab === 'style'
+              ? 'bg-white border-gray-300 text-gray-800'
+              : 'bg-gray-50 border-gray-200 text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Style
+        </button>
+      </div>
+
+      {activeTab === 'content' ? (
+        <div className="space-y-3">
+          {schema.fields.map((field) => {
+            if (field.showWhen && !field.showWhen(node.props as unknown as Record<string, unknown>))
+              return null
+            return (
+              <div key={field.key}>
+                {renderField({
+                  field,
+                  value: node.props as any,
+                  onChange: handleChange,
+                  slug,
+                })}
+              </div>
+            )
+          })}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <FieldRow label="Background">
+            <select
+              value={node.style?.background ?? 'primary'}
+              onChange={(e) =>
+                onChange({
+                  ...node,
+                  style: { ...node.style, background: e.target.value as any },
+                })
+              }
+              className={input}
+            >
+              {backgroundOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </FieldRow>
+
+          <FieldRow label="Spacing">
+            <select
+              value={resolvedSpacing}
+              onChange={(e) =>
+                onChange({
+                  ...node,
+                  style: { ...node.style, spacing: e.target.value as any },
+                })
+              }
+              className={input}
+            >
+              {spacingOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </FieldRow>
+
+          <FieldRow label="Background Image">
+            <ImageField
+              value={node.style?.backgroundImage?.image as any}
+              onChange={(v) =>
+                onChange({
+                  ...node,
+                  style: {
+                    ...node.style,
+                    backgroundImage: v ? { image: v } : undefined,
+                  },
+                })
+              }
+              slug={slug}
+              compact
+            />
+          </FieldRow>
+
+          <FieldRow label="Background Image Effects">
+            <div className="grid grid-cols-2 gap-2">
+              <select
+                value={node.style?.backgroundImageOpacityClassName ?? ''}
+                onChange={(e) =>
+                  onChange({
+                    ...node,
+                    style: {
+                      ...node.style,
+                      backgroundImageOpacityClassName: e.target.value || undefined,
+                    },
+                  })
+                }
+                className={input}
+              >
+                {BG_IMAGE_OPACITY_OPTIONS.map((option) => (
+                  <option key={option.value || option.label} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={node.style?.backgroundImageOverlayClassName ?? ''}
+                onChange={(e) =>
+                  onChange({
+                    ...node,
+                    style: {
+                      ...node.style,
+                      backgroundImageOverlayClassName: e.target.value || undefined,
+                    },
+                  })
+                }
+                className={input}
+              >
+                {BG_IMAGE_OVERLAY_OPTIONS.map((option) => (
+                  <option key={option.value || option.label} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </FieldRow>
+
+          <FieldRow label="Extra Class Name">
+            <TextInput
+              value={node.style?.className ?? ''}
+              onChange={(v) =>
+                onChange({ ...node, style: { ...node.style, className: v || undefined } })
+              }
+              placeholder="Additional section classes"
+            />
+          </FieldRow>
+
+          {node.type !== 'hero' && (
+            <FieldRow label="Remove Padding">
+              <div className="flex items-center gap-4 text-body-sm text-gray-600">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={Boolean(node.style?.removePaddingTop)}
+                    onChange={(e) =>
+                      onChange({
+                        ...node,
+                        style: { ...node.style, removePaddingTop: e.target.checked || undefined },
+                      })
+                    }
+                  />
+                  Top
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={Boolean(node.style?.removePaddingBottom)}
+                    onChange={(e) =>
+                      onChange({
+                        ...node,
+                        style: {
+                          ...node.style,
+                          removePaddingBottom: e.target.checked || undefined,
+                        },
+                      })
+                    }
+                  />
+                  Bottom
+                </label>
+              </div>
+            </FieldRow>
+          )}
+        </div>
+      )}
     </div>
   )
 }
