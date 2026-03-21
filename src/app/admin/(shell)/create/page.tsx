@@ -734,6 +734,16 @@ function CreatePageInner() {
     setDsl((prev) => (prev ? updater(prev) : prev))
   }, [])
 
+  // Keep canonical in sync with slug changes.
+  useEffect(() => {
+    if (!dsl) return
+    if (!slug || !isValidSlugPath(slug)) return
+    const normalizedCanonical = `/${slug}/`
+    if (dsl.meta.canonical !== normalizedCanonical) {
+      updateDsl((prev) => ({ ...prev, meta: { ...prev.meta, canonical: normalizedCanonical } }))
+    }
+  }, [dsl, slug, updateDsl])
+
   const handlePageNameChange = useCallback(
     (pageName: string) => {
       updateDsl((prev) => ({ ...prev, pageName }))

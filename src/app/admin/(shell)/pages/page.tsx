@@ -15,7 +15,6 @@ import {
   Info,
   RotateCw,
 } from 'lucide-react'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { SITE_BASE_URL } from '@/lib/env'
 
 interface PageItem {
@@ -396,253 +395,126 @@ export default function PagesPage() {
           </Link>
         </div>
       ) : (
-        <TooltipProvider>
-          <div className="border border-gray-200 rounded overflow-hidden bg-white">
-            {/* Table header */}
-            <div className="grid grid-cols-[1fr_2fr_140px_140px_120px_120px] gap-4 px-5 py-3 bg-gray-50 border-b border-gray-200">
-              <span className="text-label font-bold text-gray-500 uppercase tracking-wide">
-                Slug
-              </span>
-              <span className="text-label font-bold text-gray-500 uppercase tracking-wide">
-                Title
-              </span>
-              <span className="text-label font-bold text-gray-500 uppercase tracking-wide">
-                Last updated
-              </span>
-              <span className="text-label font-bold text-gray-500 uppercase tracking-wide">
-                Status
-              </span>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="text-label font-bold text-gray-500 uppercase tracking-wide inline-flex items-center gap-1 cursor-help w-full">
-                    <span>Score</span>
-                    <span className="text-gray-500 normal-case">
-                      <Info size={12} />
-                    </span>
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-xs whitespace-normal">
-                  Overall = UX (Lighthouse perf/accessibility/best practices) + SEO (Lighthouse +
-                  meta/heading checks) + Consistency (content structure checks).
-                </TooltipContent>
-              </Tooltip>
-              <span className="text-label font-bold text-gray-500 uppercase tracking-wide text-right">
-                Actions
-              </span>
-            </div>
+        <div className="border border-gray-200 rounded overflow-hidden bg-white">
+          {/* Table header */}
+          <div className="grid grid-cols-[1fr_2fr_140px_140px_120px] gap-4 px-5 py-3 bg-gray-50 border-b border-gray-200">
+            <span className="text-label font-bold text-gray-500 uppercase tracking-wide">Slug</span>
+            <span className="text-label font-bold text-gray-500 uppercase tracking-wide">
+              Title
+            </span>
+            <span className="text-label font-bold text-gray-500 uppercase tracking-wide">
+              Last updated
+            </span>
+            <span className="text-label font-bold text-gray-500 uppercase tracking-wide">
+              Status
+            </span>
+            <span className="text-label font-bold text-gray-500 uppercase tracking-wide text-right">
+              Actions
+            </span>
+          </div>
 
-            {/* Table rows */}
-            {rows.map((row) => {
-              const { node, depth, hasChildren, isGroup } = row
-              const page = node.page
-              const title = page ? page.title : toTitleCase(node.name)
-              return (
-                <div
-                  key={node.slug}
-                  className="grid grid-cols-[1fr_2fr_140px_140px_120px_120px] gap-4 items-center px-5 py-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center" style={{ paddingLeft: `${depth * 16}px` }}>
-                      {hasChildren ? (
-                        <button
-                          type="button"
-                          onClick={() => toggleNode(node.slug)}
-                          className="mr-1.5 h-6 w-6 inline-flex items-center justify-center text-gray-700 hover:text-gray-900"
-                          title={activeExpanded.has(node.slug) ? 'Collapse' : 'Expand'}
-                        >
-                          {activeExpanded.has(node.slug) ? (
-                            <ChevronDown size={18} />
-                          ) : (
-                            <ChevronRight size={18} />
-                          )}
-                        </button>
-                      ) : (
-                        <span className="mr-1.5 w-3" />
-                      )}
-                      <code className="text-body-sm text-gray-700 font-mono">/{node.slug}/</code>
-                    </div>
-                  </div>
-                  <p className="text-body-sm text-gray-900 truncate">{title}</p>
-                  <div className="flex items-center gap-1.5 text-gray-400 text-body-sm">
-                    <Clock size={12} />
-                    {page ? timeAgo(page.updatedAt) : '—'}
-                  </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {page?.isCode ? (
-                      <span className="px-2 py-0.5 rounded-full text-label font-bold border border-gray-200 text-gray-500 bg-gray-50">
-                        Code
-                      </span>
-                    ) : (
-                      <>
-                        {page?.hasPublished && (
-                          <span className="px-2 py-0.5 rounded-full text-label font-bold border border-green-200 text-green-700 bg-green-50">
-                            Published
-                          </span>
-                        )}
-                        {page?.hasDraft && (
-                          <span className="px-2 py-0.5 rounded-full text-label font-bold border border-amber-200 text-amber-700 bg-amber-50">
-                            Draft
-                          </span>
-                        )}
-                      </>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {page ? (
-                      (() => {
-                        const score = scores.get(page.slug)
-                        if (score?.error) {
-                          return (
-                            <span className="inline-flex items-center gap-2">
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <span className="px-2 py-0.5 rounded-full text-label font-bold border border-red-200 text-red-600 bg-red-50 cursor-help">
-                                    Score failed
-                                  </span>
-                                </TooltipTrigger>
-                                <TooltipContent className="max-w-xs whitespace-normal">
-                                  {score.error}
-                                </TooltipContent>
-                              </Tooltip>
-                              {process.env.NODE_ENV === 'development' && (
-                                <button
-                                  type="button"
-                                  onClick={() => handleRescore(page.slug)}
-                                  disabled={
-                                    rescoringSlug === page.slug ||
-                                    Date.now() - (rescoreCooldowns.get(page.slug) ?? 0) < 60_000
-                                  }
-                                  className="text-gray-400 hover:text-gray-900 transition-colors disabled:opacity-40"
-                                  title="Re-run scoring"
-                                >
-                                  <RotateCw
-                                    size={14}
-                                    className={rescoringSlug === page.slug ? 'animate-spin' : ''}
-                                  />
-                                </button>
-                              )}
-                            </span>
-                          )
-                        }
-                        if (!score || score.overall === 0) {
-                          const last = rescoreCooldowns.get(page.slug) ?? 0
-                          const isScoring =
-                            rescoringSlug === page.slug ||
-                            (last > 0 && Date.now() - last < 5 * 60_000)
-                          return (
-                            <span className="inline-flex items-center gap-2">
-                              {isScoring ? (
-                                <span className="px-2 py-0.5 rounded-full text-label font-bold border border-blue-200 text-blue-700 bg-blue-50">
-                                  Scoring…
-                                </span>
-                              ) : (
-                                <span className="text-body-sm text-gray-400">—</span>
-                              )}
-                              {process.env.NODE_ENV === 'development' && (
-                                <button
-                                  type="button"
-                                  onClick={() => handleRescore(page.slug)}
-                                  disabled={
-                                    rescoringSlug === page.slug ||
-                                    Date.now() - (rescoreCooldowns.get(page.slug) ?? 0) < 60_000
-                                  }
-                                  className="text-gray-400 hover:text-gray-900 transition-colors disabled:opacity-40"
-                                  title="Re-run scoring"
-                                >
-                                  <RotateCw
-                                    size={14}
-                                    className={rescoringSlug === page.slug ? 'animate-spin' : ''}
-                                  />
-                                </button>
-                              )}
-                            </span>
-                          )
-                        }
-                        return (
-                          <span className="inline-flex items-center gap-2">
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <span className="inline-flex items-center gap-1 cursor-help">
-                                  <span className={scoreBadgeClass(score.overall, 'overall')}>
-                                    Overall {score.overall}
-                                  </span>
-                                </span>
-                              </TooltipTrigger>
-                              <TooltipContent className="max-w-xs whitespace-normal">
-                                UX {score.ux} · SEO {score.seo} · Cons {score.consistency}
-                              </TooltipContent>
-                            </Tooltip>
-                            {process.env.NODE_ENV === 'development' && (
-                              <button
-                                type="button"
-                                onClick={() => handleRescore(page.slug)}
-                                disabled={
-                                  rescoringSlug === page.slug ||
-                                  Date.now() - (rescoreCooldowns.get(page.slug) ?? 0) < 60_000
-                                }
-                                className="text-gray-400 hover:text-gray-900 transition-colors disabled:opacity-40"
-                                title="Re-run scoring"
-                              >
-                                <RotateCw
-                                  size={14}
-                                  className={rescoringSlug === page.slug ? 'animate-spin' : ''}
-                                />
-                              </button>
-                            )}
-                          </span>
-                        )
-                      })()
-                    ) : (
-                      <span className="text-body-sm text-gray-400">—</span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 justify-end">
-                    {page && (
-                      <>
-                        {!page.isCode && (
-                          <Link
-                            href={`/admin/create?slug=${page.slug}&mode=edit`}
-                            className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
-                            title="Edit page"
-                          >
-                            <Edit3 size={14} />
-                          </Link>
-                        )}
-                        {page.hasPublished || page.isCode ? (
-                          <a
-                            href={`${SITE_BASE_URL.replace(/\/$/, '')}/${page.slug}/`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
-                            title="View live page"
-                          >
-                            <ExternalLink size={14} />
-                          </a>
+          {/* Table rows */}
+          {rows.map((row) => {
+            const { node, depth, hasChildren, isGroup } = row
+            const page = node.page
+            const title = page ? page.title : toTitleCase(node.name)
+            return (
+              <div
+                key={node.slug}
+                className="grid grid-cols-[1fr_2fr_140px_140px_120px] gap-4 items-center px-5 py-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center" style={{ paddingLeft: `${depth * 16}px` }}>
+                    {hasChildren ? (
+                      <button
+                        type="button"
+                        onClick={() => toggleNode(node.slug)}
+                        className="mr-1.5 h-6 w-6 inline-flex items-center justify-center text-gray-700 hover:text-gray-900"
+                        title={activeExpanded.has(node.slug) ? 'Collapse' : 'Expand'}
+                      >
+                        {activeExpanded.has(node.slug) ? (
+                          <ChevronDown size={18} />
                         ) : (
-                          <span className="border border-gray-200 text-gray-300 p-1.5 rounded">
-                            <ExternalLink size={14} />
-                          </span>
+                          <ChevronRight size={18} />
                         )}
-
-                        {process.env.NODE_ENV === 'development' && (
-                          <button
-                            type="button"
-                            onClick={() => setPendingDeleteSlug(page.slug)}
-                            disabled={deletingSlug === page.slug}
-                            className="text-gray-400 hover:text-red-600 p-1.5 rounded transition-colors disabled:opacity-40"
-                            title="Delete page"
-                          >
-                            <Trash2 size={14} />
-                          </button>
-                        )}
-                      </>
+                      </button>
+                    ) : (
+                      <span className="mr-1.5 w-3" />
                     )}
+                    <code className="text-body-sm text-gray-700 font-mono">/{node.slug}/</code>
                   </div>
                 </div>
-              )
-            })}
-          </div>
-        </TooltipProvider>
+                <p className="text-body-sm text-gray-900 truncate">{title}</p>
+                <div className="flex items-center gap-1.5 text-gray-400 text-body-sm">
+                  <Clock size={12} />
+                  {page ? timeAgo(page.updatedAt) : '—'}
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {page?.isCode ? (
+                    <span className="px-2 py-0.5 rounded-full text-label font-bold border border-gray-200 text-gray-500 bg-gray-50">
+                      Code
+                    </span>
+                  ) : (
+                    <>
+                      {page?.hasPublished && (
+                        <span className="px-2 py-0.5 rounded-full text-label font-bold border border-green-200 text-green-700 bg-green-50">
+                          Published
+                        </span>
+                      )}
+                      {page?.hasDraft && (
+                        <span className="px-2 py-0.5 rounded-full text-label font-bold border border-amber-200 text-amber-700 bg-amber-50">
+                          Draft
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 justify-end">
+                  {page && (
+                    <>
+                      {!page.isCode && (
+                        <Link
+                          href={`/admin/create?slug=${page.slug}&mode=edit`}
+                          className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
+                          title="Edit page"
+                        >
+                          <Edit3 size={14} />
+                        </Link>
+                      )}
+                      {page.hasPublished || page.isCode ? (
+                        <a
+                          href={`${SITE_BASE_URL.replace(/\/$/, '')}/${page.slug}/`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
+                          title="View live page"
+                        >
+                          <ExternalLink size={14} />
+                        </a>
+                      ) : (
+                        <span className="border border-gray-200 text-gray-300 p-1.5 rounded">
+                          <ExternalLink size={14} />
+                        </span>
+                      )}
+
+                      {process.env.NODE_ENV === 'development' && (
+                        <button
+                          type="button"
+                          onClick={() => setPendingDeleteSlug(page.slug)}
+                          disabled={deletingSlug === page.slug}
+                          className="text-gray-400 hover:text-red-600 p-1.5 rounded transition-colors disabled:opacity-40"
+                          title="Delete page"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
       )}
 
       {pendingDeleteSlug && (
