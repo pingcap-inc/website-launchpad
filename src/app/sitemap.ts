@@ -40,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/ai-test/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/search-retrieval-test/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/home/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/tidb-test/', priority: 0.7, changeFrequency: 'monthly' },
   ]
 
   return routes.map(({ url, priority, changeFrequency }) => ({
