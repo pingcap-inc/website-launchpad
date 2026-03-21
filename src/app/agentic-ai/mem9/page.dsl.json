@@ -1,0 +1,330 @@
+{
+  "pageName": "Persistent Memory for OpenClaw",
+  "meta": {
+    "title": "mem9 - Persistent Memory for TiDB OpenClaw",
+    "description": "mem9 adds persistent memory storage for OpenClaw agents with searchable recall across sessions, devices, and agents. Hosted or self-hosted.",
+    "canonical": "/mem9/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Beta",
+        "headline": "Persistent memory for <span class=\"text-gradient-violet\">OpenClaw</span>",
+        "subheadline": "OpenClaw agents lose context between sessions. mem9 adds a persistent memory layer for storage, search, and shared recall across sessions, devices, and agents.",
+        "primaryCta": {
+          "text": "Install for OpenClaw",
+          "href": "https://mem9.ai/SKILL.md"
+        },
+        "secondaryCta": {
+          "text": "Open GitHub",
+          "href": "https://github.com/pingcap/mem9"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "features-grid",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Built for agent workflows",
+        "title": "Why agents need mem9",
+        "items": [
+          {
+            "icon": "RefreshCw",
+            "title": "Persistent across sessions",
+            "description": "Memory survives restarts, reconnects, and machine switches."
+          },
+          {
+            "icon": "Search",
+            "title": "Searchable by default",
+            "description": "Start with keyword retrieval, then add embeddings for hybrid search."
+          },
+          {
+            "icon": "Zap",
+            "title": "Shared across agents",
+            "description": "Keep useful context available to multiple agents and tools."
+          },
+          {
+            "icon": "Server",
+            "title": "Hosted or self-hosted",
+            "description": "Use mem9.ai or run it on your own infrastructure."
+          }
+        ],
+        "columns": 2
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "core-features",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Core capabilities",
+        "title": "Everything needed for persistent agent memory",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "Durable memory storage",
+            "description": "Write memory once and keep it available across sessions, machines, and workflows. No fragile local-only state."
+          },
+          {
+            "icon": "Search",
+            "title": "Keyword search first",
+            "description": "Useful retrieval should work immediately. mem9 starts with keyword search out of the box."
+          },
+          {
+            "icon": "Layers",
+            "title": "Hybrid retrieval when needed",
+            "description": "Add embeddings later and mem9 can support keyword + vector retrieval without forcing a separate memory stack."
+          },
+          {
+            "icon": "Network",
+            "title": "Shared memory spaces",
+            "description": "Let multiple agents or tools read from and write to the same memory layer when they need common context."
+          },
+          {
+            "icon": "Code2",
+            "title": "Open source runtime",
+            "description": "Apache-2.0 licensed server, plugins, and hooks. Use the hosted service or self-host it."
+          },
+          {
+            "icon": "Wrench",
+            "title": "Minimal operational setup",
+            "description": "No schema work, no custom sync layer, no separate retrieval pipeline to build before getting started."
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "how-it-works",
+      "type": "featureTabs",
+      "props": {
+        "eyebrow": "Getting started",
+        "title": "How it works",
+        "tabs": [
+          {
+            "id": "connect",
+            "label": "1. Connect OpenClaw",
+            "description": "Follow the setup instructions in SKILL.md and point OpenClaw to mem9.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "write",
+            "label": "2. Write memory during use",
+            "description": "Your agent stores useful context through the mem9 memory interface.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "retrieve",
+            "label": "3. Retrieve across sessions",
+            "description": "mem9 keeps memory durable and searchable so the agent can reuse it later.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "manage",
+            "label": "4. Manage centrally",
+            "description": "Use the mem9.ai app or API to inspect, search, import, and export memory.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          }
+        ],
+        "autoSwitch": true,
+        "autoSwitchInterval": 6000
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "surfaces",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "Multiple interfaces",
+        "title": "One memory layer, multiple surfaces",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "OpenClaw",
+            "description": "Persistent memory for OpenClaw agents, with recall across sessions and devices.",
+            "cta": {
+              "text": "Install mem9",
+              "href": "https://mem9.ai/SKILL.md"
+            },
+            "icon": "Zap"
+          },
+          {
+            "variant": "blue",
+            "title": "Your Memory",
+            "description": "Use the mem9.ai interface to inspect, manage, analyze, import, and export stored memory.",
+            "cta": {
+              "text": "Open Your Memory",
+              "href": "https://mem9.ai/memory"
+            },
+            "icon": "Zap"
+          },
+          {
+            "variant": "teal",
+            "title": "API clients",
+            "description": "Also works with clients that read from or write to the mem9 API.",
+            "cta": {
+              "text": "View API docs",
+              "href": "https://mem9.ai/docs"
+            },
+            "icon": "Code2"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "security",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Trust and compliance",
+        "title": "Security and data handling",
+        "subtitle": "mem9 is designed to store and retrieve agent memory with clear operational boundaries.",
+        "items": [
+          {
+            "icon": "Lock",
+            "title": "Encryption in transit and at rest",
+            "description": "Memory data is protected over the network and while stored."
+          },
+          {
+            "icon": "Shield",
+            "title": "Access controls",
+            "description": "Production access is limited to systems and operators that require it."
+          },
+          {
+            "icon": "Activity",
+            "title": "Auditability",
+            "description": "Operational actions are logged and observable for review and troubleshooting."
+          },
+          {
+            "icon": "Layers",
+            "title": "Isolated service boundaries",
+            "description": "Memory processing is scoped to reduce unnecessary data exposure."
+          },
+          {
+            "icon": "Cloud",
+            "title": "Durable cloud infrastructure",
+            "description": "The hosted service runs on infrastructure designed for reliability, backup, and steady operation."
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently asked questions",
+        "items": [
+          {
+            "q": "Is mem9 only for OpenClaw?",
+            "a": "No. mem9 works with any client that can read from or write to the mem9 API. OpenClaw is the primary onboarding path today."
+          },
+          {
+            "q": "What problem does mem9 solve?",
+            "a": "mem9 handles long-lived memory for agents. It stores, retrieves, and shares memory across sessions, devices, and workflows."
+          },
+          {
+            "q": "Do I need a separate vector database?",
+            "a": "No. You can start with keyword retrieval. If you add embeddings, mem9 can support hybrid retrieval without requiring a separate DIY memory stack."
+          },
+          {
+            "q": "Can I self-host mem9?",
+            "a": "Yes. mem9 is open source and self-hostable."
+          },
+          {
+            "q": "Is mem9 secure?",
+            "a": "mem9 uses encryption in transit and at rest, access controls, auditability, and scoped service boundaries. Additional security information is available in the security overview."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Start with persistent memory for OpenClaw",
+        "subtitle": "Install mem9, connect it to OpenClaw, and keep agent memory available across sessions.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Install for OpenClaw",
+          "href": "https://mem9.ai/SKILL.md"
+        },
+        "secondaryCta": {
+          "text": "View on GitHub",
+          "href": "https://github.com/pingcap/mem9"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
