@@ -1,0 +1,273 @@
+{
+  "pageName": "What is TiDB? Distributed SQL Database",
+  "meta": {
+    "title": "What is TiDB? Distributed SQL Database",
+    "description": "TiDB is a distributed SQL database that combines the best of traditional databases with horizontal scalability. Learn how TiDB powers modern applications.",
+    "canonical": "/what-is-tidb/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Introduction to TiDB",
+        "headline": "The <span class=\"text-gradient-violet\">Distributed SQL</span> Database Built for Scale",
+        "subheadline": "TiDB combines the familiarity of traditional SQL with the scalability of NoSQL. Get started with a database that grows with your business.",
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View Documentation",
+          "href": "https://docs.pingcap.com/tidb/stable"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "what-is-tidb",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "Key Capabilities",
+        "title": "Why Choose TiDB?",
+        "subtitle": "TiDB delivers enterprise-grade reliability with cloud-native scalability",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "Horizontal Scalability",
+            "description": "Scale your database seamlessly across multiple nodes without resharding data manually.",
+            "cta": {
+              "text": "Learn More",
+              "href": "/tidb-architecture/"
+            },
+            "icon": "Database"
+          },
+          {
+            "variant": "blue",
+            "title": "ACID Transactions",
+            "description": "Maintain data integrity with full ACID compliance across distributed transactions.",
+            "cta": {
+              "text": "Explore Features",
+              "href": "/tidb-features/"
+            },
+            "icon": "Shield"
+          },
+          {
+            "variant": "teal",
+            "title": "SQL Compatible",
+            "description": "Use standard SQL syntax. TiDB is compatible with MySQL, making migration effortless.",
+            "cta": {
+              "text": "See Documentation",
+              "href": "https://docs.pingcap.com/tidb/stable"
+            },
+            "icon": "Zap"
+          },
+          {
+            "variant": "red",
+            "title": "Cloud-Native",
+            "description": "Run on Kubernetes or any cloud infrastructure. Deploy where you need, when you need.",
+            "cta": {
+              "text": "Deploy Now",
+              "href": "https://tidbcloud.com/free-trial/"
+            },
+            "icon": "Cloud"
+          }
+        ],
+        "columns": 2
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "architecture",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Architecture",
+        "title": "How TiDB Works",
+        "subtitle": "A modern distributed architecture designed for performance and reliability",
+        "items": [
+          {
+            "icon": "Layers",
+            "title": "TiDB Server",
+            "description": "Stateless SQL layer that processes queries and coordinates transactions across the cluster.",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Database",
+            "title": "TiKV Storage",
+            "description": "Distributed key-value store with strong consistency and high availability guarantees.",
+            "layout": "vertical"
+          },
+          {
+            "icon": "BarChart",
+            "title": "TiFlash",
+            "description": "Columnar storage engine for fast analytical queries on the same data.",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Settings",
+            "title": "PD Placement Driver",
+            "description": "Manages cluster topology, balances data distribution, and handles failover automatically.",
+            "layout": "vertical"
+          }
+        ],
+        "columns": 2
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "use-cases",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Use Cases",
+        "title": "Built for Real-World Challenges",
+        "subtitle": "From startups to enterprises, TiDB powers applications that demand scale and reliability",
+        "items": [
+          {
+            "icon": "TrendingUp",
+            "title": "E-Commerce Platforms",
+            "description": "Handle millions of transactions daily with consistent performance and zero downtime."
+          },
+          {
+            "icon": "Globe",
+            "title": "SaaS Applications",
+            "description": "Multi-tenant platforms that scale elastically with customer growth."
+          },
+          {
+            "icon": "BarChart2",
+            "title": "Analytics & BI",
+            "description": "Real-time analytics on operational data without ETL pipelines."
+          },
+          {
+            "icon": "Activity",
+            "title": "IoT & Time Series",
+            "description": "Process high-velocity data streams with real-time querying capabilities."
+          },
+          {
+            "icon": "Network",
+            "title": "Financial Services",
+            "description": "Strict ACID guarantees meet regulatory compliance requirements."
+          },
+          {
+            "icon": "Lock",
+            "title": "Data Governance",
+            "description": "Centralized data storage with comprehensive security and audit capabilities."
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "stats",
+      "type": "stats",
+      "props": {
+        "eyebrow": "The TiDB Advantage",
+        "title": "Proven at Scale",
+        "items": [
+          {
+            "value": "99.99%",
+            "label": "Availability",
+            "description": "Enterprise-grade uptime with automatic failover"
+          },
+          {
+            "value": "10x",
+            "label": "Faster Scaling",
+            "description": "Add capacity without application changes"
+          },
+          {
+            "value": "1000+",
+            "label": "Enterprise Customers",
+            "description": "Trusted by Fortune 500 companies globally"
+          },
+          {
+            "value": "$0",
+            "label": "Licensing",
+            "description": "Open source with commercial support options"
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "How is TiDB different from traditional databases?",
+            "a": "TiDB is a distributed SQL database that automatically scales horizontally while maintaining ACID transactions. Traditional databases require manual sharding and typically sacrifice consistency for scale. TiDB gives you both."
+          },
+          {
+            "q": "Is TiDB compatible with MySQL?",
+            "a": "Yes. TiDB uses MySQL protocol and syntax, making it a drop-in replacement for many MySQL applications. Most existing tools and drivers work without modification."
+          },
+          {
+            "q": "Can I run TiDB in the cloud?",
+            "a": "TiDB Cloud is our fully managed service available on AWS, Google Cloud, and Azure. You can also self-host TiDB on any Kubernetes cluster or cloud infrastructure."
+          },
+          {
+            "q": "What kind of performance should I expect?",
+            "a": "Performance depends on your workload, hardware, and configuration. TiDB typically delivers microsecond latency for OLTP and near-real-time results for analytical queries using TiFlash."
+          },
+          {
+            "q": "How does TiDB handle high availability?",
+            "a": "TiDB uses Raft consensus for data replication. Data is replicated across multiple nodes, and the system automatically handles node failures with zero data loss."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Experience TiDB?",
+        "subtitle": "Join thousands of companies using TiDB for their most demanding workloads.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Schedule a Demo",
+          "href": "https://pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
