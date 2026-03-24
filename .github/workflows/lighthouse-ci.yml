@@ -1,9 +1,7 @@
 name: Lighthouse CI (Preview)
 
 on:
-  pull_request:
-    paths:
-      - 'src/app/**/*.tsx'
+  workflow_dispatch:
 
 permissions:
   contents: read
