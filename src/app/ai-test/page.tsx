@@ -70,6 +70,12 @@ const dsl: PageDSL = {
           "alt": "hero image",
           "width": 500,
           "height": 400
+        },
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/8721dd45-tidb_hero_background.svg"
+          },
+          "alt": ""
         }
       },
       "style": {
