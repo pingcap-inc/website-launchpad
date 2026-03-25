@@ -235,6 +235,34 @@
         "background": "none",
         "spacing": "section"
       }
+    },
+    {
+      "id": "featureMedia-1774427035754",
+      "type": "featureMedia",
+      "props": {
+        "title": "",
+        "startPosition": "right",
+        "items": [
+          {
+            "title": "Context-Aware, Usage-Based Scaling",
+            "description": "Autoscaling based on real-time workload signals and RU/s limits—no more overprovisioning or manual tuning.\n\n",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/62ca27ae-context-aware.svg",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "",
+              "width": 600,
+              "height": 600
+            }
+          }
+        ]
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
     }
   ]
 }
