@@ -35,6 +35,7 @@ const SECTION_COLORS: Record<string, string> = {
   featureCard: 'bg-teal-100 text-teal-700',
   featureTabs: 'bg-cyan-100 text-cyan-700',
   featureHighlights: 'bg-fuchsia-100 text-fuchsia-700',
+  featureMedia: 'bg-sky-100 text-sky-700',
   logoCloud: 'bg-orange-100 text-orange-700',
   testimonials: 'bg-yellow-100 text-yellow-700',
   faq: 'bg-pink-100 text-pink-700',
@@ -134,6 +135,22 @@ export function SectionCard({
   const badgeClass = SECTION_COLORS[node.type] ?? 'bg-gray-100 text-gray-600'
   const summary = sectionSummary(node)
 
+  const toggleExpanded = () => {
+    setExpanded((prev) => {
+      const next = !prev
+      if (next) setRegenOpen(false)
+      return next
+    })
+  }
+
+  const toggleRegen = () => {
+    setRegenOpen((prev) => {
+      const next = !prev
+      if (next) setExpanded(false)
+      return next
+    })
+  }
+
   return (
     <div
       ref={setNodeRef}
@@ -164,7 +181,7 @@ export function SectionCard({
           <button
             type="button"
             title="Edit"
-            onClick={() => setExpanded(!expanded)}
+            onClick={toggleExpanded}
             className={`p-1 rounded transition-colors ${expanded ? 'text-gray-900 bg-gray-100' : 'text-gray-400 hover:text-gray-700'}`}
           >
             {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -172,7 +189,7 @@ export function SectionCard({
           <button
             type="button"
             title="AI Regenerate"
-            onClick={() => setRegenOpen(!regenOpen)}
+            onClick={toggleRegen}
             className="p-1 rounded text-gray-400 hover:text-brand-violet-medium transition-colors"
           >
             <Bot size={14} />

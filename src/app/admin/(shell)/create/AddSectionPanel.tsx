@@ -12,6 +12,7 @@ import {
   HelpCircle,
   Megaphone,
   FormInput,
+  GalleryHorizontalEnd,
   X,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -47,6 +48,10 @@ const SECTION_OPTIONS: SectionTypeOption[] = [
   {
     type: 'featureHighlights',
     Icon: Sparkles,
+  },
+  {
+    type: 'featureMedia',
+    Icon: GalleryHorizontalEnd,
   },
   {
     type: 'logoCloud',

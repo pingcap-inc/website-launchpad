@@ -124,18 +124,19 @@ Visual & Interaction (see visual-design.md for full guide)
 
 **Section Components** (import from `@/components/sections/[Name]` or barrel `@/components`)
 
-| Component                    | Import from                                      | Key Props                                                                                        |
-| ---------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `<HeroSection>`              | `@/components/sections/HeroSection`              | `eyebrow` `headline` `subheadline` `primaryCta` `secondaryCta` `rightSlot` `heroImage` `layout`  |
-| `<FeatureGridSection>`       | `@/components/sections/FeatureGridSection`       | `title` `features={[{icon?,title,description,cta?}]}` `columns={2\|3\|4}` `viewMore?`            |
-| `<FeatureCardSection>`       | `@/components/sections/FeatureCardSection`       | `title` `items={[{icon?,title,description,href?,borderColor?}]}` `columns?` `borderStyle?`       |
-| `<FeatureHighlightsSection>` | `@/components/sections/FeatureHighlightsSection` | `title` `items={[{variant,title,description,cta,icon}]}` `columns?`                              |
-| `<FeatureTabsSection>`       | `@/components/sections/FeatureTabsSection`       | `title` `tabs={[{id,label,description?,image}]}` `autoSwitch={true}` `autoSwitchInterval={6000}` |
-| `<StatsSection>`             | `@/components/sections/StatsSection`             | `stats={[{icon?,value,label,description?}]}` `columns={2\|3\|4}` — uses CountUp, `'use client'`  |
-| `<LogoCloudSection>`         | `@/components/sections/LogoCloudSection`         | `logos={[{name,src,href?}]}` `variant="default\|minimal"` `autoScroll?`                          |
-| `<TestimonialsSection>`      | `@/components/sections/TestimonialsSection`      | `title` `testimonials={[{quote,author,logo?,href?,cta?}]}`                                       |
-| `<FaqSection>`               | `@/components/sections/FaqSection`               | `items={[{q,a}]}` `title?="FAQ"` — always before CtaSection                                      |
-| `<CtaSection>`               | `@/components/sections/CtaSection`               | `background="red\|violet\|blue\|teal"` `title` `subtitle?` `primaryCta` `secondaryCta?`          |
+| Component                    | Import from                                      | Key Props                                                                                          |
+| ---------------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `<HeroSection>`              | `@/components/sections/HeroSection`              | `eyebrow` `headline` `subheadline` `primaryCta` `secondaryCta` `rightSlot` `heroImage` `layout`    |
+| `<FeatureGridSection>`       | `@/components/sections/FeatureGridSection`       | `title` `features={[{icon?,title,description,cta?}]}` `columns={2\|3\|4}` `viewMore?`              |
+| `<FeatureCardSection>`       | `@/components/sections/FeatureCardSection`       | `title` `items={[{icon?,title,description,href?,borderColor?}]}` `columns?` `borderStyle?`         |
+| `<FeatureHighlightsSection>` | `@/components/sections/FeatureHighlightsSection` | `title` `items={[{variant,title,description,cta,icon}]}` `columns?`                                |
+| `<FeatureTabsSection>`       | `@/components/sections/FeatureTabsSection`       | `title` `tabs={[{id,label,description?,image}]}` `autoSwitch={true}` `autoSwitchInterval={6000}`   |
+| `<FeatureMediaSection>`      | `@/components/sections/FeatureMediaSection`      | `title?` `items={[{title,description,image,imagePosition?,content?}]}` `startPosition?` `animate?` |
+| `<StatsSection>`             | `@/components/sections/StatsSection`             | `stats={[{icon?,value,label,description?}]}` `columns={2\|3\|4}` — uses CountUp, `'use client'`    |
+| `<LogoCloudSection>`         | `@/components/sections/LogoCloudSection`         | `logos={[{name,src,href?}]}` `variant="default\|minimal"` `autoScroll?`                            |
+| `<TestimonialsSection>`      | `@/components/sections/TestimonialsSection`      | `title` `testimonials={[{quote,author,logo?,href?,cta?}]}`                                         |
+| `<FaqSection>`               | `@/components/sections/FaqSection`               | `items={[{q,a}]}` `title?="FAQ"` — always before CtaSection                                        |
+| `<CtaSection>`               | `@/components/sections/CtaSection`               | `background="red\|violet\|blue\|teal"` `title` `subtitle?` `primaryCta` `secondaryCta?`            |
 
 **UI Components**
 
