@@ -496,6 +496,7 @@ export type SectionPropsMap = {
   featureCard: FeatureCardProps
   featureTabs: FeatureTabsProps
   featureHighlights: FeatureHighlightsProps
+  featureMedia: FeatureMediaProps
   logoCloud: LogoCloudProps
   testimonials: TestimonialsProps
   faq: FaqProps
