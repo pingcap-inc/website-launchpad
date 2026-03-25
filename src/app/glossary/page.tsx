@@ -230,14 +230,42 @@ const terms = [
       {
         term: 'Horizontal Scaling',
         fullName: 'Horizontal Scaling (Scale-Out)',
-        definition:
-          'Adding more nodes to a distributed system to increase capacity, as opposed to vertical scaling (adding more resources to a single node). TiDB scales horizontally — you add TiKV nodes to increase storage and throughput, and TiDB nodes to increase query concurrency, without downtime.',
+        definition: (
+          <>
+            Adding more nodes to a distributed system to increase capacity, as opposed to vertical
+            scaling (adding more resources to a single node). TiDB{' '}
+            <a
+              className="underline decoration-text-inverse/30 hover:decoration-text-inverse/60 transition-colors"
+              href="https://www.pingcap.com/horizontal-scaling-vs-vertical-scaling/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              scales horizontally
+            </a>{' '}
+            — you add TiKV nodes to increase storage and throughput, and TiDB nodes to increase
+            query concurrency, without downtime.
+          </>
+        ),
       },
       {
         term: 'Multi-Tenancy',
         fullName: 'Multi-Tenancy',
-        definition:
-          'An architecture where a single database cluster serves multiple tenants (customers or teams) with isolated resources and data. TiDB Cloud supports multi-tenancy through resource groups and access controls, enabling shared infrastructure with tenant-level isolation.',
+        definition: (
+          <>
+            An architecture where a single database cluster serves multiple tenants (customers or
+            teams) with isolated resources and data. TiDB Cloud supports{' '}
+            <a
+              className="underline decoration-text-inverse/30 hover:decoration-text-inverse/60 transition-colors"
+              href="https://www.pingcap.com/blog/multi-tenant-architecture-enhancing-database-scalability-tidb/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              multi-tenancy
+            </a>{' '}
+            through resource groups and access controls, enabling shared infrastructure with
+            tenant-level isolation.
+          </>
+        ),
       },
       {
         term: 'Elastic Scaling',
