@@ -62,6 +62,7 @@ import {
   FaqSection,
   FeatureTabsSection,
   FeatureHighlightsSection,
+  FeatureMediaSection,
   FormSection,
 } from '@/components'
 import { HubSpotForm } from '@/components/ui/HubSpotForm'
@@ -269,6 +270,18 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       items: props.items.map((item) => ({ ...item, icon: renderIcon(item.icon) })),
       columns: props.columns,
       viewMore: props.viewMore,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  featureMedia: {
+    Component: FeatureMediaSection,
+    mapProps: (props: SectionPropsMap['featureMedia']) => ({
+      eyebrow: props.eyebrow,
+      title: props.title,
+      subtitle: props.subtitle,
+      items: props.items,
+      startPosition: props.startPosition,
       className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },

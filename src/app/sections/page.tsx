@@ -14,6 +14,7 @@ import {
   LogoCloudSection,
   TestimonialsSection,
   StatsSection,
+  FeatureMediaSection,
   FormSection,
   SectionWrapper,
 } from '@/components'
@@ -377,6 +378,56 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
           {
             q: 'Is this only for marketing pages?',
             a: 'No. The sections work for docs landing pages, campaigns, or internal demos too.',
+          },
+        ]}
+      />
+    </SectionWrapper>
+  ),
+  FeatureMediaSection: () => (
+    <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
+      <FeatureMediaSection
+        eyebrow="Architecture"
+        title="Built for the Cloud Era"
+        subtitle="A modern architecture that separates compute from storage."
+        items={[
+          {
+            title: 'Decoupled Compute & Cloud-Native Object Storage',
+            description:
+              'Powered by the new TiDB X architecture, storage is now backed by cloud-native object stores for durability and elasticity, while compute scales independently to meet real-time demand.',
+            image: {
+              image: {
+                url: 'https://static.pingcap.com/images/62ca27ae-context-aware.svg',
+              },
+              alt: 'Decoupled storage illustration',
+              width: 400,
+              height: 400,
+            },
+          },
+          {
+            title: 'Context-Aware, Usage-Based Scaling',
+            description:
+              'Autoscaling based on real-time workload signals and RU/s limits — no more overprovisioning or manual tuning.',
+            image: {
+              image: {
+                url: 'https://static.pingcap.com/images/88a9e52f-decoupled-compute.svg',
+              },
+              alt: 'Scaling illustration',
+              width: 400,
+              height: 400,
+            },
+          },
+          {
+            title: 'Unified HTAP Engine',
+            description:
+              'Run transactional and analytical workloads on a single database without ETL pipelines or data movement.',
+            image: {
+              image: {
+                url: 'https://static.pingcap.com/images/8557dd65-modular-architecture.svg',
+              },
+              alt: 'HTAP engine illustration',
+              width: 400,
+              height: 400,
+            },
           },
         ]}
       />

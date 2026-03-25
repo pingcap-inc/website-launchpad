@@ -211,14 +211,30 @@ export function MediaCenterModal({
     setEditingMetaUrl(null)
   }
 
-  const handleConfirmSelect = () => {
+  const handleConfirmSelect = async () => {
     if (!selectedUrl) return
     const img = images.find((i) => i.url === selectedUrl)
+    let width = img?.width
+    let height = img?.height
+
+    if (!width || !height) {
+      await new Promise<void>((resolve) => {
+        const el = new window.Image()
+        el.onload = () => {
+          width = el.naturalWidth || width
+          height = el.naturalHeight || height
+          resolve()
+        }
+        el.onerror = () => resolve()
+        el.src = selectedUrl
+      })
+    }
+
     const result: ImageRef = {
       url: selectedUrl,
       ...(img?.alt ? { alt: img.alt } : {}),
-      ...(img?.width ? { width: img.width } : {}),
-      ...(img?.height ? { height: img.height } : {}),
+      ...(width ? { width } : {}),
+      ...(height ? { height } : {}),
     }
     onSelect(result)
     onClose()

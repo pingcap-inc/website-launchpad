@@ -350,16 +350,81 @@ function renderField({
       return (
         <FieldRow label={field.label ?? field.key}>
           <div className="space-y-2">
-            {field.fields.map((child) => (
-              <div key={child.key}>
-                {renderField({
-                  field: { ...child, key: `${field.key}.${child.key}` },
-                  value,
-                  onChange,
-                  slug,
-                })}
-              </div>
-            ))}
+            {(() => {
+              const nodes: ReactNode[] = []
+              for (let i = 0; i < field.fields.length; i += 1) {
+                const child = field.fields[i]
+                const nextChild = field.fields[i + 1]
+                if (
+                  child.type === 'number' &&
+                  nextChild?.type === 'number' &&
+                  child.key === 'width' &&
+                  nextChild.key === 'height'
+                ) {
+                  const widthKey = `${field.key}.${child.key}`
+                  const heightKey = `${field.key}.${nextChild.key}`
+                  const widthValue = getPathValue(value, widthKey)
+                  const heightValue = getPathValue(value, heightKey)
+
+                  nodes.push(
+                    <div key={`${child.key}-${nextChild.key}`} className="grid grid-cols-2 gap-2">
+                      <div className="space-y-1">
+                        <label className="block text-label font-bold text-gray-600 uppercase tracking-wide">
+                          {child.label}
+                        </label>
+                        <input
+                          type="number"
+                          value={typeof widthValue === 'number' ? widthValue : ''}
+                          onChange={(e) =>
+                            onChange(
+                              setPathValue(
+                                value,
+                                widthKey,
+                                e.target.value ? Number(e.target.value) : ''
+                              )
+                            )
+                          }
+                          className={input}
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="block text-label font-bold text-gray-600 uppercase tracking-wide">
+                          {nextChild.label}
+                        </label>
+                        <input
+                          type="number"
+                          value={typeof heightValue === 'number' ? heightValue : ''}
+                          onChange={(e) =>
+                            onChange(
+                              setPathValue(
+                                value,
+                                heightKey,
+                                e.target.value ? Number(e.target.value) : ''
+                              )
+                            )
+                          }
+                          className={input}
+                        />
+                      </div>
+                    </div>
+                  )
+                  i += 1
+                  continue
+                }
+
+                nodes.push(
+                  <div key={child.key}>
+                    {renderField({
+                      field: { ...child, key: `${field.key}.${child.key}` },
+                      value,
+                      onChange,
+                      slug,
+                    })}
+                  </div>
+                )
+              }
+              return nodes
+            })()}
           </div>
         </FieldRow>
       )

@@ -4,6 +4,7 @@ import type {
   FeatureCardProps,
   FeatureGridProps,
   FeatureHighlightsProps,
+  FeatureMediaProps,
   FeatureTabsProps,
   FaqProps,
   FormProps,
@@ -144,6 +145,18 @@ const defaultFeatureHighlightsProps: FeatureHighlightsProps = {
   columns: 3,
 }
 
+const defaultFeatureMediaProps: FeatureMediaProps = {
+  title: '',
+  startPosition: 'right',
+  items: [
+    {
+      title: '',
+      description: '',
+      image: { image: { url: '' } },
+    },
+  ],
+}
+
 const defaultLogoCloudProps: LogoCloudProps = {
   title: '',
   logos: [
@@ -220,7 +233,6 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         showWhen: (props) => props.layout === 'image-right',
         fields: [
           { type: 'image', key: 'image', label: 'Image', defaultTag: 'hero' },
-          { type: 'text', key: 'alt', label: 'Alt text' },
           { type: 'number', key: 'width', label: 'Width' },
           { type: 'number', key: 'height', label: 'Height' },
           {
@@ -417,7 +429,11 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
             type: 'object',
             key: 'image',
             label: 'Image',
-            fields: [{ type: 'image', key: 'image', label: 'Image' }],
+            fields: [
+              { type: 'image', key: 'image', label: 'Image' },
+              { type: 'number', key: 'width', label: 'Width' },
+              { type: 'number', key: 'height', label: 'Height' },
+            ],
           },
         ],
       },
@@ -475,6 +491,52 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         ],
       },
       { type: 'cta', key: 'viewMore', label: 'View More' },
+    ],
+  },
+  featureMedia: {
+    type: 'featureMedia',
+    label: 'Feature Media',
+    description: 'Alternating text + image rows (zigzag layout)',
+    defaultProps: defaultFeatureMediaProps,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: [
+      { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
+      { type: 'text', key: 'title', label: 'Title' },
+      { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
+      {
+        type: 'select',
+        key: 'startPosition',
+        label: 'First image position',
+        options: [
+          { label: 'Right', value: 'right' },
+          { label: 'Left', value: 'left' },
+        ],
+      },
+      {
+        type: 'array',
+        key: 'items',
+        label: 'Items',
+        itemLabel: 'Item',
+        newItem: () => ({
+          title: '',
+          description: '',
+          image: { image: { url: '' } },
+        }),
+        fields: [
+          { type: 'text', key: 'title', label: 'Title' },
+          { type: 'textarea', key: 'description', label: 'Description', rows: 3 },
+          {
+            type: 'object',
+            key: 'image',
+            label: 'Image',
+            fields: [
+              { type: 'image', key: 'image', label: 'Image' },
+              { type: 'number', key: 'width', label: 'Width' },
+              { type: 'number', key: 'height', label: 'Height' },
+            ],
+          },
+        ],
+      },
     ],
   },
   logoCloud: {
@@ -544,7 +606,6 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
             label: 'Logo',
             fields: [
               { type: 'image', key: 'image', label: 'Logo image' },
-              { type: 'text', key: 'alt', label: 'Alt text' },
               { type: 'number', key: 'size', label: 'Size' },
             ],
           },
@@ -590,7 +651,6 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         label: 'Image',
         fields: [
           { type: 'image', key: 'image', label: 'Image' },
-          { type: 'text', key: 'alt', label: 'Alt text' },
           { type: 'number', key: 'width', label: 'Width' },
           { type: 'number', key: 'height', label: 'Height' },
         ],

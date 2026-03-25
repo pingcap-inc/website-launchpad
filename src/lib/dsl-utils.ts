@@ -6,6 +6,8 @@ import type {
   FeatureGridProps,
   FeatureHighlightItem,
   FeatureHighlightsProps,
+  FeatureMediaItemDSL,
+  FeatureMediaProps,
   FeatureTab,
   FeatureTabsProps,
   FaqProps,
@@ -412,6 +414,37 @@ function normalizeFeatureHighlightsProps(value: unknown): FeatureHighlightsProps
   }
 }
 
+function normalizeFeatureMediaItem(raw: unknown): FeatureMediaItemDSL | null {
+  if (!raw || typeof raw !== 'object') return null
+  const v = raw as FeatureMediaItemDSL & { image?: { src?: unknown; image?: unknown } }
+  return {
+    title: typeof v.title === 'string' ? v.title : '',
+    description: typeof v.description === 'string' ? v.description : '',
+    image: {
+      image: normalizeImageRef(v.image?.image ?? v.image?.src ?? (v as any).image) ?? { url: '' },
+      alt: v.image?.alt ?? (v as any).alt,
+      width: v.image?.width ?? (v as any).width,
+      height: v.image?.height ?? (v as any).height,
+    },
+    imagePosition:
+      v.imagePosition === 'left' || v.imagePosition === 'right' ? v.imagePosition : undefined,
+  }
+}
+
+function normalizeFeatureMediaProps(value: unknown): FeatureMediaProps {
+  const v = (value ?? {}) as FeatureMediaProps
+  const items = Array.isArray(v.items) ? v.items.map(normalizeFeatureMediaItem).filter(Boolean) : []
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title,
+    subtitle: v.subtitle,
+    items: items as FeatureMediaItemDSL[],
+    startPosition:
+      v.startPosition === 'left' || v.startPosition === 'right' ? v.startPosition : undefined,
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
 function normalizeLogoCloudProps(value: unknown): LogoCloudProps {
   const v = (value ?? {}) as LogoCloudProps
   const logos = Array.isArray(v.logos) ? v.logos.map(normalizeLogo).filter(Boolean) : []
@@ -496,6 +529,8 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeFeatureTabsProps(value)
     case 'featureHighlights':
       return normalizeFeatureHighlightsProps(value)
+    case 'featureMedia':
+      return normalizeFeatureMediaProps(value)
     case 'logoCloud':
       return normalizeLogoCloudProps(value)
     case 'testimonials':

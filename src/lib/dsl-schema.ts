@@ -91,6 +91,7 @@ export type SectionType =
   | 'featureCard'
   | 'featureTabs'
   | 'featureHighlights'
+  | 'featureMedia'
   | 'logoCloud'
   | 'testimonials'
   | 'faq'
@@ -378,6 +379,29 @@ export interface CtaProps {
   className?: string
 }
 
+// ─── Feature Media ───────────────────────────────────────────────────────────
+
+export interface FeatureMediaProps {
+  eyebrow?: string
+  title?: string
+  subtitle?: string
+  items: FeatureMediaItemDSL[]
+  startPosition?: 'left' | 'right'
+  className?: string
+}
+
+export interface FeatureMediaItemDSL {
+  title: string
+  description: string
+  image: {
+    image: ImageRef
+    alt?: string
+    width?: number
+    height?: number
+  }
+  imagePosition?: 'left' | 'right'
+}
+
 // ─── HubSpot Form ────────────────────────────────────────────────────────────
 
 export interface FormProps {
@@ -396,6 +420,7 @@ export type SectionPropsMap = {
   featureCard: FeatureCardProps
   featureTabs: FeatureTabsProps
   featureHighlights: FeatureHighlightsProps
+  featureMedia: FeatureMediaProps
   logoCloud: LogoCloudProps
   testimonials: TestimonialsProps
   faq: FaqProps
@@ -550,6 +575,7 @@ Available section types (choose appropriate mix):
 - { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
 - { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, content?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval?, className? } }
 - { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href}, className? } }
+- { type: "featureMedia", props: { eyebrow?, title?, subtitle?, items: [{title, description, image: {image: {assetId?, url}, alt?, width?, height?}, imagePosition?: "left"|"right"}], startPosition?: "left"|"right", className? } }
 - { type: "faq", props: { title?, items: [{q, a}], className? } }
 - { type: "cta", props: { title, subtitle?, primaryCta: {text,href}, secondaryCta?: {text,href}, image?: { image: {assetId?, url}, alt?, width?, height? }, className? } }
 - { type: "testimonials", props: { eyebrow?, title, items: [{quote, author, href?, cta?, logo?: { image: {assetId?, url}, alt?, size? }}], className? } }
