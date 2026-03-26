@@ -1,0 +1,211 @@
+{
+  "pageName": "Scaling the AI-Native Future on TiDB | Event",
+  "meta": {
+    "title": "Scaling the AI-Native Future on TiDB | Event",
+    "description": "Join PingCAP and industry experts for an exclusive event on scaling AI-native databases. Learn best practices from real-world implementations. Register now.",
+    "canonical": "/event/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "split",
+        "eyebrow": "Lessons from TiDB & Engie",
+        "headline": "Scaling the <span class=\"text-gradient-violet\">AI-Native</span> Future on a Modern Database",
+        "subheadline": "Date: 30 April, 2026\nTime: 5:00 PM – 8:00 PM CET\nLocation: Comet Meetings, Paris (La Défense)\nFormat: In-person",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        },
+        "heroForm": {
+          "formId": "75be9c85-f624-4beb-a7f1-7188a19d5770-69c499f5bc93a",
+          "portalId": "4466002",
+          "region": "na1"
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "event-description",
+      "type": "featureMedia",
+      "props": {
+        "items": [
+          {
+            "title": "Event Overview",
+            "description": "Join PingCAP and Engie for an exclusive gathering of database architects, AI engineers, and innovation leaders. This intimate event explores how modern databases are becoming the backbone of AI-native applications, enabling organizations to harness real-time data for intelligent decision-making at scale.\n\nAttendees will discover hands-on insights into building scalable, distributed database systems that power machine learning pipelines and real-time analytics. Through interactive discussions and live demonstrations, participants will learn how leading enterprises are transforming their data infrastructure to support AI workloads without compromising consistency, availability, or performance.\n\nThis event matters now more than ever. As AI adoption accelerates, the gap between traditional databases and AI-native systems grows wider. Organizations that master this transition gain competitive advantage, operational efficiency, and the ability to innovate faster than their peers.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "right"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "agenda",
+      "type": "featureGrid",
+      "props": {
+        "title": "What's on the Agenda?",
+        "items": [
+          {
+            "icon": "Zap",
+            "title": "Opening Keynote: The AI-Data Convergence",
+            "description": "Understand how AI and data infrastructure are merging into a unified platform that drives next-generation business value."
+          },
+          {
+            "icon": "Zap",
+            "title": "Real-World Case Study: Scaling AI at Engie",
+            "description": "Learn how Engie leveraged modern database architecture to accelerate machine learning model deployment and reduce time-to-insight."
+          },
+          {
+            "icon": "Zap",
+            "title": "Technical Deep Dive: TiDB for AI Workloads",
+            "description": "Explore architectural patterns, optimization techniques, and best practices for running AI-intensive queries on distributed databases."
+          },
+          {
+            "icon": "Zap",
+            "title": "Networking & Discussion Panel",
+            "description": "Connect with peers, speakers, and PingCAP experts in an open-forum setting to discuss challenges, solutions, and future trends."
+          },
+          {
+            "icon": "Zap",
+            "title": "Hands-On Workshop: Building Your First AI Pipeline",
+            "description": "Get practical experience setting up a real-time data pipeline that feeds machine learning models using TiDB."
+          },
+          {
+            "icon": "Zap",
+            "title": "Closing Remarks & Refreshments",
+            "description": "Wrap up with final insights and continue conversations over cocktails and light dinner."
+          }
+        ],
+        "columns": 2
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "audience",
+      "type": "featureCard",
+      "props": {
+        "title": "Who is This Event For?",
+        "items": [
+          {
+            "icon": "Users",
+            "title": "If you're a database architect or engineer",
+            "description": "You want to stay ahead of AI-driven database requirements and understand how to design systems that support real-time ML.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Users",
+            "title": "If you're an AI/ML leader or data scientist",
+            "description": "You need a database that can keep pace with AI workload demands while ensuring data consistency and low latency.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Users",
+            "title": "If you're a CTO or infrastructure executive",
+            "description": "You're evaluating modern data platforms that can unify OLTP and OLAP workloads and reduce infrastructure complexity.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Lightbulb",
+            "title": "By the end, you'll understand how to scale AI workloads",
+            "description": "Gain clarity on architectural decisions that enable high-performance AI on modern distributed databases.",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Lightbulb",
+            "title": "You'll learn real-world optimization strategies",
+            "description": "Discover proven techniques for balancing consistency, availability, and performance in AI-heavy environments.",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Lightbulb",
+            "title": "You'll build a peer network of AI-data innovators",
+            "description": "Connect with leaders facing similar challenges and share lessons learned from production deployments.",
+            "borderColor": "blue"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "speakers",
+      "type": "featureGrid",
+      "props": {
+        "title": "Meet Our Speakers",
+        "items": [
+          {
+            "icon": "Users",
+            "title": "Sophie Marobin",
+            "description": "Chief Data Officer, Engie. Sophie leads Engie's global data strategy and AI transformation initiatives, overseeing the architecture of real-time analytics platforms serving millions of customers across Europe and beyond."
+          },
+          {
+            "icon": "Users",
+            "title": "Liu Qi",
+            "description": "VP Product Engineering, PingCAP. Liu spearheads TiDB's product vision for AI and analytics workloads, with 15+ years of experience building distributed database systems at scale."
+          },
+          {
+            "icon": "Users",
+            "title": "Dr. Marie Chen",
+            "description": "ML Infrastructure Engineer, leading the implementation of TiDB-powered data pipelines for a Fortune 500 financial services firm. Specializes in optimizing database performance for complex machine learning workflows."
+          },
+          {
+            "icon": "Users",
+            "title": "James Whitmore",
+            "description": "Senior Database Architect, specializing in cloud-native infrastructure and AI-driven analytics. James has helped 20+ enterprises migrate to modern database systems and scale their AI operations."
+          }
+        ],
+        "columns": 2
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Transform Your Data Infrastructure?",
+        "subtitle": "Secure your seat at this exclusive event and join the conversation on scaling AI-native databases.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Register Now",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Learn More About TiDB",
+          "href": "/tidb/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
