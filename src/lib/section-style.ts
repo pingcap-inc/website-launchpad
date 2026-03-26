@@ -20,6 +20,9 @@ export const ALLOWED_BG_BY_SECTION: Record<SectionType, Set<SectionStyle['backgr
   logoCloud: DEFAULT_ALLOWED_BG,
   faq: DEFAULT_ALLOWED_BG,
   form: DEFAULT_ALLOWED_BG,
+  agenda: DEFAULT_ALLOWED_BG,
+  speakers: DEFAULT_ALLOWED_BG,
+  comparisonTable: DEFAULT_ALLOWED_BG,
 }
 
 const DEFAULT_ALLOWED_SPACING = new Set<SectionStyle['spacing']>(['sm', 'md', 'lg', 'section'])
@@ -37,4 +40,7 @@ export const ALLOWED_SPACING_BY_SECTION: Record<SectionType, Set<SectionStyle['s
   logoCloud: DEFAULT_ALLOWED_SPACING,
   faq: DEFAULT_ALLOWED_SPACING,
   form: DEFAULT_ALLOWED_SPACING,
+  agenda: DEFAULT_ALLOWED_SPACING,
+  speakers: DEFAULT_ALLOWED_SPACING,
+  comparisonTable: DEFAULT_ALLOWED_SPACING,
 }

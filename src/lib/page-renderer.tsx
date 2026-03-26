@@ -64,6 +64,9 @@ import {
   FeatureHighlightsSection,
   FeatureMediaSection,
   FormSection,
+  Agenda,
+  Speakers,
+  ComparisonTable,
 } from '@/components'
 import { HubSpotForm } from '@/components/ui/HubSpotForm'
 import { Header } from '@/components/ui/Header'
@@ -341,6 +344,41 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       portalId: props.portalId,
       formId: props.formId,
       region: props.region,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  agenda: {
+    Component: Agenda,
+    mapProps: (props: SectionPropsMap['agenda']) => ({
+      eyebrow: props.eyebrow,
+      title: props.title,
+      subtitle: props.subtitle,
+      items: props.items,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  speakers: {
+    Component: Speakers,
+    mapProps: (props: SectionPropsMap['speakers']) => ({
+      eyebrow: props.eyebrow,
+      title: props.title,
+      items: props.items,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  comparisonTable: {
+    Component: ComparisonTable,
+    mapProps: (props: SectionPropsMap['comparisonTable']) => ({
+      eyebrow: props.eyebrow,
+      title: props.title,
+      subtitle: props.subtitle,
+      ourProduct: props.ourProduct,
+      competitor: props.competitor,
+      rows: props.rows,
+      cta: props.cta,
       className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },

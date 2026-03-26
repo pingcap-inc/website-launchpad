@@ -97,6 +97,9 @@ export type SectionType =
   | 'faq'
   | 'cta'
   | 'form'
+  | 'agenda'
+  | 'speakers'
+  | 'comparisonTable'
 
 export interface SectionStyle {
   background?:
@@ -413,6 +416,61 @@ export interface FormProps {
   className?: string
 }
 
+// ─── Agenda ─────────────────────────────────────────────────────────────────
+
+export interface AgendaProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  items: AgendaItem[]
+  className?: string
+}
+
+export interface AgendaItem {
+  time?: string
+  title: string
+  description?: string
+}
+
+// ─── Speakers ───────────────────────────────────────────────────────────────
+
+export interface SpeakersProps {
+  eyebrow?: string
+  title: string
+  items: SpeakerItem[]
+  className?: string
+}
+
+export interface SpeakerItem {
+  name: string
+  title: string
+  company?: string
+  bio?: string
+  image?: {
+    image: ImageRef
+    alt?: string
+  }
+}
+
+// ─── Comparison Table ───────────────────────────────────────────────────────
+
+export interface ComparisonTableProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  ourProduct: string
+  competitor: string
+  rows: ComparisonRow[]
+  cta?: Cta
+  className?: string
+}
+
+export interface ComparisonRow {
+  feature: string
+  ours: string | boolean
+  theirs: string | boolean
+}
+
 export type SectionPropsMap = {
   hero: HeroProps
   stats: StatsProps
@@ -426,6 +484,9 @@ export type SectionPropsMap = {
   faq: FaqProps
   cta: CtaProps
   form: FormProps
+  agenda: AgendaProps
+  speakers: SpeakersProps
+  comparisonTable: ComparisonTableProps
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -581,6 +642,9 @@ Available section types (choose appropriate mix):
 - { type: "testimonials", props: { eyebrow?, title, items: [{quote, author, href?, cta?, logo?: { image: {assetId?, url}, alt?, size? }}], className? } }
 - { type: "logoCloud", props: { eyebrow?, title?, subtitle?, logos: [{name, image: {assetId?, url}, href?, width?, height?}], variant?: "default"|"minimal", align?: "center"|"left", autoScroll?, scrollSpeedSeconds?, scrollContentMaxWidth?, className? } }
 - { type: "form", props: { title?, subtitle?, portalId: "YOUR_PORTAL_ID", formId: "YOUR_FORM_ID", region?: "na1", className? } }
+- { type: "agenda", props: { eyebrow?, title, subtitle?, items: [{time?, title, description?}], className? } }
+- { type: "speakers", props: { eyebrow?, title, items: [{name, title, company?, bio?, image?: { image: {assetId?, url}, alt? }}], className? } }
+- { type: "comparisonTable", props: { eyebrow?, title, subtitle?, ourProduct, competitor, rows: [{feature, ours: string|boolean, theirs: string|boolean}], cta?: {text, href}, className? } }
 
 Icon names (use for icon fields): ${ALL_ICON_NAMES.join(', ')}
 CTA hrefs: use real PingCAP URLs or "https://tidbcloud.com/free-trial/" for signup CTAs.

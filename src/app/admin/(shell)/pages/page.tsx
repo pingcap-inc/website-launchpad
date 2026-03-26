@@ -12,6 +12,7 @@ import {
   ChevronRight,
   ChevronDown,
   Trash2,
+  CheckSquare,
 } from 'lucide-react'
 import { SITE_BASE_URL } from '@/lib/env'
 
@@ -23,6 +24,58 @@ interface PageItem {
   hasPublished: boolean
   hasDraft: boolean
   isCode: boolean
+}
+
+type PageStatus = 'code' | 'published' | 'published-with-draft' | 'draft'
+
+interface PageStatusInfo {
+  status: PageStatus
+  label: string
+  extraLabel?: string
+  description: string
+  color: 'gray' | 'green' | 'blue' | 'amber'
+}
+
+const STATUS_COLOR_MAP = {
+  gray: 'border-gray-200 text-gray-500 bg-gray-50',
+  green: 'border-green-200 text-green-700 bg-green-50',
+  blue: 'border-blue-200 text-blue-700 bg-blue-50',
+  amber: 'border-amber-200 text-amber-700 bg-amber-50',
+} as const
+
+function getPageStatus(page: {
+  hasPublished: boolean
+  hasDraft: boolean
+  isCode: boolean
+}): PageStatusInfo {
+  if (page.isCode)
+    return {
+      status: 'code',
+      label: 'Code',
+      description: 'Managed in codebase, not editable here',
+      color: 'gray',
+    }
+  if (page.hasPublished && page.hasDraft)
+    return {
+      status: 'published-with-draft',
+      label: 'Published',
+      extraLabel: 'Edited',
+      description: 'Published to staging, but has unpublished draft changes',
+      color: 'green',
+    }
+  if (page.hasPublished)
+    return {
+      status: 'published',
+      label: 'Published',
+      description: 'Live on staging, no pending changes',
+      color: 'green',
+    }
+  return {
+    status: 'draft',
+    label: 'Draft',
+    description: 'Not yet published',
+    color: 'amber',
+  }
 }
 
 function timeAgo(dateStr: string | null): string {
@@ -281,12 +334,20 @@ export default function PagesPage() {
           <p className="text-gray-400 text-body-sm mt-1">
             Published DSL pages, draft-only DSL pages, and code pages will appear here.
           </p>
-          <Link
-            href="/admin/create"
-            className="inline-block mt-4 bg-gray-900 text-white font-bold px-6 py-2.5 text-body-sm hover:bg-gray-700 transition-colors rounded"
-          >
-            Create your first page
-          </Link>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/admin/create"
+              className="inline-block bg-gray-900 text-white font-bold px-6 py-2.5 text-body-sm hover:bg-gray-700 transition-colors rounded"
+            >
+              Create your first page
+            </Link>
+            <Link
+              href="/admin/create?mode=guided"
+              className="inline-block border border-gray-200 text-gray-600 font-bold px-6 py-2.5 text-body-sm hover:text-gray-900 hover:border-gray-400 transition-colors rounded"
+            >
+              Guided mode
+            </Link>
+          </div>
         </div>
       ) : (
         <div className="border border-gray-200 rounded overflow-hidden bg-white">
@@ -343,67 +404,94 @@ export default function PagesPage() {
                   <Clock size={12} />
                   {page ? timeAgo(page.updatedAt) : '—'}
                 </div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  {page?.isCode ? (
-                    <span className="px-2 py-0.5 rounded-full text-label font-bold border border-gray-200 text-gray-500 bg-gray-50">
-                      Code
-                    </span>
-                  ) : (
-                    <>
-                      {page?.hasPublished && (
-                        <span className="px-2 py-0.5 rounded-full text-label font-bold border border-green-200 text-green-700 bg-green-50">
-                          Published
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {page &&
+                    (() => {
+                      const { label, extraLabel, color, description } = getPageStatus(page)
+                      if (extraLabel) {
+                        return (
+                          <div className="flex items-center gap-1">
+                            <span
+                              className={`px-2 py-0.5 rounded-full text-label font-bold border ${STATUS_COLOR_MAP[color]}`}
+                              title={description}
+                            >
+                              {label}
+                            </span>
+                            <span
+                              className="w-2 h-2 rounded-full bg-amber-400 shrink-0 ml-1"
+                              title="Has unpublished draft changes"
+                            />
+                          </div>
+                        )
+                      }
+                      return (
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-label font-bold border ${STATUS_COLOR_MAP[color]}`}
+                          title={description}
+                        >
+                          {label}
                         </span>
-                      )}
-                      {page?.hasDraft && (
-                        <span className="px-2 py-0.5 rounded-full text-label font-bold border border-amber-200 text-amber-700 bg-amber-50">
-                          Draft
-                        </span>
-                      )}
-                    </>
-                  )}
+                      )
+                    })()}
                 </div>
                 <div className="flex items-center gap-2 justify-end">
-                  {page && (
-                    <>
-                      {!page.isCode && (
-                        <Link
-                          href={`/admin/create?slug=${page.slug}&mode=edit`}
-                          className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
-                          title="Edit page"
-                        >
-                          <Edit3 size={14} />
-                        </Link>
-                      )}
-                      {page.hasPublished || page.isCode ? (
-                        <a
-                          href={`${SITE_BASE_URL.replace(/\/$/, '')}/${page.slug}/`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
-                          title="View live page"
-                        >
-                          <ExternalLink size={14} />
-                        </a>
-                      ) : (
-                        <span className="border border-gray-200 text-gray-300 p-1.5 rounded">
-                          <ExternalLink size={14} />
-                        </span>
-                      )}
+                  {page &&
+                    (() => {
+                      const { status } = getPageStatus(page)
+                      return (
+                        <>
+                          {!page.isCode && (
+                            <Link
+                              href={`/admin/create?slug=${page.slug}&mode=edit`}
+                              className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
+                              title="Edit page"
+                            >
+                              <Edit3 size={14} />
+                            </Link>
+                          )}
+                          {!page.isCode && status !== 'published' && (
+                            <Link
+                              href={`/admin/create?slug=${page.slug}&mode=edit&action=review`}
+                              className="border border-brand-violet-medium/30 text-brand-violet-medium hover:text-brand-violet-dark hover:border-brand-violet-medium p-1.5 rounded transition-colors"
+                              title={
+                                status === 'draft'
+                                  ? 'Review and publish this draft'
+                                  : 'Review and publish pending changes'
+                              }
+                            >
+                              <CheckSquare size={14} />
+                            </Link>
+                          )}
+                          {page.hasPublished || page.isCode ? (
+                            <a
+                              href={`${SITE_BASE_URL.replace(/\/$/, '')}/${page.slug}/`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
+                              title="View live page"
+                            >
+                              <ExternalLink size={14} />
+                            </a>
+                          ) : (
+                            <span className="border border-gray-200 text-gray-300 p-1.5 rounded">
+                              <ExternalLink size={14} />
+                            </span>
+                          )}
 
-                      {process.env.NODE_ENV === 'development' && (
-                        <button
-                          type="button"
-                          onClick={() => setPendingDeleteSlug(page.slug)}
-                          disabled={deletingSlug === page.slug}
-                          className="text-gray-400 hover:text-red-600 p-1.5 rounded transition-colors disabled:opacity-40"
-                          title="Delete page"
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      )}
-                    </>
-                  )}
+                          {process.env.NODE_ENV === 'development' && !page.isCode && (
+                            <button
+                              type="button"
+                              onClick={() => setPendingDeleteSlug(page.slug)}
+                              disabled={deletingSlug === page.slug}
+                              className="text-gray-400 hover:text-red-600 p-1.5 rounded transition-colors disabled:opacity-40"
+                              title="Delete page"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          )}
+                        </>
+                      )
+                    })()}
                 </div>
               </div>
             )

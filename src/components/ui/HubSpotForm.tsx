@@ -62,12 +62,15 @@ export function HubSpotForm({
   errorText = 'Unable to load form. Please try refreshing the page.',
   minHeight,
 }: HubSpotFormProps) {
+  const isMisconfigured = !formId || formId.startsWith('[')
+
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const uid = useId()
   const containerId = `hubspot-form-${uid.replace(/:/g, '')}`
   const isNewsletter = className?.split(/\s+/).includes('hs-newsletter') ?? false
 
   useEffect(() => {
+    if (isMisconfigured) return
     setStatus('loading')
     let cancelled = false
     let retryTimer: ReturnType<typeof setTimeout> | null = null
@@ -133,7 +136,20 @@ export function HubSpotForm({
       if (retryTimer) clearTimeout(retryTimer)
       if (readyTimeout) clearTimeout(readyTimeout)
     }
-  }, [containerId, formId, portalId, region, sfdcCampaignId, onFormSubmit])
+  }, [isMisconfigured, containerId, formId, portalId, region, sfdcCampaignId, onFormSubmit])
+
+  if (isMisconfigured) {
+    return (
+      <div className="rounded-lg border border-dashed border-border-primary p-8 text-center">
+        <p className="text-body-sm text-text-secondary">
+          Form not configured.{' '}
+          <span className="font-bold">
+            Add your HubSpot Portal ID and Form ID to enable signup.
+          </span>
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div

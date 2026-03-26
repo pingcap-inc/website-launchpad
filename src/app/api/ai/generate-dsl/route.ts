@@ -19,6 +19,41 @@ Rules:
 - Testimonials section use style.background "gradient-dark-top"
 - CTA sections must use style.background "brand-violet" unless the page theme clearly calls for a different brand color
 - Return ONLY a valid JSON object, no explanation or markdown
+- When the user's intent is a long document or article (over 500 words), do NOT include all the content verbatim. Instead extract the key structure (headings, main points, CTAs), generate a page layout that represents this structure, and use concise placeholder text for body copy. Keep your DSL response concise — max 3000 tokens. Always return valid, complete JSON. Never truncate mid-array or mid-object.
+
+## Event Page layout
+When pageType is "Event Page" OR intent mentions "event", "signup", "register", "meetup", "webinar", or "conference", generate EXACTLY these sections in this order:
+
+1. type: "hero"
+   - layout: "split", eyebrow: event label, headline: event title, subheadline: event meta (date, time, location)
+   - style.background: "primary"
+   - If the user's intent includes a HubSpot formId (a UUID like "abc12345-1234-..."), set heroForm: {formId: "<that id>", portalId: "4466002", region: "na1"}.
+     Otherwise, set heroForm: null (do NOT invent a form ID). A plain hero without a form is fine.
+   The heroForm automatically renders a HubSpot form in the right column. Do NOT create a separate "form" section.
+
+2. type: "agenda" — session schedule with time slots and descriptions
+
+3. type: "speakers" — speaker profiles with name, title, company, bio
+
+4. type: "cta" — final registration CTA
+
+Do NOT add any sections beyond the 4 listed above.
+Do NOT use testimonials, logoCloud, stats, or featureHighlights for event pages unless specifically requested.
+The HubspotForm MUST be in the hero via heroForm prop, never as a standalone section at the bottom.
+
+## Battle Card layout
+When pageType is "Battle Card" OR intent mentions "battle card", "competitor comparison", "vs", or "alternative to", generate EXACTLY these sections in this order:
+
+1. type: "hero" — headline positioning TiDB vs [competitor]
+
+2. type: "featureHighlights" — top 3 reasons to choose TiDB (key differentiators)
+
+3. type: "comparisonTable" — ourProduct: "TiDB", competitor: "[competitor name]",
+   rows covering: scalability, MySQL compatibility, HTAP, operational complexity, cost, support
+
+4. type: "cta" — demo or trial CTA
+
+Do NOT add any sections beyond the 4 listed above.
 `
 
 const MOCK_DSL: PageDSL = {
@@ -264,6 +299,27 @@ function stripBackgroundFields(dsl: PageDSL): void {
   }
 }
 
+/** Strip heroForm when formId looks hallucinated (not a real HubSpot UUID). */
+function sanitizeHeroForm(dsl: PageDSL): void {
+  for (const section of dsl.sections) {
+    if (section.type !== 'hero') continue
+    const props = section.props as unknown as Record<string, unknown>
+    const heroForm = props.heroForm as Record<string, unknown> | null | undefined
+    if (!heroForm) continue
+    const formId = heroForm.formId as string | undefined
+    // Real HubSpot form IDs are UUIDs (8-4-4-4-12 hex). Anything else is hallucinated.
+    if (
+      !formId ||
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(formId)
+    ) {
+      console.warn(
+        `[DSL] Stripping hallucinated heroForm.formId "${formId}" on section "${section.id}"`
+      )
+      props.heroForm = null
+    }
+  }
+}
+
 function applyFeatureTabsDefaults(dsl: PageDSL): void {
   const defaults = schemaMap.featureTabs?.defaultProps
   if (!defaults) return
@@ -397,7 +453,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'intent is required' }, { status: 400 })
   }
 
-  const userContent = `Generate a complete PageDSL for: ${intent}${pageType ? ` (page type: ${pageType})` : ''}.${
+  const pageTypeHint =
+    pageType === 'auto'
+      ? ' (Analyze the content and choose the most appropriate page type automatically. If the content mentions events, meetups, webinars, or registrations → use event layout with heroForm. Otherwise → use general page layout.)'
+      : pageType
+        ? ` (page type: ${pageType})`
+        : ''
+  const userContent = `Generate a complete PageDSL for: ${intent}${pageTypeHint}.${
     AI_PROVIDER === 'bedrock'
       ? '\n\nOutput rules:\n- Return ONLY a raw JSON object. No markdown, no code blocks, no explanation.\n- Start your response with { and end with }'
       : ''
@@ -415,6 +477,7 @@ export async function POST(request: NextRequest) {
     stripImageFields(dsl as unknown as Record<string, unknown>)
     stripBackgroundFields(dsl)
     applyFeatureTabsDefaults(dsl)
+    sanitizeHeroForm(dsl)
 
     // Validate; retry once with error feedback if needed
     let errors = validateDSL(dsl)
@@ -433,6 +496,7 @@ export async function POST(request: NextRequest) {
       stripImageFields(dsl as unknown as Record<string, unknown>)
       stripBackgroundFields(dsl)
       applyFeatureTabsDefaults(dsl)
+      sanitizeHeroForm(dsl)
       errors = validateDSL(dsl)
       if (errors.length > 0) {
         console.error('[DSL] Retry still has validation errors:', errors)
