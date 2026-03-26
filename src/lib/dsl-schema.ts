@@ -502,6 +502,9 @@ export type SectionPropsMap = {
   faq: FaqProps
   cta: CtaProps
   form: FormProps
+  agenda: AgendaProps
+  speakers: SpeakersProps
+  comparisonTable: ComparisonTableProps
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
