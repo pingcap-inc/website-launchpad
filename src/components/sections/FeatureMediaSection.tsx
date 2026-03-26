@@ -56,7 +56,7 @@ export function FeatureMediaSection({
 
         const textContent = item.content ?? (
           <>
-            <h3 className="text-h2-sm font-bold mb-4">{item.title}</h3>
+            <h3 className="text-h3-lg md:text-h2-sm font-bold mb-4">{item.title}</h3>
             <p className="text-body-2xl text-secondary leading-relaxed whitespace-pre-line">
               {item.description}
             </p>

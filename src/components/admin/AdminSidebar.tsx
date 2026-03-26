@@ -12,11 +12,17 @@ import {
   Lock,
 } from 'lucide-react'
 
-const NAV_ITEMS = [
+const NAV_ITEMS: {
+  href: string
+  label: string
+  icon: typeof LayoutDashboard
+  exact?: boolean
+  disabled?: boolean
+}[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { href: '/admin/pages', label: 'Pages', icon: FileText },
   { href: '/admin/create', label: 'Create Page', icon: PlusSquare },
-  { href: '/admin/assistant', label: 'AI Assistant', icon: MessageSquare, disabled: true },
+  // { href: '/admin/assistant', label: 'AI Assistant', icon: MessageSquare, disabled: true },
   // { href: '/admin/builds', label: 'Preview Builds', icon: Layers, disabled: true },
 ]
 
