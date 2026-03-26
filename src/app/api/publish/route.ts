@@ -54,10 +54,13 @@ export async function POST(request: NextRequest) {
     slug,
     dsl,
     branch = process.env.GITHUB_BRANCH ?? 'staging',
-    addToSitemap = false,
+    addToSitemap: _addToSitemapLegacy,
     priority = 0.7,
     changeFrequency = 'monthly',
   } = (await request.json()) as PublishRequest
+
+  // Auto-add to sitemap when publishing to main; skip for feature/staging branches
+  const addToSitemap = branch === 'main'
 
   if (branch === 'main') {
     const providedToken = request.headers.get('x-publish-main-token')

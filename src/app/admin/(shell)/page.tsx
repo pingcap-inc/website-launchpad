@@ -1,5 +1,47 @@
 import Link from 'next/link'
-import { FileText, PlusSquare, Layers, ArrowRight, Lock } from 'lucide-react'
+import {
+  FileText,
+  PlusSquare,
+  BookOpen,
+  ArrowRight,
+  Megaphone,
+  Upload,
+  HelpCircle,
+  Info,
+} from 'lucide-react'
+
+const userTypes = [
+  {
+    badge: 'Type 1 · Marketing team',
+    badgeClass: 'bg-blue-50 text-blue-800',
+    title: 'Build a New Page with AI',
+    desc: "I'm on the marketing team and need to create a brand-new page from scratch using AI.",
+    tags: ['Campaign landing', 'Event signup', 'Program announcement', 'Battle card'],
+    href: '/admin/create?mode=marketing',
+    icon: Megaphone,
+    iconColor: 'text-blue-600',
+  },
+  {
+    badge: 'Type 2 · Have existing content',
+    badgeClass: 'bg-teal-50 text-teal-800',
+    title: 'Publish an Existing AI Page',
+    desc: 'I already have AI-generated content and need to bring it into the official site, get it reviewed, and publish.',
+    tags: ['Import Google Docs', 'Paste content', 'Upload .docx / .md'],
+    href: '/admin/create?mode=import',
+    icon: Upload,
+    iconColor: 'text-teal-600',
+  },
+  {
+    badge: 'Type 3 · New here',
+    badgeClass: 'bg-amber-50 text-amber-800',
+    title: "I Don't Know Where to Start",
+    desc: "First time using this platform. I'd like a guided walkthrough to create my first page.",
+    tags: ['Step-by-step guide', 'General page'],
+    href: '/admin/create?mode=guided',
+    icon: HelpCircle,
+    iconColor: 'text-amber-600',
+  },
+]
 
 export default function AdminDashboard() {
   return (
@@ -12,48 +54,140 @@ export default function AdminDashboard() {
         </p>
       </div>
 
-      {/* Quick actions */}
-      <div className="grid grid-cols-3 gap-4 mb-10">
-        <Link
-          href="/admin/create"
-          className="group flex flex-col gap-3 p-6 bg-white border border-gray-200 rounded hover:border-gray-400 transition-colors"
-        >
-          <PlusSquare size={24} className="text-brand-red-primary" strokeWidth={1.5} />
-          <div>
-            <p className="text-body-md font-bold text-gray-900">Create Page</p>
-            <p className="text-body-sm text-gray-500 mt-0.5">
-              AI generates DSL → Preview → Publish
+      {/* Who are you? — 3 user-type entry cards */}
+      <div className="mb-10">
+        <p className="text-body-sm text-gray-500 mb-4">Choose the path that fits you best</p>
+        <div className="grid grid-cols-3 gap-4">
+          {userTypes.map(
+            ({ badge, badgeClass, title, desc, tags, href, icon: Icon, iconColor }) => (
+              <Link
+                key={href}
+                href={href}
+                className="group flex flex-col gap-3 p-6 bg-white border border-gray-200 rounded hover:border-gray-400 transition-colors"
+              >
+                <Icon size={24} className={iconColor} strokeWidth={1.5} />
+                <span
+                  className={`${badgeClass} text-xs font-medium px-2 py-0.5 rounded self-start`}
+                >
+                  {badge}
+                </span>
+                <div>
+                  <p className="text-body-md font-bold text-gray-900">{title}</p>
+                  <p className="text-body-sm text-gray-500 mt-1">{desc}</p>
+                </div>
+                <div className="flex flex-wrap gap-1.5 mt-auto">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <span className="inline-flex items-center gap-2 text-body-sm font-bold text-gray-700 group-hover:text-gray-900">
+                  Get started <ArrowRight size={14} />
+                </span>
+              </Link>
+            )
+          )}
+        </div>
+      </div>
+
+      {/* Before you publish — review workflow explanation */}
+      <div className="mb-10">
+        <h2 className="text-body-md font-bold text-gray-900 mb-4">Before You Publish</h2>
+        <div className="border border-gray-200 rounded bg-white p-6">
+          <div className="grid grid-cols-3 gap-6">
+            <div className="flex gap-3">
+              <div className="w-7 h-7 rounded-full bg-gray-100 text-gray-500 text-label font-bold flex items-center justify-center shrink-0 mt-0.5">
+                1
+              </div>
+              <div>
+                <p className="text-body-sm font-bold text-gray-900 mb-1">Run pre-publish checks</p>
+                <p className="text-body-sm text-gray-500">
+                  Auto-validates SEO fields (meta title, description) and required content in every
+                  section — slug, headlines, items.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <div className="w-7 h-7 rounded-full bg-gray-100 text-gray-500 text-label font-bold flex items-center justify-center shrink-0 mt-0.5">
+                2
+              </div>
+              <div>
+                <p className="text-body-sm font-bold text-gray-900 mb-1">Score with AI</p>
+                <p className="text-body-sm text-gray-500">
+                  Click &ldquo;Run scoring&rdquo; to get an Overall score (UX · SEO · Consistency).
+                  Aim for 80+ before publishing. Fix flagged issues in the editor.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <div className="w-7 h-7 rounded-full bg-gray-100 text-gray-500 text-label font-bold flex items-center justify-center shrink-0 mt-0.5">
+                3
+              </div>
+              <div>
+                <p className="text-body-sm font-bold text-gray-900 mb-1">
+                  Publish to staging first
+                </p>
+                <p className="text-body-sm text-gray-500">
+                  Always publish to staging before production. Share the staging URL with
+                  stakeholders for sign-off. Publishing to main requires a developer.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-2">
+            <Info size={14} className="text-gray-400 shrink-0" strokeWidth={2} />
+            <p className="text-label text-gray-500">
+              Access the review panel by opening any page in the editor and clicking{' '}
+              <strong className="text-gray-700">Publish →</strong> in the top bar. The panel opens
+              on the right side.
             </p>
           </div>
-          <ArrowRight
-            size={16}
-            className="text-gray-300 group-hover:text-gray-500 mt-auto self-end transition-colors"
-          />
-        </Link>
+        </div>
+      </div>
 
-        <Link
-          href="/admin/pages"
-          className="group flex flex-col gap-3 p-6 bg-white border border-gray-200 rounded hover:border-gray-400 transition-colors"
-        >
-          <FileText size={24} className="text-brand-violet-medium" strokeWidth={1.5} />
-          <div>
-            <p className="text-body-md font-bold text-gray-900">All Pages</p>
-            <p className="text-body-sm text-gray-500 mt-0.5">View and edit published pages</p>
-          </div>
-          <ArrowRight
-            size={16}
-            className="text-gray-300 group-hover:text-gray-500 mt-auto self-end transition-colors"
-          />
-        </Link>
+      {/* Common tools */}
+      <div className="mb-10">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-xs text-gray-400 uppercase tracking-wide font-medium">
+            Common tools
+          </span>
+          <div className="flex-1 border-t border-gray-200" />
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <Link
+            href="/admin/create"
+            className="group flex flex-col gap-3 p-6 bg-white border border-gray-200 rounded hover:border-gray-400 transition-colors"
+          >
+            <PlusSquare size={24} className="text-brand-red-primary" strokeWidth={1.5} />
+            <div>
+              <p className="text-body-md font-bold text-gray-900">Create Page</p>
+              <p className="text-body-sm text-gray-500 mt-0.5">
+                AI generates DSL → Preview → Publish
+              </p>
+            </div>
+            <span className="mt-auto inline-flex items-center gap-2 text-body-sm font-bold text-gray-700 group-hover:text-gray-900">
+              Create page <ArrowRight size={14} />
+            </span>
+          </Link>
 
-        {/* <div className="flex flex-col gap-3 p-6 bg-gray-50 border border-gray-200 rounded cursor-not-allowed">
-          <Layers size={24} className="text-gray-300" strokeWidth={1.5} />
-          <div>
-            <p className="text-body-md font-bold text-gray-300">Preview Builds</p>
-            <p className="text-body-sm text-gray-300 mt-0.5">Vercel deployment status</p>
-          </div>
-          <Lock size={14} className="text-gray-300 mt-auto self-end" strokeWidth={1.5} />
-        </div> */}
+          <Link
+            href="/admin/refine"
+            className="group flex flex-col gap-3 p-6 bg-white border border-gray-200 rounded hover:border-gray-400 transition-colors"
+          >
+            <FileText size={24} className="text-brand-violet-medium" strokeWidth={1.5} />
+            <div>
+              <p className="text-body-md font-bold text-gray-900">All Pages</p>
+              <p className="text-body-sm text-gray-500 mt-0.5">View and edit published pages</p>
+            </div>
+            <span className="mt-auto inline-flex items-center gap-2 text-body-sm font-bold text-gray-700 group-hover:text-gray-900">
+              View all pages <ArrowRight size={14} />
+            </span>
+          </Link>
+        </div>
       </div>
 
       {/* Workflow overview */}
@@ -94,26 +228,6 @@ export default function AdminDashboard() {
           ))}
         </div>
       </div>
-
-      {/* Env config status */}
-      {/* <div className="mt-6 border border-gray-200 rounded p-5 bg-white">
-        <h2 className="text-body-sm font-bold text-gray-700 mb-3">Required Environment Variables</h2>
-        <div className="grid grid-cols-2 gap-2 text-body-sm">
-          {[
-            { key: 'NVIDIA_API_KEY', desc: 'AI generation (required)' },
-            { key: 'GITHUB_TOKEN', desc: 'GitHub publish (required)' },
-            { key: 'GITHUB_OWNER', desc: 'GitHub org/user (required)' },
-            { key: 'GITHUB_REPO', desc: 'Repository name (required)' },
-            { key: 'VERCEL_TOKEN', desc: 'Deploy status (optional)' },
-            { key: 'VERCEL_PROJECT_ID', desc: 'Deploy status (optional)' },
-          ].map(({ key, desc }) => (
-            <div key={key} className="flex items-center gap-2">
-              <code className="text-gray-700 font-mono">{key}</code>
-              <span className="text-gray-400">— {desc}</span>
-            </div>
-          ))}
-        </div>
-      </div> */}
     </div>
   )
 }

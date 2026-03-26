@@ -1,4 +1,6 @@
 import type {
+  AgendaProps,
+  ComparisonTableProps,
   CtaProps,
   FeatureCardItem,
   FeatureCardProps,
@@ -25,6 +27,7 @@ import type {
   SectionPropsMap,
   SectionStyle,
   SectionType,
+  SpeakersProps,
   StatsItem,
   StatsProps,
   Testimonial,
@@ -515,6 +518,41 @@ function normalizeFormProps(value: unknown): FormProps {
   }
 }
 
+function normalizeAgendaProps(value: unknown): AgendaProps {
+  const v = (value ?? {}) as AgendaProps
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title ?? '',
+    subtitle: v.subtitle,
+    items: Array.isArray(v.items) ? v.items : [],
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeSpeakersProps(value: unknown): SpeakersProps {
+  const v = (value ?? {}) as SpeakersProps
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title ?? '',
+    items: Array.isArray(v.items) ? v.items : [],
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeComparisonTableProps(value: unknown): ComparisonTableProps {
+  const v = (value ?? {}) as ComparisonTableProps
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title ?? '',
+    subtitle: v.subtitle,
+    ourProduct: v.ourProduct ?? '',
+    competitor: v.competitor ?? '',
+    rows: Array.isArray(v.rows) ? v.rows : [],
+    cta: v.cta,
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
 function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMap[SectionType] {
   switch (type) {
     case 'hero':
@@ -541,6 +579,12 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeCtaProps(value)
     case 'form':
       return normalizeFormProps(value)
+    case 'agenda':
+      return normalizeAgendaProps(value)
+    case 'speakers':
+      return normalizeSpeakersProps(value)
+    case 'comparisonTable':
+      return normalizeComparisonTableProps(value)
   }
 }
 

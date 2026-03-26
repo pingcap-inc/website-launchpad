@@ -1,5 +1,6 @@
-import image from 'next/image'
 import type {
+  AgendaProps,
+  ComparisonTableProps,
   CtaProps,
   FeatureCardProps,
   FeatureGridProps,
@@ -14,6 +15,7 @@ import type {
   SectionPropsMap,
   SectionStyle,
   SectionType,
+  SpeakersProps,
   StatsProps,
   TestimonialsProps,
 } from './dsl-schema'
@@ -201,6 +203,23 @@ const defaultFormProps: FormProps = {
   title: '',
   portalId: '4466002',
   formId: '',
+}
+
+const defaultAgendaProps: AgendaProps = {
+  title: 'Agenda',
+  items: [{ time: '', title: '', description: '' }],
+}
+
+const defaultSpeakersProps: SpeakersProps = {
+  title: 'Speakers',
+  items: [{ name: '', title: '', company: '', bio: '' }],
+}
+
+const defaultComparisonTableProps: ComparisonTableProps = {
+  title: '',
+  ourProduct: 'TiDB',
+  competitor: '',
+  rows: [{ feature: '', ours: true, theirs: false }],
 }
 
 export const schemaMap: Record<SectionType, SectionSchema<any>> = {
@@ -669,6 +688,82 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       { type: 'text', key: 'portalId', label: 'Portal ID' },
       { type: 'text', key: 'formId', label: 'Form ID' },
       { type: 'text', key: 'region', label: 'Region' },
+    ],
+  },
+  agenda: {
+    type: 'agenda',
+    label: 'Agenda',
+    description: 'Event schedule — numbered or time-tagged session list',
+    defaultProps: defaultAgendaProps,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: [
+      { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
+      { type: 'text', key: 'title', label: 'Title' },
+      { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
+      {
+        type: 'array',
+        key: 'items',
+        label: 'Sessions',
+        itemLabel: 'Session',
+        newItem: () => ({ time: '', title: '', description: '' }),
+        fields: [
+          { type: 'text', key: 'time', label: 'Time (e.g. 09:00 – 09:30)' },
+          { type: 'text', key: 'title', label: 'Session title' },
+          { type: 'textarea', key: 'description', label: 'Description', rows: 2 },
+        ],
+      },
+    ],
+  },
+  speakers: {
+    type: 'speakers',
+    label: 'Speakers',
+    description: 'Event speaker profiles with photo and bio',
+    defaultProps: defaultSpeakersProps,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: [
+      { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
+      { type: 'text', key: 'title', label: 'Title' },
+      {
+        type: 'array',
+        key: 'items',
+        label: 'Speakers',
+        itemLabel: 'Speaker',
+        newItem: () => ({ name: '', title: '', company: '', bio: '' }),
+        fields: [
+          { type: 'text', key: 'name', label: 'Name' },
+          { type: 'text', key: 'title', label: 'Job title' },
+          { type: 'text', key: 'company', label: 'Company' },
+          { type: 'textarea', key: 'bio', label: 'Bio', rows: 3 },
+          { type: 'image', key: 'image', label: 'Photo' },
+        ],
+      },
+    ],
+  },
+  comparisonTable: {
+    type: 'comparisonTable',
+    label: 'Comparison Table',
+    description: 'Side-by-side product comparison table',
+    defaultProps: defaultComparisonTableProps,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: [
+      { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
+      { type: 'text', key: 'title', label: 'Title' },
+      { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
+      { type: 'text', key: 'ourProduct', label: 'Our Product Name' },
+      { type: 'text', key: 'competitor', label: 'Competitor Name' },
+      {
+        type: 'array',
+        key: 'rows',
+        label: 'Comparison Rows',
+        itemLabel: 'Row',
+        newItem: () => ({ feature: '', ours: true, theirs: false }),
+        fields: [
+          { type: 'text', key: 'feature', label: 'Feature' },
+          { type: 'text', key: 'ours', label: 'Ours (text or true/false)' },
+          { type: 'text', key: 'theirs', label: 'Theirs (text or true/false)' },
+        ],
+      },
+      { type: 'cta', key: 'cta', label: 'CTA' },
     ],
   },
 }

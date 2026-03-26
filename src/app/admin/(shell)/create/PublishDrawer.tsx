@@ -45,16 +45,8 @@ interface PublishDrawerProps {
 type CheckStatus = 'pass' | 'warn' | 'fail'
 type PrePublishCheck = { label: string; status: CheckStatus; detail?: string }
 
-const DEPLOY_STEPS = (
-  result: PublishResult | null,
-  addToSitemap: boolean,
-  deployStatus: DeployStatus
-) => [
+const DEPLOY_STEPS = (result: PublishResult | null, deployStatus: DeployStatus) => [
   { label: 'Pushed to GitHub', done: !!result?.success },
-  {
-    label: 'Sitemap updated',
-    done: !!result?.sitemapCommitUrl || (!!result?.success && !addToSitemap),
-  },
   { label: 'Vercel rebuilding', done: deployStatus === 'ready' || deployStatus === 'error' },
   { label: 'Live globally', done: deployStatus === 'ready' },
 ]
@@ -68,7 +60,6 @@ export function PublishDrawer({
   onClose,
 }: PublishDrawerProps) {
   const branch = 'staging'
-  const [addToSitemap, setAddToSitemap] = useState(true)
   const [publishing, setPublishing] = useState(false)
   const [result, setResult] = useState<PublishResult | null>(null)
   const [deployStatus, setDeployStatus] = useState<DeployStatus>('idle')
@@ -135,7 +126,6 @@ export function PublishDrawer({
           slug: localSlug,
           dsl,
           branch: 'staging',
-          addToSitemap,
         }),
       })
       const data = (await res.json()) as PublishResult
@@ -185,7 +175,7 @@ export function PublishDrawer({
     }
   }
 
-  const steps = DEPLOY_STEPS(result, addToSitemap, deployStatus)
+  const steps = DEPLOY_STEPS(result, deployStatus)
 
   const { seoChecks, lintChecks, hasBlockingChecks } = useMemo(() => {
     const nextSeo: PrePublishCheck[] = []
@@ -495,25 +485,6 @@ export function PublishDrawer({
               </p>
             </div>
           </div>
-
-          {/* Sitemap toggle */}
-          <label className="flex items-center gap-3 cursor-pointer">
-            <div
-              onClick={() => setAddToSitemap(!addToSitemap)}
-              className={[
-                'w-9 h-5 rounded-full transition-colors cursor-pointer shrink-0',
-                addToSitemap ? 'bg-gray-900' : 'bg-gray-200',
-              ].join(' ')}
-            >
-              <div
-                className={[
-                  'w-4 h-4 bg-white rounded-full mt-0.5 transition-transform shadow',
-                  addToSitemap ? 'translate-x-4' : 'translate-x-0.5',
-                ].join(' ')}
-              />
-            </div>
-            <span className="text-body-sm text-gray-700">Add to sitemap.ts</span>
-          </label>
 
           {/* Pre-publish checks */}
           <div className="space-y-2">

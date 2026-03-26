@@ -31,6 +31,9 @@ import {
   arrayMove,
 } from '@dnd-kit/sortable'
 import type { PageDSL, SectionNode } from '@/lib/dsl-schema'
+import type { PageTemplate } from '@/lib/admin/page-templates'
+import { TemplateSelector } from '@/components/admin/TemplateSelector'
+import { ImportInput } from '@/components/admin/ImportInput'
 import { normalizeDSL } from '@/lib/dsl-utils'
 import { SectionCard } from './SectionCard'
 import { AddSectionPanel } from './AddSectionPanel'
@@ -59,8 +62,32 @@ const PAGE_TYPES = [
   // 'Landing Page',
   // 'Glossary Page',
   'General Page',
+  'Event Page',
 ]
 const DRAFT_BRANCH = 'drafts/ai'
+const GOOGLE_DOC_REGEX = /https?:\/\/docs\.google\.com\/document\/d\/([a-zA-Z0-9-_]+)/
+
+const IMPORT_MAX_CHARS = 6000
+
+/** Sanitize imported document content to avoid JSON serialization issues and excessive length */
+function sanitizeImportedContent(text: string, maxChars = IMPORT_MAX_CHARS): string {
+  const cleaned = text
+    // Normalize line endings
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    // Remove null bytes and control characters (keep newline \n and tab \t)
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
+    // Collapse 3+ consecutive newlines to 2
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+
+  if (cleaned.length <= maxChars) return cleaned
+  return (
+    cleaned.substring(0, maxChars) +
+    '\n\n[Content truncated to first ~6000 characters for processing. Edit above to include the most relevant sections.]'
+  )
+}
+
 // ── Draft save helpers ───────────────────────────────────────────────────────
 
 function localDraftKey(slug: string) {
@@ -99,6 +126,159 @@ function normalizeSlugInput(value: string) {
     .replace(/^\/|\/$/g, '')
 }
 
+function extractGoogleDocUrl(input: string) {
+  const match = input.match(GOOGLE_DOC_REGEX)
+  return match?.[0] ?? null
+}
+
+function extractGoogleDocId(input: string) {
+  const match = input.match(GOOGLE_DOC_REGEX)
+  return match?.[1] ?? null
+}
+
+function buildTitleFromLine(line: string) {
+  const words = line.split(/\s+/).filter(Boolean)
+  return words.slice(0, 6).join(' ')
+}
+
+function splitTitleAndDescription(line: string) {
+  const normalized = line.replace(/^[-*•\\d.\\s]+/, '').trim()
+  if (!normalized) return { title: 'Highlight', description: '' }
+  if (normalized.includes(':')) {
+    const [title, ...rest] = normalized.split(':')
+    return { title: title.trim(), description: rest.join(':').trim() }
+  }
+  const words = normalized.split(/\s+/)
+  const title = words.slice(0, 6).join(' ')
+  const description = words.slice(6).join(' ')
+  return { title, description: description || normalized }
+}
+
+function parseTextToDsl(text: string, slug?: string): PageDSL {
+  const lines = text
+    .split(/\\r?\\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  const headline = lines[0] ?? 'Imported page'
+  const subheadline = lines[1] ?? 'Standardized from imported content.'
+
+  const featureHeadingIndex = lines.findIndex((line) =>
+    /^(features|benefits|highlights|use cases)$/i.test(line.replace(/:$/, ''))
+  )
+  const faqHeadingIndex = lines.findIndex((line) => /^faqs?$/i.test(line.replace(/:$/, '')))
+  const ctaHeadingIndex = lines.findIndex((line) =>
+    /^(cta|call to action|next steps)$/i.test(line.replace(/:$/, ''))
+  )
+
+  const headingIndexes = [featureHeadingIndex, faqHeadingIndex, ctaHeadingIndex]
+    .filter((index) => index >= 0)
+    .sort((a, b) => a - b)
+
+  const nextHeadingAfter = (start: number) =>
+    headingIndexes.find((index) => index > start) ?? lines.length
+
+  const featureLines =
+    featureHeadingIndex >= 0
+      ? lines.slice(featureHeadingIndex + 1, nextHeadingAfter(featureHeadingIndex))
+      : lines.slice(2, 10)
+
+  const bullets = featureLines.filter(
+    (line) => /^[-*•]\\s+/.test(line) || /^\\d+\\.\\s+/.test(line)
+  )
+  const featureSource = bullets.length >= 2 ? bullets : featureLines
+  const items = featureSource.slice(0, 6).map((line) => {
+    const { title, description } = splitTitleAndDescription(line)
+    return {
+      title: title || 'Highlight',
+      description: description || 'Details to be refined.',
+    }
+  })
+
+  const faqLines =
+    faqHeadingIndex >= 0 ? lines.slice(faqHeadingIndex + 1, nextHeadingAfter(faqHeadingIndex)) : []
+  const faqItems: { q: string; a: string }[] = []
+  for (let i = 0; i < faqLines.length; i += 1) {
+    const line = faqLines[i]
+    if (line.endsWith('?')) {
+      const answer = faqLines[i + 1] ?? ''
+      faqItems.push({ q: line, a: answer })
+    }
+  }
+
+  const ctaLines =
+    ctaHeadingIndex >= 0 ? lines.slice(ctaHeadingIndex + 1, nextHeadingAfter(ctaHeadingIndex)) : []
+  const ctaLine =
+    ctaLines[0] ||
+    lines.find((line) => /call to action|cta|get started|contact|sign up/i.test(line))
+  const ctaTitle = ctaLine ? buildTitleFromLine(ctaLine) : 'Ready to take the next step?'
+  const ctaSubtitle =
+    ctaLines[1] || (lines[lines.length - 1] && lines.length > 2 ? lines[lines.length - 1] : '')
+
+  const canonical = `/${slug || 'imported-page'}/`
+  return {
+    pageName: headline,
+    meta: {
+      title: `TiDB | ${headline}`.slice(0, 60),
+      description: subheadline.slice(0, 160),
+      canonical,
+    },
+    sections: [
+      {
+        id: 'hero-1',
+        type: 'hero',
+        props: {
+          layout: 'split',
+          headline,
+          subheadline,
+          primaryCta: { text: 'Get started', href: '#' },
+          secondaryCta: { text: 'Talk to us', href: '#' },
+        },
+      },
+      {
+        id: 'featureGrid-1',
+        type: 'featureGrid',
+        props: {
+          eyebrow: 'Highlights',
+          title: 'Key Benefits',
+          subtitle: 'Refined from your imported content.',
+          columns: 3,
+          items: items.length
+            ? items
+            : [
+                { title: 'Benefit One', description: 'Add detail here.' },
+                { title: 'Benefit Two', description: 'Add detail here.' },
+                { title: 'Benefit Three', description: 'Add detail here.' },
+              ],
+        },
+      },
+      ...(faqItems.length
+        ? [
+            {
+              id: 'faq-1',
+              type: 'faq' as const,
+              props: {
+                eyebrow: 'FAQ',
+                title: 'Frequently Asked Questions',
+                items: faqItems,
+              },
+            },
+          ]
+        : []),
+      {
+        id: 'cta-1',
+        type: 'cta',
+        props: {
+          title: ctaTitle,
+          subtitle: ctaSubtitle,
+          primaryCta: { text: 'Get started', href: '#' },
+          secondaryCta: { text: 'Contact sales', href: '#' },
+        },
+      },
+    ],
+  }
+}
+
 function makeUniqueSlug(base: string, existing: Set<string>) {
   if (!existing.has(base)) return base
   const segments = base.split('/').filter(Boolean)
@@ -124,6 +304,7 @@ interface TopBarProps {
   childSlug: string
   parentOptions: { slug: string; title: string }[]
   moveStatus: 'idle' | 'moving' | 'moved' | 'error'
+  importBadge?: string | null
   onPageNameChange: (v: string) => void
   onSlugChange: (v: string) => void
   onParentChange: (v: string) => void
@@ -141,6 +322,7 @@ function TopBar({
   childSlug,
   parentOptions,
   moveStatus,
+  importBadge,
   onPageNameChange,
   onSlugChange,
   onParentChange,
@@ -201,6 +383,11 @@ function TopBar({
 
       {/* Save status + buttons */}
       <div className="flex items-center gap-2 shrink-0">
+        {importBadge && (
+          <span className="text-label text-gray-500 border border-gray-200 bg-gray-50 px-2 py-0.5 rounded">
+            {importBadge}
+          </span>
+        )}
         {saveStatus === 'saving' && (
           <span className="text-label text-gray-400 flex items-center gap-1">
             <Loader2 size={11} className="animate-spin" /> Saving…
@@ -243,6 +430,87 @@ function TopBar({
   )
 }
 
+// ── Guided input for first-time users ────────────────────────────────────────
+
+const GUIDED_STEPS = [
+  {
+    label: 'What is this page about?',
+    placeholder: 'e.g. TiDB Cloud Startup Program landing page',
+  },
+  {
+    label: 'Who is the target audience?',
+    placeholder: 'e.g. Early-stage startup founders evaluating databases',
+  },
+  {
+    label: 'What should visitors do on this page? (main CTA)',
+    placeholder: 'e.g. Sign up for the program or contact our team',
+  },
+]
+
+function GuidedInput({
+  generating,
+  onPromptChange,
+}: {
+  generating: boolean
+  onPromptChange: (prompt: string, canGenerate: boolean) => void
+}) {
+  const [values, setValues] = useState(['', '', ''])
+
+  const updateValue = (index: number, value: string) => {
+    setValues((prev) => {
+      const next = [...prev]
+      next[index] = value
+      return next
+    })
+  }
+
+  // Report prompt state to parent whenever values change
+  useEffect(() => {
+    const filled = values[0].trim() && values[1].trim() && values[2].trim()
+    const prompt = filled
+      ? `Create a page about: ${values[0].trim()}\nTarget audience: ${values[1].trim()}\nMain call to action: ${values[2].trim()}`
+      : ''
+    onPromptChange(prompt, !!filled)
+  }, [values, onPromptChange])
+
+  return (
+    <div className="space-y-4">
+      {GUIDED_STEPS.map((step, i) => (
+        <div key={i}>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="bg-gray-100 text-gray-500 text-xs font-medium w-5 h-5 rounded-full flex items-center justify-center shrink-0">
+              {i + 1}
+            </span>
+            <label className="text-body-sm font-medium text-gray-700">{step.label}</label>
+          </div>
+          {i < 2 ? (
+            <input
+              type="text"
+              value={values[i]}
+              onChange={(e) => updateValue(i, e.target.value)}
+              placeholder={step.placeholder}
+              className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
+            />
+          ) : (
+            <textarea
+              value={values[i]}
+              onChange={(e) => updateValue(i, e.target.value)}
+              rows={3}
+              placeholder={step.placeholder}
+              className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors resize-y placeholder:text-gray-300"
+            />
+          )}
+        </div>
+      ))}
+      {generating && values[0].trim() && values[1].trim() && values[2].trim() && (
+        <p className="text-label text-gray-500 text-center animate-pulse">
+          Generating based on: {values[0].trim()} · {values[1].trim()} · {values[2].trim()}
+        </p>
+      )}
+    </div>
+  )
+}
+
 // ── Left panel: intent + section list ───────────────────────────────────────
 
 interface LeftPanelProps {
@@ -250,15 +518,26 @@ interface LeftPanelProps {
   intent: string
   generating: boolean
   generateError: string
+  importStatus: 'idle' | 'loading' | 'error'
+  importError: string
   mockMode: boolean
   localJson: string
   localJsonError: string
   dsl: PageDSL | null
   metaDescription: string
   slug: string
+  refineResult: RefineResult | null
+  mode: string
+  selectedTemplate: PageTemplate | null
+  importedContent: string | null
+  importWarning: string
   onPageTypeChange: (v: string) => void
   onIntentChange: (v: string) => void
-  onGenerate: () => void
+  onGenerate: (intentOverride?: string) => void
+  onTemplateSelect: (template: PageTemplate) => void
+  onTemplateClear: () => void
+  onContentImport: (text: string) => void
+  onContentImportClear: () => void
   onLocalJsonChange: (v: string) => void
   onLocalJsonLoad: () => void
   onMetaChange: (patch: Partial<PageDSL['meta']>) => void
@@ -269,20 +548,40 @@ interface LeftPanelProps {
   onDragEnd: (event: DragEndEvent) => void
 }
 
+type RefineResult = {
+  sourceLabel: string
+  sourceUrl?: string
+  wordCount?: number
+  score?: number
+  suggestions?: string[]
+  status?: string
+}
+
 function LeftPanel({
   pageType,
   intent,
   generating,
   generateError,
+  importStatus,
+  importError,
   mockMode,
   localJson,
   localJsonError,
   dsl,
   metaDescription,
   slug,
+  refineResult,
+  mode,
+  selectedTemplate,
+  importedContent,
+  importWarning,
   onPageTypeChange,
   onIntentChange,
   onGenerate,
+  onTemplateSelect,
+  onTemplateClear,
+  onContentImport,
+  onContentImportClear,
   onLocalJsonChange,
   onLocalJsonLoad,
   onMetaChange,
@@ -293,6 +592,14 @@ function LeftPanel({
   onDragEnd,
 }: LeftPanelProps) {
   const [showAdd, setShowAdd] = useState(false)
+  const [guidedMode, setGuidedMode] = useState(mode === 'guided')
+  const [guidedPrompt, setGuidedPrompt] = useState('')
+  const [guidedCanGenerate, setGuidedCanGenerate] = useState(false)
+
+  const handleGuidedPromptChange = useCallback((prompt: string, canGenerate: boolean) => {
+    setGuidedPrompt(prompt)
+    setGuidedCanGenerate(canGenerate)
+  }, [])
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -301,124 +608,327 @@ function LeftPanel({
 
   const sectionIds = dsl?.sections.map((section) => section.id) ?? []
 
+  // ── Resizer state & logic ──────────────────────────────────────────────────
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [topHeight, setTopHeight] = useState<number | null>(null)
+
+  function getDefaultTopH() {
+    return Math.round((containerRef.current?.getBoundingClientRect().height ?? 600) * 0.5)
+  }
+
+  function handleResizerMouseDown(e: React.MouseEvent) {
+    e.preventDefault()
+    const startY = e.clientY
+    const startH = topHeight ?? getDefaultTopH()
+
+    function onMouseMove(ev: MouseEvent) {
+      const container = containerRef.current
+      if (!container) return
+      const containerH = container.getBoundingClientRect().height
+      const newH = Math.min(Math.max(startH + (ev.clientY - startY), 120), containerH - 160)
+      setTopHeight(newH)
+    }
+
+    function onMouseUp() {
+      document.removeEventListener('mousemove', onMouseMove)
+      document.removeEventListener('mouseup', onMouseUp)
+      document.body.style.userSelect = ''
+      document.body.style.cursor = ''
+    }
+
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+    document.body.style.userSelect = 'none'
+    document.body.style.cursor = 'row-resize'
+  }
+
+  // Clamp topHeight on window resize
+  useEffect(() => {
+    function handleResize() {
+      if (!containerRef.current || topHeight === null) return
+      const containerH = containerRef.current.getBoundingClientRect().height
+      if (topHeight > containerH - 160) {
+        setTopHeight(containerH - 160)
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [topHeight])
+
+  // Whether the top panel should expand to fill (no sections list shown)
+  const isExpandedTop =
+    (mode === 'marketing' && !selectedTemplate) || (mode === 'import' && importedContent === null)
+  // Whether sections list is visible
+  const showSections =
+    (mode !== 'marketing' || selectedTemplate) && (mode !== 'import' || importedContent !== null)
+  // Whether the generate button should be shown outside the top panel
+  const showGenerateBar =
+    !(mode === 'marketing' && !selectedTemplate) && !(mode === 'import' && importedContent === null)
+
   return (
-    <div className="flex flex-col h-full overflow-hidden">
-      {/* Generate form */}
-      <div className="p-4 border-b border-gray-100 space-y-3 shrink-0">
-        <div className="grid grid-cols-2 gap-2">
-          <select
-            value={pageType}
-            onChange={(e) => onPageTypeChange(e.target.value)}
-            className="col-span-2 bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors"
-          >
-            {PAGE_TYPES.map((t) => (
-              <option key={t}>{t}</option>
-            ))}
-          </select>
-        </div>
-        <textarea
-          value={intent}
-          onChange={(e) => onIntentChange(e.target.value)}
-          rows={3}
-          placeholder="Describe the page you want to create…"
-          className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors resize-none placeholder:text-gray-300"
-        />
-        {/* Quick fill prompts */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-label text-gray-400">Try:</span>
-          {QUICK_PROMPTS.map((p) => (
-            <button
-              key={p.label}
-              type="button"
-              onClick={() => onIntentChange(p.prompt)}
-              className="text-label px-2 py-0.5 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-colors bg-white"
+    <div ref={containerRef} className="flex flex-col h-full overflow-hidden">
+      {/* Top input panel — height controlled by drag state */}
+      <div
+        className={`overflow-y-auto p-4 border-b border-gray-100 space-y-3 ${isExpandedTop ? 'flex-1' : 'shrink-0'}`}
+        style={
+          !isExpandedTop && showSections && (dsl || topHeight !== null)
+            ? { height: topHeight ?? getDefaultTopH() }
+            : undefined
+        }
+      >
+        {/* Page type selector — show in freeform mode (not guided, not marketing, not import) */}
+        {!guidedMode && mode !== 'marketing' && mode !== 'import' && (
+          <div className="grid grid-cols-2 gap-2">
+            <select
+              value={pageType}
+              onChange={(e) => onPageTypeChange(e.target.value)}
+              className="col-span-2 bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors"
             >
-              {p.label}
-            </button>
-          ))}
-        </div>
-        <button
-          onClick={onGenerate}
-          disabled={!intent.trim() || generating}
-          className="w-full bg-gray-900 text-white font-bold py-2 text-body-sm rounded hover:bg-gray-700 disabled:opacity-40 transition-colors flex items-center justify-center gap-2"
-        >
-          {generating ? (
-            <>
-              <Loader2 size={13} className="animate-spin" /> Generating…
-            </>
-          ) : (
-            <>
-              <Sparkles size={13} /> Generate Page
-            </>
+              {PAGE_TYPES.map((t) => (
+                <option key={t}>{t}</option>
+              ))}
+            </select>
+          </div>
+        )}
+        {/* Auto-derived page type badge in marketing mode */}
+        {mode === 'marketing' &&
+          selectedTemplate?.pageType &&
+          selectedTemplate.pageType !== PAGE_TYPES[0] && (
+            <span className="inline-block text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded">
+              {selectedTemplate.pageType}
+            </span>
           )}
-        </button>
-        {generateError && (
-          <div className="flex gap-2 items-start text-red-600 text-body-sm p-2.5 bg-red-50 border border-red-200 rounded">
-            <AlertCircle size={13} className="mt-0.5 shrink-0" />
-            <p>{generateError}</p>
-          </div>
-        )}
-        {mockMode && (
-          <div className="space-y-2 border border-gray-200 rounded p-2.5 bg-gray-50">
-            <p className="text-label font-bold text-gray-600">Local JSON Input</p>
-            <textarea
-              value={localJson}
-              onChange={(e) => onLocalJsonChange(e.target.value)}
-              rows={6}
-              placeholder="Paste a PageDSL JSON here..."
-              className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors resize-none placeholder:text-gray-300"
-            />
-            <button
-              type="button"
-              onClick={onLocalJsonLoad}
-              className="w-full border border-gray-300 bg-white text-gray-700 font-bold py-1.5 text-body-sm rounded hover:border-gray-400 transition-colors"
-            >
-              Load JSON
-            </button>
-            {localJsonError && <p className="text-label text-red-600">{localJsonError}</p>}
-          </div>
-        )}
-      </div>
-
-      {/* Section cards */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-2">
-        {dsl ? (
+        {mode === 'marketing' && !selectedTemplate ? (
+          <TemplateSelector onSelect={onTemplateSelect} />
+        ) : mode === 'import' && importedContent === null ? (
+          <ImportInput onImport={onContentImport} />
+        ) : guidedMode ? (
+          <GuidedInput generating={generating} onPromptChange={handleGuidedPromptChange} />
+        ) : (
           <>
-            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-              <SortableContext items={sectionIds} strategy={verticalListSortingStrategy}>
-                {dsl.sections.map((section, i) => (
-                  <SectionCard
-                    key={section.id}
-                    id={section.id}
-                    node={section}
-                    slug={slug}
-                    onChange={(updated) => onSectionChange(i, updated)}
-                    onDelete={() => onSectionDelete(i)}
-                    onRegenerate={(instruction) => onSectionRegenerate(i, instruction)}
-                  />
+            {mode === 'marketing' && selectedTemplate && (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={onTemplateClear}
+                  className="text-body-sm text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  ← Change template
+                </button>
+                <span className="text-body-sm text-gray-400">·</span>
+                <span className="text-body-sm text-gray-500">{selectedTemplate.label}</span>
+              </div>
+            )}
+            {mode === 'import' && importedContent !== null && (
+              <>
+                {importWarning && (
+                  <div className="bg-amber-50 border border-amber-200 text-amber-800 text-body-sm rounded px-3 py-2 flex gap-2">
+                    <span>⚠</span>
+                    <span>{importWarning}</span>
+                  </div>
+                )}
+                <div className="bg-teal-50 border border-teal-200 text-teal-800 text-body-sm rounded px-3 py-2">
+                  ✓ Content imported · AI will convert it to the official site structure
+                </div>
+                <button
+                  type="button"
+                  onClick={onContentImportClear}
+                  className="text-body-sm text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  ← Import different content
+                </button>
+              </>
+            )}
+            <textarea
+              value={intent}
+              onChange={(e) => onIntentChange(e.target.value)}
+              rows={6}
+              placeholder="Describe the page you want to create… or paste a Google Doc link"
+              className={`w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors resize-y min-h-[160px] placeholder:text-gray-300${mode === 'import' && importedContent !== null ? ' max-h-[180px]' : ''}`}
+            />
+            {importStatus === 'loading' && (
+              <div className="text-label text-gray-500">Importing Google Doc…</div>
+            )}
+            {importStatus === 'error' && (
+              <div className="text-label text-red-600">{importError}</div>
+            )}
+            {/* Quick fill prompts — show when textarea is empty and no template/import content */}
+            {!intent.trim() && !selectedTemplate && importedContent === null && (
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="text-label text-gray-400">Try:</span>
+                {QUICK_PROMPTS.map((p) => (
+                  <button
+                    key={p.label}
+                    type="button"
+                    onClick={() => onIntentChange(p.prompt)}
+                    className="text-label px-2 py-0.5 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-colors bg-white"
+                  >
+                    {p.label}
+                  </button>
                 ))}
-              </SortableContext>
-            </DndContext>
-
-            {/* Add section */}
-            {showAdd ? (
-              <AddSectionPanel onAdd={onSectionAdd} onClose={() => setShowAdd(false)} />
-            ) : (
-              <button
-                onClick={() => setShowAdd(true)}
-                className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded py-2.5 text-body-sm text-gray-400 hover:text-gray-700 hover:border-gray-400 transition-colors"
-              >
-                <Plus size={14} /> Add Section
-              </button>
+              </div>
+            )}
+            {mode !== 'marketing' && mode !== 'import' && (
+              <div className="flex items-center justify-between gap-2 rounded border border-gray-200 bg-gray-50 px-3 py-2">
+                <div>
+                  <p className="text-label font-bold text-gray-700">New here?</p>
+                  <p className="text-label text-gray-500">Try the step-by-step guided mode.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setGuidedMode(true)}
+                  className="text-label font-bold text-gray-700 hover:text-gray-900"
+                >
+                  Open →
+                </button>
+              </div>
             )}
           </>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-32 text-gray-300 text-body-sm text-center gap-2">
-            <Sparkles size={20} />
-            <p>Describe your page above and click Generate</p>
-          </div>
+        )}
+        {showGenerateBar && (
+          <>
+            {refineResult && (
+              <div className="rounded border border-gray-200 bg-white px-3 py-2.5 space-y-2">
+                <p className="text-label font-bold text-gray-700">Refine context loaded</p>
+                <div className="text-label text-gray-500 space-y-1">
+                  <p>Source: {refineResult.sourceLabel}</p>
+                  {refineResult.sourceUrl && <p>URL: {refineResult.sourceUrl}</p>}
+                  {typeof refineResult.wordCount === 'number' && (
+                    <p>Word count: {refineResult.wordCount}</p>
+                  )}
+                  {typeof refineResult.score === 'number' && <p>Score: {refineResult.score}</p>}
+                  {refineResult.status && <p>Status: {refineResult.status}</p>}
+                </div>
+                {refineResult.suggestions && refineResult.suggestions.length > 0 && (
+                  <div className="text-label text-gray-500 space-y-1">
+                    <p className="font-bold text-gray-600">Top suggestions</p>
+                    {refineResult.suggestions.map((item) => (
+                      <p key={item}>• {item}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+            {generateError && (
+              <div className="flex gap-2 items-start text-red-600 text-body-sm p-2.5 bg-red-50 border border-red-200 rounded">
+                <AlertCircle size={13} className="mt-0.5 shrink-0" />
+                <p>{generateError}</p>
+              </div>
+            )}
+            {mockMode && (
+              <div className="space-y-2 border border-gray-200 rounded p-2.5 bg-gray-50">
+                <p className="text-label font-bold text-gray-600">Local JSON Input</p>
+                <textarea
+                  value={localJson}
+                  onChange={(e) => onLocalJsonChange(e.target.value)}
+                  rows={6}
+                  placeholder="Paste a PageDSL JSON here..."
+                  className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors resize-none placeholder:text-gray-300"
+                />
+                <button
+                  type="button"
+                  onClick={onLocalJsonLoad}
+                  className="w-full border border-gray-300 bg-white text-gray-700 font-bold py-1.5 text-body-sm rounded hover:border-gray-400 transition-colors"
+                >
+                  Load JSON
+                </button>
+                {localJsonError && <p className="text-label text-red-600">{localJsonError}</p>}
+              </div>
+            )}
+          </>
         )}
       </div>
+
+      {/* Drag handle — only when sections list is visible */}
+      {showSections && (
+        <div
+          onMouseDown={handleResizerMouseDown}
+          className="shrink-0 h-3 bg-gray-100 hover:bg-blue-50 cursor-row-resize flex items-center justify-center transition-colors group border-y border-gray-200"
+          title="Drag to resize"
+        >
+          <div className="flex gap-1">
+            <span className="w-5 h-0.5 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors" />
+            <span className="w-5 h-0.5 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors" />
+            <span className="w-5 h-0.5 rounded-full bg-gray-300 group-hover:bg-blue-400 transition-colors" />
+          </div>
+        </div>
+      )}
+
+      {/* Generate button — always visible, never resized */}
+      {showGenerateBar && (
+        <div className="shrink-0 px-4 py-3 border-b border-gray-100 space-y-2">
+          <button
+            onClick={() => (guidedMode ? onGenerate(guidedPrompt) : onGenerate())}
+            disabled={guidedMode ? !guidedCanGenerate || generating : !intent.trim() || generating}
+            className="w-full bg-gray-900 text-white font-bold py-2 text-body-sm rounded hover:bg-gray-700 disabled:opacity-40 transition-colors flex items-center justify-center gap-2"
+          >
+            {generating ? (
+              <>
+                <Loader2 size={13} className="animate-spin" /> Generating…
+              </>
+            ) : (
+              <>
+                <Sparkles size={13} /> Generate Page
+              </>
+            )}
+          </button>
+          {guidedMode && (
+            <button
+              type="button"
+              onClick={() => setGuidedMode(false)}
+              className="w-full text-center text-label text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              or, describe freely →
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Section cards */}
+      {showSections && (
+        <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          {dsl ? (
+            <>
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={onDragEnd}
+              >
+                <SortableContext items={sectionIds} strategy={verticalListSortingStrategy}>
+                  {dsl.sections.map((section, i) => (
+                    <SectionCard
+                      key={section.id}
+                      id={section.id}
+                      node={section}
+                      slug={slug}
+                      onChange={(updated) => onSectionChange(i, updated)}
+                      onDelete={() => onSectionDelete(i)}
+                      onRegenerate={(instruction) => onSectionRegenerate(i, instruction)}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
+
+              {/* Add section */}
+              {showAdd ? (
+                <AddSectionPanel onAdd={onSectionAdd} onClose={() => setShowAdd(false)} />
+              ) : (
+                <button
+                  onClick={() => setShowAdd(true)}
+                  className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded py-2.5 text-body-sm text-gray-400 hover:text-gray-700 hover:border-gray-400 transition-colors"
+                >
+                  <Plus size={14} /> Add Section
+                </button>
+              )}
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-32 text-gray-300 text-body-sm text-center gap-2">
+              <Sparkles size={20} />
+              <p>Describe your page above and click Generate</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -428,7 +938,8 @@ function LeftPanel({
 function CreatePageInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const editMode = searchParams.get('mode') === 'edit'
+  const mode = searchParams.get('mode') ?? ''
+  const editMode = mode === 'edit'
   const mockMode = process.env.NEXT_PUBLIC_USE_MOCK_DSL === '1'
   const [pageType, setPageType] = useState(PAGE_TYPES[0])
   const [intent, setIntent] = useState('')
@@ -455,6 +966,29 @@ function CreatePageInner() {
     null
   )
   const [isDirty, setIsDirty] = useState(false)
+  const [refineResult, setRefineResult] = useState<RefineResult | null>(null)
+  const [selectedTemplate, setSelectedTemplate] = useState<PageTemplate | null>(null)
+  const [importedContent, setImportedContent] = useState<string | null>(null)
+  const [importWarning, setImportWarning] = useState('')
+  const [importStatus, setImportStatus] = useState<'idle' | 'loading' | 'error'>('idle')
+  const [importError, setImportError] = useState('')
+  const lastImportedDocIdRef = useRef<string | null>(null)
+
+  const importBadge =
+    importStatus === 'loading'
+      ? 'Importing Google Doc…'
+      : refineResult?.sourceLabel?.includes('Google Doc')
+        ? 'Imported from Google Docs'
+        : null
+
+  const importSummary =
+    refineResult?.sourceLabel?.includes('Google Doc') && dsl
+      ? {
+          sections: dsl.sections.map((section) => section.type),
+          wordCount: refineResult.wordCount,
+          sourceUrl: refineResult.sourceUrl,
+        }
+      : null
   const [pendingNavigation, setPendingNavigation] = useState<
     null | { type: 'href'; href: string } | { type: 'back' }
   >(null)
@@ -466,6 +1000,7 @@ function CreatePageInner() {
   const initialSlugRef = useRef<string | null>(null)
   const autoLoadedDraftRef = useRef(false)
   const initializedFromQueryRef = useRef(false)
+  const intentInitializedRef = useRef(false)
   const lastSavedRef = useRef<string>('')
   const allowPopRef = useRef(false)
   const lastQuerySlugRef = useRef<string | null>(null)
@@ -661,6 +1196,147 @@ function CreatePageInner() {
     initializedFromQueryRef.current = true
   }, [searchParams, slug, resetEditorState])
 
+  // Initialize intent from query param (e.g. /admin/create?intent=...)
+  useEffect(() => {
+    const queryIntent = searchParams.get('intent')
+    if (!queryIntent) return
+    if (intentInitializedRef.current || intent.trim()) return
+    setIntent(queryIntent)
+    intentInitializedRef.current = true
+  }, [searchParams, intent])
+
+  // Reset mode-specific state when the mode query param changes
+  // (e.g. navigating from ?mode=marketing back to /admin/create via sidebar)
+  const prevModeRef = useRef(mode)
+  useEffect(() => {
+    if (prevModeRef.current === mode) return
+    prevModeRef.current = mode
+    setIntent('')
+    setSelectedTemplate(null)
+    setImportedContent(null)
+    setImportWarning('')
+    setRefineResult(null)
+    setPageType(PAGE_TYPES[0])
+    setGenerateError('')
+    intentInitializedRef.current = false
+  }, [mode])
+
+  // Auto-open publish panel when arriving via ?action=review
+  useEffect(() => {
+    const action = searchParams.get('action')
+    if (action === 'review' && dsl) {
+      setShowPublish(true)
+    }
+  }, [searchParams, dsl])
+
+  // Auto-import Google Docs content when a link is pasted into intent.
+  useEffect(() => {
+    const trimmed = intent.trim()
+    if (!trimmed) return
+    const url = extractGoogleDocUrl(trimmed)
+    if (!url || trimmed !== url) return
+    const docId = extractGoogleDocId(url)
+    if (!docId || lastImportedDocIdRef.current === docId) return
+
+    let cancelled = false
+    const run = async () => {
+      setImportStatus('loading')
+      setImportError('')
+      try {
+        const res = await fetch('/api/refine/google-doc', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url }),
+        })
+        const data = (await res.json()) as { content?: string; error?: string }
+        if (!res.ok || !data.content) throw new Error(data.error ?? 'Import failed')
+        if (cancelled) return
+        const parsedDsl = normalizeDSL(parseTextToDsl(data.content, slug || 'imported-page'))
+        setDsl(parsedDsl)
+        setLocalJson(JSON.stringify(parsedDsl, null, 2))
+        setLocalJsonError('')
+        setBaselineState(parsedDsl, slug)
+        lastImportedDocIdRef.current = docId
+        setImportStatus('idle')
+      } catch (err) {
+        if (cancelled) return
+        setImportStatus('error')
+        setImportError(err instanceof Error ? err.message : 'Import failed')
+      }
+    }
+
+    run()
+    return () => {
+      cancelled = true
+    }
+  }, [intent, slug])
+
+  // Initialize intent from refine payload (e.g. /admin/create?refine=1)
+  useEffect(() => {
+    const refineMode = searchParams.get('refine') === '1'
+    if (!refineMode) return
+    if (intentInitializedRef.current || intent.trim()) return
+    try {
+      const raw = localStorage.getItem('admin-refine-payload')
+      if (!raw) return
+      const payload = JSON.parse(raw) as
+        | { type: 'paste'; content: string }
+        | { type: 'gdoc'; url: string; notes?: string }
+        | { type: 'score'; profile: string; target: string }
+
+      if (payload.type === 'paste') {
+        const trimmed = payload.content.trim()
+        const capped = trimmed.length > 4000 ? `${trimmed.slice(0, 4000)}...` : trimmed
+        setIntent(
+          [
+            'Refine the following page content.',
+            'Improve structure, SEO, and UX. Keep meaning and tone.',
+            'Content:',
+            capped,
+          ].join('\n')
+        )
+      }
+      if (payload.type === 'gdoc') {
+        setIntent(
+          [
+            'Refine the page content from this Google Doc.',
+            'Improve structure, SEO, and UX, and normalize formatting.',
+            `Google Doc: ${payload.url}`,
+            payload.notes ? `Notes: ${payload.notes}` : '',
+          ]
+            .filter(Boolean)
+            .join('\n')
+        )
+      }
+      if (payload.type === 'score') {
+        setIntent(
+          [
+            'Refine an existing page using the scoring system below.',
+            `Scoring profile: ${payload.profile}`,
+            `Target: ${payload.target}`,
+          ].join('\n')
+        )
+      }
+
+      localStorage.removeItem('admin-refine-payload')
+      intentInitializedRef.current = true
+    } catch {
+      // ignore payload errors
+    }
+  }, [searchParams, intent])
+
+  useEffect(() => {
+    const refineMode = searchParams.get('refine') === '1'
+    if (!refineMode) return
+    try {
+      const raw = localStorage.getItem('admin-refine-result')
+      if (!raw) return
+      setRefineResult(JSON.parse(raw) as RefineResult)
+    } catch {
+      // ignore
+    }
+  }, [searchParams])
+
   // Check draft availability when slug changes
   useEffect(() => {
     if (!slug || !isValidSlugPath(slug)) {
@@ -695,16 +1371,33 @@ function CreatePageInner() {
     }
   }, [slug])
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (intentOverride?: string) => {
+    const effectiveIntent = typeof intentOverride === 'string' ? intentOverride : intent
+    if (typeof intentOverride === 'string') setIntent(intentOverride)
     setGenerating(true)
     setGenerateError('')
+
+    // Sanitize imported content to avoid JSON parse errors from special chars / excessive length
+    const isImport = mode === 'import' && importedContent !== null
+    const sanitizedIntent = isImport ? sanitizeImportedContent(effectiveIntent) : effectiveIntent
+
+    // In import mode, let the AI auto-detect page type from content
+    const effectivePageType = isImport ? 'auto' : pageType
+
     try {
       const res = await fetch('/api/ai/generate-dsl', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ intent, pageType }),
+        body: JSON.stringify({ intent: sanitizedIntent, pageType: effectivePageType }),
       })
-      const data = (await res.json()) as PageDSL & { error?: string }
+      let data: PageDSL & { error?: string }
+      try {
+        data = (await res.json()) as PageDSL & { error?: string }
+      } catch {
+        throw new Error(
+          'Failed to parse AI response. If you imported a long document, try trimming it to the most relevant sections and generating again.'
+        )
+      }
       if (!res.ok || data.error) throw new Error(data.error ?? 'Generation failed')
       const normalized = normalizeDSL(data)
       setDsl(normalized)
@@ -990,6 +1683,7 @@ function CreatePageInner() {
         childSlug={getLeafSlug(slug)}
         parentOptions={parentOptions}
         moveStatus={moveStatus}
+        importBadge={importBadge}
         onPageNameChange={handlePageNameChange}
         onSlugChange={setSlug}
         onParentChange={handleParentChange}
@@ -1012,15 +1706,49 @@ function CreatePageInner() {
             intent={intent}
             generating={generating}
             generateError={generateError}
+            importStatus={importStatus}
+            importError={importError}
             mockMode={mockMode}
             localJson={localJson}
             localJsonError={localJsonError}
             dsl={dsl}
             metaDescription={dsl?.meta?.description ?? ''}
             slug={slug}
+            refineResult={refineResult}
+            mode={mode}
+            selectedTemplate={selectedTemplate}
+            importedContent={importedContent}
+            importWarning={importWarning}
             onPageTypeChange={setPageType}
             onIntentChange={setIntent}
             onGenerate={handleGenerate}
+            onTemplateSelect={(template) => {
+              setSelectedTemplate(template)
+              setIntent(template.prompt)
+              if (template.pageType) setPageType(template.pageType)
+            }}
+            onTemplateClear={() => {
+              setSelectedTemplate(null)
+              setIntent('')
+              setPageType(PAGE_TYPES[0])
+            }}
+            onContentImport={(text) => {
+              setImportedContent(text)
+              setIntent(text)
+              if (text.length > IMPORT_MAX_CHARS) {
+                const wordCount = text.trim().split(/\s+/).length
+                setImportWarning(
+                  `Document is long (${wordCount.toLocaleString()} words). Only the first ~1,000 words will be sent to AI for page structure analysis. You can edit the content below before generating.`
+                )
+              } else {
+                setImportWarning('')
+              }
+            }}
+            onContentImportClear={() => {
+              setImportedContent(null)
+              setIntent('')
+              setImportWarning('')
+            }}
             onLocalJsonChange={setLocalJson}
             onLocalJsonLoad={handleLocalJsonLoad}
             onMetaChange={handleMetaChange}
@@ -1064,6 +1792,17 @@ function CreatePageInner() {
               {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
             </button>
           </div>
+
+          {importSummary && (
+            <div className="px-4 py-2.5 border-b border-gray-200 bg-white text-label text-gray-500">
+              <span className="font-bold text-gray-700">Import summary:</span>{' '}
+              {importSummary.sections.length} sections · {importSummary.sections.join(' · ')}
+              {typeof importSummary.wordCount === 'number'
+                ? ` · ${importSummary.wordCount} words`
+                : ''}
+              {importSummary.sourceUrl ? ` · ${importSummary.sourceUrl}` : ''}
+            </div>
+          )}
 
           {/* Preview content */}
           {dsl ? (
