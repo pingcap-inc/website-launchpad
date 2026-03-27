@@ -1,0 +1,333 @@
+{
+  "pageName": "TiDB vs Yugabyte: Distributed SQL Comparison",
+  "meta": {
+    "title": "TiDB vs Yugabyte: Distributed SQL Comparison",
+    "description": "Compare TiDB and Yugabyte. Learn how TiDB delivers scale-out transactions, mixed workloads, and simplified operations for distributed SQL applications.",
+    "canonical": "/tidb-vs-yugabyte/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Battle Card",
+        "headline": "TiDB vs Yugabyte",
+        "subheadline": "A distributed SQL alternative to Yugabyte that delivers scale-out transactions, mixed transactional and analytical workloads in one system, and simplified operations—without added architectural complexity.",
+        "primaryCta": {
+          "text": "Try TiDB Cloud",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Talk to an Expert",
+          "href": "https://pingcap.com/contact-us/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "comparison-table",
+      "type": "comparisonTable",
+      "props": {
+        "eyebrow": "Feature Comparison",
+        "title": "How TiDB Compares to Yugabyte",
+        "subtitle": "A side-by-side comparison across the architectural and operational dimensions that matter most as applications scale globally.",
+        "ourProduct": "TiDB",
+        "competitor": "Yugabyte",
+        "rows": [
+          {
+            "feature": "Architecture Model",
+            "ours": "Distributed SQL with decoupled compute and storage; automatic data distribution and rebalancing",
+            "theirs": "Distributed PostgreSQL-compatible database built on sharded storage layer (DocDB)"
+          },
+          {
+            "feature": "SQL Compatibility",
+            "ours": "MySQL-compatible",
+            "theirs": "PostgreSQL-compatible"
+          },
+          {
+            "feature": "Read & Write Scalability",
+            "ours": "Horizontal scale-out for reads and writes with automatic placement and balancing",
+            "theirs": "Distributed reads and writes across shards; may require tuning for optimal scaling"
+          },
+          {
+            "feature": "Mixed Workloads (OLTP + OLAP)",
+            "ours": "Designed to support transactional and real-time analytical queries on the same dataset",
+            "theirs": "Primarily optimized for distributed OLTP; analytics commonly handled in external systems"
+          },
+          {
+            "feature": "Data Distribution",
+            "ours": "Fully automated partitioning and rebalancing handled by the system",
+            "theirs": "Sharded architecture; operators may manage tablet placement and balancing"
+          },
+          {
+            "feature": "Multi-Region Deployment",
+            "ours": "Supports geo-distributed clusters with strong consistency",
+            "theirs": "Designed for geo-distributed deployments with configurable placement policies"
+          },
+          {
+            "feature": "Operational Complexity",
+            "ours": "Automated failover, scaling, and balancing with minimal application changes",
+            "theirs": "Often deployed on Kubernetes; operational model may require deeper infrastructure expertise"
+          },
+          {
+            "feature": "Multi-Tenancy at Scale",
+            "ours": "Proven large-scale SaaS multi-tenant patterns with high schema/table counts",
+            "theirs": "Multi-tenancy supported; often focused on enterprise or geo-distributed use cases"
+          },
+          {
+            "feature": "System Consolidation",
+            "ours": "Reduces need for separate transactional and analytical systems",
+            "theirs": "Typically paired with analytics or warehouse systems for reporting workloads"
+          },
+          {
+            "feature": "Cloud Deployment Options",
+            "ours": "Multi-cloud, hybrid, self-managed, and managed offerings",
+            "theirs": "Managed and self-managed options; frequently Kubernetes-centric"
+          }
+        ],
+        "cta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "differentiators",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "Why Choose TiDB",
+        "title": "Architectural Differences That Matter",
+        "subtitle": "How TiDB's distributed SQL design compares to Yugabyte's PostgreSQL-compatible architecture—and what that means as requirements evolve.",
+        "items": [
+          {
+            "variant": "blue",
+            "title": "Mixed Transactional and Analytical Workloads",
+            "description": "TiDB supports transactional and real-time analytical queries within the same distributed system, enabling fresh insights without separate pipelines. Yugabyte primarily focuses on distributed OLTP and is often paired with external analytics platforms.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://docs.pingcap.com/"
+            },
+            "icon": "Layers"
+          },
+          {
+            "variant": "violet",
+            "title": "Operational Simplicity",
+            "description": "TiDB automates data placement, rebalancing, and failover with minimal tuning. Yugabyte deployments—especially on Kubernetes—may require more hands-on infrastructure management.",
+            "cta": {
+              "text": "Read Case Study",
+              "href": "https://pingcap.com/case-studies/"
+            },
+            "icon": "Gauge"
+          },
+          {
+            "variant": "teal",
+            "title": "Automatic Data Distribution",
+            "description": "TiDB handles partitioning and rebalancing automatically as the cluster scales. Yugabyte uses a sharded architecture that may require tablet and placement awareness as scale grows.",
+            "cta": {
+              "text": "Explore Architecture",
+              "href": "https://docs.pingcap.com/tidb/stable/architecture"
+            },
+            "icon": "Database"
+          },
+          {
+            "variant": "red",
+            "title": "SaaS-Scale Multi-Tenancy",
+            "description": "TiDB is proven in multi-tenant SaaS environments with large schema and table counts. Yugabyte is often selected for geo-distributed enterprise workloads rather than extreme SaaS tenancy density.",
+            "cta": {
+              "text": "Discover SaaS Use Cases",
+              "href": "https://pingcap.com/saas/"
+            },
+            "icon": "Users"
+          },
+          {
+            "variant": "blue",
+            "title": "Broader Workload Consolidation",
+            "description": "TiDB reduces system sprawl by consolidating more workloads in one database. Yugabyte commonly integrates with separate systems for analytical needs.",
+            "cta": {
+              "text": "See Integration Options",
+              "href": "https://docs.pingcap.com/"
+            },
+            "icon": "Package"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "when-to-choose",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Selection Guide",
+        "title": "When to Choose TiDB vs Yugabyte",
+        "subtitle": "The right choice depends on whether you're optimizing for PostgreSQL compatibility or for broader workload consolidation and operational simplicity.",
+        "items": [
+          {
+            "icon": "CheckCircle",
+            "title": "Choose TiDB if you need:",
+            "description": "Horizontal scale-out transactions with simplified operations • Mixed transactional and analytical workloads in one system • Large-scale SaaS multi-tenancy support • Reduced architectural sprawl over time • Flexible deployment across cloud, hybrid, or self-managed models",
+            "borderColor": "brand-violet"
+          },
+          {
+            "icon": "GitBranch",
+            "title": "Yugabyte may be a fit if:",
+            "description": "PostgreSQL compatibility is a strict requirement • You are building globally distributed OLTP workloads • Your team is comfortable managing Kubernetes-based database infrastructure • Analytical workloads will live in separate systems",
+            "borderColor": "brand-teal"
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "customers",
+      "type": "logoCloud",
+      "props": {
+        "eyebrow": "Trusted by Leading Organizations",
+        "title": "Deployed Across Industries",
+        "subtitle": "Global companies rely on TiDB to power mission-critical applications at scale.",
+        "logos": [
+          {
+            "name": "Customer 1",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            },
+            "href": "https://pingcap.com/case-studies/"
+          },
+          {
+            "name": "Customer 2",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            },
+            "href": "https://pingcap.com/case-studies/"
+          },
+          {
+            "name": "Customer 3",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            },
+            "href": "https://pingcap.com/case-studies/"
+          },
+          {
+            "name": "Customer 4",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            },
+            "href": "https://pingcap.com/case-studies/"
+          },
+          {
+            "name": "Customer 5",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            },
+            "href": "https://pingcap.com/case-studies/"
+          }
+        ],
+        "variant": "minimal",
+        "align": "center"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "resources",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Learn More",
+        "title": "Explore TiDB Resources",
+        "subtitle": "Deepen your understanding of TiDB architecture, deployment, and best practices.",
+        "items": [
+          {
+            "icon": "FileCode",
+            "title": "TiDB Architecture Overview",
+            "description": "Understand how TiDB's distributed SQL engine delivers scalability and consistency.",
+            "cta": {
+              "text": "Read Documentation",
+              "href": "https://docs.pingcap.com/tidb/stable/architecture"
+            }
+          },
+          {
+            "icon": "Users",
+            "title": "Scaling Multi-Tenant SaaS on TiDB",
+            "description": "Learn proven patterns for deploying TiDB in high-scale SaaS environments.",
+            "cta": {
+              "text": "View Guide",
+              "href": "https://pingcap.com/saas/"
+            }
+          },
+          {
+            "icon": "Layers",
+            "title": "Running Mixed Workloads on TiDB",
+            "description": "Consolidate transactional and analytical queries in a single database.",
+            "cta": {
+              "text": "Explore Workflows",
+              "href": "https://docs.pingcap.com/"
+            }
+          },
+          {
+            "icon": "GitMerge",
+            "title": "Migration Guide",
+            "description": "Step-by-step instructions for migrating from MySQL or other databases to TiDB.",
+            "cta": {
+              "text": "Start Migration",
+              "href": "https://docs.pingcap.com/"
+            }
+          }
+        ],
+        "columns": 2,
+        "itemLayout": "vertical"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Experience the Difference?",
+        "subtitle": "Start a free trial of TiDB Cloud today and see how it simplifies distributed SQL at scale.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Schedule a Demo",
+          "href": "https://pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
