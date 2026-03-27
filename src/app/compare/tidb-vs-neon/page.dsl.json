@@ -1,0 +1,175 @@
+{
+  "pageName": "TiDB Cloud vs Neon: HTAP Database Comparison",
+  "meta": {
+    "title": "TiDB Cloud vs Neon: HTAP Database Comparison",
+    "description": "Compare TiDB Cloud and Neon. Discover why TiDB offers superior scalability, real-time analytics, and MySQL compatibility for enterprise workloads.",
+    "canonical": "/compare/tidb-vs-neon/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Battle Card",
+        "headline": "TiDB Cloud vs Neon: The HTAP Database Choice",
+        "subheadline": "Compare scalability, cost, and real-time analytics capabilities. Discover why enterprises choose TiDB Cloud for high-performance, horizontally scalable databases.",
+        "primaryCta": {
+          "text": "See a Live Demo",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "feature-highlights",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "Why Choose TiDB Cloud",
+        "title": "Top 3 Reasons to Choose TiDB Over Neon",
+        "subtitle": "Enterprise-grade performance, real-time analytics, and MySQL compatibility built-in.",
+        "items": [
+          {
+            "variant": "red",
+            "title": "Unlimited Horizontal Scalability",
+            "description": "Scale to petabytes of data across distributed clusters with TiDB's proven Raft consensus. Neon is limited to single-node architecture and vertical scaling constraints.",
+            "cta": {
+              "text": "Learn About Scalability",
+              "href": "https://docs.pingcap.com/tidb/stable/scalability-overview"
+            },
+            "icon": "TrendingUp"
+          },
+          {
+            "variant": "violet",
+            "title": "Native HTAP for Real-Time Analytics",
+            "description": "Run OLTP and OLAP workloads simultaneously on the same data with TiDB's unified architecture. Neon requires separate systems and complex ETL pipelines.",
+            "cta": {
+              "text": "Explore HTAP Capabilities",
+              "href": "https://docs.pingcap.com/tidb/stable/hybrid-transactional-analytical-processing"
+            },
+            "icon": "Zap"
+          },
+          {
+            "variant": "blue",
+            "title": "Full MySQL Compatibility",
+            "description": "Drop-in replacement for MySQL with 99.9% query compatibility. Migrate workloads instantly without code rewrites. Neon requires custom adaptations.",
+            "cta": {
+              "text": "See MySQL Compatibility Guide",
+              "href": "https://docs.pingcap.com/tidb/stable/mysql-compatibility"
+            },
+            "icon": "Database"
+          }
+        ],
+        "columns": 3,
+        "className": ""
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "comparison-table",
+      "type": "comparisonTable",
+      "props": {
+        "eyebrow": "Detailed Comparison",
+        "title": "TiDB Cloud vs Neon: Feature Matrix",
+        "subtitle": "See how TiDB Cloud and Neon stack up on key enterprise database capabilities.",
+        "ourProduct": "TiDB Cloud",
+        "competitor": "Neon",
+        "rows": [
+          {
+            "feature": "Horizontal Scalability",
+            "ours": "Unlimited — scales to petabytes across distributed clusters",
+            "theirs": "Limited — single-node architecture with vertical scaling only"
+          },
+          {
+            "feature": "MySQL Compatibility",
+            "ours": "99.9% compatible — drop-in replacement for MySQL",
+            "theirs": "PostgreSQL-based — requires application refactoring"
+          },
+          {
+            "feature": "HTAP Capabilities",
+            "ours": "Native — unified OLTP + OLAP on same data in real-time",
+            "theirs": "Not supported — requires separate analytics systems"
+          },
+          {
+            "feature": "Operational Complexity",
+            "ours": "Fully managed — automatic failover, scaling, backups",
+            "theirs": "Requires manual tuning and infrastructure management"
+          },
+          {
+            "feature": "Cost Model",
+            "ours": "Pay-as-you-go with volume discounts; predictable scaling",
+            "theirs": "Compute + storage charges; costs escalate with scale"
+          },
+          {
+            "feature": "Enterprise Support",
+            "ours": "24/7 dedicated support with SLA guarantees",
+            "theirs": "Community-driven support; limited enterprise options"
+          },
+          {
+            "feature": "High Availability",
+            "ours": "Multi-region with automatic failover and zero data loss",
+            "theirs": "Single-region deployments; manual replication setup"
+          },
+          {
+            "feature": "Data Consistency",
+            "ours": "Strong ACID with Raft consensus and transaction support",
+            "theirs": "Eventual consistency with potential data anomalies"
+          }
+        ],
+        "cta": {
+          "text": "Schedule a Comparison Demo",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "className": ""
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Experience TiDB Cloud?",
+        "subtitle": "Join thousands of enterprises using TiDB Cloud for scalable, real-time analytics. No credit card required.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Your Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Request a Demo",
+          "href": "https://www.pingcap.com/contact-us/"
+        },
+        "className": ""
+      },
+      "style": {
+        "background": "brand-teal",
+        "spacing": "section"
+      }
+    }
+  ]
+}
