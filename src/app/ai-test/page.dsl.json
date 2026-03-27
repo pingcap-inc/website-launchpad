@@ -11,7 +11,7 @@
       "type": "hero",
       "props": {
         "layout": "centered",
-        "eyebrow": "AI Solutions Hub",
+        "eyebrow": "",
         "headline": "The Database for <span class=\"text-gradient-violet\">Production AI</span>",
         "subheadline": "From grounded retrieval to stateful agents, TiDB unifies the foundation for production AI applications with live data, consistent state, and real-time scale",
         "primaryCta": {
@@ -29,6 +29,16 @@
           "alt": "hero image",
           "width": 500,
           "height": 400
+        },
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/8721dd45-tidb_hero_background.svg",
+            "width": 198,
+            "height": 150
+          },
+          "alt": "",
+          "width": 198,
+          "height": 150
         }
       },
       "style": {
@@ -50,7 +60,7 @@
             "description": "Enable semantic search and RAG experiences that reflect the latest state of your data—without stale indexes or delayed pipelines.",
             "cta": {
               "text": "Learn More",
-              "href": "/ai-solutions/vector-search/"
+              "href": "https://www.pingcap.com/article/enhancing-rag-with-tidb-for-superior-data-retrieval/"
             },
             "icon": "Search"
           },
@@ -60,17 +70,17 @@
             "description": "Persist conversations, tool interactions, and workflow progress with consistency designed for long-running and concurrent AI behavior.",
             "cta": {
               "text": "Learn More",
-              "href": "/ai-solutions/agentic-ai/"
+              "href": "https://www.pingcap.com/compare/best-database-for-ai-agents/"
             },
             "icon": "Database"
           },
           {
             "variant": "teal",
-            "title": "Intelligence Across Operational and Analytical Data",
-            "description": "Allow AI to reason across transactions and analytics together, eliminating complex synchronization between systems.",
+            "title": "One Backend. Every AI Workload",
+            "description": "No sync issues. No operational drag. Just a unified OLTP + OLAP + Vector engine that keeps up with your AI in real time.",
             "cta": {
-              "text": "Learn More",
-              "href": "/use-cases/"
+              "text": "Learn How Dify Solved This",
+              "href": "https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/"
             },
             "icon": "Brain"
           },
@@ -80,7 +90,7 @@
             "description": "Support growth across users, agents, sessions, and environments with built-in concurrency, isolation, and horizontal expansion.",
             "cta": {
               "text": "Learn More",
-              "href": "/tidb/scalability/"
+              "href": "https://docs.pingcap.com/tidb/stable/tidb-architecture/"
             },
             "icon": "Layers"
           }
@@ -124,61 +134,40 @@
       "id": "trusted-scale",
       "type": "testimonials",
       "props": {
-        "title": "Trusted for AI at Scale",
+        "title": "Proven in Real-World AI Deployments",
         "items": [
           {
             "quote": "TiDB lets us run AI features on live data without rebuilding our stack.",
             "author": "Enterprise AI Team",
+            "href": "https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/",
+            "cta": "Read the story",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/712552a8-dify.png"
               },
               "alt": "dify"
             }
+          },
+          {
+            "quote": "TiDB’s elastic architecture enabled us to migrate in two weeks, supporting users and massive ‘Context Engineering’ workloads for viral success.",
+            "author": "Engineering Leader",
+            "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
+            "cta": "Read the story",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/f003549b-manus.png",
+                "width": 512,
+                "height": 141
+              },
+              "alt": "",
+              "width": 512,
+              "height": 141
+            }
           }
         ]
       },
       "style": {
         "background": "gradient-dark-bottom",
-        "spacing": "lg"
-      }
-    },
-    {
-      "id": "stats-ai",
-      "type": "stats",
-      "props": {
-        "title": "Proven in Real-World AI Deployments",
-        "subtitle": "Teams building AI-driven applications rely on TiDB to support retrieval, agents, and live data across users, workloads, and environments.",
-        "items": [
-          {
-            "icon": "CheckCircle",
-            "value": "99.99%",
-            "label": "Uptime",
-            "description": "Production-grade reliability"
-          },
-          {
-            "icon": "TrendingUp",
-            "value": "10x",
-            "label": "Faster Retrieval",
-            "description": "vs traditional vector-only databases"
-          },
-          {
-            "icon": "Zap",
-            "value": "Real-time",
-            "label": "Data Freshness",
-            "description": "Sub-millisecond consistency"
-          },
-          {
-            "icon": "Users",
-            "value": "1000+",
-            "label": "AI Teams",
-            "description": "Building with TiDB"
-          }
-        ],
-        "columns": 4
-      },
-      "style": {
-        "background": "none",
         "spacing": "lg"
       }
     },
