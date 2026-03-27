@@ -134,17 +134,24 @@
         "layout": "image-right",
         "headline": "About These Comparisons",
         "subheadline": "Each page is written with production context in mind — architecture tradeoffs, HA behavior under failure, migration complexity, and TCO at scale. Pages are reviewed by engineers who have run these systems in real workloads. Because PingCAP builds TiDB, we're explicit when a different database is the better fit. We update pages at least quarterly; the review date is shown on each page.",
-        "heroImage": {
-          "alt": ""
-        },
         "heroForm": {
           "formId": "8d439c40-4e6b-4192-a99b-a2c619ad4146",
           "portalId": "4466002",
           "region": "na1"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/3e425381-clip-group.svg",
+            "width": 1440,
+            "height": 360
+          },
+          "alt": "",
+          "width": 1440,
+          "height": 200,
+          "align": "right"
         }
       },
       "style": {
-        "background": "primary",
         "spacing": "hero"
       }
     },
