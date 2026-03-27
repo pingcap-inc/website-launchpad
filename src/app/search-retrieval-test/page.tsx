@@ -55,6 +55,10 @@ const dsl: PageDSL = {
         "layout": "image-right",
         "headline": "Semantic Search, Hybrid Retrieval, and RAG—Built on TiDB",
         "subheadline": "Store embeddings, run similarity search, and filter results with SQL in one distributed database—so AI applications retrieve accurate, up-to-date context without managing separate vector stores.",
+        "primaryCta": {
+          "text": "Start Building Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
         "heroImage": {
           "image": {
             "url": "https://static.pingcap.com/images/5ed12035-vectorsearch.jpg",
@@ -178,7 +182,7 @@ const dsl: PageDSL = {
           },
           {
             "id": "tab-rag-retrieval",
-            "label": "Rag Retrieval",
+            "label": "RAG Retrieval",
             "description": "RAG-Ready Retrieval Workflow: Retrieve relevant context and pass it directly to an LLM.",
             "image": {
               "image": {
@@ -219,7 +223,7 @@ const dsl: PageDSL = {
       "id": "logocloud",
       "type": "logoCloud",
       "props": {
-        "title": "Trusted by leading AI and data teams",
+        "title": "Trusted by leading AI teams",
         "logos": [
           {
             "name": "Company 1",
@@ -265,7 +269,6 @@ const dsl: PageDSL = {
       "id": "resources",
       "type": "featureCard",
       "props": {
-        "eyebrow": "Resources",
         "title": "Start Building with TiDB Vector Search",
         "subtitle": "Explore documentation, tutorials, and best practices for semantic search and RAG applications.",
         "items": [
@@ -274,21 +277,21 @@ const dsl: PageDSL = {
             "title": "Vector Search Documentation",
             "description": "Complete guide to vector storage, indexing, and similarity queries in TiDB.",
             "borderColor": "blue",
-            "href": "https://docs.pingcap.com/ai/vector-search-overview/"
+            "href": "/docs/tidb-cloud/vector-search/"
           },
           {
             "icon": "Code2",
             "title": "RAG Application Tutorial",
             "description": "Build end-to-end retrieval augmented generation workflows with TiDB and LLMs.",
             "borderColor": "violet",
-            "href": "https://docs.pingcap.com/ai/rag-with-pytidb/"
+            "href": "/blog/"
           },
           {
             "icon": "Lightbulb",
             "title": "Best Practices Guide",
             "description": "Optimize embedding storage, indexing strategies, and query performance for production.",
             "borderColor": "teal",
-            "href": "https://www.pingcap.com/article/building-a-rag-application-from-scratch-evaluation-and-deployment/"
+            "href": "/docs/tidb-cloud/vector-search/"
           }
         ],
         "columns": 3,
