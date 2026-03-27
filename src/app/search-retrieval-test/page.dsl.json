@@ -47,7 +47,7 @@
       "props": {
         "eyebrow": "Why TiDB for Vector Search & Retrieval",
         "title": "A Unified Foundation for Accurate AI Retrieval",
-        "subtitle": "A unified data platform that brings semantic search, structured filtering, and live application data together—so retrieval stays accurate, consistent, and ready for real-world AI workloads.",
+        "subtitle": "TiDB brings semantic search, structured filtering, and live application data together—so retrieval stays accurate, consistent, and ready for real-world AI workloads.",
         "items": [
           {
             "title": "Semantic Search on Live Data",
