@@ -1,0 +1,233 @@
+{
+  "pageName": "TiDB vs MongoDB: SQL Scalability & ACID Consistency",
+  "meta": {
+    "title": "TiDB vs MongoDB: SQL Scalability & ACID Consistency",
+    "description": "Compare TiDB and MongoDB. TiDB offers distributed SQL with strong ACID consistency, real-time analytics, and automatic scaling—no shard-key complexity.",
+    "canonical": "/tidb-vs-mongodb/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Battle Card",
+        "headline": "TiDB vs <span class=\"text-gradient-violet\">MongoDB</span>",
+        "subheadline": "A distributed SQL alternative that delivers strong ACID consistency, SQL for complex queries, and real-time analytics on live operational data—without shard-key-driven scaling or multi-system sprawl.",
+        "primaryCta": {
+          "text": "Try TiDB Cloud",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Talk to an Expert",
+          "href": "https://pingcap.com/contact-us/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "comparison-table",
+      "type": "comparisonTable",
+      "props": {
+        "title": "How TiDB Compares to MongoDB",
+        "subtitle": "A side-by-side comparison across the architectural and operational dimensions that matter most as applications scale.",
+        "ourProduct": "TiDB",
+        "competitor": "MongoDB",
+        "rows": [
+          {
+            "feature": "Architecture Model",
+            "ours": "Distributed SQL with decoupled compute and storage. Automatic data partitioning and replication across nodes.",
+            "theirs": "Document database with collections and BSON. Scaling via replica sets and optional sharded clusters."
+          },
+          {
+            "feature": "Read & Write Scalability",
+            "ours": "Horizontal scale-out for both reads and writes. Automatic rebalancing without application sharding.",
+            "theirs": "Read scaling via replicas. Write scaling via sharding, which requires careful shard key selection."
+          },
+          {
+            "feature": "Query Model",
+            "ours": "Standard SQL with joins, aggregations, window functions, and relational modeling.",
+            "theirs": "Document query language and aggregation pipeline. Cross-collection queries require denormalization."
+          },
+          {
+            "feature": "Transaction Consistency",
+            "ours": "Strong ACID transactions across the cluster by default using distributed consensus (Raft).",
+            "theirs": "Multi-document transactions supported. Consistency depends on read/write concerns and patterns."
+          },
+          {
+            "feature": "Real-Time Analytics",
+            "ours": "Native HTAP: OLTP and OLAP on same dataset with real-time replication. No ETL required.",
+            "theirs": "Analytics via separate systems (data warehouse, Atlas Data Federation, or external pipelines)."
+          },
+          {
+            "feature": "Data Modeling",
+            "ours": "Relational schema with optional JSON columns. Supports structured relationships and constraints.",
+            "theirs": "Flexible schema by default. Document-centric modeling with denormalization for performance."
+          },
+          {
+            "feature": "Sharding & Distribution",
+            "ours": "Automatic data partitioning and rebalancing. No manual shard key selection required.",
+            "theirs": "Requires selecting a shard key. Poor shard key design creates hotspots and operational overhead."
+          },
+          {
+            "feature": "Operational Complexity",
+            "ours": "Automated placement, replication, and failover. Minimal application intrusion as scale increases.",
+            "theirs": "Requires decisions on shard keys, replica set configuration, and cluster tuning as scale grows."
+          },
+          {
+            "feature": "Multi-Tenancy at Scale",
+            "ours": "Proven support for large SaaS architectures with high schema/table counts and strong isolation.",
+            "theirs": "Multi-tenancy supported but large tenant counts and shard growth increase operational overhead."
+          },
+          {
+            "feature": "Consistency Model",
+            "ours": "Strong consistency across all distributed nodes by default.",
+            "theirs": "Tunable consistency via read preference and write concern settings."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "differentiators",
+      "type": "featureHighlights",
+      "props": {
+        "title": "Architectural Differences That Matter",
+        "subtitle": "How TiDB's distributed SQL design compares to MongoDB's document and sharding model.",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "Complex Queries in One System",
+            "description": "TiDB supports joins, aggregations, and relational queries natively with SQL. In MongoDB, complex relationships often require denormalization or added application complexity.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://pingcap.com/docs/"
+            },
+            "icon": "Zap"
+          },
+          {
+            "variant": "blue",
+            "title": "Strong Consistency for Critical Workflows",
+            "description": "TiDB provides strong ACID guarantees by default across distributed nodes. MongoDB offers tunable consistency, requiring explicit read/write concerns for correctness at scale.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://pingcap.com/docs/"
+            },
+            "icon": "Shield"
+          },
+          {
+            "variant": "teal",
+            "title": "Scale Without Shard-Key Lock-In",
+            "description": "TiDB automatically distributes and rebalances data as the cluster grows. MongoDB sharding requires careful shard key selection and can be costly to change later.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://pingcap.com/docs/"
+            },
+            "icon": "Scale"
+          },
+          {
+            "variant": "red",
+            "title": "Real-Time Analytics on Live Data",
+            "description": "TiDB runs transactional and analytical workloads on the same dataset, enabling operational insights without data movement. MongoDB analytics typically shift to external systems.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://pingcap.com/docs/"
+            },
+            "icon": "BarChart"
+          },
+          {
+            "variant": "violet",
+            "title": "Lower System Sprawl Over Time",
+            "description": "TiDB reduces the need for separate stores for analytics and complex querying. MongoDB deployments often add additional systems for reporting and analytics as requirements expand.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://pingcap.com/docs/"
+            },
+            "icon": "Layers"
+          },
+          {
+            "variant": "blue",
+            "title": "Unified Data Foundation",
+            "description": "TiDB consolidates transactional and analytical workloads into a single distributed system. MongoDB often requires pairing with separate analytics and search systems.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://pingcap.com/docs/"
+            },
+            "icon": "Puzzle"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "when-to-choose",
+      "type": "featureCard",
+      "props": {
+        "title": "When to Choose TiDB vs MongoDB",
+        "subtitle": "The right choice depends on how much relational complexity, correctness, and real-time insight your application needs.",
+        "items": [
+          {
+            "icon": "CheckCircle",
+            "title": "Choose TiDB if you need:",
+            "description": "Strong consistency for complex, multi-entity workflows with ACID by default. SQL for joins, aggregations, and rich querying. Real-time analytics on operational data without ETL. Scale-out reads and writes without shard-key decisions. A single distributed database foundation that evolves with your product.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Database",
+            "title": "MongoDB may be a fit if:",
+            "description": "Your data is primarily document-centric with minimal relational querying. You prioritize flexible schema and dynamic document structures. You have existing MongoDB investments and team expertise. Your workload patterns favor document-oriented access patterns over SQL.",
+            "borderColor": "gray"
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "cta-section",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Experience Distributed SQL at Scale?",
+        "subtitle": "Start with TiDB Cloud today and see how strong consistency, automatic scaling, and real-time analytics can simplify your architecture.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Schedule a Demo",
+          "href": "https://pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
