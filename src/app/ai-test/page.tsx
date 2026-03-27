@@ -5,13 +5,13 @@ import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
-  title: "TiDB: The Database for Production AI",
-  description: "Build production AI with TiDB—unified platform for retrieval, stateful agents, and live data at scale.",
+  title: "TiDB AI Solutions Hub - Vector Search & Agentic AI",
+  description: "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/ai-test/' },
   openGraph: {
-    title: "TiDB: The Database for Production AI",
-    description: "Build production AI with TiDB—unified platform for retrieval, stateful agents, and live data at scale.",
+    title: "TiDB AI Solutions Hub - Vector Search & Agentic AI",
+    description: "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
     url: 'https://www.pingcap.com/ai-test/',
     siteName: 'TiDB',
     images: [
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: "/ai-test/",
-  title: "TiDB: The Database for Production AI",
-  description: "Build production AI with TiDB—unified platform for retrieval, stateful agents, and live data at scale.",
+  title: "TiDB AI Solutions Hub - Vector Search & Agentic AI",
+  description: "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: "The Database for <span class=\"text-gradient-violet\">Production AI</span>", path: "/ai-test/" },
@@ -41,10 +41,10 @@ const schema = buildPageSchema({
 })
 
 const dsl: PageDSL = {
-  "pageName": "TiDB: The Database for Production AI",
+  "pageName": "TiDB AI Solutions Hub - Vector Search & Agentic AI",
   "meta": {
-    "title": "TiDB: The Database for Production AI",
-    "description": "Build production AI with TiDB—unified platform for retrieval, stateful agents, and live data at scale.",
+    "title": "TiDB AI Solutions Hub - Vector Search & Agentic AI",
+    "description": "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
     "canonical": "/ai-test/"
   },
   "sections": [
@@ -53,15 +53,16 @@ const dsl: PageDSL = {
       "type": "hero",
       "props": {
         "layout": "centered",
+        "eyebrow": "",
         "headline": "The Database for <span class=\"text-gradient-violet\">Production AI</span>",
         "subheadline": "From grounded retrieval to stateful agents, TiDB unifies the foundation for production AI applications with live data, consistent state, and real-time scale",
         "primaryCta": {
           "text": "Explore Vector Search & RAG",
-          "href": "/tidb/vector-search/"
+          "href": "/ai-solutions/vector-search/"
         },
         "secondaryCta": {
           "text": "Build Agentic AI Systems",
-          "href": "/tidb/agentic-ai/"
+          "href": "/ai-solutions/agentic-ai/"
         },
         "heroImage": {
           "image": {
@@ -73,12 +74,15 @@ const dsl: PageDSL = {
         },
         "backgroundImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/8721dd45-tidb_hero_background.svg"
+            "url": "https://static.pingcap.com/images/8721dd45-tidb_hero_background.svg",
+            "width": 198,
+            "height": 150
           },
           "alt": ""
         }
       },
       "style": {
+        "background": "gradient-dark-top",
         "spacing": "hero"
       }
     },
@@ -95,8 +99,8 @@ const dsl: PageDSL = {
             "title": "Precise Retrieval with Continuously Current Context",
             "description": "Enable semantic search and RAG experiences that reflect the latest state of your data—without stale indexes or delayed pipelines.",
             "cta": {
-              "text": "",
-              "href": ""
+              "text": "Learn More",
+              "href": "https://www.pingcap.com/article/enhancing-rag-with-tidb-for-superior-data-retrieval/"
             },
             "icon": "Search"
           },
@@ -105,86 +109,81 @@ const dsl: PageDSL = {
             "title": "Durable State for Autonomous and Multi-Step Reasoning Agents",
             "description": "Persist conversations, tool interactions, and workflow progress with consistency designed for long-running and concurrent AI behavior.",
             "cta": {
-              "text": "",
-              "href": ""
+              "text": "Learn More",
+              "href": "https://www.pingcap.com/compare/best-database-for-ai-agents/"
             },
-            "icon": "Brain"
+            "icon": "Database"
           },
           {
             "variant": "teal",
-            "title": "Intelligence Across Operational and Analytical Data",
-            "description": "Allow AI to reason across transactions and analytics together, eliminating complex synchronization between systems.",
+            "title": "One Backend. Every AI Workload",
+            "description": "No sync issues. No operational drag. Just a unified OLTP + OLAP + Vector engine that keeps up with your AI in real time.",
             "cta": {
-              "text": "",
-              "href": ""
+              "text": "Learn How Dify Solved This",
+              "href": "https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/"
             },
-            "icon": "Layers"
+            "icon": "Brain"
           },
           {
             "variant": "red",
             "title": "Distributed Architecture That Scales with AI Demand",
             "description": "Support growth across users, agents, sessions, and environments with built-in concurrency, isolation, and horizontal expansion.",
             "cta": {
-              "text": "",
-              "href": ""
+              "text": "Learn More",
+              "href": "https://docs.pingcap.com/tidb/stable/tidb-architecture/"
             },
-            "icon": "Rocket"
+            "icon": "Layers"
           }
         ],
         "columns": 2
       },
       "style": {
-        "spacing": "section"
+        "background": "none",
+        "spacing": "lg"
       }
     },
     {
-      "id": "ai-architectures",
+      "id": "subpages-overview",
       "type": "featureCard",
       "props": {
         "eyebrow": "Where TiDB Powers Modern AI",
-        "title": "Support the Architectures Teams Rely On",
+        "title": "Choose Your AI Architecture",
         "subtitle": "From retrieval-driven experiences to autonomous agent systems, TiDB supports the architectures teams rely on to rapidly build and operate AI at scale.",
         "items": [
           {
             "icon": "Search",
-            "title": "Search, Retrieval, and RAG",
+            "title": "Vector Search, Retrieval, and RAG",
             "description": "Build accurate, context-aware AI experiences using semantic search, hybrid queries, and continuously fresh data.",
-            "borderColor": "violet",
-            "href": "/tidb/vector-search/"
+            "href": "/ai-solutions/vector-search/"
           },
           {
-            "icon": "Brain",
+            "icon": "Bot",
             "title": "Stateful Agents and Autonomous Workflows",
-            "description": "Build Agents that maintain memory, coordinate tools, and operate reliably across complex, multi-step processes.",
-            "borderColor": "blue",
-            "href": "/tidb/agentic-ai/"
+            "description": "Build agents that maintain memory, coordinate tools, and operate reliably across complex, multi-step processes.",
+            "href": "/ai-solutions/agentic-ai/"
           }
         ],
-        "columns": 2,
-        "borderStyle": "color"
+        "columns": 2
       },
       "style": {
-        "spacing": "section"
+        "background": "none",
+        "spacing": "lg"
       }
     },
     {
-      "id": "testimonials",
+      "id": "trusted-scale",
       "type": "testimonials",
       "props": {
-        "eyebrow": "Trusted for AI at Scale",
         "title": "Proven in Real-World AI Deployments",
         "items": [
           {
-            "quote": "We consolidated our entire AI backend into TiDB—letting our engineers focus on building agent features instead of managing database complexity.",
-            "author": "AI Engineering Team",
+            "quote": "TiDB lets us run AI features on live data without rebuilding our stack.",
+            "author": "Enterprise AI Team",
             "href": "https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/",
-            "cta": "Read the Story",
+            "cta": "Read the story",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png",
-                "alt": "dify",
-                "width": 300,
-                "height": 300
+                "url": "https://static.pingcap.com/images/712552a8-dify.png"
               },
               "alt": "dify"
             }
@@ -193,10 +192,26 @@ const dsl: PageDSL = {
             "quote": "TiDB’s elastic architecture enabled us to migrate in two weeks, supporting users and massive ‘Context Engineering’ workloads for viral success.",
             "author": "Engineering Leader",
             "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
-            "cta": "Read the Story",
+            "cta": "Read the story",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/f003549b-manus.png"
+                "url": "https://static.pingcap.com/images/f003549b-manus.png",
+                "width": 512,
+                "height": 141
+              },
+              "alt": ""
+            }
+          },
+          {
+            "quote": "TiDB’s unified architecture enabled AI agents to access complete, real-time user context for autonomous marketing decisions.",
+            "author": "Head of Engineering",
+            "href": "https://www.pingcap.com/case-study/rengage-autonomous-marketing-tidb/",
+            "cta": "Ready the story",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/86f45063-rengage.png",
+                "width": 1225,
+                "height": 282
               },
               "alt": ""
             }
@@ -204,15 +219,16 @@ const dsl: PageDSL = {
         ]
       },
       "style": {
-        "spacing": "section"
+        "background": "gradient-dark-bottom",
+        "spacing": "lg"
       }
     },
     {
-      "id": "cta-final",
+      "id": "get-started",
       "type": "cta",
       "props": {
         "title": "Start Building with TiDB",
-        "subtitle": "Deploy AI on a trusted data platform in minutes, or connect with our team to design systems tailored to your application.",
+        "subtitle": "Deploy AI on a trusted data platform in minutes. Start building AI with TiDB for free, or connect with our team to design systems tailored to your application.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -227,12 +243,12 @@ const dsl: PageDSL = {
         },
         "secondaryCta": {
           "text": "Talk to an AI Expert",
-          "href": "/contact/"
+          "href": "/contact-sales/"
         }
       },
       "style": {
         "background": "brand-violet",
-        "spacing": "section"
+        "spacing": "lg"
       }
     }
   ]
