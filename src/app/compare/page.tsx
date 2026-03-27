@@ -41,7 +41,7 @@ const schema = buildPageSchema({
 })
 
 const dsl: PageDSL = {
-  "pageName": "TiDB vs MySQL: Feature Comparison",
+  "pageName": "Compare",
   "meta": {
     "title": "TiDB vs MySQL: Feature Comparison",
     "description": "Compare TiDB with MySQL. See how TiDB delivers superior scalability, HTAP capabilities, and MySQL compatibility for modern applications.",
