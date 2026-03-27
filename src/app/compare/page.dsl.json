@@ -128,58 +128,24 @@
       }
     },
     {
-      "id": "quick-reference",
-      "type": "featureHighlights",
+      "id": "hero-1774638604420",
+      "type": "hero",
       "props": {
-        "eyebrow": "Quick Reference",
-        "title": "What Should You Pick?",
-        "subtitle": "Directional guidance by workload. Use this to decide where to start.",
-        "items": [
-          {
-            "variant": "blue",
-            "title": "Scale-Out Writes",
-            "description": "TiDB eliminates sharding. Choose TiDB when scale-out enters the conversation.",
-            "cta": {
-              "text": "Learn More",
-              "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
-            },
-            "icon": "Zap"
-          },
-          {
-            "variant": "violet",
-            "title": "OLTP + Real-Time Analytics",
-            "description": "TiDB's HTAP eliminates ETL pipelines. TiKV for transactional, TiFlash for analytics.",
-            "cta": {
-              "text": "Explore HTAP",
-              "href": "https://tidbcloud.com/free-trial/"
-            },
-            "icon": "Layers"
-          },
-          {
-            "variant": "teal",
-            "title": "Multi-Region & Global HA",
-            "description": "TiDB with Raft replication: RTO ≤ 30s, RPO = 0. Built for production at scale.",
-            "cta": {
-              "text": "View Architecture",
-              "href": "https://www.pingcap.com/compare/cockroachdb-vs-tidb/"
-            },
-            "icon": "Globe"
-          },
-          {
-            "variant": "red",
-            "title": "AI Agents & RAG",
-            "description": "Vector search + SQL state + ACID transactions in one database. No external state managers.",
-            "cta": {
-              "text": "Compare Solutions",
-              "href": "https://www.pingcap.com/compare/best-database-for-ai-agents/"
-            },
-            "icon": "Brain"
-          }
-        ],
-        "columns": 2
+        "layout": "image-right",
+        "headline": "About These Comparisons",
+        "subheadline": "Each page is written with production context in mind — architecture tradeoffs, HA behavior under failure, migration complexity, and TCO at scale. Pages are reviewed by engineers who have run these systems in real workloads. Because PingCAP builds TiDB, we're explicit when a different database is the better fit. We update pages at least quarterly; the review date is shown on each page.",
+        "heroImage": {
+          "alt": ""
+        },
+        "heroForm": {
+          "formId": "8d439c40-4e6b-4192-a99b-a2c619ad4146",
+          "portalId": "4466002",
+          "region": "na1"
+        }
       },
       "style": {
-        "spacing": "section"
+        "background": "primary",
+        "spacing": "hero"
       }
     },
     {
