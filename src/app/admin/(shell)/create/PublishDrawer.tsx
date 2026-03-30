@@ -507,6 +507,31 @@ export function PublishDrawer({
     }
   }, [hasBlockingChecks, aiScoreStatus, handleRunAiScore])
 
+  // Link validation — runs in parallel with AI score
+  useEffect(() => {
+    if (!hasBlockingChecks && linkCheckStatus === 'idle' && !hasTriggeredLinkCheckRef.current) {
+      hasTriggeredLinkCheckRef.current = true
+      setLinkCheckStatus('checking')
+      fetch('/api/ai/validate-links', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dsl }),
+      })
+        .then((res) => res.json())
+        .then((data: { results?: LinkCheckResult[] }) => {
+          const badLinks = (data.results ?? []).filter((r) => !r.ok)
+          setLinkCheckResults(badLinks)
+          setLinkCheckStatus('done')
+        })
+        .catch(() => {
+          setLinkCheckStatus('done')
+          setLinkCheckResults([])
+        })
+    }
+  }, [hasBlockingChecks, linkCheckStatus, dsl])
+
+  // hasFailedLinks is used by canPublishNow above, so it's hoisted as a const
+
   const scoreColors = aiScore ? getScoreColor(aiScore.finalScore) : null
 
   return (
