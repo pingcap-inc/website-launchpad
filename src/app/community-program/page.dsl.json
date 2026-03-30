@@ -1,0 +1,295 @@
+{
+  "pageName": "TiDB Community Program - Connect & Build",
+  "meta": {
+    "title": "TiDB Community Program - Connect & Build",
+    "description": "Join the TiDB Community Program to connect with developers, access exclusive resources, and participate in upcoming events.",
+    "canonical": "/community-program/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "TiDB Community",
+        "headline": "Join the <span class=\"text-gradient-teal\">TiDB Community</span>",
+        "subheadline": "Connect with developers worldwide, access exclusive resources, and build innovative solutions with TiDB.",
+        "primaryCta": {
+          "text": "Join Today",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Learn More",
+          "href": "#community-resources"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "community-overview",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "Why Join",
+        "title": "Community Benefits",
+        "subtitle": "Access tools, knowledge, and connections to accelerate your TiDB journey",
+        "items": [
+          {
+            "variant": "teal",
+            "title": "Connect with Developers",
+            "description": "Network with thousands of developers building with TiDB. Share experiences, ask questions, and collaborate on projects.",
+            "cta": {
+              "text": "Join Discord",
+              "href": "https://discord.gg/vYU9h56kAW"
+            },
+            "icon": "Users"
+          },
+          {
+            "variant": "violet",
+            "title": "Access Exclusive Resources",
+            "description": "Get documentation, tutorials, code samples, and best practices curated by TiDB experts and community members.",
+            "cta": {
+              "text": "Browse Resources",
+              "href": "#resources"
+            },
+            "icon": "Package"
+          },
+          {
+            "variant": "blue",
+            "title": "Learn at Events",
+            "description": "Participate in webinars, meetups, workshops, and conferences. Connect with experts and expand your skills.",
+            "cta": {
+              "text": "View Events",
+              "href": "#upcoming-events"
+            },
+            "icon": "Rocket"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "community-resources",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Resources",
+        "title": "What's Included",
+        "subtitle": "Everything you need to succeed with TiDB",
+        "items": [
+          {
+            "icon": "FileCode",
+            "title": "Documentation",
+            "description": "Comprehensive guides covering installation, deployment, tuning, and best practices.",
+            "cta": {
+              "text": "Read Docs",
+              "href": "https://docs.pingcap.com/tidb/stable"
+            },
+            "layout": "vertical"
+          },
+          {
+            "icon": "Code2",
+            "title": "Code Samples",
+            "description": "Ready-to-use examples for common use cases and integrations with popular frameworks.",
+            "cta": {
+              "text": "Explore Samples",
+              "href": "https://github.com/pingcap"
+            },
+            "layout": "vertical"
+          },
+          {
+            "icon": "MessageSquare",
+            "title": "Community Forum",
+            "description": "Ask questions, share solutions, and get support from community members and TiDB engineers.",
+            "cta": {
+              "text": "Visit Forum",
+              "href": "https://asktug.com"
+            },
+            "layout": "vertical"
+          },
+          {
+            "icon": "Lightbulb",
+            "title": "Best Practices",
+            "description": "Learn proven strategies for schema design, indexing, performance optimization, and troubleshooting.",
+            "cta": {
+              "text": "View Guides",
+              "href": "https://docs.pingcap.com/tidb/stable"
+            },
+            "layout": "vertical"
+          },
+          {
+            "icon": "BarChart2",
+            "title": "Performance Tools",
+            "description": "Access monitoring, profiling, and diagnostic tools to optimize your TiDB deployments.",
+            "cta": {
+              "text": "Explore Tools",
+              "href": "https://docs.pingcap.com/tidb/stable"
+            },
+            "layout": "vertical"
+          },
+          {
+            "icon": "Award",
+            "title": "Certifications",
+            "description": "Validate your expertise with TiDB certifications. Become a recognized TiDB specialist.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://learn.pingcap.com"
+            },
+            "layout": "vertical"
+          }
+        ],
+        "columns": 3,
+        "itemLayout": "vertical"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "upcoming-events",
+      "type": "agenda",
+      "props": {
+        "eyebrow": "Events",
+        "title": "Upcoming Community Events",
+        "subtitle": "Join us to learn, network, and stay updated on TiDB innovations",
+        "items": [
+          {
+            "time": "Monthly",
+            "title": "TiDB Community Webinar Series",
+            "description": "Deep dives into TiDB features, real-world use cases, and technical deep dives with TiDB engineers."
+          },
+          {
+            "time": "Quarterly",
+            "title": "Community Meetups",
+            "description": "Local and virtual meetups where developers share projects, demo applications, and exchange ideas."
+          },
+          {
+            "time": "Bi-Annual",
+            "title": "TiDB Summit",
+            "description": "Major conference featuring keynotes, workshops, and networking opportunities with the global TiDB community."
+          },
+          {
+            "time": "On-Demand",
+            "title": "Office Hours",
+            "description": "Get live support from TiDB engineers. Ask questions, troubleshoot issues, and optimize your deployments."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "community-stats",
+      "type": "stats",
+      "props": {
+        "eyebrow": "Community Impact",
+        "title": "Growing Global Community",
+        "subtitle": "Thousands of developers trust TiDB for their mission-critical applications",
+        "items": [
+          {
+            "icon": "Users",
+            "value": "50K+",
+            "label": "Active Community Members",
+            "description": "Developers building with TiDB worldwide"
+          },
+          {
+            "icon": "Globe",
+            "value": "100+",
+            "label": "Countries",
+            "description": "Global presence and collaboration"
+          },
+          {
+            "icon": "MessageSquare",
+            "value": "10K+",
+            "label": "Forum Discussions",
+            "description": "Questions answered and solutions shared"
+          },
+          {
+            "icon": "Award",
+            "value": "500+",
+            "label": "Contributing Developers",
+            "description": "Open source contributors to TiDB"
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "community-get-started",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Get Started",
+        "title": "Start Your Community Journey",
+        "subtitle": "Choose the best way to engage with the TiDB community",
+        "items": [
+          {
+            "icon": "GitBranch",
+            "title": "Developers",
+            "description": "Build applications with TiDB. Access code samples, documentation, and technical support.",
+            "borderColor": "teal"
+          },
+          {
+            "icon": "Briefcase",
+            "title": "Contributors",
+            "description": "Contribute to TiDB open source. Help improve the database and shape its future.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Building",
+            "title": "Organizations",
+            "description": "Partner with TiDB for technical integration, co-marketing, and enterprise support.",
+            "borderColor": "blue"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Join the TiDB Community?",
+        "subtitle": "Start building innovative applications with TiDB today. Get free tier access and join thousands of developers.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Join Discord Community",
+          "href": "https://discord.gg/vYU9h56kAW"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
