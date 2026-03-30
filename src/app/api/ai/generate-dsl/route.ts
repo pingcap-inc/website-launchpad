@@ -3,6 +3,7 @@ import { AI_PROVIDER, generateJSON } from '@/lib/ai-client'
 import { DSL_SCHEMA_PROMPT, sanitizeDSLIcons } from '@/lib/dsl-schema'
 import type { PageDSL, SectionType } from '@/lib/dsl-schema'
 import { schemaMap } from '@/lib/section-registry'
+import { SAFE_CTA_LINKS } from '@/lib/safe-links'
 
 const SYSTEM_PROMPT = `You are a PingCAP website content expert. Generate production-ready page content for pingcap.com.
 
@@ -332,6 +333,73 @@ function applyFeatureTabsDefaults(dsl: PageDSL): void {
   }
 }
 
+// ─── Link sanitization ──────────────────────────────────────────────────────
+
+function isInvalidHref(href: unknown): boolean {
+  if (typeof href !== 'string') return false
+  const h = href.trim()
+  return h === '' || h === '#' || h === 'javascript:void(0)'
+}
+
+function guessSafeLink(text?: string) {
+  if (!text) return SAFE_CTA_LINKS['free-trial']
+  const t = text.toLowerCase()
+  if (t.includes('trial') || t.includes('start') || t.includes('sign') || t.includes('free'))
+    return SAFE_CTA_LINKS['free-trial']
+  if (t.includes('contact') || t.includes('talk')) return SAFE_CTA_LINKS['contact-us']
+  if (t.includes('demo')) return SAFE_CTA_LINKS['demo']
+  if (t.includes('doc')) return SAFE_CTA_LINKS['docs']
+  if (t.includes('github')) return SAFE_CTA_LINKS['github']
+  return SAFE_CTA_LINKS['free-trial']
+}
+
+function fixCtaHref(obj: Record<string, unknown>, key: string): void {
+  const cta = obj[key] as { text?: string; href?: string } | undefined
+  if (!cta?.href) return
+  if (isInvalidHref(cta.href)) {
+    const match = guessSafeLink(cta.text)
+    if (match) {
+      console.warn(`[DSL] Empty href on ${key} "${cta.text}", replaced with "${match.href}"`)
+      cta.href = match.href
+    } else {
+      console.warn(`[DSL] Empty href on ${key} "${cta.text}", removed`)
+      delete obj[key]
+    }
+  }
+}
+
+/** Strip empty/placeholder hrefs and replace CTA hrefs with safe links. */
+function sanitizeLinks(dsl: PageDSL): void {
+  for (const section of dsl.sections) {
+    const props = section.props as unknown as Record<string, unknown>
+    // Top-level CTAs
+    fixCtaHref(props, 'primaryCta')
+    fixCtaHref(props, 'secondaryCta')
+    // viewMore
+    if (props.viewMore && isInvalidHref((props.viewMore as { href?: string }).href)) {
+      console.warn(`[DSL] Empty viewMore href on section "${section.id}", removed`)
+      delete props.viewMore
+    }
+    // Walk items / tabs / logos arrays
+    for (const arrKey of ['items', 'tabs', 'logos'] as const) {
+      const arr = props[arrKey]
+      if (!Array.isArray(arr)) continue
+      for (const item of arr) {
+        if (!item || typeof item !== 'object') continue
+        const rec = item as Record<string, unknown>
+        fixCtaHref(rec, 'cta')
+        fixCtaHref(rec, 'primaryCta')
+        fixCtaHref(rec, 'secondaryCta')
+        // Bare href="" or href="#"
+        if ('href' in rec && isInvalidHref(rec.href)) {
+          console.warn(`[DSL] Empty href on ${arrKey} item in section "${section.id}", removed`)
+          delete rec.href
+        }
+      }
+    }
+  }
+}
+
 // ─── Style token sanitization ─────────────────────────────────────────────────
 
 const VALID_BG = new Set([
@@ -478,6 +546,7 @@ export async function POST(request: NextRequest) {
     stripBackgroundFields(dsl)
     applyFeatureTabsDefaults(dsl)
     sanitizeHeroForm(dsl)
+    sanitizeLinks(dsl)
 
     // Validate; retry once with error feedback if needed
     let errors = validateDSL(dsl)
