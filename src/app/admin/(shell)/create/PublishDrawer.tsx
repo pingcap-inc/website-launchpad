@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import {
   X,
   Loader2,
@@ -12,8 +12,9 @@ import {
   Info,
 } from 'lucide-react'
 import type { PageDSL } from '@/lib/dsl-schema'
+import type { ContentPageType } from '@/lib/detect-page-type'
 import { SITE_BASE_URL } from '@/lib/env'
-import type { PageScoreResult } from '@/lib/scoring'
+import type { PageScoreResult, TopIssue } from '@/lib/scoring'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 type DeployStatus = 'idle' | 'building' | 'ready' | 'error'
@@ -51,6 +52,13 @@ const DEPLOY_STEPS = (result: PublishResult | null, deployStatus: DeployStatus) 
   { label: 'Live globally', done: deployStatus === 'ready' },
 ]
 
+function getScoreColor(score: number) {
+  if (score >= 80)
+    return { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' }
+  if (score >= 60) return { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' }
+  return { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200' }
+}
+
 export function PublishDrawer({
   dsl,
   slug,
@@ -68,8 +76,11 @@ export function PublishDrawer({
   const [localResult, setLocalResult] = useState<LocalGenerateResult | null>(null)
   const [aiScoreStatus, setAiScoreStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle')
   const [showChecklist, setShowChecklist] = useState(false)
+  const [showScoreDetails, setShowScoreDetails] = useState(false)
   const [aiScore, setAiScore] = useState<PageScoreResult | null>(null)
   const [aiScoreError, setAiScoreError] = useState('')
+  const hasTriggeredScoreRef = useRef(false)
+  const scoredDslRef = useRef<string | null>(null)
 
   const localSlug = slug.trim().replace(/^\/|\/$/g, '')
   const slugValid = (() => {
@@ -140,24 +151,35 @@ export function PublishDrawer({
     }
   }
 
-  const handleRunAiScore = async () => {
+  const contentPageType: ContentPageType = dsl.sections.some(
+    (s) => (s.type as string) === 'numberedList'
+  )
+    ? 'listicle'
+    : 'marketing'
+  const scoreLabels =
+    contentPageType === 'listicle'
+      ? { ux: 'Content Depth', seo: 'AEO Quality', consistency: 'Structure' }
+      : { ux: 'UX', seo: 'SEO', consistency: 'Consistency' }
+
+  const handleRunAiScore = useCallback(async () => {
     setAiScoreError('')
     setAiScoreStatus('loading')
     try {
       const res = await fetch('/api/score-page', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dsl }),
+        body: JSON.stringify({ dsl, pageType: contentPageType }),
       })
       const data = (await res.json()) as { score?: PageScoreResult; error?: string }
       if (!res.ok || !data.score) throw new Error(data.error ?? 'Failed to score page')
       setAiScore(data.score)
+      scoredDslRef.current = JSON.stringify(dsl)
       setAiScoreStatus('ready')
     } catch (err) {
       setAiScoreStatus('error')
       setAiScoreError(err instanceof Error ? err.message : 'Failed to score page')
     }
-  }
+  }, [dsl, contentPageType])
 
   const handleLocalGenerate = async () => {
     setLocalGenerating(true)
@@ -396,6 +418,33 @@ export function PublishDrawer({
 
   const canPublishNow = canPublish && !hasBlockingChecks
 
+  const isScoreStale = useMemo(
+    () =>
+      aiScoreStatus === 'ready' &&
+      scoredDslRef.current !== null &&
+      scoredDslRef.current !== JSON.stringify(dsl),
+    [aiScoreStatus, dsl]
+  )
+
+  const groupedIssues = useMemo(() => {
+    if (!aiScore) return {} as Record<string, TopIssue[]>
+    return aiScore.topIssues.reduce<Record<string, TopIssue[]>>((acc, issue) => {
+      const key = issue.dimension
+      if (!acc[key]) acc[key] = []
+      acc[key].push(issue)
+      return acc
+    }, {})
+  }, [aiScore])
+
+  useEffect(() => {
+    if (!hasBlockingChecks && aiScoreStatus === 'idle' && !hasTriggeredScoreRef.current) {
+      hasTriggeredScoreRef.current = true
+      handleRunAiScore()
+    }
+  }, [hasBlockingChecks, aiScoreStatus, handleRunAiScore])
+
+  const scoreColors = aiScore ? getScoreColor(aiScore.finalScore) : null
+
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       {/* Backdrop */}
@@ -592,73 +641,146 @@ export function PublishDrawer({
             )}
           </div>
 
-          {/* AI scoring */}
-          {!hasBlockingChecks && (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <p className="text-body-sm font-bold text-gray-700">AI Scoring</p>
+          {/* AI Quality Review — always visible */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <p className="text-body-sm font-bold text-gray-700">AI Quality Review</p>
+              {aiScoreStatus === 'ready' && !isScoreStale && (
                 <button
                   type="button"
                   onClick={handleRunAiScore}
-                  disabled={aiScoreStatus === 'loading'}
-                  className="text-gray-700 underline text-label font-bold disabled:opacity-50"
+                  className="text-gray-500 hover:text-gray-700 underline text-label font-bold"
                 >
-                  {aiScoreStatus === 'loading' ? 'Scoring…' : 'Run scoring'}
+                  Re-score
+                </button>
+              )}
+            </div>
+
+            {/* Stale score banner */}
+            {isScoreStale && (
+              <div className="flex items-center justify-between gap-2 text-label text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">
+                <span>Content changed · Score may be outdated</span>
+                <button
+                  type="button"
+                  onClick={handleRunAiScore}
+                  className="font-bold underline shrink-0"
+                >
+                  Re-score
                 </button>
               </div>
-              {aiScoreStatus === 'idle' && (
-                <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
-                  Ready to score. Run AI scoring to review UX, SEO, and consistency.
+            )}
+
+            {/* Blocked by pre-publish checks */}
+            {hasBlockingChecks && (
+              <div className="text-body-sm text-gray-400 bg-gray-50 border border-gray-100 rounded p-3">
+                Fix checks above to review quality.
+              </div>
+            )}
+
+            {/* Loading */}
+            {!hasBlockingChecks && aiScoreStatus === 'loading' && (
+              <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3">
+                <div className="flex items-center gap-2 text-body-sm text-gray-500">
+                  <Loader2 size={14} className="animate-spin" />
+                  Analyzing page quality…
                 </div>
-              )}
-              {aiScoreStatus === 'error' && (
-                <div className="flex items-start gap-2 text-red-600 text-body-sm p-3 bg-red-50 border border-red-200 rounded">
-                  <AlertTriangle size={14} className="mt-0.5 shrink-0" />
+                <div className="space-y-2">
+                  <div className="h-3 bg-gray-200 rounded animate-pulse w-1/3" />
+                  <div className="h-2 bg-gray-100 rounded animate-pulse w-2/3" />
+                  <div className="h-2 bg-gray-100 rounded animate-pulse w-1/2" />
+                </div>
+              </div>
+            )}
+
+            {/* Error */}
+            {!hasBlockingChecks && aiScoreStatus === 'error' && (
+              <div className="flex items-start gap-2 text-red-600 text-body-sm p-3 bg-red-50 border border-red-200 rounded">
+                <AlertTriangle size={14} className="mt-0.5 shrink-0" />
+                <div className="flex-1">
                   <p>{aiScoreError || 'Failed to score page'}</p>
+                  <button
+                    type="button"
+                    onClick={handleRunAiScore}
+                    className="mt-1 text-red-600 underline text-label font-bold"
+                  >
+                    Retry
+                  </button>
                 </div>
-              )}
-              {aiScoreStatus === 'ready' && aiScore && (
-                <div className="border border-gray-200 rounded p-3 bg-gray-50 space-y-3">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="px-2 py-0.5 rounded-full text-label font-bold border border-emerald-200 text-emerald-700 bg-emerald-50">
-                      Overall {aiScore.finalScore}
-                    </span>
-                    <span className="text-label text-gray-500">
-                      UX {aiScore.ux.score} · SEO {aiScore.seo.score} · Cons{' '}
-                      {aiScore.consistency.score}
-                    </span>
+              </div>
+            )}
+
+            {!hasBlockingChecks && aiScoreStatus === 'idle' && (
+              <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3 flex items-center gap-2">
+                <Loader2 size={14} className="animate-spin text-gray-400" />
+                Preparing quality review…
+              </div>
+            )}
+
+            {/* Score results */}
+            {!hasBlockingChecks && aiScoreStatus === 'ready' && aiScore && scoreColors && (
+              <div className="space-y-3">
+                {/* Score banner */}
+                <div className={`rounded-lg p-4 ${scoreColors.bg} border ${scoreColors.border}`}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${scoreColors.bg} border-2 ${scoreColors.border}`}
+                    >
+                      <span className={`text-body-lg font-bold ${scoreColors.text}`}>
+                        {aiScore.finalScore}
+                      </span>
+                    </div>
+                    <div>
+                      <p className={`text-body-sm font-bold ${scoreColors.text}`}>Quality Score</p>
+                      <p className="text-label text-gray-500">
+                        {aiScore.finalScore >= 80
+                          ? 'Ready to publish'
+                          : aiScore.finalScore >= 60
+                            ? 'Review suggested improvements'
+                            : 'Significant improvements needed'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label font-bold bg-white/60 text-gray-700 border border-gray-200/60">
+                      {scoreLabels.ux} {aiScore.ux.score}
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label font-bold bg-white/60 text-gray-700 border border-gray-200/60">
+                      {scoreLabels.seo} {aiScore.seo.score}
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label font-bold bg-white/60 text-gray-700 border border-gray-200/60">
+                      {scoreLabels.consistency} {aiScore.consistency.score}
+                    </span>
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
                             type="button"
-                            className="inline-flex items-center gap-1 text-body-sm text-gray-500 hover:text-gray-700"
+                            className="inline-flex items-center"
                             aria-label="View scoring criteria"
                           >
-                            <span>Scoring criteria</span>
-                            <Info size={14} className="text-gray-400" />
+                            <Info size={13} className="text-gray-400 hover:text-gray-600" />
                           </button>
                         </TooltipTrigger>
                         <TooltipContent className="max-w-xs whitespace-normal text-body-sm">
                           <div className="space-y-2">
                             <div>
-                              <p className="font-bold text-text-inverse">UX (40)</p>
+                              <p className="font-bold text-text-inverse">{scoreLabels.ux} (40)</p>
                               <p>
                                 Clear hierarchy, CTA clarity/placement, scannability, section length
                                 and readability, visual balance.
                               </p>
                             </div>
                             <div>
-                              <p className="font-bold text-text-inverse">SEO (30)</p>
+                              <p className="font-bold text-text-inverse">{scoreLabels.seo} (30)</p>
                               <p>
                                 Title/description presence, heading structure, natural keywords,
                                 semantic structure, image alt text.
                               </p>
                             </div>
                             <div>
-                              <p className="font-bold text-text-inverse">Consistency (30)</p>
+                              <p className="font-bold text-text-inverse">
+                                {scoreLabels.consistency} (30)
+                              </p>
                               <p>
                                 Allowed components, layout consistency (spacing/width), tone
                                 consistency (marketing), avoid redundancy.
@@ -669,22 +791,132 @@ export function PublishDrawer({
                       </Tooltip>
                     </TooltipProvider>
                   </div>
-                  {aiScore.topIssues.length > 0 ? (
-                    <div>
-                      <p className="text-label font-bold text-gray-600 mb-1">Top issues</p>
-                      <ul className="list-disc pl-4 text-body-sm text-gray-600 space-y-1">
-                        {aiScore.topIssues.map((issue, index) => (
-                          <li key={`${issue}-${index}`}>{issue}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : (
-                    <p className="text-body-sm text-gray-500">No major issues detected.</p>
-                  )}
                 </div>
-              )}
-            </div>
-          )}
+
+                {/* Suggested improvements */}
+                {aiScore.topIssues.length > 0 ? (
+                  <div className="space-y-2">
+                    <p className="text-label font-bold text-gray-600">Suggested Improvements</p>
+                    <div className="space-y-1.5">
+                      {aiScore.topIssues.map((item, index) => {
+                        const isError = item.severity === 'error'
+                        return (
+                          <div
+                            key={`issue-${index}`}
+                            className={[
+                              'rounded px-3 py-2 border',
+                              isError
+                                ? 'bg-red-50/60 border-red-200'
+                                : 'bg-amber-50/50 border-amber-100',
+                            ].join(' ')}
+                          >
+                            <div className="flex items-start gap-2 text-body-sm text-gray-700">
+                              <AlertTriangle
+                                size={13}
+                                className={[
+                                  'mt-0.5 shrink-0',
+                                  isError ? 'text-red-500' : 'text-amber-500',
+                                ].join(' ')}
+                              />
+                              <span className="font-medium">{item.issue}</span>
+                            </div>
+                            {item.fix && (
+                              <p className="mt-1 ml-5 text-label text-gray-500">→ {item.fix}</p>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-body-sm text-emerald-700 bg-emerald-50 border border-emerald-100 rounded px-3 py-2">
+                    <Check size={13} className="shrink-0" />
+                    <span>No major issues found.</span>
+                  </div>
+                )}
+
+                {/* Detailed feedback (expandable) */}
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setShowScoreDetails((value) => !value)}
+                    className="text-gray-500 hover:text-gray-700 text-label font-bold inline-flex items-center gap-1"
+                  >
+                    {showScoreDetails ? 'Hide detailed feedback' : 'Show detailed feedback'}
+                    {showScoreDetails ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                  </button>
+                </div>
+                {showScoreDetails && (
+                  <div className="border border-gray-200 rounded p-3 bg-gray-50 space-y-4 text-body-sm text-gray-600">
+                    {(
+                      [
+                        { key: 'ux', label: scoreLabels.ux, data: aiScore.ux },
+                        { key: 'seo', label: scoreLabels.seo, data: aiScore.seo },
+                        {
+                          key: 'consistency',
+                          label: scoreLabels.consistency,
+                          data: aiScore.consistency,
+                        },
+                      ] as const
+                    ).map(({ key, label, data }) => (
+                      <div key={key}>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <p className="text-label font-bold text-gray-600">{label}</p>
+                          <span className="text-label text-gray-400">
+                            {key === 'ux' ? `${data.score}/40` : `${data.score}/30`}
+                          </span>
+                        </div>
+                        {data.feedback.length > 0 ? (
+                          <ul className="list-disc pl-4 space-y-1">
+                            {data.feedback.map((item, i) => (
+                              <li key={`${key}-${i}`}>{item}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-400">No feedback.</p>
+                        )}
+                        {/* Issues from topIssues that belong to this dimension */}
+                        {(groupedIssues[key]?.length ?? 0) > 0 && (
+                          <div className="mt-2 space-y-1">
+                            {groupedIssues[key].map((issue, i) => (
+                              <div
+                                key={`grouped-${key}-${i}`}
+                                className={[
+                                  'rounded px-2.5 py-1.5 border text-label',
+                                  issue.severity === 'error'
+                                    ? 'bg-red-50 border-red-200 text-red-700'
+                                    : 'bg-amber-50 border-amber-100 text-amber-700',
+                                ].join(' ')}
+                              >
+                                <span className="font-medium">{issue.issue}</span>
+                                {issue.fix && (
+                                  <span className="block text-gray-500 mt-0.5">→ {issue.fix}</span>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                    {aiScore.ruleFindings.length > 0 && (
+                      <div>
+                        <p className="text-label font-bold text-gray-600 mb-1">Rule checks</p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          {aiScore.ruleFindings.map((finding, index) => (
+                            <li key={`rule-${index}`}>
+                              {finding.detail
+                                ? `${finding.label}: ${finding.detail}`
+                                : finding.label}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* Publish button */}
           <button
