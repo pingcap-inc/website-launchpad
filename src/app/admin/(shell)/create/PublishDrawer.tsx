@@ -15,6 +15,7 @@ import type { PageDSL } from '@/lib/dsl-schema'
 import type { ContentPageType } from '@/lib/detect-page-type'
 import { SITE_BASE_URL } from '@/lib/env'
 import type { PageScoreResult, TopIssue } from '@/lib/scoring'
+import type { LinkCheckResult } from '@/lib/validate-links'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 type DeployStatus = 'idle' | 'building' | 'ready' | 'error'
@@ -81,6 +82,9 @@ export function PublishDrawer({
   const [aiScoreError, setAiScoreError] = useState('')
   const hasTriggeredScoreRef = useRef(false)
   const scoredDslRef = useRef<string | null>(null)
+  const [linkCheckStatus, setLinkCheckStatus] = useState<'idle' | 'checking' | 'done'>('idle')
+  const [linkCheckResults, setLinkCheckResults] = useState<LinkCheckResult[]>([])
+  const hasTriggeredLinkCheckRef = useRef(false)
 
   const localSlug = slug.trim().replace(/^\/|\/$/g, '')
   const slugValid = (() => {
@@ -416,7 +420,8 @@ export function PublishDrawer({
     return { seoChecks: nextSeo, lintChecks: nextLint, hasBlockingChecks: blocking }
   }, [dsl, localSlug, slugValid])
 
-  const canPublishNow = canPublish && !hasBlockingChecks
+  const hasFailedLinks = linkCheckStatus === 'done' && linkCheckResults.length > 0
+  const canPublishNow = canPublish && !hasBlockingChecks && !hasFailedLinks
 
   const isScoreStale = useMemo(
     () =>
@@ -442,6 +447,31 @@ export function PublishDrawer({
       handleRunAiScore()
     }
   }, [hasBlockingChecks, aiScoreStatus, handleRunAiScore])
+
+  // Link validation — runs in parallel with AI score
+  useEffect(() => {
+    if (!hasBlockingChecks && linkCheckStatus === 'idle' && !hasTriggeredLinkCheckRef.current) {
+      hasTriggeredLinkCheckRef.current = true
+      setLinkCheckStatus('checking')
+      fetch('/api/ai/validate-links', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dsl }),
+      })
+        .then((res) => res.json())
+        .then((data: { results?: LinkCheckResult[] }) => {
+          const badLinks = (data.results ?? []).filter((r) => !r.ok)
+          setLinkCheckResults(badLinks)
+          setLinkCheckStatus('done')
+        })
+        .catch(() => {
+          setLinkCheckStatus('done')
+          setLinkCheckResults([])
+        })
+    }
+  }, [hasBlockingChecks, linkCheckStatus, dsl])
+
+  // hasFailedLinks is used by canPublishNow above, so it's hoisted as a const
 
   const scoreColors = aiScore ? getScoreColor(aiScore.finalScore) : null
 
@@ -640,6 +670,53 @@ export function PublishDrawer({
               <p className="text-label text-red-500">Fix blocking checks to enable publish.</p>
             )}
           </div>
+
+          {/* Link Validation */}
+          {!hasBlockingChecks && (
+            <div className="space-y-2">
+              <p className="text-body-sm font-bold text-gray-700">Link Validation</p>
+              {linkCheckStatus === 'checking' && (
+                <div className="flex items-center gap-2 text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3">
+                  <Loader2 size={14} className="animate-spin text-gray-400" />
+                  Checking external links…
+                </div>
+              )}
+              {linkCheckStatus === 'done' && linkCheckResults.length === 0 && (
+                <div className="inline-flex items-center gap-1.5 text-label font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  All external links valid
+                </div>
+              )}
+              {linkCheckStatus === 'done' && linkCheckResults.length > 0 && (
+                <div className="space-y-1.5">
+                  <div className="inline-flex items-center gap-1.5 text-label font-bold text-red-600 bg-red-50 border border-red-200 rounded-full px-2.5 py-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                    {linkCheckResults.length} broken link{linkCheckResults.length > 1 ? 's' : ''}{' '}
+                    found
+                  </div>
+                  <div className="border border-red-200 rounded p-3 bg-red-50/50 space-y-1.5">
+                    {linkCheckResults.map((result, idx) => (
+                      <div
+                        key={`link-${idx}`}
+                        className="flex items-start gap-2 text-body-sm text-gray-700"
+                      >
+                        <AlertTriangle size={13} className="mt-0.5 shrink-0 text-red-500" />
+                        <div className="min-w-0">
+                          <p className="font-medium truncate">{result.href}</p>
+                          <p className="text-label text-gray-500">
+                            {result.location} · Status: {result.status}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-label text-red-500">
+                    Fix broken links before publishing. Edit the CTA href in the section editor.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* AI Quality Review — always visible */}
           <div className="space-y-3">

@@ -648,6 +648,13 @@ Available section types (choose appropriate mix):
 
 Icon names (use for icon fields): ${ALL_ICON_NAMES.join(', ')}
 CTA hrefs: use real PingCAP URLs or "https://tidbcloud.com/free-trial/" for signup CTAs.
+IMPORTANT: Do NOT invent documentation URLs or blog post paths. Only use these verified external URLs:
+- Signup CTA ("Start for Free"): https://tidbcloud.com/free-trial/
+- Contact: https://www.pingcap.com/contact-us/
+- TiDB Cloud: https://www.pingcap.com/tidb/cloud/
+- View Demo: https://www.pingcap.com/demo/
+- Docs home: https://docs.pingcap.com/
+- GitHub: https://github.com/pingcap/tidb
 Always start with a "hero" section and end with a "cta" section.
 Return ONLY the JSON object, no markdown, no code blocks.
 IMPORTANT: style.background MUST be one of the exact values listed above. Do not invent other values.
