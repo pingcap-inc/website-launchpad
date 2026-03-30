@@ -501,13 +501,19 @@ export function PublishDrawer({
   }, [aiScore])
 
   useEffect(() => {
-    if (!hasBlockingChecks && aiScoreStatus === 'idle' && !hasTriggeredScoreRef.current) {
+    if (
+      !hasBlockingChecks &&
+      linkCheckStatus === 'done' &&
+      !hasFailedLinks &&
+      aiScoreStatus === 'idle' &&
+      !hasTriggeredScoreRef.current
+    ) {
       hasTriggeredScoreRef.current = true
       handleRunAiScore()
     }
-  }, [hasBlockingChecks, aiScoreStatus, handleRunAiScore])
+  }, [hasBlockingChecks, linkCheckStatus, hasFailedLinks, aiScoreStatus, handleRunAiScore])
 
-  // Link validation — runs in parallel with AI score
+  // Link validation — runs first; AI score is gated on its result
   useEffect(() => {
     if (!hasBlockingChecks && linkCheckStatus === 'idle' && !hasTriggeredLinkCheckRef.current) {
       hasTriggeredLinkCheckRef.current = true
@@ -1246,12 +1252,15 @@ export function PublishDrawer({
               </div>
             )}
 
-            {!hasBlockingChecks && aiScoreStatus === 'idle' && (
-              <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3 flex items-center gap-2">
-                <Loader2 size={14} className="animate-spin text-gray-400" />
-                Preparing quality review…
-              </div>
-            )}
+            {!hasBlockingChecks &&
+              !hasFailedLinks &&
+              linkCheckStatus === 'done' &&
+              aiScoreStatus === 'idle' && (
+                <div className="text-body-sm text-gray-500 bg-gray-50 border border-gray-200 rounded p-3 flex items-center gap-2">
+                  <Loader2 size={14} className="animate-spin text-gray-400" />
+                  Preparing quality review…
+                </div>
+              )}
 
             {/* Score results */}
             {!hasBlockingChecks && aiScoreStatus === 'ready' && aiScore && scoreColors && (
