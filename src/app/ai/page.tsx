@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: "TiDB AI Solutions Hub - Vector Search & Agentic AI",
   description: "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/ai-test/' },
+  alternates: { canonical: 'https://www.pingcap.com/ai/' },
   openGraph: {
     title: "TiDB AI Solutions Hub - Vector Search & Agentic AI",
     description: "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
-    url: 'https://www.pingcap.com/ai-test/',
+    url: 'https://www.pingcap.com/ai/',
     siteName: 'TiDB',
     images: [
       {
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: "/ai-test/",
+  path: "/ai/",
   title: "TiDB AI Solutions Hub - Vector Search & Agentic AI",
   description: "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "The Database for <span class=\"text-gradient-violet\">Production AI</span>", path: "/ai-test/" },
+    { name: "The Database for <span class=\"text-gradient-violet\">Production AI</span>", path: "/ai/" },
   ],
 })
 
@@ -45,7 +45,7 @@ const dsl: PageDSL = {
   "meta": {
     "title": "TiDB AI Solutions Hub - Vector Search & Agentic AI",
     "description": "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
-    "canonical": "/ai-test/"
+    "canonical": "/ai/"
   },
   "sections": [
     {
@@ -58,11 +58,11 @@ const dsl: PageDSL = {
         "subheadline": "From grounded retrieval to stateful agents, TiDB unifies the foundation for production AI applications with live data, consistent state, and real-time scale",
         "primaryCta": {
           "text": "Explore Vector Search & RAG",
-          "href": "/ai-solutions/vector-search/"
+          "href": "/ai/vector-search/"
         },
         "secondaryCta": {
           "text": "Build Agentic AI Systems",
-          "href": "/ai-solutions/agentic-ai/"
+          "href": "/ai/agentic-ai/"
         },
         "heroImage": {
           "image": {
@@ -243,7 +243,7 @@ const dsl: PageDSL = {
         },
         "secondaryCta": {
           "text": "Talk to an AI Expert",
-          "href": "/contact-sales/"
+          "href": "https://www.pingcap.com/demo/#meeting"
         }
       },
       "style": {

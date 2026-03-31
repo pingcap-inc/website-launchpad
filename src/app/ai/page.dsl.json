@@ -3,7 +3,7 @@
   "meta": {
     "title": "TiDB AI Solutions Hub - Vector Search & Agentic AI",
     "description": "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
-    "canonical": "/ai-test/"
+    "canonical": "/ai/"
   },
   "sections": [
     {
@@ -16,11 +16,11 @@
         "subheadline": "From grounded retrieval to stateful agents, TiDB unifies the foundation for production AI applications with live data, consistent state, and real-time scale",
         "primaryCta": {
           "text": "Explore Vector Search & RAG",
-          "href": "/ai-solutions/vector-search/"
+          "href": "/ai/vector-search/"
         },
         "secondaryCta": {
           "text": "Build Agentic AI Systems",
-          "href": "/ai-solutions/agentic-ai/"
+          "href": "/ai/agentic-ai/"
         },
         "heroImage": {
           "image": {
@@ -36,9 +36,7 @@
             "width": 198,
             "height": 150
           },
-          "alt": "",
-          "width": 198,
-          "height": 150
+          "alt": ""
         }
       },
       "style": {
@@ -159,9 +157,7 @@
                 "width": 512,
                 "height": 141
               },
-              "alt": "",
-              "width": 512,
-              "height": 141
+              "alt": ""
             }
           },
           {
@@ -175,9 +171,7 @@
                 "width": 1225,
                 "height": 282
               },
-              "alt": "",
-              "width": 1225,
-              "height": 282
+              "alt": ""
             }
           }
         ]
@@ -207,7 +201,7 @@
         },
         "secondaryCta": {
           "text": "Talk to an AI Expert",
-          "href": "/contact-sales/"
+          "href": "https://www.pingcap.com/demo/#meeting"
         }
       },
       "style": {
