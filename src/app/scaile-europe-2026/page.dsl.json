@@ -16,7 +16,7 @@
         "subheadline": "Thursday, 4 June 2026 | Epicenter Stockholm\nJoin 500+ engineering leaders, architects, and innovators for the premier European event on distributed SQL and AI-native database architecture.",
         "primaryCta": {
           "text": "Register Now",
-          "href": "https://www.pingcap.com/contact-us/"
+          "href": ""
         },
         "heroImage": {
           "image": {
@@ -204,30 +204,17 @@
       }
     },
     {
-      "id": "cta-final",
-      "type": "cta",
+      "id": "form-1774996179341",
+      "type": "form",
       "props": {
         "title": "Join us at TiDB SCaiLE Europe 2026",
-        "subtitle": "Reserve your spot today and be part of the conversation shaping the future of cloud-native data infrastructure.",
-        "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
-          "alt": "",
-          "width": 278,
-          "height": 256
-        },
-        "primaryCta": {
-          "text": "Register Now",
-          "href": "https://www.pingcap.com/contact-us/"
-        },
-        "secondaryCta": {
-          "text": "Learn More About TiDB",
-          "href": "https://www.pingcap.com/tidb/cloud/"
-        }
+        "portalId": "4466002",
+        "formId": "33d3cad7-1aa1-4f24-bb31-d2094d906d88",
+        "region": "na1",
+        "subtitle": "Reserve your spot today and be part of the conversation shaping the future of cloud-native data infrastructure."
       },
       "style": {
-        "background": "brand-violet",
+        "background": "primary",
         "spacing": "section"
       }
     }
