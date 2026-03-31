@@ -2,7 +2,7 @@
   "pageName": "TiDB Database Comparisons | PingCAP",
   "meta": {
     "title": "TiDB Database Comparisons | PingCAP",
-    "description": "Honest, technically reviewed comparisons of TiDB against MySQL, PostgreSQL, CockroachDB, Aurora, YugabyteDB, and more. Find the right distributed SQL database.",
+    "description": "Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.",
     "canonical": "/compare/"
   },
   "sections": [
@@ -12,15 +12,15 @@
       "props": {
         "layout": "centered",
         "eyebrow": "Database Comparisons",
-        "headline": "Find the Right <span class=\"text-gradient-blue\">Distributed SQL</span> Database",
-        "subheadline": "Honest, technically reviewed comparisons of TiDB against MySQL, PostgreSQL, CockroachDB, Aurora, YugabyteDB, and more. Written for engineers making architectural decisions.",
+        "headline": "Choose the Right <span class=\"text-gradient-blue\">Database</span> for Your Scale",
+        "subheadline": "Head-to-head comparisons of TiDB against MySQL, Aurora, CockroachDB, YugabyteDB, and guides to distributed SQL databases for OLTP, HTAP, SaaS, and AI workloads. Written by engineers, reviewed in production.",
         "primaryCta": {
-          "text": "View TiDB vs MySQL",
-          "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
-        },
-        "secondaryCta": {
           "text": "Start Free Trial",
           "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View Docs",
+          "href": "https://docs.pingcap.com/"
         },
         "heroImage": {
           "image": {
@@ -36,19 +36,19 @@
       }
     },
     {
-      "id": "comparisons",
+      "id": "head-to-head",
       "type": "featureGrid",
       "props": {
         "eyebrow": "Head-to-Head Comparisons",
-        "title": "TiDB vs. Leading Databases",
-        "subtitle": "Detailed, workload-driven comparisons covering architecture, scalability, ACID behavior, HA, and TCO.",
+        "title": "Detailed Workload-Driven Comparisons",
+        "subtitle": "Each page covers architecture, scalability, ACID behavior, HA, TCO, and a clear verdict for your use case.",
         "items": [
           {
             "icon": "Database",
             "title": "TiDB vs MySQL",
             "description": "Scale-out writes, HTAP, and distributed transactions vs. MySQL's single-primary simplicity. The definitive guide for teams hitting write limits or approaching sharding.",
             "cta": {
-              "text": "Compare →",
+              "text": "Compare",
               "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
             }
           },
@@ -57,31 +57,30 @@
             "title": "TiDB vs Amazon Aurora",
             "description": "Cloud-native distributed SQL vs. AWS's managed relational offering. Covers TCO at scale, multi-region HA, HTAP, and reducing AWS dependency.",
             "cta": {
-              "text": "Compare →",
+              "text": "Compare",
               "href": "https://www.pingcap.com/compare/amazon-aurora-vs-tidb/"
             }
           },
           {
-            "icon": "Layers",
+            "icon": "Cpu",
             "title": "TiDB vs CockroachDB",
-            "description": "The two most-evaluated NewSQL databases. MySQL ecosystem vs. PostgreSQL wire protocol, HTAP capabilities, open-source licensing, and Kubernetes operations.",
+            "description": "The two most-evaluated NewSQL databases. MySQL ecosystem vs. PostgreSQL wire protocol, HTAP capabilities, and Kubernetes operations compared.",
             "cta": {
-              "text": "Compare →",
+              "text": "Compare",
               "href": "https://www.pingcap.com/compare/cockroachdb-vs-tidb/"
             }
           },
           {
             "icon": "Server",
             "title": "TiDB vs YugabyteDB",
-            "description": "Two open-source distributed SQL databases with different protocol approaches. Compares HTAP support, MySQL vs. PostgreSQL compatibility, and operational complexity.",
+            "description": "Two open-source distributed SQL databases with different protocol approaches and consistency models. HTAP support, compatibility, and licensing.",
             "cta": {
-              "text": "Compare →",
+              "text": "Compare",
               "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
             }
           }
         ],
-        "columns": 2,
-        "itemLayout": "vertical"
+        "columns": 2
       },
       "style": {
         "spacing": "section"
@@ -92,31 +91,31 @@
       "type": "featureCard",
       "props": {
         "eyebrow": "Guides & Listicles",
-        "title": "Workload-Driven Database Selection",
-        "subtitle": "Not sure which database to shortlist? These guides cover the landscape by workload — not by vendor.",
+        "title": "Not Sure Which Database to Shortlist?",
+        "subtitle": "Coverage by workload — not by vendor.",
         "items": [
           {
             "icon": "BarChart",
-            "title": "Best Distributed SQL Databases",
-            "description": "A ranked guide to leading distributed SQL databases covering architecture, consistency guarantees, ecosystem fit, cloud options, and when each is the right call.",
+            "title": "Best Distributed SQL Databases (2026)",
+            "description": "Ranked guide to leading distributed SQL databases — covering architecture, consistency guarantees, ecosystem fit, and when each is the right call.",
             "href": "https://www.pingcap.com/compare/best-distributed-sql-databases/"
           },
           {
             "icon": "Brain",
-            "title": "Best Database for AI Agents",
-            "description": "Covers memory layers, vector search, ACID state management, and multi-agent scale. Compares TiDB, Pinecone, Redis, pgvector, Milvus, MongoDB Atlas, and more.",
+            "title": "Best Database for AI Agents (2026)",
+            "description": "Memory layers, vector search, ACID state management, and multi-agent scale. Compares TiDB, Pinecone, Redis, pgvector, Milvus, MongoDB, and others.",
             "href": "https://www.pingcap.com/compare/best-database-for-ai-agents/"
           },
           {
             "icon": "Search",
-            "title": "Best Vector Database for RAG",
-            "description": "Retrieval quality, metadata filtering, hybrid search, indexing options, and production readiness. Updated quarterly to reflect real vendor capability changes.",
+            "title": "Best Vector Database for RAG (2026)",
+            "description": "Retrieval quality, metadata filtering, hybrid search, and production readiness. Updated quarterly to reflect real vendor capability changes.",
             "href": "https://www.pingcap.com/compare/best-vector-database/"
           },
           {
             "icon": "Building",
             "title": "Best Databases for SaaS at Scale",
-            "description": "How to evaluate databases for multi-tenant SaaS — covering isolation models, horizontal scale, schema flexibility, cost predictability, and growth inflection points.",
+            "description": "Multi-tenant isolation, horizontal scaling, schema flexibility, and cost predictability for SaaS applications hitting growth inflection points.",
             "href": "https://www.pingcap.com/compare/best-databases-for-saas-applications-at-scale/"
           }
         ],
@@ -128,34 +127,6 @@
       }
     },
     {
-      "id": "hero-1774638604420",
-      "type": "hero",
-      "props": {
-        "layout": "image-right",
-        "headline": "About These Comparisons",
-        "subheadline": "Each page is written with production context in mind — architecture tradeoffs, HA behavior under failure, migration complexity, and TCO at scale. Pages are reviewed by engineers who have run these systems in real workloads. Because PingCAP builds TiDB, we're explicit when a different database is the better fit. We update pages at least quarterly; the review date is shown on each page.",
-        "heroForm": {
-          "formId": "8d439c40-4e6b-4192-a99b-a2c619ad4146",
-          "portalId": "4466002",
-          "region": "na1"
-        },
-        "heroImage": {
-          "image": {
-            "url": "https://static.pingcap.com/images/3e425381-clip-group.svg",
-            "width": 1440,
-            "height": 360
-          },
-          "alt": "",
-          "width": 1440,
-          "height": 200,
-          "align": "right"
-        }
-      },
-      "style": {
-        "spacing": "hero"
-      }
-    },
-    {
       "id": "faq",
       "type": "faq",
       "props": {
@@ -163,29 +134,77 @@
         "items": [
           {
             "q": "What is TiDB and how does it differ from MySQL?",
-            "a": "TiDB is an open-source distributed SQL database that speaks the MySQL protocol. Unlike MySQL, TiDB scales horizontally across multiple nodes without sharding, supports distributed ACID transactions, and provides real-time analytics (HTAP) without ETL pipelines."
+            "a": "TiDB is an open-source distributed SQL database that speaks the MySQL protocol, so most MySQL applications connect without code changes. The key difference is scaling model: MySQL scales vertically on a single primary (plus read replicas), while TiDB distributes both storage and compute across nodes — handling scale-out writes, ACID transactions, and real-time analytics (HTAP) in one system. See TiDB vs MySQL comparison for details."
           },
           {
-            "q": "When should I choose TiDB over MySQL?",
-            "a": "Choose TiDB when you need to scale writes across multiple nodes, eliminate sharding complexity, require HTAP capabilities, or need multi-region high availability. MySQL is simpler for single-node workloads and is the right choice if your data fits on one primary."
+            "q": "When should I choose TiDB over MySQL or PostgreSQL?",
+            "a": "Choose TiDB when you're hitting write scaling limits on a single MySQL primary, when sharding is becoming a serious conversation, or when you need fresh analytics on live transactional data without building a separate warehouse pipeline. If your workload fits comfortably on a single primary with read replicas, MySQL or PostgreSQL is simpler — and that simplicity has real value. TiDB adds the most value at scale."
           },
           {
-            "q": "How does TiDB compare to PostgreSQL?",
-            "a": "TiDB speaks MySQL protocol and is MySQL-compatible. PostgreSQL is more feature-rich for single-node OLTP. If you need distributed SQL with PostgreSQL wire protocol, evaluate YugabyteDB or CockroachDB."
+            "q": "Is TiDB really MySQL-compatible?",
+            "a": "TiDB is wire-protocol compatible with MySQL 5.7/8.0 and supports the majority of MySQL SQL syntax. In practice, most MySQL applications connect and run without changes. Edge cases exist — some SELECT FOR UPDATE patterns, foreign key behavior, and a handful of MySQL-specific functions differ. Full compatibility reference available in docs."
           },
           {
-            "q": "Is TiDB open source? What license?",
-            "a": "Yes, TiDB is open source under the Apache 2.0 license. TiDB Cloud (the managed service) offers both open-source and enterprise options with additional features."
+            "q": "What does HTAP mean, and does TiDB actually do it?",
+            "a": "HTAP — Hybrid Transactional and Analytical Processing — means running OLTP and OLAP queries on the same live data without ETL. TiDB does this via two storage engines that replicate in real time: TiKV (row-based, for transactions) and TiFlash (column-based, for analytics). Queries automatically route to the right engine. The practical benefit is fresher analytics without a separate data warehouse or replication lag."
           },
           {
-            "q": "How often are these comparisons updated?",
-            "a": "All comparison pages are reviewed and updated quarterly. The review date is shown on each page. We track vendor changes, new features, and real-world production usage patterns."
+            "q": "How does TiDB compare to CockroachDB?",
+            "a": "Both are NewSQL databases built for horizontal scale-out with ACID transactions. TiDB is MySQL-compatible and has a stronger HTAP story via TiFlash. CockroachDB is PostgreSQL-compatible and leans into global multi-region active-active deployments. TiDB is Apache 2.0 open-source; CockroachDB moved to an Enterprise license in 2024. See full comparison for details."
           },
           {
-            "q": "Can I migrate from MySQL to TiDB without rewriting code?",
-            "a": "Yes. TiDB is MySQL-compatible at the wire protocol level, so most MySQL applications connect without code changes. The migration process depends on your schema and workload complexity. See our migration guides for details."
+            "q": "Can TiDB handle AI and vector search workloads?",
+            "a": "Yes. TiDB Vector Search adds native vector similarity search (HNSW indexing) within the same database as your SQL tables, enabling hybrid queries that combine semantic retrieval with structured filters in one system. See AI Agents and Vector Database guides for detailed coverage."
+          },
+          {
+            "q": "Is TiDB free to use?",
+            "a": "TiDB Self-Managed is fully open-source under Apache 2.0 — no licensing fees. TiDB Cloud (managed service on AWS, GCP, Azure) has a free Serverless tier with no credit card required."
           }
         ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "about",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "About These Comparisons",
+        "title": "Built for Production Context",
+        "subtitle": "Each comparison is written with real architectural tradeoffs in mind, reviewed by engineers who have run these systems in production workloads.",
+        "items": [
+          {
+            "variant": "blue",
+            "title": "Architecture Tradeoffs",
+            "description": "We cover scaling models, consistency guarantees, HA behavior under failure, and operational complexity — not just feature checklists.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Layers"
+          },
+          {
+            "variant": "violet",
+            "title": "Production-Reviewed",
+            "description": "Each page is reviewed by practitioners who have deployed these databases at scale. Known limitations are flagged prominently.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "CheckCircle"
+          },
+          {
+            "variant": "teal",
+            "title": "Quarterly Updates",
+            "description": "Comparisons are updated at least quarterly to reflect real vendor capability changes. Review dates are shown on every page.",
+            "cta": {
+              "text": "",
+              "href": ""
+            }
+          }
+        ],
+        "columns": 3
       },
       "style": {
         "spacing": "section"
@@ -195,8 +214,8 @@
       "id": "cta-final",
       "type": "cta",
       "props": {
-        "title": "Ready to Evaluate TiDB?",
-        "subtitle": "Start a free trial on TiDB Cloud or deploy open source and run your workload today.",
+        "title": "Try TiDB Against Your Workload",
+        "subtitle": "No credit card required. Connects with your existing MySQL driver in minutes.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -210,8 +229,8 @@
           "href": "https://tidbcloud.com/free-trial/"
         },
         "secondaryCta": {
-          "text": "View Comparisons",
-          "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
+          "text": "MySQL Compatibility Docs",
+          "href": "https://docs.pingcap.com/tidb/stable/mysql-compatibility"
         }
       },
       "style": {
