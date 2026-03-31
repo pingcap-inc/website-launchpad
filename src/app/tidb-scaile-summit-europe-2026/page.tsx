@@ -58,7 +58,7 @@ const dsl: PageDSL = {
         "subheadline": "Thursday, 4 June 2026 | Epicenter Stockholm\nJoin 500+ engineering leaders, architects, and innovators for the premier European event on distributed SQL and AI-native database architecture.",
         "primaryCta": {
           "text": "Register Now",
-          "href": ""
+          "href": "#form-1774996179341"
         },
         "heroImage": {
           "image": {
