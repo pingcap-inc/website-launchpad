@@ -1,0 +1,235 @@
+{
+  "pageName": "TiDB SCaiLE Europe 2026 | Stockholm, June 4",
+  "meta": {
+    "title": "TiDB SCaiLE Europe 2026 | Stockholm, June 4",
+    "description": "Join TiDB SCaiLE Europe 2026 in Stockholm for distributed SQL innovation, AI-native architecture talks, and networking with engineering leaders.",
+    "canonical": "/scaile-europe-2026/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "TiDB SCaiLE Europe 2026",
+        "headline": "Scaling Data. <span class=\"text-gradient-violet\">Accelerating AI.</span> Enabling You.",
+        "subheadline": "Thursday, 4 June 2026 | Epicenter Stockholm\nJoin 500+ engineering leaders, architects, and innovators for the premier European event on distributed SQL and AI-native database architecture.",
+        "primaryCta": {
+          "text": "Register Now",
+          "href": "https://www.pingcap.com/contact-us/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "why-attend",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "What to Expect",
+        "title": "Experience the Future of Cloud-Native Data Infrastructure",
+        "subtitle": "Discover real-world solutions, expert insights, and powerful connections",
+        "items": [
+          {
+            "variant": "red",
+            "title": "Real-World Success Stories",
+            "description": "Hear from customers and users who have harnessed the power of TiDB to drive business growth and innovation in production environments",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Star"
+          },
+          {
+            "variant": "violet",
+            "title": "Expert-Led Deep Dives",
+            "description": "Explore strategies for scaling data infrastructure to meet tomorrow's demands while accelerating AI app builds and time-to-market",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Brain"
+          },
+          {
+            "variant": "blue",
+            "title": "Networking Opportunities",
+            "description": "Connect with TiDB users, engineers, and peers to build relationships and learn from their experiences across distributed systems",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Users"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "who-should-attend",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Who Should Attend",
+        "title": "Engineering Leaders Building Tomorrow's AI-Native Applications",
+        "subtitle": "TiDB SCaiLE Europe brings together the teams and decision-makers driving innovation",
+        "items": [
+          {
+            "icon": "Code2",
+            "title": "Developers & Engineers",
+            "description": "Building applications on distributed or cloud-native databases",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Database",
+            "title": "Data & Platform Architects",
+            "description": "Designing infrastructure for scale, resilience, and AI-native workloads",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Briefcase",
+            "title": "Engineering Leaders",
+            "description": "Evaluating modern data strategies for next-generation database infrastructure",
+            "borderColor": "teal"
+          },
+          {
+            "icon": "Target",
+            "title": "Technical Decision-Makers",
+            "description": "Exploring alternatives to legacy database infrastructure and consolidating complexity",
+            "borderColor": "red"
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "agenda",
+      "type": "agenda",
+      "props": {
+        "eyebrow": "Event Schedule",
+        "title": "TiDB SCaiLE Europe 2026 Agenda",
+        "subtitle": "Announcing soon",
+        "items": []
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "location",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Event Location",
+        "title": "Epicenter Stockholm",
+        "subtitle": "A world-class venue in Sweden's tech capital",
+        "items": [
+          {
+            "icon": "Zap",
+            "title": "Epicenter Stockholm",
+            "description": "Malmskillnadsgatan 44a, 111 57 Stockholm, Sweden",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Globe",
+            "title": "Getting There",
+            "description": "Centrally located in Stockholm's Norrmalm district with easy access by public transport and parking available",
+            "borderColor": "teal"
+          },
+          {
+            "icon": "Clock",
+            "title": "Event Date & Time",
+            "description": "Thursday, 4 June 2026 | 09:00–17:00 CEST",
+            "borderColor": "violet"
+          }
+        ],
+        "columns": 1,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "why-tidb",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Why TiDB Matters",
+        "title": "The Distributed SQL Platform Built for Modern Workloads",
+        "subtitle": "At the heart of TiDB SCaiLE is the belief that your data infrastructure shouldn't force you to choose between scale, reliability, and efficiency.",
+        "items": [
+          {
+            "icon": "Zap",
+            "title": "Elastic Scalability",
+            "description": "Grow your database horizontally without downtime or complexity",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Shield",
+            "title": "Built-In Resilience",
+            "description": "Multi-region replication, ACID transactions, and automatic failover out of the box",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Brain",
+            "title": "AI-Native Architecture",
+            "description": "HTAP capabilities enable both transactional and analytical queries on the same data",
+            "layout": "vertical"
+          },
+          {
+            "icon": "DollarSign",
+            "title": "Cost Efficiency",
+            "description": "Reduce operational overhead and eliminate the need for multiple specialized databases",
+            "layout": "vertical"
+          }
+        ],
+        "columns": 2,
+        "itemLayout": "vertical"
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "cta-final",
+      "type": "cta",
+      "props": {
+        "title": "Join 500+ Engineering Leaders at TiDB SCaiLE Europe 2026",
+        "subtitle": "Reserve your spot today and be part of the conversation shaping the future of cloud-native data infrastructure.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Register Now",
+          "href": "https://www.pingcap.com/contact-us/"
+        },
+        "secondaryCta": {
+          "text": "Learn More About TiDB",
+          "href": "https://www.pingcap.com/tidb/cloud/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
