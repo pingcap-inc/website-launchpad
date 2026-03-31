@@ -3,7 +3,7 @@
   "meta": {
     "title": "Semantic Search & RAG on TiDB | Vector Database",
     "description": "Store embeddings, run similarity search, and filter with SQL in one distributed database. Build accurate AI retrieval without separate vector stores.",
-    "canonical": "/search-retrieval-test/"
+    "canonical": "/ai/vector-search/"
   },
   "sections": [
     {

@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: "Semantic Search & RAG on TiDB | Vector Database",
   description: "Store embeddings, run similarity search, and filter with SQL in one distributed database. Build accurate AI retrieval without separate vector stores.",
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/search-retrieval-test/' },
+  alternates: { canonical: 'https://www.pingcap.com/ai/vector-search/' },
   openGraph: {
     title: "Semantic Search & RAG on TiDB | Vector Database",
     description: "Store embeddings, run similarity search, and filter with SQL in one distributed database. Build accurate AI retrieval without separate vector stores.",
-    url: 'https://www.pingcap.com/search-retrieval-test/',
+    url: 'https://www.pingcap.com/ai/vector-search/',
     siteName: 'TiDB',
     images: [
       {
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: "/search-retrieval-test/",
+  path: "/ai/vector-search/",
   title: "Semantic Search & RAG on TiDB | Vector Database",
   description: "Store embeddings, run similarity search, and filter with SQL in one distributed database. Build accurate AI retrieval without separate vector stores.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Semantic Search, Hybrid Retrieval, and RAG—Built on TiDB", path: "/search-retrieval-test/" },
+    { name: "Semantic Search, Hybrid Retrieval, and RAG—Built on TiDB", path: "/ai/vector-search/" },
   ],
 })
 
@@ -45,7 +45,7 @@ const dsl: PageDSL = {
   "meta": {
     "title": "Semantic Search & RAG on TiDB | Vector Database",
     "description": "Store embeddings, run similarity search, and filter with SQL in one distributed database. Build accurate AI retrieval without separate vector stores.",
-    "canonical": "/search-retrieval-test/"
+    "canonical": "/ai/vector-search/"
   },
   "sections": [
     {
