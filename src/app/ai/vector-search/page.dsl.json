@@ -3,7 +3,7 @@
   "meta": {
     "title": "Semantic Search & RAG on TiDB | Vector Database",
     "description": "Store embeddings, run similarity search, and filter with SQL in one distributed database. Build accurate AI retrieval without separate vector stores.",
-    "canonical": "/ai/search-retrieval-test/"
+    "canonical": "/ai/vector-search/"
   },
   "sections": [
     {
@@ -186,31 +186,9 @@
           {
             "name": "Company 1",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
-            }
-          },
-          {
-            "name": "Company 2",
-            "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
-            }
-          },
-          {
-            "name": "Company 3",
-            "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
-            }
-          },
-          {
-            "name": "Company 4",
-            "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
-            }
-          },
-          {
-            "name": "Company 5",
-            "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "url": "https://static.pingcap.com/images/a3a6b9b9-1000011746-2.svg",
+              "width": 1066,
+              "height": 34
             }
           }
         ],
