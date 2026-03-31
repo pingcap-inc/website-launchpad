@@ -16,7 +16,7 @@
         "subheadline": "From grounded retrieval to stateful agents, TiDB unifies the foundation for production AI applications with live data, consistent state, and real-time scale",
         "primaryCta": {
           "text": "Explore Vector Search & RAG",
-          "href": "/ai/vector-search/"
+          "href": "/ai/vector-search"
         },
         "secondaryCta": {
           "text": "Build Agentic AI Systems",
