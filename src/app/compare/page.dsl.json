@@ -201,7 +201,8 @@
             "cta": {
               "text": "",
               "href": ""
-            }
+            },
+            "icon": "Repeat"
           }
         ],
         "columns": 3
