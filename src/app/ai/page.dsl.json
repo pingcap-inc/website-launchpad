@@ -3,7 +3,7 @@
   "meta": {
     "title": "TiDB AI Solutions Hub - Vector Search & Agentic AI",
     "description": "Unified data platform for production AI. Enable vector search, RAG, and stateful autonomous agents with live data and real-time scale.",
-    "canonical": "/ai-test/"
+    "canonical": "/ai/"
   },
   "sections": [
     {
