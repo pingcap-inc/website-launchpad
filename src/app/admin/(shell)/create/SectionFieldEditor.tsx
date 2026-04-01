@@ -211,15 +211,21 @@ function renderField({
           />
         </FieldRow>
       )
-    case 'select':
+    case 'select': {
+      const hasValue = fieldValue !== undefined && fieldValue !== null && fieldValue !== ''
+      const resolvedValue = hasValue
+        ? String(fieldValue)
+        : field.noEmptyOption
+          ? String(field.options[0]?.value ?? '')
+          : ''
       return (
         <FieldRow label={field.label}>
           <select
-            value={fieldValue ? String(fieldValue) : ''}
+            value={resolvedValue}
             onChange={(e) => onChange(setPathValue(value, field.key, e.target.value))}
             className={input}
           >
-            <option value="">Select…</option>
+            {!field.noEmptyOption && <option value="">Select…</option>}
             {field.options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -228,6 +234,7 @@ function renderField({
           </select>
         </FieldRow>
       )
+    }
     case 'toggle':
       return (
         <FieldRow label={field.label}>

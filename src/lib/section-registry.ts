@@ -35,6 +35,7 @@ export type FieldSchema =
       key: string
       label: string
       options: Array<{ label: string; value: string }>
+      noEmptyOption?: boolean
     })
   | (FieldBase & {
       type: 'toggle'
@@ -312,6 +313,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         type: 'select',
         key: 'columns',
         label: 'Columns',
+        noEmptyOption: true,
         options: [
           { label: '2', value: '2' },
           { label: '3', value: '3' },
@@ -334,6 +336,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         type: 'select',
         key: 'itemLayout',
         label: 'Item Layout',
+        noEmptyOption: true,
         options: [
           { label: 'Vertical', value: 'vertical' },
           { label: 'Horizontal', value: 'horizontal' },
@@ -344,7 +347,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         key: 'items',
         label: 'Features',
         itemLabel: 'Feature',
-        newItem: () => ({ title: '', description: '' }),
+        newItem: () => ({ title: '', description: '', layout: 'vertical' }),
         fields: [
           { type: 'icon', key: 'icon', label: 'Icon' },
           { type: 'text', key: 'title', label: 'Title' },
@@ -354,6 +357,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
             type: 'select',
             key: 'layout',
             label: 'Layout Override',
+            noEmptyOption: true,
             options: [
               { label: 'Vertical', value: 'vertical' },
               { label: 'Horizontal', value: 'horizontal' },
@@ -365,6 +369,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         type: 'select',
         key: 'columns',
         label: 'Columns',
+        noEmptyOption: true,
         options: [
           { label: '2', value: '2' },
           { label: '3', value: '3' },
@@ -409,6 +414,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         type: 'select',
         key: 'columns',
         label: 'Columns',
+        noEmptyOption: true,
         options: [
           { label: '2', value: '2' },
           { label: '3', value: '3' },
@@ -503,6 +509,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         type: 'select',
         key: 'columns',
         label: 'Columns',
+        noEmptyOption: true,
         options: [
           { label: '2', value: '2' },
           { label: '3', value: '3' },
