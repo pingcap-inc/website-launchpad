@@ -156,7 +156,7 @@
             "borderColor": "violet"
           }
         ],
-        "columns": 1,
+        "columns": "2",
         "borderStyle": "color"
       },
       "style": {
@@ -208,10 +208,10 @@
       "type": "form",
       "props": {
         "title": "Join us at TiDB SCaiLE Europe 2026",
+        "subtitle": "Reserve your spot today and be part of the conversation shaping the future of cloud-native data infrastructure.",
         "portalId": "4466002",
         "formId": "33d3cad7-1aa1-4f24-bb31-d2094d906d88",
-        "region": "na1",
-        "subtitle": "Reserve your spot today and be part of the conversation shaping the future of cloud-native data infrastructure."
+        "region": "na1"
       },
       "style": {
         "background": "primary",

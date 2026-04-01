@@ -198,7 +198,7 @@ const dsl: PageDSL = {
             "borderColor": "violet"
           }
         ],
-        "columns": 1,
+        "columns": "2",
         "borderStyle": "color"
       },
       "style": {
