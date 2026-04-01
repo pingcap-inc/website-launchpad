@@ -34,8 +34,9 @@ export type FieldSchema =
       type: 'select'
       key: string
       label: string
-      options: Array<{ label: string; value: string }>
+      options: Array<{ label: string; value: string | number }>
       noEmptyOption?: boolean
+      valueType?: 'string' | 'number'
     })
   | (FieldBase & {
       type: 'toggle'
@@ -314,6 +315,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         key: 'columns',
         label: 'Columns',
         noEmptyOption: true,
+        valueType: 'number',
         options: [
           { label: '2', value: '2' },
           { label: '3', value: '3' },
@@ -370,6 +372,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         key: 'columns',
         label: 'Columns',
         noEmptyOption: true,
+        valueType: 'number',
         options: [
           { label: '2', value: '2' },
           { label: '3', value: '3' },
@@ -415,6 +418,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         key: 'columns',
         label: 'Columns',
         noEmptyOption: true,
+        valueType: 'number',
         options: [
           { label: '2', value: '2' },
           { label: '3', value: '3' },
@@ -510,6 +514,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         key: 'columns',
         label: 'Columns',
         noEmptyOption: true,
+        valueType: 'number',
         options: [
           { label: '2', value: '2' },
           { label: '3', value: '3' },
