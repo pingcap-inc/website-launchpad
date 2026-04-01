@@ -156,7 +156,7 @@
             "borderColor": "violet"
           }
         ],
-        "columns": "2",
+        "columns": 2,
         "borderStyle": "color"
       },
       "style": {
