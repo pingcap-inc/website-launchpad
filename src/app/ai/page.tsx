@@ -154,13 +154,13 @@ const dsl: PageDSL = {
             "icon": "Search",
             "title": "Vector Search, Retrieval, and RAG",
             "description": "Build accurate, context-aware AI experiences using semantic search, hybrid queries, and continuously fresh data.",
-            "href": "/ai-solutions/vector-search/"
+            "href": "/ai/vector-search/"
           },
           {
             "icon": "Bot",
             "title": "Stateful Agents and Autonomous Workflows",
             "description": "Build agents that maintain memory, coordinate tools, and operate reliably across complex, multi-step processes.",
-            "href": "/ai-solutions/agentic-ai/"
+            "href": "/ai/agentic-ai/"
           }
         ],
         "columns": 2
