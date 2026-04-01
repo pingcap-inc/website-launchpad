@@ -186,9 +186,65 @@
           {
             "name": "Company 1",
             "image": {
-              "url": "https://static.pingcap.com/images/a3a6b9b9-1000011746-2.svg",
-              "width": 1066,
-              "height": 34
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg",
+              "width": 111,
+              "height": 28
+            }
+          },
+          {
+            "name": "",
+            "image": {
+              "url": "https://static.pingcap.com/images/f34077f8-omniconvert-logo-white.png",
+              "width": 1071,
+              "height": 200
+            }
+          },
+          {
+            "name": "",
+            "image": {
+              "url": "https://static.pingcap.com/images/69d76633-manuse-logo-white.svg",
+              "width": 103,
+              "height": 30
+            }
+          },
+          {
+            "name": "",
+            "image": {
+              "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
+              "width": 102,
+              "height": 45
+            }
+          },
+          {
+            "name": "",
+            "image": {
+              "url": "https://static.pingcap.com/images/716bda3b-rengage-logo-black.png",
+              "width": 1225,
+              "height": 282
+            }
+          },
+          {
+            "name": "",
+            "image": {
+              "url": "https://static.pingcap.com/images/957fb0bb-toprism-logo-primary-white.svg",
+              "width": 192,
+              "height": 45
+            }
+          },
+          {
+            "name": "",
+            "image": {
+              "url": "https://static.pingcap.com/images/7713e4cc-untitled-design-29-e1759227847264.png",
+              "width": 367,
+              "height": 98
+            }
+          },
+          {
+            "name": "",
+            "image": {
+              "url": "https://static.pingcap.com/images/87856fc4-plaid.svg",
+              "width": 112,
+              "height": 42
             }
           }
         ],
