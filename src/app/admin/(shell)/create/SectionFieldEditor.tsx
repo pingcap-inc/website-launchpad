@@ -218,16 +218,18 @@ function renderField({
         : field.noEmptyOption
           ? String(field.options[0]?.value ?? '')
           : ''
+      const parseValue = (raw: string) =>
+        field.valueType === 'number' ? (raw === '' ? undefined : Number(raw)) : raw
       return (
         <FieldRow label={field.label}>
           <select
             value={resolvedValue}
-            onChange={(e) => onChange(setPathValue(value, field.key, e.target.value))}
+            onChange={(e) => onChange(setPathValue(value, field.key, parseValue(e.target.value)))}
             className={input}
           >
             {!field.noEmptyOption && <option value="">Select…</option>}
             {field.options.map((option) => (
-              <option key={option.value} value={option.value}>
+              <option key={option.value} value={String(option.value)}>
                 {option.label}
               </option>
             ))}
