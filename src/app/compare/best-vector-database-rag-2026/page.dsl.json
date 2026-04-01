@@ -1,0 +1,281 @@
+{
+  "pageName": "Best Vector Database for RAG: Top Picks for 2026",
+  "meta": {
+    "title": "Best Vector Database for RAG: TiDB vs Pinecone 2026",
+    "description": "Compare top vector databases for RAG in 2026. Learn how TiDB Vector Search, Pinecone, and others handle filtering, hybrid search, and SQL integration.",
+    "canonical": "/compare/best-vector-database-rag-2026/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "headline": "Best Vector Database for RAG: Top Picks for 2026",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "quick-answer-the-best-vector-databases-by-use-case",
+            "label": "Quick Answer: The Best Vector Databases by Use Case",
+            "level": 1
+          },
+          {
+            "id": "best-fit-for-production-rag-sql-workloads",
+            "label": "Best Fit for Production RAG + SQL Workloads",
+            "level": 2
+          },
+          {
+            "id": "best-open-source-vector-database-for-teams-that-want-control",
+            "label": "Best Open Source Vector Database for Teams That Want Control",
+            "level": 2
+          },
+          {
+            "id": "best-postgres-option-pgvector-for-good-enough-similarity-search",
+            "label": "Best Postgres Option (pgvector) for \"Good Enough\" Similarity Search",
+            "level": 2
+          },
+          {
+            "id": "best-for-hybrid-search-bm25-vector-and-filtering-heavy-apps",
+            "label": "Best for Hybrid Search (BM25 + Vector) and Filtering-Heavy Apps",
+            "level": 2
+          },
+          {
+            "id": "best-pinecone-alternatives-managed-open-source",
+            "label": "Best Pinecone Alternatives (Managed + Open Source)",
+            "level": 2
+          },
+          {
+            "id": "vector-database-comparison-table-features-tradeoffs-pricing",
+            "label": "Vector Database Comparison Table (Features, Tradeoffs, Pricing)",
+            "level": 1
+          },
+          {
+            "id": "what-we-compared-deployment-indexing-filtering-integrations",
+            "label": "What We Compared (Deployment, Indexing, Filtering, Integrations)",
+            "level": 2
+          },
+          {
+            "id": "how-to-read-this-table-recall-vs-latency-vs-cost",
+            "label": "How to Read This Table (Recall vs Latency vs Cost)",
+            "level": 2
+          },
+          {
+            "id": "in-depth-reviews",
+            "label": "In-Depth Reviews",
+            "level": 1
+          },
+          {
+            "id": "what-is-a-vector-database-and-when-you-actually-need-one",
+            "label": "What is a Vector Database (and When You Actually Need One)?",
+            "level": 1
+          },
+          {
+            "id": "vector-store-vs-embedding-database-what-people-mean-in-practice",
+            "label": "Vector Store vs Embedding Database: What People Mean in Practice",
+            "level": 2
+          },
+          {
+            "id": "vector-similarity-search-basics-ann-recall-k-p95-latency",
+            "label": "Vector Similarity Search Basics (ANN, recall@k, p95 Latency)",
+            "level": 2
+          },
+          {
+            "id": "when-a-vector-search-database-should-live-next-to-transactional-data",
+            "label": "When a Vector Search Database Should Live Next to Transactional Data",
+            "level": 2
+          },
+          {
+            "id": "how-we-ranked-the-best-vector-database-options",
+            "label": "How We Ranked the \"Best Vector Database\" Options",
+            "level": 1
+          },
+          {
+            "id": "retrieval-quality-for-rag-recall-k-reranking-grounding",
+            "label": "Retrieval Quality for RAG (recall@k, Reranking, Grounding)",
+            "level": 2
+          },
+          {
+            "id": "metadata-filtering-hybrid-search-support",
+            "label": "Metadata Filtering + Hybrid Search Support",
+            "level": 2
+          },
+          {
+            "id": "index-types-and-performance-hnsw-ivf-diskann-when-they-matter",
+            "label": "Index Types and Performance (HNSW, IVF, DiskANN—When They Matter)",
+            "level": 2
+          },
+          {
+            "id": "langchain-vector-store-ecosystem-fit-llamaindex-pipelines",
+            "label": "LangChain Vector Store + Ecosystem Fit (LlamaIndex, Pipelines)",
+            "level": 2
+          },
+          {
+            "id": "ops-at-scale-sharding-replication-backups-observability",
+            "label": "Ops at Scale (Sharding, Replication, Backups, Observability)",
+            "level": 2
+          },
+          {
+            "id": "security-and-enterprise-readiness-sso-rbac-encryption-compliance",
+            "label": "Security and Enterprise Readiness (SSO/RBAC, Encryption, Compliance)",
+            "level": 2
+          },
+          {
+            "id": "cost-model-managed-vs-self-hosted-predictable-scaling",
+            "label": "Cost Model (Managed vs Self-Hosted, Predictable Scaling)",
+            "level": 2
+          },
+          {
+            "id": "best-vector-databases-in-depth-reviews",
+            "label": "Best Vector Databases (In-Depth Reviews)",
+            "level": 1
+          },
+          {
+            "id": "tidb-vector-search-pingcap-best-for-rag-sql-in-one-platform",
+            "label": "TiDB Vector Search (PingCAP) — Best for RAG + SQL in One Platform",
+            "level": 2
+          },
+          {
+            "id": "best-for",
+            "label": "Best For",
+            "level": 2
+          },
+          {
+            "id": "why-it-s-on-the-list",
+            "label": "Why It's On the List",
+            "level": 2
+          },
+          {
+            "id": "key-features",
+            "label": "Key Features",
+            "level": 2
+          },
+          {
+            "id": "pros",
+            "label": "Pros",
+            "level": 2
+          },
+          {
+            "id": "cons-tradeoffs",
+            "label": "Cons / Tradeoffs",
+            "level": 2
+          },
+          {
+            "id": "jump-to-in-depth-reviews",
+            "label": "Jump to In-Depth Reviews",
+            "level": 1
+          },
+          {
+            "id": "faq",
+            "label": "Vector Database FAQs",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "*Last updated: April 2026 · By PingCAP Editorial Team.*\n\n---\n\nVector databases—often referred to interchangeably as vector stores or embedding databases—are the high-performance engines designed to store embeddings and retrieve similar data points in milliseconds. However, in 2026, there is no universal \"winner\"; the right choice depends entirely on your specific workload, your filtering requirements, and whether you need vectors to live alongside transactional SQL data.\n\nWe selected tools that are commonly evaluated for production vector similarity search and RAG, then ranked them using measurable criteria: retrieval quality, filtering, hybrid support, index options, operational readiness, ecosystem fit, security, and cost model. This page is updated quarterly to reflect major changes in vendor capabilities. Because PingCAP offers [TiDB Vector Search](https://docs.pingcap.com/tidbcloud/vector-search-overview/), we explicitly include tradeoffs and recommend alternatives when a different architecture is a better fit.\n\n## Quick Answer: The Best Vector Databases by Use Case\n\nThe \"best\" vector database depends on your workload, especially your filtering and hybrid search needs, and whether embeddings must live alongside transactional data. But for very large, vector-only scenarios, a purpose-built vector database might be a better choice.\n\n### Best Fit for Production RAG + SQL Workloads\n**TiDB Vector Search**\n\n### Best Open Source Vector Database for Teams That Want Control\n**Milvus** (or **Weaviate** for broader UX/ecosystem)\n\n### Best Postgres Option (pgvector) for \"Good Enough\" Similarity Search\n**PostgreSQL (pgvector)**\n\n### Best for Hybrid Search (BM25 + Vector) and Filtering-Heavy Apps\n**OpenSearch/Elasticsearch** (or **Weaviate**)\n\n### Best Pinecone Alternatives (Managed + Open Source)\n**TiDB, Weaviate, Qdrant, Milvus/Zilliz**\n\n## Vector Database Comparison Table (Features, Tradeoffs, Pricing)\n\n| Database | Deployment | Open Source? | Hybrid Search | Filtering Strength | Common Index Types | Integrations | Pricing Model |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| **TiDB Vector Search** | Managed + self-hosted | Yes (TiDB is open source) | Yes | Strong | HNSW (vector), plus SQL indexes | LangChain, LlamaIndex | Cloud usage-based; self-hosted infra cost |\n| **Pinecone** | Managed | No | Yes | Strong | Managed ANN options | LangChain, LlamaIndex | Usage-based + tiers |\n| **Weaviate** | Managed + self-hosted | Yes | Yes | Strong | HNSW (+ hybrid features) | LangChain, LlamaIndex | Cloud + self-hosted |\n| **Milvus (Zilliz)** | Both (Milvus self-host; Zilliz managed) | Yes | Partial/depends | Strong | HNSW, IVF, Disk-based options | LangChain, LlamaIndex | Managed + self-hosted |\n| **Qdrant** | Managed + self-hosted | Yes | Partial/depends | Strong | HNSW | LangChain, LlamaIndex | Cloud + self-hosted |\n| **Chroma** | Self-hosted/local | Yes | Limited | Basic | HNSW (common) | LangChain (common) | Free/self-hosted |\n| **pgvector (Postgres)** | Both | Yes | Limited | Strong (via SQL) | IVFFlat, HNSW (where supported) | LangChain, LlamaIndex | Postgres costs (managed or self-hosted) |\n| **OpenSearch / Elasticsearch** | Both | OpenSearch yes; Elasticsearch license varies | Yes | Strong | HNSW (kNN), plus text search | Broad ecosystem | Cloud + self-hosted |\n| **Redis (Vector)** | Both | License varies | Limited | Basic–Strong (pattern-dependent) | HNSW (common) | LangChain | Cloud + self-hosted |\n| **MongoDB Atlas Vector Search** | Managed | SSPL/source-available | Limited | Strong (doc model) | Vector search index options | LangChain | Usage-based (Atlas) |\n\nIf you're down to a shortlist, [try TiDB Cloud with your real filters and traffic](https://tidbcloud.com/free-trial/?__hstc=86493575.783064bfcc857ae1a573df16c96a21a4.1767977986672.1769809216084.1770044176901.84&__hssc=86493575.3.1770044176901&__hsfp=ef5d7ef781d92d519fb04a5267e98d6c&_gl=1*1yluthp*_gcl_au*NzgzNDI4MDk1LjE3Njc5ODI1NzU.*_ga*MjUyOTQyMTU0LjE3Njc5Nzc5ODQ.*_ga_9FRXHHPYVY*czE3NzAwNTAxMjkkbzk0JGcxJHQxNzcwMDUyNDQ5JGo2MCRsMCRoMA..*_ga_3JVXJ41175*czE3NzAwNTAxMjkkbzk0JGcxJHQxNzcwMDUyNDQ5JGo2MCRsMCRoMTg3NzA4MDg0Ng..*_ga_ZEL0RNV6R2*czE3NzAwNTAxMjkkbzg0JGcxJHQxNzcwMDUyNDQ5JGo2MCRsMCRoMA..&website_referrer_url=https://pingcap.zoom.us/). Get SQL + vector search in one managed platform built for production RAG.\n\n### What We Compared (Deployment, Indexing, Filtering, Integrations)\n* **Deployment:** managed, self-hosted, or both\n* **Open source:** yes/no/license varies\n* **Hybrid search:** keyword + vector support (BM25 + vectors)\n* **Filtering strength:** how well it supports structured metadata filtering at scale\n* **Index types:** common ANN index options (HNSW, IVF, DiskANN, etc.)\n* **Integrations:** LangChain vector store, LlamaIndex, common ingestion pipelines\n* **Pricing model:** free tier, usage-based, license, or cloud subscription\n\n### How to Read This Table (Recall vs Latency vs Cost)\nMost teams are optimizing a triangle:\n* **Recall@K:** Did you retrieve the \"right\" chunks for grounding?\n* **Latency (p95/p99):** How fast is retrieval under real load and filters?\n* **Cost:** How much compute/storage do you burn to hit recall and latency targets?\n\nA \"best\" choice is usually the one that hits your recall target without exploding p95 latency or operational complexity.\n\n## In-Depth Reviews\n\n1. **TiDB Vector Search**\n2. **Pinecone**\n3. **Weaviate**\n4. **Milvus (and Zilliz)**\n5. **Qdrant**\n6. **Chroma**\n7. **pgvector (Postgres)**\n8. **OpenSearch / Elasticsearch**\n9. **Redis (vector search)**\n10. **MongoDB Atlas Vector Search**\n\n## What is a Vector Database (and When You Actually Need One)?\n\nA vector database is a system designed to store and index high-dimensional embeddings so you can run fast similarity search (nearest-neighbor retrieval), often alongside metadata filtering and sometimes hybrid search (keyword + vector). Not every RAG application requires a dedicated vector database, but as your dataset grows in dimensions and query volume, traditional storage often hits a performance ceiling. To choose the right tool, you must first understand how the industry categorizes these systems.\n\n### Vector Store vs Embedding Database: What People Mean in Practice\n\nIn practice, \"vector store\" usually means \"the component that stores embeddings and retrieves nearest neighbors.\" \"Embedding database\" is often used the same way, with a stronger implication that embeddings are a first-class data type with indexing, filtering, and durability. For production, the difference that matters is not the label. It is whether your system supports:\n* **Fast similarity search** at your scale (vectors count, dimensions, QPS)\n* **Correct and efficient metadata filtering**\n* **Hybrid retrieval** (keyword + vector)\n* **Operational requirements** (backups, HA, observability, multi-tenant isolation)\n\n### Vector Similarity Search Basics (ANN, recall@k, p95 Latency)\n\nMost vector databases use **Approximate Nearest Neighbor (ANN)** indexing to trade a bit of recall for big latency gains. You should evaluate with:\n* **Recall@K** for your task (RAG quality is sensitive to missed \"right chunks\")\n* **p95/p99 latency** (tail latency is what users feel)\n* **Throughput (QPS)** at target recall and real filter patterns\n\n### When a Vector Search Database Should Live Next to Transactional Data\n\nIf your application needs freshness, consistency, or joins between vectors and live business data, keeping vectors next to SQL can reduce moving parts:\n* Fewer pipelines to break\n* Simpler ACL and auditing\n* Easier transactional workflows (write business row + embedding pointer together)\n* Fewer \"two systems disagree\" failure modes\n\nIf your retrieval is mostly static, independent, and you want maximum isolation, a dedicated vector system can still be a great fit.\n\n## How We Ranked the \"Best Vector Database\" Options\n\nTo determine our top picks, we evaluated each platform against a rigorous set of measurable criteria, ranging from security and ecosystem fit to operational readiness. While cost and developer experience are vital for long-term sustainability, the ultimate success of a RAG application hinges on the system's ability to provide high-quality, relevant context to the model. This begins with a deep dive into the most critical performance benchmark: how effectively the database retrieves the \"right\" information under real-world conditions.\n\n### Retrieval Quality for RAG (recall@k, Reranking, Grounding)\n\nRAG fails when retrieval returns plausible-but-wrong context. We prioritize:\n* Recall at your K (and how it changes under filters)\n* Support for reranking patterns\n* Predictable performance at realistic sizes\n\n### Metadata Filtering + Hybrid Search Support\n\nFiltering is the difference between a demo and production. We weight:\n* Correctness under complex filters\n* Latency impact under filters\n* Hybrid search patterns (BM25 + vector, and reranking hooks)\n\n### Index Types and Performance (HNSW, IVF, DiskANN—When They Matter)\n* **HNSW:** strong default for many similarity search cases\n* **IVF-family:** useful for tuning memory/latency tradeoffs\n* **Disk-based indexes:** valuable when your vectors outgrow memory\n\nIndex type matters less than whether the system stays stable when you combine scale + filters + tail-latency SLOs.\n\n### LangChain Vector Store + Ecosystem Fit (LlamaIndex, Pipelines)\n\nBecause many teams build with frameworks, we consider:\n* LangChain and LlamaIndex connectors\n* Ingestion ergonomics (batching, idempotency, namespaces)\n* Cloud + local dev parity\n\n### Ops at Scale (Sharding, Replication, Backups, Observability)\n\nProduction means:\n* Predictable sharding and rebalancing\n* HA and recovery paths you have actually tested\n* Monitoring you can put on-call engineers behind\n\n### Security and Enterprise Readiness (SSO/RBAC, Encryption, Compliance)\n\nFor real deployments, look for:\n* RBAC/SSO options (or clean integration patterns)\n* encryption in transit and at rest\n* auditability and multi-tenant isolation\n\n### Cost Model (Managed vs Self-Hosted, Predictable Scaling)\n\nCost risk usually comes from:\n* Uncontrolled growth in vector count and dimensions\n* High recall targets pushing more compute\n* Tail-latency SLOs requiring overprovisioning\n* Duplicated pipelines (text search + vector + SQL)\n\n## Best Vector Databases (In-Depth Reviews)\n\nEach option below is reviewed through the same lens: retrieval quality for RAG (recall at K), filtering and hybrid search support, ecosystem fit (LangChain/LlamaIndex), and production readiness (scaling, backups, security, and cost predictability). Use these snapshots to shortlist 2–3 candidates, then benchmark them on your own data and real query patterns, especially the filters and tail-latency targets your app will live or die by.\n\n### TiDB Vector Search (PingCAP) — Best for RAG + SQL in One Platform\n\nTiDB is an open-source, distributed SQL database, and TiDB Vector Search adds support for storing embeddings and running vector similarity queries within the same database.\n\n#### Best For\nTeams building production RAG or AI applications that need vectors + SQL + reliability together, especially when filtering and transactional freshness matter.\n\n#### Why It's On the List\n* Unifies an embedding database and SQL in one distributed system\n* Strong fit for filtering-heavy, multi-tenant SaaS retrieval\n* Designed for operational reliability (HA, scaling, observability patterns)\n\n#### Key Features\n* Store vectors alongside relational data (fewer systems, fewer sync issues)\n* SQL-based metadata filtering and joins\n* Distributed scale-out for production workloads\n\n#### Pros\n* Fewer moving parts for RAG stacks that already depend on SQL\n* Strong filtering patterns (SQL is a natural fit for metadata)\n* Clear path from prototype to production operations\n\n#### Cons / Tradeoffs\n* If you only need a lightweight prototype vector store, this may be overkill.",
+        "maxWidth": "full"
+      },
+      "style": {
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "main",
+      "type": "richTextBlock",
+      "props": {
+        "content": "Vector databases—often referred to interchangeably as vector stores or embedding databases—are the high-performance engines designed to store embeddings and retrieve similar data points in milliseconds. However, in 2026, there is no universal \"winner\"; the right choice depends entirely on your specific workload, your filtering requirements, and whether you need vectors to live alongside transactional SQL data.\n\nWe selected tools that are commonly evaluated for production vector similarity search and RAG, then ranked them using measurable criteria: retrieval quality, filtering, hybrid support, index options, operational readiness, ecosystem fit, security, and cost model. This page is updated quarterly to reflect major changes in vendor capabilities. Because PingCAP offers [TiDB Vector Search](https://docs.pingcap.com/tidbcloud/vector-search-overview/), we explicitly include tradeoffs and recommend alternatives when a different architecture is a better fit.\n\n## Quick Answer: The Best Vector Databases by Use Case\n\nThe “best” vector database depends on your workload, especially your filtering and hybrid search needs, and whether embeddings must live alongside transactional data. But for very large, vector-only scenarios, a purpose-built vector database might be a better choice.\n\n### Best Fit for Production RAG + SQL Workloads\n**TiDB Vector Search**\n\n### Best Open Source Vector Database for Teams That Want Control\n**Milvus** (or **Weaviate** for broader UX/ecosystem)\n\n### Best Postgres Option (pgvector) for “Good Enough” Similarity Search\n**PostgreSQL (pgvector)**\n\n### Best for Hybrid Search (BM25 + Vector) and Filtering-Heavy Apps\n**OpenSearch/Elasticsearch** (or **Weaviate**)\n\n### Best Pinecone Alternatives (Managed + Open Source)\n**TiDB**, **Weaviate**, **Qdrant**, **Milvus/Zilliz**\n\n## Vector Database Comparison Table (Features, Tradeoffs, Pricing)\n\n| Database | Deployment | Open Source? | Hybrid Search | Filtering Strength | Common Index Types | Integrations | Pricing Model |\n| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |\n| **TiDB Vector Search** | Managed + self-hosted | Yes (TiDB is open source) | Yes | Strong | HNSW (vector), plus SQL indexes | LangChain, LlamaIndex | Cloud usage-based; self-hosted infra cost |\n| **Pinecone** | Managed | No | Yes | Strong | Managed ANN options | LangChain, LlamaIndex | Usage-based + tiers |\n| **Weaviate** | Managed + self-hosted | Yes | Yes | Strong | HNSW (+ hybrid features) | LangChain, LlamaIndex | Cloud + self-hosted |\n| **Milvus (Zilliz)** | Both (Milvus self-host; Zilliz managed) | Yes | Partial/depends | Strong | HNSW, IVF, Disk-based options | LangChain, LlamaIndex | Managed + self-hosted |\n| **Qdrant** | Managed + self-hosted | Yes | Partial/depends | Strong | HNSW | LangChain, LlamaIndex | Cloud + self-hosted |\n| **Chroma** | Self-hosted/local | Yes | Limited | Basic | HNSW (common) | LangChain (common) | Free/self-hosted |\n| **pgvector (Postgres)** | Both | Yes | Limited | Strong (via SQL) | IVFFlat, HNSW (where supported) | LangChain, LlamaIndex | Postgres costs (managed or self-hosted) |\n| **OpenSearch / Elasticsearch** | Both | OpenSearch yes; Elasticsearch license varies | Yes | Strong | HNSW (kNN), plus text search | Broad ecosystem | Cloud + self-hosted |\n| **Redis (Vector)** | Both | License varies | Limited | Basic–Strong (pattern-dependent) | HNSW (common) | LangChain | Cloud + self-hosted |\n| **MongoDB Atlas Vector Search** | Managed | SSPL/source-available | Limited | Strong (doc model) | Vector search index options | LangChain | Usage-based (Atlas) |\n\nIf you’re down to a shortlist, [try TiDB Cloud with your real filters and traffic](https://tidbcloud.com/free-trial/?__hstc=86493575.783064bfcc857ae1a573df16c96a21a4.1767977986672.1769809216084.1770044176901.84&__hssc=86493575.3.1770044176901&__hsfp=ef5d7ef781d92d519fb04a5267e98d6c&_gl=1*1yluthp*_gcl_au*NzgzNDI4MDk1LjE3Njc5ODI1NzU.*_ga*MjUyOTQyMTU0LjE3Njc5Nzc5ODQ.*_ga_9FRXHHPYVY*czE3NzAwNTAxMjkkbzk0JGcxJHQxNzcwMDUyNDQ5JGo2MCRsMCRoMA..*_ga_3JVXJ41175*czE3NzAwNTAxMjkkbzk0JGcxJHQxNzcwMDUyNDQ5JGo2MCRsMCRoMTg3NzA4MDg0Ng..*_ga_ZEL0RNV6R2*czE3NzAwNTAxMjkkbzg0JGcxJHQxNzcwMDUyNDQ5JGo2MCRsMCRoMA..&website_referrer_url=https://pingcap.zoom.us/). Get SQL + vector search in one managed platform built for production RAG.\n\n### What We Compared (Deployment, Indexing, Filtering, Integrations)\n* **Deployment:** managed, self-hosted, or both\n* **Open source:** yes/no/license varies\n* **Hybrid search:** keyword + vector support (BM25 + vectors)\n* **Filtering strength:** how well it supports structured metadata filtering at scale\n* **Index types:** common ANN index options (HNSW, IVF, DiskANN, etc.)\n* **Integrations:** LangChain vector store, LlamaIndex, common ingestion pipelines\n* **Pricing model:** free tier, usage-based, license, or cloud subscription\n\n### How to Read This Table (Recall vs Latency vs Cost)\nMost teams are optimizing a triangle:\n* **Recall@K:** Did you retrieve the “right” chunks for grounding?\n* **Latency (p95/p99):** How fast is retrieval under real load and filters?\n* **Cost:** How much compute/storage do you burn to hit recall and latency targets?\n\nA “best” choice is usually the one that hits your recall target without exploding p95 latency or operational complexity.\n\n## Jump to In-Depth Reviews\n1. TiDB Vector Search\n2. Pinecone\n3. Weaviate\n4. Milvus (and Zilliz)\n5. Qdrant\n6. Chroma\n7. pgvector (Postgres)\n8. OpenSearch / Elasticsearch\n9. Redis (vector search)\n10. MongoDB Atlas Vector Search\n\n## What is a Vector Database (and When You Actually Need One)?\n\nA vector database is a system designed to store and index high-dimensional embeddings so you can run fast similarity search (nearest-neighbor retrieval), often alongside metadata filtering and sometimes hybrid search (keyword + vector). Not every RAG application requires a dedicated vector database, but as your dataset grows in dimensions and query volume, traditional storage often hits a performance ceiling. To choose the right tool, you must first understand how the industry categorizes these systems.\n\n### Vector Store vs Embedding Database: What People Mean in Practice\n\nIn practice, “vector store” usually means “the component that stores embeddings and retrieves nearest neighbors.” “Embedding database” is often used the same way, with a stronger implication that embeddings are a first-class data type with indexing, filtering, and durability. For production, the difference that matters is not the label. It is whether your system supports:\n* **Fast similarity search** at your scale (vectors count, dimensions, QPS)\n* **Correct and efficient metadata filtering**\n* **Hybrid retrieval** (keyword + vector)\n* **Operational requirements** (backups, HA, observability, multi-tenant isolation)\n\n### Vector Similarity Search Basics (ANN, recall@k, p95 Latency)\n\nMost vector databases use **Approximate Nearest Neighbor (ANN)** indexing to trade a bit of recall for big latency gains. You should evaluate with:\n* **Recall@K** for your task (RAG quality is sensitive to missed “right chunks”)\n* **p95/p99 latency** (tail latency is what users feel)\n* **Throughput (QPS)** at target recall and real filter patterns\n\n### When a Vector Search Database Should Live Next to Transactional Data\n\nIf your application needs freshness, consistency, or joins between vectors and live business data, keeping vectors next to SQL can reduce moving parts:\n* Fewer pipelines to break\n* Simpler ACL and auditing\n* Easier transactional workflows (write business row + embedding pointer together)\n* Fewer “two systems disagree” failure modes\n\nIf your retrieval is mostly static, independent, and you want maximum isolation, a dedicated vector system can still be a great fit.\n\n## How We Ranked the “Best Vector Database” Options\n\nTo determine our top picks, we evaluated each platform against a rigorous set of measurable criteria, ranging from security and ecosystem fit to operational readiness. While cost and developer experience are vital for long-term sustainability, the ultimate success of a RAG application hinges on the system's ability to provide high-quality, relevant context to the model. This begins with a deep dive into the most critical performance benchmark: how effectively the database retrieves the \"right\" information under real-world conditions.\n\n### Retrieval Quality for RAG (recall@k, Reranking, Grounding)\n\nRAG fails when retrieval returns plausible-but-wrong context. We prioritize:\n* Recall at your K (and how it changes under filters)\n* Support for reranking patterns\n* Predictable performance at realistic sizes\n\n### Metadata Filtering + Hybrid Search Support\n\nFiltering is the difference between a demo and production. We weight:\n* Correctness under complex filters\n* Latency impact under filters\n* Hybrid search patterns (BM25 + vector, and reranking hooks)\n\n### Index Types and Performance (HNSW, IVF, DiskANN—When They Matter)\n\n* **HNSW:** strong default for many similarity search cases\n* **IVF-family:** useful for tuning memory/latency tradeoffs\n* **Disk-based indexes:** valuable when your vectors outgrow memory\n\nIndex type matters less than whether the system stays stable when you combine scale + filters + tail-latency SLOs.\n\n### LangChain Vector Store + Ecosystem Fit (LlamaIndex, Pipelines)\n\nBecause many teams build with frameworks, we consider:\n* LangChain and LlamaIndex connectors\n* Ingestion ergonomics (batching, idempotency, namespaces)\n* Cloud + local dev parity\n\n### Ops at Scale (Sharding, Replication, Backups, Observability)\n\nProduction means:\n* Predictable sharding and rebalancing\n* HA and recovery paths you have actually tested\n* Monitoring you can put on-call engineers behind\n\n### Security and Enterprise Readiness (SSO/RBAC, Encryption, Compliance)\n\nFor real deployments, look for:\n* RBAC/SSO options (or clean integration patterns)\n* encryption in transit and at rest\n* auditability and multi-tenant isolation\n\n### Cost Model (Managed vs Self-Hosted, Predictable Scaling)\n\nCost risk usually comes from:\n* Uncontrolled growth in vector count and dimensions\n* High recall targets pushing more compute\n* Tail-latency SLOs requiring overprovisioning\n* Duplicated pipelines (text search + vector + SQL)\n\n## Best Vector Databases (In-Depth Reviews)\n\nEach option below is reviewed through the same lens: retrieval quality for RAG (recall at K), filtering and hybrid search support, ecosystem fit (LangChain/LlamaIndex), and production readiness (scaling, backups, security, and cost predictability). Use these snapshots to shortlist 2–3 candidates, then benchmark them on your own data and real query patterns, especially the filters and tail-latency targets your app will live or die by.\n\n### TiDB Vector Search (PingCAP) — Best for RAG + SQL in One Platform\n\nTiDB is an open-source, distributed SQL database, and TiDB Vector Search adds support for storing embeddings and running vector similarity queries within the same database.\n\n#### Best For\nTeams building production RAG or AI applications that need vectors + SQL + reliability together, especially when filtering and transactional freshness matter.\n\n#### Why It’s On the List\n* Unifies an embedding database and SQL in one distributed system\n* Strong fit for filtering-heavy, multi-tenant SaaS retrieval\n* Designed for operational reliability (HA, scaling, observability patterns)\n\n#### Key Features\n* Store vectors alongside relational data (fewer systems, fewer sync issues)\n* SQL-based metadata filtering and joins\n* Distributed scale-out for production workloads\n\n#### Pros\n* Fewer moving parts for RAG stacks that already depend on SQL\n* Strong filtering patterns (SQL is a natural fit for metadata)\n* Clear path from prototype to production operations\n\n#### Cons / Tradeoffs\n* If you only need a lightweight prototype vector store, this",
+        "maxWidth": "full"
+      },
+      "style": {
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Vector Database FAQs",
+        "items": [
+          {
+            "q": "What is a vector database?",
+            "a": "A vector database is a system designed to store and index high-dimensional embeddings so you can run fast similarity search (nearest-neighbor retrieval), often alongside metadata filtering and sometimes hybrid search (keyword + vector). Not every RAG application requires a dedicated vector database, but as your dataset grows in dimensions and query volume, traditional storage often hits a performance ceiling."
+          },
+          {
+            "q": "What is the best vector database for RAG?",
+            "a": "The best choice depends entirely on your specific workload, filtering requirements, and whether you need vectors to live alongside transactional SQL data. For production RAG + SQL workloads, **TiDB Vector Search** is recommended. For teams wanting open-source control, **Milvus** (or **Weaviate** for broader UX/ecosystem) is a top pick. For \"good enough\" similarity search within an existing stack, **PostgreSQL (pgvector)** is ideal. For hybrid search (BM25 + Vector) and filtering-heavy apps, **OpenSearch/Elasticsearch** or **Weaviate** are best."
+          },
+          {
+            "q": "Do I need a separate vector store or can I use pgvector?",
+            "a": "If your application needs freshness, consistency, or joins between vectors and live business data, keeping vectors next to SQL (like with **pgvector** or **TiDB**) can reduce moving parts, simplify ACL/auditing, and make transactional workflows easier. However, if your retrieval is mostly static, independent, and you want maximum isolation, a dedicated vector system (like **Milvus** or **Pinecone**) can still be a great fit. For high-scale or strict SLOs, a separate system may be necessary to avoid performance bottlenecks."
+          },
+          {
+            "q": "What is the difference between a vector store and an embedding database?",
+            "a": "In practice, the terms are often used interchangeably. \"Vector store\" usually means the component that stores embeddings and retrieves nearest neighbors. \"Embedding database\" is often used the same way but with a stronger implication that embeddings are a first-class data type with indexing, filtering, and durability. For production, the label matters less than whether the system supports: **fast similarity search** at your scale, **correct and efficient metadata filtering**, **hybrid retrieval**, and operational requirements like backups, HA, and observability."
+          },
+          {
+            "q": "How should I prioritize recall vs. latency vs. cost?",
+            "a": "Most teams optimize a triangle: **Recall@K** (did you retrieve the right chunks for grounding?), **Latency (p95/p99)** (how fast is retrieval under real load and filters?), and **Cost** (how much compute/storage is burned to hit targets). A \"best\" choice is usually the one that hits your recall target without exploding p95 latency or operational complexity. You should evaluate with Recall@K for your task, p95/p99 latency (tail latency is what users feel), and throughput (QPS) at target recall and real filter patterns."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "md",
+        "className": "faq-longform"
+      }
+    },
+    {
+      "id": "cta",
+      "type": "cta",
+      "props": {
+        "title": "Try TiDB Cloud for AI Apps",
+        "subtitle": "Free serverless tier — no credit card required. Includes vector search, SQL, and TiFlash columnar analytics.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Try TiDB Cloud Free →",
+          "href": "https://www.pingcap.com/tidb/cloud/"
+        },
+        "secondaryCta": {
+          "text": "Book a Demo",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
