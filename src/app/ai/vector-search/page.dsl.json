@@ -183,7 +183,7 @@
         "title": "Trusted by leading AI teams",
         "logos": [
           {
-            "name": "Company 1",
+            "name": "Catalyst",
             "image": {
               "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg",
               "width": 111,
@@ -191,7 +191,7 @@
             }
           },
           {
-            "name": "",
+            "name": "Omniconvert",
             "image": {
               "url": "https://static.pingcap.com/images/f34077f8-omniconvert-logo-white.png",
               "width": 1071,
@@ -199,7 +199,7 @@
             }
           },
           {
-            "name": "",
+            "name": "Manus",
             "image": {
               "url": "https://static.pingcap.com/images/69d76633-manuse-logo-white.svg",
               "width": 103,
@@ -207,7 +207,7 @@
             }
           },
           {
-            "name": "",
+            "name": "Dify",
             "image": {
               "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
               "width": 102,
@@ -215,7 +215,7 @@
             }
           },
           {
-            "name": "",
+            "name": "Rengage",
             "image": {
               "url": "https://static.pingcap.com/images/716bda3b-rengage-logo-black.png",
               "width": 1225,
@@ -223,7 +223,7 @@
             }
           },
           {
-            "name": "",
+            "name": "Toprism",
             "image": {
               "url": "https://static.pingcap.com/images/957fb0bb-toprism-logo-primary-white.svg",
               "width": 192,
@@ -231,7 +231,7 @@
             }
           },
           {
-            "name": "",
+            "name": "Crowdsnap",
             "image": {
               "url": "https://static.pingcap.com/images/7713e4cc-untitled-design-29-e1759227847264.png",
               "width": 367,
@@ -239,7 +239,7 @@
             }
           },
           {
-            "name": "",
+            "name": "Plaid",
             "image": {
               "url": "https://static.pingcap.com/images/87856fc4-plaid.svg",
               "width": 112,
@@ -312,7 +312,7 @@
         },
         "secondaryCta": {
           "text": "View Documentation",
-          "href": "/docs/tidb-cloud/vector-search/"
+          "href": "https://docs.pingcap.com/ai/vector-search-overview/"
         }
       },
       "style": {
