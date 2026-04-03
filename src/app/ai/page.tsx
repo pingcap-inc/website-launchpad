@@ -75,10 +75,11 @@ const dsl: PageDSL = {
         "backgroundImage": {
           "image": {
             "url": "https://static.pingcap.com/images/a047832d-banner-ai.svg",
+            "alt": "TiDB AI architecture gradient visualization",
             "width": 1440,
             "height": 1037
           },
-          "alt": ""
+          "alt": "TiDB AI architecture gradient visualization"
         }
       },
       "style": {
@@ -183,9 +184,13 @@ const dsl: PageDSL = {
             "cta": "Read the story",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+                "url": "https://static.pingcap.com/images/712552a8-dify.png",
+                "alt": "dify",
+                "width": 300,
+                "height": 300
               },
-              "alt": "dify"
+              "alt": "dify",
+              "size": 47
             }
           },
           {
@@ -196,24 +201,26 @@ const dsl: PageDSL = {
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/f003549b-manus.png",
+                "alt": "manus logo",
                 "width": 512,
                 "height": 141
               },
-              "alt": ""
+              "alt": "manus logo"
             }
           },
           {
             "quote": "TiDB’s unified architecture enabled AI agents to access complete, real-time user context for autonomous marketing decisions.",
             "author": "Head of Engineering",
             "href": "https://www.pingcap.com/case-study/rengage-autonomous-marketing-tidb/",
-            "cta": "Ready the story",
+            "cta": "Read the story",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/86f45063-rengage.png",
+                "alt": "rengage logo",
                 "width": 1225,
                 "height": 282
               },
-              "alt": ""
+              "alt": "rengage logo"
             }
           }
         ]
