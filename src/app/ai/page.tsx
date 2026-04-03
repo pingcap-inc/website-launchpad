@@ -71,20 +71,19 @@ const dsl: PageDSL = {
           "alt": "hero image",
           "width": 500,
           "height": 400
-        },
+        }
+      },
+      "style": {
+        "background": "gradient-dark-top",
+        "spacing": "hero",
         "backgroundImage": {
           "image": {
             "url": "https://static.pingcap.com/images/a047832d-banner-ai.svg",
             "alt": "TiDB AI architecture gradient visualization",
             "width": 1440,
             "height": 1037
-          },
-          "alt": "TiDB AI architecture gradient visualization"
+          }
         }
-      },
-      "style": {
-        "background": "gradient-dark-top",
-        "spacing": "hero"
       }
     },
     {
