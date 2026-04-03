@@ -24,7 +24,7 @@ import { resolve } from 'path';
 const LOWERCASE_WORDS = new Set([
   'a', 'an', 'the',
   'and', 'but', 'or', 'for', 'nor',
-  'on', 'at', 'to', 'from', 'by', 'with', 'of', 'in', 'into', 'up', 'as',
+  'on', 'at', 'to', 'from', 'by', 'with', 'of', 'in', 'into', 'up', 'as', 'vs'
 ]);
 
 // Brand names / acronyms that are always valid as-is — never flag them.

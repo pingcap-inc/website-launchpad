@@ -1,6 +1,14 @@
 'use client'
 
-import { Megaphone, CalendarDays, Sparkles, BarChart2 } from 'lucide-react'
+import {
+  Megaphone,
+  CalendarDays,
+  Sparkles,
+  BarChart2,
+  List,
+  BookOpen,
+  Columns2,
+} from 'lucide-react'
 import type { PageTemplate } from '@/lib/admin/page-templates'
 import { PAGE_TEMPLATES } from '@/lib/admin/page-templates'
 
@@ -9,6 +17,9 @@ const TEMPLATE_ICONS: Record<string, React.ReactNode> = {
   'event-signup': <CalendarDays size={18} strokeWidth={1.5} />,
   'program-announcement': <Sparkles size={18} strokeWidth={1.5} />,
   'battle-card': <BarChart2 size={18} strokeWidth={1.5} />,
+  listicle: <List size={18} strokeWidth={1.5} />,
+  playbook: <BookOpen size={18} strokeWidth={1.5} />,
+  compare: <Columns2 size={18} strokeWidth={1.5} />,
 }
 
 export function TemplateSelector({ onSelect }: { onSelect: (template: PageTemplate) => void }) {

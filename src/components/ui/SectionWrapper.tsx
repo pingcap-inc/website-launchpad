@@ -12,6 +12,7 @@ const BACKGROUND_CLASS: Record<string, string> = {
   'brand-violet': 'bg-brand-violet-bg',
   'brand-blue': 'bg-brand-blue-bg',
   'brand-teal': 'bg-brand-teal-bg',
+  none: '',
 }
 
 const SPACING_CLASS: Record<string, string> = {
@@ -20,6 +21,7 @@ const SPACING_CLASS: Record<string, string> = {
   lg: 'py-section-sm lg:py-section',
   section: 'py-section-sm lg:py-section',
   hero: '',
+  none: '',
 }
 
 export function resolveSectionStyle(style?: SectionStyle, defaults?: SectionStyle): SectionStyle {
