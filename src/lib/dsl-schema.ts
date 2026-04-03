@@ -149,19 +149,6 @@ export interface HeroImage {
   priority?: boolean
 }
 
-/** Used with layout="centered" */
-export interface HeroBackgroundImage {
-  image: ImageRef
-  alt?: string
-  priority?: boolean
-  /** Tailwind opacity class, e.g. "opacity-80". Defaults to "opacity-80". */
-  opacityClassName?: string
-  /** Optional overlay class. */
-  overlayClassName?: string
-  /** Defaults to object-center / bg-center */
-  positionClassName?: string
-}
-
 export interface HeroForm {
   formId: string // HubSpot form ID (required)
   portalId?: string // HubSpot portal ID — defaults to '4466002'
@@ -188,8 +175,6 @@ export interface HeroProps {
   secondaryCta?: Cta
   /** Image shown on the right side. Requires layout="image-right". */
   heroImage?: HeroImage
-  /** Full-bleed background image. Requires layout="centered". */
-  backgroundImage?: HeroBackgroundImage
   /** Embeds a HubSpot form in the hero right slot. Auto-sets layout="split". */
   heroForm?: HeroForm
   className?: string
@@ -617,7 +602,6 @@ Available section types (choose appropriate mix):
       primaryCta?: {text,href},
       secondaryCta?: {text,href},
       heroImage?: { image: {assetId?, url}, alt?, width?, height?, align?:"right"|"center", priority? },
-      backgroundImage?: { image: {assetId?, url}, alt?, opacityClassName?, overlayClassName?, positionClassName?, priority? },
       heroForm?: {formId, portalId?, region?},
       className?
     }
