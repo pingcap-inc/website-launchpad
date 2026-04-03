@@ -41,7 +41,15 @@
       },
       "style": {
         "background": "gradient-dark-top",
-        "spacing": "hero"
+        "spacing": "hero",
+        "backgroundImageOpacityClassName": "opacity-50",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/a047832d-banner-ai.svg",
+            "width": 1440,
+            "height": 1037
+          }
+        }
       }
     },
     {
