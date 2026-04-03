@@ -31,12 +31,11 @@
       },
       "style": {
         "spacing": "hero",
-        "backgroundImageOpacityClassName": "opacity-50",
         "backgroundImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/ba02385f-vector_search_hero_bg.svg",
-            "width": 296,
-            "height": 150
+            "url": "https://static.pingcap.com/images/a047832d-banner-ai.svg",
+            "width": 1440,
+            "height": 1037
           }
         }
       }
@@ -54,13 +53,13 @@
             "description": "Run similarity search directly on fresh operational data instead of stale indexes or duplicated vector stores.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/38da2a01-semantic_search.jpg",
-                "width": 1440,
-                "height": 796
+                "url": "https://static.pingcap.com/images/8d8971c1-02_semantic_search.png",
+                "width": 1360,
+                "height": 876
               },
               "alt": "",
-              "width": 1440,
-              "height": 796
+              "width": 1360,
+              "height": 876
             }
           },
           {
@@ -68,13 +67,13 @@
             "description": "Combine vector similarity with relational filters, joins, and metadata-aware queries using familiar SQL—without separate search infrastructure.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/3173ac54-sql_retrieval.jpg",
-                "width": 1440,
-                "height": 1112
+                "url": "https://static.pingcap.com/images/113739e0-03_sql_retrieval.png",
+                "width": 1360,
+                "height": 1236
               },
               "alt": "",
-              "width": 1440,
-              "height": 1112
+              "width": 1360,
+              "height": 1236
             }
           },
           {
@@ -82,13 +81,13 @@
             "description": "Handle growing embeddings, queries, and concurrent AI workloads with TiDB’s distributed architecture and transactional consistency.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/0555de04-production_rag.jpg",
-                "width": 1440,
-                "height": 926
+                "url": "https://static.pingcap.com/images/259c880d-04_production_rag.png",
+                "width": 1360,
+                "height": 1122
               },
               "alt": "",
-              "width": 1440,
-              "height": 926
+              "width": 1360,
+              "height": 1122
             }
           }
         ],
@@ -159,13 +158,13 @@
             "description": "Maintain fast retrieval as embeddings, queries, and application traffic grow, without redesigning infrastructure as AI usage expands.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/07654253-distributed_performance_at_scale_.jpg",
-                "width": 1440,
-                "height": 896
+                "url": "https://static.pingcap.com/images/5bf34168-01_distributed_performance.png",
+                "width": 1360,
+                "height": 888
               },
               "alt": "",
-              "width": 1440,
-              "height": 896
+              "width": 1360,
+              "height": 888
             }
           }
         ],
@@ -184,33 +183,67 @@
         "title": "Trusted by leading AI teams",
         "logos": [
           {
-            "name": "Company 1",
+            "name": "Catalyst",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg",
+              "width": 111,
+              "height": 28
             }
           },
           {
-            "name": "Company 2",
+            "name": "Omniconvert",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "url": "https://static.pingcap.com/images/f34077f8-omniconvert-logo-white.png",
+              "width": 1071,
+              "height": 200
             }
           },
           {
-            "name": "Company 3",
+            "name": "Manus",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "url": "https://static.pingcap.com/images/69d76633-manuse-logo-white.svg",
+              "width": 103,
+              "height": 30
             }
           },
           {
-            "name": "Company 4",
+            "name": "Dify",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
+              "width": 102,
+              "height": 45
             }
           },
           {
-            "name": "Company 5",
+            "name": "Rengage",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "url": "https://static.pingcap.com/images/716bda3b-rengage-logo-black.png",
+              "width": 1225,
+              "height": 282
+            }
+          },
+          {
+            "name": "Toprism",
+            "image": {
+              "url": "https://static.pingcap.com/images/957fb0bb-toprism-logo-primary-white.svg",
+              "width": 192,
+              "height": 45
+            }
+          },
+          {
+            "name": "Crowdsnap",
+            "image": {
+              "url": "https://static.pingcap.com/images/7713e4cc-untitled-design-29-e1759227847264.png",
+              "width": 367,
+              "height": 98
+            }
+          },
+          {
+            "name": "Plaid",
+            "image": {
+              "url": "https://static.pingcap.com/images/87856fc4-plaid.svg",
+              "width": 112,
+              "height": 42
             }
           }
         ],
