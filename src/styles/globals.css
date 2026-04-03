@@ -110,6 +110,103 @@
   color: var(--text-secondary);
 }
 
+/* ─── Rich text code blocks (Prism-ready) ─────────────────────────────────── */
+.rt-code-wrap {
+  margin: 16px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.rt-code-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.rt-code-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #93c5fd;
+}
+
+.rt-copy-btn {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e5e7eb;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rt-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.rt-code-block {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: var(--font-moderat-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: #e5e7eb;
+}
+
+.rt-code-block code {
+  font-family: inherit;
+}
+
+/* Minimal Prism-like tokens */
+.rt-code-block .token.comment,
+.rt-code-block .token.prolog,
+.rt-code-block .token.doctype,
+.rt-code-block .token.cdata {
+  color: #6b7280;
+}
+.rt-code-block .token.punctuation {
+  color: #cbd5f5;
+}
+.rt-code-block .token.property,
+.rt-code-block .token.tag,
+.rt-code-block .token.boolean,
+.rt-code-block .token.number,
+.rt-code-block .token.constant,
+.rt-code-block .token.symbol,
+.rt-code-block .token.deleted {
+  color: #fca5a5;
+}
+.rt-code-block .token.selector,
+.rt-code-block .token.attr-name,
+.rt-code-block .token.string,
+.rt-code-block .token.char,
+.rt-code-block .token.builtin,
+.rt-code-block .token.inserted {
+  color: #86efac;
+}
+.rt-code-block .token.operator,
+.rt-code-block .token.entity,
+.rt-code-block .token.url,
+.rt-code-block .token.variable {
+  color: #93c5fd;
+}
+.rt-code-block .token.atrule,
+.rt-code-block .token.attr-value,
+.rt-code-block .token.function,
+.rt-code-block .token.class-name {
+  color: #fcd34d;
+}
+.rt-code-block .token.keyword {
+  color: #c4b5fd;
+}
+
 @keyframes logo-marquee {
   from {
     transform: translateX(0%);
@@ -215,6 +312,155 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ─── Rich Text Block (Markdown content for listicle pages) ─── */
+.rich-text-block {
+  color: #a2adb9; /* text-secondary */
+  line-height: 1.75;
+  font-size: 1rem;
+}
+.rich-text-block h2 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 48px;
+  margin-bottom: 0.75em;
+  line-height: 1.3;
+}
+.rich-text-block h3 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.4;
+}
+.rich-text-block h4 {
+  color: #ffffff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+  line-height: 1.4;
+}
+@media (min-width: 1024px) {
+  .rich-text-block h2 {
+    font-size: 2rem;
+  }
+  .rich-text-block h3 {
+    font-size: 1.5rem;
+  }
+}
+.rich-text-block p {
+  margin-bottom: 1em;
+}
+.rich-text-block strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+.rich-text-block em {
+  font-style: italic;
+}
+.rich-text-block a {
+  color: #509dea; /* brand-blue-light */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.rich-text-block a:hover {
+  color: #2c80ce; /* brand-blue-medium */
+}
+.rich-text-block ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+.rich-text-block ol {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+.rich-text-block li {
+  margin-bottom: 0.25em;
+}
+.rich-text-block blockquote {
+  border-left: 3px solid #424d57;
+  padding-left: 1em;
+  margin: 1em 0;
+  color: #cbd1d7;
+  font-style: italic;
+}
+.rich-text-block code {
+  background: #06111a;
+  padding: 0.125em 0.375em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+.rich-text-block hr {
+  border: 0;
+  border-top: 1px solid #424d57;
+  margin: 2em 0;
+}
+.rich-text-block table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.875rem;
+}
+.rt-table-wrap {
+  margin: 1.25rem 0;
+}
+.rt-table-wrap--scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.5rem;
+}
+.rt-table-wrap--scroll table {
+  min-width: 720px;
+}
+.rt-table-wrap--scroll th:first-child,
+.rt-table-wrap--scroll td:first-child {
+  position: sticky;
+  left: 0;
+  background: #0b141b;
+}
+[data-tone='dark'] .rt-table-wrap--scroll th:first-child,
+[data-tone='dark'] .rt-table-wrap--scroll td:first-child {
+  background: #ffffff;
+}
+.rich-text-block th {
+  color: #ffffff;
+  font-weight: 700;
+  text-align: left;
+  padding: 0.75em 1em;
+  border-bottom: 2px solid #424d57;
+}
+.rich-text-block td {
+  padding: 0.75em 1em;
+  border-bottom: 1px solid #28333e;
+}
+.faq-longform h2 {
+  font-size: 1.5rem;
+}
+@media (min-width: 1024px) {
+  .faq-longform h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Dark section tone overrides for rich-text-block (light backgrounds) */
+[data-tone='dark'] .rich-text-block {
+  color: #424d57;
+}
+[data-tone='dark'] .rich-text-block h2,
+[data-tone='dark'] .rich-text-block h3,
+[data-tone='dark'] .rich-text-block h4,
+[data-tone='dark'] .rich-text-block strong {
+  color: #000000;
+}
+[data-tone='dark'] .rich-text-block th {
+  color: #000000;
 }
 
 @media (prefers-reduced-motion: reduce) {

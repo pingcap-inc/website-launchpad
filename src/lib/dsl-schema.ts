@@ -100,6 +100,9 @@ export type SectionType =
   | 'agenda'
   | 'speakers'
   | 'comparisonTable'
+  | 'richTextBlock'
+  | 'tableOfContents'
+  | 'codeBlock'
 
 export interface SectionStyle {
   background?:
@@ -456,6 +459,39 @@ export interface ComparisonRow {
   theirs: string | boolean
 }
 
+// ─── Rich Text Block ────────────────────────────────────────────────────────
+
+export interface RichTextBlockProps {
+  content: string
+  className?: string
+}
+
+// ─── Code Block ─────────────────────────────────────────────────────────────
+
+export interface CodeBlockProps {
+  title?: string
+  filename?: string
+  language?: string
+  code: string
+  className?: string
+}
+
+// ─── Table of Contents ──────────────────────────────────────────────────────
+
+export interface TocItem {
+  id: string
+  label: string
+  level?: 1 | 2
+}
+
+export interface TableOfContentsProps {
+  items: TocItem[]
+  sticky?: boolean
+  className?: string
+}
+
+// ─── Numbered List ──────────────────────────────────────────────────────────
+
 export type SectionPropsMap = {
   hero: HeroProps
   stats: StatsProps
@@ -472,6 +508,9 @@ export type SectionPropsMap = {
   agenda: AgendaProps
   speakers: SpeakersProps
   comparisonTable: ComparisonTableProps
+  richTextBlock: RichTextBlockProps
+  tableOfContents: TableOfContentsProps
+  codeBlock: CodeBlockProps
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -575,7 +614,7 @@ Generate a PageDSL JSON object with this exact structure:
       "type": string,
       "props": object,
       "style": {
-        "background"?: "primary"|"inverse"|"gradient-dark-top"|"gradient-dark-bottom"|"brand-red"|"brand-violet"|"brand-blue"|"brand-teal",
+        "background"?: "primary"|"inverse"|"gradient-dark-top"|"gradient-dark-bottom"|"brand-red"|"brand-violet"|"brand-blue"|"brand-teal"|"none",
         "spacing"?: "none"|"sm"|"md"|"lg"|"section"|"hero",
         "removePaddingTop"?: boolean,
         "removePaddingBottom"?: boolean,
@@ -629,6 +668,8 @@ Available section types (choose appropriate mix):
 - { type: "agenda", props: { eyebrow?, title, subtitle?, items: [{time?, title, description?}], className? } }
 - { type: "speakers", props: { eyebrow?, title, items: [{name, title, company?, bio?, image?: { image: {assetId?, url}, alt? }}], className? } }
 - { type: "comparisonTable", props: { eyebrow?, title, subtitle?, ourProduct, competitor, rows: [{feature, ours: string|boolean, theirs: string|boolean}], cta?: {text, href}, className? } }
+- { type: "richTextBlock", props: { content: string (Markdown), className? } }
+- { type: "tableOfContents", props: { items: [{id, label, level?: 1|2}], sticky?: boolean, className? } }
 
 Icon names (use for icon fields): ${ALL_ICON_NAMES.join(', ')}
 CTA hrefs: use real PingCAP URLs or "https://tidbcloud.com/free-trial/" for signup CTAs.
@@ -640,6 +681,14 @@ IMPORTANT: Do NOT invent documentation URLs or blog post paths. Only use these v
 - Docs home: https://docs.pingcap.com/
 - GitHub: https://github.com/pingcap/tidb
 Always start with a "hero" section and end with a "cta" section.
+
+If pageType is "listicle", only use these section types:
+- hero (centered headline)
+- tableOfContents (table of contents for headings and list entries)
+- richTextBlock (intro text, explanatory copy; first line includes last updated + author)
+- faq (frequently asked questions)
+- cta (call to action)
+Do NOT use stats, featureGrid, featureCard, featureTabs, featureHighlights, featureMedia, testimonials, logoCloud, or form for listicle pages.
 Return ONLY the JSON object, no markdown, no code blocks.
 IMPORTANT: style.background MUST be one of the exact values listed above. Do not invent other values.
 IMPORTANT: style.spacing MUST be one of the exact values listed above. Do not invent other values.

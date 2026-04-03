@@ -14,6 +14,8 @@ import {
   Minimize2,
   PanelLeftClose,
   PanelLeftOpen,
+  TriangleAlert,
+  X,
 } from 'lucide-react'
 import {
   DndContext,
@@ -32,9 +34,13 @@ import {
 } from '@dnd-kit/sortable'
 import type { PageDSL, SectionNode } from '@/lib/dsl-schema'
 import type { PageTemplate } from '@/lib/admin/page-templates'
+import type { ImportPageType, PageType } from '@/lib/admin/page-types'
+import { IMPORT_PAGE_TYPES, PAGE_TYPES, PAGE_TYPE_LABELS } from '@/lib/admin/page-types'
 import { TemplateSelector } from '@/components/admin/TemplateSelector'
 import { ImportInput } from '@/components/admin/ImportInput'
 import { normalizeDSL } from '@/lib/dsl-utils'
+import { detectPageType } from '@/lib/detect-page-type'
+import { addTableOfContentsForLongForm } from '@/lib/toc'
 import { SectionCard } from './SectionCard'
 import { AddSectionPanel } from './AddSectionPanel'
 import { PublishDrawer } from './PublishDrawer'
@@ -56,22 +62,37 @@ The page should:
   },
 ]
 
-const PAGE_TYPES = [
-  // 'Product Page',
-  // 'Solution Page',
-  // 'Landing Page',
-  // 'Glossary Page',
-  'General Page',
-  'Event Page',
-]
+function getPageTypeLabel(pageType: PageType): string {
+  return PAGE_TYPE_LABELS[pageType] ?? pageType
+}
 const DRAFT_BRANCH = 'drafts/ai'
 const GOOGLE_DOC_REGEX = /https?:\/\/docs\.google\.com\/document\/d\/([a-zA-Z0-9-_]+)/
 
 const IMPORT_MAX_CHARS = 6000
+const LONG_FORM_IMPORT_MAX_CHARS = 20000
 
-/** Sanitize imported document content to avoid JSON serialization issues and excessive length */
-function sanitizeImportedContent(text: string, maxChars = IMPORT_MAX_CHARS): string {
-  const cleaned = text
+function stripBase64Images(text: string): string {
+  return (
+    text
+      // Drop inline base64 images (Markdown or HTML). Keep linked images.
+      .replace(/!\[[^\]]*]\(\s*data:image\/[^)\s]+[^)]*\)/gi, '')
+      .replace(/<img[^>]+src=["']\s*data:image\/[^"']+["'][^>]*>/gi, '')
+      // Drop reference-style base64 image definitions (with or without <>)
+      .replace(/^\s*\[[^\]]+]\s*:\s*<?\s*data:image\/\S+.*>?$/gim, '')
+      // Drop any remaining inline base64 image tokens
+      .replace(/<\s*data:image[\s\S]*?>/gi, '')
+      .replace(/data:image\/[a-zA-Z0-9.+-]+;base64,[A-Za-z0-9+/=]+/g, '')
+  )
+}
+
+/** Sanitize imported document content to avoid JSON serialization issues and excessive length.
+ *  For long-form page types (listicle, playbook, compare), skip truncation. */
+function sanitizeImportedContent(
+  text: string,
+  options?: { isLongForm?: boolean; maxChars?: number }
+): string {
+  const { isLongForm = false, maxChars = IMPORT_MAX_CHARS } = options ?? {}
+  const cleaned = stripBase64Images(text)
     // Normalize line endings
     .replace(/\r\n/g, '\n')
     .replace(/\r/g, '\n')
@@ -81,9 +102,26 @@ function sanitizeImportedContent(text: string, maxChars = IMPORT_MAX_CHARS): str
     .replace(/\n{3,}/g, '\n\n')
     .trim()
 
-  if (cleaned.length <= maxChars) return cleaned
+  // Final guard: drop any lines that still contain base64 image payloads.
+  const cleanedLines = cleaned
+    .split('\n')
+    .filter((line) => {
+      const trimmed = line.trim()
+      if (!/data:image\//i.test(trimmed)) return true
+      return !(
+        /^data:image\//i.test(trimmed) ||
+        /^!\[[^\]]*]\(\s*data:image/i.test(trimmed) ||
+        /^<img[^>]+src=["']\s*data:image/i.test(trimmed) ||
+        /^\[[^\]]+]\s*:\s*<?\s*data:image/i.test(trimmed)
+      )
+    })
+    .join('\n')
+
+  // Long-form content (listicle, playbook, compare) — do not truncate
+  if (isLongForm || cleanedLines.length <= maxChars) return cleanedLines
+
   return (
-    cleaned.substring(0, maxChars) +
+    cleanedLines.substring(0, maxChars) +
     '\n\n[Content truncated to first ~6000 characters for processing. Edit above to include the most relevant sections.]'
   )
 }
@@ -276,6 +314,36 @@ function parseTextToDsl(text: string, slug?: string): PageDSL {
         },
       },
     ],
+  }
+}
+
+function appendSourceContentSection(dsl: PageDSL, content: string): PageDSL {
+  const trimmed = content.trim()
+  if (!trimmed) return dsl
+  const sample = trimmed.slice(0, 200)
+  const hasSource = dsl.sections.some((section) => {
+    if (section.type !== 'richTextBlock') return false
+    const sectionContent = (section.props as { content?: string } | undefined)?.content
+    return typeof sectionContent === 'string' && sectionContent.includes(sample)
+  })
+  if (hasSource) return dsl
+  const baseId = 'source-content'
+  let id = baseId
+  let suffix = 2
+  while (dsl.sections.some((section) => section.id === id)) {
+    id = `${baseId}-${suffix}`
+    suffix += 1
+  }
+  const sourceSection: SectionNode = {
+    id,
+    type: 'richTextBlock',
+    props: {
+      content: trimmed,
+    },
+  }
+  return {
+    ...dsl,
+    sections: [...dsl.sections, sourceSection],
   }
 }
 
@@ -514,9 +582,10 @@ function GuidedInput({
 // ── Left panel: intent + section list ───────────────────────────────────────
 
 interface LeftPanelProps {
-  pageType: string
+  pageType: PageType
   intent: string
   generating: boolean
+  generationStage: string | null
   generateError: string
   importStatus: 'idle' | 'loading' | 'error'
   importError: string
@@ -531,12 +600,14 @@ interface LeftPanelProps {
   selectedTemplate: PageTemplate | null
   importedContent: string | null
   importWarning: string
-  onPageTypeChange: (v: string) => void
+  preserveSource: boolean
+  onPreserveSourceChange: (v: boolean) => void
+  onPageTypeChange: (v: PageType) => void
   onIntentChange: (v: string) => void
   onGenerate: (intentOverride?: string) => void
   onTemplateSelect: (template: PageTemplate) => void
   onTemplateClear: () => void
-  onContentImport: (text: string) => void
+  onContentImport: (text: string, pageType?: ImportPageType) => void
   onContentImportClear: () => void
   onLocalJsonChange: (v: string) => void
   onLocalJsonLoad: () => void
@@ -546,6 +617,14 @@ interface LeftPanelProps {
   onSectionRegenerate: (index: number, instruction: string) => Promise<void>
   onSectionAdd: (node: SectionNode) => void
   onDragEnd: (event: DragEndEvent) => void
+  briefUrl: string
+  briefFile: File | null
+  briefLoading: boolean
+  briefError: string
+  onBriefUrlChange: (v: string) => void
+  onBriefFileChange: (f: File | null) => void
+  onBriefErrorChange: (v: string) => void
+  onLoadBrief: (fileOverride?: File | null) => void
 }
 
 type RefineResult = {
@@ -561,6 +640,7 @@ function LeftPanel({
   pageType,
   intent,
   generating,
+  generationStage,
   generateError,
   importStatus,
   importError,
@@ -575,6 +655,8 @@ function LeftPanel({
   selectedTemplate,
   importedContent,
   importWarning,
+  preserveSource,
+  onPreserveSourceChange,
   onPageTypeChange,
   onIntentChange,
   onGenerate,
@@ -590,11 +672,21 @@ function LeftPanel({
   onSectionRegenerate,
   onSectionAdd,
   onDragEnd,
+  briefUrl,
+  briefFile,
+  briefLoading,
+  briefError,
+  onBriefUrlChange,
+  onBriefFileChange,
+  onBriefErrorChange,
+  onLoadBrief,
 }: LeftPanelProps) {
   const [showAdd, setShowAdd] = useState(false)
   const [guidedMode, setGuidedMode] = useState(mode === 'guided')
   const [guidedPrompt, setGuidedPrompt] = useState('')
   const [guidedCanGenerate, setGuidedCanGenerate] = useState(false)
+  const [dragActive, setDragActive] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleGuidedPromptChange = useCallback((prompt: string, canGenerate: boolean) => {
     setGuidedPrompt(prompt)
@@ -607,6 +699,40 @@ function LeftPanel({
   )
 
   const sectionIds = dsl?.sections.map((section) => section.id) ?? []
+
+  const handleBriefFile = useCallback(
+    (file: File) => {
+      onBriefErrorChange('')
+      const ext = file.name.split('.').pop()?.toLowerCase()
+      if (!ext || !['md', 'txt', 'docx'].includes(ext)) {
+        onBriefFileChange(null)
+        onBriefErrorChange('Only .docx, .md, or .txt files are supported.')
+        return
+      }
+      onBriefUrlChange('')
+      onBriefFileChange(file)
+      onLoadBrief(file)
+    },
+    [onBriefErrorChange, onBriefFileChange, onBriefUrlChange, onLoadBrief]
+  )
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault()
+      setDragActive(false)
+      const file = e.dataTransfer.files?.[0]
+      if (file) handleBriefFile(file)
+    },
+    [handleBriefFile]
+  )
+
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0]
+      if (file) handleBriefFile(file)
+    },
+    [handleBriefFile]
+  )
 
   // ── Resizer state & logic ──────────────────────────────────────────────────
   const containerRef = useRef<HTMLDivElement>(null)
@@ -681,11 +807,13 @@ function LeftPanel({
           <div className="grid grid-cols-2 gap-2">
             <select
               value={pageType}
-              onChange={(e) => onPageTypeChange(e.target.value)}
+              onChange={(e) => onPageTypeChange(e.target.value as PageType)}
               className="col-span-2 bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors"
             >
               {PAGE_TYPES.map((t) => (
-                <option key={t}>{t}</option>
+                <option key={t} value={t}>
+                  {getPageTypeLabel(t)}
+                </option>
               ))}
             </select>
           </div>
@@ -695,13 +823,18 @@ function LeftPanel({
           selectedTemplate?.pageType &&
           selectedTemplate.pageType !== PAGE_TYPES[0] && (
             <span className="inline-block text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded">
-              {selectedTemplate.pageType}
+              {getPageTypeLabel(selectedTemplate.pageType)}
             </span>
           )}
         {mode === 'marketing' && !selectedTemplate ? (
           <TemplateSelector onSelect={onTemplateSelect} />
         ) : mode === 'import' && importedContent === null ? (
-          <ImportInput onImport={onContentImport} />
+          <>
+            <div className="text-label text-gray-500">
+              Tip: If you need to preserve formatting, upload a Markdown (.md) file.
+            </div>
+            <ImportInput onImport={onContentImport} />
+          </>
         ) : guidedMode ? (
           <GuidedInput generating={generating} onPromptChange={handleGuidedPromptChange} />
         ) : (
@@ -737,6 +870,86 @@ function LeftPanel({
                 >
                   ← Import different content
                 </button>
+                <div className="w-full">
+                  <p className="text-body-sm font-medium text-gray-700 mb-2">Page type</p>
+                  <select
+                    value={IMPORT_PAGE_TYPES.includes(pageType) ? pageType : IMPORT_PAGE_TYPES[0]}
+                    onChange={(e) => onPageTypeChange(e.target.value as PageType)}
+                    className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors"
+                  >
+                    {IMPORT_PAGE_TYPES.map((t) => (
+                      <option key={t} value={t}>
+                        {getPageTypeLabel(t)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
+            )}
+            {!guidedMode && !importedContent && (
+              <>
+                <div className="rounded-lg border border-gray-200 bg-white p-3 space-y-3">
+                  <div className="flex flex-wrap gap-2 items-center">
+                    <input
+                      type="text"
+                      placeholder="Paste a Google Doc URL…"
+                      value={briefUrl}
+                      onChange={(e) => onBriefUrlChange(e.target.value)}
+                      className="flex-1 min-w-[220px] text-body-sm rounded border border-gray-200 px-2.5 py-1.5 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
+                    />
+                    <button
+                      type="button"
+                      disabled={briefLoading || (!briefUrl.trim() && !briefFile)}
+                      onClick={() => onLoadBrief()}
+                      className="text-body-sm px-3 py-1.5 rounded bg-gray-900 text-white disabled:opacity-40 hover:bg-gray-700 transition-colors flex items-center gap-1.5"
+                    >
+                      {briefLoading ? (
+                        <>
+                          <Loader2 size={12} className="animate-spin" /> Loading…
+                        </>
+                      ) : (
+                        'Load content →'
+                      )}
+                    </button>
+                  </div>
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    onDragOver={(e) => {
+                      e.preventDefault()
+                      setDragActive(true)
+                    }}
+                    onDragLeave={() => setDragActive(false)}
+                    onDrop={handleDrop}
+                    className={`relative rounded-md border border-dashed px-3 py-2 text-body-sm cursor-pointer transition-colors ${
+                      dragActive
+                        ? 'border-gray-400 bg-gray-50 text-gray-600'
+                        : 'border-gray-200 text-gray-400 hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span>Drop a .docx / .md / .txt file here, or click to browse</span>
+                      {briefFile && (
+                        <span className="text-label text-gray-500">{briefFile.name}</span>
+                      )}
+                    </div>
+                    {dragActive && (
+                      <div className="absolute inset-0 rounded-md bg-gray-50/80 border border-gray-300 flex items-center justify-center text-gray-600 text-body-sm pointer-events-none">
+                        Drop to attach
+                      </div>
+                    )}
+                  </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".docx,.md,.txt"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                  {briefError && <p className="text-label text-red-600">{briefError}</p>}
+                  <div className="text-label text-gray-500">
+                    Tip: Use a .md file to keep formatting intact.
+                  </div>
+                </div>
               </>
             )}
             <textarea
@@ -746,6 +959,17 @@ function LeftPanel({
               placeholder="Describe the page you want to create… or paste a Google Doc link"
               className={`w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors resize-y min-h-[160px] placeholder:text-gray-300${mode === 'import' && importedContent !== null ? ' max-h-[180px]' : ''}`}
             />
+            {/* {mode === 'import' && importedContent !== null && (
+              <label className="flex items-center gap-2 text-body-sm text-gray-600">
+                <input
+                  type="checkbox"
+                  checked={preserveSource}
+                  onChange={(e) => onPreserveSourceChange(e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-500"
+                />
+                Preserve source wording as much as possible
+              </label>
+            )} */}
             {importStatus === 'loading' && (
               <div className="text-label text-gray-500">Importing Google Doc…</div>
             )}
@@ -872,6 +1096,9 @@ function LeftPanel({
               </>
             )}
           </button>
+          {generating && generationStage && (
+            <div className="text-label text-gray-500">{generationStage}</div>
+          )}
           {guidedMode && (
             <button
               type="button"
@@ -944,6 +1171,7 @@ function CreatePageInner() {
   const [pageType, setPageType] = useState(PAGE_TYPES[0])
   const [intent, setIntent] = useState('')
   const [generating, setGenerating] = useState(false)
+  const [generationStage, setGenerationStage] = useState<string | null>(null)
   const [generateError, setGenerateError] = useState('')
   const [localJson, setLocalJson] = useState('')
   const [localJsonError, setLocalJsonError] = useState('')
@@ -972,7 +1200,17 @@ function CreatePageInner() {
   const [importWarning, setImportWarning] = useState('')
   const [importStatus, setImportStatus] = useState<'idle' | 'loading' | 'error'>('idle')
   const [importError, setImportError] = useState('')
+  const [parentWarning, setParentWarning] = useState<{
+    suggested: string
+    parent: string
+    fallback: string
+  } | null>(null)
   const lastImportedDocIdRef = useRef<string | null>(null)
+  const [briefUrl, setBriefUrl] = useState('')
+  const [briefFile, setBriefFile] = useState<File | null>(null)
+  const [briefLoading, setBriefLoading] = useState(false)
+  const [briefError, setBriefError] = useState('')
+  const [preserveSource, setPreserveSource] = useState(false)
 
   const importBadge =
     importStatus === 'loading'
@@ -1251,7 +1489,8 @@ function CreatePageInner() {
         const data = (await res.json()) as { content?: string; error?: string }
         if (!res.ok || !data.content) throw new Error(data.error ?? 'Import failed')
         if (cancelled) return
-        const parsedDsl = normalizeDSL(parseTextToDsl(data.content, slug || 'imported-page'))
+        const cleanedContent = stripBase64Images(data.content)
+        const parsedDsl = normalizeDSL(parseTextToDsl(cleanedContent, slug || 'imported-page'))
         setDsl(parsedDsl)
         setLocalJson(JSON.stringify(parsedDsl, null, 2))
         setLocalJsonError('')
@@ -1371,24 +1610,92 @@ function CreatePageInner() {
     }
   }, [slug])
 
+  const handleLoadBrief = async (fileOverride?: File | null) => {
+    setBriefLoading(true)
+    setBriefError('')
+    try {
+      let content = ''
+      if (briefUrl && !fileOverride) {
+        const match = briefUrl.match(/\/document\/d\/([a-zA-Z0-9_-]+)/)
+        const docId = match?.[1]
+        if (!docId) {
+          setBriefError('Invalid Google Docs URL.')
+          return
+        }
+        const res = await fetch(`/api/import-gdoc?docId=${encodeURIComponent(docId)}`)
+        const data = (await res.json()) as { text?: string; error?: string }
+        if (!res.ok || data.error) throw new Error(data.error ?? 'Failed to fetch')
+        content = data.text ?? ''
+      } else if (fileOverride ?? briefFile) {
+        const file = fileOverride ?? briefFile
+        if (!file) return
+        const ext = file.name.split('.').pop()?.toLowerCase()
+        if (ext === 'md' || ext === 'txt') {
+          content = await file.text()
+        } else if (ext === 'docx') {
+          const mammoth = await import('mammoth')
+          const arrayBuffer = await file.arrayBuffer()
+          const result = await mammoth.extractRawText({ arrayBuffer })
+          content = result.value
+        } else {
+          setBriefError('Only .docx, .md, or .txt files are supported.')
+          return
+        }
+      }
+      if (content) {
+        setIntent(
+          `Based on the following SEO brief, generate a ${pageType} page:\n\n${stripBase64Images(content)}`
+        )
+        setBriefUrl('')
+        setBriefFile(null)
+      }
+    } catch (err) {
+      setBriefError(err instanceof Error ? err.message : 'Failed to load brief')
+    } finally {
+      setBriefLoading(false)
+    }
+  }
+
   const handleGenerate = async (intentOverride?: string) => {
     const effectiveIntent = typeof intentOverride === 'string' ? intentOverride : intent
     if (typeof intentOverride === 'string') setIntent(intentOverride)
     setGenerating(true)
     setGenerateError('')
+    setParentWarning(null)
+    setGenerationStage('Preparing content…')
 
     // Sanitize imported content to avoid JSON parse errors from special chars / excessive length
     const isImport = mode === 'import' && importedContent !== null
-    const sanitizedIntent = isImport ? sanitizeImportedContent(effectiveIntent) : effectiveIntent
+    const detectedType = isImport ? detectPageType(effectiveIntent) : 'marketing'
+    const hasManualImportType =
+      isImport && IMPORT_PAGE_TYPES.includes(pageType) && pageType !== 'general'
+    const manualType = hasManualImportType ? pageType.toLowerCase() : undefined
+    const resolvedType = manualType ?? detectedType
+    const isLongForm = resolvedType !== 'marketing'
+    const base64StrippedIntent = stripBase64Images(effectiveIntent)
+    const sanitizedIntent = isImport
+      ? sanitizeImportedContent(base64StrippedIntent, { isLongForm })
+      : base64StrippedIntent
 
     // In import mode, let the AI auto-detect page type from content
-    const effectivePageType = isImport ? 'auto' : pageType
+    const effectivePageType = isImport
+      ? hasManualImportType
+        ? pageType
+        : isLongForm
+          ? resolvedType
+          : 'auto'
+      : pageType
 
     try {
+      setGenerationStage('Generating page…')
       const res = await fetch('/api/ai/generate-dsl', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ intent: sanitizedIntent, pageType: effectivePageType }),
+        body: JSON.stringify({
+          intent: sanitizedIntent,
+          pageType: effectivePageType,
+          preserveSource,
+        }),
       })
       let data: PageDSL & { error?: string }
       try {
@@ -1399,15 +1706,44 @@ function CreatePageInner() {
         )
       }
       if (!res.ok || data.error) throw new Error(data.error ?? 'Generation failed')
+      if (!res.ok || data.error) throw new Error(data.error ?? 'Generation failed')
       const normalized = normalizeDSL(data)
-      setDsl(normalized)
-      setBaselineState(normalized, slug)
-      setLocalJson(JSON.stringify(normalized, null, 2))
+      const finalDsl = normalized
+      if (isLongForm && !slug) {
+        const canonical = typeof data.meta?.canonical === 'string' ? data.meta.canonical : ''
+        const aiSegments = canonical
+          .replace(/^\/|\/$/g, '')
+          .split('/')
+          .filter(Boolean)
+        if (aiSegments.length > 1) {
+          const aiParent = aiSegments.slice(0, -1).join('/')
+          const aiChild = aiSegments.at(-1)!
+          const parentExists = parentOptions.some((opt) => opt.slug === aiParent)
+          if (parentExists) {
+            setSlug(`${aiParent}/${aiChild}`)
+            setParentWarning(null)
+          } else {
+            setSlug(aiChild)
+            setParentWarning({
+              suggested: canonical,
+              parent: `/${aiParent}/`,
+              fallback: `/${aiChild}/`,
+            })
+          }
+        } else if (aiSegments.length === 1) {
+          setSlug(aiSegments[0])
+          setParentWarning(null)
+        }
+      }
+      setDsl(finalDsl)
+      setBaselineState(finalDsl, slug)
+      setLocalJson(JSON.stringify(finalDsl, null, 2))
       setLocalJsonError('')
     } catch (err) {
       setGenerateError(err instanceof Error ? err.message : 'Unknown error')
     } finally {
       setGenerating(false)
+      setGenerationStage(null)
     }
   }
 
@@ -1426,6 +1762,39 @@ function CreatePageInner() {
   const updateDsl = useCallback((updater: (prev: PageDSL) => PageDSL) => {
     setDsl((prev) => (prev ? updater(prev) : prev))
   }, [])
+
+  const updateImportWarningFor = useCallback((content: string, selectedPageType: string) => {
+    const longFormTypes = ['listicle', 'playbook', 'compare']
+    const isLongFormImport = longFormTypes.includes(selectedPageType)
+    const importMaxChars = isLongFormImport ? LONG_FORM_IMPORT_MAX_CHARS : IMPORT_MAX_CHARS
+    if (isLongFormImport) {
+      setImportWarning('')
+      return
+    }
+    if (content.length <= importMaxChars) {
+      setImportWarning('')
+      return
+    }
+    const wordCount = content.trim().split(/\s+/).length
+    setImportWarning(
+      `Document is long (${wordCount.toLocaleString()} words). Only the first ~1,000 words will be sent to AI for page structure analysis. You can edit the content below before generating.`
+    )
+  }, [])
+
+  useEffect(() => {
+    if (mode !== 'import' || !importedContent) return
+    updateImportWarningFor(importedContent, pageType)
+  }, [importedContent, mode, pageType, updateImportWarningFor])
+
+  const syncTocIfNeeded = useCallback(
+    (next: PageDSL) => {
+      const longFormTypes = ['listicle', 'playbook', 'compare']
+      if (!longFormTypes.includes(pageType)) return next
+      const cloned = structuredClone(next)
+      return addTableOfContentsForLongForm(cloned, pageType)
+    },
+    [pageType]
+  )
 
   // Keep canonical in sync with slug changes.
   useEffect(() => {
@@ -1456,27 +1825,29 @@ function CreatePageInner() {
       updateDsl((prev) => {
         const sections = [...prev.sections]
         sections[index] = updated
-        return { ...prev, sections }
+        return syncTocIfNeeded({ ...prev, sections })
       })
     },
-    [updateDsl]
+    [syncTocIfNeeded, updateDsl]
   )
 
   const handleSectionDelete = useCallback(
     (index: number) => {
-      updateDsl((prev) => ({
-        ...prev,
-        sections: prev.sections.filter((_, i) => i !== index),
-      }))
+      updateDsl((prev) =>
+        syncTocIfNeeded({
+          ...prev,
+          sections: prev.sections.filter((_, i) => i !== index),
+        })
+      )
     },
-    [updateDsl]
+    [syncTocIfNeeded, updateDsl]
   )
 
   const handleSectionAdd = useCallback(
     (node: SectionNode) => {
-      updateDsl((prev) => ({ ...prev, sections: [...prev.sections, node] }))
+      updateDsl((prev) => syncTocIfNeeded({ ...prev, sections: [...prev.sections, node] }))
     },
-    [updateDsl]
+    [syncTocIfNeeded, updateDsl]
   )
 
   const handleSectionRegenerate = useCallback(
@@ -1501,17 +1872,19 @@ function CreatePageInner() {
       if (!over || active.id === over.id) return
       const activeId = String(active.id)
       const overId = String(over.id)
-      updateDsl((prev) => ({
-        ...prev,
-        sections: (() => {
-          const oldIndex = prev.sections.findIndex((section) => section.id === activeId)
-          const newIndex = prev.sections.findIndex((section) => section.id === overId)
-          if (oldIndex === -1 || newIndex === -1) return prev.sections
-          return arrayMove(prev.sections, oldIndex, newIndex)
-        })(),
-      }))
+      updateDsl((prev) =>
+        syncTocIfNeeded({
+          ...prev,
+          sections: (() => {
+            const oldIndex = prev.sections.findIndex((section) => section.id === activeId)
+            const newIndex = prev.sections.findIndex((section) => section.id === overId)
+            if (oldIndex === -1 || newIndex === -1) return prev.sections
+            return arrayMove(prev.sections, oldIndex, newIndex)
+          })(),
+        })
+      )
     },
-    [updateDsl]
+    [syncTocIfNeeded, updateDsl]
   )
 
   const handleSaveDraft = async () => {
@@ -1692,6 +2065,27 @@ function CreatePageInner() {
         onPublish={handlePublishRequest}
       />
 
+      {/* Parent-page warning banner */}
+      {parentWarning && (
+        <div className="flex items-start gap-2.5 px-4 py-2.5 bg-amber-50 border-b border-amber-200 text-amber-800 text-body-sm shrink-0">
+          <TriangleAlert size={15} className="mt-0.5 shrink-0 text-amber-500" />
+          <p className="flex-1">
+            The AI-suggested path <span className="font-bold">{parentWarning.suggested}</span>{' '}
+            references parent page <span className="font-bold">{parentWarning.parent}</span>, which
+            does not exist yet. Saved as root-level{' '}
+            <span className="font-bold">{parentWarning.fallback}</span> instead. To nest it under{' '}
+            <span className="font-bold">{parentWarning.parent}</span>, create the parent page first.
+          </p>
+          <button
+            onClick={() => setParentWarning(null)}
+            className="shrink-0 text-amber-500 hover:text-amber-700 transition-colors"
+            title="Dismiss"
+          >
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
       {/* Dual panel body */}
       <div className="flex flex-1 min-h-0 flex-col lg:flex-row">
         {/* Left panel */}
@@ -1705,6 +2099,7 @@ function CreatePageInner() {
             pageType={pageType}
             intent={intent}
             generating={generating}
+            generationStage={generationStage}
             generateError={generateError}
             importStatus={importStatus}
             importError={importError}
@@ -1719,6 +2114,8 @@ function CreatePageInner() {
             selectedTemplate={selectedTemplate}
             importedContent={importedContent}
             importWarning={importWarning}
+            preserveSource={preserveSource}
+            onPreserveSourceChange={setPreserveSource}
             onPageTypeChange={setPageType}
             onIntentChange={setIntent}
             onGenerate={handleGenerate}
@@ -1732,14 +2129,27 @@ function CreatePageInner() {
               setIntent('')
               setPageType(PAGE_TYPES[0])
             }}
-            onContentImport={(text) => {
-              setImportedContent(text)
-              setIntent(text)
-              if (text.length > IMPORT_MAX_CHARS) {
-                const wordCount = text.trim().split(/\s+/).length
-                setImportWarning(
-                  `Document is long (${wordCount.toLocaleString()} words). Only the first ~1,000 words will be sent to AI for page structure analysis. You can edit the content below before generating.`
-                )
+            onContentImport={(text, importedPageType) => {
+              const cleaned = stripBase64Images(text)
+              setImportedContent(cleaned)
+              setIntent(cleaned)
+              // Apply page type from import selector if it's not 'general'
+              const detectedType = detectPageType(cleaned)
+              const mapped =
+                importedPageType && importedPageType !== 'general'
+                  ? importedPageType
+                  : detectedType !== 'marketing'
+                    ? detectedType
+                    : PAGE_TYPES[0]
+              setPageType(mapped)
+              const longFormTypes = ['listicle', 'playbook', 'compare']
+              const isLongFormImport = longFormTypes.includes(mapped)
+              const importMaxChars = isLongFormImport
+                ? LONG_FORM_IMPORT_MAX_CHARS
+                : IMPORT_MAX_CHARS
+
+              if (cleaned.length > importMaxChars) {
+                updateImportWarningFor(cleaned, mapped)
               } else {
                 setImportWarning('')
               }
@@ -1757,6 +2167,14 @@ function CreatePageInner() {
             onSectionRegenerate={handleSectionRegenerate}
             onSectionAdd={handleSectionAdd}
             onDragEnd={handleDragEnd}
+            briefUrl={briefUrl}
+            briefFile={briefFile}
+            briefLoading={briefLoading}
+            briefError={briefError}
+            onBriefUrlChange={setBriefUrl}
+            onBriefFileChange={setBriefFile}
+            onBriefErrorChange={setBriefError}
+            onLoadBrief={handleLoadBrief}
           />
         </div>
 

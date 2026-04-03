@@ -33,6 +33,20 @@ function isGoogleDocUrl(input: string) {
   return /https?:\/\/docs\.google\.com\/document\/d\/[a-zA-Z0-9-_]+/.test(input)
 }
 
+function stripBase64Images(text: string): string {
+  return (
+    text
+      // Drop inline base64 images (Markdown or HTML). Keep linked images.
+      .replace(/!\[[^\]]*]\(\s*data:image\/[^)\s]+[^)]*\)/gi, '')
+      .replace(/<img[^>]+src=["']\s*data:image\/[^"']+["'][^>]*>/gi, '')
+      // Drop reference-style base64 image definitions (with or without <>)
+      .replace(/^\s*\[[^\]]+]\s*:\s*<?\s*data:image\/\S+.*>?$/gim, '')
+      // Drop any remaining inline base64 image tokens
+      .replace(/<\s*data:image[\s\S]*?>/gi, '')
+      .replace(/data:image\/[a-zA-Z0-9.+-]+;base64,[A-Za-z0-9+/=]+/g, '')
+  )
+}
+
 const REFINE_STORAGE_KEY = 'admin-refine-payload'
 const REFINE_RESULT_KEY = 'admin-refine-result'
 const REFINE_LAST_KEY = 'admin-refine-last'
@@ -84,7 +98,7 @@ export default function RefinePage() {
   }
 
   const handlePasteContinue = () => {
-    const content = pasteContent.trim()
+    const content = stripBase64Images(pasteContent).trim()
     if (isGoogleDocUrl(content)) {
       handleGdocContinue(content)
       return
@@ -106,7 +120,7 @@ export default function RefinePage() {
       })
       const data = (await res.json()) as { content?: string; error?: string }
       if (!res.ok || !data.content) throw new Error(data.error ?? 'Import failed')
-      const content = data.content.trim()
+      const content = stripBase64Images(data.content).trim()
       const wordCount = content ? content.split(/\s+/).length : 0
       saveRefineResult({ sourceLabel: 'Google Doc import', sourceUrl: nextUrl, wordCount })
       startRefine({ type: 'paste', content })

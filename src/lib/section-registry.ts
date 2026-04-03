@@ -1,6 +1,7 @@
 import type {
   AgendaProps,
   ComparisonTableProps,
+  CodeBlockProps,
   CtaProps,
   FeatureCardProps,
   FeatureGridProps,
@@ -11,12 +12,14 @@ import type {
   FormProps,
   HeroProps,
   LogoCloudProps,
+  RichTextBlockProps,
   SectionDefinition,
   SectionPropsMap,
   SectionStyle,
   SectionType,
   SpeakersProps,
   StatsProps,
+  TableOfContentsProps,
   TestimonialsProps,
 } from './dsl-schema'
 
@@ -222,6 +225,13 @@ const defaultComparisonTableProps: ComparisonTableProps = {
   ourProduct: 'TiDB',
   competitor: '',
   rows: [{ feature: '', ours: true, theirs: false }],
+}
+
+const defaultCodeBlockProps: CodeBlockProps = {
+  title: '',
+  filename: '',
+  language: 'bash',
+  code: '',
 }
 
 export const schemaMap: Record<SectionType, SectionSchema<any>> = {
@@ -769,6 +779,57 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         ],
       },
       { type: 'cta', key: 'cta', label: 'CTA' },
+    ],
+  },
+  richTextBlock: {
+    type: 'richTextBlock',
+    label: 'Rich Text Block',
+    description: 'Markdown content block for long-form text',
+    defaultProps: { content: '' } as RichTextBlockProps,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: [{ type: 'textarea', key: 'content', label: 'Content (Markdown)', rows: 10 }],
+  },
+  tableOfContents: {
+    type: 'tableOfContents',
+    label: 'Table of Contents',
+    description: 'Sticky sidebar navigation for long-form pages',
+    defaultProps: { items: [{ id: '', label: '' }], sticky: true } as TableOfContentsProps,
+    defaultStyle: { background: 'primary', spacing: 'none' },
+    fields: [
+      { type: 'toggle', key: 'sticky', label: 'Sticky on desktop' },
+      {
+        type: 'array',
+        key: 'items',
+        label: 'Items',
+        itemLabel: 'Item',
+        newItem: () => ({ id: '', label: '', level: 1 }),
+        fields: [
+          { type: 'text', key: 'id', label: 'Anchor ID' },
+          { type: 'text', key: 'label', label: 'Label' },
+          {
+            type: 'select',
+            key: 'level',
+            label: 'Level',
+            options: [
+              { label: 'Level 1', value: 1 },
+              { label: 'Level 2', value: 2 },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  codeBlock: {
+    type: 'codeBlock',
+    label: 'Code Block',
+    description: 'Standalone code snippet with optional metadata',
+    defaultProps: defaultCodeBlockProps,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: [
+      { type: 'text', key: 'title', label: 'Title' },
+      { type: 'text', key: 'filename', label: 'Filename' },
+      { type: 'text', key: 'language', label: 'Language' },
+      { type: 'textarea', key: 'code', label: 'Code', rows: 10 },
     ],
   },
 }
