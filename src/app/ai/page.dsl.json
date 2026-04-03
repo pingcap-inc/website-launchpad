@@ -143,9 +143,14 @@
             "cta": "Read the story",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+                "url": "https://static.pingcap.com/images/712552a8-dify.png",
+                "alt": "dify",
+                "width": 300,
+                "height": 300
               },
-              "alt": "dify"
+              "alt": "dify",
+              "width": 300,
+              "height": 300
             }
           },
           {
@@ -156,10 +161,13 @@
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/f003549b-manus.png",
+                "alt": "manus logo",
                 "width": 512,
                 "height": 141
               },
-              "alt": ""
+              "alt": "manus logo",
+              "width": 512,
+              "height": 141
             }
           },
           {
@@ -170,10 +178,13 @@
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/86f45063-rengage.png",
+                "alt": "rengage logo",
                 "width": 1225,
                 "height": 282
               },
-              "alt": ""
+              "alt": "rengage logo",
+              "width": 1225,
+              "height": 282
             }
           }
         ]
