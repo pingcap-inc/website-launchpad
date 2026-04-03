@@ -310,21 +310,21 @@ const dsl: PageDSL = {
             "title": "Vector Search Documentation",
             "description": "Complete guide to vector storage, indexing, and similarity queries in TiDB.",
             "borderColor": "blue",
-            "href": "/docs/tidb-cloud/vector-search/"
+            "href": "https://docs.pingcap.com/ai/vector-search-overview/"
           },
           {
             "icon": "Code2",
             "title": "RAG Application Tutorial",
             "description": "Build end-to-end retrieval augmented generation workflows with TiDB and LLMs.",
             "borderColor": "violet",
-            "href": "/blog/"
+            "href": "https://www.pingcap.com/article/building-a-rag-application-from-scratch-understanding-rag-and-preparing-your-data/"
           },
           {
             "icon": "Lightbulb",
             "title": "Best Practices Guide",
             "description": "Optimize embedding storage, indexing strategies, and query performance for production.",
             "borderColor": "teal",
-            "href": "/docs/tidb-cloud/vector-search/"
+            "href": "https://docs.pingcap.com/ai/vector-search-improve-performance/"
           }
         ],
         "columns": 3,
