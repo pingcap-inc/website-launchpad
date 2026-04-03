@@ -31,12 +31,11 @@
       },
       "style": {
         "spacing": "hero",
-        "backgroundImageOpacityClassName": "opacity-50",
         "backgroundImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/ba02385f-vector_search_hero_bg.svg",
-            "width": 296,
-            "height": 150
+            "url": "https://static.pingcap.com/images/a047832d-banner-ai.svg",
+            "width": 1440,
+            "height": 1037
           }
         }
       }
