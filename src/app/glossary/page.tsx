@@ -387,8 +387,8 @@ export default function GlossaryPage() {
           <CtaSection
             title="Ready to Put These Concepts Into Practice?"
             subtitle="TiDB Cloud brings HTAP, elastic scaling, and MySQL compatibility to a fully managed service."
-            primaryCta={{ text: 'Start for Free', href: '/signup/' }}
-            secondaryCta={{ text: 'Read the Docs', href: '/docs/' }}
+            primaryCta={{ text: 'Start for Free', href: 'https://tidbcloud.com/free-trial/' }}
+            secondaryCta={{ text: 'Read the Docs', href: 'https://docs.pingcap.com/' }}
             image={{
               image: {
                 url: 'https://static.pingcap.com/files/2025/04/27224533/CTA-cube-red-mini.svg',

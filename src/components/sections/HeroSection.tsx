@@ -85,7 +85,7 @@ function HeroTextBlock({
       {subheadline && (
         <p
           className={cn(
-            'text-body-2xl leading-relaxed text-secondary max-w-subtitle',
+            'text-body-2xl leading-relaxed text-text-secondary max-w-subtitle',
             centered && 'mx-auto mb-10'
           )}
         >
