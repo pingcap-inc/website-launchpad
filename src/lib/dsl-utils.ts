@@ -14,7 +14,6 @@ import type {
   FeatureTabsProps,
   FaqProps,
   FormProps,
-  HeroBackgroundImage,
   HeroImage,
   HeroProps,
   IconValue,
@@ -164,29 +163,6 @@ function normalizeHeroImage(value: unknown): HeroImage | undefined {
   }
 }
 
-function normalizeHeroBackgroundImage(value: unknown): HeroBackgroundImage | undefined {
-  if (!value || typeof value !== 'object') return undefined
-  const v = value as {
-    image?: unknown
-    src?: unknown
-    alt?: unknown
-    opacityClassName?: unknown
-    overlayClassName?: unknown
-    positionClassName?: unknown
-    priority?: unknown
-  }
-  const image = normalizeImageRef(v.image ?? v.src)
-  if (!image) return undefined
-  return {
-    image,
-    alt: typeof v.alt === 'string' ? v.alt : undefined,
-    priority: typeof v.priority === 'boolean' ? v.priority : undefined,
-    opacityClassName: typeof v.opacityClassName === 'string' ? v.opacityClassName : undefined,
-    overlayClassName: typeof v.overlayClassName === 'string' ? v.overlayClassName : undefined,
-    positionClassName: typeof v.positionClassName === 'string' ? v.positionClassName : undefined,
-  }
-}
-
 function normalizeSectionStyle(style?: SectionStyle): SectionStyle | undefined {
   if (!style) return undefined
   const v = style as SectionStyle & {
@@ -329,7 +305,6 @@ function normalizeTestimonial(value: unknown): Testimonial | null {
 function normalizeHeroProps(value: unknown): HeroProps {
   const v = (value ?? {}) as HeroProps & {
     heroImage?: unknown
-    backgroundImage?: unknown
   }
   return {
     layout: v.layout,
@@ -339,7 +314,6 @@ function normalizeHeroProps(value: unknown): HeroProps {
     primaryCta: v.primaryCta,
     secondaryCta: v.secondaryCta,
     heroImage: normalizeHeroImage(v.heroImage),
-    backgroundImage: normalizeHeroBackgroundImage(v.backgroundImage),
     heroForm: v.heroForm,
     className: typeof v.className === 'string' ? v.className : undefined,
   }

@@ -8,23 +8,11 @@ import type { ImageRef } from '@/lib/dsl-schema'
 
 /**
  * Three layout modes:
- * - `centered`    — text centered, optional background image
+ * - `centered`    — text centered
  * - `split`       — 1:1 left text / right rightSlot (form, image, any ReactNode)
  * - `image-right` — left text (max-w-[780px]) / right hero image with alignment control
  */
 export type HeroLayout = 'centered' | 'split' | 'image-right'
-
-interface HeroBackgroundImage {
-  image: ImageRef
-  alt?: string
-  priority?: boolean
-  /** Defaults to opacity-80 */
-  opacityClassName?: string
-  /** Optional overlay class. No overlay is applied unless this is provided. */
-  overlayClassName?: string
-  /** Defaults to object-center */
-  positionClassName?: string
-}
 
 /** Used with `layout="image-right"` */
 export interface HeroImageSlot {
@@ -61,7 +49,6 @@ interface HeroSectionProps {
   rightSlot?: React.ReactNode
   /** Hero image config. Used in `image-right` layout. */
   heroImage?: HeroImageSlot
-  backgroundImage?: HeroBackgroundImage
   className?: string
 }
 
@@ -133,57 +120,18 @@ export function HeroSection({
   secondaryCta,
   rightSlot,
   heroImage,
-  backgroundImage,
   className,
 }: HeroSectionProps) {
   const resolvedLayout: HeroLayout = layout ?? 'image-right'
   const isCentered = resolvedLayout === 'centered'
-  const heroBackgroundImage = backgroundImage?.image?.url ? backgroundImage : undefined
-  const useCssBackgroundForCentered = isCentered && !!heroBackgroundImage
 
   // Right slot for split layout
   const resolvedRightSlot = resolvedLayout === 'split' ? (rightSlot ?? null) : null
 
   return (
     <div className={cn('relative overflow-hidden', isCentered && 'text-center', className)}>
-      {/* ── Background layer ── */}
-      {isCentered && heroBackgroundImage && (
-        <>
-          {useCssBackgroundForCentered ? (
-            <div
-              aria-hidden="true"
-              className={cn(
-                'pointer-events-none absolute inset-0 bg-cover',
-                heroBackgroundImage.positionClassName ?? 'bg-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-80'
-              )}
-              style={{ backgroundImage: `url("${heroBackgroundImage.image.url}")` }}
-            />
-          ) : (
-            <Image
-              src={heroBackgroundImage.image.url}
-              alt={heroBackgroundImage.alt ?? ''}
-              fill
-              priority={heroBackgroundImage.priority}
-              aria-hidden={heroBackgroundImage.alt ? undefined : true}
-              className={cn(
-                'pointer-events-none object-cover',
-                heroBackgroundImage.positionClassName ?? 'object-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-80'
-              )}
-            />
-          )}
-          {heroBackgroundImage.overlayClassName && (
-            <div
-              aria-hidden="true"
-              className={cn('absolute inset-0', heroBackgroundImage.overlayClassName)}
-            />
-          )}
-        </>
-      )}
-
       {/* ── Content ── */}
-      <div className={cn(heroBackgroundImage && 'relative z-10')}>
+      <div>
         {/* Layout 1: centered */}
         {resolvedLayout === 'centered' && (
           <HeroTextBlock

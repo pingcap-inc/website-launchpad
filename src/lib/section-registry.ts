@@ -269,13 +269,6 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       },
       {
         type: 'object',
-        key: 'backgroundImage',
-        label: 'Background Image',
-        showWhen: (props) => props.layout === 'centered',
-        fields: [{ type: 'image', key: 'image', label: 'Image' }],
-      },
-      {
-        type: 'object',
         key: 'heroForm',
         label: 'Hero Form',
         showWhen: (props) => props.layout === 'split',
