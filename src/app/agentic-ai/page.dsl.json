@@ -10,7 +10,7 @@
       "id": "hero",
       "type": "hero",
       "props": {
-        "layout": "image-right",
+        "layout": "centered",
         "headline": "The Database Built for <span class=\"text-gradient-violet\">Agentic Workloads</span>",
         "subheadline": "Agent systems create bursts of isolated work, memory, and state that traditional databases were not designed to handle. TiDB supports branching, durable state, and concurrency for agents operating independently at scale.",
         "primaryCta": {
@@ -24,11 +24,21 @@
           "alt": "hero image",
           "width": 500,
           "height": 400
+        },
+        "backgroundImage": {
+          "alt": ""
         }
       },
       "style": {
         "background": "gradient-dark-top",
-        "spacing": "hero"
+        "spacing": "hero",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/a047832d-banner-ai.svg",
+            "width": 1440,
+            "height": 1037
+          }
+        }
       }
     },
     {
