@@ -156,7 +156,7 @@ export function PublishDrawer({
   }
 
   const contentPageType: ContentPageType = dsl.sections.some(
-    (s) => (s.type as string) === 'numberedList'
+    (s) => (s.type as string) === 'tableOfContents'
   )
     ? 'listicle'
     : 'marketing'

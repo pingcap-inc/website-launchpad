@@ -9,6 +9,12 @@ interface LocalGenerateRequest {
   dsl: PageDSL
 }
 
+function isValidSlugPath(slug: string) {
+  if (!slug) return false
+  const segments = slug.split('/').filter(Boolean)
+  return segments.length > 0 && segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
+}
+
 export async function POST(request: NextRequest) {
   if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
     return NextResponse.json(
@@ -17,11 +23,12 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { slug, dsl } = (await request.json()) as LocalGenerateRequest
+  const { slug: rawSlug, dsl } = (await request.json()) as LocalGenerateRequest
+  const slug = rawSlug?.replace(/^\/|\/$/g, '')
 
-  if (!slug || !/^[a-z0-9-]+$/.test(slug)) {
+  if (!isValidSlugPath(slug)) {
     return NextResponse.json(
-      { error: 'Invalid slug. Use lowercase letters, numbers, and hyphens only.' },
+      { error: 'Invalid slug. Use lowercase letters, numbers, hyphens, and slashes only.' },
       { status: 400 }
     )
   }

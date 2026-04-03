@@ -67,6 +67,9 @@ import {
   Agenda,
   Speakers,
   ComparisonTable,
+  RichTextBlock,
+  CodeBlock,
+  TableOfContents,
 } from '@/components'
 import { HubSpotForm } from '@/components/ui/HubSpotForm'
 import { Header } from '@/components/ui/Header'
@@ -383,6 +386,34 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
+  richTextBlock: {
+    Component: RichTextBlock,
+    mapProps: (props: SectionPropsMap['richTextBlock']) => ({
+      content: props.content,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  codeBlock: {
+    Component: CodeBlock,
+    mapProps: (props: SectionPropsMap['codeBlock']) => ({
+      title: props.title,
+      filename: props.filename,
+      language: props.language,
+      code: props.code,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  tableOfContents: {
+    Component: TableOfContents,
+    mapProps: (props: SectionPropsMap['tableOfContents']) => ({
+      items: props.items,
+      sticky: props.sticky,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'none' },
+  },
 }
 
 // ─── Page renderer ───────────────────────────────────────────────────────────
@@ -392,30 +423,115 @@ interface PageRendererProps {
   withChrome?: boolean
 }
 
+/** Types that sit alongside the TOC sidebar in a two-column layout */
+const TOC_COMPANION_TYPES = new Set<SectionType>(['richTextBlock', 'faq', 'codeBlock'])
+
+function renderSection(
+  section: {
+    id: string
+    type: SectionType
+    props: unknown
+    style?: SectionStyle
+  },
+  options?: { compactFaq?: boolean }
+) {
+  const entry = componentMap[section.type]
+  if (!entry) return null
+  const baseProps = entry.mapProps ? entry.mapProps(section.props as any) : (section.props as any)
+  const props =
+    section.type === 'faq' && options?.compactFaq ? { ...baseProps, compact: true } : baseProps
+  const resolvedStyle = sanitizeSpacingBySection(
+    section.type,
+    sanitizeBackgroundBySection(section.type, section.style)
+  )
+  const defaultStyle: SectionStyle = {
+    ...(entry.defaultStyle ?? {}),
+    background: getDefaultBackground(section.type),
+  }
+  return (
+    <SectionWrapper
+      key={section.id}
+      id={section.id}
+      style={resolvedStyle}
+      defaultStyle={defaultStyle}
+    >
+      <entry.Component {...props} />
+    </SectionWrapper>
+  )
+}
+
 export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
   const normalized = normalizeDSL(dsl)
   const sections = normalized.sections
-  const renderedSections = sections.map((section, index) => {
-    const entry = componentMap[section.type]
-    if (!entry) return null
-    const props = entry.mapProps ? entry.mapProps(section.props as any) : (section.props as any)
-    const resolvedStyle = sanitizeSpacingBySection(
-      section.type,
-      sanitizeBackgroundBySection(section.type, section.style)
-    )
-    const defaultStyle: SectionStyle = {
-      ...(entry.defaultStyle ?? {}),
-      background: getDefaultBackground(section.type),
+
+  // Detect TOC section for sidebar layout
+  const tocIndex = sections.findIndex((s) => s.type === 'tableOfContents')
+  const hasToc = tocIndex !== -1
+
+  // For pages without a hero (e.g. listicle), render pageName as H1
+  const hasHero = sections.some((s) => s.type === 'hero')
+  const pageH1 =
+    !hasHero && normalized.pageName ? (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-0">
+        <h1 className="text-h1-mb md:text-h1 font-bold text-text-inverse leading-tight">
+          {normalized.pageName}
+        </h1>
+      </div>
+    ) : null
+
+  let renderedSections: React.ReactNode[]
+
+  if (hasToc) {
+    // Build three groups: before-TOC, TOC+companions, after-companions
+    const beforeToc = sections.slice(0, tocIndex)
+    const tocSection = sections[tocIndex]
+
+    // Collect companion sections after the TOC (right column), keep others below
+    const companionSections: typeof sections = []
+    const afterCompanions: typeof sections = []
+    for (let i = tocIndex + 1; i < sections.length; i += 1) {
+      const section = sections[i]
+      if (TOC_COMPANION_TYPES.has(section.type)) {
+        companionSections.push(section)
+      } else {
+        afterCompanions.push(section)
+      }
     }
 
-    return (
-      <SectionWrapper key={section.id} style={resolvedStyle} defaultStyle={defaultStyle}>
-        <entry.Component {...props} />
-      </SectionWrapper>
-    )
-  })
+    renderedSections = [
+      // Sections before TOC (e.g. intro richTextBlock)
+      ...beforeToc.map((s) => renderSection(s)),
+      // TOC sidebar layout
+      <div key="toc-layout" className="contain pb-10 lg:pb-16">
+        <div className="lg:flex lg:gap-12">
+          {/* TOC sidebar — rendered without SectionWrapper for direct flex control */}
+          {(() => {
+            const entry = componentMap[tocSection.type]
+            if (!entry) return null
+            const props = entry.mapProps
+              ? entry.mapProps(tocSection.props as any)
+              : (tocSection.props as any)
+            return <entry.Component {...props} />
+          })()}
+          {/* Main content alongside TOC */}
+          <div className="flex-1 min-w-0">
+            {companionSections.map((s) => renderSection(s, { compactFaq: true }))}
+          </div>
+        </div>
+      </div>,
+      // Remaining sections (FAQ, CTA, etc.)
+      ...afterCompanions.map((s) => renderSection(s)),
+    ]
+  } else {
+    renderedSections = sections.map((section) => renderSection(section))
+  }
 
-  const content = <div className="bg-bg-primary">{renderedSections}</div>
+  const content = (
+    <div className="bg-bg-primary">
+      {pageH1}
+      {renderedSections}
+    </div>
+  )
 
   if (!withChrome) return content
 

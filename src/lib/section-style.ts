@@ -23,6 +23,9 @@ export const ALLOWED_BG_BY_SECTION: Record<SectionType, Set<SectionStyle['backgr
   agenda: DEFAULT_ALLOWED_BG,
   speakers: DEFAULT_ALLOWED_BG,
   comparisonTable: DEFAULT_ALLOWED_BG,
+  richTextBlock: DEFAULT_ALLOWED_BG,
+  codeBlock: DEFAULT_ALLOWED_BG,
+  tableOfContents: new Set(['primary', 'none'] as SectionStyle['background'][]),
 }
 
 const DEFAULT_ALLOWED_SPACING = new Set<SectionStyle['spacing']>(['sm', 'md', 'lg', 'section'])
@@ -43,4 +46,7 @@ export const ALLOWED_SPACING_BY_SECTION: Record<SectionType, Set<SectionStyle['s
   agenda: DEFAULT_ALLOWED_SPACING,
   speakers: DEFAULT_ALLOWED_SPACING,
   comparisonTable: DEFAULT_ALLOWED_SPACING,
+  richTextBlock: DEFAULT_ALLOWED_SPACING,
+  codeBlock: DEFAULT_ALLOWED_SPACING,
+  tableOfContents: new Set(['none', 'sm', 'md'] as SectionStyle['spacing'][]),
 }

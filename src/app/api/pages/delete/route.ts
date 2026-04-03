@@ -62,10 +62,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
 
-  const body = (await req.json()) as {
-    slug: string
-    includeDraft?: boolean
-    includePublished?: boolean
+  let body: { slug: string; includeDraft?: boolean; includePublished?: boolean }
+  try {
+    body = await req.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 })
   }
 
   const slug = body.slug?.replace(/^\/|\/$/g, '')
@@ -94,11 +95,16 @@ export async function POST(req: NextRequest) {
   }
 
   let deleted = 0
-  for (const target of targets) {
-    const sha = await readSha(baseUrl, headers, target.path, target.branch)
-    if (!sha) continue
-    await deleteFile(baseUrl, headers, target.path, target.branch, sha, message)
-    deleted += 1
+  try {
+    for (const target of targets) {
+      const sha = await readSha(baseUrl, headers, target.path, target.branch)
+      if (!sha) continue
+      await deleteFile(baseUrl, headers, target.path, target.branch, sha, message)
+      deleted += 1
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Unknown error during deletion'
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 
   if (deleted === 0) {
