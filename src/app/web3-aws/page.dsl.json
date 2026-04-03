@@ -1,0 +1,373 @@
+{
+  "pageName": "TiDB Cloud for AWS: Web3 Scenario Analysis",
+  "meta": {
+    "title": "TiDB Cloud for AWS: Web3 Scenario Analysis",
+    "description": "Discover how TiDB Cloud on AWS scales Web3 applications with real-time data processing, global infrastructure, and seamless AWS integration.",
+    "canonical": "/web3-aws/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Web3 on AWS",
+        "headline": "Scale Web3 Applications with <span class=\"text-gradient-blue\">TiDB Cloud</span> on AWS",
+        "subheadline": "Mature ecosystem, global infrastructure, and efficient business closure. Deploy Web3 applications at scale with enterprise-grade performance and compliance.",
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View Demo",
+          "href": "https://www.pingcap.com/demo/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "why-tidb-aws",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "Why Choose TiDB for AWS Web3",
+        "title": "Four Strategic Advantages",
+        "items": [
+          {
+            "variant": "blue",
+            "title": "Enterprise Customer Base & AWS Integration",
+            "description": "Largest enterprise customer foundation on AWS with proven Web3 and fintech cases. Seamless integration with VPC, EKS, and S3 for faster project delivery.",
+            "cta": {
+              "text": "Learn More",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            },
+            "icon": "Cloud"
+          },
+          {
+            "variant": "violet",
+            "title": "Global Infrastructure Capabilities",
+            "description": "Broadest global Region/AZ coverage with mature cross-region disaster recovery. Native multi-AZ high availability for Web3 global deployment.",
+            "cta": {
+              "text": "Explore Infrastructure",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            },
+            "icon": "Globe"
+          },
+          {
+            "variant": "teal",
+            "title": "AWS Marketplace Integration",
+            "description": "Simplified procurement through AWS Marketplace. Unified billing, minute-level provisioning, and pay-as-you-go pricing. Accelerate sales cycles from months to days.",
+            "cta": {
+              "text": "Discover Marketplace",
+              "href": "https://www.pingcap.com/contact-us/"
+            },
+            "icon": "Package"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "use-cases",
+      "type": "featureTabs",
+      "props": {
+        "eyebrow": "Web3 Use Cases",
+        "title": "Five Core Scenarios for TiDB on AWS",
+        "subtitle": "Real-world Web3 applications powered by TiDB's distributed architecture and HTAP capabilities",
+        "tabs": [
+          {
+            "id": "chain-data",
+            "label": "On-Chain Data Aggregation",
+            "description": "Real-time multi-chain data consolidation and display",
+            "bullets": [
+              "Real-time ingestion from multiple blockchains (Ethereum, Solana, L2s)",
+              "Native full-text search for token names, symbols, and contract addresses",
+              "Sub-millisecond multi-dimensional asset search at scale (billions of records)",
+              "Semantic tagging and whale/bot address classification",
+              "Eliminates ODS→DWD→DWM→DWS→ADS multi-layer architecture"
+            ],
+            "primaryCta": {
+              "text": "View Use Case",
+              "href": "https://www.pingcap.com/demo/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "order-system",
+            "label": "Trading Order System",
+            "description": "High-concurrency transaction processing with real-time analytics",
+            "bullets": [
+              "Support millions of IOPS for order placement and history queries",
+              "Zero-downtime horizontal scaling during peak trading periods",
+              "Global consistency reads via TSO mechanism",
+              "HTAP dual-engine: TiKV for OLTP, TiFlash for real-time analytics",
+              "Automatic data rebalancing without manual sharding maintenance",
+              "Storage capacity up to hundreds of TB, support trillions of records"
+            ],
+            "primaryCta": {
+              "text": "Explore Architecture",
+              "href": "https://www.pingcap.com/demo/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "finops",
+            "label": "Reconciliation & Risk Control",
+            "description": "Financial reconciliation with millisecond-level data synchronization",
+            "bullets": [
+              "Unified data storage eliminates cross-shard JOIN complexity",
+              "Separate OLTP/OLAP loads via HTAP architecture",
+              "Millisecond real-time data sync for high-concurrency updates",
+              "MySQL compatibility ensures efficient development",
+              "Consolidated audit trail for regulatory compliance"
+            ],
+            "primaryCta": {
+              "text": "Learn Implementation",
+              "href": "https://docs.pingcap.com/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "ai-agent",
+            "label": "AI Agent & Chat Memory",
+            "description": "Scalable long-term memory infrastructure for Web3 AI agents",
+            "bullets": [
+              "One Database per Agent architecture for data isolation",
+              "Snapshot/Branch support for memory version management",
+              "HTAP for real-time + analytical workloads on chat/behavior data",
+              "Serverless architecture optimizes cost per million light instances",
+              "Multi-tenant capable: 100M+ lightweight data instances"
+            ],
+            "primaryCta": {
+              "text": "Discover AI Solution",
+              "href": "https://www.pingcap.com/contact-us/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "multi-chain-dw",
+            "label": "PB-Scale Multi-Chain Data Warehouse",
+            "description": "Petabyte-scale lakehouse for cross-chain data analytics",
+            "bullets": [
+              "TiDB Cloud Lake: COPY INTO from S3 (NDJSON/Parquet) directly",
+              "Domain isolation: separate Ingestion WH and Mining WH",
+              "Zero resource contention between data ingestion and analysis",
+              "Address clustering and attribution across blockchains",
+              "Taint analysis for regulatory compliance and fraud detection",
+              "Dramatically lower storage tax vs. traditional data warehouses"
+            ],
+            "primaryCta": {
+              "text": "Start Data Warehouse",
+              "href": "https://tidbcloud.com/free-trial/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          }
+        ],
+        "autoSwitch": false,
+        "autoSwitchInterval": 6000
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "key-benefits",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Technical Advantages",
+        "title": "Why TiDB Solves Web3 Challenges",
+        "subtitle": "Purpose-built for decentralized applications",
+        "items": [
+          {
+            "icon": "Zap",
+            "title": "Real-Time Performance",
+            "description": "Raft-based strong consistency ensures instant data accuracy for address tracking and real-time analytics.",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Database",
+            "title": "Simplified Architecture",
+            "description": "Replace multi-layer data pipelines with single unified storage layer. Reduce operational complexity and accelerate time-to-market.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Scale",
+            "title": "Elastic Scalability",
+            "description": "Compute-storage separation enables on-demand scaling during peaks. Automatic data rebalancing eliminates manual sharding.",
+            "borderColor": "teal"
+          },
+          {
+            "icon": "Lock",
+            "title": "Enterprise Compliance",
+            "description": "Comprehensive compliance framework for fintech and Web3. Proven by leading institutions and decentralized platforms.",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Globe",
+            "title": "Multi-Chain Native",
+            "description": "Cross-chain data consolidation and search. Full-text indexing and semantic tagging across billions of on-chain records.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Layers",
+            "title": "HTAP Dual Engines",
+            "description": "TiKV for transactional workloads, TiFlash for analytical queries. No data movement—instant consistency.",
+            "borderColor": "teal"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "stats",
+      "type": "stats",
+      "props": {
+        "eyebrow": "Performance at Scale",
+        "title": "TiDB Cloud Metrics",
+        "items": [
+          {
+            "value": "100+",
+            "label": "Production Deployments",
+            "description": "Web3 and fintech customers on AWS"
+          },
+          {
+            "value": "99.99%",
+            "label": "Uptime SLA",
+            "description": "Enterprise-grade availability across 3 AZs"
+          },
+          {
+            "value": "PB",
+            "label": "Data Scale",
+            "description": "Single cluster capacity for multi-chain warehouses"
+          },
+          {
+            "value": "Sub-ms",
+            "label": "Search Latency",
+            "description": "Full-text index on billions of on-chain records"
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Deploy TiDB Cloud on AWS Today",
+        "subtitle": "Scale your Web3 application with a database built for Web3. Start free and pay only for what you use.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Contact Sales",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "logoCloud-1775204903273",
+      "type": "logoCloud",
+      "props": {
+        "title": "",
+        "logos": [
+          {
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            },
+            "name": "catalyst"
+          },
+          {
+            "name": "Manus",
+            "image": {
+              "url": "https://static.pingcap.com/images/0fc78057-manus.svg",
+              "width": 165,
+              "height": 48
+            }
+          },
+          {
+            "name": "Dify",
+            "image": {
+              "url": "https://static.pingcap.com/images/8aeb6413-dify-logo-white.svg",
+              "width": 54,
+              "height": 24
+            }
+          }
+        ],
+        "variant": "default",
+        "align": "center",
+        "autoScroll": true
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    }
+  ]
+}
