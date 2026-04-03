@@ -354,7 +354,7 @@ const dsl: PageDSL = {
         },
         "secondaryCta": {
           "text": "View Documentation",
-          "href": "/docs/tidb-cloud/vector-search/"
+          "href": "https://docs.pingcap.com/ai/vector-search-overview/"
         }
       },
       "style": {
