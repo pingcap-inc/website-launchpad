@@ -74,9 +74,9 @@ const dsl: PageDSL = {
         },
         "backgroundImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/8721dd45-tidb_hero_background.svg",
-            "width": 198,
-            "height": 150
+            "url": "https://static.pingcap.com/images/a047832d-banner-ai.svg",
+            "width": 1440,
+            "height": 1037
           },
           "alt": ""
         }
