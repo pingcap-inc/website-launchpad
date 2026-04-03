@@ -167,7 +167,7 @@ const dsl: PageDSL = {
         "columns": 2
       },
       "style": {
-        "background": "none",
+        "background": "gradient-dark-top",
         "spacing": "lg"
       }
     },
