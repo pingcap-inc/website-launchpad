@@ -41,7 +41,7 @@ export function CtaSection({
         <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-current mb-4">
           {title}
         </h2>
-        {subtitle && <p className="text-2xl text-secondary leading-relaxed">{subtitle}</p>}
+        {subtitle && <p className="text-2xl text-current leading-relaxed">{subtitle}</p>}
         <div className="flex items-center gap-4 flex-wrap mt-8">
           {primaryCta.text && (
             <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>

@@ -70,7 +70,7 @@ const dsl: PageDSL = {
         },
         secondaryCta: {
           text: 'Build Agentic AI Systems',
-          href: '/ai/agentic-ai/',
+          href: 'https://www.pingcap.com/ai/agentic-ai/',
         },
         heroImage: {
           image: {
@@ -176,7 +176,7 @@ const dsl: PageDSL = {
             title: 'Stateful Agents and Autonomous Workflows',
             description:
               'Build agents that maintain memory, coordinate tools, and operate reliably across complex, multi-step processes.',
-            href: '/ai/agentic-ai/',
+            href: 'https://www.pingcap.com/ai/agentic-ai/',
           },
         ],
         columns: 2,
