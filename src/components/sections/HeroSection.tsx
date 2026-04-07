@@ -92,7 +92,7 @@ function HeroTextBlock({
           {subheadline}
         </p>
       )}
-      {(primaryCta || secondaryCta) && (
+      {(primaryCta?.text || secondaryCta?.text) && (
         <div
           className={cn(
             'flex items-center gap-4 md:gap-8 flex-wrap mt-8',

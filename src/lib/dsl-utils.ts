@@ -32,6 +32,7 @@ import type {
   Testimonial,
   TestimonialsProps,
 } from './dsl-schema'
+import type { PageType } from '@/lib/admin/page-types'
 import { schemaMap } from './section-registry'
 
 export type LegacySectionNode = {
@@ -527,6 +528,43 @@ function normalizeComparisonTableProps(value: unknown): ComparisonTableProps {
   }
 }
 
+function normalizeRichTextBlockProps(value: unknown): SectionPropsMap['richTextBlock'] {
+  const v = (value && typeof value === 'object' ? value : {}) as Record<string, unknown>
+  return {
+    content: typeof v.content === 'string' ? v.content : '',
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeCodeBlockProps(value: unknown): SectionPropsMap['codeBlock'] {
+  const v = (value && typeof value === 'object' ? value : {}) as Record<string, unknown>
+  return {
+    title: typeof v.title === 'string' ? v.title : undefined,
+    filename: typeof v.filename === 'string' ? v.filename : undefined,
+    language: typeof v.language === 'string' ? v.language : undefined,
+    code: typeof v.code === 'string' ? v.code : '',
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeTableOfContentsProps(value: unknown): SectionPropsMap['tableOfContents'] {
+  const v = (value && typeof value === 'object' ? value : {}) as Record<string, unknown>
+  return {
+    items: Array.isArray(v.items)
+      ? v.items.map((item: unknown) => {
+          const i = (item && typeof item === 'object' ? item : {}) as Record<string, unknown>
+          return {
+            id: typeof i.id === 'string' ? i.id : '',
+            label: typeof i.label === 'string' ? i.label : '',
+            level: i.level === 2 ? 2 : 1,
+          }
+        })
+      : [],
+    sticky: v.sticky !== false,
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
 function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMap[SectionType] {
   switch (type) {
     case 'hero':
@@ -559,6 +597,12 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeSpeakersProps(value)
     case 'comparisonTable':
       return normalizeComparisonTableProps(value)
+    case 'richTextBlock':
+      return normalizeRichTextBlockProps(value)
+    case 'codeBlock':
+      return normalizeCodeBlockProps(value)
+    case 'tableOfContents':
+      return normalizeTableOfContentsProps(value)
   }
 }
 
@@ -596,4 +640,74 @@ export function normalizeDSL(dsl: PageDSLInput): PageDSL {
     meta: dsl.meta,
     sections: dsl.sections.map((section, index) => normalizeSection(section, index)),
   }
+}
+
+export function enforceLongFormMaxWidth(dsl: PageDSL, pageType?: PageType) {
+  const normalizedType = pageType?.toLowerCase()
+  if (!normalizedType || !['listicle', 'playbook', 'compare'].includes(normalizedType)) return
+  for (const section of dsl.sections) {
+    if (section.type === 'richTextBlock') {
+      section.style = {
+        ...(section.style ?? {}),
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      }
+    }
+    if (section.type === 'faq') {
+      section.style = {
+        ...(section.style ?? {}),
+        spacing: 'md',
+        className: [section.style?.className, 'faq-longform'].filter(Boolean).join(' '),
+      }
+    }
+  }
+}
+
+function getMonthYear() {
+  return new Date().toLocaleString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+const LONG_FORM_DEFAULT_AUTHOR = 'PingCAP Editorial Team'
+
+export function ensureLongFormLastUpdated(dsl: PageDSL, pageType?: PageType) {
+  const normalizedType = pageType?.toLowerCase()
+  if (!normalizedType || !['listicle', 'playbook', 'compare'].includes(normalizedType)) return
+  const introSection = dsl.sections.find((section) => section.type === 'richTextBlock')
+  if (!introSection) return
+  const props = introSection.props as { content?: string }
+  const content = props.content ?? ''
+  if (/last\s+updated/i.test(content)) return
+  const updatedLine = `*Last updated: ${getMonthYear()} · By ${LONG_FORM_DEFAULT_AUTHOR}.*`
+  const divider = '---'
+  props.content = content.trim()
+    ? `${updatedLine}\n\n${divider}\n\n${content.trim()}`
+    : `${updatedLine}\n\n${divider}`
+}
+
+export function ensureLongFormHero(dsl: PageDSL, pageType?: PageType) {
+  const normalizedType = pageType?.toLowerCase()
+  if (!normalizedType || !['listicle', 'playbook', 'compare'].includes(normalizedType)) return
+
+  const headline = dsl.pageName ?? dsl.meta?.title ?? 'Untitled'
+
+  const heroIndex = dsl.sections.findIndex((section) => section.type === 'hero')
+  if (heroIndex !== -1) {
+    const hero = dsl.sections[heroIndex]
+    const heroProps = hero.props as { subheadline?: string }
+    hero.props = heroProps as SectionDefinition['props']
+    return
+  }
+
+  dsl.sections.unshift({
+    id: 'hero-1',
+    type: 'hero',
+    props: {
+      layout: 'centered',
+      headline,
+    },
+    style: { background: 'primary', spacing: 'section' },
+  })
 }

@@ -1,10 +1,12 @@
+import type { PageType } from '@/lib/admin/page-types'
+
 export type PageTemplate = {
   id: string
   label: string
   description: string
   tags: string[]
   prompt: string
-  pageType?: string
+  pageType?: PageType
 }
 
 export const PAGE_TEMPLATES: PageTemplate[] = [
@@ -28,7 +30,7 @@ Social proof to include: [customer logos, stats, testimonials if any]`,
     description:
       'Meetup, webinar, or conference page — hero banner, agenda, speakers, HubSpot form',
     tags: ['Hero + HubSpot form', 'Agenda', 'Speakers', 'CTA'],
-    pageType: 'Event Page',
+    pageType: 'event',
     prompt: `Create an event signup page for PingCAP. Follow this exact section structure.
 
 ---
@@ -157,5 +159,53 @@ Generate EXACTLY these sections in this order:
    rows covering: scalability, MySQL compatibility, HTAP, operational complexity, cost, support
 4. type: "cta" — demo or trial CTA
 Do NOT add any sections beyond the 4 listed above.`,
+  },
+  {
+    id: 'listicle',
+    label: 'Listicle / ranked list',
+    description:
+      'SEO listicle for "Top N / Best X" topics with auto-generated table of contents and numbered entries.',
+    tags: ['Table of contents', 'Numbered list', 'Rich text', 'CTA'],
+    pageType: 'listicle',
+    prompt: `Create a listicle page for PingCAP.
+
+Topic: [what is being ranked or listed, e.g. "Top 10 Distributed Databases for 2026"]
+Target keyword: [primary SEO keyword]
+Number of items: [e.g. 10]
+Each item should include: name, brief description, key strengths, and any relevant TiDB comparison points.
+Include a FAQ section with 4-6 common questions.
+Generate EXACTLY these sections: richTextBlock (intro), richTextBlock (main), faq, cta.`,
+  },
+  {
+    id: 'playbook',
+    label: 'Playbook / step-by-step guide',
+    description:
+      'How-to playbook with steps, code blocks, and callouts; optimized for AEO featured snippets.',
+    tags: ['Steps', 'Code block', 'Callout', 'CTA'],
+    pageType: 'playbook',
+    prompt: `Create a playbook/step-by-step guide for PingCAP.
+
+Topic: [what the guide covers, e.g. "How to Migrate from MySQL to TiDB"]
+Target audience: [who this guide is for]
+Number of steps: [e.g. 5-7]
+Each step should include: clear action title, detailed instructions, tips or warnings.
+Include a FAQ section with 4-6 common questions.
+Generate EXACTLY these sections: richTextBlock (intro), richTextBlock (steps), faq, cta.`,
+  },
+  {
+    id: 'compare',
+    label: 'Comparison / vs page',
+    description:
+      'Public SEO comparison page with a feature matrix table and objective product tradeoffs.',
+    tags: ['Detailed analysis', 'Feature matrix', 'Rich text', 'CTA'],
+    pageType: 'compare',
+    prompt: `Create a detailed comparison page for PingCAP.
+
+Products: [e.g. TiDB vs CockroachDB]
+Target keyword: [e.g. "tidb vs cockroachdb"]
+Comparison dimensions: [e.g. compatibility, scaling, HTAP, pricing, operations]
+Target audience: [e.g. platform engineers evaluating distributed SQL options]
+Include: detailed analysis per dimension, pros/cons, FAQ. If a comparison table exists in source material, summarize it in the intro text instead of using a table section.
+Generate EXACTLY these sections: richTextBlock (intro), richTextBlock (detailed analysis per dimension), faq, cta.`,
   },
 ]
