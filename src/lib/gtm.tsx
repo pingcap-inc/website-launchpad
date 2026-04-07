@@ -6,7 +6,7 @@
  *
  * Setup:
  *   1. Add GTM script to src/app/layout.tsx (see GTMScript component below)
- *   2. Use pushEvent() for all custom tracking calls
+ *   2. Use pushEvent() for all custom tracking calls (from gtm.client.ts)
  *   3. Page view is fired automatically by GTM on route change via the
  *      'page_view' event — no manual call needed per page
  *
@@ -27,69 +27,6 @@ const GTM_IDS = [
 ].filter(Boolean) as string[]
 
 const SHOULD_LOAD_GTM = process.env.VERCEL_ENV === 'production'
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-export type PageType =
-  | 'home'
-  | 'product'
-  | 'landing_page'
-  | 'seo_content'
-  | 'blog'
-  | 'glossary'
-  | 'compare'
-  | 'pricing'
-  | 'other'
-
-export interface PageViewEvent {
-  event: 'page_view'
-  page_type: PageType
-  page_path: string
-  page_title: string
-}
-
-export interface CTAClickEvent {
-  event: 'cta_click'
-  cta_text: string
-  cta_location: string // e.g. 'hero' | 'cta_section' | 'navbar'
-  page_path: string
-}
-
-export interface FormSubmitEvent {
-  event: 'form_submit'
-  form_id: string
-  page_path: string
-}
-
-export type GTMEvent = PageViewEvent | CTAClickEvent | FormSubmitEvent | Record<string, unknown>
-
-// ─── Core push utility ────────────────────────────────────────────────────────
-
-declare global {
-  interface Window {
-    dataLayer: GTMEvent[]
-  }
-}
-
-export function pushEvent(event: GTMEvent): void {
-  if (typeof window === 'undefined') return
-  window.dataLayer = window.dataLayer ?? []
-  window.dataLayer.push(event)
-}
-
-// ─── Typed event helpers ──────────────────────────────────────────────────────
-
-export function trackPageView(options: Omit<PageViewEvent, 'event'>): void {
-  pushEvent({ event: 'page_view', ...options })
-}
-
-export function trackCTAClick(options: Omit<CTAClickEvent, 'event'>): void {
-  pushEvent({ event: 'cta_click', ...options })
-}
-
-export function trackFormSubmit(options: Omit<FormSubmitEvent, 'event'>): void {
-  pushEvent({ event: 'form_submit', ...options })
-}
 
 // ─── GTM Script component ─────────────────────────────────────────────────────
 // Add to src/app/layout.tsx inside <head> and after <body> opening tag

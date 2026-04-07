@@ -121,7 +121,7 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-bg-primary">
       <div className="h-[62px] lg:h-20">
         <nav
-          className="max-w-container mx-auto h-full px-4 md:px-8 lg:px-16 flex items-center justify-between"
+          className="contain h-full flex items-center justify-between"
           aria-label="Main navigation"
         >
           <a href="/" className="shrink-0">

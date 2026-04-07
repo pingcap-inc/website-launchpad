@@ -10,6 +10,7 @@ import {
   PrimaryButton,
   CountUp,
   FaqSection,
+  SectionWrapper,
 } from '@/components'
 import { CreditTabs } from './_components/CreditTabs'
 
@@ -246,17 +247,25 @@ export default function OpenSourceHeroesPage() {
       <Header />
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         {/* ── 1. Hero ── */}
-        <HeroSection
-          eyebrow="Open Source Heroes Program"
-          headline="Fuel Your Next Big Idea with TiDB Cloud Serverless"
-          subheadline="TiDB loves open-source. We contribute code, sponsor projects and deeply appreciate developers who actively contribute to the community. As a token of our appreciation, we're offering up to $2,000 in free TiDB Cloud Serverless credits to fuel open-source heroes' next big idea. Simply log in with your GitHub account to calculate and claim your credits."
-          primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
-          layout="centered"
-          backgroundImage={{ src: '/images/hero/c/bg-banner.svg' }}
-        />
+        <SectionWrapper
+          style={{
+            background: 'primary',
+            spacing: 'hero',
+            className: 'py-10 md:py-0',
+            backgroundImage: { image: { url: '/images/hero/c/bg-banner.svg' } },
+          }}
+        >
+          <HeroSection
+            eyebrow="Open Source Heroes Program"
+            headline="Fuel Your Next Big Idea with TiDB Cloud Serverless"
+            subheadline="TiDB loves open-source. We contribute code, sponsor projects and deeply appreciate developers who actively contribute to the community. As a token of our appreciation, we're offering up to $2,000 in free TiDB Cloud Serverless credits to fuel open-source heroes' next big idea. Simply log in with your GitHub account to calculate and claim your credits."
+            primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
+            layout="centered"
+          />
+        </SectionWrapper>
 
         {/* ── 2. How It Works ── */}
-        <section className="py-section-sm lg:py-section bg-gradient-dark-bottom">
+        <SectionWrapper style={{ background: 'gradient-dark-bottom', spacing: 'section' }}>
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <SectionHeader title="How it Works" />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -275,10 +284,10 @@ export default function OpenSourceHeroesPage() {
               ))}
             </div>
           </div>
-        </section>
+        </SectionWrapper>
 
         {/* ── 3. Introduction ── */}
-        <section className="py-section-sm lg:py-section bg-bg-primary">
+        <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-20">
               <div className="lg:col-span-7">
@@ -332,10 +341,16 @@ export default function OpenSourceHeroesPage() {
             />
             <CreditTabs ctaHref={CLAIM_URL} />
           </div>
-        </section>
+        </SectionWrapper>
 
         {/* ── 4. Reviews ── */}
-        <section className="py-section-sm lg:py-section bg-gradient-dark-top border-t border-carbon-800">
+        <SectionWrapper
+          style={{
+            background: 'gradient-dark-top',
+            spacing: 'section',
+            className: 'border-t border-carbon-800',
+          }}
+        >
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <SectionHeader eyebrow="Community Stories" title="We Build with TiDB" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -368,10 +383,16 @@ export default function OpenSourceHeroesPage() {
               ))}
             </div>
           </div>
-        </section>
+        </SectionWrapper>
 
         {/* ── 5. Contributions ── */}
-        <section className="py-section-sm lg:py-section bg-bg-primary border-t border-carbon-800">
+        <SectionWrapper
+          style={{
+            background: 'primary',
+            spacing: 'section',
+            className: 'border-t border-carbon-800',
+          }}
+        >
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 text-center">
             <p className="font-mono text-eyebrow text-carbon-400 mb-6">TiDB ❤️ Open Source</p>
             <p className="text-body-lg text-carbon-300 leading-relaxed max-w-2xl mx-auto mb-16">
@@ -407,21 +428,38 @@ export default function OpenSourceHeroesPage() {
               <span aria-hidden="true">→</span>
             </a>
           </div>
-        </section>
+        </SectionWrapper>
 
         {/* ── 6. FAQ ── */}
-        <FaqSection items={faqs} />
+        <SectionWrapper style={{ background: 'gradient-dark-bottom', spacing: 'section' }}>
+          <FaqSection items={faqs} />
+        </SectionWrapper>
 
         {/* ── 7. CTA ── */}
-        <CtaSection
-          title="Ready to Claim Your Credits?"
-          subtitle="Link your GitHub, check your contribution score, and get up to $2,000 in TiDB Cloud Serverless credits — in under 3 minutes."
-          primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
-          background="teal"
-        />
+        <SectionWrapper style={{ background: 'brand-teal', spacing: 'md' }}>
+          <CtaSection
+            title="Ready to Claim Your Credits?"
+            subtitle="Link your GitHub, check your contribution score, and get up to $2,000 in TiDB Cloud Serverless credits — in under 3 minutes."
+            primaryCta={{ text: 'Claim Your Credits Now', href: CLAIM_URL }}
+            image={{
+              image: {
+                url: 'https://static.pingcap.com/files/2025/04/27224533/CTA-cube-teal-mini.svg',
+              },
+              alt: 'CTA cube',
+              width: 278,
+              height: 256,
+            }}
+          />
+        </SectionWrapper>
 
         {/* ── 8. Legal ── */}
-        <section className="py-12 bg-bg-primary border-t border-carbon-800">
+        <SectionWrapper
+          style={{
+            background: 'primary',
+            spacing: 'hero',
+            className: 'py-12 border-t border-carbon-800',
+          }}
+        >
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <details className="group">
               <summary className="cursor-pointer list-none flex items-center gap-2 text-body-sm text-carbon-500 hover:text-carbon-300 transition-colors">
@@ -444,7 +482,7 @@ export default function OpenSourceHeroesPage() {
               </div>
             </details>
           </div>
-        </section>
+        </SectionWrapper>
       </main>
       <Footer />
     </>

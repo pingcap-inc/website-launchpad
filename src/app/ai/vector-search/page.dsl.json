@@ -1,0 +1,324 @@
+{
+  "pageName": "Semantic Search & RAG on TiDB | Vector Database",
+  "meta": {
+    "title": "Semantic Search & RAG on TiDB | Vector Database",
+    "description": "Store embeddings, run similarity search, and filter with SQL in one distributed database. Build accurate AI retrieval without separate vector stores.",
+    "canonical": "/ai/vector-search/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "Semantic Search, Hybrid Retrieval, and RAG—Built on TiDB",
+        "subheadline": "Store embeddings, run similarity search, and filter results with SQL in one distributed database—so AI applications retrieve accurate, up-to-date context without managing separate vector stores.",
+        "primaryCta": {
+          "text": "Start Building Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/5ed12035-vectorsearch.jpg",
+            "width": 1440,
+            "height": 1034
+          },
+          "alt": "",
+          "width": 1800,
+          "height": 1034,
+          "align": "right"
+        }
+      },
+      "style": {
+        "spacing": "hero",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/a047832d-banner-ai.svg",
+            "width": 1440,
+            "height": 1037
+          }
+        }
+      }
+    },
+    {
+      "id": "featureMedia-1774590056243",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "Why TiDB for Vector Search & Retrieval",
+        "title": "A Unified Foundation for Accurate AI Retrieval",
+        "subtitle": "TiDB brings semantic search, structured filtering, and live application data together—so retrieval stays accurate, consistent, and ready for real-world AI workloads.",
+        "items": [
+          {
+            "title": "Semantic Search on Live Data",
+            "description": "Run similarity search directly on fresh operational data instead of stale indexes or duplicated vector stores.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/8d8971c1-02_semantic_search.png",
+                "width": 1360,
+                "height": 876
+              },
+              "alt": "",
+              "width": 1360,
+              "height": 876
+            }
+          },
+          {
+            "title": "Hybrid Retrieval with SQL Precision",
+            "description": "Combine vector similarity with relational filters, joins, and metadata-aware queries using familiar SQL—without separate search infrastructure.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/113739e0-03_sql_retrieval.png",
+                "width": 1360,
+                "height": 1236
+              },
+              "alt": "",
+              "width": 1360,
+              "height": 1236
+            }
+          },
+          {
+            "title": "Distributed Scale for Production RAG",
+            "description": "Handle growing embeddings, queries, and concurrent AI workloads with TiDB’s distributed architecture and transactional consistency.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/259c880d-04_production_rag.png",
+                "width": 1360,
+                "height": 1122
+              },
+              "alt": "",
+              "width": 1360,
+              "height": 1122
+            }
+          }
+        ],
+        "startPosition": "right"
+      },
+      "style": {
+        "background": "gradient-dark-top",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "featureTabs-1774591311618",
+      "type": "featureTabs",
+      "props": {
+        "title": "Everything You Need to Build Retrieval and RAG Apps",
+        "subtitle": "TiDB integrates vector storage, hybrid querying, and scalable execution in a single system—making it straightforward to build production-ready retrieval workflows.",
+        "tabs": [
+          {
+            "id": "tab-vector-storage",
+            "label": "Vector Storage",
+            "description": "Native Vector Storage and Indexing: Store embeddings alongside application data and query them using similarity search.",
+            "bullets": [],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/5ed12035-vectorsearch.jpg",
+                "width": 1440,
+                "height": 1034
+              },
+              "alt": "",
+              "width": 1440,
+              "height": 1034
+            }
+          },
+          {
+            "id": "tab-hybrid-search",
+            "label": "Hybrid Search",
+            "description": "Hybrid Search with SQL Filters: Combine semantic similarity with structured predicates for precise retrieval.",
+            "bullets": [],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/65c0530e-hybrid_search_with_sql_filters_.jpg",
+                "width": 1440,
+                "height": 718
+              },
+              "alt": "",
+              "width": 1440,
+              "height": 718
+            }
+          },
+          {
+            "id": "tab-rag-retrieval",
+            "label": "RAG Retrieval",
+            "description": "RAG-Ready Retrieval Workflow: Retrieve relevant context and pass it directly to an LLM.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/f56b1395-rag-ready_retrieval_workflow_.jpg",
+                "width": 1440,
+                "height": 880
+              },
+              "alt": "",
+              "width": 1440,
+              "height": 880
+            }
+          },
+          {
+            "id": "tab-distributed-performance",
+            "label": "Performance at Scale",
+            "description": "Maintain fast retrieval as embeddings, queries, and application traffic grow, without redesigning infrastructure as AI usage expands.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/5bf34168-01_distributed_performance.png",
+                "width": 1360,
+                "height": 888
+              },
+              "alt": "",
+              "width": 1360,
+              "height": 888
+            }
+          }
+        ],
+        "autoSwitch": true,
+        "autoSwitchInterval": 6000
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "logocloud",
+      "type": "logoCloud",
+      "props": {
+        "title": "Trusted by leading AI teams",
+        "logos": [
+          {
+            "name": "Catalyst",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg",
+              "width": 111,
+              "height": 28
+            }
+          },
+          {
+            "name": "Omniconvert",
+            "image": {
+              "url": "https://static.pingcap.com/images/f34077f8-omniconvert-logo-white.png",
+              "width": 1071,
+              "height": 200
+            }
+          },
+          {
+            "name": "Manus",
+            "image": {
+              "url": "https://static.pingcap.com/images/69d76633-manuse-logo-white.svg",
+              "width": 103,
+              "height": 30
+            }
+          },
+          {
+            "name": "Dify",
+            "image": {
+              "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
+              "width": 102,
+              "height": 45
+            }
+          },
+          {
+            "name": "Rengage",
+            "image": {
+              "url": "https://static.pingcap.com/images/716bda3b-rengage-logo-black.png",
+              "width": 1225,
+              "height": 282
+            }
+          },
+          {
+            "name": "Toprism",
+            "image": {
+              "url": "https://static.pingcap.com/images/957fb0bb-toprism-logo-primary-white.svg",
+              "width": 192,
+              "height": 45
+            }
+          },
+          {
+            "name": "Crowdsnap",
+            "image": {
+              "url": "https://static.pingcap.com/images/7713e4cc-untitled-design-29-e1759227847264.png",
+              "width": 367,
+              "height": 98
+            }
+          },
+          {
+            "name": "Plaid",
+            "image": {
+              "url": "https://static.pingcap.com/images/87856fc4-plaid.svg",
+              "width": 112,
+              "height": 42
+            }
+          }
+        ],
+        "variant": "minimal",
+        "align": "center",
+        "autoScroll": true,
+        "scrollSpeedSeconds": 15
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "resources",
+      "type": "featureCard",
+      "props": {
+        "title": "Start Building with TiDB Vector Search",
+        "subtitle": "Explore documentation, tutorials, and best practices for semantic search and RAG applications.",
+        "items": [
+          {
+            "icon": "FileCode",
+            "title": "Vector Search Documentation",
+            "description": "Complete guide to vector storage, indexing, and similarity queries in TiDB.",
+            "borderColor": "blue",
+            "href": "https://docs.pingcap.com/ai/vector-search-overview/"
+          },
+          {
+            "icon": "Code2",
+            "title": "RAG Application Tutorial",
+            "description": "Build end-to-end retrieval augmented generation workflows with TiDB and LLMs.",
+            "borderColor": "violet",
+            "href": "https://www.pingcap.com/article/building-a-rag-application-from-scratch-understanding-rag-and-preparing-your-data/"
+          },
+          {
+            "icon": "Lightbulb",
+            "title": "Best Practices Guide",
+            "description": "Optimize embedding storage, indexing strategies, and query performance for production.",
+            "borderColor": "teal",
+            "href": "https://docs.pingcap.com/ai/vector-search-improve-performance/"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta-final",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Build Accurate AI Retrieval?",
+        "subtitle": "Start with TiDB Cloud free tier and explore vector search capabilities today.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View Documentation",
+          "href": "https://docs.pingcap.com/ai/vector-search-overview/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}

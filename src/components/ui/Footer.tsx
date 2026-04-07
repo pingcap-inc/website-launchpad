@@ -108,7 +108,7 @@ const socialLinks: { label: string; href: string; svgContent: string }[] = [
 export function Footer() {
   return (
     <footer className="bg-bg-primary">
-      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16 py-16 lg:py-20">
+      <div className="contain py-16 lg:py-20">
         {/* Language switcher — mobile only, first row */}
         <div className="lg:hidden mb-8">
           <LanguageSwitcher />

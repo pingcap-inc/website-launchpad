@@ -2,35 +2,24 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { PrimaryButton } from '@/components/ui/PrimaryButton'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
+import type { ImageRef } from '@/lib/dsl-schema'
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
 /**
  * Three layout modes:
- * - `centered`    — text centered, optional background image
+ * - `centered`    — text centered
  * - `split`       — 1:1 left text / right rightSlot (form, image, any ReactNode)
  * - `image-right` — left text (max-w-[780px]) / right hero image with alignment control
  */
 export type HeroLayout = 'centered' | 'split' | 'image-right'
 
-interface HeroBackgroundImage {
-  src?: string
-  alt?: string
-  priority?: boolean
-  /** Defaults to opacity-40 */
-  opacityClassName?: string
-  /** Optional overlay class. No overlay is applied unless this is provided. */
-  overlayClassName?: string
-  /** Defaults to object-center */
-  positionClassName?: string
-}
-
 /** Used with `layout="image-right"` */
 export interface HeroImageSlot {
-  src: string
+  image: ImageRef
   alt?: string
-  width: number
-  height: number
+  width?: number
+  height?: number
   /** Desktop image alignment. Defaults to `'right'`. */
   align?: 'right' | 'center'
   priority?: boolean
@@ -45,6 +34,13 @@ interface HeroSectionProps {
    */
   layout?: HeroLayout
   eyebrow?: string
+  /**
+   * Plain text, a React node, or an HTML string.
+   * HTML strings (detected by `<` tag) are rendered via `dangerouslySetInnerHTML`.
+   * SECURITY: HTML headline strings must be code-owned/trusted (not user/CMS input).
+   * Use CSS classes from globals.css for gradient effects, e.g.:
+   * `"Unlock <span class=\"text-gradient-violet animate-glow-sweep\">TiDB Cloud</span>"`
+   */
   headline: string | React.ReactNode
   subheadline?: string
   primaryCta?: { text: string; href: string }
@@ -53,7 +49,6 @@ interface HeroSectionProps {
   rightSlot?: React.ReactNode
   /** Hero image config. Used in `image-right` layout. */
   heroImage?: HeroImageSlot
-  backgroundImage?: HeroBackgroundImage
   className?: string
 }
 
@@ -71,16 +66,21 @@ function HeroTextBlock({
   HeroSectionProps,
   'eyebrow' | 'headline' | 'subheadline' | 'primaryCta' | 'secondaryCta'
 > & { centered?: boolean; className?: string }) {
+  // Detect HTML strings so we can use dangerouslySetInnerHTML
+  const isHtmlHeadline = typeof headline === 'string' && /<[a-z][\s\S]*>/i.test(headline)
+
   return (
     <div className={className}>
-      {eyebrow && <p className="font-mono text-eyebrow text-carbon-400 mb-8">{eyebrow}</p>}
+      {eyebrow && <p className="font-mono text-eyebrow text-secondary mb-8">{eyebrow}</p>}
       <h1
         className={cn(
-          'text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title mb-6 whitespace-pre-line',
+          'text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title mb-6',
+          !isHtmlHeadline && 'whitespace-pre-line',
           centered && 'mx-auto'
         )}
+        {...(isHtmlHeadline ? { dangerouslySetInnerHTML: { __html: headline as string } } : {})}
       >
-        {headline}
+        {!isHtmlHeadline ? headline : null}
       </h1>
       {subheadline && (
         <p
@@ -109,15 +109,6 @@ function HeroTextBlock({
   )
 }
 
-// ─── Defaults ──────────────────────────────────────────────────────────────────
-
-const DEFAULT_HERO_IMAGE: HeroImageSlot = {
-  src: '/images/hero/r/Graphic-1-Dk.png',
-  alt: '',
-  width: 800,
-  height: 500,
-}
-
 // ─── Component ─────────────────────────────────────────────────────────────────
 
 export function HeroSection({
@@ -129,73 +120,18 @@ export function HeroSection({
   secondaryCta,
   rightSlot,
   heroImage,
-  backgroundImage,
   className,
 }: HeroSectionProps) {
   const resolvedLayout: HeroLayout = layout ?? 'image-right'
   const isCentered = resolvedLayout === 'centered'
-  const resolvedHeroImage = heroImage ?? DEFAULT_HERO_IMAGE
-
-  const resolvedBackgroundSrc = backgroundImage?.src
-  const heroBackgroundImage = resolvedBackgroundSrc
-    ? { ...backgroundImage, src: resolvedBackgroundSrc }
-    : null
-  const useCssBackgroundForCentered = isCentered && !!heroBackgroundImage
 
   // Right slot for split layout
   const resolvedRightSlot = resolvedLayout === 'split' ? (rightSlot ?? null) : null
 
   return (
-    <section
-      className={cn(
-        'bg-bg-primary text-text-inverse relative overflow-hidden py-10 md:py-0',
-        isCentered && 'text-center',
-        className
-      )}
-    >
-      {/* ── Background layer ── */}
-      {heroBackgroundImage && (
-        <>
-          {useCssBackgroundForCentered ? (
-            <div
-              aria-hidden="true"
-              className={cn(
-                'pointer-events-none absolute inset-0 bg-cover',
-                heroBackgroundImage.positionClassName ?? 'bg-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-40'
-              )}
-              style={{ backgroundImage: `url("${heroBackgroundImage.src}")` }}
-            />
-          ) : (
-            <Image
-              src={heroBackgroundImage.src}
-              alt={heroBackgroundImage.alt ?? ''}
-              fill
-              priority={heroBackgroundImage.priority}
-              aria-hidden={heroBackgroundImage.alt ? undefined : true}
-              className={cn(
-                'pointer-events-none object-cover',
-                heroBackgroundImage.positionClassName ?? 'object-center',
-                heroBackgroundImage.opacityClassName ?? 'opacity-40'
-              )}
-            />
-          )}
-          {heroBackgroundImage.overlayClassName && (
-            <div
-              aria-hidden="true"
-              className={cn('absolute inset-0', heroBackgroundImage.overlayClassName)}
-            />
-          )}
-        </>
-      )}
-
+    <div className={cn('relative overflow-hidden', isCentered && 'text-center', className)}>
       {/* ── Content ── */}
-      <div
-        className={cn(
-          'max-w-container mx-auto px-4 md:px-8 lg:px-16',
-          heroBackgroundImage && 'relative z-10'
-        )}
-      >
+      <div>
         {/* Layout 1: centered */}
         {resolvedLayout === 'centered' && (
           <HeroTextBlock
@@ -218,9 +154,9 @@ export function HeroSection({
               subheadline={subheadline}
               primaryCta={primaryCta}
               secondaryCta={secondaryCta}
-              className="pt-10 md:py-20"
+              className="pt-10 md:pt-20 lg:py-20"
             />
-            <div className="py-4">{resolvedRightSlot}</div>
+            <div className="py-4 md:pb-20 lg:py-0">{resolvedRightSlot}</div>
           </div>
         )}
 
@@ -233,26 +169,30 @@ export function HeroSection({
               subheadline={subheadline}
               primaryCta={primaryCta}
               secondaryCta={secondaryCta}
-              className="md:py-20 w-full lg:max-w-[780px] lg:shrink-0"
+              className="md:pt-20 lg:py-20 w-full lg:max-w-[780px] xlg:shrink-0"
             />
             <div
               className={cn(
                 'pt-4 lg:py-4 flex-1 flex items-center justify-center',
-                resolvedHeroImage.align === 'center' ? 'lg:justify-center' : 'lg:justify-end'
+                heroImage?.align === 'center'
+                  ? 'lg:justify-center'
+                  : 'md:pb-10 lg:pb-0 lg:justify-end lg:min-w-[300px]'
               )}
             >
-              <Image
-                src={resolvedHeroImage.src}
-                alt={resolvedHeroImage.alt ?? ''}
-                width={resolvedHeroImage.width}
-                height={resolvedHeroImage.height}
-                className="max-w-full h-auto"
-                priority={resolvedHeroImage.priority ?? true}
-              />
+              {heroImage && (
+                <Image
+                  src={heroImage.image.url}
+                  alt={heroImage.alt ?? ''}
+                  width={heroImage.width || 800}
+                  height={heroImage.height || 500}
+                  className="max-w-full h-auto"
+                  priority={heroImage.priority ?? true}
+                />
+              )}
             </div>
           </div>
         )}
       </div>
-    </section>
+    </div>
   )
 }

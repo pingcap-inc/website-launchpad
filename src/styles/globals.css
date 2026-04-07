@@ -38,6 +38,9 @@
 :root {
   --font-moderat: 'Moderat', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-moderat-mono: 'Moderat Mono', ui-monospace, monospace;
+  --global-width: 1374px;
+  --container-margin: 16px;
+  --container-max-width: calc(100vw - calc(var(--container-margin) * 2));
 }
 
 @layer base {
@@ -49,6 +52,30 @@
   body {
     @apply font-sans antialiased bg-bg-primary text-text-inverse;
   }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-margin: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --container-margin: 64px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --container-max-width: var(--global-width);
+  }
+}
+
+.contain {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
 }
 
 @keyframes tab-progress {
@@ -71,6 +98,18 @@
   mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
 }
 
+.section-root {
+  --text-secondary: #a2adb9;
+}
+
+.section-root[data-tone='dark'] {
+  --text-secondary: #5d6974;
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
 @keyframes logo-marquee {
   from {
     transform: translateX(0%);
@@ -84,6 +123,21 @@
   animation: logo-marquee 28s linear infinite;
 }
 
+@keyframes slide-in-right {
+  from {
+    transform: translateX(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 240ms ease-out;
+}
+
 @keyframes glow-sweep {
   from {
     background-position: 200% 50%;
@@ -93,9 +147,74 @@
   }
 }
 
-.animate-glow-sweep {
+.animate-glow-sweep,
+.animate-pulse-glow,
+.animate-glow {
   background-size: 200% 100%;
   animation: glow-sweep 2.8s linear infinite;
+}
+
+/* ─── Gradient headline text ── use with animate-glow-sweep ─────────────── */
+/* Usage: <span class="text-gradient-violet animate-glow-sweep">word</span>  */
+
+.text-gradient-violet {
+  background: linear-gradient(
+    90deg,
+    #9e4ec4 0%,
+    #c76ff2 35%,
+    #f0d4ff 50%,
+    #c76ff2 65%,
+    #9e4ec4 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(
+    90deg,
+    #2c80ce 0%,
+    #509dea 35%,
+    #d0e8ff 50%,
+    #509dea 65%,
+    #2c80ce 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-teal {
+  background: linear-gradient(
+    90deg,
+    #1aa8a8 0%,
+    #50dbd9 35%,
+    #d0fffe 50%,
+    #50dbd9 65%,
+    #1aa8a8 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-red {
+  background: linear-gradient(
+    90deg,
+    #dc150b 0%,
+    #f35048 35%,
+    #ffd0ce 50%,
+    #f35048 65%,
+    #dc150b 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @media (prefers-reduced-motion: reduce) {

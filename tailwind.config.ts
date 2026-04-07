@@ -228,7 +228,9 @@ const config: Config = {
         container: '40px',
       },
       maxWidth: {
-        container: '1502px',
+        container: '1374px',
+        'content-md': '1140px',
+        'content-sm': '905px',
         'hero-title': '860px',
         'section-title': '880px',
         subtitle: '640px',

@@ -10,7 +10,7 @@ export interface ColorCardItem {
   title: string
   description: string
   cta: { text: string; href: string }
-  icon: React.ReactNode
+  icon?: React.ReactNode
 }
 
 interface FeatureHighlightsProps {
@@ -19,7 +19,7 @@ interface FeatureHighlightsProps {
   subtitle?: string
   items: ColorCardItem[]
   columns?: 2 | 3 | 4
-  viewMore?: { text?: string; href: string }
+  viewMore?: { text: string; href: string }
   className?: string
 }
 
@@ -39,20 +39,18 @@ export function FeatureHighlightsSection({
   className,
 }: FeatureHighlightsProps) {
   return (
-    <section className={cn('py-section-sm lg:py-section', className)}>
-      <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
-        <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
-        <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
-          {items.map((item) => (
-            <ColorCard key={item.title} {...item} />
-          ))}
-        </div>
-        {viewMore && (
-          <div className="mt-12 flex justify-center">
-            <SecondaryButton href={viewMore.href}>{viewMore.text ?? 'View More'}</SecondaryButton>
-          </div>
-        )}
+    <div className={cn('space-y-16', className)}>
+      <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
+      <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
+        {items.map((item) => (
+          <ColorCard key={item.title} {...item} />
+        ))}
       </div>
-    </section>
+      {viewMore && (
+        <div className="mt-12 flex justify-center">
+          <SecondaryButton href={viewMore.href}>{viewMore.text}</SecondaryButton>
+        </div>
+      )}
+    </div>
   )
 }

@@ -9,6 +9,7 @@ import {
   ColorCard,
   SectionHeader,
   FeatureCard,
+  SectionWrapper,
 } from '@/components'
 import { DeveloperSubnav } from './_components/DeveloperSubnav'
 import { IconOltpD, IconSelfManagedC, IconBuildAi, IconMigration } from './_components/icons'
@@ -241,25 +242,35 @@ export default function DeveloperHubPage() {
         <DeveloperSubnav />
         <main>
           {/* ── Hero ── */}
-          <HeroSection
-            layout="image-right"
-            eyebrow="TiDB Developer Hub"
-            headline="Everything You Need to Build on TiDB"
-            subheadline="Working examples, connection guides, migration paths, and courses — pick a section based on where you are."
-            primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
-            secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
-            heroImage={{
-              src: '/images/developers/developers-banner.svg',
-              alt: 'Developers Banner',
-              width: 570,
-              height: 444,
-              align: 'right',
-            }}
-          />
+          <SectionWrapper
+            style={{ background: 'primary', spacing: 'hero', className: 'py-10 md:py-0' }}
+          >
+            <HeroSection
+              layout="image-right"
+              eyebrow="TiDB Developer Hub"
+              headline="Everything You Need to Build on TiDB"
+              subheadline="Working examples, connection guides, migration paths, and courses — pick a section based on where you are."
+              primaryCta={{ text: 'Try for Free', href: 'https://tidbcloud.com/free-trial/' }}
+              secondaryCta={{ text: 'Deep Dive with Docs', href: 'https://docs.pingcap.com/' }}
+              heroImage={{
+                image: { url: '/images/developers/developers-banner.svg' },
+                alt: 'Developers Banner',
+                width: 570,
+                height: 444,
+                align: 'right',
+              }}
+            />
+          </SectionWrapper>
 
           {/* ── Choose Your Path ── */}
-          <section className="py-section-sm lg:pb-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper
+            style={{
+              background: 'primary',
+              spacing: 'hero',
+              className: 'py-section-sm lg:pb-section',
+            }}
+          >
+            <div className="space-y-16">
               <SectionHeader className="md:mb-6" subtitle="Choose Your Path" align="left" />
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {pathCards.map((card) => (
@@ -274,14 +285,14 @@ export default function DeveloperHubPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
           {/* ── How-To Guides ── */}
-          <section
+          <SectionWrapper
             id="how-to-guides"
-            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+            style={{ background: 'gradient-dark-bottom', spacing: 'section' }}
           >
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+            <div className="space-y-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-start">
                 <div className="lg:pt-2">
                   <SectionHeader
@@ -311,11 +322,11 @@ export default function DeveloperHubPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
           {/* ── Featured Tutorials ── */}
-          <section id="learn" className="py-section-sm lg:py-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper id="learn" style={{ background: 'primary', spacing: 'section' }}>
+            <div className="space-y-16">
               <SectionHeader title="Featured Tutorials" align="left" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {tutorials.map((item) => (
@@ -341,11 +352,11 @@ export default function DeveloperHubPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
           {/* ── Courses ── */}
-          <section className="py-section-sm lg:py-section">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
+            <div className="space-y-16">
               <SectionHeader title="Developer Courses" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {courses.map((item) => (
@@ -365,11 +376,11 @@ export default function DeveloperHubPage() {
                 </SecondaryButton>
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
           {/* ── Community ── */}
-          <section className="py-section-sm lg:py-section">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
+            <div className="space-y-16">
               <SectionHeader title="Join the TiDB Community" />
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {community.map((platform) => (
@@ -400,7 +411,7 @@ export default function DeveloperHubPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
         </main>
       </div>
       <Footer />

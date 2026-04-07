@@ -8,6 +8,7 @@ import {
   HeroSection,
   SecondaryButton,
   IconFeatureItem,
+  SectionWrapper,
 } from '@/components'
 import { buildPageSchema, techArticleSchema } from '@/lib/schema'
 import { DeveloperSubnav } from '../_components/DeveloperSubnav'
@@ -220,23 +221,33 @@ export default function GetStartedPage() {
         <DeveloperSubnav />
         <main>
           {/* ── Hero ── */}
-          <HeroSection
-            layout="image-right"
-            eyebrow="TiDB Developer Hub"
-            headline="Get Started with TiDB"
-            subheadline="New to TiDB? Start by spinning up a free cluster, then pick a path based on what you want to build."
-            heroImage={{
-              src: '/images/developers/get-started-banner.svg',
-              alt: 'Get Started Banner',
-              width: 517,
-              height: 200,
-              align: 'right',
-            }}
-          />
+          <SectionWrapper
+            style={{ background: 'primary', spacing: 'hero', className: 'py-10 md:py-0' }}
+          >
+            <HeroSection
+              layout="image-right"
+              eyebrow="TiDB Developer Hub"
+              headline="Get Started with TiDB"
+              subheadline="New to TiDB? Start by spinning up a free cluster, then pick a path based on what you want to build."
+              heroImage={{
+                image: { url: '/images/developers/get-started-banner.svg' },
+                alt: 'Get Started Banner',
+                width: 517,
+                height: 200,
+                align: 'right',
+              }}
+            />
+          </SectionWrapper>
 
           {/* ── Why TiDB ── */}
-          <section className="py-section-sm lg:pb-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper
+            style={{
+              background: 'primary',
+              spacing: 'hero',
+              className: 'py-section-sm lg:pb-section',
+            }}
+          >
+            <div className="space-y-16">
               <SectionHeader title="Why Do Developers Choose TiDB?" h2Size="md" align="left" />
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
                 {whyFeatures.map((f) => (
@@ -250,14 +261,14 @@ export default function GetStartedPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
           {/* ── Featured Quick Starts ── */}
-          <section
+          <SectionWrapper
             id="quick-starts"
-            className="py-section-sm lg:py-section bg-gradient-dark-bottom"
+            style={{ background: 'gradient-dark-bottom', spacing: 'section' }}
           >
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+            <div className="space-y-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8 items-center">
                 <div className="lg:pt-2">
                   <SectionHeader
@@ -274,11 +285,11 @@ export default function GetStartedPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
           {/* ── Understand the Basics ── */}
-          <section className="py-section-sm lg:py-section bg-gradient-dark-top">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'gradient-dark-top', spacing: 'section' }}>
+            <div className="space-y-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
                 {/* Left: title + illustration */}
                 <div className="flex flex-col gap-8">
@@ -302,11 +313,11 @@ export default function GetStartedPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </SectionWrapper>
 
           {/* ── Choose What to Do Next ── */}
-          <section className="py-section-sm lg:py-section bg-bg-primary">
-            <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+          <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
+            <div className="space-y-16">
               <SectionHeader title="Choose What to Do Next" h2Size="sm" align="left" />
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {nextSteps.map((card) => (
@@ -321,7 +332,7 @@ export default function GetStartedPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </SectionWrapper>
         </main>
         <Footer />
       </div>
