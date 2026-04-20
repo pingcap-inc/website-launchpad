@@ -52,7 +52,7 @@ const dsl: PageDSL = {
       "id": "hero",
       "type": "hero",
       "props": {
-        "layout": "centered",
+        "layout": "image-right",
         "eyebrow": "Now in Private Beta",
         "headline": "One platform. Transactions, analytics, and <span class=\"text-gradient-violet\">your data lake</span>.",
         "subheadline": "TiDB Cloud Lake is a cloud native lakehouse built into TiDB Cloud. Run real-time analytics and AI workloads next to your transactional data, on a unified OLTP and OLAP database — pay only for what you query.",
