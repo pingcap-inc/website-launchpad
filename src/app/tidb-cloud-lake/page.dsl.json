@@ -1,0 +1,242 @@
+{
+  "pageName": "TiDB Cloud Lake: Unified OLTP and OLAP Database",
+  "meta": {
+    "title": "TiDB Cloud Lake: Unified OLTP and OLAP Database",
+    "description": "TiDB Cloud Lake delivers lakehouse analytics with unified OLTP/OLAP processing, pay-as-you-go pricing, and AI-ready data architecture.",
+    "canonical": "/tidb-cloud-lake/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Now in Private Beta",
+        "headline": "One platform. Transactions, analytics, and <span class=\"text-gradient-violet\">your data lake</span>.",
+        "subheadline": "TiDB Cloud Lake is a cloud native lakehouse built into TiDB Cloud. Run real-time analytics and AI workloads next to your transactional data, on a unified OLTP and OLAP database — pay only for what you query.",
+        "primaryCta": {
+          "text": "Start free in TiDB Cloud",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Request Private Beta access",
+          "href": "https://www.pingcap.com/contact-us/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "why-lake",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "Why TiDB Cloud Lake",
+        "title": "One unified data platform for every workload",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "Unified OLTP and OLAP",
+            "description": "Skip stitched pipelines between separate systems. TiDB's HTAP database architecture lets transactional and analytic workloads run on the same distributed SQL platform. Lake adds an elastic analytic tier for BI, ETL, and AI data prep.",
+            "cta": {
+              "text": "Learn about HTAP",
+              "href": "https://www.pingcap.com/article/hybrid-databases-real-time-analytics-with-oltp-olap/"
+            },
+            "icon": "Layers"
+          },
+          {
+            "variant": "blue",
+            "title": "Pay-as-you-go analytics warehouse",
+            "description": "Spin up a Lake warehouse in minutes, resize it when workloads change, pause it when you're done. Compute is billed by usage and rolls into your TiDB Cloud invoice. No separate vendor, no idle-capacity bill.",
+            "cta": {
+              "text": "See pricing",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            },
+            "icon": "DollarSign"
+          },
+          {
+            "variant": "teal",
+            "title": "AI-ready, MySQL-compatible lakehouse",
+            "description": "Lake is a MySQL compatible data lake designed as an AI-ready data platform for embedding pipelines, feature engineering, retrieval corpora, and vector search database workloads next to your operational data.",
+            "cta": {
+              "text": "Explore AI capabilities",
+              "href": "https://www.pingcap.com/demo/"
+            },
+            "icon": "Brain"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "how-it-works",
+      "type": "featureTabs",
+      "props": {
+        "eyebrow": "How it works",
+        "title": "Three steps to real-time analytics",
+        "tabs": [
+          {
+            "id": "step1",
+            "label": "Provision a warehouse",
+            "description": "Create a Lake warehouse from the TiDB Cloud console. Choose a size; pause or resize any time to match your analytics workload needs.",
+            "bullets": [
+              "Deploy in minutes from TiDB Cloud console",
+              "Auto-scale compute based on query load",
+              "Pause to eliminate idle costs"
+            ],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "step2",
+            "label": "Query your data in place",
+            "description": "Run distributed SQL analytics against live TiDB data plus historical data in object storage — no ETL required for a real-time analytics database experience.",
+            "bullets": [
+              "Direct queries on operational data",
+              "Historical data in cloud object storage",
+              "Zero-copy data access"
+            ],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "step3",
+            "label": "Connect your stack",
+            "description": "Point Tableau, Looker, dbt, or your ML pipeline at the warehouse endpoint. MySQL compatibility means most tools work out of the box.",
+            "bullets": [
+              "Native MySQL driver support",
+              "BI tool integrations",
+              "ML pipeline connectivity"
+            ],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          }
+        ],
+        "autoSwitch": true,
+        "autoSwitchInterval": 6000
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "built-on-tidb",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Built on TiDB Cloud",
+        "title": "Enterprise-grade unified governance",
+        "subtitle": "Lake inherits TiDB Cloud's identity, RBAC, audit, and billing. One governance boundary for OLTP and OLAP.",
+        "items": [
+          {
+            "icon": "Shield",
+            "title": "Identity & Access Control",
+            "description": "Unified RBAC across transactional and analytic workloads with consistent audit trails."
+          },
+          {
+            "icon": "Lock",
+            "title": "Consolidated Billing",
+            "description": "All compute and storage costs roll into your single TiDB Cloud invoice with pay-as-you-go pricing."
+          },
+          {
+            "icon": "Database",
+            "title": "Unified Platform",
+            "description": "Single control plane for OLTP, OLAP, and lakehouse operations with consistent provisioning."
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently asked questions",
+        "items": [
+          {
+            "q": "What is TiDB Cloud Lake?",
+            "a": "TiDB Cloud Lake is the lakehouse analytics tier of TiDB Cloud. It adds on-demand analytic warehouses to the distributed SQL database you run OLTP workloads on, enabling unified OLTP and OLAP processing on a single platform."
+          },
+          {
+            "q": "How is TiDB Cloud Lake priced?",
+            "a": "Pay-as-you-go for warehouse compute and storage, consolidated on your TiDB Cloud invoice. You only pay for the queries you run and the data you store, with no idle-capacity charges."
+          },
+          {
+            "q": "Who should use TiDB Cloud Lake?",
+            "a": "Existing TiDB users hitting HTAP scaling limits, platform teams looking to retire a separate data warehouse, and AI/ML builders who need a data lake for training and RAG workloads. Also ideal for mid-market teams already on TiDB Cloud Essential."
+          },
+          {
+            "q": "Is TiDB Cloud Lake available now?",
+            "a": "TiDB Cloud Lake is currently in Private Beta. You can request early access from your TiDB Cloud workspace or contact our sales team."
+          },
+          {
+            "q": "Is TiDB Cloud Lake MySQL compatible?",
+            "a": "Yes. Lake is a MySQL compatible lakehouse, so you can connect with SQL tools, BI platforms, and drivers your team already uses without modification."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "lg"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to unify OLTP, analytics, and AI on one platform?",
+        "subtitle": "Start free in TiDB Cloud and request Private Beta access to TiDB Cloud Lake today.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start free in TiDB Cloud",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Talk to an engineer",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "lg"
+      }
+    }
+  ]
+}
