@@ -41,7 +41,7 @@
       "props": {
         "eyebrow": "Why TiDB Cloud Lake",
         "title": "Eliminate data pipeline complexity",
-        "subtitle": "Run transactions, analytics, and AI on one distributed SQL platform—no more data silos between OLTP and OLAP systems.",
+        "subtitle": "Run transactions, analytics, and AI on one distributed SQL platform. No more data silos between OLTP and OLAP systems.",
         "items": [
           {
             "variant": "blue",
