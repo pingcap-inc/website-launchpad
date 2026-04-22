@@ -174,7 +174,7 @@ const dsl: PageDSL = {
       "id": "cta-1776830986643",
       "type": "cta",
       "props": {
-        "title": "Vector search alone isn't enough",
+        "title": "Vector search alone isn't enough for AI agents",
         "subtitle": "See how TiDB stacks up against Pinecone, Redis, pgvector and more — across memory, ACID, and scale.",
         "image": {
           "image": {
