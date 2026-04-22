@@ -171,6 +171,32 @@ const dsl: PageDSL = {
       }
     },
     {
+      "id": "cta-1776830986643",
+      "type": "cta",
+      "props": {
+        "title": "Vector search alone isn't enough for production agents.",
+        "subtitle": "See how TiDB, Pinecone, Redis, pgvector, and others compare across all four memory layers — short-term, episodic, semantic, and procedural.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/88a9e52f-decoupled-compute.svg",
+            "width": 600,
+            "height": 600
+          },
+          "alt": "",
+          "width": 600,
+          "height": 600
+        },
+        "primaryCta": {
+          "text": "Best Database for AI Agents: 2026 Comparison",
+          "href": "https://www.pingcap.com/compare/best-database-for-ai-agents/"
+        }
+      },
+      "style": {
+        "background": "brand-teal",
+        "spacing": "sm"
+      }
+    },
+    {
       "id": "trusted-scale",
       "type": "testimonials",
       "props": {
