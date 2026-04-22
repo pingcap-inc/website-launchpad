@@ -174,8 +174,8 @@ const dsl: PageDSL = {
       "id": "cta-1776830986643",
       "type": "cta",
       "props": {
-        "title": "Vector search alone isn't enough for AI agents",
-        "subtitle": "See how TiDB stacks up against Pinecone, Redis, pgvector and more — across memory, ACID, and scale.",
+        "title": "Choosing a database for AI agents? Here's the full comparison.",
+        "subtitle": "Memory architecture, ACID guarantees, multi-agent isolation — TiDB, Pinecone, Redis, pgvector and more.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/88a9e52f-decoupled-compute.svg",
@@ -187,7 +187,7 @@ const dsl: PageDSL = {
           "height": 600
         },
         "primaryCta": {
-          "text": "Best Database for AI Agents: 2026 Comparison",
+          "text": "Read the 2026 guide",
           "href": "https://www.pingcap.com/compare/best-database-for-ai-agents/"
         }
       },
