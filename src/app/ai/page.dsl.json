@@ -132,8 +132,8 @@
       "id": "cta-1776830986643",
       "type": "cta",
       "props": {
-        "title": "Vector search alone isn't enough for production agents.",
-        "subtitle": "See how TiDB, Pinecone, Redis, pgvector, and others compare across all four memory layers — short-term, episodic, semantic, and procedural.",
+        "title": "Vector search alone isn't enough",
+        "subtitle": "See how TiDB stacks up against Pinecone, Redis, pgvector and more — across memory, ACID, and scale.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/88a9e52f-decoupled-compute.svg",
