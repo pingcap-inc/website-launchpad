@@ -260,11 +260,11 @@
       "id": "testimonials",
       "type": "testimonials",
       "props": {
-        "eyebrow": "Supply Chain Visibility Leaders",
-        "title": "Trusted by Logistics and Supply Chain Companies",
+        "eyebrow": "Testimonials",
+        "title": "Supply Chain Visibility Solutions: Customers & Social Proof",
         "items": [
           {
-            "quote": "TiDB powers real-time shipment visibility across millions of daily events. We eliminated batch delays and downtime during peak delivery windows.",
+            "quote": "TiDB is trusted by logistics, e-commerce, and supply chain technology companies to power real-time visibility at scale. From high-volume courier operations to complex, multi-leg supply chains, teams rely on TiDB to deliver consistent performance, high availability, and live operational insight.",
             "author": "Logistics Platform Leader",
             "logo": {
               "image": {
@@ -300,18 +300,63 @@
       }
     },
     {
+      "id": "featureHighlights-1776905896101",
+      "type": "featureHighlights",
+      "props": {
+        "title": "Resources to Fuel your TiDB Journey",
+        "items": [
+          {
+            "variant": "red",
+            "title": "Modernizing MySQL",
+            "description": "Dynamic scaling on reads and writes while providing strong consistency",
+            "cta": {
+              "text": "Read",
+              "href": "https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/"
+            }
+          },
+          {
+            "variant": "violet",
+            "title": "Hands-on Labs",
+            "description": "Drive in and master TiDB's unique capabilities through hands-on practice",
+            "cta": {
+              "text": "Explore",
+              "href": "https://labs.tidb.io/?utm_source=website_en&utm_medium=direct&__hstc=86493575.3342d2642fbd5d4be93b021c5287935f.1775255944334.1776881471667.1776905940298.51&__hssc=86493575.4.1776905940298&__hsfp=9f1cc048b05cb66183921cc0a5bffa89"
+            }
+          },
+          {
+            "variant": "blue",
+            "title": "Blogs",
+            "description": "Stay updated with the latest insights, tips, and industry trends from ex",
+            "cta": {
+              "text": "Learn",
+              "href": "https://www.pingcap.com/blog/"
+            }
+          },
+          {
+            "variant": "teal",
+            "title": "Community",
+            "description": "Become part of the TiDB community and connect with other like minded users and developers.",
+            "cta": {
+              "text": "Join",
+              "href": "https://discord.com/invite/vYU9h56kAX"
+            }
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
       "id": "cta-final",
       "type": "cta",
       "props": {
         "title": "Enable Real-Time Supply Chain Visibility Today",
         "subtitle": "Join logistics and supply chain leaders delivering real-time visibility without ETL delays, sharding complexity, or downtime.",
         "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
-          "alt": "",
-          "width": 278,
-          "height": 256
+          "alt": ""
         },
         "primaryCta": {
           "text": "Start Free Trial",
