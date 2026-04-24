@@ -70,7 +70,7 @@ const dsl: PageDSL = {
         },
         secondaryCta: {
           text: 'Build Agentic AI Systems',
-          href: 'https://www.pingcap.com/ai/agentic-ai/',
+          href: '/ai/agentic-ai/',
         },
         heroImage: {
           image: {
@@ -184,6 +184,33 @@ const dsl: PageDSL = {
       style: {
         background: 'gradient-dark-top',
         spacing: 'lg',
+      },
+    },
+    {
+      id: 'cta-1776830986643',
+      type: 'cta',
+      props: {
+        title: "Choosing a Database for AI Agents? Here's the Full Comparison.",
+        subtitle:
+          'Memory architecture, ACID guarantees, multi-agent isolation — TiDB, Pinecone, Redis, pgvector and more.',
+        image: {
+          image: {
+            url: 'https://static.pingcap.com/images/88a9e52f-decoupled-compute.svg',
+            width: 600,
+            height: 600,
+          },
+          alt: '',
+          width: 600,
+          height: 600,
+        },
+        primaryCta: {
+          text: 'Read the 2026 guide',
+          href: 'https://www.pingcap.com/compare/best-database-for-ai-agents/',
+        },
+      },
+      style: {
+        background: 'brand-teal',
+        spacing: 'sm',
       },
     },
     {
