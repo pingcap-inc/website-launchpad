@@ -67,10 +67,11 @@ const dsl: PageDSL = {
         "heroImage": {
           "image": {
             "url": "https://static.pingcap.com/images/e0454c7c-group_1000011598__1_.png",
+            "alt": "Cloud lake illustration",
             "width": 386,
             "height": 370
           },
-          "alt": "",
+          "alt": "Cloud lake illustration",
           "width": 386,
           "height": 370
         }
@@ -133,12 +134,17 @@ const dsl: PageDSL = {
         "subtitle": "Simple setup and seamless integration with your data stack.",
         "items": [
           {
-            "title": "Provision a Warehouse",
+            "title": "1. Provision a Warehouse",
             "description": "Create a TiDB Cloud Lake warehouse from the console. Choose a size, pause, or resize any time to match workload demand.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/57aedf28-how-1-provision-warehouse.svg",
+                "width": 200,
+                "height": 150
+              },
+              "alt": "",
+              "width": 500,
+              "height": 150
             },
             "imagePosition": "right"
           },
@@ -147,8 +153,13 @@ const dsl: PageDSL = {
             "description": "Use ANSI SQL analytics, full-text search, vector search, and geospatial functions to explore, analyze, and retrieve data from object storage.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/63393d5e-how-2-query-in-place.svg",
+                "width": 200,
+                "height": 150
+              },
+              "alt": "",
+              "width": 500,
+              "height": 150
             },
             "imagePosition": "left"
           },
@@ -157,8 +168,13 @@ const dsl: PageDSL = {
             "description": "Point Tableau, Looker, dbt, or your ML pipeline at the warehouse endpoint. Real-time insights and AI-ready workflows in minutes.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/f38fda7c-how-3-connect-stack.svg",
+                "width": 200,
+                "height": 150
+              },
+              "alt": "",
+              "width": 500,
+              "height": 150
             },
             "imagePosition": "right"
           }
