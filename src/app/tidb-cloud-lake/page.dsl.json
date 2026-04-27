@@ -11,15 +11,15 @@
       "type": "hero",
       "props": {
         "layout": "image-right",
-        "eyebrow": "Now in Private Beta",
+        "eyebrow": "Now in Public Review",
         "headline": "Cloud-Native Analytics Warehouse for AI and Modern <span class=\"text-gradient-violet\">Analytics</span>",
         "subheadline": "TiDB Cloud Lake is a cloud-native analytics warehouse built for modern analytics and AI-oriented data workflows, combining elastic warehouses, ANSI SQL analytics, vector search, full-text search, and object storage in one managed service.",
         "primaryCta": {
           "text": "Start free in TiDB Cloud",
-          "href": "https://tidbcloud.com/free-trial/"
+          "href": "https://tidbcloud.com/signup/?signup_source=pingcap-en-lake"
         },
         "secondaryCta": {
-          "text": "Request Private Beta Access",
+          "text": "Contact Sales",
           "href": "https://www.pingcap.com/contact-us/"
         },
         "heroImage": {
