@@ -8,6 +8,7 @@ export interface FeatureCardItem {
   description: string
   borderColor?: string
   href?: string
+  ctaText?: string
   className?: string
 }
 
@@ -59,6 +60,7 @@ export function FeatureCardSection({
                 : item.borderColor
             }
             href={item.href}
+            ctaText={item.ctaText}
             className={item.className}
           />
         ))}

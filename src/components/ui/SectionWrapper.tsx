@@ -97,7 +97,7 @@ export function SectionWrapper({
           <div
             aria-hidden="true"
             className={cn(
-              'pointer-events-none absolute inset-0 bg-cover bg-center',
+              'pointer-events-none absolute inset-0 bg-no-repeat bg-cover bg-center',
               backgroundImageOpacityClassName
             )}
             style={{ backgroundImage: `url("${backgroundImage.image.url}")` }}

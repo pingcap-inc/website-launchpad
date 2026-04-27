@@ -13,32 +13,30 @@ const bgMap: Record<ColorCardVariant, string> = {
 
 interface ColorCardProps {
   variant: ColorCardVariant
-  title: string
-  description: string
-  cta: { text: string; href: string }
+  title: string | React.ReactNode
+  description: string | React.ReactNode
+  cta?: { text: string; href: string }
   /** Lucide icon or any SVG node */
   icon?: React.ReactNode
+  className?: string
 }
 
-export function ColorCard({ variant, title, description, cta, icon }: ColorCardProps) {
-  return (
-    <a
-      href={cta.href}
-      className={cn(
-        'group flex flex-col p-8',
-        bgMap[variant],
-        'hover:-translate-y-2 transition-transform duration-200 ease-in-out'
-      )}
-      {...externalLinkProps(cta.href)}
-    >
-      {/* Icon or image */}
+export function ColorCard({ variant, title, description, cta, icon, className }: ColorCardProps) {
+  const rootClassName = cn(
+    'group flex flex-col p-8',
+    bgMap[variant],
+    cta && 'hover:-translate-y-2 transition-transform duration-200 ease-in-out',
+    className
+  )
+
+  const content = (
+    <>
       {icon && <div className="mb-6 text-text-inverse shrink-0">{icon}</div>}
 
       <h3 className="text-h3-lg font-bold text-text-inverse mb-4">{title}</h3>
-      <p className="text-body-md text-text-inverse leading-relaxed flex-1">{description}</p>
+      <div className="text-body-md text-text-inverse leading-relaxed flex-1">{description}</div>
 
-      {/* SecondaryButton — triggered by card group hover */}
-      {cta.text && (
+      {cta?.text && (
         <div className="mt-8">
           <SecondaryButton
             className="group-hover:bg-transparent group-hover:text-text-inverse"
@@ -48,6 +46,16 @@ export function ColorCard({ variant, title, description, cta, icon }: ColorCardP
           </SecondaryButton>
         </div>
       )}
-    </a>
+    </>
   )
+
+  if (cta) {
+    return (
+      <a href={cta.href} className={rootClassName} {...externalLinkProps(cta.href)}>
+        {content}
+      </a>
+    )
+  }
+
+  return <div className={rootClassName}>{content}</div>
 }

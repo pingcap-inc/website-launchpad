@@ -9,7 +9,7 @@ import {
 
 export interface FaqItem {
   q: string
-  a: string
+  a: string | React.ReactNode
 }
 
 interface SectionFaqProps {

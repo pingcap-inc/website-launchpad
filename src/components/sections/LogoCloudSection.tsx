@@ -22,6 +22,7 @@ interface LogoCloudSectionProps {
   autoScroll?: boolean
   scrollSpeedSeconds?: number
   scrollContentMaxWidth?: number
+  logoClassName?: string
   className?: string
 }
 
@@ -35,6 +36,7 @@ export function LogoCloudSection({
   autoScroll = true,
   scrollSpeedSeconds = 28,
   scrollContentMaxWidth,
+  logoClassName,
   className,
 }: LogoCloudSectionProps) {
   const shouldScroll = autoScroll && logos.length > 4
@@ -44,10 +46,12 @@ export function LogoCloudSection({
 
   const renderLogo = (logo: LogoCloudItem, key: string) => {
     const containerClasses = 'flex items-center justify-center'
-    const imageClasses =
+    const imageClasses = cn(
       variant === 'minimal'
-        ? 'h-8 w-auto object-contain opacity-70 transition-opacity duration-200 ease-in-out hover:opacity-100 brightness-0 invert'
-        : 'h-10 w-auto object-contain opacity-75 transition-opacity duration-200 ease-in-out hover:opacity-100 brightness-0 invert'
+        ? 'h-8 w-auto object-contain transition-opacity duration-200 ease-in-out hover:opacity-70'
+        : 'h-10 w-auto object-contain transition-opacity duration-200 ease-in-out hover:opacity-75',
+      logoClassName
+    )
     const content = (
       <div className={containerClasses}>
         <Image
