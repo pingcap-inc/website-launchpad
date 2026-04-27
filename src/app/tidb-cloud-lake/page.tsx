@@ -205,7 +205,7 @@ const dsl: PageDSL = {
           },
           {
             "q": "Is TiDB Cloud Lake available now?",
-            "a": "Private Beta. Request access from your TiDB Cloud workspace."
+            "a": "TiDB Cloud Lake is now in. Public Preview"
           }
         ]
       },
