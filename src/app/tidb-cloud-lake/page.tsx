@@ -101,7 +101,7 @@ const dsl: PageDSL = {
           {
             "variant": "blue",
             "title": "Elastic Warehouses for Dynamic Workloads",
-            "description": "Create, pause, resize, and scale warehouses based on workload demand. Separate storage and compute so teams can scale analytics performance independently while keeping infrastructure simple. - Pay as you go",
+            "description": "Create, pause, resize, and scale warehouses based on workload demand. Separate storage and compute so teams can scale analytics performance independently while keeping infrastructure simple - pay as you go",
             "cta": {
               "text": "",
               "href": ""
@@ -232,7 +232,7 @@ const dsl: PageDSL = {
           "href": "https://tidbcloud.com/free-trial/"
         },
         "secondaryCta": {
-          "text": "Talk to an Engineer",
+          "text": "Contact Sales",
           "href": "https://www.pingcap.com/contact-us/"
         }
       },
