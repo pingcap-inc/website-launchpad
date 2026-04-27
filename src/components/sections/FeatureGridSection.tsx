@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 interface Feature {
   icon?: React.ReactNode
   title: string
-  description: string
+  description: string | React.ReactNode
   cta?: { text: string; href: string }
   layout?: 'horizontal' | 'vertical'
 }
@@ -45,7 +45,7 @@ export function FeatureGridSection({
         {features.map((feature) => {
           const resolvedLayout = feature.layout ?? itemLayout
           return (
-            <div key={`${feature.title}-${feature.description}`} className="space-y-4">
+            <div key={feature.title} className="space-y-4">
               <IconFeatureItem
                 icon={feature.icon}
                 title={feature.title}
