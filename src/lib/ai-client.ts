@@ -117,7 +117,8 @@ export function repairJson(raw: string): string {
 
 export const AI_PROVIDER = process.env.AI_PROVIDER === 'bedrock' ? 'bedrock' : 'nvidia'
 
-const NVIDIA_MODEL = 'qwen/qwen3.5-122b-a10b'
+const DEFAULT_NVIDIA_MODEL = 'qwen/qwen3.5-122b-a10b'
+export const NVIDIA_MODEL = process.env.NVIDIA_MODEL ?? DEFAULT_NVIDIA_MODEL
 export const AI_MODEL =
   AI_PROVIDER === 'bedrock' ? (process.env.ANTHROPIC_MODEL ?? '') : NVIDIA_MODEL
 
