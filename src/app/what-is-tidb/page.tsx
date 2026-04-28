@@ -30,7 +30,7 @@ import {
   SecondaryButton,
 } from '@/components'
 import type { ColorCardItem } from '@/components/sections/FeatureHighlightsSection'
-import { buildPageSchema, faqSchema } from '@/lib/schema'
+import { buildPageSchema, faqSchema, softwareApplicationSchema } from '@/lib/schema'
 import { VideoDialog } from '@/components/ui/VideoDialog'
 import { HeroVideo } from './_components/HeroVideo'
 
@@ -45,13 +45,24 @@ export const metadata: Metadata = {
     url: 'https://www.pingcap.com/what-is-tidb/',
     siteName: 'TiDB',
     type: 'website',
+    locale: 'en_US',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+        alt: 'TiDB — Open-source distributed SQL database',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'What is TiDB? | TiDB',
     description:
       'Learn what TiDB is, how its HTAP architecture works, and how TiDB Server, TiKV, TiFlash, and PD work together in one distributed SQL system.',
+    site: '@PingCAP',
     creator: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/what-is-tidb/' },
@@ -68,6 +79,12 @@ const schema = buildPageSchema({
     { name: 'What is TiDB?', path: '/what-is-tidb/' },
   ],
   extraSchemas: [
+    softwareApplicationSchema({
+      name: 'TiDB',
+      description:
+        'TiDB is an open-source, distributed SQL database with MySQL compatibility, horizontal scalability, and built-in HTAP for real-time transactional and analytical workloads.',
+      url: 'https://www.pingcap.com/tidb/',
+    }),
     faqSchema([
       {
         question: 'What is TiDB?',
