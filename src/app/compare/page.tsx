@@ -195,27 +195,27 @@ const dsl: PageDSL = {
           },
           {
             "q": "When should I choose TiDB over MySQL or PostgreSQL?",
-            "a": "Choose TiDB when you're hitting write scaling limits on a single MySQL primary, when sharding is becoming a serious conversation, or when you need fresh analytics on live transactional data without building a separate warehouse pipeline. If your workload fits comfortably on a single primary with read replicas, MySQL or PostgreSQL is simpler — and that simplicity has real value. TiDB adds the most value at scale."
+            "a": "Choose TiDB when you're hitting write scaling limits on a single primary, when sharding is becoming a serious conversation, or when you need fresh analytics on live transactional data without building a separate warehouse pipeline. If your workload fits comfortably on a single primary with read replicas, MySQL or PostgreSQL is simpler — and that simplicity has real value. TiDB adds the most value at scale."
           },
           {
             "q": "Is TiDB really MySQL-compatible?",
-            "a": "TiDB is wire-protocol compatible with MySQL 5.7/8.0 and supports the majority of MySQL SQL syntax. In practice, most MySQL applications connect and run without changes. Edge cases exist — some SELECT FOR UPDATE patterns, foreign key behavior, and a handful of MySQL-specific functions differ. Full compatibility reference available in docs."
+            "a": "TiDB is wire-protocol compatible with MySQL 5.7/8.0 and supports the majority of MySQL SQL syntax. In practice, most MySQL applications connect and run without changes. Edge cases exist — stored procedures and functions, triggers, and events are not supported, and some SELECT FOR UPDATE patterns and a handful of MySQL-specific functions differ. Foreign keys are fully supported as of v8.5. Full compatibility reference available in docs."
           },
           {
             "q": "What does HTAP mean, and does TiDB actually do it?",
-            "a": "HTAP — Hybrid Transactional and Analytical Processing — means running OLTP and OLAP queries on the same live data without ETL. TiDB does this via two storage engines that replicate in real time: TiKV (row-based, for transactions) and TiFlash (column-based, for analytics). Queries automatically route to the right engine. The practical benefit is fresher analytics without a separate data warehouse or replication lag."
+            "a": "HTAP — Hybrid Transactional and Analytical Processing — means running OLTP and OLAP queries on the same live data without ETL. TiDB does this via two storage engines: TiKV (row-based, for transactions) and TiFlash (column-based, for analytics), with asynchronous replication that stays near real-time. Queries automatically route to the right engine. The practical benefit is fresher analytics without a separate data warehouse."
           },
           {
             "q": "How does TiDB compare to CockroachDB?",
-            "a": "Both are NewSQL databases built for horizontal scale-out with ACID transactions. TiDB is MySQL-compatible and has a stronger HTAP story via TiFlash. CockroachDB is PostgreSQL-compatible and leans into global multi-region active-active deployments. TiDB is Apache 2.0 open-source; CockroachDB moved to an Enterprise license in 2024. See full comparison for details."
+            "a": "Both are NewSQL databases built for horizontal scale-out with ACID transactions. TiDB is MySQL-compatible and has a stronger HTAP story via TiFlash. CockroachDB is PostgreSQL-compatible and leans into global multi-region active-active deployments. TiDB is Apache 2.0 open-source; CockroachDB moved to an Enterprise license in 2024. See full comparison for details.Both are NewSQL databases built for horizontal scale-out with ACID transactions. TiDB is MySQL-compatible and has a stronger HTAP story via TiFlash. CockroachDB is PostgreSQL-compatible and leans into global multi-region active-active deployments. TiDB is Apache 2.0 open-source; CockroachDB moved to an Enterprise license in 2024. See full comparison for details."
           },
           {
             "q": "Can TiDB handle AI and vector search workloads?",
-            "a": "Yes. TiDB Vector Search adds native vector similarity search (HNSW indexing) within the same database as your SQL tables, enabling hybrid queries that combine semantic retrieval with structured filters in one system. See AI Agents and Vector Database guides for detailed coverage."
+            "a": "Yes. TiDB Vector Search adds native vector similarity search (HNSW indexing) within the same database as your SQL tables. The real power is combining vector search, full-text search (BM25), and SQL filters in a single hybrid query — enabling semantic retrieval with structured data in one system. TiDB also supports auto-embedding on INSERT, so vectors can be generated automatically as data is written. See AI Agents and Vector Database guides for detailed coverage."
           },
           {
             "q": "Is TiDB free to use?",
-            "a": "TiDB Self-Managed is fully open-source under Apache 2.0 — no licensing fees. TiDB Cloud (managed service on AWS, GCP, Azure) has a free Serverless tier with no credit card required."
+            "a": "TiDB Self-Managed is fully open-source under Apache 2.0 — no licensing fees. TiDB Cloud (managed service on AWS, GCP, Azure) has a free Starter tier with no credit card required."
           }
         ]
       },
