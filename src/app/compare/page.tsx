@@ -207,7 +207,7 @@ const dsl: PageDSL = {
           },
           {
             "q": "How does TiDB compare to CockroachDB?",
-            "a": "Both are NewSQL databases built for horizontal scale-out with ACID transactions. TiDB is MySQL-compatible and has a stronger HTAP story via TiFlash. CockroachDB is PostgreSQL-compatible and leans into global multi-region active-active deployments. TiDB is Apache 2.0 open-source; CockroachDB moved to an Enterprise license in 2024. See full comparison for details.Both are NewSQL databases built for horizontal scale-out with ACID transactions. TiDB is MySQL-compatible and has a stronger HTAP story via TiFlash. CockroachDB is PostgreSQL-compatible and leans into global multi-region active-active deployments. TiDB is Apache 2.0 open-source; CockroachDB moved to an Enterprise license in 2024. See full comparison for details."
+            "a": "Both are NewSQL databases built for horizontal scale-out with ACID transactions. TiDB is MySQL-compatible and has a stronger HTAP story via TiFlash. CockroachDB is PostgreSQL-compatible and leans into global multi-region active-active deployments. TiDB is Apache 2.0 open-source; CockroachDB moved to an Enterprise license in 2024. See full comparison for details."
           },
           {
             "q": "Can TiDB handle AI and vector search workloads?",
