@@ -6,12 +6,12 @@ import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
   title: "Real-Time Logistics Data Platform | TiDB",
-  description: "TiDB unifies transactional and analytical data for global supply chain visibility. Track orders, inventory, and shipments in real time without ETL delays or manual sharding.",
+  description: "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/logistics-supply-chain/' },
   openGraph: {
     title: "Real-Time Logistics Data Platform | TiDB",
-    description: "TiDB unifies transactional and analytical data for global supply chain visibility. Track orders, inventory, and shipments in real time without ETL delays or manual sharding.",
+    description: "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
     url: 'https://www.pingcap.com/logistics-supply-chain/',
     siteName: 'TiDB',
     images: [
@@ -33,10 +33,10 @@ export const metadata: Metadata = {
 const schema = buildPageSchema({
   path: "/logistics-supply-chain/",
   title: "Real-Time Logistics Data Platform | TiDB",
-  description: "TiDB unifies transactional and analytical data for global supply chain visibility. Track orders, inventory, and shipments in real time without ETL delays or manual sharding.",
+  description: "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Real-Time Logistics Data Platform for Global Supply Chain Visibility", path: "/logistics-supply-chain/" },
+    { name: "Real-Time Logistics Data Platform for Global <span class=\"text-gradient-violet\">Supply Chain Visibility</span>", path: "/logistics-supply-chain/" },
   ],
 })
 
@@ -44,7 +44,7 @@ const dsl: PageDSL = {
   "pageName": "Real-Time Logistics Data Platform | TiDB",
   "meta": {
     "title": "Real-Time Logistics Data Platform | TiDB",
-    "description": "TiDB unifies transactional and analytical data for global supply chain visibility. Track orders, inventory, and shipments in real time without ETL delays or manual sharding.",
+    "description": "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
     "canonical": "/logistics-supply-chain/"
   },
   "sections": [
@@ -54,11 +54,11 @@ const dsl: PageDSL = {
       "props": {
         "layout": "centered",
         "eyebrow": "Supply Chain Visibility",
-        "headline": "Real-Time Logistics Data Platform for Global Supply Chain Visibility",
-        "subheadline": "TiDB unifies transactional and analytical data in a single distributed SQL platform, so logistics teams can track orders, inventory, and shipments in real time — without ETL delays, manual sharding, or planned downtime.",
+        "headline": "Real-Time Logistics Data Platform for Global <span class=\"text-gradient-violet\">Supply Chain Visibility</span>",
+        "subheadline": "TiDB powers real-time logistics and supply chain visibility by unifying operational and analytical data in a single, distributed SQL platform. Track orders, inventory, and shipments without ETL delays, sharding complexity, or downtime.",
         "primaryCta": {
           "text": "Launch TiDB Cloud",
-          "href": "https://tidbcloud.com/free-trial/"
+          "href": "https://www.pingcap.com/tidb/cloud/"
         },
         "secondaryCta": {
           "text": "Book a Demo",
@@ -71,6 +71,14 @@ const dsl: PageDSL = {
           "alt": "hero image",
           "width": 500,
           "height": 400
+        },
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/47053e7c-module___headline_6.png",
+            "width": 1440,
+            "height": 664
+          },
+          "alt": ""
         }
       },
       "style": {
@@ -78,137 +86,231 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "why-legacy-breaks",
+      "id": "why-tidb",
       "type": "featureHighlights",
       "props": {
-        "eyebrow": "The Problem",
-        "title": "Why Legacy Databases Break Real-Time Supply Chain Visibility",
-        "subtitle": "Logistics platforms write orders, inventory updates, shipment scans, and telematics events simultaneously — often across regions. Legacy databases bolt on read replicas, shard transactional tables, and schedule ETL jobs. The result: stale dashboards and visibility gaps.",
+        "eyebrow": "",
+        "title": "Why Choose TiDB for Logistics Data",
         "items": [
           {
-            "variant": "red",
-            "title": "Batch ETL Kills Real-Time Visibility",
-            "description": "Scheduled ETL means dashboards are already hours old. Late-shipment alerts fire after SLAs are missed, and inventory counts reflect an early-morning snapshot, not current stock.",
+            "variant": "violet",
+            "title": "Real-Time Insight",
+            "description": "Query live operational data and historical events in milliseconds",
             "cta": {
-              "text": "Learn More",
-              "href": "https://docs.pingcap.com/"
+              "text": "",
+              "href": ""
             },
-            "icon": "Clock"
+            "icon": "Zap"
           },
           {
-            "variant": "red",
+            "variant": "blue",
+            "title": "Elastic Scale",
+            "description": "Handle unpredictable spikes from orders, tracking, and optimization workloads",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Layers"
+          },
+          {
+            "variant": "teal",
+            "title": "Always-On Availability",
+            "description": "Built-in high availability across regions for 24/7 logistics operations",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Shield"
+          }
+        ],
+        "columns": 3,
+        "viewMore": {
+          "text": "Launch TiDB Cloud",
+          "href": "https://www.pingcap.com/tidb/cloud/"
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "legacy-challenges",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "The High-Velocity Logistics Challenge",
+        "title": "Why Legacy Databases Break Real-Time Supply Chain Visibility",
+        "subtitle": "Logistics platforms generate high-velocity operational data from orders and inventory updates to shipment scans and telematics events\nLegacy databases can’t support real-time supply chain workloads at scale, leading teams to stitch together sharded databases and analytics systems that increase latency, complexity, and risk.",
+        "items": [
+          {
+            "icon": "Clock",
+            "title": "Batch ETL Kills Real Time Visibility",
+            "description": "Batch ETL breaks real-time logistics visibility, leading to stale data and missed SLAs.",
+            "borderColor": "red"
+          },
+          {
+            "icon": "GitBranch",
             "title": "Sharding Fragments Logistics Data",
-            "description": "Manual sharding across orders, inventory, and carrier events makes unified supply chain views expensive to build and fragile to maintain. Every new region adds coordination overhead.",
-            "cta": {
-              "text": "Learn More",
-              "href": "https://docs.pingcap.com/"
-            },
-            "icon": "GitBranch"
+            "description": "Manual sharding and separate analytics systems fragment logistics data, eliminating a single source of truth across orders, inventory, and shipments.",
+            "borderColor": "red"
           },
           {
-            "variant": "red",
-            "title": "Concurrency Limits During Peak Loads",
-            "description": "Lock contention and connection exhaustion in legacy databases expose themselves during seasonal peaks or disruptions. Vertical scaling delays the problem; it doesn't fix it.",
-            "cta": {
-              "text": "Learn More",
-              "href": "https://docs.pingcap.com/"
-            },
-            "icon": "Activity"
+            "icon": "Activity",
+            "title": "Concurrency Limits Break at Peak",
+            "description": "Legacy databases can’t handle peak logistics concurrency, resulting in lock contention, timeouts, and unpredictable performance at scale.",
+            "borderColor": "red"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tidb-solution",
+      "type": "featureTabs",
+      "props": {
+        "eyebrow": "",
+        "title": "TiDB: Unified Platform for Supply Chain Visibility",
+        "subtitle": "TiDB replaces fragmented logistics data stacks with a single, distributed SQL platform that supports both high-volume transactions and real-time analytics. By unifying operational and analytical workloads in one system, TiDB enables global supply chain visibility without batch ETL, manual sharding, or point solutions.",
+        "tabs": [
+          {
+            "id": "htap",
+            "label": "HTAP Engine for Real-Time Visibility",
+            "description": "",
+            "bullets": [
+              "Single distributed SQL cluster for OLTP + analytics",
+              "Region-aware deployment for cross-border logistics networks"
+            ],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "inventory",
+            "label": "Real-Time Inventory Management and Order Tracking",
+            "description": "",
+            "bullets": [
+              "Consolidate WMS, OMS, and TMS events into one real-time store",
+              "Query stock, orders, and carrier events in a single SQL query"
+            ],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "availability",
+            "label": "Always-On Architecture for Logistics Operations",
+            "description": "",
+            "bullets": [
+              "Multi-AZ and multi-region deployment options",
+              "Transparent failover with no downtime for live shipments"
+            ],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          }
+        ],
+        "autoSwitch": true,
+        "autoSwitchInterval": 6000
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "use-cases",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Use Cases",
+        "title": "From Inventory Management to Last-Mile Visibility",
+        "subtitle": "TiDB supports a range of real-time logistics and supply chain use cases.",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "Use Case 1: Real-Time Inventory Across Warehouses & Stores",
+            "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time.\n- Combine stock levels, inbound and outbound shipments, and reservations in one system\n- Power accurate available-to-promise decisions in seconds, not hours",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Zap",
+            "title": "Use Case 2: Multi-Leg Shipment Tracking",
+            "description": "TiDB enables real-time last-mile visibility by ingesting high-velocity delivery data.\n  - Stream telematics, driver app events, and delivery scans into a single store\n  - Feed route optimization and ETA prediction engines with fresh, consistent data",
+            "layout": "vertical"
           }
         ],
         "columns": 3
       },
       "style": {
-        "spacing": "lg"
+        "spacing": "section"
       }
     },
     {
-      "id": "tidb-solution",
-      "type": "featureGrid",
-      "props": {
-        "eyebrow": "The Solution",
-        "title": "TiDB: Unified Logistics Platform for Global Supply Chain Visibility",
-        "subtitle": "TiDB replaces fragmented logistics data stacks with one distributed SQL cluster that handles transactions and analytics on the same dataset — no ETL, no sharding, no point solutions.",
-        "items": [
-          {
-            "icon": "Layers",
-            "title": "HTAP Engine for Global Supply Chain Visibility",
-            "description": "TiDB stores data in row format (TiKV) for transactional writes and columnar format (TiFlash) for analytical reads simultaneously. Analytical queries run on live operational data with no replication lag.",
-            "layout": "vertical"
-          },
-          {
-            "icon": "Database",
-            "title": "Real-Time Inventory Management and Order Tracking",
-            "description": "Consolidate WMS, OMS, and TMS events into a single schema. Query stock levels, open orders, inbound shipments, and carrier events together in standard SQL without cross-system joins.",
-            "layout": "vertical"
-          },
-          {
-            "icon": "Shield",
-            "title": "Always-On Architecture for 24/7 Logistics Operations",
-            "description": "Raft-based replication across availability zones delivers automatic failover with no manual promotion. Multi-AZ and multi-region options keep shipment tracking and dashboards online through failures and upgrades.",
-            "layout": "vertical"
-          },
-          {
-            "icon": "Zap",
-            "title": "Real-Time Insight",
-            "description": "Query live operational and historical data in milliseconds on the same cluster without ETL delays or separate analytic warehouses.",
-            "layout": "vertical"
-          },
-          {
-            "icon": "Server",
-            "title": "Elastic Scale",
-            "description": "Add nodes horizontally to handle order spikes and tracking surges without schema changes or downtime. Scale independently for read-heavy analytics.",
-            "layout": "vertical"
-          },
-          {
-            "icon": "Gauge",
-            "title": "Built-In Monitoring & Alerting",
-            "description": "Standard SQL detects late shipments, dwell time anomalies, and SLA breaches directly on live data. Prometheus and Grafana integration provides cluster observability across regions.",
-            "layout": "vertical"
-          }
-        ],
-        "columns": 3,
-        "itemLayout": "vertical"
-      },
-      "style": {
-        "spacing": "lg"
-      }
-    },
-    {
-      "id": "use-cases",
+      "id": "architecture",
       "type": "featureMedia",
       "props": {
-        "eyebrow": "Use Cases",
-        "title": "Solution Use Cases: From Real-Time Inventory to Last-Mile Logistics Visibility",
-        "subtitle": "TiDB supports real-time logistics use cases across the entire supply chain.",
+        "eyebrow": "Architecture",
+        "title": "Supply Chain Analytics in One HTAP Engine",
+        "subtitle": "TiDB provides a unified architecture for ingesting, storing, and analyzing logistics data in real time. This architecture enables real-time supply chain monitoring and analytics, helping teams enable operational intelligence across logistics, fulfillment, and delivery operations.",
         "items": [
           {
-            "title": "Real-Time Inventory Management Across Warehouses & Stores",
-            "description": "TiDB consolidates stock levels, inbound and outbound movements, and reservations across warehouses, stores, and fulfillment centers in one operational store. Available-to-promise queries return accurate results in seconds, without a separate aggregation pipeline.",
+            "title": "Ingest Once: Streaming & Batch Pipelines",
+            "description": "Connect TMS/WMS/OMS systems, IoT gateways, and Kafka streams. TiDB handles real-time large-scale data ingestion without intermediate ETL layers.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/6355cf1c-rapid_productivity_illustration.svg",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "",
+              "width": 600,
+              "height": 600
             },
             "imagePosition": "right"
           },
           {
-            "title": "Multi-Leg Shipment Tracking and Status Aggregation",
-            "description": "TiDB ingests scan events, carrier callbacks, and handoff records across shipment legs into a single table. Joining against order records and SLA thresholds in real time gives consistent shipment status across carriers and geographies without a separate tracking database.",
+            "title": "Unified Store for Supply Chain Analytics",
+            "description": "Consolidate operational tables, event streams, and aggregates in one schema. Run logistics analytics queries without copying data to separate warehouses.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/ba3f695e-rapid_productivity_illustration__1_.svg",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "",
+              "width": 600,
+              "height": 600
             },
             "imagePosition": "left"
           },
           {
-            "title": "Last-Mile Logistics Visibility & ETA Accuracy",
-            "description": "Telematics, driver app events, and delivery scans write directly into TiDB and feed route optimization and ETA engines with consistent, current data. Systems respond to missed scans or delays in seconds — not on the next ETL run.",
+            "title": "Built-In Monitoring & Alerting",
+            "description": "Use standard SQL to detect anomalies directly on live data. Power real-time dashboards with Prometheus and Grafana integration. Enable advanced analytics without exporting data.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/56659e4e-rapid_productivity_illustration__2_.svg",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "",
+              "width": 600,
+              "height": 600
             },
             "imagePosition": "right"
           }
@@ -216,89 +318,19 @@ const dsl: PageDSL = {
         "startPosition": "right"
       },
       "style": {
-        "spacing": "lg"
-      }
-    },
-    {
-      "id": "architecture",
-      "type": "featureTabs",
-      "props": {
-        "eyebrow": "Architecture",
-        "title": "Supply Chain Data Analytics & Monitoring in One HTAP Engine",
-        "subtitle": "TiDB ingests, stores, and analyzes logistics data in one place, helping teams enable operational intelligence across fulfillment and delivery without a separate warehouse.",
-        "tabs": [
-          {
-            "id": "ingest",
-            "label": "Ingest Once",
-            "description": "Connect TMS, WMS, OMS, IoT gateways, and Kafka streams to a single ingestion layer. TiDB handles real-time event streams and bulk loads together — write once, query immediately.",
-            "bullets": [
-              "Multi-protocol ingestion: Kafka, Flink, native drivers",
-              "Batch and streaming in parallel",
-              "No separate data staging layer"
-            ],
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
-              },
-              "alt": "tab image",
-              "width": 1200,
-              "height": 800
-            }
-          },
-          {
-            "id": "unified",
-            "label": "Unified Store",
-            "description": "Operational tables, event streams, and aggregates coexist in one schema. Trip analysis, carrier performance, and dwell-time queries run on live data.",
-            "bullets": [
-              "Single source of truth for logistics data",
-              "Row and columnar formats coexist",
-              "No ETL or data movement required"
-            ],
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
-              },
-              "alt": "tab image",
-              "width": 1200,
-              "height": 800
-            }
-          },
-          {
-            "id": "monitoring",
-            "label": "Built-In Monitoring",
-            "description": "Standard SQL detects late shipments, dwell time anomalies, and SLA breaches directly on live data. Dashboards and BI tools connect without an export step.",
-            "bullets": [
-              "Real-time alerting on SLA breaches",
-              "Prometheus and Grafana integration",
-              "Cluster observability across regions"
-            ],
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
-              },
-              "alt": "tab image",
-              "width": 1200,
-              "height": 800
-            }
-          }
-        ],
-        "autoSwitch": false,
-        "autoSwitchInterval": 6000
-      },
-      "style": {
-        "spacing": "lg"
+        "spacing": "section"
       }
     },
     {
       "id": "testimonials",
       "type": "testimonials",
       "props": {
-        "eyebrow": "Customer Success",
-        "title": "Proven Supply Chain Visibility Solutions",
+        "eyebrow": "Testimonials",
+        "title": "Supply Chain Visibility Solutions: Customers & Social Proof",
         "items": [
           {
-            "quote": "TiDB enables us to process millions of shipment events per day with sub-second query latency, giving our customers real-time tracking visibility without a separate analytics warehouse.",
-            "author": "Global Logistics Platform",
+            "quote": "TiDB is trusted by logistics, e-commerce, and supply chain technology companies to power real-time visibility at scale. From high-volume courier operations to complex, multi-leg supply chains, teams rely on TiDB to deliver consistent performance, high availability, and live operational insight.",
+            "author": "Logistics Platform Leader",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/712552a8-dify.png"
@@ -307,8 +339,8 @@ const dsl: PageDSL = {
             }
           },
           {
-            "quote": "We consolidated our WMS, OMS, and TMS onto TiDB and eliminated ETL delays. Inventory counts are now accurate within seconds, not hours.",
-            "author": "Multi-Region Fulfillment Network",
+            "quote": "With TiDB, we consolidated fragmented data from WMS, OMS, and TMS into a single platform. Real-time queries replaced delayed reporting pipelines.",
+            "author": "Supply Chain Technology Director",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/712552a8-dify.png"
@@ -317,8 +349,8 @@ const dsl: PageDSL = {
             }
           },
           {
-            "quote": "TiDB's HTAP architecture lets us run operational reports on live supply chain data without impacting order processing. That's a game-changer for peak season.",
-            "author": "Last-Mile Logistics Provider",
+            "quote": "Multi-region deployment with transparent failover ensures our logistics operations never stop. We deliver consistent visibility 24/7 across borders.",
+            "author": "Global Courier Operations Manager",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/712552a8-dify.png"
@@ -329,15 +361,65 @@ const dsl: PageDSL = {
         ]
       },
       "style": {
-        "spacing": "lg"
+        "spacing": "section"
       }
     },
     {
-      "id": "final-cta",
+      "id": "featureHighlights-1776905896101",
+      "type": "featureHighlights",
+      "props": {
+        "title": "Resources to Fuel your TiDB Journey",
+        "items": [
+          {
+            "variant": "red",
+            "title": "Modernizing MySQL",
+            "description": "Dynamic scaling on reads and writes while providing strong consistency",
+            "cta": {
+              "text": "Read",
+              "href": "https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/"
+            }
+          },
+          {
+            "variant": "violet",
+            "title": "Hands-on Labs",
+            "description": "Drive in and master TiDB's unique capabilities through hands-on practice",
+            "cta": {
+              "text": "Explore",
+              "href": "https://labs.tidb.io/?utm_source=website_en&utm_medium=direct&__hstc=86493575.3342d2642fbd5d4be93b021c5287935f.1775255944334.1776881471667.1776905940298.51&__hssc=86493575.4.1776905940298&__hsfp=9f1cc048b05cb66183921cc0a5bffa89"
+            }
+          },
+          {
+            "variant": "blue",
+            "title": "Blogs",
+            "description": "Stay updated with the latest insights, tips, and industry trends from ex",
+            "cta": {
+              "text": "Learn",
+              "href": "https://www.pingcap.com/blog/"
+            }
+          },
+          {
+            "variant": "teal",
+            "title": "Community",
+            "description": "Become part of the TiDB community and connect with other like minded users and developers.",
+            "cta": {
+              "text": "Join",
+              "href": "https://discord.gg/vTSAK8usZF"
+            }
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta-final",
       "type": "cta",
       "props": {
-        "title": "Ready to Transform Your Supply Chain Visibility?",
-        "subtitle": "Join logistics leaders running real-time operations on TiDB. Start for free or book a personalized demo with our supply chain experts.",
+        "title": "Enable Real-Time Supply Chain Visibility Today",
+        "subtitle": "Join logistics and supply chain leaders delivering real-time visibility without ETL delays, sharding complexity, or downtime.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -347,11 +429,11 @@ const dsl: PageDSL = {
           "height": 256
         },
         "primaryCta": {
-          "text": "Launch TiDB Cloud",
+          "text": "Start Free Trial",
           "href": "https://tidbcloud.com/free-trial/"
         },
         "secondaryCta": {
-          "text": "Schedule a Demo",
+          "text": "Schedule Demo",
           "href": "https://www.pingcap.com/demo/"
         }
       },
