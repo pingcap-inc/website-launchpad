@@ -36,7 +36,7 @@ const schema = buildPageSchema({
   description: "Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Choose the Right <span class=\"text-gradient-blue\">Database</span> for Your Scale", path: "/compare/" },
+    { name: "Choose the Right <span class=\"text-gradient-blue\">Database</span> for Your Workload", path: "/compare/" },
   ],
 })
 
@@ -54,7 +54,7 @@ const dsl: PageDSL = {
       "props": {
         "layout": "centered",
         "eyebrow": "Database Comparisons",
-        "headline": "Choose the Right <span class=\"text-gradient-blue\">Database</span> for Your Scale",
+        "headline": "Choose the Right <span class=\"text-gradient-blue\">Database</span> for Your Workload",
         "subheadline": "Head-to-head comparisons of TiDB against MySQL, Aurora, CockroachDB, YugabyteDB, and guides to distributed SQL databases for OLTP, HTAP, SaaS, and AI workloads. Written by engineers, reviewed in production.",
         "primaryCta": {
           "text": "Start Free Trial",
