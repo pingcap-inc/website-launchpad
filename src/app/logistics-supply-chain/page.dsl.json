@@ -29,6 +29,16 @@
           "alt": "hero image",
           "width": 500,
           "height": 400
+        },
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/47053e7c-module___headline_6.png",
+            "width": 1440,
+            "height": 664
+          },
+          "alt": "",
+          "width": 1440,
+          "height": 664
         }
       },
       "style": {
@@ -195,17 +205,17 @@
           {
             "icon": "Database",
             "title": "Use Case 1: Real-Time Inventory Across Warehouses & Stores",
-            "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time.\n- Combine stock levels, inbound and outbound shipments, and reservations in one system\n- Power accurate available-to-promise decisions in seconds, not hours",
+            "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time. Combine stock levels, inbound and outbound shipments, and reservations in one system. Power accurate available-to-promise decisions in seconds, not hours",
             "layout": "vertical"
           },
           {
             "icon": "Zap",
             "title": "Use Case 2: Multi-Leg Shipment Tracking",
-            "description": "TiDB enables real-time last-mile visibility by ingesting high-velocity delivery data.\n  - Stream telematics, driver app events, and delivery scans into a single store\n  - Feed route optimization and ETA prediction engines with fresh, consistent data",
+            "description": "TiDB enables real-time last-mile visibility by ingesting high-velocity delivery data. Stream telematics, driver app events, and delivery scans into a single store. Feed route optimization and ETA prediction engines with fresh, consistent data.",
             "layout": "vertical"
           }
         ],
-        "columns": 3
+        "columns": 2
       },
       "style": {
         "spacing": "section"
@@ -224,8 +234,13 @@
             "description": "Connect TMS/WMS/OMS systems, IoT gateways, and Kafka streams. TiDB handles real-time large-scale data ingestion without intermediate ETL layers.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/6355cf1c-rapid_productivity_illustration.svg",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "",
+              "width": 600,
+              "height": 600
             },
             "imagePosition": "right"
           },
@@ -234,8 +249,13 @@
             "description": "Consolidate operational tables, event streams, and aggregates in one schema. Run logistics analytics queries without copying data to separate warehouses.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/ba3f695e-rapid_productivity_illustration__1_.svg",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "",
+              "width": 600,
+              "height": 600
             },
             "imagePosition": "left"
           },
@@ -244,8 +264,13 @@
             "description": "Use standard SQL to detect anomalies directly on live data. Power real-time dashboards with Prometheus and Grafana integration. Enable advanced analytics without exporting data.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/56659e4e-rapid_productivity_illustration__2_.svg",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "",
+              "width": 600,
+              "height": 600
             },
             "imagePosition": "right"
           }
@@ -338,7 +363,7 @@
             "description": "Become part of the TiDB community and connect with other like minded users and developers.",
             "cta": {
               "text": "Join",
-              "href": "https://discord.com/invite/vYU9h56kAX"
+              "href": "https://discord.gg/vTSAK8usZF"
             }
           }
         ],
@@ -356,7 +381,12 @@
         "title": "Enable Real-Time Supply Chain Visibility Today",
         "subtitle": "Join logistics and supply chain leaders delivering real-time visibility without ETL delays, sharding complexity, or downtime.",
         "image": {
-          "alt": ""
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
         },
         "primaryCta": {
           "text": "Start Free Trial",
