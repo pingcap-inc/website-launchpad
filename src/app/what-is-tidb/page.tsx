@@ -329,7 +329,7 @@ const useCases = [
     title: 'Financial Services',
     description:
       'Banks, payment processors, and fintech platforms use TiDB for workloads where data consistency, high availability, and disaster tolerance are non-negotiable. TiDB’s multi-replica architecture and ACID guarantees meet the requirements of ledger systems, fraud detection, and regulatory, while scaling to handle transaction volumes that overwhelm single-node databases.',
-    href: 'https://www.pingcap.com/solutions/financial-services/',
+    href: 'https://www.pingcap.com/solutions/fintech/',
     ctaText: 'Learn more about TiDB for financial services',
     borderColor: 'border-brand-red-primary',
     icon: (
@@ -1012,37 +1012,35 @@ export default function WhatIsTidbPage() {
             className: 'overflow-hidden',
           }}
         >
-          <div className="pb-16 pt-4 lg:pb-20">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1.42fr)_minmax(280px,0.58fr)] lg:items-center">
-              <div className="max-w-[960px]">
-                <SectionHeader title="TiDB vs. Traditional Databases" h2Size="sm" align="left" />
-                <p className="text-body-2xl text-carbon-200">
-                  If you’re running MySQL or PostgreSQL today, you already know the pattern. Your
-                  application grows, your data grows, and eventually a single database server can’t
-                  keep up. The conventional playbook (read replicas, manual sharding, a separate
-                  analytics warehouse connected by ETL pipelines) adds layers of complexity that
-                  compound over time. Every new shard means new routing logic in your application.
-                  Every analytics query runs on data that’s at least minutes old. Every failover
-                  event is a manual scramble.
-                </p>
-                <p className="mt-8 text-body-2xl text-carbon-200">
-                  TiDB eliminates these layers. Because it’s a distributed SQL database with MySQL
-                  wire-protocol compatibility, you keep writing standard SQL against a
-                  MySQL-compatible interface. But behind that interface, TiDB distributes your data
-                  automatically, scales horizontally without sharding, runs real-time analytics on
-                  live transactional data, and fails over automatically with no data loss. You don’t
-                  migrate to a different paradigm. You migrate to a better architecture for the same
-                  paradigm.
-                </p>
-                <div className="mt-10">
-                  <PrimaryButton href="https://www.pingcap.com/tidb/">
-                    See How TiDB Compares
-                  </PrimaryButton>
-                </div>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.42fr)_minmax(280px,0.58fr)] lg:items-center">
+            <div className="max-w-[960px]">
+              <SectionHeader title="TiDB vs. Traditional Databases" h2Size="sm" align="left" />
+              <p className="text-body-2xl text-carbon-200">
+                If you’re running MySQL or PostgreSQL today, you already know the pattern. Your
+                application grows, your data grows, and eventually a single database server can’t
+                keep up. The conventional playbook (read replicas, manual sharding, a separate
+                analytics warehouse connected by ETL pipelines) adds layers of complexity that
+                compound over time. Every new shard means new routing logic in your application.
+                Every analytics query runs on data that’s at least minutes old. Every failover event
+                is a manual scramble.
+              </p>
+              <p className="mt-8 text-body-2xl text-carbon-200">
+                TiDB eliminates these layers. Because it’s a distributed SQL database with MySQL
+                wire-protocol compatibility, you keep writing standard SQL against a
+                MySQL-compatible interface. But behind that interface, TiDB distributes your data
+                automatically, scales horizontally without sharding, runs real-time analytics on
+                live transactional data, and fails over automatically with no data loss. You don’t
+                migrate to a different paradigm. You migrate to a better architecture for the same
+                paradigm.
+              </p>
+              <div className="mt-10">
+                <PrimaryButton href="https://www.pingcap.com/tidb/">
+                  See How TiDB Compares
+                </PrimaryButton>
               </div>
-
-              <ComparisonGraphic />
             </div>
+
+            <ComparisonGraphic />
           </div>
         </SectionWrapper>
 

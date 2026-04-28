@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Play } from 'lucide-react'
 import { VideoDialog } from '@/components/ui/VideoDialog'
 
@@ -16,18 +17,18 @@ export function HeroVideo() {
       <button
         type="button"
         aria-label={`Watch: ${VIDEO_TITLE}`}
-        className="group relative flex aspect-video w-full items-center justify-center overflow-hidden border border-carbon-900 bg-[#2A2A2A]"
+        className="group relative flex aspect-video w-full items-center justify-center overflow-hidden bg-[#2A2A2A]"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`https://i.ytimg.com/vi/${VIDEO_ID}/maxresdefault.jpg`}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="lazy"
+        <Image
+          src="/images/what-is-tidb/20260428-100621-1.jpeg"
+          alt="What is TiDB? video thumbnail"
+          fill
+          priority
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/30 transition-colors duration-200 ease-in-out group-hover:bg-black/20" />
         <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/[0.12] backdrop-blur-sm transition-transform duration-200 ease-in-out group-hover:scale-105">
-          <Play className="ml-1 h-10 w-10 fill-white text-white/80" strokeWidth={1.5} />
+          <Play className="ml-1 h-10 w-10 fill-white text-white/80" strokeWidth={1} />
         </div>
       </button>
     </VideoDialog>
