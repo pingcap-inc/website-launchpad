@@ -78,6 +78,15 @@
               "text": "Compare",
               "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
             }
+          },
+          {
+            "title": "TiDB vs PostgreSQL",
+            "description": "Distributed SQL vs. the world's most extensible open-source database. Covers horizontal scaling, HTAP, MySQL compatibility, and when Postgres hits its limits.",
+            "layout": "vertical",
+            "cta": {
+              "text": "Compare",
+              "href": "https://www.pingcap.com/compare/tidb-vs-postgresql-2026-comparison-guide/"
+            }
           }
         ],
         "columns": 2
@@ -95,19 +104,19 @@
         "subtitle": "Coverage by workload — not by vendor.",
         "items": [
           {
-            "icon": "BarChart",
+            "icon": "Layers",
             "title": "Best Distributed SQL Databases (2026)",
             "description": "Ranked guide to leading distributed SQL databases — covering architecture, consistency guarantees, ecosystem fit, and when each is the right call.",
             "href": "https://www.pingcap.com/compare/best-distributed-sql-databases/"
           },
           {
-            "icon": "Brain",
+            "icon": "Bot",
             "title": "Best Database for AI Agents (2026)",
             "description": "Memory layers, vector search, ACID state management, and multi-agent scale. Compares TiDB, Pinecone, Redis, pgvector, Milvus, MongoDB, and others.",
             "href": "https://www.pingcap.com/compare/best-database-for-ai-agents/"
           },
           {
-            "icon": "Search",
+            "icon": "GitBranch",
             "title": "Best Vector Database for RAG (2026)",
             "description": "Retrieval quality, metadata filtering, hybrid search, and production readiness. Updated quarterly to reflect real vendor capability changes.",
             "href": "https://www.pingcap.com/compare/best-vector-database/"
@@ -117,6 +126,12 @@
             "title": "Best Databases for SaaS at Scale",
             "description": "Multi-tenant isolation, horizontal scaling, schema flexibility, and cost predictability for SaaS applications hitting growth inflection points.",
             "href": "https://www.pingcap.com/compare/best-databases-for-saas-applications-at-scale/"
+          },
+          {
+            "title": "Best Database for AI Applications",
+            "description": "A practical guide comparing 10 databases for RAG pipelines, vector search, and real-time AI workloads — covering SQL support, ACID compliance, scalability, and when to use a unified platform vs. purpose-built tools.",
+            "icon": "FileCode",
+            "href": "https://www.pingcap.com/compare/best-database-building-ai-apps/"
           }
         ],
         "columns": 2,
