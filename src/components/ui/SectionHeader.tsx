@@ -12,7 +12,7 @@ const h2SizeMap: Record<H2Size, string> = {
 interface SectionHeaderProps {
   eyebrow?: string
   title?: string
-  subtitle?: string
+  subtitle?: string | React.ReactNode
   h2Size?: H2Size
   align?: Align
   className?: string

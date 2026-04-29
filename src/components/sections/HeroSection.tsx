@@ -42,7 +42,7 @@ interface HeroSectionProps {
    * `"Unlock <span class=\"text-gradient-violet animate-glow-sweep\">TiDB Cloud</span>"`
    */
   headline: string | React.ReactNode
-  subheadline?: string
+  subheadline?: string | React.ReactNode
   primaryCta?: { text: string; href: string }
   secondaryCta?: { text: string; href: string }
   /** Right column content. Used in `split` layout. */

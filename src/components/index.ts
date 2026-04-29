@@ -14,6 +14,7 @@ export { HeaderLp } from './ui/HeaderLp'
 export { Footer } from './ui/Footer'
 export { HubSpotForm } from './ui/HubSpotForm'
 export { JsonLd, organizationSchema, softwareSchema } from './ui/JsonLd'
+export { InlineLink } from './ui/InlineLink'
 
 // Section Components
 export { HeroSection } from './sections/HeroSection'

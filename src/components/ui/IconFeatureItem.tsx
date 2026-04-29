@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 interface IconFeatureItemProps {
   icon?: React.ReactNode
   title: string
-  description: string
+  description: React.ReactNode
   /** 'horizontal' = icon-left（默认）| 'vertical' = icon-top */
   layout?: 'horizontal' | 'vertical'
   className?: string
@@ -34,7 +34,7 @@ export function IconFeatureItem({
         </div>
       )}
       <div>
-        <h3 className="text-h3-lg font-bold text-current mb-2">{title}</h3>
+        <h3 className="text-h3-lg font-bold text-current mb-4">{title}</h3>
         <p className="text-body-md text-secondary leading-relaxed">{description}</p>
       </div>
     </div>

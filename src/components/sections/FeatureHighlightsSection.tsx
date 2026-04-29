@@ -7,20 +7,22 @@ type ColorCardVariant = 'red' | 'violet' | 'blue' | 'teal'
 
 export interface ColorCardItem {
   variant: ColorCardVariant
-  title: string
-  description: string
-  cta: { text: string; href: string }
+  title: string | React.ReactNode
+  description: string | React.ReactNode
+  cta?: { text: string; href: string }
   icon?: React.ReactNode
 }
 
 interface FeatureHighlightsProps {
   eyebrow?: string
-  title: string
+  title?: string
   subtitle?: string
   items: ColorCardItem[]
   columns?: 2 | 3 | 4
   viewMore?: { text: string; href: string }
   className?: string
+  /** Extra classes applied to every card */
+  cardClassName?: string
 }
 
 const colsMap = {
@@ -37,13 +39,19 @@ export function FeatureHighlightsSection({
   columns = 3,
   viewMore,
   className,
+  cardClassName,
 }: FeatureHighlightsProps) {
+  const hasHeader = Boolean(eyebrow || title || subtitle)
   return (
     <div className={cn('space-y-16', className)}>
-      <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
+      {hasHeader && <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />}
       <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
-        {items.map((item) => (
-          <ColorCard key={item.title} {...item} />
+        {items.map((item, index) => (
+          <ColorCard
+            key={typeof item.title === 'string' ? item.title : index}
+            {...item}
+            className={cardClassName}
+          />
         ))}
       </div>
       {viewMore && (
