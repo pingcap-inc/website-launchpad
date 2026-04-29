@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import type { SectionStyle } from '@/lib/dsl-schema'
+import { resolveCdnUrl } from '@/lib/cdn-url'
 import { cn } from '@/lib/utils'
 
 const BACKGROUND_CLASS: Record<string, string> = {
@@ -100,7 +101,7 @@ export function SectionWrapper({
               'pointer-events-none absolute inset-0 bg-no-repeat bg-cover bg-center',
               backgroundImageOpacityClassName
             )}
-            style={{ backgroundImage: `url("${backgroundImage.image.url}")` }}
+            style={{ backgroundImage: `url("${resolveCdnUrl(backgroundImage.image.url)}")` }}
           />
           {backgroundImageOverlayClassName && (
             <div
