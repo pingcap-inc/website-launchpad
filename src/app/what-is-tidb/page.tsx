@@ -1,18 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import {
-  CheckSquare,
-  CircleUserRound,
-  Database,
-  ChartNoAxesCombined,
-  Cloud,
-  Radius,
-  ShieldCheck,
-  Landmark,
-  MonitorSmartphone,
-  BadgeDollarSign,
-  Sparkles,
-} from 'lucide-react'
+import { CheckSquare, ChartNoAxesCombined, Cloud, Radius } from 'lucide-react'
 import {
   FaqSection,
   Footer,

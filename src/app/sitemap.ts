@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/developers/learn/', priority: 0.7, changeFrequency: 'monthly' },
     // Content pages
     { url: '/glossary/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/what-is-tidb/', priority: 0.8, changeFrequency: 'monthly' },
     // AI pages
     { url: '/ai/', priority: 0.8, changeFrequency: 'weekly' },
     { url: '/ai/vector-search/', priority: 0.7, changeFrequency: 'monthly' },
