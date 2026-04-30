@@ -1,0 +1,480 @@
+{
+  "pageName": "TiDB Integrations: Kubernetes, Kafka, Spark and More",
+  "meta": {
+    "title": "TiDB Integrations: Kubernetes, Kafka, Spark and More",
+    "description": "Explore TiDB and TiDB Cloud integrations -- Kubernetes Operator, Kafka CDC, Spark (TiSpark), Terraform, and more. Deploy faster with TiDB.",
+    "canonical": "/integrations/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Integrations & Compatibility",
+        "headline": "TiDB Integrations: Kubernetes, Kafka, Spark and Cloud",
+        "subheadline": "TiDB and TiDB Cloud integrate with the tools modern engineering teams already run. Fully MySQL protocol compatible with standard drivers, JDBC, ODBC, and popular ORMs like Hibernate, Prisma, and SQLAlchemy.",
+        "primaryCta": {
+          "text": "Start for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View Documentation",
+          "href": "https://docs.pingcap.com/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "categories",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Integration Categories",
+        "title": "TiDB Integration Categories (At-a-Glance)",
+        "subtitle": "TiDB compatibility spans the modern data and application ecosystem.",
+        "items": [
+          {
+            "icon": "Layers",
+            "title": "Kubernetes and Cloud-Native",
+            "description": "TiDB Operator, Prometheus, Grafana, Datadog, New Relic"
+          },
+          {
+            "icon": "GitBranch",
+            "title": "Streaming and CDC",
+            "description": "Apache Kafka, TiCDC, Confluent, Apache Flink, Airbyte, dbt"
+          },
+          {
+            "icon": "BarChart2",
+            "title": "Analytics and HTAP",
+            "description": "Apache Spark (TiSpark), Tableau, Power BI, Looker, Superset"
+          },
+          {
+            "icon": "Brain",
+            "title": "AI and MCP Integrations",
+            "description": "LLM integrations, Model Context Protocol, AI-powered analytics"
+          },
+          {
+            "icon": "Cloud",
+            "title": "App Platforms and Serverless",
+            "description": "AWS Lambda, Google Cloud Functions, Vercel, Railway"
+          },
+          {
+            "icon": "Wrench",
+            "title": "Infrastructure Automation",
+            "description": "Terraform, Ansible, CloudFormation, Infrastructure as Code"
+          },
+          {
+            "icon": "Database",
+            "title": "Connectors, Drivers and ORMs",
+            "description": "JDBC, ODBC, Go, Python, Node.js, Hibernate, SQLAlchemy, Prisma"
+          },
+          {
+            "icon": "Globe",
+            "title": "Cloud Providers and Marketplaces",
+            "description": "AWS, Google Cloud, Azure, Alibaba Cloud, Huawei Cloud"
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "kubernetes",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Kubernetes and Cloud-Native",
+        "title": "Kubernetes and Cloud-Native Integrations for TiDB",
+        "subtitle": "Run, scale, and monitor TiDB in production using cloud-native orchestration and observability tooling.",
+        "items": [
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/6861f0b2-kubernetes.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Kubernetes (TiDB Operator)",
+            "description": "Deploy and manage TiDB clusters natively on Kubernetes with automated scaling, upgrades, backup, and self-healing.",
+            "href": "https://docs.pingcap.com/tidb-in-kubernetes/stable/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/cb82fc2c-prometheus.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Prometheus",
+            "description": "Collect real-time performance metrics from TiDB clusters for monitoring, alerting, and operational visibility.",
+            "href": "https://docs.pingcap.com/tidbcloud/monitor-prometheus-and-grafana-integration/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/c37e8a9c-grafana.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Grafana",
+            "description": "Visualize TiDB performance metrics with prebuilt dashboards for cluster health, query latency, and storage insights.",
+            "href": "https://docs.pingcap.com/tidbcloud/monitor-prometheus-and-grafana-integration/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/55d24810-datadog.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Datadog",
+            "description": "Export TiDB metrics into Datadog for centralized monitoring across cloud-native infrastructure.",
+            "href": "https://docs.pingcap.com/tidbcloud/monitor-datadog-integration/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/74446e7a-newrelic.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "New Relic",
+            "description": "Integrate TiDB observability data into New Relic APM workflows for full-stack monitoring.",
+            "href": "https://docs.pingcap.com/tidbcloud/monitor-new-relic-integration/"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "background": "inverse",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "mysql-compatibility",
+      "type": "cta",
+      "props": {
+        "title": "TiDB is Fully MySQL Compatible",
+        "subtitle": "TiDB works with standard MySQL drivers, connectors, and tools. Most integrations rely on open standards like JDBC and ODBC — reducing friction when migrating or modernizing existing workloads. If you are modernizing legacy systems, see how to Modernize MySQL workloads with TiDB.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Modernize MySQL Workloads",
+          "href": "https://www.pingcap.com/mysql/"
+        },
+        "secondaryCta": {
+          "text": "Learn More",
+          "href": "https://docs.pingcap.com/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "streaming",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Streaming and CDC",
+        "title": "Streaming and CDC Integrations for TiDB",
+        "subtitle": "Real-time architectures depend on reliable change data capture and event streaming. TiDB supports CDC via TiCDC.",
+        "items": [
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/70bf47a8-apachekafka__1_.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Apache Kafka (TiCDC)",
+            "description": "Stream real-time changes from TiDB to Kafka using TiCDC for event-driven architectures and data pipelines.",
+            "href": "https://docs.pingcap.com/tidb/stable/replicate-data-to-kafka/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/3a2c00e6-apacheflink.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Apache Flink",
+            "description": "Consume TiDB change streams in Flink for stateful stream processing and real-time analytics.",
+            "href": "https://docs.pingcap.com/tidb/stable/replicate-data-to-kafka/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/afddcbfd-confluent_idua1asd7z_0.svg",
+              "width": 300,
+              "height": 49
+            },
+            "title": "Confluent",
+            "description": "Deliver TiDB change events into Confluent-compatible Kafka deployments for scalable streaming workflows.",
+            "href": "https://docs.pingcap.com/tidb/stable/integrate-confluent-using-ticdc/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/5dd0f343-airbyte__1_.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Airbyte",
+            "description": "Use Airbyte connectors to move data into or out of TiDB for modern ELT pipelines.",
+            "href": "https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-airbyte/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/84e327ff-powered-by-aws-white.png",
+              "width": 200,
+              "height": 72
+            },
+            "title": "Amazon AppFlow",
+            "description": "Integrate SaaS data into TiDB via AWS AppFlow for cloud-native data movement workflows.",
+            "href": "https://docs.pingcap.com/developer/dev-guide-aws-appflow-integration/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/a05b0e2c-dbt-core.svg",
+              "width": 404,
+              "height": 90
+            },
+            "title": "dbt",
+            "description": "Transform TiDB data using dbt in ELT pipelines for analytics engineering and modeling.",
+            "href": "https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-dbt/"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "background": "inverse",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "analytics",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Analytics and HTAP",
+        "title": "Analytics and HTAP Workloads",
+        "subtitle": "TiDB is an HTAP database — handle transactional and analytical workloads on the same data without ETL duplication.",
+        "items": [
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/30cf1754-apachespark.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Apache Spark (TiSpark)",
+            "description": "Run distributed Spark SQL queries directly on TiDB using TiSpark for large-scale analytics without ETL duplication.",
+            "href": "https://github.com/pingcap/tispark"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/4380d035-tableau_logo.png",
+              "width": 1200,
+              "height": 325
+            },
+            "title": "Tableau",
+            "description": "Connect Tableau dashboards to TiDB for interactive visual analytics and business intelligence.",
+            "href": "https://docs.pingcap.com/"
+          },
+          {
+            "icon": "BarChart",
+            "title": "PowerBI",
+            "description": "Integrate TiDB with Microsoft Power BI for unified data visualization and reporting.",
+            "href": "https://docs.pingcap.com/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/1e33a4c8-looker.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Looker",
+            "description": "Build self-service analytics with Looker's semantic layer connected to TiDB data.",
+            "href": "https://docs.pingcap.com/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/bd5f714c-apachesuperset.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Apache Superset",
+            "description": "Create interactive, real-time dashboards with Superset using TiDB as a native data source.",
+            "href": "https://docs.pingcap.com/"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "drivers",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Application Development",
+        "title": "Drivers, Connectors and ORM Compatibility",
+        "subtitle": "TiDB is MySQL protocol compatible — all standard drivers work without modification.",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "JDBC and ODBC",
+            "description": "Standard Java and system-level database connectivity with full ACID and transactional support.",
+            "href": "https://docs.pingcap.com/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/2534029b-python.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Python (SQLAlchemy, PyMySQL)",
+            "description": "Connect Python applications using SQLAlchemy ORM and PyMySQL driver with native MySQL compatibility.",
+            "href": "https://docs.pingcap.com/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/3fa797dd-nodedotjs.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Node.js (Prisma, Sequelize)",
+            "description": "Use Prisma and Sequelize ORMs for Node.js with TiDB as a drop-in MySQL replacement.",
+            "href": "https://docs.pingcap.com/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/cf8e62bd-go.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Go (gorm, database/sql)",
+            "description": "Build Go applications with gorm and standard database/sql packages connecting to TiDB.",
+            "href": "https://docs.pingcap.com/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/09a2ab4c-hibernate__1_.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Hibernate (Java)",
+            "description": "Use Hibernate with TiDB for object-relational mapping in Java enterprise applications.",
+            "href": "https://docs.pingcap.com/"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cloud-providers",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Cloud Deployment",
+        "title": "Cloud Providers and Marketplaces",
+        "subtitle": "Deploy TiDB Cloud or self-hosted TiDB across all major cloud providers.",
+        "items": [
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/84e327ff-powered-by-aws-white.png",
+              "width": 200,
+              "height": 72
+            },
+            "title": "AWS",
+            "description": "Deploy TiDB Cloud on AWS, access via CloudFormation, and use AWS AppFlow for data integration.",
+            "href": "https://www.pingcap.com/tidb/cloud/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/030907c5-googlecloud.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Google Cloud Platform",
+            "description": "Run TiDB on Google Cloud Bigtable or self-host with native GCP marketplace integrations.",
+            "href": "https://www.pingcap.com/tidb/cloud/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/bc7aec79-microsoft_azure_portal_id5rfimt9n_1.png",
+              "width": 800,
+              "height": 800
+            },
+            "title": "Microsoft Azure",
+            "description": "Deploy TiDB on Azure Kubernetes Service (AKS) with Azure Marketplace support.",
+            "href": "https://www.pingcap.com/tidb/cloud/"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/c92a4c84-alibabacloud.svg",
+              "width": 150,
+              "height": 150
+            },
+            "title": "Alibaba Cloud",
+            "description": "TiDB deployments on Alibaba Cloud with native marketplace and managed service options.",
+            "href": "https://www.pingcap.com/tidb/cloud/"
+          },
+          {
+            "icon": "Layers",
+            "title": "Self-Hosted (On-Premises)",
+            "description": "Deploy TiDB on your own infrastructure using Kubernetes Operator or binary installation.",
+            "href": "https://docs.pingcap.com/tidb-in-kubernetes/stable/"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Integrate TiDB into Your Tech Stack?",
+        "subtitle": "Explore the full documentation for each integration, or get started with TiDB Cloud free trial today.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View All Documentation",
+          "href": "https://docs.pingcap.com/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
