@@ -335,7 +335,7 @@ const useCases = [
     description:
       'Banks, payment processors, and fintech platforms use TiDB for workloads where data consistency, high availability, and disaster tolerance are non-negotiable. TiDB’s multi-replica architecture and ACID guarantees meet the requirements of ledger systems, fraud detection, and regulatory, while scaling to handle transaction volumes that overwhelm single-node databases.',
     href: 'https://www.pingcap.com/solutions/fintech/',
-    ctaText: 'Learn more about TiDB for financial services',
+    ctaText: 'Learn more',
     borderColor: 'border-brand-red-primary',
     icon: (
       <Image
@@ -351,8 +351,8 @@ const useCases = [
     title: 'SaaS and Internet-Scale Applications',
     description:
       'TiDB powers production workloads at companies like Atlassian, Plaid, and Databricks. For SaaS platforms and internet-scale applications, TiDB eliminates the sharding complexity and operational overhead that come with outgrowing a single MySQL or PostgreSQL instance. You scale by adding nodes, not by rewriting your data access layer.',
-    href: 'https://www.pingcap.com/customers/',
-    ctaText: 'Explore customer stories',
+    href: 'https://www.pingcap.com/solutions/saas/',
+    ctaText: 'Learn more',
     borderColor: 'border-brand-violet-medium',
     icon: (
       <Image
@@ -368,6 +368,8 @@ const useCases = [
     title: 'Real-Time Analytics and Operational Reporting',
     description:
       'Teams that need real-time dashboards, cohort analysis, or operational reporting on transactional data can run those queries directly in TiDB using TiFlash. There’s no need to build and maintain a separate ETL pipeline into an analytics warehouse. One database, one source of truth, both workloads.',
+    href: 'https://www.pingcap.com/solutions/enable-operational-intelligence/',
+    ctaText: 'Learn more',
     borderColor: 'border-brand-blue-medium',
     icon: (
       <Image
@@ -381,8 +383,20 @@ const useCases = [
   },
   {
     title: 'AI Applications',
-    description:
-      'TiDB supports native vector search, enabling developers to build retrieval-augmented generation (RAG) pipelines and agent memory systems without bolting on a separate vector database. AI-native companies like Manus and Dify use TiDB as a unified data layer, combining structured data, semantic vectors, and full-text search in a single query layer for a simpler stack.',
+    description: (
+      <>
+        TiDB supports{' '}
+        <InlineLink href="https://docs.pingcap.com/tidbcloud/vector-search-overview/">
+          native vector search
+        </InlineLink>
+        , enabling developers to build retrieval-augmented generation (RAG) pipelines and agent
+        memory systems without bolting on a separate vector database. AI-native companies like Manus
+        and Dify use TiDB as their unified, combining structured data, semantic vectors, and
+        full-text search in a single query layer for a simpler stack.
+      </>
+    ),
+    href: 'https://www.pingcap.com/ai/',
+    ctaText: 'Learn more',
     borderColor: 'border-brand-teal-medium',
     icon: (
       <Image

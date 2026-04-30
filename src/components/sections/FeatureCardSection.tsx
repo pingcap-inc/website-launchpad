@@ -5,7 +5,7 @@ import { FeatureCard } from '@/components/ui/FeatureCard'
 export interface FeatureCardItem {
   icon?: React.ReactNode
   title: string
-  description: string
+  description: string | React.ReactNode
   borderColor?: string
   href?: string
   ctaText?: string
