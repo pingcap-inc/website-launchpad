@@ -5,7 +5,7 @@ import { SecondaryButton } from './SecondaryButton'
 interface FeatureCardProps {
   icon?: React.ReactNode
   title: string
-  description: string
+  description: string | React.ReactNode
   /** Border color Tailwind class, e.g. 'border-brand-red-primary'. Defaults to border-carbon-800 */
   borderColor?: string
   /** When provided, renders as <a> with hover float animation */
@@ -23,6 +23,10 @@ export function FeatureCard({
   ctaText,
   className,
 }: FeatureCardProps) {
+  // Description with inline JSX (e.g. <InlineLink>) cannot be nested inside the
+  // card-level <a>. In that case, drop the wrapping anchor and let the CTA be the link.
+  const wrapInAnchor = href && typeof description === 'string'
+
   const classes = cn(
     'group flex flex-col gap-4 p-8 border h-full transition-transform duration-200 ease-in-out',
     href && 'hover:-translate-y-2',
@@ -39,7 +43,8 @@ export function FeatureCard({
         <div className="mt-4">
           <SecondaryButton
             className="group-hover:bg-transparent group-hover:text-text-inverse"
-            as="span"
+            as={wrapInAnchor ? 'span' : 'a'}
+            href={wrapInAnchor ? undefined : href}
           >
             {ctaText}
           </SecondaryButton>
@@ -48,7 +53,7 @@ export function FeatureCard({
     </>
   )
 
-  if (href) {
+  if (wrapInAnchor) {
     return (
       <a href={href} className={classes} {...externalLinkProps(href)}>
         {content}
