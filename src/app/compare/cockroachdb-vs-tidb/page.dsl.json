@@ -14,11 +14,14 @@
         "headline": "TiDB vs CockroachDB (2026) Comparison Guide for Platform Teams",
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+            "url": "https://static.pingcap.com/images/0525206a-tidb-vs-cockroachdb-banner.svg",
+            "alt": "tidb vs cockroachdb banner",
+            "width": 590,
+            "height": 450
           },
-          "alt": "hero image",
-          "width": 500,
-          "height": 400
+          "alt": "tidb vs cockroachdb banner",
+          "width": 590,
+          "height": 450
         }
       },
       "style": {
