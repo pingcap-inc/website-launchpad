@@ -1,0 +1,486 @@
+{
+  "pageName": "TiDB vs CockroachDB (2026) Comparison Guide for Platform Teams",
+  "meta": {
+    "title": "TiDB vs CockroachDB - 2026: Comparison Guide",
+    "description": "Compare TiDB vs CockroachDB on compatibility, ACID transactions, scaling, HTAP analytics, multi-region tradeoffs, ops, and pricing—then pick the best fit.",
+    "canonical": "/compare/cockroachdb-vs-tidb/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "TiDB vs CockroachDB (2026) Comparison Guide for Platform Teams",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "tidb-vs-cockroachdb-side-by-side-comparison",
+            "label": "TiDB vs CockroachDB: Side-by-Side Comparison",
+            "level": 1
+          },
+          {
+            "id": "what-this-guide-covers",
+            "label": "What This Guide Covers",
+            "level": 1
+          },
+          {
+            "id": "tidb-vs-cockroachdb-overview-2-minute-summary",
+            "label": "TiDB vs CockroachDB Overview: 2-Minute Summary",
+            "level": 1
+          },
+          {
+            "id": "tidb-in-brief",
+            "label": "TiDB in Brief",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-in-brief",
+            "label": "CockroachDB in Brief",
+            "level": 2
+          },
+          {
+            "id": "when-this-comparison-matters",
+            "label": "When This Comparison Matters",
+            "level": 2
+          },
+          {
+            "id": "key-differences-tidb-vs-cockroachdb-what-buyers-should-know-first",
+            "label": "Key Differences: TiDB vs CockroachDB - What Buyers Should Know First",
+            "level": 1
+          },
+          {
+            "id": "mysql-compatibility-vs-postgres-wire-compatibility-tradeoffs",
+            "label": "MySQL Compatibility vs Postgres Wire-Compatibility Tradeoffs",
+            "level": 2
+          },
+          {
+            "id": "htap-path-tiflash-vs-external-analytics-patterns",
+            "label": "HTAP Path: TiFlash vs External Analytics Patterns",
+            "level": 2
+          },
+          {
+            "id": "scaling-approach-partitioning-vs-no-manual-sharding-operational-reality",
+            "label": "Scaling Approach: Partitioning vs ‘No Manual Sharding’ Operational Reality",
+            "level": 2
+          },
+          {
+            "id": "distributed-transactions-consistency-model-differences",
+            "label": "Distributed Transactions & Consistency Model Differences",
+            "level": 2
+          },
+          {
+            "id": "multi-region-database-design-locality-latency-and-write-path-constraints",
+            "label": "Multi-Region Database Design: Locality, Latency, and Write-Path Constraints",
+            "level": 2
+          },
+          {
+            "id": "operational-model-self-managed-vs-managed-service-expectations",
+            "label": "Operational Model: Self-Managed vs Managed Service Expectations",
+            "level": 2
+          },
+          {
+            "id": "architecture-deep-dive",
+            "label": "Architecture Deep Dive",
+            "level": 1
+          },
+          {
+            "id": "tidb-architecture-compute-storage-separation",
+            "label": "TiDB Architecture: Compute + Storage Separation",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-architectur",
+            "label": "CockroachDB Architectur",
+            "level": 2
+          },
+          {
+            "id": "elasticity-decoupled-components-vs-co-located-nodes",
+            "label": "Elasticity: Decoupled Components vs Co-Located Nodes",
+            "level": 2
+          },
+          {
+            "id": "timestamp-ordering-pd-based-tso-vs-hybrid-logical-clocks-hlc",
+            "label": "Timestamp Ordering: PD-based TSO vs Hybrid Logical Clocks (HLC)",
+            "level": 2
+          },
+          {
+            "id": "storage-engine-rocksdb-tikv-vs-pebble-cockroachdb",
+            "label": "Storage Engine: RocksDB (TiKV) vs Pebble (CockroachDB)",
+            "level": 2
+          },
+          {
+            "id": "what-architecture-means-for-real-workloads",
+            "label": "What Architecture Means for Real Workloads",
+            "level": 2
+          },
+          {
+            "id": "compatibility-mysql-compatibility-vs-postgres-ecosystem",
+            "label": "Compatibility: MySQL Compatibility vs Postgres Ecosystem",
+            "level": 1
+          },
+          {
+            "id": "tidb-mysql-compatible-distributed-database",
+            "label": "TiDB: MySQL Compatible Distributed Database",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-postgres-compatibility",
+            "label": "CockroachDB: Postgres Compatibility",
+            "level": 2
+          },
+          {
+            "id": "practical-migration-checklist",
+            "label": "Practical Migration Checklist",
+            "level": 2
+          },
+          {
+            "id": "consistency-isolation-and-acid-transactions-distributed-transactions-explained",
+            "label": "Consistency, Isolation, and ACID Transactions:  Distributed Transactions Explained",
+            "level": 1
+          },
+          {
+            "id": "isolation-levels-at-a-glance-tidb-vs-cockroachdb",
+            "label": "Isolation Levels at a Glance (TiDB vs CockroachDB)",
+            "level": 2
+          },
+          {
+            "id": "transaction-modes-under-contention-optimistic-vs-pessimistic",
+            "label": "Transaction Modes Under Contention (Optimistic vs Pessimistic)",
+            "level": 2
+          },
+          {
+            "id": "tidb-acid-transactions-at-scale-distributed-transactions-basics",
+            "label": "TiDB ACID Transactions at Scale - Distributed Transactions Basics",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-transaction-model-overview",
+            "label": "CockroachDB Transaction Model Overview",
+            "level": 2
+          },
+          {
+            "id": "what-to-test-in-a-poc",
+            "label": "What to Test in a POC",
+            "level": 2
+          },
+          {
+            "id": "scaling-performance-horizontal-scaling-without-the-headaches",
+            "label": "Scaling & Performance: Horizontal Scaling Without the Headaches",
+            "level": 1
+          },
+          {
+            "id": "tidb-scale-out-model-horizontal-scaling-sql-database",
+            "label": "TiDB Scale-Out Model: Horizontal Scaling SQL Database",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-scale-out-model",
+            "label": "CockroachDB Scale-Out Model",
+            "level": 2
+          },
+          {
+            "id": "schema-object-scale-tables-indexes-and-tenancy-footprint",
+            "label": "Schema Object Scale: Tables, Indexes, and Tenancy Footprint",
+            "level": 2
+          },
+          {
+            "id": "hot-lookup-tables-cached-tables-vs-general-block-cache",
+            "label": "Hot Lookup Tables: Cached Tables vs General Block Cache",
+            "level": 2
+          },
+          {
+            "id": "resource-management-workload-isolation-controls-vs-admission-control",
+            "label": "Resource Management: Workload Isolation Controls vs Admission Control",
+            "level": 2
+          },
+          {
+            "id": "sharding-vs-partitioning-what-you-manage-vs-what-the-db-manages",
+            "label": "Sharding vs Partitioning: What You Manage vs What the DB Manages",
+            "level": 2
+          },
+          {
+            "id": "benchmarking-guidance-how-to-compare-fairly",
+            "label": "Benchmarking Guidance: How to Compare Fairly",
+            "level": 2
+          },
+          {
+            "id": "mini-benchmark-rubric",
+            "label": "Mini Benchmark Rubric",
+            "level": 2
+          },
+          {
+            "id": "htap-analytics-real-time-oltp-olap-on-fresh-data",
+            "label": "HTAP / Analytics: Real-Time OLTP + OLAP on Fresh Data",
+            "level": 1
+          },
+          {
+            "id": "tidb-htap-with-tiflash",
+            "label": "TiDB HTAP with TiFlash",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-analytics-approaches",
+            "label": "CockroachDB Analytics Approaches",
+            "level": 2
+          },
+          {
+            "id": "common-htap-use-cases-to-compare",
+            "label": "Common HTAP Use Cases to Compare",
+            "level": 2
+          },
+          {
+            "id": "multi-region-database-reality-check-latency-locality-and-tradeoffs",
+            "label": "Multi-Region Database Reality Check: Latency, Locality, and Tradeoffs",
+            "level": 1
+          },
+          {
+            "id": "common-multi-region-topologies-and-which-teams-need-them",
+            "label": "Common Multi-Region Topologies and Which Teams Need Them",
+            "level": 2
+          },
+          {
+            "id": "tidb-multi-region-patterns",
+            "label": "TiDB Multi-Region Patterns",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-multi-region-patterns",
+            "label": "CockroachDB Multi-Region Patterns",
+            "level": 2
+          },
+          {
+            "id": "decision-rule-when-multi-region-becomes-a-requirement-vs-a-nice-to-have",
+            "label": "Decision Rule: When “Multi-Region” Becomes a Requirement vs a Nice-to-Have",
+            "level": 2
+          },
+          {
+            "id": "operations-reliability-upgrades-backups-and-online-schema-change",
+            "label": "Operations & Reliability: Upgrades, Backups, and Online Schema Change",
+            "level": 1
+          },
+          {
+            "id": "zero-downtime-schema-changes-online-ddl",
+            "label": "Zero-Downtime Schema Changes: Online DDL",
+            "level": 2
+          },
+          {
+            "id": "upgrades-and-maintenance-windows-what-to-expect",
+            "label": "Upgrades and Maintenance Windows - What to Expect",
+            "level": 2
+          },
+          {
+            "id": "backup-restore-pitr-and-disaster-recovery-considerations",
+            "label": "Backup/Restore, PITR, and Disaster Recovery Considerations",
+            "level": 2
+          },
+          {
+            "id": "observability-and-day-2-operations-checklist",
+            "label": "Observability and Day-2 Operations Checklist",
+            "level": 2
+          },
+          {
+            "id": "ecosystem-integrations-kubernetes-data-movement-tooling",
+            "label": "Ecosystem & Integrations: Kubernetes, Data Movement, Tooling",
+            "level": 1
+          },
+          {
+            "id": "deployment-patterns",
+            "label": "Deployment Patterns",
+            "level": 2
+          },
+          {
+            "id": "data-movement-cdc",
+            "label": "Data Movement & CDC",
+            "level": 2
+          },
+          {
+            "id": "developer-tooling-and-operational-tooling-expectations",
+            "label": "Developer Tooling and Operational Tooling Expectations",
+            "level": 2
+          },
+          {
+            "id": "implementation-migration-plan-how-to-de-risk-the-move",
+            "label": "Implementation / Migration Plan: How to De-Risk the Move",
+            "level": 1
+          },
+          {
+            "id": "step-1-compatibility-assessment-schema-queries",
+            "label": "Step 1 — Compatibility Assessment: Schema + Queries",
+            "level": 2
+          },
+          {
+            "id": "step-2-data-migration-and-validation-strategy",
+            "label": "Step 2 — Data Migration and Validation Strategy",
+            "level": 2
+          },
+          {
+            "id": "step-3-cutover-approach-dual-write-vs-planned-cutover",
+            "label": "Step 3 — Cutover Approach: Dual-Write vs Planned Cutover",
+            "level": 2
+          },
+          {
+            "id": "step-4-performance-failure-testing-runbook",
+            "label": "Step 4 — Performance + Failure Testing Runbook",
+            "level": 2
+          },
+          {
+            "id": "step-5-production-readiness-checklist",
+            "label": "Step 5 — Production Readiness Checklist",
+            "level": 2
+          },
+          {
+            "id": "pricing-cost-drivers-what-actually-moves-the-bill",
+            "label": "Pricing & Cost Drivers: What Actually Moves the Bill",
+            "level": 1
+          },
+          {
+            "id": "tidb-self-managed-vs-tidb-cloud-pricing-model",
+            "label": "TiDB: Self-Managed vs TiDB Cloud Pricing Model",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-pricing-model-overview",
+            "label": "CockroachDB: Pricing Model Overview",
+            "level": 2
+          },
+          {
+            "id": "cost-driver-checklist",
+            "label": "Cost Driver Checklist",
+            "level": 2
+          },
+          {
+            "id": "pros-cons",
+            "label": "Pros & Cons",
+            "level": 1
+          },
+          {
+            "id": "tidb-pros",
+            "label": "TiDB — Pros",
+            "level": 2
+          },
+          {
+            "id": "tidb-cons-tradeoffs",
+            "label": "TiDB — Cons / Tradeoffs",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-pros",
+            "label": "CockroachDB — Pros",
+            "level": 2
+          },
+          {
+            "id": "cockroachdb-cons-tradeoffs",
+            "label": "CockroachDB — Cons / Tradeoffs",
+            "level": 2
+          },
+          {
+            "id": "who-should-choose-which",
+            "label": "Who Should Choose Which?",
+            "level": 1
+          },
+          {
+            "id": "faq",
+            "label": "Frequently Asked Questions",
+            "level": 1
+          },
+          {
+            "id": "bottom-line",
+            "label": "Bottom Line",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "**Updated March 4, 2026 | Author: Brian Foster (Content Director) | Reviewed by: Ben Sherrill (Senior Solutions Engineer)**\n\nTiDB is a MySQL-compatible distributed SQL database built on TiKV with an HTAP database path via TiFlash, designed to scale out without manual sharding while preserving MySQL compatibility. CockroachDB is a distributed SQL database with strong Postgres ecosystem alignment and a multi-region-first positioning, typically evaluated by teams standardizing on Postgres-compatible tooling.\n\n**Verdict:** For platform teams outgrowing single-node SQL, both offer distributed SQL with ACID transactions. Choose TiDB if you are MySQL-first and need scale-out writes and storage without application-owned sharding, with an optional HTAP path via TiKV + TiFlash. Choose CockroachDB if you are Postgres-first and your priority is multi-region locality. Validate SQL/feature differences and tail latency in a POC.\n\n**Choose TiDB if…**\n\n* MySQL compatibility is non-negotiable and you want to preserve existing drivers, ORMs, and operational workflows with minimal rewrites.  \n* You need scale-out writes and storage without application-owned sharding, so growth is handled by adding nodes instead of building shard routing and resharding into your application.  \n* You want an HTAP path (TiKV + TiFlash) to run analytics on fresh OLTP data and reduce ETL lag.\n\n**Choose CockroachDB if…**\n\n* You require PostgreSQL wire protocol compatibility and your entire ecosystem is Postgres-first.  \n* You specifically need SERIALIZABLE isolation semantics.  \n* You want single-cluster multi-region locality or are targeting 99.999 availability within a single cluster and are willing to accept the coordination and latency tradeoffs that come with that architecture.\n\n**Run a POC that explicitly tests…**\n\n* Contention-heavy transactions, hotspot behavior, failure scenarios, and p95/p99 latency in your target topology.\n\n**Key Takeaways (TiDB vs CockroachDB):**\n\n* **Compatibility:** Choose TiDB for MySQL protocol + common syntax; choose CockroachDB if your ecosystem is Postgres-first (drivers/ORMs/tooling).  \n* **Scale-out without app sharding:** Choose TiDB if you want to scale writes and storage without introducing shard routing in the application.  \n* **Analytics / HTAP:** Choose TiDB if you want an HTAP path using TiFlash to reduce ETL lag and dual-system complexity for operational analytics.  \n* **Multi-region:** Choose CockroachDB if multi-region locality is a core requirement, and you accept the latency and cost tradeoffs of cross-region coordination.  \n* **Evaluation rule:** In both cases, treat topology as part of the product requirement and run a POC that measures correctness and tail latency under contention, hotspots, and failure drills.\n\n## TiDB vs CockroachDB: Side-by-Side Comparison\n\n| Criteria | TiDB | CockroachDB |\n| ----- | ----- | ----- |\n| Primary use | Distributed SQL / NewSQL for scale-out OLTP; MySQL-compatible; optional HTAP via TiFlash on TiKV | Distributed SQL with Postgres ecosystem alignment; commonly used for scale-out OLTP and geo-distributed patterns |\n| SQL / protocol compatibility | MySQL protocol + common MySQL syntax; validate edge cases in a POC | Postgres wire-compatibility focus; validate SQL dialect/feature differences in a POC |\n| Consistency & distributed transactions | ACID transactions with strong consistency; supports distributed transactions (validate isolation semantics for your workload) | ACID transactions in a distributed system; confirm isolation/serialization expectations, retries, and contention behavior for your workload |\n| Scaling model | Horizontal scaling SQL database: add nodes; separate compute (TiDB) from storage (TiKV/TiFlash); distribution handled by the cluster | Horizontal scale-out design; distribution and rebalancing handled by the system (validate operational knobs and workload behavior) |\n| HTAP database capability | TiFlash columnar replicas for mixed OLTP + OLAP on fresher operational data | Analytics often handled via external OLAP patterns; some teams use materialized views / downstream systems depending on needs |\n| Multi-region database patterns | Multi-region patterns exist; tradeoffs depend on locality goals and cross-region consensus latency | Multi-region patterns are a core evaluation dimension; tradeoffs depend on locality configuration and write-path constraints |\n| Operations & reliability | Self-managed (VMs/Kubernetes) or managed via TiDB Cloud; HA behavior depends on topology and runbooks | Self-managed and managed offerings exist; evaluate upgrades, backups, and operational ergonomics for your org |\n| Implementation / migration surface area | MySQL compatibility reduces rewrite scope for MySQL apps; still validate SQL/feature edge cases | Postgres ecosystem fit can reduce friction for Postgres apps; still validate SQL/feature edge cases |\n| Pricing model & cost drivers | Cost drivers vary by topology; model equivalent availability and region assumptions | Cost drivers vary by topology; model equivalent availability and region assumptions |\n\n## What This Guide Covers\n\n* Overview  \n* Key Differences  \n* Architecture  \n* MySQL Compatibility  \n* Consistency & Transactions  \n* Scaling & Performance  \n* HTAP / Analytics  \n* Multi-Region  \n* Operations & Reliability  \n* Ecosystem & Integrations  \n* Implementation / Migration  \n* Pricing  \n* Pros & Cons  \n* Who Should Choose Which?  \n* FAQs\n\n## TiDB vs CockroachDB Overview: 2-Minute Summary\n\nBefore diving into architecture and benchmarks, it helps to define each database in plain language and clarify when this comparison actually matters for platform teams.\n\n### TiDB in Brief\n\nTiDB is a Distributed SQL / NewSQL database from PingCAP that preserves MySQL compatibility while scaling out writes and storage. Under the hood, TiKV provides distributed transactional storage and TiFlash can add an HTAP database path for analytical queries on fresh operational data.\n\n### CockroachDB in Brief\n\nCockroachDB is a distributed SQL database that aligns strongly with the Postgres ecosystem (via Postgres wire-compatibility) and is often evaluated for resilience and geo-distributed patterns. In practice, teams validate SQL compatibility, transaction behavior under contention, and operational ergonomics for their specific workload and topology.\n\n### When This Comparison Matters\n\nThis comparison becomes high-stakes when you are outgrowing single-node SQL, you have real multi-region requirements, you need ACID transactions and distributed transactions at scale, and you want to avoid the operational burden of manual sharding.\n\n## Key Differences: TiDB vs CockroachDB - What Buyers Should Know First\n\nThese are the buyer-level decision drivers that most often determine the “right fit” before you get into deep tuning, because they shape migration scope, operational overhead, and the tradeoffs you will live with at scale.\n\n### MySQL Compatibility vs Postgres Wire-Compatibility Tradeoffs\n\nIf your application and tooling are MySQL-native, TiDB’s MySQL protocol compatibility can reduce rewrite scope and shorten a POC. If your org standardizes on Postgres drivers/ORMs and Postgres-centric SQL features, CockroachDB’s Postgres wire-compatibility may reduce integration friction, but you still validate dialect and feature edge cases either way.\n\n### HTAP Path: TiFlash vs External Analytics Patterns\n\nIf you want operational analytics on fresh data without standing up and syncing a separate OLAP system for every use case, TiDB’s TiFlash-based HTAP path can be a decisive simplifier. If your analytics stack is already well-defined (warehouse/lake) and you prefer strict separation, CockroachDB is often paired with external analytics patterns rather than an in-database HTAP replica.\n\n### Scaling Approach: Partitioning vs ‘No Manual Sharding’ Operational Reality\n\nBoth systems aim to scale horizontally, but you should evaluate what you actually manage day to day: hotspot handling, rebalancing behavior, and whether scaling forces application-owned sharding logic. The operational reality is what matters more than the marketing phrase.\n\n### Distributed Transactions & Consistency Model Differences\n\nBoth databases provide ACID transactions, but the “feel” in production can differ depending on transaction coordination, retries under contention, and failure-mode behavior. The buyer takeaway is simple: you test correctness and latency under the exact failure domains you plan to run.\n\n### Multi-Region Database Design: Locality, Latency, and Write-Path Constraints\n\nMulti-region is never free. Cross-region consensus and locality goals will shape latency, cost, and what “writes everywhere” realistically means. Treat topology as a first-class part of the evaluation, not an afterthought.\n\n### Operational Model: Self-Managed vs Managed Service Expectations\n\nIf your team wants to minimize operational labor, the managed-service path (and its limits) matters as much as database internals. Compare what “managed” actually includes: upgrades, backups, observability, and support boundaries.\n\n## Architecture Deep Dive\n\nArchitecture is the reason the tradeoffs show up in the first place, so this section focuses on the core mental models that explain scaling behavior, failure recovery, and mixed-workload performance.\n\n### TiDB Architecture: Compute + Storage Separation\n\n![TiDB compute layer with TiKV distributed KV storage and TiFlash columnar replicas for HTAP workloads.](https://static.pingcap.com/files/2026/02/27123334/image-9.png)\n\nTiDB separates SQL compute from storage. The SQL layer scales by adding stateless nodes, while TiKV scales storage and transactional throughput independently. When you need HTAP, TiFlash adds columnar replicas so analytical scans can run without turning your OLTP path into your analytics engine.\n\n### CockroachDB Architectur\n![CockroachDB cluster showing data flowing sequentially through SQL, Transactional, Distribution, Replication, and final Storage layers.](https://static.pingcap.com/files/2026/03/10064127/CockroachDB-architecture.jpg)\n\nCockroachDB uses a distributed SQL architecture designed to keep data replicated and available across nodes. For a POC evaluation, the practical architecture questions are how data is distributed, how rebalancing behaves under skew, and how consistency and transaction coordination impact latency in your target topology.\n\n### Elasticity: Decoupled Components vs Co-Located Nodes\n\nOne of the most practical architectural differences is elasticity. TiDB’s separation of compute and storage lets teams scale SQL compute and storage/throughput more independently. In node-centric architectures where compute and storage are more tightly coupled, scaling decisions can require adding capacity that includes both, which can lead to overprovisioning if your bottleneck is mostly one dimension.\n\n### Timestamp Ordering: PD-based TSO vs Hybrid Logical Clocks (HLC)\n\nTimestamp architecture matters when you evaluate contention behavior and commit latency. TiDB uses PD-based TSO to generate globally ordered timestamps quickly for transaction ordering. CockroachDB uses a Hybrid Logical Clock (HLC) approach that blends physical and logical time across nodes. The key buyer takeaway is not “which is better in theory,” but how each approach behaves in your topology, especially when you introduce multiple regions and tolerate clock uncertainty and coordination.\n\n### Storage Engine: RocksDB (TiKV) vs Pebble (CockroachDB)\n\nStorage engine choices influence write amplification, compaction behavior, and tail latency under sustained load. TiDB’s TiKV is built on RocksDB, a mature LSM-tree storage engine widely used for high write throughput workloads. CockroachDB uses Pebble, an LSM engine designed specifically for CockroachDB’s architecture. This is not a “winner” bullet, but it is useful context when you are interpreting compaction-related latency spikes and long-running throughput tests.\n\n### What Architecture Means for Real Workloads\n\nThe under-the-hood design shows up as real-world behavior: hotspot sensitivity, cross-node transaction overhead, recovery behavior during failures, and the operational complexity of keeping latency stable as the cluster grows.\n\n## Compatibility: MySQL Compatibility vs Postgres Ecosystem\n\nCompatibility is where migration risk lives, so this section makes compatibility concrete for app teams: drivers, ORMs, SQL dialect, and the “not always 100% drop-in” reality that a good POC should surface early.\n\n### TiDB: MySQL Compatible Distributed Database\n\nTiDB is built to preserve the MySQL developer experience for the common path: SQL syntax, drivers, and tooling. What you validate in practice are MySQL-specific features you rely on, edge-case semantics, and performance behavior under your concurrency and data distribution.\n\n### CockroachDB: Postgres Compatibility\n\nCockroachDB is commonly evaluated by Postgres-oriented teams because of Postgres wire-compatibility. A realistic POC still tests SQL feature compatibility (especially around complex queries and schema features) and confirms driver/ORM behavior under load and retries.\n\n### Practical Migration Checklist\n\nA POC checklist that catches most surprises looks like this:\n\n* Schema and index patterns (including large tables and hot keys).  \n* SQL features your app depends on (constraints, generated columns, specific functions).  \n* ORM behavior and connection pooling assumptions.  \n* Operational workflows (backups, restores, upgrades, incident drills).\n\n## Consistency, Isolation, and ACID Transactions:  Distributed Transactions Explained\n\nPlatform teams want confidence around what ACID guarantees mean in a distributed system, what changes under contention, and what to explicitly test before production traffic moves.\n\n### Isolation Levels at a Glance (TiDB vs CockroachDB)\n\nBecause isolation semantics directly affect application correctness (especially under contention and retries), it’s worth clarifying the isolation levels each system supports before you interpret benchmark results or migration effort.\n\n* TiDB supports:  \n  * READ COMMITTED  \n  * REPEATABLE READ (implemented as Snapshot Isolation)  \n* CockroachDB supports:  \n  * SERIALIZABLE (default)  \n  * READ COMMITTED  \n* Not supported today (both):  \n  * READ UNCOMMITTED\n\nIf your application depends on a specific isolation guarantee (for example, strict SERIALIZABLE behavior or MySQL-style REPEATABLE READ expectations), validate it early in the POC using your real transaction patterns and contention scenarios.\n\n### Transaction Modes Under Contention (Optimistic vs Pessimistic)\n\nIsolation level is only part of the story under contention. When you evaluate concurrency behavior, it also helps to know that both TiDB and CockroachDB support optimistic and pessimistic transaction modes, which gives teams levers to tune how the database behaves when many transactions compete for the same rows.\n\nOptimistic approaches can perform well when conflicts are rare, while pessimistic approaches can reduce wasted work when conflicts are frequent. The right choice depends on your workload’s conflict rate, transaction length, and tail-latency goals, so it’s worth testing both modes during the POC on your most contention-heavy paths.\n\n### TiDB ACID Transactions at Scale - Distributed Transactions Basics\n\nTiDB supports ACID transactions in a distributed cluster, which means transaction coordination can span nodes and failure domains. The practical evaluation focus is correctness under failures, latency under contention, and the retry/timeout behavior your application will experience. Learn more: [ACID transactions in a distributed SQL database (TiDB)](https://www.pingcap.com/blog/distributed-transactions-tidb/?utm_source=chatgpt.com).\n\n### CockroachDB Transaction Model Overview\n\nCockroachDB provides ACID transactions as well, and teams typically evaluate the transaction model by testing contention-heavy patterns, long transactions, and how the system behaves during node or region disruptions. The point is not to assume a difference, but to measure what your application actually experiences.\n\n### What to Test in a POC\n\nA reliable POC test plan includes:\n\n* Correctness checks under cross-node failures and leader changes.  \n* Retries, timeouts, and idempotency assumptions in the app layer.  \n* Hotspot behavior (skewed keys, bursty writes).  \n* Long transactions and backfills (lock time, tail latency).\n\n## Scaling & Performance: Horizontal Scaling Without the Headaches\n\nThis section is about how scaling really feels in production: What happens when you add nodes, how hotspots and rebalancing affect latency, and when “database sharding” or “database partitioning” shows up as an operational responsibility.\n\n### TiDB Scale-Out Model: Horizontal Scaling SQL Database\n\nTiDB scales out by adding stateless SQL compute and scaling storage/throughput via TiKV. The useful question for buyers is whether scaling is mostly a capacity action (add nodes) or an application redesign action (introduce shard routing and resharding).\n\n### CockroachDB Scale-Out Model\n\nCockroachDB also scales horizontally, and the practical evaluation focuses on rebalancing behavior, hotspot handling, and how performance changes as data distribution shifts. Treat this as a measurement exercise with your workload, not a theoretical debate.\n\n### Schema Object Scale: Tables, Indexes, and Tenancy Footprint\n\nAt scale, “how many objects does the cluster need to manage?” becomes a real constraint, especially in multi-tenant designs with many tables and indexes. Make schema footprint part of your evaluation by testing not just a single large table, but the real number of tables, indexes, and schema objects your platform will carry, plus the operational workflows that create/alter them over time.\n\n### Hot Lookup Tables: Cached Tables vs General Block Cache\n\nFor read-heavy workloads, small lookup tables often sit on the critical path. TiDB supports cached tables patterns for small, frequently accessed tables to reduce read latency and avoid repeated storage lookups. CockroachDB relies on its general block cache behavior rather than an explicit “cache this whole table” control, so the right question is whether your lookup-heavy paths stay stable under production concurrency and churn.\n\n### Resource Management: Workload Isolation Controls vs Admission Control\n\nContention is not only a data problem. It is also a resource scheduling problem under saturation. TiDB provides resource control mechanisms that let teams define workload isolation policies (e.g.,, separating critical OLTP from background jobs). CockroachDB uses admission control to protect cluster stability under overload. Both approaches can help, but they are different levers, so validate which model better matches your operational goals and tenant isolation requirements.\n\n### Sharding vs Partitioning: What You Manage vs What the DB Manages\n\nDatabase sharding is when the application or ops layer owns data distribution (routing, resharding, cross-shard query patterns). Database partitioning is a way to segment data to improve manageability or pruning, but it does not automatically remove distributed-systems coordination costs. If you want a crisp explainer on when sharding becomes a trap, read: [Database sharding explained (and when to avoid it)](https://www.pingcap.com/blog/database-sharding-defined/?utm_source=chatgpt.com).\n\n### Benchmarking Guidance: How to Compare Fairly\n\nTo avoid “benchmark theater,” compare both databases using:\n\n* Your real schema, indexes, and query mix  \n* Production-like concurrency and connection behavior  \n* Tail latency (p95/p99), not just average latency  \n* Failure-mode tests (node loss, region disruption, network blips)  \n* Cost modeling tied to replicas, regions, and egress\n\n### Mini Benchmark Rubric \n\nCompare both databases on *your* schema and query mix, using production-like concurrency and topology, then validate tail latency and failure behavior (not just averages).\n\n**A. Inputs (define these before you run anything):**\n\n* **Workload shape:** Read/write ratio, peak QPS, burst profile, background jobs (backfills, ETL, reporting).  \n* **Data shape:** Total size, growth rate, hot keys or skew, largest tables, index footprint.  \n* **Topology:** Regions/zones, replication factor, expected failover domain (node, AZ, region).  \n* **Client behavior:** Connection pool settings, retry/timeout policy, idempotency assumptions.\n\n**B. What to measure (capture as a scorecard per scenario):**\n\n* **Latency:** p50/p95/p99 by *query class* (critical read paths, critical write paths, background jobs).  \n* **Throughput & errors:** Sustained throughput at SLO, error rate, retry rate, timeouts, deadlocks/serialization retries (as observed by the app).  \n* **Hotspots & contention:** Worst hot-key behavior, queueing, lock time, tail latency under contention-heavy transactions.  \n* **Operational events:** Tail latency during (1) scaling/rebalancing, (2) online schema change, (3) backup/restore drill.  \n* **Failure drills:** Node loss, AZ loss, “network blip,” leader/lease transfers; confirm SLOs still hold.\n\n**C. Scenarios to run (minimum viable, but honest):**\n\n1. Steady-state load at expected peak concurrency.  \n2. Hot-key burst (skewed writes + read-after-write).  \n3. Large-table online DDL during traffic.  \n4. Controlled failure drill during load (node/AZ).\n\n**D. Common traps (how “benchmark theater” happens):**\n\n* Measuring averages only and ignoring p95/p99.  \n* Using a dataset too small to surface hotspots, rebalancing behavior, or compaction effects.  \n* Mismatching topology (regions/replicas) so cost and latency are not comparable.  \n* Ignoring app-layer retries/timeouts (the database “looks fine” until production traffic).  \n* Not including operational workflows (DDL, upgrades, restore drills) in the test plan.\n\n## HTAP / Analytics: Real-Time OLTP + OLAP on Fresh Data\n\nHTAP is not a buzzword for buyers. It is a practical question about whether you can run analytical queries on fresh operational data without duplicating datasets into more systems and pipelines.\n\n### TiDB HTAP with TiFlash\n\nTiDB supports an HTAP path by using TiFlash columnar replicas alongside TiKV. The buyer-level benefit is reducing ETL lag for operational intelligence use cases where “freshness” matters and duplicating data increases cost and attack surface. Learn more: [HTAP database fundamentals and TiDB HTAP use cases](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/?utm_source=chatgpt.com).\n\n### CockroachDB Analytics Approaches\n\nCockroachDB teams often use a mix of approaches depending on workload: selective in-database techniques (for example, materialized views where appropriate) and external OLAP systems when analytical concurrency or scan-heavy workloads should be isolated from OLTP.\n\n### Common HTAP Use Cases to Compare\n\nUse cases that make HTAP worth evaluating include:\n\n* Fraud/risk signals that depend on the newest transactions.  \n* Operational intelligence dashboards during incidents.  \n* Real-time reporting where ETL lag changes decisions.\n\n## Multi-Region Database Reality Check: Latency, Locality, and Tradeoffs\n\nMulti-region database design is always a set of tradeoffs. The goal is to name the topology you actually need (single-region HA, multi-region reads, or multi-region writes) and then test the latency and consensus implications honestly.\n\n### Common Multi-Region Topologies and Which Teams Need Them\n\nMost teams fall into one of these patterns:\n\n* **Single-region HA:** tolerate a region-wide outage via DR, but optimize for low latency.  \n* **Multi-region reads:** keep reads closer to users, accept write-path constraints.  \n* **Multi-region writes:** require global write availability, accept higher coordination latency and cost.\n\n### TiDB Multi-Region Patterns\n\nTiDB can be deployed with multi-region goals, but you should describe (and test) supported patterns conservatively: how replicas are placed, how reads are routed, and what happens to latency when coordination spans regions. The most important outcome is aligning topology to your user locality and failure assumptions.\n\n### CockroachDB Multi-Region Patterns\n\nCockroachDB is often evaluated for multi-region use cases, and the key buyer questions are similar: how you configure locality, how writes coordinate across regions, and what tail latency looks like during failover and degraded states. Validate with your own traffic distribution and SLA targets.\n\n### Decision Rule: When “Multi-Region” Becomes a Requirement vs a Nice-to-Have\n\nIf “multi-region” is primarily about resilience, single-region HA plus tested DR may be enough. If “multi-region” is about user latency and regulatory locality, treat it as a core product requirement and evaluate the write path and cost tradeoffs early.\n\n## Operations & Reliability: Upgrades, Backups, and Online Schema Change\n\nOps friction is a BOFU deal-breaker, so this section focuses on the work you will repeatedly do in production: online schema change, upgrades, backups/PITR, and day-2 observability.\n\n### Zero-Downtime Schema Changes: Online DDL\n\nSchema change is where downtime sneaks in. Your evaluation should include online schema change behavior under load, how long it takes on large tables, and what operational guardrails exist. If you want a baseline framing for online DDL (sometimes written as “online dll”), see: [Online DDL / online schema change with zero downtime](https://www.pingcap.com/blog/effective-online-ddl-database-schema-changes-zero-downtime/).\n\n### Upgrades and Maintenance Windows - What to Expect\n\n“Managed” does not automatically mean “no downtime.” Compare upgrade workflows, rollback strategy, and what your team is responsible for in the worst-case scenario (failed upgrade, partial outage, or degraded performance).\n\n### Backup/Restore, PITR, and Disaster Recovery Considerations\n\nEven if you rarely restore, restore speed and procedure clarity determine RPO/RTO when incidents happen. Make backup verification (restore drills) part of the POC, not a post-launch checkbox.\n\n### Observability and Day-2 Operations Checklist\n\nA production-ready checklist includes metrics and alert coverage for tail latency, hotspots, replication/raft health, node saturation, and error rates, plus runbooks your on-call team can execute under pressure.\n\n## Ecosystem & Integrations: Kubernetes, Data Movement, Tooling\n\nBeyond core database features, day-to-day success depends on how well the system fits your platform: deployment patterns, CDC/data movement, and tooling that your developers and operators already rely on.\n\n### Deployment Patterns\n\nCompare self-managed expectations (operational labor, runbooks, SRE maturity) to managed service boundaries (what the provider does vs what you own). If Kubernetes is your standard platform, explicitly evaluate how the database lifecycle fits GitOps workflows.\n\n### Data Movement & CDC\n\nMost real architectures need streaming, pipelines, and downstream consumers. Validate CDC ergonomics, connector maturity, and how you handle schema evolution in pipelines.\n\n### Developer Tooling and Operational Tooling Expectations\n\nFocus on what your teams actually use: migration tooling, schema management workflows, observability integration, and incident response ergonomics.\n\n## Implementation / Migration Plan: How to De-Risk the Move\n\nA safe evaluation does not stop at “it works on a demo dataset.” This section outlines a practical rollout plan that surfaces compatibility risk, correctness issues, and failure-mode behavior before production traffic shifts.\n\n### Step 1 — Compatibility Assessment: Schema + Queries\n\nInventory schema features and identify your top query paths. Confirm the SQL/driver surface area that must be compatible for your app to behave the same.\n\n### Step 2 — Data Migration and Validation Strategy\n\nPlan validation beyond row counts: checksums, application read-path correctness, and reconciliation strategies for edge cases.\n\n### Step 3 — Cutover Approach: Dual-Write vs Planned Cutover\n\nChoose a cutover method that matches your risk tolerance. Dual-write reduces downtime but increases correctness complexity, so treat it as an engineering project, not a checkbox.\n\n### Step 4 — Performance + Failure Testing Runbook\n\nTest tail latency under load, then run controlled failure drills. Your goal is to prove that SLOs are still met when nodes or zones fail.\n\n### Step 5 — Production Readiness Checklist\n\nLock in SLOs, alerts, on-call runbooks, and capacity planning assumptions before declaring success.\n\n## Pricing & Cost Drivers: What Actually Moves the Bill\n\nThe cost comparison that matters is not list price. It is which cost levers your workload will trigger at scale: compute, storage, replicas, backups, egress, regions, and support.\n\n### TiDB: Self-Managed vs TiDB Cloud Pricing Model\n\nSelf-managed TCO is primarily infrastructure plus operational labor, while TiDB Cloud shifts more cost into a managed-service model. If your team wants the fastest path to a production-grade trial, start here: [Try TiDB Cloud (managed distributed SQL)](https://www.pingcap.com/tidb/cloud/?utm_source=chatgpt.com).\n\n### CockroachDB: Pricing Model Overview\n\nEvaluate how pricing maps to your topology (regions, replicas) and your workload shape (steady-state vs bursty). Avoid comparing prices without aligning on equivalent availability and multi-region assumptions.\n\n### Cost Driver Checklist\n\nA practical checklist includes:\n\n* Compute footprint at steady state and peak.  \n* Storage growth rate and replica factor.  \n* Backup retention and restore testing frequency.  \n* Network egress and cross-region traffic.  \n* Support model and on-call expectations.\n\n## Pros & Cons\n\nThis section summarizes tradeoffs without spin, so you can sanity-check whether the “fit” aligns with your team’s priorities and constraints.\n\n### TiDB — Pros\n\n* MySQL compatibility for many common app stacks.  \n* Scale-out model with TiKV storage and optional TiFlash HTAP path.  \n* Clear HTAP database story for operational analytics on fresh data.\n\n### TiDB — Cons / Tradeoffs\n\n* Distributed transactions introduce coordination latency tradeoffs that must be tested.  \n* Compatibility edge cases exist; a focused POC is required.  \n* Operating model differs between self-managed and managed service.\n\n### CockroachDB — Pros\n\n* Postgres ecosystem alignment (wire-compatibility focus) for many Postgres-oriented orgs.  \n* Multi-region is often a first-class evaluation dimension.  \n* Distributed SQL design oriented toward resilience and availability patterns.\n\n### CockroachDB — Cons / Tradeoffs\n\n* SQL dialect/feature differences from “standard Postgres” must be tested in a POC.  \n* Distributed coordination can impact tail latency under certain contention patterns.  \n* Operational ergonomics vary by deployment model and topology.\n\n## Who Should Choose Which?\n\n| Situation | Choose TiDB if… | Choose CockroachDB if… |\n| ----- | ----- | ----- |\n| Best-fit by compatibility needs | Your application ecosystem is MySQL-first and you want to preserve MySQL protocol compatibility | Your ecosystem is Postgres-first and you want Postgres wire-compatibility alignment |\n| Best-fit by workload  | You want OLTP scale-out plus an HTAP path (TiFlash) for fresher operational analytics | You want scale-out OLTP with analytics handled via external OLAP patterns or selective in-database techniques |\n| Best-fit by operating model  | You want self-managed flexibility or TiDB Cloud managed operations | You prefer the managed-service path in your ecosystem and your team aligns to that operating model |\n| Best-fit by multi-region priorities | Multi-region is important, but you will choose a topology aligned to locality and latency constraints | Multi-region is a core product requirement and you are optimizing heavily around locality-driven designs |",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "Is TiDB a drop-in replacement for MySQL?",
+            "a": "TiDB is MySQL-compatible at the protocol level and supports common MySQL syntax and drivers, but it is not guaranteed to be 100% identical for every MySQL feature or edge case. The safest approach is a focused POC on your top queries, schema features, and operational workflows. If your app relies heavily on MySQL-specific features, validate those early."
+          },
+          {
+            "q": "How does TiDB handle distributed transactions and ACID transactions?",
+            "a": "TiDB supports ACID transactions across a distributed cluster, which means transaction coordination can involve multiple nodes. In practice, you validate correctness, contention behavior, and tail latency under your expected failure domains. Learn more: [ACID transactions in a distributed SQL database (TiDB)](https://www.pingcap.com/blog/distributed-transactions-tidb/?utm_source=chatgpt.com)."
+          },
+          {
+            "q": "What does HTAP mean, and how does TiFlash work?",
+            "a": "HTAP means running operational (OLTP) and analytical (OLAP) queries on the same underlying data with minimal lag. TiDB enables an HTAP path using TiFlash columnar replicas alongside TiKV, so analytical scans can be isolated from transactional workloads. Learn more: [HTAP database fundamentals and TiDB HTAP use cases](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/?utm_source=chatgpt.com)."
+          },
+          {
+            "q": "Do I need database sharding or database partitioning with TiDB?",
+            "a": "TiDB is designed to scale out without requiring application-owned database sharding as the default approach, but you may still use database partitioning for manageability or pruning. The right question is what you want to own operationally: shard routing and resharding, or a cluster that manages distribution for you. Learn more: [Database sharding explained (and when to avoid it)](https://www.pingcap.com/blog/database-sharding-defined/?utm_source=chatgpt.com)."
+          },
+          {
+            "q": "How do online DDL / online schema changes work in TiDB?",
+            "a": "Online DDL aims to change schemas without taking the database offline, but you still validate duration and workload impact under production-like load. Your POC should include a representative large-table schema change and measure tail latency during the operation. Learn more: [Online DDL / online schema change with zero downtime](https://www.pingcap.com/blog/effective-online-ddl-database-schema-changes-zero-downtime/)."
+          },
+          {
+            "q": "How should I evaluate TiDB vs CockroachDB performance for my workload?",
+            "a": "Use your real schema and query mix, then test production-like concurrency and tail latency (p95/p99), not just averages. Include failure-mode drills and measure how performance changes during node loss, rebalancing, and contention hotspots. Finally, model cost with equivalent availability and multi-region assumptions."
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "main",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Bottom Line\n\nIf your priority is MySQL compatibility, elastic scale without manual sharding, and an HTAP database path via TiFlash on TiKV, TiDB is often the more practical choice to validate first. If your organization is deeply Postgres-first and multi-region is your primary design driver, CockroachDB can be a strong option, but you should still confirm compatibility and operational simplicity in a POC.\n\nNext steps:\n\n* [Try TiDB Cloud (managed distributed SQL)](https://www.pingcap.com/tidb/cloud/).  \n* [Talk to a TiDB expert](https://www.pingcap.com/contact-us/) to review your workload, topology, and POC plan.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    }
+  ]
+}
