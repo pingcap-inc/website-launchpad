@@ -245,17 +245,17 @@ const dsl: PageDSL = {
           {
             "icon": "Database",
             "title": "Use Case 1: Real-Time Inventory Across Warehouses & Stores",
-            "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time.\n- Combine stock levels, inbound and outbound shipments, and reservations in one system\n- Power accurate available-to-promise decisions in seconds, not hours",
+            "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time. Combine stock levels, inbound and outbound shipments, and reservations in one system. Power accurate available-to-promise decisions in seconds, not hours",
             "layout": "vertical"
           },
           {
             "icon": "Zap",
             "title": "Use Case 2: Multi-Leg Shipment Tracking",
-            "description": "TiDB enables real-time last-mile visibility by ingesting high-velocity delivery data.\n  - Stream telematics, driver app events, and delivery scans into a single store\n  - Feed route optimization and ETA prediction engines with fresh, consistent data",
+            "description": "TiDB enables real-time last-mile visibility by ingesting high-velocity delivery data. Stream telematics, driver app events, and delivery scans into a single store. Feed route optimization and ETA prediction engines with fresh, consistent data.",
             "layout": "vertical"
           }
         ],
-        "columns": 3
+        "columns": 2
       },
       "style": {
         "spacing": "section"
@@ -329,33 +329,39 @@ const dsl: PageDSL = {
         "title": "Supply Chain Visibility Solutions: Customers & Social Proof",
         "items": [
           {
-            "quote": "TiDB is trusted by logistics, e-commerce, and supply chain technology companies to power real-time visibility at scale. From high-volume courier operations to complex, multi-leg supply chains, teams rely on TiDB to deliver consistent performance, high availability, and live operational insight.",
-            "author": "Logistics Platform Leader",
+            "quote": "TiDB enables us to handle thousands of requests per second with less than 100ms latency.",
+            "author": "Hari Kishan, Senior Engineering Manager",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+                "url": "https://static.pingcap.com/images/d84591ca-delhivery_idyw5wjqh6_0.png",
+                "width": 820,
+                "height": 130
               },
-              "alt": "dify"
+              "alt": ""
             }
           },
           {
-            "quote": "With TiDB, we consolidated fragmented data from WMS, OMS, and TMS into a single platform. Real-time queries replaced delayed reporting pipelines.",
-            "author": "Supply Chain Technology Director",
+            "quote": "The migration to TiDB resulted in significant cost savings of up to 70% due to its efficient resource utilization.",
+            "author": "Anteraja IT Team",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+                "url": "https://static.pingcap.com/images/9ea10b95-idzsz0k_ic_logos.png",
+                "width": 177,
+                "height": 72
               },
-              "alt": "dify"
+              "alt": ""
             }
           },
           {
-            "quote": "Multi-region deployment with transparent failover ensures our logistics operations never stop. We deliver consistent visibility 24/7 across borders.",
-            "author": "Global Courier Operations Manager",
+            "quote": "TiDB's futuristic product roadmap proactively addresses many of the pain points of managing distributed systems.",
+            "author": "Mani Kuramboyina, Head of Engineering India NinjaVan",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+                "url": "https://static.pingcap.com/images/02abcf91-id-qv0xxyp_logos.png",
+                "width": 180,
+                "height": 180
               },
-              "alt": "dify"
+              "alt": ""
             }
           }
         ]
