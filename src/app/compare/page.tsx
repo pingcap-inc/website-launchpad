@@ -74,7 +74,14 @@ const dsl: PageDSL = {
         }
       },
       "style": {
-        "spacing": "hero"
+        "spacing": "hero",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/03c492f3-tidb-comparison-hero-bg.svg",
+            "width": 1440,
+            "height": 400
+          }
+        }
       }
     },
     {
