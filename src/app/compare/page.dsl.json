@@ -12,7 +12,7 @@
       "props": {
         "layout": "centered",
         "eyebrow": "Database Comparisons",
-        "headline": "Choose the Right <span class=\"text-gradient-blue\">Database</span> for Your Workload",
+        "headline": "How TiDB Compares",
         "subheadline": "Explore head-to-head comparisons against MySQL, Aurora, CockroachDB, YugabyteDB, and PostgreSQL. Plus shortlist guides for OLTP, HTAP, SaaS, and AI workloads. Written by engineers, reviewed in production.",
         "primaryCta": {
           "text": "Start Free Trial",
