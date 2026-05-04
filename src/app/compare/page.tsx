@@ -36,7 +36,7 @@ const schema = buildPageSchema({
   description: "Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Choose the Right <span class=\"text-gradient-blue\">Database</span> for Your Workload", path: "/compare/" },
+    { name: "How TiDB Compares", path: "/compare/" },
   ],
 })
 
@@ -54,8 +54,8 @@ const dsl: PageDSL = {
       "props": {
         "layout": "centered",
         "eyebrow": "Database Comparisons",
-        "headline": "Choose the Right <span class=\"text-gradient-blue\">Database</span> for Your Workload",
-        "subheadline": "Head-to-head comparisons of TiDB against MySQL, Aurora, CockroachDB, YugabyteDB, and guides to distributed SQL databases for OLTP, HTAP, SaaS, and AI workloads. Written by engineers, reviewed in production.",
+        "headline": "How TiDB Compares",
+        "subheadline": "Explore head-to-head comparisons against MySQL, Aurora, CockroachDB, YugabyteDB, and PostgreSQL. Plus shortlist guides for OLTP, HTAP, SaaS, and AI workloads. Written by engineers, reviewed in production.",
         "primaryCta": {
           "text": "Start Free Trial",
           "href": "https://tidbcloud.com/free-trial/"
@@ -83,7 +83,7 @@ const dsl: PageDSL = {
       "props": {
         "eyebrow": "Head-to-Head Comparisons",
         "title": "Detailed Workload-Driven Comparisons",
-        "subtitle": "Each page covers architecture, scalability, ACID behavior, HA, TCO, and a clear verdict for your use case.",
+        "subtitle": "Each comparison covers architecture, scalability, ACID behavior, HA, TCO, and a clear verdict for your use case.",
         "items": [
           {
             "icon": "Database",
@@ -97,7 +97,7 @@ const dsl: PageDSL = {
           {
             "icon": "Cloud",
             "title": "TiDB vs Amazon Aurora",
-            "description": "Cloud-native distributed SQL vs. AWS's managed relational offering. Covers TCO at scale, multi-region HA, HTAP, and reducing AWS dependency.",
+            "description": "Cloud-native distributed SQL vs. AWS's managed MySQL and Postgres. Covers TCO at scale, multi-region writes, HTAP, and what changes when Aurora's per-IO pricing meets your growth curve.",
             "cta": {
               "text": "Compare",
               "href": "https://www.pingcap.com/compare/amazon-aurora-vs-tidb/"
@@ -106,7 +106,7 @@ const dsl: PageDSL = {
           {
             "icon": "Cpu",
             "title": "TiDB vs CockroachDB",
-            "description": "The two most-evaluated NewSQL databases. MySQL ecosystem vs. PostgreSQL wire protocol, HTAP capabilities, and Kubernetes operations compared.",
+            "description": "Both are distributed SQL, but the architectural choices diverge fast. MySQL vs. PostgreSQL wire protocol, HTAP vs. OLTP-only, and how each handles Kubernetes operations and licensing.",
             "cta": {
               "text": "Compare",
               "href": "https://www.pingcap.com/compare/cockroachdb-vs-tidb/"
@@ -115,7 +115,7 @@ const dsl: PageDSL = {
           {
             "icon": "Server",
             "title": "TiDB vs YugabyteDB",
-            "description": "Two open-source distributed SQL databases with different protocol approaches and consistency models. HTAP support, compatibility, and licensing.",
+            "description": "Two open-source distributed SQL databases that look similar on paper. Differences emerge in HTAP support, MySQL vs. PostgreSQL compatibility, licensing, and operational footprint.",
             "cta": {
               "text": "Compare",
               "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
@@ -123,7 +123,7 @@ const dsl: PageDSL = {
           },
           {
             "title": "TiDB vs PostgreSQL",
-            "description": "Distributed SQL vs. the world's most extensible open-source database. Covers horizontal scaling, HTAP, MySQL compatibility, and when Postgres hits its limits.",
+            "description": "When Postgres hits its scaling limits (single-primary writes, vacuum overhead, sharding pain), distributed SQL becomes the conversation. Covers horizontal scaling, HTAP, and a realistic migration path.",
             "cta": {
               "text": "Compare",
               "href": "https://www.pingcap.com/compare/tidb-vs-postgresql-2026-comparison-guide/"
@@ -131,7 +131,8 @@ const dsl: PageDSL = {
             "layout": "vertical"
           }
         ],
-        "columns": 2
+        "columns": 2,
+        "itemLayout": "vertical"
       },
       "style": {
         "spacing": "section"
@@ -143,18 +144,18 @@ const dsl: PageDSL = {
       "props": {
         "eyebrow": "Guides & Listicles",
         "title": "Not Sure Which Database to Shortlist?",
-        "subtitle": "Coverage by workload — not by vendor.",
+        "subtitle": "Coverage by workload, not by vendor. Each guide compares the leading options against the criteria that actually matter for that use case.",
         "items": [
           {
             "icon": "Layers",
             "title": "Best Distributed SQL Databases (2026)",
-            "description": "Ranked guide to leading distributed SQL databases — covering architecture, consistency guarantees, ecosystem fit, and when each is the right call.",
+            "description": "A workload-first comparison of leading distributed SQL databases. Covers architecture, consistency guarantees, ecosystem fit, and when each is the right call.",
             "href": "https://www.pingcap.com/compare/best-distributed-sql-databases/"
           },
           {
             "icon": "Bot",
             "title": "Best Database for AI Agents (2026)",
-            "description": "Memory layers, vector search, ACID state management, and multi-agent scale. Compares TiDB, Pinecone, Redis, pgvector, Milvus, MongoDB, and others.",
+            "description": "What agents actually need from a database: durable memory, vector search, ACID state, and the throughput to run hundreds in parallel. Compares TiDB, Pinecone, Redis, pgvector, Milvus, and MongoDB.",
             "href": "https://www.pingcap.com/compare/best-database-for-ai-agents/"
           },
           {
@@ -172,7 +173,7 @@ const dsl: PageDSL = {
           {
             "icon": "FileCode",
             "title": "Best Database for AI Applications",
-            "description": "A practical guide comparing 10 databases for RAG pipelines, vector search, and real-time AI workloads — covering SQL support, ACID compliance, scalability, and when to use a unified platform vs. purpose-built tools.",
+            "description": "A practical comparison of 10 databases for RAG pipelines, vector search, and real-time AI workloads. Covers SQL support, ACID compliance, scalability, and when to use a unified platform vs. purpose-built tools.",
             "href": "https://www.pingcap.com/compare/best-database-building-ai-apps/"
           }
         ],
@@ -191,31 +192,31 @@ const dsl: PageDSL = {
         "items": [
           {
             "q": "What is TiDB and how does it differ from MySQL?",
-            "a": "TiDB is an open-source distributed SQL database that speaks the MySQL protocol, so most MySQL applications connect without code changes. The key difference is scaling model: MySQL scales vertically on a single primary (plus read replicas), while TiDB distributes both storage and compute across nodes — handling scale-out writes, ACID transactions, and real-time analytics (HTAP) in one system. See TiDB vs MySQL comparison for details."
+            "a": "TiDB is an open-source distributed SQL database that uses the MySQL wire protocol, so many MySQL applications connect with no application code changes. The key difference is the scaling model: MySQL scales vertically on a single primary (with read replicas), while TiDB distributes both storage and compute across nodes. That means scale-out writes, ACID transactions, and real-time analytics (HTAP) in one system, without sharding.\nSee the full TiDB vs. MySQL comparison."
           },
           {
             "q": "When should I choose TiDB over MySQL or PostgreSQL?",
-            "a": "Choose TiDB when you're hitting write scaling limits on a single primary, when sharding is becoming a serious conversation, or when you need fresh analytics on live transactional data without building a separate warehouse pipeline. If your workload fits comfortably on a single primary with read replicas, MySQL or PostgreSQL is simpler — and that simplicity has real value. TiDB adds the most value at scale."
+            "a": "Choose TiDB when single-node scaling has become the bottleneck: write throughput limits, sharding complexity, or analytics that strain the OLTP database. TiDB is built for workloads that need horizontal scale, strong consistency, and HTAP in one system. For smaller workloads that fit comfortably on a single primary, MySQL or PostgreSQL remains the simpler choice.\nSee TiDB vs. MySQL or TiDB vs. PostgreSQL for workload-specific guidance."
           },
           {
             "q": "Is TiDB really MySQL-compatible?",
-            "a": "TiDB is wire-protocol compatible with MySQL 5.7/8.0 and supports the majority of MySQL SQL syntax. In practice, most MySQL applications connect and run without changes. Edge cases exist — stored procedures and functions, triggers, and events are not supported, and some SELECT FOR UPDATE patterns and a handful of MySQL-specific functions differ. Foreign keys are fully supported as of v8.5. Full compatibility reference available in docs."
+            "a": "TiDB is compatible with the MySQL 8.0 protocol and most MySQL syntax, including stored procedures, views, and common SQL features. Most applications, ORMs, and drivers work without modification. There are documented differences (some around DDL, character sets, and edge-case behaviors), and the docs maintain a complete compatibility matrix.\nSee the MySQL compatibility reference in the TiDB docs."
           },
           {
             "q": "What does HTAP mean, and does TiDB actually do it?",
-            "a": "HTAP — Hybrid Transactional and Analytical Processing — means running OLTP and OLAP queries on the same live data without ETL. TiDB does this via two storage engines: TiKV (row-based, for transactions) and TiFlash (column-based, for analytics), with asynchronous replication that stays near real-time. Queries automatically route to the right engine. The practical benefit is fresher analytics without a separate data warehouse."
+            "a": "HTAP stands for Hybrid Transactional/Analytical Processing: running OLTP and OLAP workloads against the same data, in the same system, without ETL. TiDB does this by separating row-oriented storage (TiKV) for transactions from columnar storage (TiFlash) for analytics, with replication between them. Production users run real-time dashboards and analytics directly on transactional data.\nSee How TiDB Does HTAP for the architecture details."
           },
           {
             "q": "How does TiDB compare to CockroachDB?",
-            "a": "Both are NewSQL databases built for horizontal scale-out with ACID transactions. TiDB is MySQL-compatible and has a stronger HTAP story via TiFlash. CockroachDB is PostgreSQL-compatible and leans into global multi-region active-active deployments. TiDB is Apache 2.0 open-source; CockroachDB moved to an Enterprise license in 2024. See full comparison for details."
+            "a": "Both are distributed SQL databases with ACID transactions, but the choices diverge. TiDB uses the MySQL wire protocol, separates row and columnar storage for HTAP, and is open source under Apache 2.0. CockroachDB uses the PostgreSQL wire protocol, focuses on OLTP, and changed its license in 2024. Operational footprint, ecosystem fit, and HTAP needs usually decide the call.\nSee the full TiDB vs. CockroachDB comparison."
           },
           {
             "q": "Can TiDB handle AI and vector search workloads?",
-            "a": "Yes. TiDB Vector Search adds native vector similarity search (HNSW indexing) within the same database as your SQL tables. The real power is combining vector search, full-text search (BM25), and SQL filters in a single hybrid query — enabling semantic retrieval with structured data in one system. TiDB also supports auto-embedding on INSERT, so vectors can be generated automatically as data is written. See AI Agents and Vector Database guides for detailed coverage."
+            "a": "Yes. TiDB includes native vector search alongside SQL, JSON, and full-text search, so a single database can serve transactional state, agent memory, and retrieval for RAG pipelines. That eliminates the operational overhead of running a separate vector database for production AI applications.\nSee Best Database for AI Agents or the TiDB vector search documentation."
           },
           {
             "q": "Is TiDB free to use?",
-            "a": "TiDB Self-Managed is fully open-source under Apache 2.0 — no licensing fees. TiDB Cloud (managed service on AWS, GCP, Azure) has a free Starter tier with no credit card required."
+            "a": "Yes. TiDB is open source under the Apache 2.0 license and free to download, run, and modify. PingCAP also offers TiDB Cloud, a fully managed service with a free tier for evaluation and pay-as-you-go and dedicated tiers for production.\nSee TiDB Cloud pricing or download TiDB Self-Managed."
           }
         ]
       },
@@ -228,13 +229,13 @@ const dsl: PageDSL = {
       "type": "featureHighlights",
       "props": {
         "eyebrow": "About These Comparisons",
-        "title": "Built for Production Context",
-        "subtitle": "Each comparison is written with real architectural tradeoffs in mind, reviewed by engineers who have run these systems in production workloads.",
+        "title": " Built for Engineers Evaluating Distributed SQL",
+        "subtitle": "Vendor comparisons are usually rigged. Ours cover the tradeoffs honestly, flag where competitors win, and get updated when reality changes.",
         "items": [
           {
             "variant": "blue",
-            "title": "Architecture Tradeoffs",
-            "description": "We cover scaling models, consistency guarantees, HA behavior under failure, and operational complexity — not just feature checklists.",
+            "title": "Tradeoffs, Not Feature Checklists",
+            "description": "Scaling model, consistency guarantees, failure behavior, operational complexity, TCO at scale. Where a competitor is the better fit, we say so.",
             "cta": {
               "text": "",
               "href": ""
@@ -243,8 +244,8 @@ const dsl: PageDSL = {
           },
           {
             "variant": "violet",
-            "title": "Production-Reviewed",
-            "description": "Each page is reviewed by practitioners who have deployed these databases at scale. Known limitations are flagged prominently.",
+            "title": "Reviewed by Engineers",
+            "description": "Each page is reviewed by engineers who have deployed these databases at scale. Authors named on every page.",
             "cta": {
               "text": "",
               "href": ""
@@ -253,8 +254,8 @@ const dsl: PageDSL = {
           },
           {
             "variant": "teal",
-            "title": "Quarterly Updates",
-            "description": "Comparisons are updated at least quarterly to reflect real vendor capability changes. Review dates are shown on every page.",
+            "title": "Updated When Reality Changes",
+            "description": "Licenses shift, architectures get rewritten, pricing flips. Every page shows its last-reviewed date and a changelog. Refreshed quarterly, sooner when a release breaks the comparison.",
             "cta": {
               "text": "",
               "href": ""
