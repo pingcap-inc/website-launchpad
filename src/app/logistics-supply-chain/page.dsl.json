@@ -19,7 +19,7 @@
           "href": "https://www.pingcap.com/tidb/cloud/"
         },
         "secondaryCta": {
-          "text": "Book a Demo",
+          "text": "Book a Meeting",
           "href": "https://www.pingcap.com/demo/"
         },
         "heroImage": {
@@ -36,13 +36,45 @@
             "width": 1440,
             "height": 664
           },
-          "alt": "",
-          "width": 1440,
-          "height": 664
+          "alt": ""
         }
       },
       "style": {
         "spacing": "hero"
+      }
+    },
+    {
+      "id": "legacy-challenges",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "The High-Velocity Logistics Challenge",
+        "title": "Why Legacy Databases Break Real-Time Supply Chain Visibility",
+        "subtitle": "Logistics platforms generate high-velocity operational data from orders and inventory updates to shipment scans and telematics events\nLegacy databases can’t support real-time supply chain workloads at scale, leading teams to stitch together sharded databases and analytics systems that increase latency, complexity, and risk.",
+        "items": [
+          {
+            "icon": "Clock",
+            "title": "Batch ETL Kills Real Time Visibility",
+            "description": "Batch ETL breaks real-time logistics visibility, leading to stale data and missed SLAs.",
+            "borderColor": "red"
+          },
+          {
+            "icon": "GitBranch",
+            "title": "Sharding Fragments Logistics Data",
+            "description": "Manual sharding and separate analytics systems fragment logistics data, eliminating a single source of truth across orders, inventory, and shipments.",
+            "borderColor": "red"
+          },
+          {
+            "icon": "Activity",
+            "title": "Concurrency Limits Break at Peak",
+            "description": "Legacy databases can’t handle peak logistics concurrency, resulting in lock contention, timeouts, and unpredictable performance at scale.",
+            "borderColor": "red"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
       }
     },
     {
@@ -88,40 +120,6 @@
           "text": "Launch TiDB Cloud",
           "href": "https://www.pingcap.com/tidb/cloud/"
         }
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
-      "id": "legacy-challenges",
-      "type": "featureCard",
-      "props": {
-        "eyebrow": "The High-Velocity Logistics Challenge",
-        "title": "Why Legacy Databases Break Real-Time Supply Chain Visibility",
-        "subtitle": "Logistics platforms generate high-velocity operational data from orders and inventory updates to shipment scans and telematics events\nLegacy databases can’t support real-time supply chain workloads at scale, leading teams to stitch together sharded databases and analytics systems that increase latency, complexity, and risk.",
-        "items": [
-          {
-            "icon": "Clock",
-            "title": "Batch ETL Kills Real Time Visibility",
-            "description": "Batch ETL breaks real-time logistics visibility, leading to stale data and missed SLAs.",
-            "borderColor": "red"
-          },
-          {
-            "icon": "GitBranch",
-            "title": "Sharding Fragments Logistics Data",
-            "description": "Manual sharding and separate analytics systems fragment logistics data, eliminating a single source of truth across orders, inventory, and shipments.",
-            "borderColor": "red"
-          },
-          {
-            "icon": "Activity",
-            "title": "Concurrency Limits Break at Peak",
-            "description": "Legacy databases can’t handle peak logistics concurrency, resulting in lock contention, timeouts, and unpredictable performance at scale.",
-            "borderColor": "red"
-          }
-        ],
-        "columns": 3,
-        "borderStyle": "color"
       },
       "style": {
         "spacing": "section"
@@ -289,33 +287,39 @@
         "title": "Supply Chain Visibility Solutions: Customers & Social Proof",
         "items": [
           {
-            "quote": "TiDB is trusted by logistics, e-commerce, and supply chain technology companies to power real-time visibility at scale. From high-volume courier operations to complex, multi-leg supply chains, teams rely on TiDB to deliver consistent performance, high availability, and live operational insight.",
-            "author": "Logistics Platform Leader",
+            "quote": "TiDB enables us to handle thousands of requests per second with less than 100ms latency.",
+            "author": "Hari Kishan, Senior Engineering Manager",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+                "url": "https://static.pingcap.com/images/d84591ca-delhivery_idyw5wjqh6_0.png",
+                "width": 820,
+                "height": 130
               },
-              "alt": "dify"
+              "alt": ""
             }
           },
           {
-            "quote": "With TiDB, we consolidated fragmented data from WMS, OMS, and TMS into a single platform. Real-time queries replaced delayed reporting pipelines.",
-            "author": "Supply Chain Technology Director",
+            "quote": "The migration to TiDB resulted in significant cost savings of up to 70% due to its efficient resource utilization.",
+            "author": "Anteraja IT Team",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+                "url": "https://static.pingcap.com/images/9ea10b95-idzsz0k_ic_logos.png",
+                "width": 177,
+                "height": 72
               },
-              "alt": "dify"
+              "alt": ""
             }
           },
           {
-            "quote": "Multi-region deployment with transparent failover ensures our logistics operations never stop. We deliver consistent visibility 24/7 across borders.",
-            "author": "Global Courier Operations Manager",
+            "quote": "TiDB's futuristic product roadmap proactively addresses many of the pain points of managing distributed systems.",
+            "author": "Mani Kuramboyina, Head of Engineering India NinjaVan",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+                "url": "https://static.pingcap.com/images/02abcf91-id-qv0xxyp_logos.png",
+                "width": 180,
+                "height": 180
               },
-              "alt": "dify"
+              "alt": ""
             }
           }
         ]
