@@ -159,12 +159,7 @@
               "Query stock, orders, and carrier events in a single SQL query"
             ],
             "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
-              },
-              "alt": "tab image",
-              "width": 1200,
-              "height": 800
+              "alt": ""
             }
           },
           {
@@ -177,11 +172,13 @@
             ],
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+                "url": "https://static.pingcap.com/images/3e425381-clip-group.svg",
+                "width": 1440,
+                "height": 360
               },
-              "alt": "tab image",
-              "width": 1200,
-              "height": 800
+              "alt": "",
+              "width": 1440,
+              "height": 360
             }
           }
         ],
@@ -202,13 +199,13 @@
         "items": [
           {
             "icon": "Database",
-            "title": "Use Case 1: Real-Time Inventory Across Warehouses & Stores",
+            "title": "Use Case: Real-Time Inventory Across Warehouses & Stores",
             "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time. Combine stock levels, inbound and outbound shipments, and reservations in one system. Power accurate available-to-promise decisions in seconds, not hours",
             "layout": "vertical"
           },
           {
             "icon": "Zap",
-            "title": "Use Case 2: Multi-Leg Shipment Tracking",
+            "title": "Use Case: Multi-Leg Shipment Tracking",
             "description": "TiDB enables real-time last-mile visibility by ingesting high-velocity delivery data. Stream telematics, driver app events, and delivery scans into a single store. Feed route optimization and ETA prediction engines with fresh, consistent data.",
             "layout": "vertical"
           }
@@ -238,7 +235,7 @@
               },
               "alt": "",
               "width": 600,
-              "height": 600
+              "height": 400
             },
             "imagePosition": "right"
           },
@@ -253,7 +250,7 @@
               },
               "alt": "",
               "width": 600,
-              "height": 600
+              "height": 400
             },
             "imagePosition": "left"
           },
