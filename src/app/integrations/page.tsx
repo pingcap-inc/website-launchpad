@@ -500,34 +500,6 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "final-cta",
-      "type": "cta",
-      "props": {
-        "title": "Ready to Integrate TiDB into Your Tech Stack?",
-        "subtitle": "Explore the full documentation for each integration, or get started with TiDB Cloud free trial today.",
-        "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
-          "alt": "",
-          "width": 278,
-          "height": 256
-        },
-        "primaryCta": {
-          "text": "Start for Free",
-          "href": "https://tidbcloud.com/free-trial/"
-        },
-        "secondaryCta": {
-          "text": "View All Documentation",
-          "href": "https://docs.pingcap.com/"
-        }
-      },
-      "style": {
-        "background": "brand-violet",
-        "spacing": "section"
-      }
-    },
-    {
       "id": "featureCard-1778062110285",
       "type": "featureCard",
       "props": {
@@ -601,6 +573,71 @@ const dsl: PageDSL = {
       },
       "style": {
         "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Integrate TiDB into Your Tech Stack?",
+        "subtitle": "Explore the full documentation for each integration, or get started with TiDB Cloud free trial today.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View All Documentation",
+          "href": "https://docs.pingcap.com/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "faq-1778062459306",
+      "type": "faq",
+      "props": {
+        "title": "Integration FAQs",
+        "items": [
+          {
+            "q": "Is TiDB fully MySQL compatible?",
+            "a": "Yes. TiDB supports the MySQL protocol and works with standard MySQL drivers."
+          },
+          {
+            "q": "Does TiDB integrate with Kafka?",
+            "a": "Yes. TiCDC streams real-time changes to Apache Kafka and compatible platforms."
+          },
+          {
+            "q": "Can I run Spark analytics on TiDB?",
+            "a": "Yes. TiSpark enables distributed analytics with Apache Spark."
+          },
+          {
+            "q": "Does TiDB support Kubernetes?",
+            "a": "Yes. TiDB runs natively on Kubernetes using the TiDB Operator."
+          },
+          {
+            "q": "What drivers does TiDB support?",
+            "a": "Standard MySQL drivers including JDBC, ODBC, Go, Python, and Node.js connectors."
+          },
+          {
+            "q": "Can I provision TiDB with Terraform?",
+            "a": "Yes. TiDB Cloud provides a Terraform provider for automated infrastructure management."
+          }
+        ]
+      },
+      "style": {
+        "background": "gradient-dark-bottom",
         "spacing": "section"
       }
     }
