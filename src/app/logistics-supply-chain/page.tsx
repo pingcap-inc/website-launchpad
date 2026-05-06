@@ -36,7 +36,7 @@ const schema = buildPageSchema({
   description: "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Real-Time Logistics Data Platform for Global <span class=\"text-gradient-violet\">Supply Chain Visibility</span>", path: "/logistics-supply-chain/" },
+    { name: "Real-Time Logistics Data Platform for Global<br> <span class=\"text-gradient-violet\">Supply Chain Visibility</span>", path: "/logistics-supply-chain/" },
   ],
 })
 
@@ -54,14 +54,14 @@ const dsl: PageDSL = {
       "props": {
         "layout": "centered",
         "eyebrow": "Supply Chain Visibility",
-        "headline": "Real-Time Logistics Data Platform for Global <span class=\"text-gradient-violet\">Supply Chain Visibility</span>",
+        "headline": "Real-Time Logistics Data Platform for Global<br> <span class=\"text-gradient-violet\">Supply Chain Visibility</span>",
         "subheadline": "TiDB powers real-time logistics and supply chain visibility by unifying operational and analytical data in a single, distributed SQL platform. Track orders, inventory, and shipments without ETL delays, sharding complexity, or downtime.",
         "primaryCta": {
           "text": "Launch TiDB Cloud",
           "href": "https://www.pingcap.com/tidb/cloud/"
         },
         "secondaryCta": {
-          "text": "Book a Demo",
+          "text": "Book a Meeting",
           "href": "https://www.pingcap.com/demo/"
         },
         "heroImage": {
@@ -83,6 +83,40 @@ const dsl: PageDSL = {
       },
       "style": {
         "spacing": "hero"
+      }
+    },
+    {
+      "id": "legacy-challenges",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "The High-Velocity Logistics Challenge",
+        "title": "Why Legacy Databases Break Real-Time Supply Chain Visibility",
+        "subtitle": "Logistics platforms generate high-velocity operational data from orders and inventory updates to shipment scans and telematics events\nLegacy databases can’t support real-time supply chain workloads at scale, leading teams to stitch together sharded databases and analytics systems that increase latency, complexity, and risk.",
+        "items": [
+          {
+            "icon": "Clock",
+            "title": "Batch ETL Kills Real Time Visibility",
+            "description": "Batch ETL breaks real-time logistics visibility, leading to stale data and missed SLAs.",
+            "borderColor": "red"
+          },
+          {
+            "icon": "GitBranch",
+            "title": "Sharding Fragments Logistics Data",
+            "description": "Manual sharding and separate analytics systems fragment logistics data, eliminating a single source of truth across orders, inventory, and shipments.",
+            "borderColor": "red"
+          },
+          {
+            "icon": "Activity",
+            "title": "Concurrency Limits Break at Peak",
+            "description": "Legacy databases can’t handle peak logistics concurrency, resulting in lock contention, timeouts, and unpredictable performance at scale.",
+            "borderColor": "red"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
       }
     },
     {
@@ -128,40 +162,6 @@ const dsl: PageDSL = {
           "text": "Launch TiDB Cloud",
           "href": "https://www.pingcap.com/tidb/cloud/"
         }
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
-      "id": "legacy-challenges",
-      "type": "featureCard",
-      "props": {
-        "eyebrow": "The High-Velocity Logistics Challenge",
-        "title": "Why Legacy Databases Break Real-Time Supply Chain Visibility",
-        "subtitle": "Logistics platforms generate high-velocity operational data from orders and inventory updates to shipment scans and telematics events\nLegacy databases can’t support real-time supply chain workloads at scale, leading teams to stitch together sharded databases and analytics systems that increase latency, complexity, and risk.",
-        "items": [
-          {
-            "icon": "Clock",
-            "title": "Batch ETL Kills Real Time Visibility",
-            "description": "Batch ETL breaks real-time logistics visibility, leading to stale data and missed SLAs.",
-            "borderColor": "red"
-          },
-          {
-            "icon": "GitBranch",
-            "title": "Sharding Fragments Logistics Data",
-            "description": "Manual sharding and separate analytics systems fragment logistics data, eliminating a single source of truth across orders, inventory, and shipments.",
-            "borderColor": "red"
-          },
-          {
-            "icon": "Activity",
-            "title": "Concurrency Limits Break at Peak",
-            "description": "Legacy databases can’t handle peak logistics concurrency, resulting in lock contention, timeouts, and unpredictable performance at scale.",
-            "borderColor": "red"
-          }
-        ],
-        "columns": 3,
-        "borderStyle": "color"
       },
       "style": {
         "spacing": "section"
@@ -219,11 +219,13 @@ const dsl: PageDSL = {
             ],
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+                "url": "https://static.pingcap.com/images/3e425381-clip-group.svg",
+                "width": 1440,
+                "height": 360
               },
-              "alt": "tab image",
-              "width": 1200,
-              "height": 800
+              "alt": "",
+              "width": 1440,
+              "height": 360
             }
           }
         ],
@@ -244,13 +246,13 @@ const dsl: PageDSL = {
         "items": [
           {
             "icon": "Database",
-            "title": "Use Case 1: Real-Time Inventory Across Warehouses & Stores",
+            "title": "Use Case: Real-Time Inventory Across Warehouses & Stores",
             "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time. Combine stock levels, inbound and outbound shipments, and reservations in one system. Power accurate available-to-promise decisions in seconds, not hours",
             "layout": "vertical"
           },
           {
             "icon": "Zap",
-            "title": "Use Case 2: Multi-Leg Shipment Tracking",
+            "title": "Use Case: Multi-Leg Shipment Tracking",
             "description": "TiDB enables real-time last-mile visibility by ingesting high-velocity delivery data. Stream telematics, driver app events, and delivery scans into a single store. Feed route optimization and ETA prediction engines with fresh, consistent data.",
             "layout": "vertical"
           }
@@ -280,7 +282,7 @@ const dsl: PageDSL = {
               },
               "alt": "",
               "width": 600,
-              "height": 600
+              "height": 400
             },
             "imagePosition": "right"
           },
@@ -295,7 +297,7 @@ const dsl: PageDSL = {
               },
               "alt": "",
               "width": 600,
-              "height": 600
+              "height": 400
             },
             "imagePosition": "left"
           },
@@ -445,6 +447,20 @@ const dsl: PageDSL = {
       },
       "style": {
         "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "form-1778040944947",
+      "type": "form",
+      "props": {
+        "title": "See TiDB in Action",
+        "subtitle": "Get to know TiDB in the way that fits you best",
+        "portalId": "4466002",
+        "formId": "066e9d00-f659-43b2-8fa5-71fb88dfab59"
+      },
+      "style": {
+        "background": "primary",
         "spacing": "section"
       }
     }
