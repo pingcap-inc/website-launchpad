@@ -363,6 +363,7 @@ const dsl: PageDSL = {
         "borderStyle": "gray"
       },
       "style": {
+        "background": "inverse",
         "spacing": "section"
       }
     },
@@ -378,7 +379,7 @@ const dsl: PageDSL = {
             "icon": "Database",
             "title": "JDBC and ODBC",
             "description": "Standard Java and system-level database connectivity with full ACID and transactional support.",
-            "href": "https://docs.pingcap.com/"
+            "href": "https://docs.pingcap.com/developer/dev-guide-sample-application-java-jdbc/"
           },
           {
             "icon": {
@@ -388,7 +389,7 @@ const dsl: PageDSL = {
             },
             "title": "Python (SQLAlchemy, PyMySQL)",
             "description": "Connect Python applications using SQLAlchemy ORM and PyMySQL driver with native MySQL compatibility.",
-            "href": "https://docs.pingcap.com/"
+            "href": "https://docs.pingcap.com/developer/dev-guide-sample-application-python-sqlalchemy/"
           },
           {
             "icon": {
@@ -398,7 +399,7 @@ const dsl: PageDSL = {
             },
             "title": "Node.js (Prisma, Sequelize)",
             "description": "Use Prisma and Sequelize ORMs for Node.js with TiDB as a drop-in MySQL replacement.",
-            "href": "https://docs.pingcap.com/"
+            "href": "https://docs.pingcap.com/developer/dev-guide-sample-application-nodejs-prisma/"
           },
           {
             "icon": {
@@ -408,7 +409,7 @@ const dsl: PageDSL = {
             },
             "title": "Go (gorm, database/sql)",
             "description": "Build Go applications with gorm and standard database/sql packages connecting to TiDB.",
-            "href": "https://docs.pingcap.com/"
+            "href": "https://docs.pingcap.com/developer/dev-guide-sample-application-golang-sql-driver/"
           },
           {
             "icon": {
@@ -418,13 +419,20 @@ const dsl: PageDSL = {
             },
             "title": "Hibernate (Java)",
             "description": "Use Hibernate with TiDB for object-relational mapping in Java enterprise applications.",
-            "href": "https://docs.pingcap.com/"
+            "href": "https://docs.pingcap.com/developer/dev-guide-sample-application-java-hibernate/"
+          },
+          {
+            "icon": "Globe",
+            "title": "ProxySQL",
+            "description": "Use ProxySQL for connection pooling and traffic routing in TiDB-compatible environments.",
+            "href": "https://docs.pingcap.com/developer/dev-guide-proxysql-integration/"
           }
         ],
         "columns": 3,
         "borderStyle": "gray"
       },
       "style": {
+        "background": "inverse",
         "spacing": "section"
       }
     },
@@ -444,7 +452,7 @@ const dsl: PageDSL = {
             },
             "title": "AWS",
             "description": "Deploy TiDB Cloud on AWS, access via CloudFormation, and use AWS AppFlow for data integration.",
-            "href": "https://www.pingcap.com/tidb/cloud/"
+            "href": "https://www.pingcap.com/partners/aws/"
           },
           {
             "icon": {
@@ -454,7 +462,7 @@ const dsl: PageDSL = {
             },
             "title": "Google Cloud Platform",
             "description": "Run TiDB on Google Cloud Bigtable or self-host with native GCP marketplace integrations.",
-            "href": "https://www.pingcap.com/tidb/cloud/"
+            "href": "https://docs.pingcap.com/tidb-in-kubernetes/stable/deploy-on-gcp-gke/"
           },
           {
             "icon": {
@@ -464,7 +472,7 @@ const dsl: PageDSL = {
             },
             "title": "Microsoft Azure",
             "description": "Deploy TiDB on Azure Kubernetes Service (AKS) with Azure Marketplace support.",
-            "href": "https://www.pingcap.com/tidb/cloud/"
+            "href": "https://www.pingcap.com/blog/tidb-cloud-dedicated-public-preview-microsoft-azure-distributed-sql/"
           },
           {
             "icon": {
@@ -474,7 +482,7 @@ const dsl: PageDSL = {
             },
             "title": "Alibaba Cloud",
             "description": "TiDB deployments on Alibaba Cloud with native marketplace and managed service options.",
-            "href": "https://www.pingcap.com/tidb/cloud/"
+            "href": "https://docs.pingcap.com/tidb-in-kubernetes/v1.3/deploy-on-alibaba-cloud/"
           },
           {
             "icon": "Layers",
@@ -487,6 +495,7 @@ const dsl: PageDSL = {
         "borderStyle": "gray"
       },
       "style": {
+        "background": "inverse",
         "spacing": "section"
       }
     },
@@ -515,6 +524,83 @@ const dsl: PageDSL = {
       },
       "style": {
         "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "featureCard-1778062110285",
+      "type": "featureCard",
+      "props": {
+        "title": "Infrastructure Automation & DevOps Tooling",
+        "subtitle": "Provision, manage, and govern TiDB clusters using infrastructure-as-code and database DevOps workflows.",
+        "items": [
+          {
+            "title": "Terraform (TiDB Cloud Provider)",
+            "description": "Provision and manage TiDB Cloud clusters using Terraform for infrastructure-as-code workflows.",
+            "href": "https://docs.pingcap.com/tidbcloud/terraform-tidbcloud-provider-overview/"
+          },
+          {
+            "title": "Bytebase",
+            "description": "Manage TiDB schema migrations and database DevOps workflows with version control and approvals.",
+            "href": "https://www.pingcap.com/blog/streamline-database-change-management-for-tidb-cloud-with-bytebase/"
+          },
+          {
+            "title": "Gitpod",
+            "description": "Spin up cloud-based development environments connected to TiDB for rapid prototyping.",
+            "href": "https://docs.pingcap.com/developer/dev-guide-playground-gitpod/"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "featureCard-1778062198951",
+      "type": "featureCard",
+      "props": {
+        "title": "App Platforms & Serverless Deployments",
+        "subtitle": "Connect modern serverless, SaaS, and edge applications to TiDB using standard MySQL-compatible drivers.",
+        "items": [
+          {
+            "title": "Vercel",
+            "description": "Connect serverless and SaaS backends on Vercel to TiDB Cloud using standard MySQL drivers.",
+            "href": "https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-vercel/"
+          },
+          {
+            "title": "Netlify",
+            "description": "Integrate Netlify-hosted applications with TiDB via MySQL-compatible connectors.",
+            "href": "https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-netlify/"
+          },
+          {
+            "title": "AWS Lambda",
+            "description": "Use Lambda functions to query or write to TiDB using standard MySQL connectors in serverless architectures.",
+            "href": "https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-aws-lambda/"
+          },
+          {
+            "title": "Cloudflare",
+            "description": "Build globally distributed applications connecting Cloudflare workers to TiDB Cloud endpoints.",
+            "href": "https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-cloudflare/"
+          },
+          {
+            "title": "Zapier",
+            "description": "Automate workflows triggered by TiDB data changes using Zapier integrations.",
+            "href": "https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-zapier/"
+          },
+          {
+            "title": "n8n",
+            "description": "Create event-driven automation workflows integrating TiDB with SaaS tools via n8n.",
+            "href": "https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-n8n/"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "background": "primary",
         "spacing": "section"
       }
     }
