@@ -215,7 +215,7 @@ const dsl: PageDSL = {
         },
         "primaryCta": {
           "text": "Modernize MySQL Workloads",
-          "href": "https://www.pingcap.com/mysql/"
+          "href": "https://www.pingcap.com/solutions/modernize-mysql-workloads/"
         },
         "secondaryCta": {
           "text": "Learn More",
