@@ -3,7 +3,7 @@
   "meta": {
     "title": "TiDB vs Pinecone: RAG Stack Simplified | TiDB",
     "description": "Compare TiDB's embedded vector DB approach against the classic two-DB setup for RAG. Discover how TiDB unifies vector and SQL in one system.",
-    "canonical": "/compare/playbook-embed-vector-db-build-rag/"
+    "canonical": "/playbook/playbook-embed-vector-db-build-rag/"
   },
   "sections": [
     {
@@ -20,8 +20,8 @@
             "height": 447
           },
           "alt": "rag without extra luggage",
-          "width": 421,
-          "height": 447
+          "width": 300,
+          "height": 300
         }
       },
       "style": {
