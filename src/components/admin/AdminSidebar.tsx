@@ -2,15 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-  LayoutDashboard,
-  FileText,
-  PlusSquare,
-  MessageSquare,
-  Layers,
-  PanelRight,
-  Lock,
-} from 'lucide-react'
+import { LayoutDashboard, FileText, PlusSquare, PanelRight, Lock } from 'lucide-react'
 
 const NAV_ITEMS: {
   href: string
@@ -22,8 +14,6 @@ const NAV_ITEMS: {
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { href: '/admin/pages', label: 'Pages', icon: FileText },
   { href: '/admin/create', label: 'Create Page', icon: PlusSquare },
-  // { href: '/admin/assistant', label: 'AI Assistant', icon: MessageSquare, disabled: true },
-  // { href: '/admin/builds', label: 'Preview Builds', icon: Layers, disabled: true },
 ]
 
 interface AdminSidebarProps {
@@ -74,7 +64,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
         <ul className="space-y-1">
           {NAV_ITEMS.map(({ href, label, icon: Icon, exact, disabled }) => {
             const normalizedPath = pathname.replace(/\/$/, '')
-            const normalizedHref = href.replace(/\/$/, '')
+            const normalizedHref = href.split('?')[0].replace(/\/$/, '')
             const isActive =
               !disabled &&
               (exact

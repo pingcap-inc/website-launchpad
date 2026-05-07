@@ -668,7 +668,7 @@ Available section types (choose appropriate mix):
 - { type: "agenda", props: { eyebrow?, title, subtitle?, items: [{time?, title, description?}], className? } }
 - { type: "speakers", props: { eyebrow?, title, items: [{name, title, company?, bio?, image?: { image: {assetId?, url}, alt? }}], className? } }
 - { type: "comparisonTable", props: { eyebrow?, title, subtitle?, ourProduct, competitor, rows: [{feature, ours: string|boolean, theirs: string|boolean}], cta?: {text, href}, className? } }
-- { type: "richTextBlock", props: { content: string (Markdown), className? } }
+- { type: "richTextBlock", props: { content: string (Markdown; also supports :::card-grid containing :::card blocks), className? } }
 - { type: "tableOfContents", props: { items: [{id, label, level?: 1|2}], sticky?: boolean, className? } }
 
 Icon names (use for icon fields): ${ALL_ICON_NAMES.join(', ')}

@@ -33,13 +33,14 @@ import {
   arrayMove,
 } from '@dnd-kit/sortable'
 import type { PageDSL, SectionNode } from '@/lib/dsl-schema'
-import type { PageTemplate } from '@/lib/admin/page-templates'
+import { PAGE_TEMPLATES, type PageTemplate } from '@/lib/admin/page-templates'
 import type { ImportPageType, PageType } from '@/lib/admin/page-types'
 import { IMPORT_PAGE_TYPES, PAGE_TYPES, PAGE_TYPE_LABELS } from '@/lib/admin/page-types'
 import { TemplateSelector } from '@/components/admin/TemplateSelector'
 import { ImportInput } from '@/components/admin/ImportInput'
 import { normalizeDSL } from '@/lib/dsl-utils'
 import { detectPageType } from '@/lib/detect-page-type'
+import { cleanupImportedMarkdownEscapes } from '@/lib/imported-text'
 import { addTableOfContentsForLongForm } from '@/lib/toc'
 import { SectionCard } from './SectionCard'
 import { AddSectionPanel } from './AddSectionPanel'
@@ -64,6 +65,10 @@ The page should:
 
 function getPageTypeLabel(pageType: PageType): string {
   return PAGE_TYPE_LABELS[pageType] ?? pageType
+}
+
+function isPageType(value: string | null): value is PageType {
+  return !!value && PAGE_TYPES.includes(value as PageType)
 }
 const DRAFT_BRANCH = 'drafts/ai'
 const GOOGLE_DOC_REGEX = /https?:\/\/docs\.google\.com\/document\/d\/([a-zA-Z0-9-_]+)/
@@ -92,7 +97,7 @@ function sanitizeImportedContent(
   options?: { isLongForm?: boolean; maxChars?: number }
 ): string {
   const { isLongForm = false, maxChars = IMPORT_MAX_CHARS } = options ?? {}
-  const cleaned = stripBase64Images(text)
+  const cleaned = cleanupImportedMarkdownEscapes(stripBase64Images(text))
     // Normalize line endings
     .replace(/\r\n/g, '\n')
     .replace(/\r/g, '\n')
@@ -315,6 +320,308 @@ function parseTextToDsl(text: string, slug?: string): PageDSL {
       },
     ],
   }
+}
+
+function stripLeadingMarkdownH1(markdown: string) {
+  return markdown.replace(/^\s*#\s+.+\n+/i, '').trim()
+}
+
+function splitMarkdownFaq(markdown: string) {
+  const lines = markdown.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
+  const faqHeadingRegex =
+    /^(#{2,4})\s+(faq|faqs|frequently asked questions)\b(?:\s*[:\-–—]\s*.+|\s*)$/i
+  const headingRegex = /^(#{1,4})\s+(.+)$/
+  const faqStart = lines.findIndex((line) => faqHeadingRegex.test(line.trim()))
+
+  if (faqStart === -1) {
+    return {
+      beforeFaq: markdown.trim(),
+      afterFaq: '',
+      faqMarkdown: '',
+      faqItems: [] as { q: string; a: string }[],
+      faqTitle: '',
+    }
+  }
+
+  const faqHeadingMatch = lines[faqStart].trim().match(faqHeadingRegex)
+  const faqLevel = faqHeadingMatch ? faqHeadingMatch[1].length : 2
+  const faqHeadingTextMatch = lines[faqStart].trim().match(headingRegex)
+  const faqTitle = faqHeadingTextMatch ? faqHeadingTextMatch[2].trim() : ''
+  let faqEnd = lines.length
+  for (let i = faqStart + 1; i < lines.length; i += 1) {
+    const match = lines[i].trim().match(headingRegex)
+    if (match && match[1].length <= faqLevel) {
+      faqEnd = i
+      break
+    }
+  }
+
+  const beforeFaq = lines.slice(0, faqStart).join('\n').trim()
+  const afterFaq = lines.slice(faqEnd).join('\n').trim()
+  const faqMarkdown = lines
+    .slice(faqStart + 1, faqEnd)
+    .join('\n')
+    .trim()
+  const faqItems: { q: string; a: string }[] = []
+  const normalizeQuestion = (question: string) => {
+    const trimmed = question
+      .replace(/^#+\s+/, '')
+      .replace(/^\*\*|\*\*$/g, '')
+      .trim()
+    if (!trimmed) return ''
+    return trimmed.endsWith('?') ? trimmed : `${trimmed}?`
+  }
+
+  let currentQuestion = ''
+  let currentAnswer: string[] = []
+
+  const flushFaq = () => {
+    const q = normalizeQuestion(currentQuestion)
+    const a = currentAnswer.join('\n').trim()
+    if (q && a) faqItems.push({ q, a })
+    currentQuestion = ''
+    currentAnswer = []
+  }
+
+  for (const rawLine of lines.slice(faqStart + 1, faqEnd)) {
+    const trimmed = rawLine.trim()
+    const headingQuestionMatch = trimmed.match(/^#{2,6}\s+(.+)$/)
+    const boldQuestionMatch = trimmed.match(/^\*\*(.+?)\*\*\s*:?\s*(.*)$/)
+
+    if (headingQuestionMatch) {
+      flushFaq()
+      currentQuestion = headingQuestionMatch[1]
+      continue
+    }
+
+    if (boldQuestionMatch) {
+      flushFaq()
+      currentQuestion = boldQuestionMatch[1]
+      if (boldQuestionMatch[2].trim()) currentAnswer.push(boldQuestionMatch[2].trim())
+      continue
+    }
+
+    if (!currentQuestion && trimmed.endsWith('?')) {
+      flushFaq()
+      currentQuestion = trimmed
+      continue
+    }
+
+    if (currentQuestion) currentAnswer.push(rawLine)
+  }
+  flushFaq()
+
+  return {
+    beforeFaq,
+    afterFaq,
+    faqMarkdown,
+    faqItems: faqItems.filter((item) => item.q && item.a),
+    faqTitle,
+  }
+}
+
+type LongFormChunk = { kind: 'richText'; content: string } | { kind: 'cta'; data: CtaFenceData }
+
+type CtaFenceProps = {
+  title: string
+  subtitle?: string
+  primaryCta: { text: string; href: string }
+  secondaryCta?: { text: string; href: string }
+}
+
+type CtaFenceData = {
+  props: CtaFenceProps
+  backgroundImageUrl?: string
+}
+
+const CTA_FENCE_REGEX = /^:::cta([^\n]*)\n([\s\S]*?)^:::\s*$/gm
+
+function parseCtaFenceParams(rawParams: string): { backgroundImageUrl?: string } {
+  const out: { backgroundImageUrl?: string } = {}
+  const paramRegex = /(\w+)=("([^"]*)"|'([^']*)'|(\S+))/g
+  let m: RegExpExecArray | null
+  while ((m = paramRegex.exec(rawParams))) {
+    const key = m[1].toLowerCase()
+    const value = (m[3] ?? m[4] ?? m[5] ?? '').trim()
+    if (!value) continue
+    if (key === 'bg' || key === 'background' || key === 'backgroundimage') {
+      out.backgroundImageUrl = value
+    }
+  }
+  return out
+}
+
+function parseCtaFenceBody(rawParams: string, inner: string): CtaFenceData | null {
+  const trimmed = inner.trim()
+  if (!trimmed) return null
+
+  const linkRegex = /\[([^\]]+)\]\(([^)\s]+)\)/g
+  const links: { text: string; href: string }[] = []
+  let m: RegExpExecArray | null
+  while ((m = linkRegex.exec(trimmed))) {
+    const text = m[1].replace(/^\*+|\*+$/g, '').trim()
+    const href = m[2].trim()
+    if (text && href) links.push({ text, href })
+  }
+  if (!links.length) return null
+
+  const textOnly = trimmed.replace(/\[[^\]]+\]\([^)\s]+\)/g, '').trim()
+  const paragraphs = textOnly
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+  if (!paragraphs.length) return null
+
+  // Inline long-form CTAs render without a heading — fold all text into subtitle.
+  const subtitle =
+    paragraphs
+      .map((p) => p.replace(/^\*+|\*+$/g, '').trim())
+      .join('\n\n')
+      .trim() || undefined
+  if (!subtitle) return null
+
+  const { backgroundImageUrl } = parseCtaFenceParams(rawParams)
+
+  return {
+    props: {
+      title: '',
+      subtitle,
+      primaryCta: links[0],
+      ...(links[1] ? { secondaryCta: links[1] } : {}),
+    },
+    ...(backgroundImageUrl ? { backgroundImageUrl } : {}),
+  }
+}
+
+function splitMarkdownByCtaFences(markdown: string): LongFormChunk[] {
+  const trimmed = markdown.trim()
+  if (!trimmed) return []
+  const matches = Array.from(trimmed.matchAll(CTA_FENCE_REGEX))
+  if (!matches.length) return [{ kind: 'richText', content: trimmed }]
+
+  const chunks: LongFormChunk[] = []
+  let cursor = 0
+  for (const match of matches) {
+    const start = match.index ?? 0
+    const before = trimmed.slice(cursor, start).trim()
+    if (before) chunks.push({ kind: 'richText', content: before })
+    const data = parseCtaFenceBody(match[1] ?? '', match[2] ?? '')
+    if (data) chunks.push({ kind: 'cta', data })
+    else chunks.push({ kind: 'richText', content: match[0] })
+    cursor = start + match[0].length
+  }
+  const tail = trimmed.slice(cursor).trim()
+  if (tail) chunks.push({ kind: 'richText', content: tail })
+  return chunks
+}
+
+function chunksToSections(chunks: LongFormChunk[], baseId: string): SectionNode[] {
+  // Continuation ids must not contain "intro"/"main" substrings — TOC keys off them.
+  const continuationBase = baseId === 'intro' ? 'pre' : baseId === 'main' ? 'post' : `${baseId}-rt`
+  const sections: SectionNode[] = []
+  let rtCount = 0
+  let ctaCount = 0
+  for (const chunk of chunks) {
+    if (chunk.kind === 'richText') {
+      rtCount += 1
+      sections.push({
+        id: rtCount === 1 ? baseId : `${continuationBase}-${rtCount - 1}`,
+        type: 'richTextBlock',
+        props: {
+          content: chunk.content,
+          className: 'rich-text-block--raw-source',
+        },
+        style: {
+          background: 'none',
+          spacing: 'section',
+          removePaddingTop: true,
+          removePaddingBottom: true,
+        },
+      })
+    } else {
+      ctaCount += 1
+      // image: null opts out of defaultCtaProps.image fill — fillMissingImages skips
+      // present-but-null keys, and normalizeCtaProps maps null back to undefined.
+      sections.push({
+        id: `cta-${baseId}-${ctaCount}`,
+        type: 'cta',
+        props: { ...chunk.data.props, image: null } as unknown as SectionNode['props'],
+        style: {
+          background: 'brand-violet',
+          spacing: 'sm',
+          ...(chunk.data.backgroundImageUrl
+            ? { backgroundImage: { image: { url: chunk.data.backgroundImageUrl } } }
+            : {}),
+        },
+      })
+    }
+  }
+  return sections
+}
+
+function parseMarkdownLongFormToDsl(text: string, pageType: PageType, slug?: string): PageDSL {
+  const cleaned = sanitizeImportedContent(text, { isLongForm: true })
+  const normalized = cleaned.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim()
+  const firstH1Match = normalized.match(/^#\s+(.+)$/m)
+  const headline = firstH1Match?.[1]?.trim() || 'Imported page'
+  const bodyWithoutH1 = stripLeadingMarkdownH1(normalized)
+  const { beforeFaq, afterFaq, faqItems, faqTitle } = splitMarkdownFaq(bodyWithoutH1)
+  const body = [beforeFaq, afterFaq].filter(Boolean).join('\n\n').trim()
+  const firstParagraph =
+    body
+      .split(/\n\s*\n/)
+      .map((block) => block.trim())
+      .find((block) => block && !block.startsWith('#') && !block.startsWith(':::')) ?? ''
+  const canonical = `/${slug || 'imported-page'}/`
+
+  const beforeChunks = splitMarkdownByCtaFences(beforeFaq)
+  const afterChunks = splitMarkdownByCtaFences(afterFaq)
+
+  const dsl: PageDSL = {
+    pageName: headline,
+    meta: {
+      title: `TiDB | ${headline}`.slice(0, 60),
+      description: firstParagraph.slice(0, 160),
+      canonical,
+    },
+    sections: [
+      {
+        id: 'hero-1',
+        type: 'hero',
+        props: {
+          layout: 'image-right',
+          headline,
+        },
+        style: { background: 'primary', spacing: 'section' },
+      },
+      ...chunksToSections(beforeChunks, 'intro'),
+      ...(faqItems.length
+        ? [
+            {
+              id: 'faq',
+              type: 'faq' as const,
+              props: {
+                title: faqTitle || 'Frequently Asked Questions',
+                items: faqItems,
+              },
+              style: {
+                background: 'none' as const,
+                spacing: 'section' as const,
+                removePaddingTop: true,
+                removePaddingBottom: true,
+              },
+            },
+          ]
+        : []),
+      ...chunksToSections(afterChunks, 'main'),
+    ],
+  }
+
+  return addTableOfContentsForLongForm(dsl, pageType)
+}
+
+function looksLikeMarkdownLongForm(text: string) {
+  return /(^|\n)#{1,4}\s+\S/.test(text)
 }
 
 function appendSourceContentSection(dsl: PageDSL, content: string): PageDSL {
@@ -613,6 +920,7 @@ interface LeftPanelProps {
   onLocalJsonLoad: () => void
   onMetaChange: (patch: Partial<PageDSL['meta']>) => void
   onSectionChange: (index: number, updated: SectionNode) => void
+  onRichTextImageInsert: (payload: { sectionId: string; imageUrl: string }) => void
   onSectionDelete: (index: number) => void
   onSectionRegenerate: (index: number, instruction: string) => Promise<void>
   onSectionAdd: (node: SectionNode) => void
@@ -668,6 +976,7 @@ function LeftPanel({
   onLocalJsonLoad,
   onMetaChange,
   onSectionChange,
+  onRichTextImageInsert,
   onSectionDelete,
   onSectionRegenerate,
   onSectionAdd,
@@ -790,6 +1099,7 @@ function LeftPanel({
   // Whether the generate button should be shown outside the top panel
   const showGenerateBar =
     !(mode === 'marketing' && !selectedTemplate) && !(mode === 'import' && importedContent === null)
+  const showInlineFileImport = pageType === 'compare' || pageType === 'playbook'
 
   return (
     <div ref={containerRef} className="flex flex-col h-full overflow-hidden">
@@ -888,68 +1198,47 @@ function LeftPanel({
             )}
             {!guidedMode && !importedContent && (
               <>
-                <div className="rounded-lg border border-gray-200 bg-white p-3 space-y-3">
-                  <div className="flex flex-wrap gap-2 items-center">
-                    <input
-                      type="text"
-                      placeholder="Paste a Google Doc URL…"
-                      value={briefUrl}
-                      onChange={(e) => onBriefUrlChange(e.target.value)}
-                      className="flex-1 min-w-[220px] text-body-sm rounded border border-gray-200 px-2.5 py-1.5 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
-                    />
-                    <button
-                      type="button"
-                      disabled={briefLoading || (!briefUrl.trim() && !briefFile)}
-                      onClick={() => onLoadBrief()}
-                      className="text-body-sm px-3 py-1.5 rounded bg-gray-900 text-white disabled:opacity-40 hover:bg-gray-700 transition-colors flex items-center gap-1.5"
+                {showInlineFileImport && (
+                  <div className="rounded-lg border border-gray-200 bg-white p-3 space-y-3">
+                    <div
+                      onClick={() => fileInputRef.current?.click()}
+                      onDragOver={(e) => {
+                        e.preventDefault()
+                        setDragActive(true)
+                      }}
+                      onDragLeave={() => setDragActive(false)}
+                      onDrop={handleDrop}
+                      className={`relative rounded-md border border-dashed px-3 py-2 text-body-sm cursor-pointer transition-colors ${
+                        dragActive
+                          ? 'border-gray-400 bg-gray-50 text-gray-600'
+                          : 'border-gray-200 text-gray-400 hover:border-gray-300'
+                      }`}
                     >
-                      {briefLoading ? (
-                        <>
-                          <Loader2 size={12} className="animate-spin" /> Loading…
-                        </>
-                      ) : (
-                        'Load content →'
-                      )}
-                    </button>
-                  </div>
-                  <div
-                    onClick={() => fileInputRef.current?.click()}
-                    onDragOver={(e) => {
-                      e.preventDefault()
-                      setDragActive(true)
-                    }}
-                    onDragLeave={() => setDragActive(false)}
-                    onDrop={handleDrop}
-                    className={`relative rounded-md border border-dashed px-3 py-2 text-body-sm cursor-pointer transition-colors ${
-                      dragActive
-                        ? 'border-gray-400 bg-gray-50 text-gray-600'
-                        : 'border-gray-200 text-gray-400 hover:border-gray-300'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span>Drop a .docx / .md / .txt file here, or click to browse</span>
-                      {briefFile && (
-                        <span className="text-label text-gray-500">{briefFile.name}</span>
+                      <div className="flex items-center justify-between gap-3">
+                        <span>Drop a .docx / .md / .txt file here, or click to browse</span>
+                        {briefFile && (
+                          <span className="text-label text-gray-500">{briefFile.name}</span>
+                        )}
+                      </div>
+                      {dragActive && (
+                        <div className="absolute inset-0 rounded-md bg-gray-50/80 border border-gray-300 flex items-center justify-center text-gray-600 text-body-sm pointer-events-none">
+                          Drop to attach
+                        </div>
                       )}
                     </div>
-                    {dragActive && (
-                      <div className="absolute inset-0 rounded-md bg-gray-50/80 border border-gray-300 flex items-center justify-center text-gray-600 text-body-sm pointer-events-none">
-                        Drop to attach
-                      </div>
-                    )}
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".docx,.md,.txt"
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+                    {briefError && <p className="text-label text-red-600">{briefError}</p>}
+                    <div className="text-label text-gray-500">
+                      Tip: Use a .md file to keep formatting intact.
+                    </div>
                   </div>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".docx,.md,.txt"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                  {briefError && <p className="text-label text-red-600">{briefError}</p>}
-                  <div className="text-label text-gray-500">
-                    Tip: Use a .md file to keep formatting intact.
-                  </div>
-                </div>
+                )}
               </>
             )}
             <textarea
@@ -977,22 +1266,25 @@ function LeftPanel({
               <div className="text-label text-red-600">{importError}</div>
             )}
             {/* Quick fill prompts — show when textarea is empty and no template/import content */}
-            {!intent.trim() && !selectedTemplate && importedContent === null && (
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-label text-gray-400">Try:</span>
-                {QUICK_PROMPTS.map((p) => (
-                  <button
-                    key={p.label}
-                    type="button"
-                    onClick={() => onIntentChange(p.prompt)}
-                    className="text-label px-2 py-0.5 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-colors bg-white"
-                  >
-                    {p.label}
-                  </button>
-                ))}
-              </div>
-            )}
-            {mode !== 'marketing' && mode !== 'import' && (
+            {!intent.trim() &&
+              !selectedTemplate &&
+              importedContent === null &&
+              pageType === 'general' && (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-label text-gray-400">Try:</span>
+                  {QUICK_PROMPTS.map((p) => (
+                    <button
+                      key={p.label}
+                      type="button"
+                      onClick={() => onIntentChange(p.prompt)}
+                      className="text-label px-2 py-0.5 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-colors bg-white"
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            {mode !== 'marketing' && mode !== 'import' && pageType === 'general' && (
               <div className="flex items-center justify-between gap-2 rounded border border-gray-200 bg-gray-50 px-3 py-2">
                 <div>
                   <p className="text-label font-bold text-gray-700">New here?</p>
@@ -1129,6 +1421,7 @@ function LeftPanel({
                       node={section}
                       slug={slug}
                       onChange={(updated) => onSectionChange(i, updated)}
+                      onRichTextImageInsert={onRichTextImageInsert}
                       onDelete={() => onSectionDelete(i)}
                       onRegenerate={(instruction) => onSectionRegenerate(i, instruction)}
                     />
@@ -1210,7 +1503,12 @@ function CreatePageInner() {
   const [briefFile, setBriefFile] = useState<File | null>(null)
   const [briefLoading, setBriefLoading] = useState(false)
   const [briefError, setBriefError] = useState('')
+  const [briefUploadedLongForm, setBriefUploadedLongForm] = useState(false)
   const [preserveSource, setPreserveSource] = useState(false)
+  const [pendingPreviewFocus, setPendingPreviewFocus] = useState<{
+    sectionId: string
+    imageUrl: string
+  } | null>(null)
 
   const importBadge =
     importStatus === 'loading'
@@ -1232,6 +1530,7 @@ function CreatePageInner() {
   >(null)
 
   const previewRef = useRef<HTMLDivElement>(null)
+  const previewScrollRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const iframeReadyRef = useRef(false)
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -1249,17 +1548,30 @@ function CreatePageInner() {
       if (e.data?.type === 'preview-height') {
         setIframeHeight(e.data.height as number)
       }
+      if (e.data?.type === 'preview-scroll-to') {
+        const top = typeof e.data.top === 'number' ? e.data.top : 0
+        previewScrollRef.current?.scrollTo({
+          top: Math.max(top - 48, 0),
+          behavior: 'smooth',
+        })
+      }
       if (e.data?.type === 'preview-ready') {
         iframeReadyRef.current = true
         // Push current DSL immediately when iframe signals ready
         if (dsl) {
           iframeRef.current?.contentWindow?.postMessage({ type: 'preview-dsl', dsl }, '*')
         }
+        if (pendingPreviewFocus) {
+          iframeRef.current?.contentWindow?.postMessage(
+            { type: 'preview-focus', target: pendingPreviewFocus },
+            '*'
+          )
+        }
       }
     }
     window.addEventListener('message', handler)
     return () => window.removeEventListener('message', handler)
-  }, [dsl])
+  }, [dsl, pendingPreviewFocus])
 
   // On viewport switch: reset + reload iframe once
   useEffect(() => {
@@ -1276,6 +1588,14 @@ function CreatePageInner() {
       iframeRef.current?.contentWindow?.postMessage({ type: 'preview-dsl', dsl }, '*')
     }
   }, [dsl])
+
+  useEffect(() => {
+    if (!pendingPreviewFocus || !iframeReadyRef.current) return
+    iframeRef.current?.contentWindow?.postMessage(
+      { type: 'preview-focus', target: pendingPreviewFocus },
+      '*'
+    )
+  }, [pendingPreviewFocus])
 
   // Fullscreen listener
   useEffect(() => {
@@ -1308,11 +1628,24 @@ function CreatePageInner() {
         const res = await fetch('/api/pages')
         if (!res.ok) return
         const data = (await res.json()) as { pages?: { slug: string; title: string }[] }
-        const options =
+        const direct =
           data.pages?.map((page) => ({ slug: page.slug, title: page.title ?? page.slug })) ?? []
-        options.sort((a, b) => a.slug.localeCompare(b.slug))
+        // Derive intermediate parent paths so e.g. `compare/foo-vs-bar` surfaces `compare`
+        // as a selectable parent even when no page lives at /compare/ directly.
+        const merged = new Map<string, { slug: string; title: string }>()
+        for (const page of direct) merged.set(page.slug, page)
+        for (const page of direct) {
+          const segments = page.slug.split('/').filter(Boolean)
+          for (let i = 1; i < segments.length; i += 1) {
+            const parentSlug = segments.slice(0, i).join('/')
+            if (!merged.has(parentSlug)) {
+              merged.set(parentSlug, { slug: parentSlug, title: parentSlug })
+            }
+          }
+        }
+        const options = Array.from(merged.values()).sort((a, b) => a.slug.localeCompare(b.slug))
         setParentOptions(options)
-        setExistingSlugs(new Set(options.map((option) => option.slug)))
+        setExistingSlugs(new Set(direct.map((option) => option.slug)))
       } catch {
         // ignore
       }
@@ -1443,21 +1776,40 @@ function CreatePageInner() {
     intentInitializedRef.current = true
   }, [searchParams, intent])
 
+  useEffect(() => {
+    const requestedPageType = searchParams.get('pageType')
+    if (!isPageType(requestedPageType)) return
+    if (pageType !== requestedPageType) {
+      setPageType(requestedPageType)
+    }
+
+    if (mode !== 'marketing' || selectedTemplate) return
+
+    const matchingTemplate = PAGE_TEMPLATES.find(
+      (template) => template.pageType === requestedPageType
+    )
+    if (!matchingTemplate) return
+
+    setSelectedTemplate(matchingTemplate)
+    setIntent(matchingTemplate.prompt)
+  }, [mode, pageType, searchParams, selectedTemplate])
+
   // Reset mode-specific state when the mode query param changes
   // (e.g. navigating from ?mode=marketing back to /admin/create via sidebar)
   const prevModeRef = useRef(mode)
   useEffect(() => {
     if (prevModeRef.current === mode) return
     prevModeRef.current = mode
+    const requestedPageType = searchParams.get('pageType')
     setIntent('')
     setSelectedTemplate(null)
     setImportedContent(null)
     setImportWarning('')
     setRefineResult(null)
-    setPageType(PAGE_TYPES[0])
+    setPageType(isPageType(requestedPageType) ? requestedPageType : PAGE_TYPES[0])
     setGenerateError('')
     intentInitializedRef.current = false
-  }, [mode])
+  }, [mode, searchParams])
 
   // Auto-open publish panel when arriving via ?action=review
   useEffect(() => {
@@ -1631,21 +1983,32 @@ function CreatePageInner() {
         if (!file) return
         const ext = file.name.split('.').pop()?.toLowerCase()
         if (ext === 'md' || ext === 'txt') {
-          content = await file.text()
+          content = cleanupImportedMarkdownEscapes(await file.text())
         } else if (ext === 'docx') {
           const mammoth = await import('mammoth')
           const arrayBuffer = await file.arrayBuffer()
           const result = await mammoth.extractRawText({ arrayBuffer })
-          content = result.value
+          content = cleanupImportedMarkdownEscapes(result.value)
         } else {
           setBriefError('Only .docx, .md, or .txt files are supported.')
           return
         }
       }
       if (content) {
+        const strippedContent = stripBase64Images(content)
+        const importedType =
+          IMPORT_PAGE_TYPES.includes(pageType) && pageType !== 'general'
+            ? pageType
+            : detectPageType(strippedContent)
+        const isImportedLongForm = ['listicle', 'playbook', 'compare'].includes(importedType)
+        const fileUpload = Boolean(fileOverride ?? briefFile)
+        setImportedContent(null)
         setIntent(
-          `Based on the following SEO brief, generate a ${pageType} page:\n\n${stripBase64Images(content)}`
+          isImportedLongForm
+            ? strippedContent
+            : `Based on the following SEO brief, generate a ${pageType} page:\n\n${strippedContent}`
         )
+        setBriefUploadedLongForm(fileUpload && isImportedLongForm)
         setBriefUrl('')
         setBriefFile(null)
       }
@@ -1666,16 +2029,19 @@ function CreatePageInner() {
 
     // Sanitize imported content to avoid JSON parse errors from special chars / excessive length
     const isImport = mode === 'import' && importedContent !== null
+    const isInlineLongFormUpload =
+      !isImport && briefUploadedLongForm && (pageType === 'compare' || pageType === 'playbook')
     const detectedType = isImport ? detectPageType(effectiveIntent) : 'marketing'
     const hasManualImportType =
       isImport && IMPORT_PAGE_TYPES.includes(pageType) && pageType !== 'general'
     const manualType = hasManualImportType ? pageType.toLowerCase() : undefined
     const resolvedType = manualType ?? detectedType
-    const isLongForm = resolvedType !== 'marketing'
+    const isLongForm = resolvedType !== 'marketing' || isInlineLongFormUpload
     const base64StrippedIntent = stripBase64Images(effectiveIntent)
-    const sanitizedIntent = isImport
-      ? sanitizeImportedContent(base64StrippedIntent, { isLongForm })
-      : base64StrippedIntent
+    const sanitizedIntent =
+      isImport || isInlineLongFormUpload
+        ? sanitizeImportedContent(base64StrippedIntent, { isLongForm: true })
+        : base64StrippedIntent
 
     // In import mode, let the AI auto-detect page type from content
     const effectivePageType = isImport
@@ -1688,13 +2054,75 @@ function CreatePageInner() {
 
     try {
       setGenerationStage('Generating page…')
+      const shouldPreserveUploadedLongForm = (isImport && isLongForm) || isInlineLongFormUpload
+      if (
+        shouldPreserveUploadedLongForm &&
+        typeof effectivePageType === 'string' &&
+        ['listicle', 'playbook', 'compare'].includes(effectivePageType)
+      ) {
+        let deterministicDsl = normalizeDSL(
+          parseMarkdownLongFormToDsl(sanitizedIntent, effectivePageType as PageType, slug)
+        )
+        let nextSlug = slug
+
+        if (['listicle', 'compare', 'playbook'].includes(effectivePageType)) {
+          const parentPrefix = effectivePageType
+          setGenerationStage('Optimizing meta…')
+          try {
+            const metaRes = await fetch('/api/ai/optimize-meta', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                content: sanitizedIntent,
+                pageType: effectivePageType,
+                headline: deterministicDsl.pageName,
+              }),
+            })
+            if (metaRes.ok) {
+              const meta = (await metaRes.json()) as {
+                slug?: string
+                title?: string
+                description?: string
+              }
+              const leafSlug = meta.slug ? normalizeSlugInput(meta.slug) : ''
+              if (leafSlug) {
+                nextSlug = `${parentPrefix}/${leafSlug}`
+              }
+              const aiTitle = typeof meta.title === 'string' ? meta.title.trim() : ''
+              const aiDescription =
+                typeof meta.description === 'string' ? meta.description.trim() : ''
+              deterministicDsl = {
+                ...deterministicDsl,
+                meta: {
+                  ...deterministicDsl.meta,
+                  title: aiTitle || deterministicDsl.meta.title,
+                  description: aiDescription || deterministicDsl.meta.description,
+                  canonical: nextSlug ? `/${nextSlug}/` : deterministicDsl.meta.canonical,
+                },
+              }
+            }
+          } catch {
+            // Meta optimization is best-effort; fall back to local-parsed meta
+          }
+          setGenerationStage('Generating page…')
+        }
+
+        if (nextSlug !== slug) setSlug(nextSlug)
+        setDsl(deterministicDsl)
+        setBaselineState(deterministicDsl, nextSlug)
+        setLocalJson(JSON.stringify(deterministicDsl, null, 2))
+        setLocalJsonError('')
+        setGenerating(false)
+        setGenerationStage(null)
+        return
+      }
       const res = await fetch('/api/ai/generate-dsl', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           intent: sanitizedIntent,
           pageType: effectivePageType,
-          preserveSource,
+          preserveSource: shouldPreserveUploadedLongForm || preserveSource,
         }),
       })
       let data: PageDSL & { error?: string }
@@ -1829,6 +2257,13 @@ function CreatePageInner() {
       })
     },
     [syncTocIfNeeded, updateDsl]
+  )
+
+  const handleRichTextImageInsert = useCallback(
+    (payload: { sectionId: string; imageUrl: string }) => {
+      setPendingPreviewFocus(payload)
+    },
+    []
   )
 
   const handleSectionDelete = useCallback(
@@ -2054,7 +2489,15 @@ function CreatePageInner() {
         draftAvailable={draftAvailable && !checkingDraft}
         parentSlug={getParentSlug(slug)}
         childSlug={getLeafSlug(slug)}
-        parentOptions={parentOptions}
+        parentOptions={(() => {
+          const currentParent = getParentSlug(slug)
+          if (!currentParent || parentOptions.some((opt) => opt.slug === currentParent)) {
+            return parentOptions
+          }
+          return [...parentOptions, { slug: currentParent, title: currentParent }].sort((a, b) =>
+            a.slug.localeCompare(b.slug)
+          )
+        })()}
         moveStatus={moveStatus}
         importBadge={importBadge}
         onPageNameChange={handlePageNameChange}
@@ -2130,7 +2573,7 @@ function CreatePageInner() {
               setPageType(PAGE_TYPES[0])
             }}
             onContentImport={(text, importedPageType) => {
-              const cleaned = stripBase64Images(text)
+              const cleaned = cleanupImportedMarkdownEscapes(stripBase64Images(text))
               setImportedContent(cleaned)
               setIntent(cleaned)
               // Apply page type from import selector if it's not 'general'
@@ -2163,6 +2606,7 @@ function CreatePageInner() {
             onLocalJsonLoad={handleLocalJsonLoad}
             onMetaChange={handleMetaChange}
             onSectionChange={handleSectionChange}
+            onRichTextImageInsert={handleRichTextImageInsert}
             onSectionDelete={handleSectionDelete}
             onSectionRegenerate={handleSectionRegenerate}
             onSectionAdd={handleSectionAdd}
@@ -2226,6 +2670,7 @@ function CreatePageInner() {
           {dsl ? (
             viewport === 'desktop' ? (
               <div
+                ref={previewScrollRef}
                 className="flex-1 overflow-y-auto overflow-x-hidden bg-white"
                 style={{ contain: 'paint' }}
               >
@@ -2238,7 +2683,10 @@ function CreatePageInner() {
                 />
               </div>
             ) : (
-              <div className="flex justify-center overflow-y-auto bg-gray-100 flex-1 py-6">
+              <div
+                ref={previewScrollRef}
+                className="flex justify-center overflow-y-auto bg-gray-100 flex-1 py-6"
+              >
                 <iframe
                   ref={iframeRef}
                   key={previewKey}

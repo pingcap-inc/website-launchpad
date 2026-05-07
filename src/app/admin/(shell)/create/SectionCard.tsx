@@ -89,6 +89,7 @@ interface SectionCardProps {
   node: SectionNode
   slug?: string
   onChange: (updated: SectionNode) => void
+  onRichTextImageInsert?: (payload: { sectionId: string; imageUrl: string }) => void
   onDelete: () => void
   onRegenerate: (instruction: string) => Promise<void>
 }
@@ -98,6 +99,7 @@ export function SectionCard({
   node,
   slug,
   onChange,
+  onRichTextImageInsert,
   onDelete,
   onRegenerate,
 }: SectionCardProps) {
@@ -208,7 +210,12 @@ export function SectionCard({
       {/* Inline field editor */}
       {expanded && (
         <div className="border-t border-gray-100 px-3 py-3 bg-gray-50 space-y-0">
-          <SectionFieldEditor node={node} onChange={onChange} slug={slug} />
+          <SectionFieldEditor
+            node={node}
+            onChange={onChange}
+            onRichTextImageInsert={onRichTextImageInsert}
+            slug={slug}
+          />
         </div>
       )}
 

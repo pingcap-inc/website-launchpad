@@ -74,7 +74,7 @@ function HeroTextBlock({
       {eyebrow && <p className="font-mono text-eyebrow text-secondary mb-8">{eyebrow}</p>}
       <h1
         className={cn(
-          'text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title mb-6',
+          'text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title',
           !isHtmlHeadline && 'whitespace-pre-line',
           centered && 'mx-auto'
         )}
@@ -85,7 +85,7 @@ function HeroTextBlock({
       {subheadline && (
         <p
           className={cn(
-            'text-body-2xl leading-relaxed text-text-secondary max-w-subtitle',
+            'text-body-2xl leading-relaxed text-text-secondary max-w-subtitle mt-6',
             centered && 'mx-auto mb-10'
           )}
         >
@@ -169,14 +169,14 @@ export function HeroSection({
               subheadline={subheadline}
               primaryCta={primaryCta}
               secondaryCta={secondaryCta}
-              className="md:pt-20 lg:py-20 w-full lg:max-w-[780px] xlg:shrink-0"
+              className="pt-10 md:pt-20 lg:py-20 w-full lg:max-w-[780px] xlg:shrink-0"
             />
             <div
               className={cn(
                 'pt-4 lg:py-4 flex-1 flex items-center justify-center',
                 heroImage?.align === 'center'
                   ? 'lg:justify-center'
-                  : 'md:pb-10 lg:pb-0 lg:justify-end lg:min-w-[300px]'
+                  : 'pb-10 lg:py-0 lg:justify-end lg:min-w-[300px]'
               )}
             >
               {heroImage && (

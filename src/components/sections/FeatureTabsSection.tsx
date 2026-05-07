@@ -57,7 +57,7 @@ export function FeatureTabsSection({
                       </p>
                     )}
                     {tab.bullets && tab.bullets.length > 0 && (
-                      <ul className="space-y-2 text-body-md text-secondary mb-6">
+                      <ul className="space-y-2 text-body-lg text-secondary mb-6">
                         {tab.bullets.map((bullet) => (
                           <li key={bullet} className="flex items-start gap-2">
                             <span className="mt-2 h-1 w-1 rounded-full bg-text-secondary" />

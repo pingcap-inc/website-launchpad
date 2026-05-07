@@ -381,15 +381,6 @@ export function PublishDrawer({
           }
           break
         case 'cta':
-          if (!props.title?.trim()) {
-            nextLint.push({
-              label: 'Section',
-              status: 'fail',
-              detail: `${prefix} · Title is required.`,
-            })
-          } else {
-            nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Title` })
-          }
           if (!props.primaryCta?.text || !props.primaryCta?.href) {
             nextLint.push({
               label: 'Section',

@@ -66,11 +66,11 @@ Do NOT add any sections beyond the 4 listed above.
 ## Listicle layout
 When pageType is "listicle" OR intent mentions "top N", "best X", "ranked list", or "listicle", generate EXACTLY these sections in this order:
 
-1. type: "hero" — centered layout with headline (page title)
+1. type: "hero" — image-right layout with headline (page title)
 
 2. type: "tableOfContents" — items for section headings and list entries; place immediately after hero
 
-3. type: "richTextBlock" — intro paragraphs setting context (first line must include "Last updated" and author)
+3. type: "richTextBlock" — intro paragraphs setting context
 
 4. type: "richTextBlock" — main body content with all ranked/numbered items (Markdown)
 
@@ -83,11 +83,11 @@ Do NOT use stats, featureGrid, featureCard, featureTabs, featureHighlights, feat
 ## Playbook layout
 When pageType is "playbook" OR intent mentions "how to", "step by step", "step-by-step", "playbook", "migration guide", "implementation guide", generate EXACTLY these sections in this order:
 
-1. type: "hero" — centered layout with headline (page title)
+1. type: "hero" — image-right layout with headline (page title)
 
 2. type: "tableOfContents" — items for section headings and list entries; place immediately after hero
 
-3. type: "richTextBlock" — intro overview: what the guide covers, who it's for, and expected outcome (first line must include "Last updated" and author)
+3. type: "richTextBlock" — intro overview: what the guide covers, who it's for, and expected outcome
 
 4. type: "richTextBlock" — steps and procedural content (Markdown)
 
@@ -100,11 +100,11 @@ Do NOT use stats, featureGrid, featureCard, featureTabs, featureHighlights, feat
 ## Compare layout
 When pageType is "compare" OR intent mentions "vs", "versus", "comparison guide", "compare X and Y", generate EXACTLY these sections in this order:
 
-1. type: "hero" — centered layout with headline (page title)
+1. type: "hero" — image-right layout with headline (page title)
 
 2. type: "tableOfContents" — items for section headings and list entries; place immediately after hero
 
-3. type: "richTextBlock" — intro overview of both products, key differences summary (first line must include "Last updated" and author)
+3. type: "richTextBlock" — intro overview of both products, key differences summary
 
 4. type: "richTextBlock" — detailed analysis per comparison dimension (Markdown)
 
@@ -822,16 +822,17 @@ function normalizeContentForCompare(value: string) {
     .trim()
 }
 
-function extractSourceHeadings(fullContent: string): Set<string> {
-  const lines = fullContent.split('\n').map((line) => line.trim())
-  const headings = lines.filter((line) => {
-    if (!line) return false
-    if (line.length < 3 || line.length > 140) return false
-    if (/[.!?]$/.test(line)) return false
-    if (!/[A-Za-z0-9]/.test(line)) return false
-    return true
-  })
-  return new Set(headings)
+function extractSourceMarkdownHeadings(fullContent: string): Set<string> {
+  const headings = new Set<string>()
+  for (const rawLine of fullContent.split('\n')) {
+    const line = rawLine.trim()
+    const match = line.match(/^#{2,4}\s+(.+)$/)
+    if (!match) continue
+    const headingText = match[1].trim()
+    if (!headingText) continue
+    headings.add(headingText)
+  }
+  return headings
 }
 
 function pruneUnsupportedHeadings(markdown: string, sourceHeadings: Set<string>) {
@@ -885,12 +886,34 @@ async function generateLongFormDslFromOutline(
     )
   }
 
-  const sourceHeadings = preserveSource ? extractSourceHeadings(content) : null
   const normalizedContent = preserveSource ? convertIndentedCodeToFenced(content) : content
+  if (preserveSource) {
+    return {
+      pageName: outline.title,
+      meta: {
+        title: outline.meta.title,
+        description: outline.meta.description,
+        canonical: outline.slug,
+      },
+      sections: [
+        {
+          id: 'intro',
+          type: 'richTextBlock',
+          props: {
+            content: normalizedContent.trim(),
+            className: 'rich-text-block--raw-source',
+          },
+          style: { background: 'none', spacing: 'section' },
+        },
+      ] as SectionDefinition[],
+    }
+  }
+  const sourceMarkdownHeadings =
+    pageType.toLowerCase() === 'compare' ? extractSourceMarkdownHeadings(normalizedContent) : null
   const split = splitIntroMainFromSource(normalizedContent)
-  const useSourceOnly = preserveSource
+  const outlineSections = outline.sections
   const filledSections = await Promise.all(
-    outline.sections.map(async (section) => {
+    outlineSections.map(async (section) => {
       // CTA: use fixed template (no AI needed)
       if (section.sectionType === 'cta') {
         return {
@@ -910,27 +933,6 @@ async function generateLongFormDslFromOutline(
             },
           },
           style: { background: 'gradient-dark-top', spacing: 'section' },
-        }
-      }
-
-      if (useSourceOnly && section.sectionType === 'richTextBlock') {
-        const sectionContent =
-          section.id.includes('intro') && split.intro
-            ? split.intro
-            : section.id.includes('main') && split.main
-              ? split.main
-              : normalizedContent
-        const props: Record<string, unknown> = {
-          content: sectionContent.trim(),
-        }
-        if (section.id.includes('intro') && props.content) {
-          props.content = trimToParagraphs(String(props.content), 3)
-        }
-        return {
-          id: section.id,
-          type: section.sectionType,
-          props,
-          style: { background: 'none', spacing: 'section' },
         }
       }
 
@@ -958,8 +960,12 @@ async function generateLongFormDslFromOutline(
         ))
       const elapsedMs = Date.now() - start
       console.log(`[generate-dsl] ${section.sectionType} ${cached ? 'cache' : 'ai'} ${elapsedMs}ms`)
-      if (preserveSource && sourceHeadings) {
-        sanitizeHeadingsInProps(section.sectionType, props, sourceHeadings)
+      if (
+        sourceMarkdownHeadings &&
+        section.sectionType === 'richTextBlock' &&
+        section.id.includes('intro')
+      ) {
+        sanitizeHeadingsInProps(section.sectionType, props, sourceMarkdownHeadings)
       }
       if (section.sectionType === 'richTextBlock' && section.id.includes('intro')) {
         const introContent = typeof props.content === 'string' ? props.content : ''
