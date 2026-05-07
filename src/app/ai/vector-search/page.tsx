@@ -239,7 +239,7 @@ const dsl: PageDSL = {
       id: 'logocloud',
       type: 'logoCloud',
       props: {
-        title: 'Trusted by leading AI teams',
+        title: 'Trusted by Leading AI Teams',
         logos: [
           {
             name: 'Catalyst',
