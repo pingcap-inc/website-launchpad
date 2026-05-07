@@ -95,40 +95,6 @@ function validateSection(s: unknown, originalType: string): string[] {
   return errors
 }
 
-const VALID_BG = new Set([
-  'primary',
-  'inverse',
-  'gradient-dark-top',
-  'gradient-dark-bottom',
-  'brand-red',
-  'brand-violet',
-  'brand-blue',
-  'brand-teal',
-])
-const VALID_SPACING = new Set(['none', 'sm', 'md', 'lg', 'section', 'hero'])
-
-function validateSection(s: unknown, originalType: string): string[] {
-  const errors: string[] = []
-  if (!s || typeof s !== 'object') return ['response must be an object']
-  const sec = s as Record<string, unknown>
-  if (!sec.type) errors.push('"type" field is required')
-  else if (sec.type !== originalType)
-    errors.push(`type must be "${originalType}", got "${sec.type}"`)
-  if (!sec.props || typeof sec.props !== 'object') errors.push('"props" field is required')
-  const style = sec.style as Record<string, unknown> | undefined
-  if (style) {
-    if (style.background && !VALID_BG.has(style.background as string))
-      errors.push(
-        `style.background "${style.background}" is invalid; must be one of: ${[...VALID_BG].join(', ')}`
-      )
-    if (style.spacing && !VALID_SPACING.has(style.spacing as string))
-      errors.push(
-        `style.spacing "${style.spacing}" is invalid; must be one of: ${[...VALID_SPACING].join(', ')}`
-      )
-  }
-  return errors
-}
-
 /**
  * POST /api/ai/edit-section
  * Regenerates a single DSL section based on an instruction.

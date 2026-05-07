@@ -513,24 +513,6 @@ export type SectionPropsMap = {
   codeBlock: CodeBlockProps
 }
 
-export type SectionPropsMap = {
-  hero: HeroProps
-  stats: StatsProps
-  featureGrid: FeatureGridProps
-  featureCard: FeatureCardProps
-  featureTabs: FeatureTabsProps
-  featureHighlights: FeatureHighlightsProps
-  featureMedia: FeatureMediaProps
-  logoCloud: LogoCloudProps
-  testimonials: TestimonialsProps
-  faq: FaqProps
-  cta: CtaProps
-  form: FormProps
-  agenda: AgendaProps
-  speakers: SpeakersProps
-  comparisonTable: ComparisonTableProps
-}
-
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 export const ALL_ICON_NAMES: IconName[] = [

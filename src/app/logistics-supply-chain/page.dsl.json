@@ -12,7 +12,7 @@
       "props": {
         "layout": "centered",
         "eyebrow": "Supply Chain Visibility",
-        "headline": "Real-Time Logistics Data Platform for Global<br> <span class=\"text-gradient-violet\">Supply Chain Visibility</span>",
+        "headline": "Real-Time Logistics Data Platform for Global <br><span class=\"text-gradient-violet\">Supply Chain Visibility</span>",
         "subheadline": "TiDB powers real-time logistics and supply chain visibility by unifying operational and analytical data in a single, distributed SQL platform. Track orders, inventory, and shipments without ETL delays, sharding complexity, or downtime.",
         "primaryCta": {
           "text": "Launch TiDB Cloud",
@@ -29,18 +29,18 @@
           "alt": "hero image",
           "width": 500,
           "height": 400
-        },
-        "backgroundImage": {
-          "image": {
-            "url": "https://static.pingcap.com/images/47053e7c-module___headline_6.png",
-            "width": 1440,
-            "height": 664
-          },
-          "alt": ""
         }
       },
       "style": {
-        "spacing": "hero"
+        "spacing": "hero",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/47053e7c-module___headline_6.png",
+            "alt": "module headline 6",
+            "width": 1440,
+            "height": 664
+          }
+        }
       }
     },
     {
@@ -160,11 +160,14 @@
             ],
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg",
+                "alt": "graphic 1",
+                "width": 910,
+                "height": 480
               },
-              "alt": "tab image",
-              "width": 1200,
-              "height": 800
+              "alt": "graphic 1",
+              "width": 910,
+              "height": 480
             }
           },
           {
@@ -205,7 +208,7 @@
           {
             "icon": "Database",
             "title": "Use Case: Real-Time Inventory Across Warehouses & Stores",
-            "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time. Combine stock levels, inbound and outbound shipments, and reservations in one system. Power accurate available-to-promise decisions in seconds, not hours",
+            "description": "TiDB unifies inventory data across warehouses, stores, and fulfillment centers in real time. Combine stock levels, inbound and outbound shipments, and reservations in one system. Power accurate available-to-promise decisions in seconds, not hours\n",
             "layout": "vertical"
           },
           {
@@ -409,13 +412,13 @@
       }
     },
     {
-      "id": "form-1778040944947",
+      "id": "form-1778138212030",
       "type": "form",
       "props": {
         "title": "See TiDB in Action",
-        "subtitle": "Get to know TiDB in the way that fits you best",
         "portalId": "4466002",
-        "formId": "066e9d00-f659-43b2-8fa5-71fb88dfab59"
+        "formId": "066e9d00-f659-43b2-8fa5-71fb88dfab59",
+        "subtitle": "Get to know TiDB in the way that fits you best"
       },
       "style": {
         "background": "primary",
