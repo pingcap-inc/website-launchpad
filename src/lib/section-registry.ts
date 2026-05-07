@@ -784,7 +784,8 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
   richTextBlock: {
     type: 'richTextBlock',
     label: 'Rich Text Block',
-    description: 'Markdown content block for long-form text',
+    description:
+      'Markdown content block for long-form text, including :::card-grid / :::card directives',
     defaultProps: { content: '' } as RichTextBlockProps,
     defaultStyle: { background: 'primary', spacing: 'section' },
     fields: [{ type: 'textarea', key: 'content', label: 'Content (Markdown)', rows: 10 }],

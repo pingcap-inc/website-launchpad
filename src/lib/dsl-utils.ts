@@ -95,16 +95,17 @@ function fillMissingImages(
   for (const key of Object.keys(defaults)) {
     const defVal = defaults[key]
     const tgtVal = target[key]
+    const keyMissing = !(key in target) || tgtVal === undefined
 
     if (!defVal || typeof defVal !== 'object') continue
 
     if (isImageRefWithUrl(defVal)) {
-      if (!isImageRefWithUrl(tgtVal)) target[key] = defVal
+      if (keyMissing) target[key] = defVal
       continue
     }
 
     if (isImageContainerWithImage(defVal)) {
-      if (!isImageContainerWithImage(tgtVal)) target[key] = defVal
+      if (keyMissing) target[key] = defVal
       continue
     }
 
@@ -128,6 +129,15 @@ function fillMissingImages(
 function applyDefaultImages(type: SectionType, props: Record<string, unknown>): void {
   const defaults = schemaMap[type]?.defaultProps as Record<string, unknown> | undefined
   if (!defaults) return
+
+  // Long-form inline CTAs intentionally render without the default illustration.
+  // They are represented as titleless CTA sections, so skip the CTA image backfill
+  // when no heading is present.
+  if (type === 'cta') {
+    const title = typeof props.title === 'string' ? props.title.trim() : ''
+    if (!title) return
+  }
+
   fillMissingImages(props, defaults)
 }
 
@@ -663,28 +673,11 @@ export function enforceLongFormMaxWidth(dsl: PageDSL, pageType?: PageType) {
   }
 }
 
-function getMonthYear() {
-  return new Date().toLocaleString('en-US', {
-    month: 'long',
-    year: 'numeric',
-  })
-}
-
-const LONG_FORM_DEFAULT_AUTHOR = 'PingCAP Editorial Team'
-
 export function ensureLongFormLastUpdated(dsl: PageDSL, pageType?: PageType) {
-  const normalizedType = pageType?.toLowerCase()
-  if (!normalizedType || !['listicle', 'playbook', 'compare'].includes(normalizedType)) return
-  const introSection = dsl.sections.find((section) => section.type === 'richTextBlock')
-  if (!introSection) return
-  const props = introSection.props as { content?: string }
-  const content = props.content ?? ''
-  if (/last\s+updated/i.test(content)) return
-  const updatedLine = `*Last updated: ${getMonthYear()} · By ${LONG_FORM_DEFAULT_AUTHOR}.*`
-  const divider = '---'
-  props.content = content.trim()
-    ? `${updatedLine}\n\n${divider}\n\n${content.trim()}`
-    : `${updatedLine}\n\n${divider}`
+  const _dsl = dsl
+  const _pageType = pageType
+  void _dsl
+  void _pageType
 }
 
 export function ensureLongFormHero(dsl: PageDSL, pageType?: PageType) {
@@ -696,7 +689,8 @@ export function ensureLongFormHero(dsl: PageDSL, pageType?: PageType) {
   const heroIndex = dsl.sections.findIndex((section) => section.type === 'hero')
   if (heroIndex !== -1) {
     const hero = dsl.sections[heroIndex]
-    const heroProps = hero.props as { subheadline?: string }
+    const heroProps = hero.props as { subheadline?: string; layout?: string }
+    heroProps.layout = 'image-right'
     hero.props = heroProps as SectionDefinition['props']
     return
   }
@@ -705,7 +699,7 @@ export function ensureLongFormHero(dsl: PageDSL, pageType?: PageType) {
     id: 'hero-1',
     type: 'hero',
     props: {
-      layout: 'centered',
+      layout: 'image-right',
       headline,
     },
     style: { background: 'primary', spacing: 'section' },

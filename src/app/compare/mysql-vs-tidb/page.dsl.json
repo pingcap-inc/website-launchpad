@@ -1,0 +1,370 @@
+{
+  "pageName": "TiDB vs MySQL (2026) Comparison Guide for Platform Teams",
+  "meta": {
+    "title": "TiDB vs MySQL 2026: A Comparison Guide for Platform Teams |",
+    "description": "Compare TiDB and MySQL 2026 for scalable database performance and features. Find out which is better for your platform team's needs.",
+    "canonical": "/compare/mysql-vs-tidb/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "TiDB vs MySQL (2026) Comparison Guide for Platform Teams",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/e30c09ce-tidb-vs-mysql.svg",
+            "alt": "tidb vs mysql",
+            "width": 591,
+            "height": 450
+          },
+          "alt": "tidb vs mysql",
+          "width": 400,
+          "height": 450
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "trusted-by-innovation-leaders",
+            "label": "Trusted by Innovation Leaders",
+            "level": 1
+          },
+          {
+            "id": "tidb-vs-mysql-side-by-side-comparison-table",
+            "label": "TiDB vs MySQL: Side-by-Side Comparison Table",
+            "level": 1
+          },
+          {
+            "id": "tidb-vs-mysql-overview-quick-take",
+            "label": "TiDB vs MySQL Overview (Quick Take)",
+            "level": 1
+          },
+          {
+            "id": "tidb-in-brief-distributed-sql-newsql-htap-database",
+            "label": "TiDB in Brief: Distributed SQL + NewSQL + HTAP Database",
+            "level": 2
+          },
+          {
+            "id": "mysql-in-brief-why-it-s-great-and-where-mysql-scalability-breaks",
+            "label": "MySQL in Brief: Why It’s Great—and Where MySQL Scalability Breaks",
+            "level": 2
+          },
+          {
+            "id": "jump-to-a-section",
+            "label": "Jump to a Section",
+            "level": 1
+          },
+          {
+            "id": "key-differences-when-tidb-wins-vs-when-mysql-wins",
+            "label": "Key Differences: When TiDB Wins vs When MySQL Wins",
+            "level": 1
+          },
+          {
+            "id": "no-manual-mysql-sharding-elastic-scale-out",
+            "label": "No Manual MySQL Sharding (Elastic Scale-Out)",
+            "level": 2
+          },
+          {
+            "id": "acid-transactions-distributed-transactions-at-scale",
+            "label": "ACID Transactions + Distributed Transactions at Scale",
+            "level": 2
+          },
+          {
+            "id": "htap-analytics-with-tiflash-fresh-oltp-data",
+            "label": "HTAP Analytics with TiFlash (Fresh OLTP Data)",
+            "level": 2
+          },
+          {
+            "id": "high-availability-database-point-in-time-recovery-pitr",
+            "label": "High Availability Database + Point-in-Time Recovery (PITR)",
+            "level": 2
+          },
+          {
+            "id": "cloud-native-database-operations-on-kubernetes",
+            "label": "Cloud-Native Database Operations on Kubernetes",
+            "level": 2
+          },
+          {
+            "id": "architecture-how-tidb-scales-beyond-single-node-mysql",
+            "label": "Architecture: How TiDB Scales Beyond Single-Node MySQL",
+            "level": 1
+          },
+          {
+            "id": "tidb-tikv-tiflash-and-placement-driver-the-htap-architecture-in-plain-english",
+            "label": "TiDB, TiKV, TiFlash, and Placement Driver: the HTAP Architecture in Plain English",
+            "level": 2
+          },
+          {
+            "id": "automatic-sharding-and-database-partitioning-what-you-manage-vs-tidb",
+            "label": "Automatic Sharding and Database Partitioning (What You Manage vs TiDB)",
+            "level": 2
+          },
+          {
+            "id": "mysql-compatibility-and-key-limitations-to-validate",
+            "label": "MySQL Compatibility (and Key Limitations to Validate)",
+            "level": 1
+          },
+          {
+            "id": "protocol-syntax-drivers-and-orm-surface-area",
+            "label": "Protocol, Syntax, Drivers, and ORM Surface Area",
+            "level": 2
+          },
+          {
+            "id": "poc-checklist-query-patterns-and-sql-features-to-test",
+            "label": "POC Checklist: Query Patterns and SQL Features to Test",
+            "level": 2
+          },
+          {
+            "id": "consistency-transactions-acid-compliance-in-a-distributed-sql-database",
+            "label": "Consistency & Transactions: ACID Compliance in a Distributed SQL Database",
+            "level": 1
+          },
+          {
+            "id": "acid-transactions-what-stays-the-same-vs-mysql",
+            "label": "ACID Transactions: What Stays the Same vs MySQL",
+            "level": 2
+          },
+          {
+            "id": "distributed-transactions-latency-and-tradeoffs-to-understand",
+            "label": "Distributed Transactions: Latency and Tradeoffs to Understand",
+            "level": 2
+          },
+          {
+            "id": "scaling-performance-mysql-scalability-vs-horizontal-scaling-in-tidb",
+            "label": "Scaling & Performance: MySQL Scalability vs Horizontal Scaling in TiDB",
+            "level": 1
+          },
+          {
+            "id": "oltp-at-scale-add-nodes-instead-of-bigger-boxes",
+            "label": "OLTP at Scale: Add Nodes Instead of Bigger Boxes",
+            "level": 2
+          },
+          {
+            "id": "mysql-sharding-vs-tidb-auto-sharding-operational-overhead-comparison",
+            "label": "MySQL Sharding vs TiDB Auto-Sharding: Operational Overhead Comparison",
+            "level": 2
+          },
+          {
+            "id": "htap-analytics-oltp-vs-olap-without-a-separate-warehouse",
+            "label": "HTAP Analytics: OLTP vs OLAP Without a Separate Warehouse",
+            "level": 1
+          },
+          {
+            "id": "what-htap-means-and-when-it-matters",
+            "label": "What HTAP Means (and When It Matters)",
+            "level": 2
+          },
+          {
+            "id": "tiflash-columnar-replicas-for-real-time-analytics",
+            "label": "TiFlash: Columnar Replicas for Real-Time Analytics",
+            "level": 2
+          },
+          {
+            "id": "multi-region-locality-what-s-realistic-for-writes-and-reads",
+            "label": "Multi-Region & Locality: What’s Realistic for Writes and Reads",
+            "level": 1
+          },
+          {
+            "id": "single-region-ha-vs-multi-region-reads-vs-multi-region-writes",
+            "label": "Single-Region HA vs Multi-Region Reads vs Multi-Region Writes",
+            "level": 2
+          },
+          {
+            "id": "operations-reliability-ha-backups-and-pitr",
+            "label": "Operations & Reliability: HA, Backups, and PITR",
+            "level": 1
+          },
+          {
+            "id": "high-availability-database-behavior-during-az-failures",
+            "label": "High Availability Database Behavior During AZ Failures",
+            "level": 2
+          },
+          {
+            "id": "point-in-time-recovery-pitr-what-it-is-and-why-it-matters",
+            "label": "Point-in-Time Recovery (PITR): What It Is and Why It Matters",
+            "level": 2
+          },
+          {
+            "id": "enterprise-grade-security-encryption-in-transit-at-rest",
+            "label": "Enterprise-Grade Security (Encryption in Transit/At Rest)",
+            "level": 2
+          },
+          {
+            "id": "ecosystem-integrations-kubernetes-cdc-and-observability",
+            "label": "Ecosystem & Integrations: Kubernetes, CDC, and Observability",
+            "level": 1
+          },
+          {
+            "id": "kubernetes-database-operator-deploy-scale-upgrade-with-confidence",
+            "label": "Kubernetes Database Operator: Deploy, Scale, Upgrade with Confidence",
+            "level": 2
+          },
+          {
+            "id": "cdc-pipelines-and-streaming-integrations-operational-analytics",
+            "label": "CDC Pipelines and Streaming Integrations (Operational + Analytics)",
+            "level": 2
+          },
+          {
+            "id": "observability-integrations",
+            "label": "Observability Integrations",
+            "level": 2
+          },
+          {
+            "id": "implementation-migration-moving-from-mysql-to-tidb",
+            "label": "Implementation & Migration: Moving from MySQL to TiDB",
+            "level": 1
+          },
+          {
+            "id": "step-1-schema-compatibility-assessment",
+            "label": "Step 1: Schema + Compatibility Assessment",
+            "level": 2
+          },
+          {
+            "id": "step-2-data-migration-validation",
+            "label": "Step 2: Data Migration + Validation",
+            "level": 2
+          },
+          {
+            "id": "step-3-cutover-strategy-dual-write-vs-controlled-switchover",
+            "label": "Step 3: Cutover Strategy (Dual-Write vs Controlled Switchover)",
+            "level": 2
+          },
+          {
+            "id": "pricing-tidb-cloud-vs-self-managed-tco",
+            "label": "Pricing: TiDB Cloud vs Self-Managed TCO",
+            "level": 1
+          },
+          {
+            "id": "cost-drivers-to-compare-compute-storage-backups-egress-support",
+            "label": "Cost Drivers to Compare (Compute, Storage, Backups, Egress, Support)",
+            "level": 2
+          },
+          {
+            "id": "pros-cons-tidb-and-mysql",
+            "label": "Pros & Cons: TiDB and MySQL",
+            "level": 1
+          },
+          {
+            "id": "tidb-pros-for-scale-out-oltp-htap",
+            "label": "TiDB Pros for Scale-Out OLTP + HTAP",
+            "level": 2
+          },
+          {
+            "id": "tidb-tradeoffs-to-validate-in-your-workload",
+            "label": "TiDB Tradeoffs to Validate in Your Workload",
+            "level": 2
+          },
+          {
+            "id": "mysql-pros-and-constraints-at-scale",
+            "label": "MySQL Pros and Constraints at Scale",
+            "level": 2
+          },
+          {
+            "id": "who-should-choose-tidb-vs-mysql",
+            "label": "Who Should Choose TiDB vs MySQL?",
+            "level": 1
+          },
+          {
+            "id": "choose-tidb-if-you-need-scale-out-acid-htap",
+            "label": "Choose TiDB if You Need Scale-Out + ACID + HTAP",
+            "level": 2
+          },
+          {
+            "id": "choose-mysql-if-your-workloads-fit-single-node-simpler-ops",
+            "label": "Choose MySQL if Your Workloads Fit Single-Node + Simpler Ops",
+            "level": 2
+          },
+          {
+            "id": "faq",
+            "label": "FAQs: TiDB vs MySQL",
+            "level": 1
+          },
+          {
+            "id": "proof-deeper-dives",
+            "label": "Proof & Deeper Dives",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "**Updated February 20, 2026 | Author: [Brian Foster](https://www.pingcap.com/blog/author/brian-james-foster/) (Content Director) | Reviewed by: Ravish Patel (Solutions Engineer)**\n***\n\nTiDB and MySQL both speak SQL, but they are built for different scaling realities. MySQL is a proven relational database for OLTP workloads that fit a single primary with read replicas. TiDB is a MySQL-compatible distributed SQL (NewSQL) database designed for horizontal scale-out with ACID transactions, plus an HTAP path to run operational analytics on fresh OLTP data via TiKV + TiFlash.\n\n**Verdict**: Choose MySQL when your workload comfortably fits a single primary and you want the simplest operational model. Choose TiDB when you need scale-out writes and storage while keeping SQL + ACID, and you want a production-ready way to combine OLTP and analytics on the same data without building a separate warehouse pipeline.\n\n**Key takeaways (TiDB vs MySQL):**\n\n* Choose **TiDB** if you are hitting (or approaching) write scaling limits or sharding is entering the conversation.  \n* Choose **TiDB** if you need strong consistency + distributed transactions beyond a single primary footprint.  \n* Choose **TiDB** if you need fresh operational analytics and want to reduce ETL lag and dual-system complexity.  \n* Choose **MySQL** if your workload fits a single primary and you want the lowest-complexity, lowest-moving-parts architecture.  \n* Choose **MySQL** if you do not need scale-out writes, distributed coordination, or HTAP-style mixed workloads.\n\n## Trusted by Innovation Leaders\n\nTeams adopt TiDB when MySQL begins to require architectural workarounds, such as sharding, complex HA/DR, or splitting OLTP and analytics into separate systems. TiDB is used in production by high-growth companies to scale MySQL-compatible workloads while preserving SQL + ACID correctness and enabling HTAP patterns with TiFlash.\n\n![](https://static.pingcap.com/images/3874ef7f-screenshot-20260506-160026.png)\n\n:::columns\n:::column\n[![gartner](https://static.pingcap.com/images/e54e2db0-20260506-160445.png)](https://www.gartner.com/reviews/market/cloud-database-management-systems/vendor/pingcap?utm_source=pingcap&utm_medium=referral&utm_campaign=widget&utm_content=NGU0MTQzNTAtYTk3Yi00MDYwLTgwMTYtZmY1N2UxZGFiY2Ix)\n:::\n\n:::column\n[![g2](https://static.pingcap.com/images/053856a3-20260506-160923.png)](https://www.g2.com/products/tidb/reviews)\n:::\n:::\n\n## TiDB vs MySQL: Side-by-Side Comparison Table\n\n| Criteria | TiDB | MySQL |\n| ----- | ----- | ----- |\n| Primary use | Distributed SQL / NewSQL for scale-out OLTP; MySQL-compatible; optional HTAP via TiFlash | Relational OLTP, typically single primary + replicas |\n| SQL / protocol compatibility | MySQL protocol + common syntax; validate compatibility limitations in a POC | Native MySQL |\n| Consistency & transactions | ACID transactions with strong consistency; supports distributed transactions (validate isolation semantics for your workload) | ACID transactions on a single primary; replication topologies vary |\n| Scaling model | Horizontal scaling: add nodes; separate compute (TiDB) and storage (TiKV/TiFlash) | Scale up primary; scale reads with replicas; write scaling often requires architectural changes |\n| HTAP / analytics | TiFlash columnar replicas for analytical queries on the same data via async replication | Analytics typically offloaded to a separate OLAP system/warehouse |\n| Multi-region / locality | HA/topologies across failure domains; multi-region patterns possible with locality/latency tradeoffs | Multi-region patterns depend on deployment and replication approach; locality tradeoffs apply |\n| Operations & reliability | HA by design in clustered deployments; backups + restore workflows; PITR available when configured | HA/DR and PITR depend on tooling and operational approach |\n| Ecosystem & integrations | Kubernetes-friendly; CDC/streaming ecosystem; observability integrations | Broad ecosystem; ops patterns vary by distro/vendor tooling |\n| Implementation / migration | “MySQL-compatible” reduces rewrite scope vs non-MySQL systems | N/A |\n| Pricing | TiDB Self-Managed or TiDB Cloud; cost depends on topology, usage, and support | MySQL community + managed offerings; costs vary by vendor and architecture |\n| Sharding burden | Sharding is handled inside the database (automatic distribution/replication), reducing app-owned shard routing and resharding work. | Sharding is usually an application/ops responsibility (routing, resharding, cross-shard patterns, operational overhead). |\n| :---- | :---- | :---- |\n| Cross-partition transactions and joins | Supports distributed transactions and joins across the cluster (validate latency and contention behavior in your workload). | Strong within a single primary; cross-shard transactions/joins (if sharded) require application patterns or additional systems. |\n| Online schema changes (DDL) | Designed for operational continuity in clustered environments; validate online DDL duration and impact under load. | Online schema change patterns vary by version/tooling; large-table changes often require careful ops planning and can become painful at scale. |\n| Change Data Capture (CDC)  | Commonly implemented with dedicated CDC tooling (e.g., TiCDC) to stream changes to downstream systems. | CDC typically relies on binlog-based approaches and tooling; ergonomics and capabilities vary by distribution and ops setup. |\n| Bulk data ingestion and backfills | Supports bulk-load workflows (e.g., TiDB Lightning) for large imports/backfills in controlled ways. | Bulk loads are possible (LOAD DATA, batched inserts), but large backfills can pressure the primary and require careful throttling. |\n\n*Table 1. Side-by-side of compatibility, scaling, consistency, HTAP, operations, and pricing.*\n\n## TiDB vs MySQL Overview (Quick Take)\n\nMySQL is typically the best choice for OLTP workloads that fit a single primary plus replicas. TiDB is built for teams that need to scale beyond that model with a distributed SQL database that preserves the MySQL developer experience while scaling out writes and storage.\n\n### TiDB in Brief: Distributed SQL + NewSQL + HTAP Database\n\nTiDB is an open-source Distributed SQL database that is MySQL-compatible at the application layer and designed to scale out. It uses TiKV for distributed transactional storage and TiFlash columnar replicas to support HTAP workloads when you need analytics on fresh OLTP data.\n\n### MySQL in Brief: Why It’s Great—and Where MySQL Scalability Breaks\n\nMySQL is a strong default for OLTP. As workloads grow, teams typically scale reads with replicas, while writes concentrate on the primary. When write throughput, data volume, or operational complexity outgrows the model, teams often evaluate sharding, complex HA/DR, or splitting OLTP and OLAP into separate systems.\n\nIf sharding is entering the conversation, start here: [**MySQL sharding: definition and alternatives**](https://www.pingcap.com/blog/database-sharding-defined/?utm_source=chatgpt.com).\n\n## Key Differences: When TiDB Wins vs When MySQL Wins\n\nTiDB wins when scale introduces architectural change in MySQL, such as sharding, complex HA/DR, or splitting OLTP and OLAP into separate systems. MySQL still wins when the simplest single-primary architecture meets your performance, reliability, and growth needs.\n\n### No Manual MySQL Sharding (Elastic Scale-Out)\n\nTiDB is built to reduce the need for application-level sharding by distributing data and load across the cluster, while keeping a single logical SQL database.\n\n**Where MySQL still wins:** When your workload is still comfortably served by a single primary (plus replicas) and you want the simplest possible architecture without introducing a distributed system.\n\n### ACID Transactions + Distributed Transactions at Scale\n\nTiDB is designed for ACID correctness at scale, including workloads that require distributed transactions. Learn more: [Distributed transactions in TiDB](https://www.pingcap.com/blog/distributed-transactions-tidb/?utm_source=chatgpt.com).\n\n**Where MySQL still wins:** When your transactional workload fits on a single primary and you do not need cross-node transaction coordination, which keeps latency and operational complexity lower.\n\n### HTAP Analytics with TiFlash (Fresh OLTP Data)\n\nIf you are splitting OLTP and OLAP across systems and fighting ETL lag, TiDB can serve analytical queries from TiFlash columnar replicas against the same underlying data. Learn more: [HTAP databases: OLTP vs OLAP in one system](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/?utm_source=chatgpt.com).\n\n**Where MySQL still wins:** When analytics needs are light (or already handled well in a separate warehouse) and you prefer to keep OLTP isolated from analytical workloads entirely.\n\n### High Availability Database + Point-in-Time Recovery (PITR)\n\nTiDB supports high availability through Raft-based replication of data across multiple nodes, plus recovery workflows including point-in-time recovery (PITR) when configured, for teams tightening RPO/RTO.\n\n**Where MySQL still wins:** When HA and recovery requirements are straightforward and you are satisfied with established MySQL HA/backup patterns, without needing Raft-replicated, distributed HA behavior across a cluster.\n\n### Cloud-Native Database Operations on Kubernetes\n\nTiDB supports cloud-native operations and is commonly deployed and managed with Kubernetes workflows for platform teams.\n\n**Where MySQL still wins:** Workloads that fit comfortably on a single primary and prefer the simplest possible operational model.\n\n## Architecture: How TiDB Scales Beyond Single-Node MySQL\n\nTiDB scales differently because it separates SQL compute (TiDB) from distributed transactional storage (TiKV) and optional columnar analytics replicas (TiFlash), then distributes data automatically so scale does not depend on application-owned shards.\n\n### TiDB, TiKV, TiFlash, and Placement Driver: the HTAP Architecture in Plain English\n\n![TiDB architecture showing TiDB Server (SQL compute), TiKV (distributed row storage), PD (placement/metadata), and TiFlash (columnar store)](https://static.pingcap.com/files/2026/02/27123334/image-9.png)\n\n* **TiDB:** Stateless SQL layer for parsing, planning, and distributed execution.  \n* **TiKV:** Distributed transactional (row-oriented) storage.  \n* **TiFlash:** Columnar replicas for analytics and mixed workloads.  \n* **Placement Driver**: Cluster control plane that manages metadata and placement decisions. \n\n### Automatic Sharding and Database Partitioning (What You Manage vs TiDB)\n\nIn MySQL, once you outgrow a single primary, sharding and many partitioning decisions become application and operational responsibilities: Choosing shard keys, routing queries, resharding, and dealing with cross-shard joins and transactions.\n\nIn TiDB, the cluster handles distribution automatically. TiKV splits data into key-range Regions (tens to hundreds of MB, configurable) that are Raft-replicated across nodes, while Placement Driver (PD) schedules and rebalances Region replicas and leaders as data and traffic change. SQL partitioning remains optional and is mainly used for manageability and query pruning, not as a prerequisite for horizontal scale.\n\nLearn more: [Database partitioning (SQL partitioning) explained](https://www.pingcap.com/article/sql-partition-demystified-from-concept-to-implementation/?utm_source=chatgpt.com).\n\n## MySQL Compatibility (and Key Limitations to Validate)\n\nTiDB is MySQL-compatible at the protocol level and supports common MySQL syntax and ecosystem tooling, but it is not “zero-effort identical.” The right way to de-risk migration is a focused POC on your heaviest queries, transaction edge cases, and operational workflows.\n\n### Protocol, Syntax, Drivers, and ORM Surface Area\n\nTiDB is [MySQL-compatible](https://docs.pingcap.com/tidb/stable/mysql-compatibility/) at the protocol level and supports common MySQL syntax and ecosystem tooling. You should still validate feature differences and edge cases based on your application.\n\n### POC Checklist: Query Patterns and SQL Features to Test\n\n* Top OLTP query paths (latency under concurrency).  \n* Transaction patterns (contention, retries, long transactions).  \n* MySQL-specific SQL features you depend on such as stored procedures and triggers.  \n* Backups, restores, failure drills, and upgrade workflows.\n\n## Consistency & Transactions: ACID Compliance in a Distributed SQL Database\n\nBoth systems support ACID transactions, but the evaluation differs because TiDB coordinates transactions across a distributed cluster. You should validate isolation expectations, contention behavior, and failure behavior under load, because distributed coordination can add latency tradeoffs.\n\n### ACID Transactions: What Stays the Same vs MySQL\n\nIf your application depends on ACID correctness, the evaluation should focus on transactional behavior, isolation expectations, and operational behavior during failures.\n\n### Distributed Transactions: Latency and Tradeoffs to Understand\n\nDistributed transactions introduce coordination and latency tradeoffs compared to a single-node primary. The upside is the ability to scale writes and storage while preserving a single logical SQL database.\n\n## Scaling & Performance: MySQL Scalability vs Horizontal Scaling in TiDB\n\nMySQL scales by pushing a single primary harder and scaling reads with replicas, while TiDB scales out by adding nodes and distributing data and traffic across the cluster. The practical difference is whether scaling writes forces application sharding and operational overhead.\n\n### OLTP at Scale: Add Nodes Instead of Bigger Boxes\n\nTiDB is designed as a horizontal scaling database. You scale by adding nodes and distributing workload across the cluster rather than relying only on vertical scaling.\n\n### MySQL Sharding vs TiDB Auto-Sharding: Operational Overhead Comparison\n\nWith MySQL sharding, teams typically own shard routing, resharding, cross-shard patterns, and operational complexity. TiDB is designed to reduce this overhead by handling data distribution inside the database.\n\n## HTAP Analytics: OLTP vs OLAP Without a Separate Warehouse\n\nIf you need analytics on fresh operational data, TiDB supports HTAP by serving analytical queries from TiFlash columnar replicas against the same underlying data. That reduces not only ETL lag, but also the security exposure and compliance overhead that comes from copying sensitive data into additional systems, plus the ongoing cost and operational burden of running two platforms. MySQL typically requires offloading analytics to a separate OLAP system or warehouse for performance and concurrency at scale.\n\n### What HTAP Means (and When It Matters)\n\nHTAP (Hybrid Transactional and Analytical Processing) matters when you want accurate, timely analytics on operational data while minimizing data movement, attack surface, and platform sprawl. It is most valuable when you are repeatedly answering questions that depend on up-to-date production data, and when duplicating that data across systems creates risk and cost.\n\n### TiFlash: Columnar Replicas for Real-Time Analytics\n\nTiFlash provides columnar replicas that serve analytical queries against the same underlying data, enabling mixed OLTP + OLAP patterns without exporting data to a separate warehouse for every use case.\n\n## Multi-Region & Locality: What’s Realistic for Writes and Reads\n\nMulti-region always introduces tradeoffs between latency and consistency, so the real question is what you are optimizing for: failover resilience, read locality, or multi-region write requirements. Evaluate both TiDB and MySQL topologies based on those constraints, not marketing promises.\n\n### Single-Region HA vs Multi-Region Reads vs Multi-Region Writes\n\nMulti-region designs always involve tradeoffs between latency and consistency. Evaluate topology patterns based on what you need most: failover resilience, read locality, or multi-region write requirements.\n\n## Operations & Reliability: HA, Backups, and PITR\n\nOperational reliability is defined by what happens during failures and how quickly you can recover, not just benchmark performance. Compare HA behavior during AZ failures, backup/restore workflows, and PITR requirements, because these determine your real RPO/RTO.\n\n### High Availability Database Behavior During AZ Failures\n\nOperationally, the question is not “does it scale,” but “what happens during failures.” TiDB is commonly deployed across failure domains and designed for HA patterns that platform teams can drill and test.\n\n### Point-in-Time Recovery (PITR): What It Is and Why It Matters\n\nPITR matters for incidents like operator error or bad deployments where restoring to a specific moment can reduce business impact.\n\n### Enterprise-Grade Security (Encryption in Transit/At Rest)\n\nEnterprise evaluation usually requires encryption in transit and at rest. Confirm your required controls and deployment model early in the POC.\n\n## Ecosystem & Integrations: Kubernetes, CDC, and Observability\n\nFor platform teams, ecosystem fit is about day-to-day operability: Kubernetes workflows, CDC pipelines, and clean observability integration. Evaluate the tooling you will actually run in production, including upgrades, backups, failure recovery, and streaming integrations.\n\n### Kubernetes Database Operator: Deploy, Scale, Upgrade with Confidence\n\nIf your platform standard is Kubernetes, the key question is operability: upgrade workflows, scaling, backup automation, and failure recovery.\n\nLearn more: [TiDB Operator for Kubernetes](https://docs.pingcap.com/tidb-in-kubernetes/stable/tidb-operator-overview/).\n\n### CDC Pipelines and Streaming Integrations (Operational + Analytics)\n\nModern architectures often require CDC for downstream systems, streaming pipelines, and operational analytics.\n\nLearn more: [TiCDC change data capture](https://docs.pingcap.com/tidb/stable/ticdc-overview/).\n\n### Observability Integrations\n\nOperational confidence depends on monitoring, alerting, and tracing. Ensure the database integrates cleanly with your observability stack.\n\nLearn more:\n\n* [TiDB Self-managed: Prometheus/Grafana](https://docs.pingcap.com/tidb/stable/tidb-monitoring-framework/)  \n* [TiDB Cloud: Built-in monitoring](https://docs.pingcap.com/tidbcloud/built-in-monitoring/)\n\n## Implementation & Migration: Moving from MySQL to TiDB\n\nA safe MySQL-to-TiDB migration is a three-step process: assess compatibility, migrate and validate data correctness and performance, then choose a cutover strategy that matches your risk tolerance. The goal is to prove behavior on your workload before changing production traffic.\n\n### Step 1: Schema + Compatibility Assessment\n\nStart by inventorying schema features, key queries, and MySQL-specific behavior your application depends on.\n\n### Step 2: Data Migration + Validation\n\nPlan validation: row counts, checksums, application read-path correctness, and performance under concurrency.\n\n### Step 3: Cutover Strategy (Dual-Write vs Controlled Switchover)\n\nChoose rollout mechanics that match your risk tolerance: staged cutover, controlled window, or dual-write, depending on constraints.\n\nLearn more: [MySQL to TiDB migration guide](https://www.pingcap.com/blog/migrating-mysql-tidb/). \n\n## Pricing: TiDB Cloud vs Self-Managed TCO\n\nThe useful cost comparison is not list price. It is whether your architecture keeps TCO predictable as you scale, based on concrete drivers like compute, replicas, backups/PITR retention, cross-region traffic, and operational labor.\n\n### Cost Drivers to Compare (Compute, Storage, Backups, Egress, Support)\n\nCompare total cost based on:\n\n* Steady-state and peak compute  \n* Storage footprint and replicas  \n* Backup retention and PITR requirements  \n* Network egress and cross-region traffic  \n* Operational labor and support\n\n## Pros & Cons: TiDB and MySQL\n\nTo make the tradeoff concrete, here is what each option is objectively strong at, along with the practical constraints you should validate before committing.\n\nLearn more: [TiDB Cloud pricing](https://www.pingcap.com/pricing/). \n\n### TiDB Pros for Scale-Out OLTP + HTAP\n\n* Distributed SQL / NewSQL design for horizontal scaling  \n* ACID transactions built for scale-out systems  \n* HTAP path with TiFlash columnar replicas  \n* Cloud-native operations, including Kubernetes workflows\n\n### TiDB Tradeoffs to Validate in Your Workload\n\n* Transaction and latency tradeoffs in distributed systems  \n* Compatibility edge cases based on your MySQL usage  \n* Operational preferences: self-managed vs managed cloud\n\n### MySQL Pros and Constraints at Scale\n\n* Extremely mature ecosystem and talent pool  \n* Simple single-primary operational model  \n* Scaling writes and mixed workloads can push teams toward sharding, complex HA/DR, or OLTP/OLAP split\n\n## Who Should Choose TiDB vs MySQL?\n\nUse this section as a quick decision filter based on your scaling and operational requirements, so you can align the choice to the architecture you actually need rather than what is easiest today.\n\n### Choose TiDB if You Need Scale-Out + ACID + HTAP\n\nChoose TiDB when you need a distributed SQL database that can scale out, preserve ACID correctness, and support HTAP patterns on the same data.\n\n[Try TiDB Cloud](https://www.pingcap.com/tidb/cloud/?utm_source=chatgpt.com) and spin up a MySQL-compatible TiDB cluster in minutes, so you can validate scale-out performance and HTAP analytics on your own workload.\n\n### Choose MySQL if Your Workloads Fit Single-Node + Simpler Ops\n\nChoose MySQL when your workload fits comfortably on a single primary and your operational model stays simple.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "FAQs: TiDB vs MySQL",
+        "items": [
+          {
+            "q": "What is the difference between MySQL and TiDB?",
+            "a": "MySQL is a traditional relational database commonly deployed as a single primary with replicas. TiDB is a Distributed SQL database designed for horizontal scaling with TiKV storage and optional HTAP analytics using TiFlash."
+          },
+          {
+            "q": "Is TiDB a drop-in replacement for MySQL?",
+            "a": "TiDB is MySQL-compatible at the protocol level and supports common syntax, but you should validate compatibility differences and workload behavior in a POC."
+          },
+          {
+            "q": "Is TiDB NoSQL?",
+            "a": "No. TiDB is a Distributed SQL database that supports SQL and ACID transactions."
+          },
+          {
+            "q": "Which companies use TiDB?",
+            "a": "(Reference the “Trusted by Innovation Leaders” logo strip and link to relevant customer stories.)"
+          },
+          {
+            "q": "How scalable is TiDB compared to MySQL?",
+            "a": "TiDB is designed to scale horizontally by adding nodes, while MySQL commonly scales reads via replicas and often requires architectural changes to scale writes beyond a single primary."
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "main",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Proof & Deeper Dives\n\n* Customer stories (keep existing links)  \n* Webinar (keep existing link)  \n* Blog posts (keep existing links)",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    }
+  ]
+}

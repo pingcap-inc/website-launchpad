@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { cleanupImportedMarkdownEscapes } from '@/lib/imported-text'
 
 export async function GET(req: NextRequest) {
   const docId = req.nextUrl.searchParams.get('docId')
@@ -10,7 +11,7 @@ export async function GET(req: NextRequest) {
     })
     if (!res.ok) throw new Error('Failed to fetch')
     const text = await res.text()
-    return NextResponse.json({ text })
+    return NextResponse.json({ text: cleanupImportedMarkdownEscapes(text) })
   } catch {
     return NextResponse.json({ error: 'Could not fetch document' }, { status: 502 })
   }

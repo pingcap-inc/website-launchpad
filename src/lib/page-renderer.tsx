@@ -424,7 +424,25 @@ interface PageRendererProps {
 }
 
 /** Types that sit alongside the TOC sidebar in a two-column layout */
-const TOC_COMPANION_TYPES = new Set<SectionType>(['richTextBlock', 'faq', 'codeBlock'])
+const TOC_COMPANION_TYPES = new Set<SectionType>(['richTextBlock', 'faq', 'codeBlock', 'cta'])
+const LONG_FORM_GENERATED_TYPES = new Set<SectionType>([
+  'hero',
+  'tableOfContents',
+  'richTextBlock',
+  'faq',
+  'codeBlock',
+  'cta',
+])
+
+function isLongFormGeneratedPage(sections: PageDSL['sections']) {
+  const hasToc = sections.some((section) => section.type === 'tableOfContents')
+  const hasRichText = sections.some((section) => section.type === 'richTextBlock')
+  return (
+    hasToc &&
+    hasRichText &&
+    sections.every((section) => LONG_FORM_GENERATED_TYPES.has(section.type))
+  )
+}
 
 function renderSection(
   section: {
@@ -433,17 +451,41 @@ function renderSection(
     props: unknown
     style?: SectionStyle
   },
-  options?: { compactFaq?: boolean }
+  options?: { compactFaq?: boolean; longFormLightTheme?: boolean }
 ) {
   const entry = componentMap[section.type]
   if (!entry) return null
   const baseProps = entry.mapProps ? entry.mapProps(section.props as any) : (section.props as any)
+  const themedProps =
+    options?.longFormLightTheme && section.type === 'tableOfContents'
+      ? { ...baseProps, tone: 'light' as const }
+      : options?.longFormLightTheme && section.type === 'hero'
+        ? { ...baseProps, layout: 'image-right' as const }
+        : baseProps
   const props =
-    section.type === 'faq' && options?.compactFaq ? { ...baseProps, compact: true } : baseProps
+    section.type === 'faq' && options?.compactFaq ? { ...themedProps, compact: true } : themedProps
   const resolvedStyle = sanitizeSpacingBySection(
     section.type,
     sanitizeBackgroundBySection(section.type, section.style)
   )
+  const themedStyle =
+    options?.longFormLightTheme && section.type !== 'cta'
+      ? ({
+          ...(resolvedStyle ?? {}),
+          background:
+            section.type === 'tableOfContents'
+              ? 'none'
+              : section.type === 'hero'
+                ? 'primary'
+                : 'inverse',
+          className: [
+            resolvedStyle?.className,
+            section.type !== 'tableOfContents' && section.type !== 'hero' ? '!bg-white' : '',
+          ]
+            .filter(Boolean)
+            .join(' '),
+        } satisfies SectionStyle)
+      : resolvedStyle
   const defaultStyle: SectionStyle = {
     ...(entry.defaultStyle ?? {}),
     background: getDefaultBackground(section.type),
@@ -452,7 +494,7 @@ function renderSection(
     <SectionWrapper
       key={section.id}
       id={section.id}
-      style={resolvedStyle}
+      style={themedStyle}
       defaultStyle={defaultStyle}
     >
       <entry.Component {...props} />
@@ -463,6 +505,7 @@ function renderSection(
 export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
   const normalized = normalizeDSL(dsl)
   const sections = normalized.sections
+  const isLongFormGenerated = isLongFormGeneratedPage(sections)
 
   // Detect TOC section for sidebar layout
   const tocIndex = sections.findIndex((s) => s.type === 'tableOfContents')
@@ -473,7 +516,11 @@ export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
   const pageH1 =
     !hasHero && normalized.pageName ? (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-0">
-        <h1 className="text-h1-mb md:text-h1 font-bold text-text-inverse leading-tight">
+        <h1
+          className={`text-h1-mb md:text-h1 font-bold leading-tight ${
+            isLongFormGenerated ? 'text-text-primary' : 'text-text-inverse'
+          }`}
+        >
           {normalized.pageName}
         </h1>
       </div>
@@ -500,9 +547,12 @@ export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
 
     renderedSections = [
       // Sections before TOC (e.g. intro richTextBlock)
-      ...beforeToc.map((s) => renderSection(s)),
+      ...beforeToc.map((s) => renderSection(s, { longFormLightTheme: isLongFormGenerated })),
       // TOC sidebar layout
-      <div key="toc-layout" className="contain pb-10 lg:pb-16">
+      <div
+        key="toc-layout"
+        className={`contain py-10 lg:py-20 ${isLongFormGenerated ? 'longform-generated-page' : ''}`}
+      >
         <div className="lg:flex lg:gap-12">
           {/* TOC sidebar — rendered without SectionWrapper for direct flex control */}
           {(() => {
@@ -511,23 +561,31 @@ export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
             const props = entry.mapProps
               ? entry.mapProps(tocSection.props as any)
               : (tocSection.props as any)
-            return <entry.Component {...props} />
+            const themedProps = isLongFormGenerated ? { ...props, tone: 'light' as const } : props
+            return <entry.Component {...themedProps} />
           })()}
           {/* Main content alongside TOC */}
           <div className="flex-1 min-w-0">
-            {companionSections.map((s) => renderSection(s, { compactFaq: true }))}
+            {companionSections.map((s) =>
+              renderSection(s, {
+                compactFaq: true,
+                longFormLightTheme: isLongFormGenerated,
+              })
+            )}
           </div>
         </div>
       </div>,
       // Remaining sections (FAQ, CTA, etc.)
-      ...afterCompanions.map((s) => renderSection(s)),
+      ...afterCompanions.map((s) => renderSection(s, { longFormLightTheme: isLongFormGenerated })),
     ]
   } else {
-    renderedSections = sections.map((section) => renderSection(section))
+    renderedSections = sections.map((section) =>
+      renderSection(section, { longFormLightTheme: isLongFormGenerated })
+    )
   }
 
   const content = (
-    <div className="bg-bg-primary">
+    <div className={isLongFormGenerated ? 'bg-white longform-generated-page' : 'bg-bg-primary'}>
       {pageH1}
       {renderedSections}
     </div>

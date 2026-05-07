@@ -11,11 +11,11 @@ export const PAGE_TYPE_OPTIONS: PageTypeOption[] = [
   // 'Solution Page',
   // 'Landing Page',
   // 'Glossary Page',
-  { value: 'general', label: 'General Page', importEligible: true },
+  { value: 'general', label: 'General Page', importEligible: false },
   { value: 'event', label: 'Event Page', importEligible: false },
-  { value: 'listicle', label: 'Listicle Page', importEligible: true },
-  { value: 'playbook', label: 'Playbook Page', importEligible: true },
-  { value: 'compare', label: 'Compare Page', importEligible: true },
+  // { value: 'listicle', label: 'Listicle Page', importEligible: true },
+  // { value: 'compare', label: 'Compare Page', importEligible: true },
+  // { value: 'playbook', label: 'Playbook Page', importEligible: true },
 ]
 
 export const PAGE_TYPES = PAGE_TYPE_OPTIONS.map((option) => option.value)

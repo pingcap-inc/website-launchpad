@@ -36,6 +36,10 @@ function collectTocItems(sections: SectionDefinition[]): TocItem[] {
   const seen = new Set<string>()
   for (const section of sections) {
     if (section.type === 'richTextBlock') {
+      if (section.id.includes('intro') && !seen.has(section.id)) {
+        items.push({ id: section.id, label: 'Introduction', level: 1 })
+        seen.add(section.id)
+      }
       const content = (section.props as { content?: string }).content ?? ''
       const headingItems = extractHeadingItems(content)
       for (const item of headingItems) {

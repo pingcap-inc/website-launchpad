@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from 'react'
 import { Loader2, Upload } from 'lucide-react'
 import type { ImportPageType } from '@/lib/admin/page-types'
+import { cleanupImportedMarkdownEscapes } from '@/lib/imported-text'
 
 function extractGoogleDocId(url: string): string | null {
   const match = url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/)
@@ -63,14 +64,14 @@ export function ImportInput({
 
       if (ext === 'md') {
         const text = await file.text()
-        onImport(text, importPageType)
+        onImport(cleanupImportedMarkdownEscapes(text), importPageType)
       } else if (ext === 'docx') {
         setFileLoading(true)
         try {
           const mammoth = await import('mammoth')
           const arrayBuffer = await file.arrayBuffer()
           const result = await mammoth.extractRawText({ arrayBuffer })
-          onImport(result.value, importPageType)
+          onImport(cleanupImportedMarkdownEscapes(result.value), importPageType)
         } catch {
           setFileError('Failed to read .docx file.')
         } finally {
@@ -100,7 +101,8 @@ export function ImportInput({
 
   // ── Paste ───────────────────────────────────────────────────────────────────
   const handlePasteImport = () => {
-    if (pastedText.trim()) onImport(pastedText.trim(), importPageType)
+    if (pastedText.trim())
+      onImport(cleanupImportedMarkdownEscapes(pastedText.trim()), importPageType)
   }
 
   return (

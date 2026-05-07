@@ -1,0 +1,499 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: 'TiDB vs YugabyteDB (2026) Comparison Guide for Platform',
+  description:
+    "Compare TiDB and YugabyteDB for distributed SQL workloads. Choose the right cloud-native database for your platform team's needs.",
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/compare/yugabytedb-vs-tidb/' },
+  openGraph: {
+    title: 'TiDB vs YugabyteDB (2026) Comparison Guide for Platform',
+    description:
+      "Compare TiDB and YugabyteDB for distributed SQL workloads. Choose the right cloud-native database for your platform team's needs.",
+    url: 'https://www.pingcap.com/compare/yugabytedb-vs-tidb/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: '/compare/yugabytedb-vs-tidb/',
+  title: 'TiDB vs YugabyteDB (2026) Comparison Guide for Platform',
+  description:
+    "Compare TiDB and YugabyteDB for distributed SQL workloads. Choose the right cloud-native database for your platform team's needs.",
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    {
+      name: 'TiDB vs YugabyteDB (2026) Comparison Guide for Platform Teams',
+      path: '/compare/yugabytedb-vs-tidb/',
+    },
+  ],
+})
+
+const dsl: PageDSL = {
+  pageName: 'TiDB vs YugabyteDB (2026) Comparison Guide for Platform Teams',
+  meta: {
+    title: 'TiDB vs YugabyteDB (2026) Comparison Guide for Platform',
+    description:
+      "Compare TiDB and YugabyteDB for distributed SQL workloads. Choose the right cloud-native database for your platform team's needs.",
+    canonical: '/compare/yugabytedb-vs-tidb/',
+  },
+  sections: [
+    {
+      id: 'hero-1',
+      type: 'hero',
+      props: {
+        layout: 'image-right',
+        headline: 'TiDB vs YugabyteDB (2026) Comparison Guide for Platform Teams',
+        heroImage: {
+          image: {
+            url: 'https://static.pingcap.com/images/60389a7e-tidb-vs-yugabytedb-banner.png',
+            alt: 'tidb vs yugabytedb banner',
+            width: 800,
+            height: 609,
+          },
+          alt: 'tidb vs yugabytedb banner',
+          width: 400,
+          height: 300,
+        },
+      },
+      style: {
+        background: 'primary',
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'tableOfContents-1',
+      type: 'tableOfContents',
+      props: {
+        items: [
+          {
+            id: 'intro',
+            label: 'Introduction',
+            level: 1,
+          },
+          {
+            id: 'at-a-glance-tidb-vs-yugabytedb',
+            label: 'At-a-Glance: TiDB vs YugabyteDB',
+            level: 1,
+          },
+          {
+            id: 'what-this-table-covers',
+            label: 'What This Table Covers',
+            level: 2,
+          },
+          {
+            id: 'how-to-interpret-compatibility',
+            label: 'How to Interpret “Compatibility”',
+            level: 2,
+          },
+          {
+            id: 'tidb-vs-yugabytedb-overview',
+            label: 'TiDB vs YugabyteDB Overview',
+            level: 1,
+          },
+          {
+            id: 'tidb-in-brief',
+            label: 'TiDB in Brief',
+            level: 2,
+          },
+          {
+            id: 'yugabytedb-in-brief',
+            label: 'YugabyteDB in Brief',
+            level: 2,
+          },
+          {
+            id: 'jump-to-a-section',
+            label: 'Jump to a Section',
+            level: 1,
+          },
+          {
+            id: 'key-differences-the-60-second-takeaway',
+            label: 'Key Differences: The 60-Second Takeaway',
+            level: 1,
+          },
+          {
+            id: 'biggest-decision-drivers-for-platform-teams',
+            label: 'Biggest Decision Drivers for Platform Teams',
+            level: 2,
+          },
+          {
+            id: 'common-misconceptions',
+            label: 'Common Misconceptions',
+            level: 2,
+          },
+          {
+            id: 'architecture-how-tidb-and-yugabytedb-work',
+            label: 'Architecture: How TiDB and YugabyteDB Work',
+            level: 1,
+          },
+          {
+            id: 'tidb-architecture',
+            label: 'TiDB Architecture',
+            level: 2,
+          },
+          {
+            id: 'yugabytedb-architecture',
+            label: 'YugabyteDB Architecture',
+            level: 2,
+          },
+          {
+            id: 'distributed-transactions-what-to-verify-in-a-poc',
+            label: 'Distributed Transactions: What to Verify in a POC',
+            level: 2,
+          },
+          {
+            id: 'why-architecture-matters-for-oltp-workloads-vs-olap-workloads',
+            label: 'Why Architecture Matters for OLTP Workloads vs OLAP Workloads',
+            level: 2,
+          },
+          {
+            id: 'sql-app-compatibility',
+            label: 'SQL & App Compatibility',
+            level: 1,
+          },
+          {
+            id: 'tidb-mysql-compatibility',
+            label: 'TiDB: MySQL Compatibility',
+            level: 2,
+          },
+          {
+            id: 'yugabytedb-postgresql-compatibility',
+            label: 'YugabyteDB: PostgreSQL Compatibility',
+            level: 2,
+          },
+          {
+            id: 'choosing-based-on-your-current-stack',
+            label: 'Choosing Based on Your Current Stack',
+            level: 2,
+          },
+          {
+            id: 'if-you-re-mysql-first',
+            label: '*If You’re MySQL-First*',
+            level: 2,
+          },
+          {
+            id: 'if-you-re-postgresql-first',
+            label: '*If You’re PostgreSQL-First*',
+            level: 2,
+          },
+          {
+            id: 'consistency-acid-transactions-and-isolation-semantics',
+            label: 'Consistency, ACID Transactions, and Isolation Semantics',
+            level: 1,
+          },
+          {
+            id: 'tidb-acid-transactions-at-scale',
+            label: 'TiDB: ACID Transactions at Scale',
+            level: 2,
+          },
+          {
+            id: 'yugabytedb-transaction-consistency-model-to-validate',
+            label: 'YugabyteDB: Transaction + Consistency Model to Validate',
+            level: 2,
+          },
+          {
+            id: 'operational-impact-latency-contention-and-failure-scenarios',
+            label: 'Operational Impact: Latency, Contention, and Failure Scenarios',
+            level: 2,
+          },
+          {
+            id: 'scaling-performance-horizontal-scaling-without-rewriting-everything',
+            label: 'Scaling & Performance (Horizontal Scaling Without Rewriting Everything)',
+            level: 1,
+          },
+          {
+            id: 'scaling-model-comparison',
+            label: 'Scaling Model Comparison',
+            level: 2,
+          },
+          {
+            id: 'performance-considerations-for-oltp-workloads',
+            label: 'Performance Considerations for OLTP Workloads',
+            level: 2,
+          },
+          {
+            id: 'performance-considerations-for-olap-workloads',
+            label: 'Performance Considerations for OLAP Workloads',
+            level: 2,
+          },
+          {
+            id: 'benchmarking-checklist',
+            label: 'Benchmarking Checklist',
+            level: 2,
+          },
+          {
+            id: 'htap-analytics-oltp-olap-on-the-same-data',
+            label: 'HTAP & Analytics: OLTP + OLAP on the Same Data',
+            level: 1,
+          },
+          {
+            id: 'tidb-htap-approach-tiflash-for-analytical-replicas',
+            label: 'TiDB HTAP Approach: TiFlash for Analytical Replicas',
+            level: 2,
+          },
+          {
+            id: 'when-tiflash-helps',
+            label: 'When TiFlash helps',
+            level: 2,
+          },
+          {
+            id: 'when-a-separate-olap-system-still-makes-sense',
+            label: 'When a Separate OLAP System Still Makes Sense',
+            level: 2,
+          },
+          {
+            id: 'multi-region-replication-resilience-reality-of-global-latency',
+            label: 'Multi-Region Replication & Resilience (Reality of Global Latency)',
+            level: 1,
+          },
+          {
+            id: 'supported-topology-patterns-to-evaluate',
+            label: 'Supported Topology Patterns to Evaluate',
+            level: 2,
+          },
+          {
+            id: 'strong-consistency-vs-latency-what-multi-region-really-means',
+            label: 'Strong Consistency vs Latency: What “Multi-Region” Really Means',
+            level: 2,
+          },
+          {
+            id: 'disaster-recovery-basics-rpo-rto-backups-and-failover-drills',
+            label: 'Disaster Recovery Basics: RPO/RTO, Backups, and Failover Drills',
+            level: 2,
+          },
+          {
+            id: 'kubernetes-operations',
+            label: 'Kubernetes & Operations',
+            level: 1,
+          },
+          {
+            id: 'tidb-on-kubernetes-tidb-operator-automation-opportunities',
+            label: 'TiDB on Kubernetes: TiDB Operator + Automation Opportunities',
+            level: 2,
+          },
+          {
+            id: 'managed-path-tidb-cloud-vs-tidb-self-managed',
+            label: 'Managed Path: TiDB Cloud vs TiDB Self-Managed',
+            level: 2,
+          },
+          {
+            id: 'operational-readiness-checklist',
+            label: 'Operational Readiness Checklist',
+            level: 2,
+          },
+          {
+            id: 'ecosystem-integrations-cdc-streaming-bi-tooling',
+            label: 'Ecosystem & Integrations (CDC, Streaming, BI, Tooling)',
+            level: 1,
+          },
+          {
+            id: 'data-movement-cdc',
+            label: 'Data Movement & CDC',
+            level: 2,
+          },
+          {
+            id: 'observability-and-reliability-tooling',
+            label: 'Observability and Reliability Tooling',
+            level: 2,
+          },
+          {
+            id: 'developer-ecosystem-drivers-orms-connection-pooling',
+            label: 'Developer Ecosystem: Drivers, ORMs, Connection Pooling',
+            level: 2,
+          },
+          {
+            id: 'implementation-migration-how-teams-actually-switch',
+            label: 'Implementation & Migration (How Teams Actually Switch)',
+            level: 1,
+          },
+          {
+            id: 'migration-plan',
+            label: 'Migration Plan',
+            level: 2,
+          },
+          {
+            id: 'risk-reducers',
+            label: 'Risk Reducers',
+            level: 2,
+          },
+          {
+            id: 'poc-success-criteria',
+            label: 'POC Success Criteria',
+            level: 2,
+          },
+          {
+            id: 'pricing-cost-drivers-what-changes-your-bill',
+            label: 'Pricing & Cost Drivers (What Changes Your Bill)',
+            level: 1,
+          },
+          {
+            id: 'tidb-self-managed-tco-vs-tidb-cloud-pricing-model',
+            label: 'TiDB: Self-Managed TCO vs TiDB Cloud Pricing Model',
+            level: 2,
+          },
+          {
+            id: 'yugabytedb-pricing-model-to-confirm',
+            label: 'YugabyteDB: Pricing Model to Confirm',
+            level: 2,
+          },
+          {
+            id: 'cost-checklist-for-fair-comparison',
+            label: 'Cost Checklist for Fair Comparison',
+            level: 2,
+          },
+          {
+            id: 'pros-cons-clear-tradeoffs-no-hype',
+            label: 'Pros & Cons (Clear Tradeoffs, No Hype)',
+            level: 1,
+          },
+          {
+            id: 'tidb-pros',
+            label: 'TiDB Pros',
+            level: 2,
+          },
+          {
+            id: 'tidb-cons-tradeoffs',
+            label: 'TiDB Cons / Tradeoffs',
+            level: 2,
+          },
+          {
+            id: 'yugabytedb-pros',
+            label: 'YugabyteDB Pros',
+            level: 2,
+          },
+          {
+            id: 'yugabytedb-cons-tradeoffs',
+            label: 'YugabyteDB Cons / Tradeoffs',
+            level: 2,
+          },
+          {
+            id: 'who-should-choose-which-decision-matrix',
+            label: 'Who Should Choose Which? (Decision Matrix)',
+            level: 1,
+          },
+          {
+            id: 'if-you-re-optimizing-for-mysql-compatibility-scale',
+            label: 'If You’re Optimizing for MySQL Compatibility + Scale',
+            level: 2,
+          },
+          {
+            id: 'if-you-re-optimizing-for-postgresql-compatibility-multi-region-needs',
+            label: 'If You’re Optimizing for PostgreSQL Compatibility + Multi-Region Needs',
+            level: 2,
+          },
+          {
+            id: 'bottom-line',
+            label: 'Bottom Line',
+            level: 2,
+          },
+          {
+            id: 'faq',
+            label: 'FAQs',
+            level: 1,
+          },
+          {
+            id: 'next-steps-validate-with-a-hands-on-demo-poc',
+            label: 'Next Steps: Validate with a Hands-On Demo / POC',
+            level: 1,
+          },
+        ],
+        sticky: true,
+      },
+    },
+    {
+      id: 'intro',
+      type: 'richTextBlock',
+      props: {
+        content:
+          '**Updated March 13, 2026 | Author: [Brian Foster](https://www.pingcap.com/blog/author/brian-james-foster/) (Content Director) | Reviewed by: Ravish Patel (Solutions Engineer)**\n\nThis guide is for database architects, platform/DevOps teams, and engineering leaders evaluating TiDB alongside YugabyteDB and trying to choose a pragmatic distributed SQL database for cloud-native, Kubernetes-first workloads. It focuses on what matters in production: Strong consistency, ACID transactions, horizontal scaling, HTAP analytics via TiFlash, and multi-region replication tradeoffs.\n\n**Verdict:** Choose TiDB when you are MySQL-first and need a pragmatic distributed SQL database for scale-out writes and storage (without application-owned sharding), plus an HTAP database path via TiKV + TiFlash to run operational analytics on fresh OLTP data. Choose YugabyteDB when your ecosystem is PostgreSQL-first and you want a distributed SQL option that aligns closely to Postgres drivers/ORMs and your existing Postgres-centric workflows, and you are ready to validate distributed transactions and multi-region replication tradeoffs in a topology-faithful POC.\n\n**Key takeaways (TiDB vs YugabyteDB):**\n\n* Choose **TiDB** if MySQL compatibility is non-negotiable and you want to preserve existing application behavior and tooling with minimal rewrite risk.  \n* Choose **TiDB** if you need scale-out writes and storage while keeping ACID transactions and strong consistency expectations, and you want scaling to be primarily “add nodes,” not “add sharding logic.”  \n* Choose **TiDB** if you want an HTAP path using TiFlash to reduce ETL lag and avoid standing up a separate analytics system for every real-time insight use case.  \n* Choose **YugabyteDB** if your stack is PostgreSQL-first (drivers, ORMs, SQL patterns) and that compatibility surface area is the biggest migration constraint you are trying to protect.  \n* In both cases, run a POC that explicitly measures distributed transactions under contention, p95/p99 latency, hotspot behavior, and failure scenarios in your intended multi-region replication topology, because that is where the real tradeoffs show up. \n\n## At-a-Glance: TiDB vs YugabyteDB\n\n| Criteria | TiDB | YugabyteDB |\n| ----- | ----- | ----- |\n| Primary use | Distributed SQL / NewSQL for scale-out OLTP with MySQL compatibility; optional HTAP database path with TiFlash | Distributed SQL database often evaluated for PostgreSQL compatibility and scale-out goals  |\n| SQL / protocol compatibility | MySQL compatibility focus; validate feature gaps and edge cases in a POC  | PostgreSQL compatibility focus; validate dialect/feature gaps in a POC  |\n| Consistency & ACID transactions | Strong consistency and ACID transactions; distributed transactions are part of the model (test contention + tail latency)  | Distributed transaction + consistency model should be validated with workload-specific testing  |\n| Scaling model | Horizontal scaling database with TiDB compute + TiKV storage separation; designed to scale without application-owned sharding | Horizontal scale-out model; compare how rebalancing and hot partitions behave under growth  |\n| HTAP / analytics | TiFlash columnar replicas enable HTAP analytics on fresh OLTP data (OLTP + OLAP on same data)  | Many teams still use a separate OLAP system for scan-heavy analytics; evaluate mixed workload strategy  |\n| Multi-region replication | Multi-region replication patterns exist, but tradeoffs depend on strong consistency vs latency choices | Multi-region replication patterns exist; validate topology goals and latency/cost tradeoffs early  |\n| Kubernetes operations | Self-managed on Kubernetes (TiDB Operator) or managed via TiDB Cloud; compare operational overhead | Self-managed on Kubernetes (YugabyteDB Kubernetes Operator) and day-2 workflows (upgrades, backups, incident response)  |\n| Pricing approach | No invented numbers. Compare TCO drivers: nodes/vCPU, storage, backups retention, egress, regions, support  | No invented numbers. Confirm licensing/pricing model and map it to your topology and workload shape  |\n\n### What This Table Covers\n\nThe table addresses the criteria that matter most during vendor selection: SQL dialect, architecture, consistency, analytics, scaling, multi-region support, Kubernetes maturity, managed services, licensing, and sharding. \n\nHowever, this table does **not** replace a topology-faithful POC on real schema and queries, and it won’t tell you how either system behaves under specific constraints, such as p95/p99 latency under contention, hotspot and rebalancing behavior at scale, failure-mode performance (node/AZ/region disruption), or the day-2 operational workflows your team relies on (online DDL, backups/restores, upgrades, and incident runbooks).\n\n#### How to Interpret “Compatibility”\n\n"MySQL compatibility" means TiDB speaks MySQL wire protocol, supports MySQL syntax, and works with MySQL drivers and ORMs. "PostgreSQL compatibility" means YugabyteDB’s YSQL API reuses the PostgreSQL query layer with support for PostgreSQL syntax, extensions, and drivers. Neither guarantees 100% feature parity—run your actual queries against a test cluster before committing.\n\n## TiDB vs YugabyteDB Overview\n\nTo set a baseline, here is a plain-English “category + best-fit” definition for each system so the rest of the comparison stays grounded in real usage, not labels.\n\n### TiDB in Brief\n\nTiDB (PingCAP) is a distributed SQL database (NewSQL) designed for horizontal scaling with a MySQL-friendly application experience. It uses TiKV for distributed transactional storage and TiFlash columnar replicas for an HTAP database path when you need analytics on fresh OLTP data.\n\n### YugabyteDB in Brief\n\nYugabyteDB is a distributed SQL database often evaluated for PostgreSQL compatibility and scale-out goals. In practice, teams validate compatibility surface area, distributed transaction behavior, and multi-region replication tradeoffs in a POC aligned to their target topology.\n\n## Jump to a Section\n\n* At-a-Glance: TiDB vs YugabyteDB  \n* TiDB vs YugabyteDB Overview  \n* Key Differences - The 60-second takeaway  \n* Architecture: How TiDB and YugabyteDB Work  \n* SQL & App Compatibility  \n* Consistency, ACID Transactions, and Isolation Semantics  \n* Scaling & Performance   \n* HTAP & Analytics: OLTP + OLAP on the Same Data  \n* Multi-Region Replication & Resilience   \n* Kubernetes & Operations  \n* Ecosystem & Integrations  \n* Implementation & Migration   \n* Pricing & Cost Drivers   \n* Pros & Cons   \n* Who Should Choose Which?   \n* FAQs   \n* Next Steps\n\n## Key Differences: The 60-Second Takeaway\n\nIf you only read one section, make it this one. These bullets map directly to the criteria that usually determine whether a team can migrate safely and operate the system confidently at scale.\n\n### Biggest Decision Drivers for Platform Teams\n\n* **SQL dialect:** TiDB speaks MySQL; YugabyteDB speaks PostgreSQL. Your existing stack is the strongest pull factor.\n\n* **HTAP analytics:** TiDB includes TiFlash for real-time analytics on live data. YugabyteDB relies on external OLAP systems.\n\n* **Scaling model:** TiDB separates compute and storage for independent scaling. YugabyteDB co-locates them, coupling scaling decisions.\n\n* **Multi-region writes:** Latency characteristics differ based on each system’s timestamp mechanism. Validate with your write patterns.\n\n* **Kubernetes operations:** TiDB Operator is purpose-built for K8s lifecycle management. YugabyteDB Kubernetes Operator streamlines the deployment and management of YugabyteDB clusters in Kubernetes environments.\n\n* **Sharding:** TiDB defaults to range-based sharding; YugabyteDB defaults to hash-based. This affects range scan vs. point lookup performance.\n\n### Common Misconceptions\n\n* **"Drop-in replacement":** Neither database is a zero-change drop-in for MySQL or PostgreSQL. Both require compatibility testing with your queries, stored procedures, and ORM configurations. TiDB covers a broad MySQL surface area but has documented differences in auto-increment ID allocation, certain collations, and some stored procedure features. YugabyteDB reuses the PostgreSQL engine but not every extension is fully supported.\n\n* **"Global writes without latency":** Any strongly consistent distributed database incurs cross-region latency for writes that span regions. The laws of physics apply. Evaluate whether single-region primary writes with cross-region read replicas might suit your workload better than true multi-region write topologies.\n\n* **"Distributed = always faster":** For small datasets on a single node, a well-tuned single-instance MySQL or PostgreSQL database outperforms any distributed system. Distributed SQL shines when data volume, availability needs, or write throughput exceed single-node capacity.\n\n## Architecture: How TiDB and YugabyteDB Work\n\nUnderstanding the architectural differences helps predict how each system will behave under your specific workload. Both databases draw inspiration from Google Spanner, but they make different design trade-offs in how they separate compute from storage and handle distributed transactions.\n\n### TiDB Architecture\n\n![TiDB architecture showing TiDB SQL layer, PD coordination, TiKV storage, and TiFlash columnar replicas.](https://static.pingcap.com/files/2026/02/27123334/image-9.png)\n\nTiDB’s core components are designed to separate responsibilities: \n\n* **TiDB Server (SQL layer):** Stateless nodes that parse SQL and generate distributed execution plans. Add or remove nodes without data migration.\n\n* **TiKV (row storage):** Distributed transactional key-value store. Data is divided into ~256 MB Regions replicated via Raft. Default Snapshot Isolation.\n\n* **TiFlash (columnar storage):** An optional columnar engine that maintains real-time replicas of selected tables. Data arrives from TiKV via Raft Learner without slowing transactional writes. The TiDB optimizer automatically chooses between TiKV (row) and TiFlash (columnar) based on cost estimates, and can even combine both in a single query for optimal performance.\n\n* **Placement Driver (PD):** Cluster metadata brain—manages topology, timestamp allocation, and data scheduling.\n\nStarting with TiDB 7.0, TiFlash also supports disaggregated storage and compute on S3-compatible object storage.\n\n### YugabyteDB Architecture\n\n![YugabyteDB architecture showing the query layer and the storage layer.](https://static.pingcap.com/files/2026/03/16181122/YugabyteDB-architecture.png)\n\n* **Query Layer:** YSQL reuses the PostgreSQL query engine; YCQL provides a Cassandra-compatible interface.\n\n* **DocDB (storage):** Distributed document store on customized RocksDB. Data split into tablets replicated via Raft. Handles sharding, replication, and distributed ACID transactions.\n\n* **YB-Master:** Manages metadata, tablet creation/splitting, schema changes, and load balancing.\n\nCompute and storage are co-located on each YB-TServer, so the two layers cannot be scaled independently.\n\n### Distributed Transactions: What to Verify in a POC\n\nTiDB uses a two-phase commit protocol (inspired by Percolator) with timestamps from PD. YugabyteDB uses a Spanner-inspired protocol with hybrid logical clocks. In a POC, test: Cross-shard transaction latency, conflict resolution under concurrent writes, transaction retry logic in your ORM/driver, and the throughput impact of different isolation levels.\n\n### Why Architecture Matters for OLTP Workloads vs OLAP Workloads\n\nBoth databases are optimized for OLTP. For OLAP, TiDB’s TiFlash runs analytical queries on columnar replicas without affecting transactional performance. YugabyteDB lacks a native columnar engine, so teams typically export data to a dedicated OLAP system like ClickHouse or a cloud data warehouse.\n\n## SQL & App Compatibility\n\nCompatibility is where migration risk lives. This section makes “compatibility surface area” concrete: Drivers/ORMs, SQL dialect gaps, and the specific risk areas that can break applications in subtle ways, without making “100% compatible” claims.\n\n### TiDB: MySQL Compatibility\n\nTiDB is highly compatible with the MySQL wire protocol and common MySQL 5.7 and 8.0 features. It supports most SQL syntax, functions, and data types. MySQL drivers and ORMs (Hibernate, Sequelize, SQLAlchemy, Django ORM, GORM) work with minimal or no changes. TiDB also supports online DDL for non-blocking schema changes.\n\nWhat typically ports without changes: Standard CRUD operations, most JOIN types, subqueries, common aggregate functions, B-tree and composite indexes, and views.\n\nWhat needs testing: Certain stored procedure behaviors, trigger semantics, specific character set and collation combinations, auto-increment ID allocation patterns (TiDB allocates IDs in batches for performance, so consecutive inserts may not produce strictly sequential IDs), and application code relying on MySQL-specific system variables or information\\_schema nuances.\n\n### YugabyteDB: PostgreSQL Compatibility\n\nYSQL reuses the PostgreSQL query layer, with the 2025.1 release rebasing the PostgreSQL fork from version 11.2 to 15.0. This upgrade brings support for stored generated columns, foreign keys on partitioned tables, and query execution optimizations like incremental sort and memoization.\n\nWhat typically ports without changes: Standard SQL queries, PostgreSQL data types (JSONB, arrays, hstore), most popular extensions (PostGIS, pg\\_trgm, pgcrypto), stored procedures, and PostgreSQL drivers and ORMs (psycopg2, node-postgres, ActiveRecord, Prisma).\n\nWhat needs testing: Extensions that depend on local filesystem access, custom C extensions, very large schema migrations, full-text search configurations, and workloads relying on PostgreSQL-specific sequential scan behavior. Yugabyte reports that over [92% of PostgreSQL query patterns now run with comparable performance](https://www.businesswire.com/news/home/20240919766328/en/YugabyteDB-Evolves-PostgreSQL-to-a-Distributed-Architecture-for-Modern-Cloud-Native-Applications), but the remaining gaps may affect your specific workload.\n\n### Choosing Based on Your Current Stack\n\nA practical decision usually starts with what you already run today. Use the guidance below as a quick filter, then prove it with a workload-aligned POC.\n\n#### *If You’re MySQL-First*\n\nTiDB offers the lowest migration friction. Connect using existing MySQL drivers, often without changing application code. Run your integration test suite against a TiDB cluster to surface any gaps. TiDB provides migration tools including TiDB Data Migration (DM) for ongoing replication from MySQL/MariaDB and TiDB Lightning for fast bulk data imports.\n\n#### *If You’re PostgreSQL-First*\n\nYugabyteDB provides the most familiar path. Use PostgreSQL drivers and ORMs directly. Yugabyte also provides YugabyteDB Voyager, a migration tool designed to facilitate schema, procedural code, and data migration from PostgreSQL, Oracle, and other databases to YugabyteDB. Test stored procedures, triggers, and extension usage against a YugabyteDB cluster to confirm compatibility.\n\n## Consistency, ACID Transactions, and Isolation Semantics\n\nStrong consistency and ACID compliance are table stakes for distributed SQL databases. The practical differences lie in the specific isolation levels supported, how distributed transactions behave under contention, and what guarantees you can rely on during failure scenarios.\n\n### TiDB: ACID Transactions at Scale\n\nTiDB provides full ACID support across distributed shards. Default isolation is Snapshot Isolation (Repeatable Read in MySQL terms). A two-phase commit with PD’s global timestamp oracle coordinates distributed transactions, providing strong consistency within a region and predictable OLTP behavior. For deeper background, see [distributed transactions and ACID transactions in TiDB](https://www.pingcap.com/blog/distributed-transactions-tidb/?utm_source=chatgpt.com).\n\n### YugabyteDB: Transaction + Consistency Model to Validate\n\nYugabyteDB supports Snapshot Isolation, Serializable, and Read Committed, with Read Committed the default for newer versions (v2025.2 and later). Its protocol uses hybrid logical clocks, which can operate across regions without a centralized timestamp oracle. In a POC, validate which isolation level your application requires and measure throughput impact.\n\n### Operational Impact: Latency, Contention, and Failure Scenarios\n\nIn both systems, distributed transactions add latency proportional to network round-trips between participating nodes. Cross-shard transactions are more expensive than single-shard transactions. Under write contention (multiple transactions competing for the same rows), TiDB uses pessimistic locking by default where conflicts are detected at commit time. YugabyteDB uses pessimistic locking in its default Snapshot Isolation mode. During node failures, both use Raft consensus for automatic leader election and continued service, but failover speed depends on Raft election timeout settings and cluster topology. Measure these behaviors under your specific failure injection scenarios.\n\n## Scaling & Performance (Horizontal Scaling Without Rewriting Everything)\n\nThe promise of distributed SQL is horizontal scaling: add nodes to handle more data and traffic without rewriting your application. Both TiDB and YugabyteDB deliver on this promise, but their scaling mechanics differ in important ways.\n\n### Scaling Model Comparison\n\nTiDB’s compute-storage separation lets you scale each layer independently. Need more query throughput? Add TiDB server nodes. Need more storage capacity or write throughput? Add TiKV nodes. PD automatically rebalances data regions across the expanded cluster. This flexibility is particularly valuable for workloads where compute and storage demands grow at different rates.\n\nYugabyteDB co-locates compute and storage on each YB-TServer node. When you add a node, you get both more compute and more storage. Tablet rebalancing happens automatically. This model is simpler to reason about but means you cannot independently scale compute without also scaling storage (and vice versa).\n\nFor a clear framing of scaling tradeoffs, see [horizontal scaling database vs vertical scaling](https://www.pingcap.com/horizontal-scaling-vs-vertical-scaling/).\n\n### Performance Considerations for OLTP Workloads\n\nKey factors: Sharding alignment with query patterns (range-sharded TiDB favors range scans; hash-sharded YugabyteDB distributes point lookups evenly), connection pooling, transaction size, contention levels, and index design.\n\n### Performance Considerations for OLAP Workloads\n\nTiDB’s TiFlash gives it a structural advantage: Analytical queries run on columnar replicas without affecting transactional performance on TiKV. The TiDB optimizer automatically routes appropriate queries to TiFlash, and can combine row and columnar access in a single query. This is the core of TiDB’s HTAP value proposition. YugabyteDB does not include a built-in columnar engine. For heavy analytical workloads, the common pattern is to use CDC to stream data from YugabyteDB to a dedicated analytics system like ClickHouse, Snowflake, or BigQuery.\n\n### Benchmarking Checklist\n\nBenchmarking is only useful if it reflects production.\n\n* **Versions:** Use latest stable releases.\n\n* **Topology:** Match node counts, instance types, and storage configs.\n\n* **Workload:** Use your actual application queries, not just synthetic benchmarks.\n\n* **Sharding:** Configure primary keys optimally for each system’s strategy.\n\n* **Warm-up:** Allow steady state before measuring.\n\n## HTAP & Analytics: OLTP + OLAP on the Same Data\n\nHTAP means running transactional and analytical workloads on the same database without ETL pipelines. This reduces complexity, eliminates data staleness, and lowers cost.\n\n### TiDB HTAP Approach: TiFlash for Analytical Replicas\n\nTiDB’s HTAP architecture centers on TiFlash, a columnar storage engine that receives real-time data replication from TiKV. When you create TiFlash replicas for a table, TiDB automatically maintains a columnar copy updated as transactions commit. The replication uses the Raft consensus protocol—TiFlash replicas do not participate in leader elections and do not slow transactional writes. TiFlash provides the same Snapshot Isolation consistency as TiKV, ensuring analytical reads always see consistent, up-to-date data. The TiDB optimizer routes queries to the most efficient engine and can use both TiKV and TiFlash in a single query.\n\nIf you want a primer on why this can simplify architecture, see [HTAP database for OLTP and OLAP workloads](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/?utm_source=chatgpt.com).\n\n### When TiFlash helps\n\nTiFlash is most valuable when your team needs fresh analytics on operational data without building and maintaining a separate ETL pipeline. Common scenarios include: \n\n* Real-time dashboards (revenue, inventory, user engagement) built directly on transactional data.  \n* Operational intelligence queries that join transactional tables with reference data for business decisions.  \n* Ad-hoc analytical queries from business analysts who need current data without waiting for batch loads.  \n* Mixed workloads where the same cluster serves the application and internal reporting.\n\n### When a Separate OLAP System Still Makes Sense\n\nFor petabyte-scale historical analysis, complex multi-source transformations, ML feature engineering, or long-running batch jobs, a dedicated system (Spark, Snowflake, BigQuery) remains appropriate. Many teams use TiDB with TiFlash for operational analytics plus CDC to a warehouse for deep historical analysis.\n\n## Multi-Region Replication & Resilience (Reality of Global Latency)\n\nMulti-region deployments are increasingly important for global applications, disaster recovery, and compliance with data residency requirements. Both databases offer multi-region capabilities, but the trade-offs between consistency, latency, and operational complexity differ.\n\n### Supported Topology Patterns to Evaluate\n\n* **Single-region HA:** Replicas across availability zones. Lowest latency, simplest operations.\n\n* **Multi-region reads:** Primary writes in one region, read replicas elsewhere. Good for read-heavy global apps.\n\n* **Multi-region writes:** Write to any region. Most complex, highest latency for consistent writes.\n\nTiDB supports Placement Rules that allow fine-grained control over where data replicas are placed across regions. TiDB Cloud provides managed multi-region cluster deployments. YugabyteDB provides geo-partitioning for pinning data to specific regions, xCluster async replication between clusters, and synchronous replication across availability zones within a region. Both systems support read replicas for offloading read traffic to secondary regions.\n\n### Strong Consistency vs Latency: What “Multi-Region” Really Means\n\nTiDB’s PD-based timestamps mean multi-region writes incur latency to the PD leader. YugabyteDB’s hybrid clocks reduce this dependency but still face Raft latency. Start with single-region HA and add multi-region only when business requirements demand it.\n\nIf you want a practical framework for strong consistency tradeoffs, see [strong consistency and the CAP theorem (distributed systems)](https://www.pingcap.com/article/understanding-cap-theorem-basics-in-distributed-systems/).\n\n### Disaster Recovery Basics: RPO/RTO, Backups, and Failover Drills\n\nBoth databases support PITR, scheduled backups, and automated failover. TiDB integrates PITR into TiDB Cloud and provides BR tooling for self-managed deployments. YugabyteDB offers backup/restore via Anywhere and CLI utilities. Regardless of choice, regularly test DR procedures and document RPO/RTO targets.\n\n## Kubernetes & Operations\n\nDay-2 operations—upgrades, backups, monitoring, incident response—are where distributed databases create the most operational load. Kubernetes-native tooling can significantly reduce this burden.\n\n### TiDB on Kubernetes: TiDB Operator + Automation Opportunities\n\nTiDB Operator is a purpose-built Kubernetes Operator that automates the full lifecycle of TiDB clusters: Deployment, upgrades, scaling, backup, failover, and configuration changes. Originally developed by PingCAP and open-sourced in 2018, it uses Custom Resource Definitions (CRDs) to represent TiDB clusters as Kubernetes-native resources. Key capabilities include rolling upgrades with automatic rollback on failure, horizontal scaling of TiDB, TiKV, and TiFlash nodes via CR modifications, automated backup to S3-compatible storage, and native integration with Prometheus and Grafana for observability. TiDB Operator requires Kubernetes v1.24+ and uses Helm for deployment. It supports managing multiple TiDB clusters within a single Kubernetes cluster.\n\n![TiDB Operator automation for deploying, scaling, upgrading, and backing up TiDB on Kubernetes.](https://static.pingcap.com/files/2026/03/01050752/Kubernetes-database-operator-workflow.png)\n\n###  Managed Path: TiDB Cloud vs TiDB Self-Managed \n\n[TiDB Cloud managed distributed SQL database](https://www.pingcap.com/tidb/cloud/?utm_source=chatgpt.com) eliminates Kubernetes operational overhead entirely. PingCAP manages infrastructure provisioning, patching, upgrades, backups, and monitoring. TiDB Cloud Dedicated provides full control over node sizing and cluster configuration, while TiDB Cloud Starter offers auto-scaling, lower-touch options for smaller workloads. TiDB Cloud Essential is also a solid option for growing or production workloads that need performance, security, and scale—without the complexity of infrastructure management. \n\nFor teams that prefer full control, [self-managed TiDB on Kubernetes or VMs](https://www.pingcap.com/tidb/self-managed/) via TiDB Operator is the recommended path. The choice depends on your team’s operational capacity, compliance requirements, and cost optimization strategy.\n\n### Operational Readiness Checklist\n\nA production checklist should include:\n\n* **PITR and backups:** Automated schedules, tested restores, documented RPO/RTO.\n\n* **Upgrades:** Rolling upgrade process tested in staging.\n\n* **Monitoring:** Dashboards for latency, throughput, storage, Raft health, replication lag.\n\n* **Incident playbooks:** Procedures for node failures, partitions, storage full, performance degradation.\n\n## Ecosystem & Integrations (CDC, Streaming, BI, Tooling)\n\nA database does not exist in isolation. Integration with your data pipeline, observability stack, and developer tools is critical for production readiness.\n\n### Data Movement & CDC\n\nTiDB provides [TiCDC (TiDB Change Data Capture)](https://www.pingcap.com/blog/multi-writer-change-data-capture-cdc-architecture-ticdc-tidb/) for streaming row-level changes to downstream systems including Apache Kafka, Apache Pulsar, MySQL, and other TiDB clusters. TiCDC supports ordering guarantees and at-least-once delivery. TiDB also offers [TiDB Data Migration](https://docs.pingcap.com/tidb/stable/dm-overview/) for ongoing replication from MySQL/MariaDB sources and [TiDB Lightning](https://docs.pingcap.com/tidb/stable/tidb-lightning-overview/) for fast bulk import.\n\nYugabyteDB supports CDC through its native change data capture feature, streaming changes to Kafka and other targets. [YugabyteDB Voyager](https://docs.yugabyte.com/stable/yugabyte-voyager/) provides schema and data migration tooling from PostgreSQL, Oracle, and MySQL sources.\n\n### Observability and Reliability Tooling\n\nTiDB integrates natively with Prometheus for metrics collection and Grafana for dashboards. TiDB Dashboard provides a built-in web UI for cluster diagnostics, slow query analysis, and key visualization. TiDB Cloud includes built-in monitoring and alerting. YugabyteDB provides Prometheus-compatible metrics endpoints, a web-based admin UI, and comprehensive monitoring through Anywhere and Aeon.\n\n### Developer Ecosystem: Drivers, ORMs, Connection Pooling\n\nTiDB works with any MySQL-compatible driver and ORM. Officially tested integrations include JDBC (MySQL Connector/J), Go (go-sql-driver/mysql), Python (mysqlclient, PyMySQL), Node.js (mysql2), and ORMs like Hibernate, Django ORM, SQLAlchemy, Sequelize, and GORM. Connection pooling is supported by application-side pools used with MySQL connectors like JDBC or by proxies like ProxySQL. \n\nYugabyteDB works with PostgreSQL-compatible drivers and ORMs. In addition to standard PostgreSQL drivers, Yugabyte offers topology-aware Smart Drivers that route connections to the nearest node for lower latency. Supported ORMs include ActiveRecord, Hibernate, Django ORM, Prisma, and Sequelize (via PostgreSQL dialect).\n\n## Implementation & Migration (How Teams Actually Switch)\n\nMigrating to a distributed SQL database is a multi-phase project. Rushing the process is the most common source of production incidents. Plan carefully and validate thoroughly.\n\n### Migration Plan\n\n* **Assessment:** Audit schema, queries, stored procedures, and dependencies. Identify compatibility gaps.\n\n* **Migration:** Move schema, then data. TiDB: use Lightning for bulk import, DM for replication. YugabyteDB: use Voyager.\n\n* **Validation:** Run full test suite. Compare results, latency, and error rates.\n\n* **Cutover:** Switch production traffic with rollback plan ready.\n\n### Risk Reducers\n\n* **Dual writes:** Write to both systems during validation to compare results.\n\n* **Canary deployment:** Route a small percentage of production traffic first.\n\n* **Workload replay:** Capture and replay production queries against the new database.\n\n### POC Success Criteria\n\nDefine success across three dimensions:\n\n* **Functional:** Critical queries return correct results; stored procedures and schema migrations work.\n\n* **Performance:** P50/P99 latencies meet SLA targets under peak load.\n\n* **Operations:** Backup/restore, rolling upgrades, and failover meet RPO/RTO targets.\n\n## Pricing & Cost Drivers (What Changes Your Bill)\n\nPricing models evolve and depend on deployment choices. This section describes what typically drives cost rather than quoting specific prices that may be outdated by the time you read this.\n\n### TiDB: Self-Managed TCO vs TiDB Cloud Pricing Model\n\nFor self-managed TiDB, primary costs are infrastructure (compute, storage, network) and operational labor. TiDB is Apache 2.0 licensed with no software fees. TiDB Cloud pricing is not only node and storage based. It varies by tier: Starter is billed on RU consumption, and Essential is billed on provisioned RCUs (capacity in RU/s), in addition to drivers like node types/sizes (TiDB, TiKV, TiFlash), storage consumed, backup retention, network egress, and support tier. \n\nTiDB Cloud Starter offers a free tier for getting started. Cost drivers that frequently surprise teams include TiFlash capacity for HTAP (additional compute and storage), cross-region network egress for multi-region deployments, backup storage retention beyond default periods, and provisioning enough RU or RCUs to cover peak concurrency and write bursts.\n\nFor the managed option, start with [TiDB Cloud managed distributed SQL database](https://www.pingcap.com/tidb/cloud/?utm_source=chatgpt.com).\n\n### YugabyteDB: Pricing Model to Confirm\n\nYugabyteDB core is Apache 2.0 licensed. YugabyteDB Anywhere (management platform) is under a Polyform Free Trial license. YugabyteDB Aeon pricing is based on cluster size, instance types, storage, and cloud provider. Confirm current pricing directly with Yugabyte, as published pricing may differ from negotiated enterprise agreements. Cost drivers to watch: Multi-region replication configurations, read replica deployments, and support tier escalation.\n\n### Cost Checklist for Fair Comparison\n\nWhen comparing TCO between TiDB and YugabyteDB, ensure your analysis accounts for both node-based and RU/RCU-based pricing, depending on deployment tier. Include: \n\n* Compute costs (number and size of nodes across all layers, where applicable).  \n* RU consumption (TiDB Cloud Starter) and provisioned RCUs in RU/s (TiDB Cloud Essential).  \n* Storage costs (including replication overhead).  \n* Network egress (especially cross-region).  \n* Backup and DR storage.  \n* Managed service fees vs. internal operational labor.  \n* Support tier costs. \n\nBoth vendors offer pricing calculators. Use them with realistic workload estimates, including peak concurrency and burst profiles, so RU/RCU capacity and consumption assumptions are not understated.\n\n## Pros & Cons (Clear Tradeoffs, No Hype)\n\nTo keep the comparison selection-oriented and trustworthy, this section summarizes the best-fit scenarios and what to watch for, without making untestable claims.\n\n### TiDB Pros\n\n* **MySQL compatibility** minimizes migration risk for MySQL-based applications.\n\n* **HTAP with TiFlash** provides built-in real-time analytics without a separate OLAP pipeline.\n\n* **Compute-storage separation** enables independent scaling of SQL processing and storage.\n\n* **TiDB Operator** delivers mature, Kubernetes-native lifecycle management.\n\n* **CNCF-graduated TiKV** signals strong open-source governance.\n\n* **TiDB Cloud** on AWS, GCP, Microsoft Azure, and Alibaba Cloud reduces operational burden.\n\n* **Proven at scale:** [Adopted by 3,000+ companies globally](https://www.pingcap.com/customers/).\n\n### TiDB Cons / Tradeoffs\n\n* **Not PostgreSQL-compatible:** Teams committed to PostgreSQL face a dialect mismatch.\n\n* **Multi-region write latency:** Centralized PD means writes incur latency to the PD leader’s region.\n\n* **Component complexity:** TiDB, TiKV, PD, and TiFlash are more components than a monolithic database.\n\n### YugabyteDB Pros\n\n* **PostgreSQL compatibility** via reused query layer provides a familiar experience.\n\n* **Multiple isolation levels:** Snapshot, Serializable, and Read Committed.\n\n* **Geo-distribution:** Native geo-partitioning and xCluster replication.\n\n* **Multi-API:** YSQL, YCQL, plus emerging MongoDB API support.\n\n### YugabyteDB Cons / Tradeoffs\n\n* **No built-in HTAP:** Analytical workloads require an external OLAP system.\n\n* **Coupled compute/storage:** Cannot scale independently.\n\n* **Licensing nuance:** Anywhere uses a different license than the Apache 2.0 core.\n\n* **Hash sharding default:** Range scans may underperform without explicit range sharding configuration.\n\n## Who Should Choose Which? (Decision Matrix)\n\nUse this matrix as a fast decision filter, then confirm the decision with a workload-aligned POC that includes performance, failure drills, and operational workflows.\n\n| Scenario | TiDB | YugabyteDB |\n| :---- | :---- | :---- |\n| **MySQL-based apps** | Lowest migration friction | Requires query rewrite to PostgreSQL |\n| **HTAP (analytics on live data)** | Built-in via TiFlash | Requires external OLAP |\n| **PostgreSQL-based apps** | Requires query adaptation | Native compatibility via YSQL |\n| **Serializable isolation** | Snapshot Isolation default | Natively supported |\n| **Independent compute scaling** | Supported natively | Compute/storage scale together |\n| **Geo-partitioning** | Via Placement Rules | Native support |\n| **Kubernetes-first ops** | TiDB Operator (purpose-built) | YugabyteDB Kubernetes Operator |\n\n### If You’re Optimizing for MySQL Compatibility + Scale\n\nTiDB is the natural choice. It provides MySQL protocol compatibility, the TiDB Operator for Kubernetes-native operations, TiFlash for real-time analytics without a separate OLAP pipeline, and a managed cloud option on AWS, GCP, Azure, and Alibaba Cloud. Migration from MySQL is well-documented with dedicated tooling including DM and Lightning.\n\n### If You’re Optimizing for PostgreSQL Compatibility + Multi-Region Needs\n\nYugabyteDB is the natural choice. It provides deep PostgreSQL compatibility via the YSQL API, native geo-partitioning for data residency requirements, serializable isolation for workloads that need it, and Smart Drivers for topology-aware connection routing. Migration from PostgreSQL is supported by YugabyteDB Voyager.\n\n### Bottom Line\n\nBoth TiDB and YugabyteDB are mature, production-ready distributed SQL databases. Choose TiDB if your stack is MySQL-based and you need HTAP analytics with independent compute and storage scaling. Choose YugabyteDB if your stack is PostgreSQL-based and you need flexible multi-region isolation options. In either case, run a proof-of-concept with your actual workload before committing.',
+        className: 'rich-text-block--raw-source',
+      },
+      style: {
+        background: 'none',
+        spacing: 'section',
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      },
+    },
+    {
+      id: 'faq',
+      type: 'faq',
+      props: {
+        title: 'FAQs',
+        items: [
+          {
+            q: 'Is TiDB a drop-in replacement for MySQL?',
+            a: 'TiDB is MySQL-compatible at the protocol level and supports common MySQL syntax, but it is not guaranteed to match every MySQL feature or edge case. The safest approach is a POC on your top queries, schema features, and operational workflows.',
+          },
+          {
+            q: 'Is YugabyteDB PostgreSQL-compatible enough for my app?',
+            a: 'For Postgres-first teams, the practical answer comes from testing your specific SQL features, drivers/ORM behavior, and high-concurrency transaction paths in a POC. Validate the edge cases you actually rely on, not only “hello world” queries.',
+          },
+          {
+            q: 'How do distributed transactions work in TiDB vs YugabyteDB?',
+            a: 'Both are distributed SQL databases where transactions can span nodes. You should test contention-heavy transactions, long transactions, and failure scenarios to understand retries, timeouts, and tail latency in your intended topology. For TiDB background, see [distributed transactions and ACID transactions in TiDB](https://www.pingcap.com/blog/distributed-transactions-tidb/?utm_source=chatgpt.com).',
+          },
+          {
+            q: 'Can TiDB handle OLAP workloads without ETL? (HTAP + TiFlash)?',
+            a: 'TiDB can support HTAP patterns using TiFlash columnar replicas, which lets you run analytical queries on the same underlying data with less ETL lag. For a primer, see [HTAP database for OLTP and OLAP workloads](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/?utm_source=chatgpt.com).',
+          },
+          {
+            q: 'What’s the easiest way to run TiDB on Kubernetes (Kubernetes operator)?',
+            a: 'If you want control and Kubernetes-native workflows, start with [self-managed TiDB on Kubernetes or VMs](https://www.pingcap.com/tidb/self-managed/?utm_source=chatgpt.com) and evaluate operator-driven deployment, upgrades, backups, and incident playbooks. If you want managed operations, start with [TiDB Cloud managed distributed SQL database](https://www.pingcap.com/tidb/cloud/?utm_source=chatgpt.com).',
+          },
+          {
+            q: 'What should I test in a TiDB vs YugabyteDB POC?',
+            a: 'Test your real schema and query mix at production-like concurrency, measure p95/p99 latency, include hotspot and failure drills, and run at least one operational workflow (DDL plus backup/restore). Define success criteria across correctness, performance, and operations before tuning.',
+          },
+        ],
+      },
+      style: {
+        background: 'none',
+        spacing: 'section',
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      },
+    },
+    {
+      id: 'main',
+      type: 'richTextBlock',
+      props: {
+        content:
+          '## Next Steps: Validate with a Hands-On Demo / POC\n\nThe best way to evaluate TiDB is to test it with your own data and workload:\n\n* [Try TiDB Cloud](https://www.pingcap.com/tidb/cloud/)**:** Free Starter cluster—deploy in minutes.\n\n* [Self-managed on Kubernetes](https://www.pingcap.com/tidb/self-managed/)**:** Follow the TiDB Operator quick-start guide.\n\n* [Explore HTAP](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/)**:** Learn how TiFlash enables real-time analytics.\n\n* [Distributed transactions](https://www.pingcap.com/blog/distributed-transactions-tidb/)**:** Deep-dive into ACID at scale.\n\n* [Distributed SQL explained](https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/)**:** Why distributed SQL is the foundation for modern apps.\n\nReady to dive deeper? [Talk with a TiDB expert](https://www.pingcap.com/contact-us/) to walk through your architecture and workload requirements.',
+        className: 'rich-text-block--raw-source',
+      },
+      style: {
+        background: 'none',
+        spacing: 'section',
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      },
+    },
+  ],
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}

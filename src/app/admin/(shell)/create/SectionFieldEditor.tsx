@@ -1,13 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { Trash2, Plus } from 'lucide-react'
-import type { SectionNode } from '@/lib/dsl-schema'
+import { Trash2, Plus, ImagePlus } from 'lucide-react'
+import type { ImageRef, SectionNode } from '@/lib/dsl-schema'
 import type { FieldSchema } from '@/lib/section-registry'
 import { schemaMap } from '@/lib/section-registry'
 import { IconPicker } from './IconPicker'
 import { ImageField } from './ImageField'
+import { MediaCenterModal } from './MediaCenterModal'
 import { ALLOWED_BG_BY_SECTION, ALLOWED_SPACING_BY_SECTION } from '@/lib/section-style'
 
 // ── Shared primitives ────────────────────────────────────────────────────────
@@ -69,6 +70,120 @@ function TextArea({
   )
 }
 
+function buildMarkdownImageSnippet(image: ImageRef) {
+  const alt = (image.alt ?? '')
+    .replace(/[\r\n]+/g, ' ')
+    .replace(/\]/g, '\\]')
+    .trim()
+  return `![${alt}](${image.url})`
+}
+
+function RichTextMarkdownField({
+  sectionId,
+  label,
+  value,
+  onChange,
+  onInsertImage,
+  placeholder,
+  rows = 10,
+}: {
+  sectionId: string
+  label: string
+  value: string
+  onChange: (v: string) => void
+  onInsertImage?: (payload: { sectionId: string; imageUrl: string }) => void
+  placeholder?: string
+  rows?: number
+}) {
+  const [mediaCenterOpen, setMediaCenterOpen] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const selectionRef = useRef({ start: value.length, end: value.length, scrollTop: 0 })
+
+  const rememberCursorState = () => {
+    const textareaEl = textareaRef.current
+    if (!textareaEl) return
+    selectionRef.current = {
+      start: textareaEl.selectionStart ?? value.length,
+      end: textareaEl.selectionEnd ?? value.length,
+      scrollTop: textareaEl.scrollTop,
+    }
+  }
+
+  const insertImageMarkdown = (image: ImageRef) => {
+    const snippet = buildMarkdownImageSnippet(image)
+    const textareaEl = textareaRef.current
+    if (!textareaEl) {
+      onChange(value ? `${value}\n\n${snippet}` : snippet)
+      return
+    }
+
+    const start = selectionRef.current.start ?? textareaEl.selectionStart ?? value.length
+    const end = selectionRef.current.end ?? textareaEl.selectionEnd ?? value.length
+    const before = value.slice(0, start)
+    const after = value.slice(end)
+    const prefix = before && !before.endsWith('\n') ? '\n\n' : before ? '\n' : ''
+    const suffix = after && !after.startsWith('\n') ? '\n\n' : after ? '\n' : ''
+    const nextValue = `${before}${prefix}${snippet}${suffix}${after}`
+    const nextCursor = before.length + prefix.length + snippet.length
+    const nextScrollTop = selectionRef.current.scrollTop
+
+    onChange(nextValue)
+    onInsertImage?.({ sectionId, imageUrl: image.url })
+
+    requestAnimationFrame(() => {
+      if (!textareaRef.current) return
+      textareaRef.current.focus()
+      textareaRef.current.setSelectionRange(nextCursor, nextCursor)
+      textareaRef.current.scrollTop = nextScrollTop
+    })
+  }
+
+  return (
+    <FieldRow label={label}>
+      <div className="space-y-2">
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onSelect={rememberCursorState}
+          onClick={rememberCursorState}
+          onKeyUp={rememberCursorState}
+          placeholder={placeholder}
+          rows={rows}
+          className={textarea}
+        />
+        <div className="flex flex-col gap-3 rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="min-w-0 text-body-sm text-gray-500">
+            Insert an image from the media library. We will add{' '}
+            <code className="rounded bg-white px-1.5 py-0.5 text-[12px] text-gray-600 ring-1 ring-gray-200">
+              ![alt](url)
+            </code>{' '}
+            for you.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              rememberCursorState()
+              setMediaCenterOpen(true)
+            }}
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-body-sm font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-100"
+          >
+            <ImagePlus size={14} />
+            <span>Insert Image</span>
+          </button>
+        </div>
+      </div>
+      <MediaCenterModal
+        open={mediaCenterOpen}
+        onClose={() => setMediaCenterOpen(false)}
+        onSelect={insertImageMarkdown}
+        initialTab="library"
+        defaultTag="richtext"
+      />
+    </FieldRow>
+  )
+}
+
 function CtaFields({
   prefix,
   text,
@@ -90,7 +205,6 @@ function CtaFields({
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ArrayItemsEditor<T extends Record<string, any>>({
   items,
   onUpdate,
@@ -167,11 +281,17 @@ function renderField({
   field,
   value,
   onChange,
+  nodeId,
+  sectionType,
+  onRichTextImageInsert,
   slug,
 }: {
   field: FieldSchema
   value: Record<string, unknown>
   onChange: (next: Record<string, unknown>) => void
+  nodeId: string
+  sectionType: SectionNode['type']
+  onRichTextImageInsert?: (payload: { sectionId: string; imageUrl: string }) => void
   slug?: string
 }) {
   const fieldValue = getPathValue(value, field.key)
@@ -188,6 +308,19 @@ function renderField({
         </FieldRow>
       )
     case 'textarea':
+      if (field.key === 'content') {
+        return (
+          <RichTextMarkdownField
+            sectionId={nodeId}
+            label={field.label}
+            value={typeof fieldValue === 'string' ? fieldValue : ''}
+            onChange={(v) => onChange(setPathValue(value, field.key, v))}
+            onInsertImage={onRichTextImageInsert}
+            placeholder={field.placeholder}
+            rows={field.rows}
+          />
+        )
+      }
       return (
         <FieldRow label={field.label}>
           <TextArea
@@ -274,6 +407,15 @@ function renderField({
           <ImageField
             value={fieldValue as any}
             onChange={(v) => {
+              const isCtaImageField =
+                sectionType === 'cta' && (field.key === 'image' || field.key === 'image.image')
+
+              if (isCtaImageField && !v) {
+                const next = setPathValue(value, parentPath ?? field.key, null)
+                onChange(next)
+                return
+              }
+
               let next = setPathValue(value, field.key, v)
               if (parentPath) {
                 next = setPathValue(next, `${parentPath}.alt`, v?.alt ?? '')
@@ -344,6 +486,9 @@ function renderField({
                       field: child,
                       value: item,
                       onChange: (nextItem) => update(nextItem as any),
+                      nodeId,
+                      sectionType,
+                      onRichTextImageInsert,
                       slug,
                     })}
                   </div>
@@ -427,6 +572,9 @@ function renderField({
                       field: { ...child, key: `${field.key}.${child.key}` },
                       value,
                       onChange,
+                      nodeId,
+                      sectionType,
+                      onRichTextImageInsert,
                       slug,
                     })}
                   </div>
@@ -495,10 +643,16 @@ const BG_IMAGE_OVERLAY_OPTIONS = [
 interface SectionFieldEditorProps {
   node: SectionNode
   onChange: (updated: SectionNode) => void
+  onRichTextImageInsert?: (payload: { sectionId: string; imageUrl: string }) => void
   slug?: string
 }
 
-export function SectionFieldEditor({ node, onChange, slug }: SectionFieldEditorProps) {
+export function SectionFieldEditor({
+  node,
+  onChange,
+  onRichTextImageInsert,
+  slug,
+}: SectionFieldEditorProps) {
   const schema = schemaMap[node.type]
   const [activeTab, setActiveTab] = useState<'content' | 'style'>('content')
   const allowedBackgrounds = ALLOWED_BG_BY_SECTION[node.type] ?? new Set()
@@ -575,6 +729,9 @@ export function SectionFieldEditor({ node, onChange, slug }: SectionFieldEditorP
                   field,
                   value: node.props as any,
                   onChange: handleChange,
+                  nodeId: node.id,
+                  sectionType: node.type,
+                  onRichTextImageInsert,
                   slug,
                 })}
               </div>
