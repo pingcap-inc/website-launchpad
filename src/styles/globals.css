@@ -656,9 +656,12 @@
   padding: 1rem 1rem;
   border: 1px solid #1f2933;
 }
+.rich-text-block th strong {
+  color: inherit;
+}
 .rich-text-block td {
   color: #424d57;
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.25rem;
   border: 1px solid #1f2933;
   line-height: 1.55;
 }
