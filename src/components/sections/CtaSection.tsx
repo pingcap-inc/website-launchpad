@@ -29,7 +29,7 @@ export function CtaSection({
   // decorative illustration, even if upstream defaults tried to backfill one.
   if (!hasTitle) {
     return (
-      <div className={cn('lg:px-16', className)}>
+      <div className={cn('md:px-8 lg:px-16', className)}>
         {subtitle && (
           <p className="text-body-xl md:text-2xl text-current leading-relaxed">{subtitle}</p>
         )}

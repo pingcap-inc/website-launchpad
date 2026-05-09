@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Header, Footer, HeroSection, CtaSection, JsonLd, SectionWrapper } from '@/components'
+import { Header, Footer, HeroSection, JsonLd } from '@/components'
 import { RichTextBlock } from '@/components/sections/RichTextBlock'
 import { buildPageSchema } from '@/lib/schema'
 
@@ -57,8 +57,6 @@ type Example = {
   note?: string
   /** When true, pass `rich-text-block--raw-source` so the leading H1 is preserved. */
   rawSource?: boolean
-  /** Override RichTextBlock preview — used for fences not handled by the rich-text renderer (e.g. `:::cta`). */
-  customPreview?: React.ReactNode
 }
 
 const lines = (...rows: string[]) => rows.join('\n')
@@ -249,7 +247,7 @@ const EXAMPLES: Example[] = [
     id: 'cta',
     title: 'Inline CTA Banner (Custom Directive)',
     description:
-      '`:::cta` is parsed at the document level — every fenced block becomes a standalone CTA banner section between richTextBlock chunks. The first `[link](url)` is the primary button; the second is the optional secondary button. All other text becomes the subtitle. There is no title.',
+      'A `:::cta` fence renders a CTA banner. The first `[link](url)` is the primary button; the second is the optional secondary button. All other text becomes the subtitle. There is no title. In the admin import flow each fence also splits the surrounding markdown into separate sections.',
     code: lines(
       ':::cta bg="https://static.pingcap.com/files/2025/06/22092103/1000011430.png"',
       '',
@@ -258,26 +256,6 @@ const EXAMPLES: Example[] = [
       '[Start for Free](https://tidbcloud.com/free-trial/)',
       '[Read the Docs](https://docs.pingcap.com/)',
       ':::'
-    ),
-    customPreview: (
-      <div className="rounded border border-border-subtle overflow-hidden">
-        <SectionWrapper
-          style={{
-            background: 'brand-violet',
-            backgroundImage: {
-              image: { url: 'https://static.pingcap.com/files/2025/06/22092103/1000011430.png' },
-            },
-            spacing: 'sm',
-          }}
-        >
-          <CtaSection
-            title=""
-            subtitle="Ready to see TiDB in action? Spin up a free cluster in under two minutes — no credit card required."
-            primaryCta={{ text: 'Start for Free', href: 'https://tidbcloud.com/free-trial/' }}
-            secondaryCta={{ text: 'Read the Docs', href: 'https://docs.pingcap.com/' }}
-          />
-        </SectionWrapper>
-      </div>
     ),
     note: 'Attributes: `bg="URL"` (also accepts `background=` / `backgroundimage=`) sets a background image. Default background is `brand-violet`. The `:::cta` fence MUST be on its own line at the top level — do NOT nest it inside `:::card` or `:::columns`.',
   },
@@ -318,7 +296,7 @@ const GOTCHAS = [
   },
   {
     label: '`:::cta` must be top-level',
-    body: '`:::cta` is parsed before the rich-text renderer runs and splits the document into separate sections. Do not nest it inside `:::card`, `:::columns`, or any other directive — the inner `:::cta` will be ignored.',
+    body: '`:::cta` is parsed before the rest of the markdown renderer runs. Do not nest it inside `:::card`, `:::columns`, or any other directive — the outer block will fail to close cleanly.',
   },
   {
     label: '`:::cta` needs at least one link',
@@ -378,7 +356,7 @@ export default function MarkdownGuidePage() {
               <article
                 key={ex.id}
                 id={ex.id}
-                className="scroll-mt-32 border-t border-border-subtle pt-10 first:border-t-0 first:pt-0"
+                className="scroll-mt-8 border-t border-border-subtle pt-10 first:border-t-0 first:pt-0"
               >
                 <h2 className="text-h2-mb md:text-h2-sm font-bold text-text-primary mb-3">
                   {ex.title}
@@ -405,9 +383,7 @@ export default function MarkdownGuidePage() {
                     <p className="font-mono text-label uppercase tracking-wider text-carbon-500 mb-2">
                       Renders as
                     </p>
-                    {ex.customPreview ? (
-                      ex.customPreview
-                    ) : ex.noPreview ? (
+                    {ex.noPreview ? (
                       <div className="rounded border border-border-subtle bg-bg-subtle p-4 text-body-sm text-carbon-700 italic">
                         Preview suppressed — see note below.
                       </div>
@@ -434,7 +410,7 @@ export default function MarkdownGuidePage() {
         </section>
 
         {/* Gotchas */}
-        <section id="gotchas" className="scroll-mt-32 bg-bg-inverse pb-section-sm lg:pb-section">
+        <section id="gotchas" className="scroll-mt-8 bg-bg-inverse pb-section-sm lg:pb-section">
           <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
             <h2 className="text-h2-mb md:text-h2-sm font-bold text-text-primary mb-3">
               Gotchas & Not Supported
