@@ -377,15 +377,6 @@
   margin-bottom: 16px;
   line-height: 1.4;
 }
-
-/* @media (min-width: 1024px) {
-  .rich-text-block h2 {
-    font-size: 2rem;
-  }
-  .rich-text-block h3 {
-    font-size: 1.5rem;
-  }
-} */
 .rich-text-block p {
   margin-bottom: 1em;
 }
@@ -563,12 +554,12 @@
 .rich-text-block em {
   font-style: italic;
 }
-.rich-text-block a {
+.rich-text-block a:not(.group) {
   color: #509dea; /* brand-blue-light */
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.rich-text-block a:hover {
+.rich-text-block a:not(.group):hover {
   color: #2c80ce; /* brand-blue-medium */
 }
 .rich-text-block ul {

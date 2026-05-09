@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, FileText, PlusSquare, PanelRight, Lock } from 'lucide-react'
+import { LayoutDashboard, FileText, PlusSquare, PanelRight, Lock, BookOpen } from 'lucide-react'
 
 const NAV_ITEMS: {
   href: string
@@ -10,10 +10,12 @@ const NAV_ITEMS: {
   icon: typeof LayoutDashboard
   exact?: boolean
   disabled?: boolean
+  newTab?: boolean
 }[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { href: '/admin/pages', label: 'Pages', icon: FileText },
   { href: '/admin/create', label: 'Create Page', icon: PlusSquare },
+  { href: '/tools/markdown-guide/', label: 'Markdown Guide', icon: BookOpen, newTab: true },
 ]
 
 interface AdminSidebarProps {
@@ -62,11 +64,12 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-4 px-2">
         <ul className="space-y-1">
-          {NAV_ITEMS.map(({ href, label, icon: Icon, exact, disabled }) => {
+          {NAV_ITEMS.map(({ href, label, icon: Icon, exact, disabled, newTab }) => {
             const normalizedPath = pathname.replace(/\/$/, '')
             const normalizedHref = href.split('?')[0].replace(/\/$/, '')
             const isActive =
               !disabled &&
+              !newTab &&
               (exact
                 ? normalizedPath === normalizedHref
                 : normalizedPath.startsWith(normalizedHref))
@@ -93,6 +96,8 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
                   <Link
                     href={href}
                     title={collapsed ? label : undefined}
+                    target={newTab ? '_blank' : undefined}
+                    rel={newTab ? 'noopener noreferrer' : undefined}
                     className={[
                       baseClass,
                       isActive

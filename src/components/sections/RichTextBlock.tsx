@@ -11,6 +11,13 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-typescript'
 import { Check, Copy, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import {
+  splitMarkdownByCtaFences,
+  type MarkdownCtaChunk,
+  type CtaFenceData,
+} from '@/lib/markdown-cta'
+import { SectionWrapper } from '@/components/ui/SectionWrapper'
+import { CtaSection } from '@/components/sections/CtaSection'
 
 if (typeof window !== 'undefined') {
   ;(window as unknown as { Prism: typeof Prism }).Prism = Prism
@@ -708,17 +715,36 @@ function markdownToHtml(md: string, options?: { preserveLeadingHeadings?: boolea
   return html.join('\n')
 }
 
+type RenderedChunk = { kind: 'richText'; html: string } | { kind: 'cta'; data: CtaFenceData }
+
+function renderRichTextChunk(content: string, preserveLeadingHeadings: boolean): string {
+  const raw = markdownToHtml(content, { preserveLeadingHeadings })
+  return raw.replace(
+    /<table>[\s\S]*?<\/table>/g,
+    (match) => `<div class="rt-table-wrap rt-table-wrap--scroll">${match}</div>`
+  )
+}
+
+function buildChunks(content: string, isRawSource: boolean): RenderedChunk[] {
+  const parsed: MarkdownCtaChunk[] = splitMarkdownByCtaFences(content)
+  let firstRichTextSeen = false
+  return parsed.map((chunk) => {
+    if (chunk.kind === 'cta') return chunk
+    // Strip leading display-only H1 only on the very first richText chunk
+    // (and only when the caller hasn't asked for raw-source).
+    const preserveLeadingHeadings = isRawSource || firstRichTextSeen
+    firstRichTextSeen = true
+    return { kind: 'richText', html: renderRichTextChunk(chunk.content, preserveLeadingHeadings) }
+  })
+}
+
 export function RichTextBlock({ content, className }: RichTextBlockProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [activeVideo, setActiveVideo] = useState<ActiveVideo | null>(null)
   const videoOpenNonceRef = useRef(0)
-  const html = useMemo(() => {
+  const chunks = useMemo(() => {
     const isRawSource = className?.includes('rich-text-block--raw-source') ?? false
-    const raw = markdownToHtml(content, { preserveLeadingHeadings: isRawSource })
-    return raw.replace(
-      /<table>[\s\S]*?<\/table>/g,
-      (match) => `<div class="rt-table-wrap rt-table-wrap--scroll">${match}</div>`
-    )
+    return buildChunks(content, isRawSource)
   }, [className, content])
 
   useEffect(() => {
@@ -825,15 +851,30 @@ export function RichTextBlock({ content, className }: RichTextBlockProps) {
     return () => {
       cleanups.forEach((off) => off())
     }
-  }, [html])
+  }, [chunks])
 
   return (
     <>
-      <div
-        ref={containerRef}
-        className={cn('rich-text-block', className)}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <div ref={containerRef} className={cn('rich-text-block', className)}>
+        {chunks.map((chunk, idx) =>
+          chunk.kind === 'cta' ? (
+            <SectionWrapper
+              key={idx}
+              style={{
+                background: 'brand-violet',
+                spacing: 'sm',
+                ...(chunk.data.backgroundImageUrl
+                  ? { backgroundImage: { image: { url: chunk.data.backgroundImageUrl } } }
+                  : {}),
+              }}
+            >
+              <CtaSection {...chunk.data.props} />
+            </SectionWrapper>
+          ) : (
+            <div key={idx} dangerouslySetInnerHTML={{ __html: chunk.html }} />
+          )
+        )}
+      </div>
       {activeVideo && (
         <YouTubeLightbox
           key={activeVideo.nonce}
