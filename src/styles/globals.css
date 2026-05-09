@@ -688,14 +688,6 @@
   }
 }
 
-[data-tone='dark'] .rich-text-block h1,
-[data-tone='dark'] .rich-text-block h2,
-[data-tone='dark'] .rich-text-block h3,
-[data-tone='dark'] .rich-text-block h4,
-[data-tone='dark'] .rich-text-block strong {
-  color: #000000;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .animate-logo-marquee {
     animation: none;
