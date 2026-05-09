@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Header, Footer, HeroSection, JsonLd } from '@/components'
 import { RichTextBlock } from '@/components/sections/RichTextBlock'
 import { buildPageSchema } from '@/lib/schema'
+import { cn } from '@/lib/utils'
 
 const PAGE_PATH = '/tools/markdown-guide/'
 const PAGE_TITLE = 'Markdown Syntax Reference for Long-Form Pages | TiDB'
@@ -247,7 +248,7 @@ const EXAMPLES: Example[] = [
     id: 'cta',
     title: 'Inline CTA Banner (Custom Directive)',
     description:
-      'A `:::cta` fence renders a CTA banner. The first `[link](url)` is the primary button; the second is the optional secondary button. All other text becomes the subtitle. There is no title. In the admin import flow each fence also splits the surrounding markdown into separate sections.',
+      'A `:::cta` fence renders a CTA banner. The first `[link](url)` is the primary button; the second is the optional secondary button. All other text becomes the subtitle. There is no title. In the admin import flow each fence also splits the surrounding markdown into separate sections. Pick a `bg` image to match the section tone — three approved variants below.',
     code: lines(
       ':::cta bg="https://static.pingcap.com/files/2025/06/22092103/1000011430.png"',
       '',
@@ -255,6 +256,21 @@ const EXAMPLES: Example[] = [
       '',
       '[Start for Free](https://tidbcloud.com/free-trial/)',
       '[Read the Docs](https://docs.pingcap.com/)',
+      ':::',
+      '',
+      ':::cta bg="https://static.pingcap.com/files/2025/06/22184957/1000011432.png"',
+      '',
+      'Migrating from sharded MySQL? Our team can map your schema and review your access patterns on a free 30-minute call.',
+      '',
+      '[Talk to an Engineer](https://www.pingcap.com/contact-us/)',
+      '[See Migration Guide](https://docs.pingcap.com/tidb/stable/migration-overview)',
+      ':::',
+      '',
+      ':::cta bg="https://static.pingcap.com/files/2025/06/22211020/1000011435.png"',
+      '',
+      'Want the deep technical story? Download the TiDB architecture whitepaper — distributed SQL, HTAP, and how it all fits together.',
+      '',
+      '[Get the Whitepaper](https://www.pingcap.com/resources/)',
       ':::'
     ),
     note: 'Attributes: `bg="URL"` (also accepts `background=` / `backgroundimage=`) sets a background image. Default background is `brand-violet`. The `:::cta` fence MUST be on its own line at the top level — do NOT nest it inside `:::card` or `:::columns`.',
@@ -391,7 +407,7 @@ export default function MarkdownGuidePage() {
                       <div className="rounded border border-border-subtle bg-white p-6">
                         <RichTextBlock
                           content={ex.code}
-                          className={ex.rawSource ? 'rich-text-block--raw-source' : undefined}
+                          className={cn('space-y-6', ex.rawSource && 'rich-text-block--raw-source')}
                         />
                       </div>
                     )}
