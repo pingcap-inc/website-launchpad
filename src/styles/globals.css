@@ -644,17 +644,24 @@
   background: #ffffff;
   z-index: 1;
 }
+.rt-table-wrap--scroll th:first-child {
+  background: #000000;
+}
 .rich-text-block th {
-  color: #000000;
+  background: #000000;
+  color: #ffffff;
   font-weight: 500;
   text-align: center;
   vertical-align: middle;
   padding: 1rem 1rem;
   border: 1px solid #1f2933;
 }
+.rich-text-block th strong {
+  color: inherit;
+}
 .rich-text-block td {
   color: #424d57;
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.25rem;
   border: 1px solid #1f2933;
   line-height: 1.55;
 }
@@ -682,14 +689,6 @@
   .faq-longform h2 {
     font-size: 2rem;
   }
-}
-
-[data-tone='dark'] .rich-text-block h1,
-[data-tone='dark'] .rich-text-block h2,
-[data-tone='dark'] .rich-text-block h3,
-[data-tone='dark'] .rich-text-block h4,
-[data-tone='dark'] .rich-text-block strong {
-  color: #000000;
 }
 
 @media (prefers-reduced-motion: reduce) {
