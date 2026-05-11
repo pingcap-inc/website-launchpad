@@ -56,11 +56,14 @@ const dsl: PageDSL = {
         "headline": "Best Distributed SQL Databases 2026",
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+            "url": "https://static.pingcap.com/images/44898b82-tidb-training-and-certification.svg",
+            "alt": "tidb training and certification",
+            "width": 263,
+            "height": 389
           },
-          "alt": "hero image",
-          "width": 500,
-          "height": 400
+          "alt": "tidb training and certification",
+          "width": 263,
+          "height": 389
         }
       },
       "style": {
