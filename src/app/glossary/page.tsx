@@ -146,37 +146,37 @@ const terms = [
         term: 'Sharding',
         fullName: 'Data Sharding',
         definition:
-          'The practice of splitting a dataset into smaller chunks (shards or partitions) distributed across multiple nodes. TiDB performs sharding transparently — data is divided into Regions (fixed-size key-range chunks) and automatically distributed across TiKV nodes. Applications do not need to implement sharding logic or choose partition keys.',
+          'The practice of splitting a dataset into smaller chunks (shards or partitions) distributed across multiple nodes. TiDB performs sharding transparently. Data is divided into Regions (fixed-size key-range chunks) and automatically distributed across TiKV nodes. Applications do not need to implement sharding logic or choose partition keys.',
       },
       {
         term: 'Strong Consistency',
         fullName: 'Strong Consistency (Linearizability)',
         definition:
-          'A consistency model guaranteeing that once a write is committed, all subsequent reads reflect that write — regardless of which node serves the request. TiDB is strongly consistent by default. All reads see the latest committed state, eliminating the stale-read anomalies common in eventually consistent systems.',
+          'A consistency model guaranteeing that once a write is committed, all subsequent reads reflect that write, regardless of which node serves the request. TiDB is strongly consistent by default. All reads see the latest committed state, eliminating the stale-read anomalies common in eventually consistent systems.',
       },
       {
         term: 'Eventual Consistency',
         fullName: 'Eventual Consistency',
         definition:
-          'A weaker consistency model where replicas are allowed to diverge temporarily, converging to the same state only after sufficient time has passed with no new writes. Many NoSQL databases default to eventual consistency to maximize write throughput. TiDB does not use eventual consistency for primary reads — it provides strong consistency guarantees across the distributed cluster.',
+          'A weaker consistency model where replicas are allowed to diverge temporarily, converging to the same state only after sufficient time has passed with no new writes. Many NoSQL databases default to eventual consistency to maximize write throughput. TiDB does not use eventual consistency for primary reads. It provides strong consistency guarantees across the distributed cluster.',
       },
       {
         term: 'CAP Theorem',
         fullName: 'CAP Theorem (Consistency, Availability, Partition Tolerance)',
         definition:
-          'A theoretical framework stating that a distributed system can fully guarantee at most two of three properties simultaneously: Consistency (every read returns the latest write), Availability (every request receives a response), and Partition Tolerance (the system continues operating despite network splits). TiDB prioritizes Consistency and Partition Tolerance (CP), ensuring strong consistency even in the event of network partitions, with availability maintained through automatic failover.',
+          'A theoretical framework stating that a distributed system can fully guarantee at most two of three properties simultaneously: Consistency (every read returns the latest write), Availability (every request receives a response), and Partition Tolerance (the system continues operating despite network splits). TiDB prioritizes Consistency and Partition Tolerance (CP), ensuring strong consistency even during network partitions, with availability maintained through automatic failover.',
       },
       {
         term: 'Serializable Isolation',
         fullName: 'Serializable Isolation',
         definition:
-          'The strictest standard transaction isolation level, guaranteeing that the outcome of concurrent transactions is identical to some serial (one-at-a-time) execution. TiDB supports Snapshot Isolation and Repeatable Read by default, and provides Serializable behavior through its pessimistic locking mode — preventing anomalies such as write skew and phantom reads.',
+          'The strictest standard transaction isolation level, guaranteeing that the outcome of concurrent transactions is identical to some serial (one-at-a-time) execution. TiDB supports Read Committed and Repeatable Read isolation levels, with Repeatable Read implemented as Snapshot Isolation via MVCC. TiDB does not expose Serializable as an isolation level. Pessimistic locking and `SELECT ... FOR UPDATE` can be used to prevent specific anomalies such as lost updates where stronger guarantees are required.',
       },
       {
         term: 'Two-Phase Commit (2PC)',
         fullName: 'Two-Phase Commit',
         definition:
-          "A distributed protocol that ensures all participants in a distributed transaction either commit or abort together. TiDB uses a modified 2PC protocol coordinated by PD (Placement Driver) to implement distributed ACID transactions across TiKV nodes. The prepare phase locks resources across nodes; the commit phase releases them atomically.",
+          'A distributed protocol that ensures all participants in a distributed transaction either commit or abort together. TiDB uses a modified 2PC protocol, coordinated by the TiDB SQL node initiating the transaction, with globally consistent timestamps provided by PD (Placement Driver). The prepare phase locks the rows being modified across TiKV nodes; the commit phase finalizes them atomically.',
       },
       {
         term: 'Consensus Algorithm',
@@ -184,7 +184,7 @@ const terms = [
         definition: (
           <>
             A protocol that enables nodes in a distributed system to agree on a single value or
-            state, even in the presence of failures. TiDB&apos;s storage layer (TiKV) uses the{' '}
+            state, even when failures occur. TiDB&apos;s storage layer (TiKV) uses the{' '}
             <strong>Raft</strong> consensus algorithm, which elects a leader per Region and requires
             a quorum of replicas to acknowledge each write before committing.
           </>
@@ -296,13 +296,13 @@ const terms = [
         term: 'TiCDC',
         fullName: 'TiDB Change Data Capture',
         definition:
-          "TiDB's real-time change data capture and replication tool. TiCDC reads the change log from TiKV and streams row-level changes to downstream systems — including Kafka, MySQL, and object storage — with low latency. It is used for event-driven architectures, data synchronization, and feeding analytics pipelines without ETL batch jobs.",
+          "TiDB's real-time change data capture and replication tool. TiCDC reads the change log from TiKV and streams row-level changes to downstream systems (including Kafka, MySQL, and object storage) with low latency. It is used for event-driven architectures, data synchronization, and feeding analytics pipelines without ETL batch jobs.",
       },
       {
         term: 'TiDB Operator',
         fullName: 'TiDB Operator (Kubernetes)',
         definition:
-          'The official Kubernetes operator for deploying and managing TiDB clusters on Kubernetes. TiDB Operator automates provisioning, scaling, upgrades, backup, and failover for TiDB components (TiDB, TiKV, PD, TiFlash) on any Kubernetes-compatible platform. It is a production-grade tool maintained by PingCAP and widely used in cloud-native deployments.',
+          'The official Kubernetes operator for deploying and managing TiDB clusters on Kubernetes. TiDB Operator automates provisioning, scaling, upgrades, backup, and failover for TiDB components (TiDB, TiKV, PD, TiFlash) on any Kubernetes-compatible platform. Maintained by PingCAP, it is the recommended way to run TiDB on Kubernetes in production.',
       },
       {
         term: 'Hot Spot',
@@ -329,7 +329,7 @@ const terms = [
         term: 'Placement Rules',
         fullName: 'TiDB Placement Rules',
         definition:
-          "A TiDB feature that controls where data is stored across nodes, availability zones, and regions by specifying constraints on Raft replica placement. Placement rules enable data locality — for example, requiring certain tables to be stored only in specific geographic regions to satisfy data residency regulations. This is TiDB's mechanism for multi-region data control, distinct from geo-partitioning approaches.",
+          "A TiDB feature that controls where data is stored across nodes, availability zones, and regions by specifying constraints on Raft replica placement. Placement rules enable data locality. For example, certain tables can be restricted to specific geographic regions to satisfy data residency regulations. This is TiDB's mechanism for multi-region data control, distinct from geo-partitioning approaches.",
       },
       {
         term: 'Resource Control (RU)',
@@ -427,7 +427,7 @@ const terms = [
         term: 'High Availability (HA)',
         fullName: 'High Availability',
         definition:
-          'A system property ensuring that a database remains accessible even when individual components fail. TiDB achieves high availability through Raft-based multi-replica storage: when a TiKV node fails, the Raft group automatically elects a new leader from surviving replicas, and PD rebalances data — typically within seconds and without data loss.',
+          'A system property ensuring that a database remains accessible even when individual components fail. TiDB achieves high availability through Raft-based multi-replica storage: when a TiKV node fails, the Raft group automatically elects a new leader from surviving replicas, and PD rebalances data, typically within seconds and without data loss.',
       },
       {
         term: 'RPO / RTO',
@@ -437,8 +437,8 @@ const terms = [
             Two metrics used to characterize database disaster recovery posture. <strong>RPO</strong>{' '}
             is the maximum acceptable data loss (measured in time) after a failure.{' '}
             <strong>RTO</strong> is the maximum acceptable time to restore service. TiDB is designed
-            for near-zero RPO and low RTO through synchronous Raft replication — committed data is
-            never lost across a replica majority failure.
+            for near-zero RPO and low RTO through synchronous Raft replication. Committed data is
+            never lost provided a replica majority survives.
           </>
         ),
       },
@@ -446,7 +446,7 @@ const terms = [
         term: 'Multi-Region Deployment',
         fullName: 'Multi-Region Deployment',
         definition:
-          "Running a database cluster across multiple geographic regions to reduce latency for global users and survive regional failures. TiDB supports multi-region deployments through placement rules and Raft-based replication across availability zones. Note: TiDB's active-active multi-region support across regions is an upcoming capability — current multi-region deployments use placement rules for data locality within a cluster.",
+          "Running a database cluster across multiple geographic regions to reduce latency for global users and survive regional failures. TiDB supports multi-region deployments through placement rules and Raft-based replication across availability zones. Note: TiDB's active-active multi-region support is an upcoming capability. Current multi-region deployments use placement rules for data locality within a cluster.",
       },
       {
         term: 'Availability Zone (AZ)',
@@ -458,7 +458,7 @@ const terms = [
         term: 'Cloud-Native Database',
         fullName: 'Cloud-Native Database',
         definition:
-          "A database designed from the ground up to run on cloud infrastructure, taking advantage of elastic compute, managed storage, container orchestration, and pay-as-you-go pricing. Cloud-native databases separate storage from compute, support auto-scaling, and are typically deployed via containers or managed services. TiDB Cloud is PingCAP's fully managed cloud-native offering, available on AWS and Google Cloud.",
+          "A database designed from the ground up to run on cloud infrastructure, taking advantage of elastic compute, managed storage, container orchestration, and pay-as-you-go pricing. Cloud-native databases separate storage from compute, support auto-scaling, and are typically deployed via containers or managed services. TiDB Cloud is PingCAP's fully managed cloud-native offering, available on AWS, Google Cloud, and Azure.",
       },
       {
         term: 'Compute-Storage Separation',
@@ -497,13 +497,13 @@ const terms = [
         term: 'Vector Database',
         fullName: 'Vector Database',
         definition:
-          'A database optimized for storing, indexing, and querying high-dimensional vector embeddings — numerical representations of unstructured data such as text, images, or audio generated by machine learning models. Vector databases power similarity search, semantic search, and retrieval-augmented generation (RAG) in AI applications. TiDB supports vector search natively, enabling teams to combine structured SQL queries with vector similarity search in a single database without managing a separate vector store.',
+          'A database optimized for storing, indexing, and querying high-dimensional vector embeddings, which are numerical representations of unstructured data such as text, images, or audio generated by machine learning models. Vector databases power similarity search, semantic search, and retrieval-augmented generation (RAG) in AI applications. TiDB supports vector search natively, enabling teams to combine structured SQL queries with vector similarity search in a single database without managing a separate vector store.',
       },
       {
         term: 'RAG',
         fullName: 'Retrieval-Augmented Generation',
         definition:
-          "An AI architecture pattern that improves large language model (LLM) output by retrieving relevant context from an external knowledge base before generating a response. The retrieved context — often sourced via vector similarity search — grounds the LLM in factual, up-to-date information. TiDB's vector search capability makes it a natural fit for RAG pipelines that need both structured data queries and semantic retrieval in one system.",
+          "An AI architecture pattern that improves large language model (LLM) output by retrieving relevant context from an external knowledge base before generating a response. The retrieved context, often sourced via vector similarity search, grounds the LLM in factual, up-to-date information. TiDB's vector search capability makes it a natural fit for RAG pipelines that need both structured data queries and semantic retrieval in one system.",
       },
       {
         term: 'Serverless Database',
@@ -533,7 +533,7 @@ const terms = [
         term: 'Pessimistic Locking',
         fullName: 'Pessimistic Locking',
         definition:
-          'A concurrency control strategy that acquires locks on rows at the start of a transaction — before the actual write — to prevent conflicts. Pessimistic locking is suitable for high-contention workloads where conflicts are frequent. TiDB supports pessimistic transactions as the default mode, matching the behavior of MySQL and making application migration straightforward.',
+          'A concurrency control strategy that acquires locks on rows at the start of a transaction, before the actual write, to prevent conflicts. Pessimistic locking is suitable for high-contention workloads where conflicts are frequent. TiDB supports pessimistic transactions as the default mode, matching the behavior of MySQL and simplifying application migration.',
       },
       {
         term: 'Optimistic Locking',
@@ -600,7 +600,7 @@ export default function GlossaryPage() {
                 {category.items.map((item) => (
                   <article
                     key={item.term}
-                    className="py-10 grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-12"
+                    className="py-10 grid-cols-1 md:grid-cols-4 gap-6 md:gap-12"
                   >
                     {/* Term + full name */}
                     <div className="md:col-span-1">
