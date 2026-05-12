@@ -6,13 +6,13 @@ import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
   title: "Best Databases for AI Applications (2026) | TiDB",
-  description: "Compare the best databases for AI apps in 2026. See which supports RAG, vector search, and ACID transactions—then try TiDB Cloud.",
+  description: "Discover the top databases for AI apps in 2026. Compare TiDB, Pinecone, Weaviate, and more for RAG, vector search, and real-time data.",
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/compare/best-databases-for-ai-applications/' },
+  alternates: { canonical: 'https://www.pingcap.com/compare/best-database-building-ai-apps/' },
   openGraph: {
     title: "Best Databases for AI Applications (2026) | TiDB",
-    description: "Compare the best databases for AI apps in 2026. See which supports RAG, vector search, and ACID transactions—then try TiDB Cloud.",
-    url: 'https://www.pingcap.com/compare/best-databases-for-ai-applications/',
+    description: "Discover the top databases for AI apps in 2026. Compare TiDB, Pinecone, Weaviate, and more for RAG, vector search, and real-time data.",
+    url: 'https://www.pingcap.com/compare/best-database-building-ai-apps/',
     siteName: 'TiDB',
     images: [
       {
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: "/compare/best-databases-for-ai-applications/",
+  path: "/compare/best-database-building-ai-apps/",
   title: "Best Databases for AI Applications (2026) | TiDB",
-  description: "Compare the best databases for AI apps in 2026. See which supports RAG, vector search, and ACID transactions—then try TiDB Cloud.",
+  description: "Discover the top databases for AI apps in 2026. Compare TiDB, Pinecone, Weaviate, and more for RAG, vector search, and real-time data.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Best Databases for AI Applications (2026): Top Picks for RAG, Vector Search & Real-Time Data", path: "/compare/best-databases-for-ai-applications/" },
+    { name: "Best Databases for AI Applications (2026): Top Picks for RAG, Vector Search & Real-Time Data", path: "/compare/best-database-building-ai-apps/" },
   ],
 })
 
@@ -44,8 +44,8 @@ const dsl: PageDSL = {
   "pageName": "Best Databases for AI Applications (2026): Top Picks for RAG, Vector Search & Real-Time Data",
   "meta": {
     "title": "Best Databases for AI Applications (2026) | TiDB",
-    "description": "Compare the best databases for AI apps in 2026. See which supports RAG, vector search, and ACID transactions—then try TiDB Cloud.",
-    "canonical": "/compare/best-databases-for-ai-applications/"
+    "description": "Discover the top databases for AI apps in 2026. Compare TiDB, Pinecone, Weaviate, and more for RAG, vector search, and real-time data.",
+    "canonical": "/compare/best-database-building-ai-apps/"
   },
   "sections": [
     {
@@ -59,8 +59,8 @@ const dsl: PageDSL = {
             "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
           },
           "alt": "hero image",
-          "width": 500,
-          "height": 400
+          "width": 300,
+          "height": 300
         }
       },
       "style": {
