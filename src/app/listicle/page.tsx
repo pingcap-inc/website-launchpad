@@ -41,7 +41,7 @@ const schema = buildPageSchema({
 })
 
 const dsl: PageDSL = {
-  "pageName": "TiDB vs MySQL: 5 Key Differences You Should Know",
+  "pageName": "Listicle hub",
   "meta": {
     "title": "listicle",
     "description": "Discover the top 5 key differences between TiDB and MySQL that every developer should understand for better database decisions.",
