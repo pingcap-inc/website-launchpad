@@ -14,11 +14,14 @@
         "headline": "Best Databases for SaaS Applications 2026",
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+            "url": "https://static.pingcap.com/images/fd9bc1e4-saas__1_.svg",
+            "alt": "saas 1",
+            "width": 471,
+            "height": 474
           },
-          "alt": "hero image",
-          "width": 500,
-          "height": 400
+          "alt": "saas 1",
+          "width": 471,
+          "height": 474
         }
       },
       "style": {
