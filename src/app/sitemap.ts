@@ -32,6 +32,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // AI pages
     { url: '/ai/', priority: 0.8, changeFrequency: 'weekly' },
     { url: '/ai/vector-search/', priority: 0.7, changeFrequency: 'monthly' },
+    // Compare pages
+    { url: '/compare/', priority: 0.8, changeFrequency: 'weekly' },
+    { url: '/compare/amazon-aurora-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/best-database-building-ai-apps/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/best-database-for-ai-agents/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/compare/best-databases-for-saas-applications-at-scale/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    { url: '/compare/best-distributed-sql-databases/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/best-vector-database/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/cockroachdb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/mysql-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/yugabytedb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
     // Campaign / program pages
     // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
     // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
