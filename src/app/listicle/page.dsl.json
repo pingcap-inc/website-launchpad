@@ -1,0 +1,39 @@
+{
+  "pageName": "TiDB vs MySQL: 5 Key Differences You Should Know",
+  "meta": {
+    "title": "listicle",
+    "description": "Discover the top 5 key differences between TiDB and MySQL that every developer should understand for better database decisions.",
+    "canonical": "/listicle/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "",
+        "headline": "listicle",
+        "subheadline": "",
+        "primaryCta": {
+          "text": "",
+          "href": ""
+        },
+        "secondaryCta": {
+          "text": "",
+          "href": ""
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    }
+  ]
+}
