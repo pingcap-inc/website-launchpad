@@ -187,6 +187,13 @@ function renderCardGrid(content: string, attrs?: Record<string, string>) {
   )
 }
 
+function renderSection(content: string, attrs?: Record<string, string>) {
+  const allowedBg = new Set(['light', 'dark', 'brand'])
+  const bg = attrs?.bg && allowedBg.has(attrs.bg) ? attrs.bg : 'light'
+  const bodyHtml = markdownToHtml(content.trim(), { preserveLeadingHeadings: true })
+  return `<section class="rt-section" data-bg="${bg}">${bodyHtml}</section>`
+}
+
 function renderColumns(content: string, attrs?: Record<string, string>) {
   const lines = content.split('\n')
   const items: string[] = []
@@ -476,6 +483,21 @@ function markdownToHtml(md: string, options?: { preserveLeadingHeadings?: boolea
         html.push(`<p>${inlineFormat(line)}</p>`)
       } else {
         html.push(renderColumns(block.body, parseDirectiveAttributes(columnsMatch[1])))
+        i = block.endIndex
+      }
+      continue
+    }
+
+    const sectionMatch = trimmed.match(/^:::section(?:\s+(.*))?$/)
+    if (sectionMatch) {
+      closeList()
+      closeBlockquote()
+      closeTable()
+      const block = extractDirectiveBlock(lines, i, 'section')
+      if (!block) {
+        html.push(`<p>${inlineFormat(line)}</p>`)
+      } else {
+        html.push(renderSection(block.body, parseDirectiveAttributes(sectionMatch[1])))
         i = block.endIndex
       }
       continue

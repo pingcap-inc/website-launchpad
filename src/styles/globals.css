@@ -419,6 +419,38 @@
 .rich-text-block .rt-columns-item > :last-child {
   margin-bottom: 0;
 }
+.rich-text-block .rt-section {
+  margin: 2rem 0;
+  padding: 2rem;
+  border-radius: 4px;
+}
+.rich-text-block .rt-section[data-bg='light'] {
+  background: #f5f6f8;
+}
+.rich-text-block .rt-section[data-bg='dark'] {
+  background: #06111a;
+  color: #ffffff;
+}
+.rich-text-block .rt-section[data-bg='brand'] {
+  background: #630d09;
+  color: #ffffff;
+}
+.rich-text-block .rt-section[data-bg='dark'] h1,
+.rich-text-block .rt-section[data-bg='dark'] h2,
+.rich-text-block .rt-section[data-bg='dark'] h3,
+.rich-text-block .rt-section[data-bg='dark'] h4,
+.rich-text-block .rt-section[data-bg='brand'] h1,
+.rich-text-block .rt-section[data-bg='brand'] h2,
+.rich-text-block .rt-section[data-bg='brand'] h3,
+.rich-text-block .rt-section[data-bg='brand'] h4 {
+  color: #ffffff;
+}
+.rich-text-block .rt-section > :first-child {
+  margin-top: 0;
+}
+.rich-text-block .rt-section > :last-child {
+  margin-bottom: 0;
+}
 .rich-text-block .rt-card {
   display: flex;
   flex-direction: column;
@@ -435,7 +467,7 @@
 }
 .rich-text-block .rt-card-title {
   margin: 0;
-  color: #ffffff !important;
+  color: #ffffff;
   font-size: 1.125rem;
   font-weight: 500;
   line-height: 1.35;
@@ -644,20 +676,13 @@
   background: #ffffff;
   z-index: 1;
 }
-.rt-table-wrap--scroll th:first-child {
-  background: #000000;
-}
 .rich-text-block th {
-  background: #000000;
-  color: #ffffff;
+  color: #000;
   font-weight: 500;
   text-align: center;
   vertical-align: middle;
   padding: 1rem 1rem;
   border: 1px solid #1f2933;
-}
-.rich-text-block th strong {
-  color: inherit;
 }
 .rich-text-block td {
   color: #424d57;
