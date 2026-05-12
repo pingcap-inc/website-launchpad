@@ -3,7 +3,7 @@
   "meta": {
     "title": "Best Databases for SaaS Applications 2026 | TiDB",
     "description": "Compare top SaaS databases for scale, multi-tenancy, and uptime. See the decision framework, tradeoffs, and why TiDB leads. Start free.",
-    "canonical": "/compare/best-databases-for-saas-applications-2026/"
+    "canonical": "/compare/best-databases-for-saas-applications-at-scale/"
   },
   "sections": [
     {
@@ -20,8 +20,8 @@
             "height": 474
           },
           "alt": "saas 1",
-          "width": 471,
-          "height": 474
+          "width": 300,
+          "height": 300
         }
       },
       "style": {

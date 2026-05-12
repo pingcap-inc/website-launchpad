@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: "Best Databases for SaaS Applications 2026 | TiDB",
   description: "Compare top SaaS databases for scale, multi-tenancy, and uptime. See the decision framework, tradeoffs, and why TiDB leads. Start free.",
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/compare/best-databases-for-saas-applications-2026/' },
+  alternates: { canonical: 'https://www.pingcap.com/compare/best-databases-for-saas-applications-at-scale/' },
   openGraph: {
     title: "Best Databases for SaaS Applications 2026 | TiDB",
     description: "Compare top SaaS databases for scale, multi-tenancy, and uptime. See the decision framework, tradeoffs, and why TiDB leads. Start free.",
-    url: 'https://www.pingcap.com/compare/best-databases-for-saas-applications-2026/',
+    url: 'https://www.pingcap.com/compare/best-databases-for-saas-applications-at-scale/',
     siteName: 'TiDB',
     images: [
       {
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: "/compare/best-databases-for-saas-applications-2026/",
+  path: "/compare/best-databases-for-saas-applications-at-scale/",
   title: "Best Databases for SaaS Applications 2026 | TiDB",
   description: "Compare top SaaS databases for scale, multi-tenancy, and uptime. See the decision framework, tradeoffs, and why TiDB leads. Start free.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Best Databases for SaaS Applications 2026", path: "/compare/best-databases-for-saas-applications-2026/" },
+    { name: "Best Databases for SaaS Applications 2026", path: "/compare/best-databases-for-saas-applications-at-scale/" },
   ],
 })
 
@@ -45,7 +45,7 @@ const dsl: PageDSL = {
   "meta": {
     "title": "Best Databases for SaaS Applications 2026 | TiDB",
     "description": "Compare top SaaS databases for scale, multi-tenancy, and uptime. See the decision framework, tradeoffs, and why TiDB leads. Start free.",
-    "canonical": "/compare/best-databases-for-saas-applications-2026/"
+    "canonical": "/compare/best-databases-for-saas-applications-at-scale/"
   },
   "sections": [
     {
@@ -62,8 +62,8 @@ const dsl: PageDSL = {
             "height": 474
           },
           "alt": "saas 1",
-          "width": 471,
-          "height": 474
+          "width": 300,
+          "height": 300
         }
       },
       "style": {
