@@ -406,10 +406,10 @@ const dsl: PageDSL = {
         "items": [
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/c58f9a7a-image_215.png",
-              "alt": "image 215",
-              "width": 61,
-              "height": 112
+              "url": "https://static.pingcap.com/images/1c32ca50-java.svg",
+              "alt": "java",
+              "width": 241,
+              "height": 76
             },
             "title": "JDBC and ODBC",
             "description": "Standard Java and system-level database connectivity with full ACID and transactional support.",
@@ -417,10 +417,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/71de43e6-image_216.png",
-              "alt": "image 216",
-              "width": 129,
-              "height": 129
+              "url": "https://static.pingcap.com/images/1df48ede-sola.svg",
+              "alt": "sola",
+              "width": 241,
+              "height": 76
             },
             "title": "Python (SQLAlchemy, PyMySQL)",
             "description": "Connect Python applications using SQLAlchemy ORM and PyMySQL driver with native MySQL compatibility.",
@@ -428,10 +428,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/ac5eca36-image_217.png",
-              "alt": "image 217",
-              "width": 103,
-              "height": 103
+              "url": "https://static.pingcap.com/images/bf481bfe-node.svg",
+              "alt": "node",
+              "width": 241,
+              "height": 76
             },
             "title": "Node.js (Prisma, Sequelize)",
             "description": "Use Prisma and Sequelize ORMs for Node.js with TiDB as a drop-in MySQL replacement.",
@@ -450,10 +450,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/84cc5d6b-image_219.png",
-              "alt": "image 219",
-              "width": 94,
-              "height": 94
+              "url": "https://static.pingcap.com/images/780bb7fe-hiberbnate.svg",
+              "alt": "hiberbnate",
+              "width": 241,
+              "height": 76
             },
             "title": "Hibernate (Java)",
             "description": "Use Hibernate with TiDB for object-relational mapping in Java enterprise applications.",
@@ -461,10 +461,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/61d4500b-idqpkhlx14_logos_1.png",
-              "alt": "idqpkhlx14 logos 1",
-              "width": 99,
-              "height": 99
+              "url": "https://static.pingcap.com/images/d90f076a-proxysql.svg",
+              "alt": "proxysql",
+              "width": 241,
+              "height": 76
             },
             "title": "ProxySQL",
             "description": "Use ProxySQL for connection pooling and traffic routing in TiDB-compatible environments.",
@@ -489,10 +489,10 @@ const dsl: PageDSL = {
         "items": [
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/d04f7083-group_1000011756.png",
-              "alt": "group 1000011756",
-              "width": 93,
-              "height": 56
+              "url": "https://static.pingcap.com/images/8675b8f1-aws.svg",
+              "alt": "aws",
+              "width": 241,
+              "height": 76
             },
             "title": "AWS",
             "description": "Deploy TiDB Cloud on AWS, access via CloudFormation, and use AWS AppFlow for data integration.",
@@ -500,10 +500,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/d0efb1b9-group_1000011758.png",
-              "alt": "group 1000011758",
-              "width": 225,
-              "height": 39
+              "url": "https://static.pingcap.com/images/f4f89345-google.svg",
+              "alt": "google",
+              "width": 241,
+              "height": 66
             },
             "title": "Google Cloud Platform",
             "description": "Run TiDB on Google Cloud Bigtable or self-host with native GCP marketplace integrations.",
@@ -511,9 +511,9 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/1133f760-image_221.png",
-              "alt": "image 221",
-              "width": 200,
+              "url": "https://static.pingcap.com/images/927fb12f-azure.svg",
+              "alt": "azure",
+              "width": 241,
               "height": 66
             },
             "title": "Microsoft Azure",
@@ -522,10 +522,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/9213760c-alibabacloudlogo_1.png",
-              "alt": "alibabacloudlogo 1",
-              "width": 268,
-              "height": 34
+              "url": "https://static.pingcap.com/images/a81421d7-alibaba.svg",
+              "alt": "alibaba",
+              "width": 289,
+              "height": 66
             },
             "title": "Alibaba Cloud",
             "description": "TiDB deployments on Alibaba Cloud with native marketplace and managed service options.",
@@ -555,10 +555,10 @@ const dsl: PageDSL = {
         "items": [
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/c2fa58aa-image_222.png",
-              "alt": "image 222",
-              "width": 111,
-              "height": 111
+              "url": "https://static.pingcap.com/images/16724987-terraform.svg",
+              "alt": "terraform",
+              "width": 241,
+              "height": 76
             },
             "title": "Terraform (TiDB Cloud Provider)",
             "description": "Provision and manage TiDB Cloud clusters using Terraform for infrastructure-as-code workflows.",
@@ -566,10 +566,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/79a81cd2-bytebase-seeklogo_1.png",
-              "alt": "bytebase seeklogo 1",
-              "width": 289,
-              "height": 62
+              "url": "https://static.pingcap.com/images/32eb13f1-bytebase.svg",
+              "alt": "bytebase",
+              "width": 304,
+              "height": 76
             },
             "title": "Bytebase",
             "description": "Manage TiDB schema migrations and database DevOps workflows with version control and approvals.",
@@ -577,10 +577,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/0a6c35a1-image_223.png",
-              "alt": "image 223",
-              "width": 97,
-              "height": 97
+              "url": "https://static.pingcap.com/images/334023fa-gitpod.svg",
+              "alt": "gitpod",
+              "width": 241,
+              "height": 76
             },
             "title": "Gitpod",
             "description": "Spin up cloud-based development environments connected to TiDB for rapid prototyping.",
@@ -604,10 +604,10 @@ const dsl: PageDSL = {
         "items": [
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/01d94698-image_224.png",
-              "alt": "image 224",
-              "width": 200,
-              "height": 40
+              "url": "https://static.pingcap.com/images/f1391490-vercel.svg",
+              "alt": "vercel",
+              "width": 304,
+              "height": 76
             },
             "title": "Vercel",
             "description": "Connect serverless and SaaS backends on Vercel to TiDB Cloud using standard MySQL drivers.",
@@ -615,10 +615,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/267f2123-image_225.png",
-              "alt": "image 225",
-              "width": 140,
-              "height": 140
+              "url": "https://static.pingcap.com/images/d6b334af-netlify.svg",
+              "alt": "netlify",
+              "width": 241,
+              "height": 76
             },
             "title": "Netlify",
             "description": "Integrate Netlify-hosted applications with TiDB via MySQL-compatible connectors.",
@@ -626,10 +626,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/bb9408fa-image_226.png",
-              "alt": "image 226",
-              "width": 122,
-              "height": 122
+              "url": "https://static.pingcap.com/images/9ed13915-lambda.svg",
+              "alt": "lambda",
+              "width": 241,
+              "height": 76
             },
             "title": "AWS Lambda",
             "description": "Use Lambda functions to query or write to TiDB using standard MySQL connectors in serverless architectures.",
@@ -637,10 +637,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/c847ef10-image_227.png",
-              "alt": "image 227",
-              "width": 162,
-              "height": 162
+              "url": "https://static.pingcap.com/images/1d209cd1-cloudflare.svg",
+              "alt": "cloudflare",
+              "width": 241,
+              "height": 76
             },
             "title": "Cloudflare",
             "description": "Build globally distributed applications connecting Cloudflare workers to TiDB Cloud endpoints.",
@@ -648,10 +648,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/ead737fb-image_228.png",
-              "alt": "image 228",
-              "width": 121,
-              "height": 121
+              "url": "https://static.pingcap.com/images/92ab7b63-zaiper.svg",
+              "alt": "zaiper",
+              "width": 241,
+              "height": 76
             },
             "title": "Zapier",
             "description": "Automate workflows triggered by TiDB data changes using Zapier integrations.",
@@ -659,10 +659,10 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/5159237d-image_229.png",
-              "alt": "image 229",
-              "width": 162,
-              "height": 162
+              "url": "https://static.pingcap.com/images/2c15dffa-n8n.svg",
+              "alt": "n8n",
+              "width": 241,
+              "height": 76
             },
             "title": "n8n",
             "description": "Create event-driven automation workflows integrating TiDB with SaaS tools via n8n.",
