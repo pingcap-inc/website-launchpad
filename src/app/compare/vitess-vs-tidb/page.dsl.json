@@ -233,7 +233,7 @@
       "type": "cta",
       "props": {
         "title": "",
-        "subtitle": "Stop spending engineering cycles on sharding workflows that grow with your fleet.",
+        "subtitle": "Stop spending engineering cycles on sharding workflows that grow with your database fleet.",
         "primaryCta": {
           "text": "Modernize MySQL workloads",
           "href": "https://www.pingcap.com/solutions/modernize-mysql-workloads/"
