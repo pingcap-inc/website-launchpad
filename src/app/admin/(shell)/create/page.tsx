@@ -581,6 +581,7 @@ interface TopBarProps {
   slug: string
   saveStatus: 'idle' | 'saving' | 'saved' | 'error'
   draftAvailable: boolean
+  saveDraftDisabled: boolean
   parentSlug: string
   childSlug: string
   parentOptions: { slug: string; title: string }[]
@@ -599,6 +600,7 @@ function TopBar({
   slug,
   saveStatus,
   draftAvailable,
+  saveDraftDisabled,
   parentSlug,
   childSlug,
   parentOptions,
@@ -693,8 +695,13 @@ function TopBar({
         {moveStatus === 'error' && <span className="text-label text-red-500">Move failed</span>}
         <button
           onClick={onSaveDraft}
-          disabled={!dsl || !slug || !slugValid}
-          className="flex items-center gap-1.5 border border-gray-300 text-gray-700 font-bold px-3 py-1.5 text-body-sm rounded hover:border-gray-400 disabled:opacity-40 transition-colors"
+          disabled={!dsl || !slug || !slugValid || saveDraftDisabled}
+          title={
+            saveDraftDisabled
+              ? 'Editing the published version — Save Draft is disabled. Use Publish to push changes live.'
+              : undefined
+          }
+          className="flex items-center gap-1.5 border border-gray-300 text-gray-700 font-bold px-3 py-1.5 text-body-sm rounded hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           Save Draft
         </button>
@@ -1366,6 +1373,9 @@ function CreatePageInner() {
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode') ?? ''
   const editMode = mode === 'edit'
+  const initialSourceRef = useRef<'draft' | 'published'>(
+    searchParams.get('source') === 'published' ? 'published' : 'draft'
+  )
   const mockMode = process.env.NEXT_PUBLIC_USE_MOCK_DSL === '1'
   const [pageType, setPageType] = useState(PAGE_TYPES[0])
   const [intent, setIntent] = useState('')
@@ -1385,6 +1395,9 @@ function CreatePageInner() {
   const [previewKey, setPreviewKey] = useState(0)
   const [draftAvailable, setDraftAvailable] = useState(false)
   const [checkingDraft, setCheckingDraft] = useState(false)
+  const [editingPublishedSource, setEditingPublishedSource] = useState(
+    initialSourceRef.current === 'published'
+  )
   const [parentOptions, setParentOptions] = useState<{ slug: string; title: string }[]>([])
   const [existingSlugs, setExistingSlugs] = useState<Set<string>>(new Set())
   const [moveStatus, setMoveStatus] = useState<'idle' | 'moving' | 'moved' | 'error'>('idle')
@@ -2230,6 +2243,7 @@ function CreatePageInner() {
 
   const handleSaveDraft = async () => {
     if (!dsl || !slug) return
+    if (editingPublishedSource) return
     if (editMode && initialSlug && initialSlug !== slug) {
       setPendingMoveAction({ type: 'save' })
       return
@@ -2243,6 +2257,7 @@ function CreatePageInner() {
       })
       if (!res.ok) throw new Error('Save failed')
       setBaselineState(dsl, slug)
+      setEditingPublishedSource(false)
       setSaveStatus('saved')
       setTimeout(() => setSaveStatus('idle'), 3000)
     } catch {
@@ -2338,6 +2353,7 @@ function CreatePageInner() {
       setDsl(localDraft)
       setBaselineState(localDraft, slug)
       setLocalJson(JSON.stringify(localDraft, null, 2))
+      setEditingPublishedSource(false)
       return
     }
 
@@ -2349,6 +2365,7 @@ function CreatePageInner() {
         setDsl(normalized)
         setBaselineState(normalized, slug)
         setLocalJson(JSON.stringify(normalized, null, 2))
+        setEditingPublishedSource(false)
         return
       }
 
@@ -2360,11 +2377,32 @@ function CreatePageInner() {
           setDsl(normalized)
           setBaselineState(normalized, slug)
           setLocalJson(JSON.stringify(normalized, null, 2))
+          setEditingPublishedSource(false)
           return
         }
       }
 
       throw new Error('Draft not found')
+    } catch {
+      setSaveStatus('error')
+      setTimeout(() => setSaveStatus('idle'), 3000)
+    }
+  }, [slug])
+
+  const handleLoadPublished = useCallback(async () => {
+    if (!slug || !isValidSlugPath(slug)) return
+    try {
+      const publishedRes = await fetch(`/api/pages/${slug}`)
+      if (publishedRes.ok) {
+        const published = (await publishedRes.json()) as PageDSL
+        const normalized = normalizeDSL(published)
+        setDsl(normalized)
+        setBaselineState(normalized, slug)
+        setLocalJson(JSON.stringify(normalized, null, 2))
+        setEditingPublishedSource(true)
+        return
+      }
+      throw new Error('Published version not found')
     } catch {
       setSaveStatus('error')
       setTimeout(() => setSaveStatus('idle'), 3000)
@@ -2377,8 +2415,12 @@ function CreatePageInner() {
     if (!slug || !isValidSlugPath(slug)) return
     if (initialSlugRef.current !== slug) return
     autoLoadedDraftRef.current = true
-    handleLoadDraft()
-  }, [slug, handleLoadDraft])
+    if (initialSourceRef.current === 'published') {
+      handleLoadPublished()
+    } else {
+      handleLoadDraft()
+    }
+  }, [slug, handleLoadDraft, handleLoadPublished])
 
   const toggleFullscreen = () => {
     if (!previewRef.current) return
@@ -2393,6 +2435,7 @@ function CreatePageInner() {
         slug={slug}
         saveStatus={saveStatus}
         draftAvailable={draftAvailable && !checkingDraft}
+        saveDraftDisabled={editingPublishedSource}
         parentSlug={getParentSlug(slug)}
         childSlug={getLeafSlug(slug)}
         parentOptions={(() => {
