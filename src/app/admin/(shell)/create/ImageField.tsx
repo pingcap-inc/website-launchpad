@@ -27,26 +27,26 @@ export function ImageField({
 }: ImageFieldProps) {
   const [mediaCenterOpen, setMediaCenterOpen] = useState(false)
   const [initialTab, setInitialTab] = useState<'library' | 'upload'>('library')
-  const [initialFile, setInitialFile] = useState<File | undefined>()
+  const [initialFiles, setInitialFiles] = useState<File[] | undefined>()
   const [isDragging, setIsDragging] = useState(false)
 
-  const openUpload = (file?: File) => {
+  const openUpload = (files?: File[]) => {
     setInitialTab('upload')
-    setInitialFile(file)
+    setInitialFiles(files)
     setMediaCenterOpen(true)
   }
 
   const openLibrary = () => {
     setInitialTab('library')
-    setInitialFile(undefined)
+    setInitialFiles(undefined)
     setMediaCenterOpen(true)
   }
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragging(false)
-    const file = e.dataTransfer.files[0]
-    if (file) openUpload(file)
+    const files = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith('image/'))
+    if (files.length > 0) openUpload(files)
   }
 
   return (
@@ -112,7 +112,7 @@ export function ImageField({
         onSelect={(img) => onChange(img)}
         currentUrl={value?.url}
         initialTab={initialTab}
-        initialFile={initialFile}
+        initialFiles={initialFiles}
         hideTags
         defaultTag={defaultTag}
       />

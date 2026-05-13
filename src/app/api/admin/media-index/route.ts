@@ -144,7 +144,22 @@ export async function PATCH(req: NextRequest) {
     alt?: string
     width?: number | null
     height?: number | null
+    /** Batch: set tags for many URLs in one read-modify-write cycle */
+    tagEntries?: { url: string; tags: string[] }[]
   }
+
+  // Batch tag update path — no per-URL alt/size in batch mode
+  if (Array.isArray(body.tagEntries)) {
+    const tagsMap = await readJson<Record<string, string[]>>(s3, bucket, TAGS_KEY, {})
+    for (const entry of body.tagEntries) {
+      if (entry.url && Array.isArray(entry.tags)) {
+        tagsMap[entry.url] = entry.tags
+      }
+    }
+    await writeJson(s3, bucket, TAGS_KEY, tagsMap)
+    return NextResponse.json({ ok: true })
+  }
+
   if (!body.url) {
     return NextResponse.json({ error: 'url is required' }, { status: 400 })
   }
