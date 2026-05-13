@@ -1,7 +1,7 @@
 {
-  "pageName": "TiDB Database Comparisons | PingCAP",
+  "pageName": "TiDB Database Comparisons",
   "meta": {
-    "title": "TiDB Database Comparisons | PingCAP",
+    "title": "TiDB Database Comparisons",
     "description": "Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.",
     "canonical": "/compare/"
   },

@@ -5,13 +5,13 @@ import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
-  title: 'TiDB Database Comparisons | PingCAP',
+  title: 'TiDB Database Comparisons',
   description:
     'Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.',
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/compare/' },
   openGraph: {
-    title: 'TiDB Database Comparisons | PingCAP',
+    title: 'TiDB Database Comparisons',
     description:
       'Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.',
     url: 'https://www.pingcap.com/compare/',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/compare/',
-  title: 'TiDB Database Comparisons | PingCAP',
+  title: 'TiDB Database Comparisons',
   description:
     'Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.',
   breadcrumbs: [
@@ -44,9 +44,9 @@ const schema = buildPageSchema({
 })
 
 const dsl: PageDSL = {
-  pageName: 'TiDB Database Comparisons | PingCAP',
+  pageName: 'TiDB Database Comparisons',
   meta: {
-    title: 'TiDB Database Comparisons | PingCAP',
+    title: 'TiDB Database Comparisons',
     description:
       'Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.',
     canonical: '/compare/',
