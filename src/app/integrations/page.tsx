@@ -378,8 +378,8 @@ const dsl: PageDSL = {
           },
           {
             "icon": {
-              "url": "https://static.pingcap.com/images/45467d07-go.svg",
-              "alt": "go",
+              "url": "https://static.pingcap.com/images/6aa8296e-superset.svg",
+              "alt": "superset",
               "width": 241,
               "height": 76
             },
