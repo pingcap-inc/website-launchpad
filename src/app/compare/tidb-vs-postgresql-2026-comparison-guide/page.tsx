@@ -9,12 +9,14 @@ export const metadata: Metadata = {
   description:
     'Compare TiDB and PostgreSQL for scale-out, high availability, and real-time analytics. Choose the right database for your cloud-native apps.',
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/compare/tidb-vs-postgresql/' },
+  alternates: {
+    canonical: 'https://www.pingcap.com/compare/tidb-vs-postgresql-2026-comparison-guide/',
+  },
   openGraph: {
     title: "TiDB vs PostgreSQL (2026): A Platform Team's Guide | TiDB",
     description:
       'Compare TiDB and PostgreSQL for scale-out, high availability, and real-time analytics. Choose the right database for your cloud-native apps.',
-    url: 'https://www.pingcap.com/compare/tidb-vs-postgresql/',
+    url: 'https://www.pingcap.com/compare/tidb-vs-postgresql-2026-comparison-guide/',
     siteName: 'TiDB',
     images: [
       {
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: '/compare/tidb-vs-postgresql/',
+  path: '/compare/tidb-vs-postgresql-2026-comparison-guide/',
   title: "TiDB vs PostgreSQL (2026): A Platform Team's Guide | TiDB",
   description:
     'Compare TiDB and PostgreSQL for scale-out, high availability, and real-time analytics. Choose the right database for your cloud-native apps.',
@@ -41,7 +43,7 @@ const schema = buildPageSchema({
     { name: 'Home', path: '/' },
     {
       name: 'TiDB vs PostgreSQL (2026) Comparison Guide for Platform Teams',
-      path: '/compare/tidb-vs-postgresql/',
+      path: '/compare/tidb-vs-postgresql-2026-comparison-guide/',
     },
   ],
 })
@@ -52,7 +54,7 @@ const dsl: PageDSL = {
     title: "TiDB vs PostgreSQL (2026): A Platform Team's Guide | TiDB",
     description:
       'Compare TiDB and PostgreSQL for scale-out, high availability, and real-time analytics. Choose the right database for your cloud-native apps.',
-    canonical: '/compare/tidb-vs-postgresql/',
+    canonical: '/compare/tidb-vs-postgresql-2026-comparison-guide/',
   },
   sections: [
     {

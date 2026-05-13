@@ -46,7 +46,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/compare/best-vector-database/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/compare/cockroachdb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/compare/mysql-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
-    { url: '/compare/tidb-vs-postgresql/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/compare/tidb-vs-postgresql-2026-comparison-guide/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
     { url: '/compare/yugabytedb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
     // Campaign / program pages
     // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
