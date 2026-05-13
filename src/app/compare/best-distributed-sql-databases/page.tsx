@@ -1,0 +1,466 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: 'Best Distributed SQL Databases 2026 | TiDB',
+  description:
+    'Compare top distributed SQL databases for global scale, ACID transactions, HTAP, and cloud options. See tradeoffs and try TiDB Cloud.',
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/compare/best-distributed-sql-databases/' },
+  openGraph: {
+    title: 'Best Distributed SQL Databases 2026 | TiDB',
+    description:
+      'Compare top distributed SQL databases for global scale, ACID transactions, HTAP, and cloud options. See tradeoffs and try TiDB Cloud.',
+    url: 'https://www.pingcap.com/compare/best-distributed-sql-databases/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: '/compare/best-distributed-sql-databases/',
+  title: 'Best Distributed SQL Databases 2026 | TiDB',
+  description:
+    'Compare top distributed SQL databases for global scale, ACID transactions, HTAP, and cloud options. See tradeoffs and try TiDB Cloud.',
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    {
+      name: 'Best Distributed SQL Databases 2026',
+      path: '/compare/best-distributed-sql-databases/',
+    },
+  ],
+})
+
+const dsl: PageDSL = {
+  pageName: 'Best Distributed SQL Databases 2026',
+  meta: {
+    title: 'Best Distributed SQL Databases 2026 | TiDB',
+    description:
+      'Compare top distributed SQL databases for global scale, ACID transactions, HTAP, and cloud options. See tradeoffs and try TiDB Cloud.',
+    canonical: '/compare/best-distributed-sql-databases/',
+  },
+  sections: [
+    {
+      id: 'hero-1',
+      type: 'hero',
+      props: {
+        layout: 'image-right',
+        headline: 'Best Distributed SQL Databases 2026',
+        heroImage: {
+          image: {
+            url: 'https://static.pingcap.com/images/44898b82-tidb-training-and-certification.svg',
+            alt: 'tidb training and certification',
+            width: 263,
+            height: 389,
+          },
+          alt: 'tidb training and certification',
+          width: 263,
+          height: 389,
+        },
+      },
+      style: {
+        background: 'primary',
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'tableOfContents-1',
+      type: 'tableOfContents',
+      props: {
+        items: [
+          {
+            id: 'intro',
+            label: 'Introduction',
+            level: 1,
+          },
+          {
+            id: 'jump-to-a-section',
+            label: 'Jump to a Section',
+            level: 1,
+          },
+          {
+            id: 'what-is-a-distributed-sql-database',
+            label: 'What Is a Distributed SQL Database',
+            level: 1,
+          },
+          {
+            id: 'why-distributed-sql-is-replacing-sharding-for-modern-apps',
+            label: 'Why Distributed SQL Is Replacing Sharding for Modern Apps',
+            level: 1,
+          },
+          {
+            id: 'quick-answer-best-distributed-sql-databases-by-use-case',
+            label: 'Quick Answer: Best Distributed SQL Databases by Use Case',
+            level: 1,
+          },
+          {
+            id: 'database-comparison-table-best-options-for-distributed-sql',
+            label: 'Database Comparison Table: Best Options for Distributed SQL',
+            level: 1,
+          },
+          {
+            id: 'how-to-read-this-table',
+            label: 'How to Read This Table',
+            level: 1,
+          },
+          {
+            id: 'the-evaluation-framework-for-choosing-the-best-distributed-database',
+            label: 'The Evaluation Framework for Choosing the Best Distributed Database',
+            level: 1,
+          },
+          {
+            id: 'layer-1-correctness-and-transactions',
+            label: 'Layer 1: Correctness and Transactions',
+            level: 2,
+          },
+          {
+            id: 'layer-2-scaling-model-and-operations',
+            label: 'Layer 2: Scaling Model and Operations',
+            level: 2,
+          },
+          {
+            id: 'layer-3-workload-fit-and-htap-readiness',
+            label: 'Layer 3: Workload Fit and HTAP Readiness',
+            level: 2,
+          },
+          {
+            id: 'layer-4-deployment-and-geography',
+            label: 'Layer 4: Deployment and Geography',
+            level: 2,
+          },
+          {
+            id: 'how-we-chose-these-distributed-sql-databases',
+            label: 'How We Chose These Distributed SQL Databases',
+            level: 1,
+          },
+          {
+            id: 'benchmarks-and-testing-guidance-for-2026-evaluations',
+            label: 'Benchmarks and Testing Guidance for 2026 Evaluations',
+            level: 1,
+          },
+          {
+            id: 'benchmark-checklist',
+            label: 'Benchmark Checklist',
+            level: 2,
+          },
+          {
+            id: 'in-depth-reviews-of-the-top-distributed-sql-databases',
+            label: 'In-Depth Reviews of the Top Distributed SQL Databases',
+            level: 1,
+          },
+          {
+            id: 'tidb',
+            label: 'TiDB',
+            level: 2,
+          },
+          {
+            id: 'key-features',
+            label: 'Key features',
+            level: 2,
+          },
+          {
+            id: 'pros',
+            label: 'Pros',
+            level: 2,
+          },
+          {
+            id: 'cons-and-tradeoffs',
+            label: 'Cons and tradeoffs',
+            level: 2,
+          },
+          {
+            id: 'tidb-cloud',
+            label: 'TiDB Cloud',
+            level: 2,
+          },
+          {
+            id: 'cockroachdb',
+            label: 'CockroachDB',
+            level: 2,
+          },
+          {
+            id: 'google-cloud-spanner',
+            label: 'Google Cloud Spanner',
+            level: 2,
+          },
+          {
+            id: 'yugabytedb',
+            label: 'YugabyteDB',
+            level: 2,
+          },
+          {
+            id: 'amazon-aurora-dsql',
+            label: 'Amazon Aurora DSQL',
+            level: 2,
+          },
+          {
+            id: 'singlestore',
+            label: 'SingleStore',
+            level: 2,
+          },
+          {
+            id: 'vitess',
+            label: 'Vitess',
+            level: 2,
+          },
+          {
+            id: 'how-to-choose-the-right-distributed-sql-database',
+            label: 'How to Choose the Right Distributed SQL Database',
+            level: 1,
+          },
+          {
+            id: 'step-1-define-the-workload-mix',
+            label: 'Step 1: Define the Workload Mix',
+            level: 2,
+          },
+          {
+            id: 'step-2-define-acid-and-consistency-requirements',
+            label: 'Step 2: Define ACID and Consistency Requirements',
+            level: 2,
+          },
+          {
+            id: 'step-3-define-the-scaling-profile',
+            label: 'Step 3: Define the Scaling Profile',
+            level: 2,
+          },
+          {
+            id: 'step-4-decide-managed-vs-self-managed-deployment',
+            label: 'Step 4: Decide Managed vs Self-Managed Deployment',
+            level: 2,
+          },
+          {
+            id: 'step-5-validate-multi-region-behavior-and-failover',
+            label: 'Step 5: Validate Multi-Region Behavior and Failover',
+            level: 2,
+          },
+          {
+            id: 'architecture-patterns-for-distributed-sql-in-production',
+            label: 'Architecture Patterns for Distributed SQL in Production',
+            level: 1,
+          },
+          {
+            id: 'scalable-operational-core-with-htap-analytics',
+            label: 'Scalable Operational Core with HTAP Analytics',
+            level: 2,
+          },
+          {
+            id: 'multi-region-architecture-for-global-apps',
+            label: 'Multi-Region Architecture for Global Apps',
+            level: 2,
+          },
+          {
+            id: 'migration-from-mysql-to-distributed-sql',
+            label: 'Migration from MySQL to Distributed SQL',
+            level: 2,
+          },
+          {
+            id: 'faq',
+            label: 'FAQs',
+            level: 1,
+          },
+          {
+            id: 'try-tidb-s-distributed-sql-database',
+            label: "Try TiDB's Distributed SQL Database",
+            level: 1,
+          },
+        ],
+        sticky: true,
+      },
+    },
+    {
+      id: 'intro',
+      type: 'richTextBlock',
+      props: {
+        content:
+          '**Updated March 20, 2026 | Author: [Akshata Hire](https://www.pingcap.com/blog/author/akshata-hire/) (Product Marketing Lead) | Reviewed by: Ravish Patel (Solutions Engineer)**\n\n---\n\nA distributed SQL database distributes data across multiple nodes while preserving full SQL semantics, ACID transactions, and strong consistency. "Best" here means the database can scale horizontally without manual sharding, handle distributed transactions correctly under failure, and match the workload profile of the team evaluating it.\n\n## Jump to a Section\n\n- [What Is a Distributed SQL Database](#what-is-a-distributed-sql-database)\n- [Why Distributed SQL Is Replacing Sharding for Modern Apps](#why-distributed-sql-is-replacing-sharding-for-modern-apps)\n- [Quick Answer: Best Distributed SQL Databases by Use Case](#quick-answer-best-distributed-sql-databases-by-use-case)\n- [Database Comparison Table](#database-comparison-table-best-options-for-distributed-sql)\n- [The Evaluation Framework](#the-evaluation-framework-for-choosing-the-best-distributed-database)\n- [How We Chose These Databases](#how-we-chose-these-distributed-sql-databases)\n- [Benchmarks and Testing Guidance](#benchmarks-and-testing-guidance-for-2026-evaluations)\n- [In-Depth Reviews](#in-depth-reviews-of-the-top-distributed-sql-databases)\n- [How to Choose the Right Database](#how-to-choose-the-right-distributed-sql-database)\n- [Architecture Patterns](#architecture-patterns-for-distributed-sql-in-production)\n- [FAQs](#faqs)\n\n## What Is a Distributed SQL Database\n\nA distributed SQL database stores data across multiple physical nodes and coordinates reads, writes, and transactions across that cluster while presenting a single SQL interface to applications. Most implementations handle data distribution internally, without requiring application-level sharding logic. Some tools in this category, like Vitess, use a middleware sharding layer on top of an existing database engine, which is a distinct architectural approach covered later in this article.\n\nThe core properties that define a distributed SQL database:\n- **Horizontal scaling:** nodes are added to the cluster rather than upgrading a single machine.\n- **ACID-compliant distributed transactions:** commits and rollbacks apply atomically across all nodes holding the relevant data.\n- **SQL interface:** standard query language, joins, indexes, and schema management work without modification.\n- **Automatic data distribution:** the database handles partitioning, replication, and rebalancing internally.\n\nSome evaluators still use the term **NewSQL database** to describe this category. That label was coined in the early 2010s to distinguish horizontally scalable SQL systems from both legacy RDBMS and NoSQL solutions. It remains accurate as a historical framing, but most vendors and analysts now use **distributed SQL** as the current standard term.\n\n## Why Distributed SQL Is Replacing Sharding for Modern Apps\n\nGrowth beyond a single database server has historically meant one of two painful paths: buy a much larger server (vertical scaling) or partition your data manually across multiple databases (sharding). Both carry significant costs.\n\nManual sharding breaks the SQL guarantees applications depend on. Cross-shard joins become expensive or impossible. Transactions that touch multiple shards require application-level coordination. Schema changes must be applied across every shard independently. Rebalancing data after growth requires engineering work, planned downtime, or both.\n\nThe operational overhead accumulates. Teams that manage sharded MySQL or Postgres clusters report that a meaningful portion of their database engineering time goes to shard management rather than product work. At 10 or 20 shards, this cost becomes structurally embedded in how the team operates.\n\nDistributed SQL removes that overhead by making horizontal scaling a database responsibility. The cluster handles data placement, rebalancing, and cross-node transaction coordination. The application sees a single logical database.\n\n**On the multi-region problem:** latency and availability requirements for global applications have become harder to ignore. Users in Europe and Asia-Pacific experiencing 200ms+ read latency because all traffic routes to a US-East primary is no longer an acceptable tradeoff. Distributed SQL databases designed for multi-region deployment place data closer to users and provide configurable read and write locality.\n\n**On the NoSQL myth:** the idea that "NoSQL is the only way to scale horizontally" was accurate for a brief window in the 2010s before distributed SQL systems reached production maturity. Modern distributed SQL databases demonstrate horizontal scalability matching or exceeding major NoSQL systems while preserving the query expressiveness and consistency guarantees that NoSQL sacrificed. For teams that need both scale and correctness, there is no longer a forced tradeoff.\n\nLearn more about [why distributed SQL databases power modern apps](https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/).\n\n## Quick Answer: Best Distributed SQL Databases by Use Case\n\n:::card tone=light\n\n- **Best overall for HTAP and MySQL compatibility:** TiDB. Handles OLTP and real-time analytics on a single cluster. MySQL-wire-protocol compatible. Horizontal scaling without sharding.\n- **Best for cloud-native global apps:** CockroachDB. Serializable isolation, active-active multi-region, PostgreSQL-compatible API.\n- **Best for managed multi-region SQL on Google Cloud:** Google Cloud Spanner. Externally consistent, fully managed, global distribution built on Google infrastructure.\n- **Best for Postgres-compatible distributed SQL:** YugabyteDB. High PostgreSQL compatibility with distributed storage and replication.\n- **Best for AWS-first teams wanting serverless distributed SQL:** Amazon Aurora DSQL. Serverless, auto-scaling, tight AWS integration.\n- **Best for real-time analytics alongside transactions:** SingleStore. Row store in memory plus columnar disk storage for mixed OLTP and analytical queries.\n- **Best for explicit MySQL sharding control:** Vitess. Middleware-based sharding layer for teams that want full control over how MySQL data is partitioned. Note: Vitess is not a distributed SQL database in the native sense; it is included here because teams commonly evaluate it alongside distributed SQL options.\n\n:::',
+        className: 'rich-text-block--raw-source',
+      },
+      style: {
+        background: 'none',
+        spacing: 'section',
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      },
+    },
+    {
+      id: 'cta-intro-1',
+      type: 'cta',
+      props: {
+        title: '',
+        subtitle: 'See How TiDB Performs at Your Scale.',
+        primaryCta: {
+          text: 'Try TiDB Cloud for distributed SQL',
+          href: 'https://www.pingcap.com/tidb/cloud/',
+        },
+      },
+      style: {
+        background: 'brand-violet',
+        spacing: 'sm',
+        backgroundImage: {
+          image: {
+            url: 'https://static.pingcap.com/files/2025/06/22092103/1000011430.png',
+          },
+        },
+      },
+    },
+    {
+      id: 'pre-1',
+      type: 'richTextBlock',
+      props: {
+        content:
+          "## Database Comparison Table: Best Options for Distributed SQL\n\n| Database | Best For | Consistency | Scale Model | Workload Fit | Deployment | Key Tradeoff |\n|---|---|---|---|---|---|---|\n| TiDB | HTAP + MySQL-compatible scale | ACID, Snapshot Isolation | Horizontal, auto-sharding | OLTP + real-time analytics | Cloud (TiDB Cloud) / self-managed | Ecosystem maturity vs MySQL |\n| CockroachDB | Cloud-native global OLTP | Serializable | Horizontal, auto-sharding | OLTP, multi-region writes | Cloud / self-managed | Cost at high scale |\n| Google Cloud Spanner | Managed multi-region SQL on GCP | External consistency | Fully managed, global | OLTP, global compliance | Google Cloud only | GCP lock-in, cost |\n| YugabyteDB | Postgres-compatible distributed SQL | Serializable | Horizontal, auto-sharding | OLTP, Postgres workloads | Cloud / self-managed | Performance vs Postgres |\n| Amazon Aurora DSQL | AWS-first serverless distributed SQL | Strong Consistency | Serverless, auto-scaling | OLTP, variable traffic | AWS only | AWS lock-in, limited regions |\n| SingleStore | Real-time analytics + transactions | ACID | Horizontal, in-memory option | HTAP, fast analytics | Cloud / self-managed | Cost, Postgres-first users |\n| Vitess | MySQL sharding control | MySQL-level | Sharding (explicit) | High-volume MySQL OLTP | Self-managed | Operational complexity |\n\n*Table: Comparing leading distributed SQL databases across consistency, scale, workload fit, deployment, and key tradeoffs.*\n\n## How to Read This Table\n\n- If your primary requirement is MySQL compatibility with a path to HTAP analytics, TiDB belongs at the top of your shortlist.\n- If you need Postgres-compatible distributed SQL and want to avoid cloud lock-in, YugabyteDB and CockroachDB are the natural **Postgres alternatives** to evaluate side by side.\n- If you are evaluating **Google Spanner alternatives** because of GCP lock-in or cost concerns, CockroachDB, TiDB, and YugabyteDB all offer multi-region capabilities on multi-cloud or self-managed infrastructure.\n- If your workload is entirely on AWS and traffic is spiky or unpredictable, Aurora DSQL's serverless model reduces operational overhead.\n- If your team manages a high-volume MySQL cluster and cannot afford a full migration, Vitess extends MySQL with sharding without replacing the database engine.\n\n## The Evaluation Framework for Choosing the Best Distributed Database\n\nUse these four layers as a structured filter. A database that fails any layer you genuinely need should not make your shortlist, regardless of performance benchmarks or marketing claims.\n\n### Layer 1: Correctness and Transactions\n\nStart with isolation and consistency requirements. Determine the minimum isolation level your application requires. Serializable isolation prevents all anomalies but costs throughput. Snapshot isolation (used by TiDB) prevents most anomalies and is appropriate for the majority of OLTP workloads.\n\nFor [distributed transactions with ACID guarantees](https://www.pingcap.com/blog/distributed-transactions-tidb/), verify how the database handles cross-shard commits. Two-phase commit (2PC) is the common mechanism, but implementations differ in how they handle coordinator failures, network partitions, and clock skew. Ask vendors for their failure handling documentation, not just their consistency model claim.\n\n- What isolation levels does the database support?\n- How are distributed transactions coordinated, and what happens if the coordinator fails?\n- Does the database provide external consistency across regions, or is consistency relaxed for geo-distribution?\n- What are the known scenarios where consistency guarantees can be violated?\n\n### Layer 2: Scaling Model and Operations\n\nHorizontal scaling is not a binary property. Understand whether the database requires manual intervention to rebalance data after adding nodes. Understand how schema changes work at scale. Online DDL matters when your tables hold billions of rows and you need to add a column without taking downtime.\n\nReview the operations story for your team's size. A distributed SQL database managed by a team of two engineers has different requirements than one supported by a dedicated platform team. Managed cloud offerings like TiDB Cloud offload much of this burden. Review [SQL database horizontal scaling vs vertical scaling](https://www.pingcap.com/horizontal-scaling-vs-vertical-scaling/) to set the right expectations.\n\n- Does the cluster rebalance automatically when nodes are added or removed?\n- How are rolling upgrades handled? Is there a documented zero-downtime upgrade path?\n- Does the database support online schema changes without table locks?\n- What is the operational burden for multi-region deployments?\n\n### Layer 3: Workload Fit and HTAP Readiness\n\nMost distributed SQL databases are optimized for OLTP. If you also need real-time reporting, dashboards, or analytical queries running against production data, the options narrow. A true [HTAP database explained for OLTP and analytics](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/) maintains separate row-oriented and column-oriented storage engines that serve transactional and analytical queries from the same dataset. Even in a true HTAP system, there can be minimal replication lag between transactional writes and analytical read availability; the advantage is that this lag is typically sub-second and eliminates the need for a separate ETL pipeline entirely.\n\n- What is the expected query latency for complex aggregations on production data?\n- Does the database maintain separate storage paths for OLTP and analytics, or does analytical load degrade transactional performance?\n- What is the replication lag between transactional writes and analytical read availability?\n- Does the database require a separate data warehouse for reporting workloads?\n\n### Layer 4: Deployment and Geography\n\nCloud-native deployment expectations vary by team. Some organizations require full managed service support where the vendor handles patching, replication, and failover. Others need on-premises or hybrid deployment. Verify the deployment model against your infrastructure strategy before investing evaluation time.\n\nFor multi-region deployments, the consistency-latency tradeoff is non-trivial. Writing to a globally distributed cluster requires coordinating across geographically separated nodes, and the speed of light imposes a floor on cross-region write latency. Understand what the database optimizes for and match it to your workload's geographic distribution.\n\n- Which cloud providers and regions does the managed service support?\n- Is self-managed deployment on-premises documented and supported?\n- How does the database handle split-brain scenarios across regions?\n- What are the RPO and RTO guarantees for regional failover?\n\n## How We Chose These Distributed SQL Databases\n\nThis list covers databases that meet all three of the following criteria: they support SQL-standard queries and schema management, they distribute data across nodes without requiring application-level sharding logic, and they have documented production deployments at meaningful scale.\n\nSelection criteria weighted in order of importance:\n- **Correctness:** the database must support ACID transactions across nodes. Systems that sacrifice consistency for throughput without explicit documentation of the tradeoffs were excluded.\n- **Scale:** the database must demonstrate horizontal scale beyond a single-server deployment, with auto-rebalancing or well-documented operational procedures.\n- **Ecosystem and production evidence:** the database must have documented production deployments, public case studies, or open-source adoption evidence.\n- **Deployment flexibility:** the list covers both managed cloud offerings and self-managed options to serve different organizational requirements.\n\nConflict of interest disclosure: this article is published by PingCAP, the company behind TiDB. TiDB receives more detailed coverage as a result. Competing products are described accurately based on public documentation and independent evaluations. Tradeoffs for each product, including TiDB, are presented candidly.\n\nUpdate policy: this article is reviewed quarterly. Pricing notes are directional only and verified against vendor documentation at each review cycle.\n\n## Benchmarks and Testing Guidance for 2026 Evaluations\n\nVendor benchmarks are useful for understanding theoretical limits, but they rarely reflect the conditions your application will actually run under. Run your own evaluation using the checklist below.\n\n### Benchmark Checklist\n\n- **Dataset size and shape:** use production-representative data volumes. A 10GB benchmark dataset does not predict behavior at 10TB. Include your actual schema, index structure, and key distribution.\n- **Throughput at p95 and p99:** average latency hides tail behavior. Distributed SQL systems with cross-node coordination can show high p99 latency spikes under contention. Measure under sustained load, not bursts.\n- **Mixed workload:** run OLTP and read-heavy analytical queries concurrently if your application requires both. Verify that analytical load does not degrade transactional performance.\n- **Failure testing:** kill a node mid-transaction and observe recovery behavior. Verify that uncommitted transactions are rolled back and that committed data is not lost. Test regional failover if you are evaluating multi-region deployments.\n- **Multi-region assumptions:** if your architecture spans regions, benchmark with realistic inter-region latency injected. Cross-region write latency will be the binding constraint on write throughput for globally distributed workloads.\n- **Cost modeling:** factor storage, compute, network egress, and support costs into the comparison. Cloud-managed services with high egress costs can become expensive at scale even if the compute pricing is competitive.\n\nWhen evaluating distributed SQL databases in 2026, the benchmark questions most relevant to architecture decisions are:\n- Can this database sustain my current peak TPS with room to grow, without degrading p99 latency?\n- What happens to write throughput and consistency guarantees as I add geographic regions?\n- How does the operational cost compare to my current sharded MySQL or Postgres at equivalent data volume?\n- Does the HTAP capability eliminate the need for a separate analytics pipeline, and what is the actual latency for complex queries on live data?\n\n## In-Depth Reviews of the Top Distributed SQL Databases\n\n### TiDB\n\n**Best for:** HTAP workloads, MySQL-compatible scale-out, and teams that want a single cluster for OLTP and real-time analytics.\n\n**Why it's on the list:** TiDB is the most complete implementation of distributed SQL combined with HTAP capability in the market. It delivers ACID transactions and distributed transactions across a horizontally scaled cluster, with MySQL wire-protocol compatibility that reduces migration friction. The separation of TiKV (row-oriented transactional storage) and TiFlash (columnar analytical storage) on the same dataset allows OLTP and analytics to run concurrently without interference.\n\n#### Key features\n- **TiKV:** the row-oriented storage engine that powers distributed transactions. Based on RocksDB, uses Raft for replication and consensus across regions.\n- **TiFlash:** a columnar replica of TiKV data that accelerates analytical queries. Updated asynchronously from TiKV, enabling HTAP without ETL.\n- **Separation of storage and compute:** storage nodes (TiKV, TiFlash) and compute nodes (TiDB SQL layer) scale independently.\n- **Online schema change:** DDL operations run without table locks, enabling schema evolution at scale without planned downtime.\n- **MySQL compatibility:** supports MySQL 5.7/8.0 protocol, most MySQL syntax, and widely-used MySQL tooling.\n\n#### Pros\n- Single cluster handles OLTP and real-time analytics, eliminating a separate data warehouse for most reporting workloads.\n- Horizontal scaling is automatic. Adding TiKV nodes triggers rebalancing without manual intervention.\n- ACID transactions with Snapshot Isolation across distributed data is the default behavior, not an option requiring tuning.\n- MySQL compatibility reduces migration effort from sharded MySQL deployments.\n\n#### Cons and tradeoffs\n- TiFlash replication introduces a small lag between transactional writes and analytical read availability. For latency-sensitive analytics, this lag (typically sub-second to a few seconds) needs validation.\n- The architecture requires running multiple component types (TiDB, TiKV, TiFlash, PD). Self-managed deployment has a higher operational baseline than a single-binary database.\n- TiDB's MySQL compatibility covers the majority of workloads but is not 100% compatible. Edge-case MySQL extensions and stored procedure-heavy applications may require migration work.\n\n**Pricing:** TiDB Cloud (managed) is available on a pay-as-you-go model with three tiers: Starter (RU-based, with a free tier), Essential (provisioned RCUs), and Dedicated (node-based, for production workloads requiring guaranteed compute and storage isolation). Self-managed TiDB is open-source under Apache 2.0 for the core components. Enterprise support is available from PingCAP.\n\n**Getting started:** [Try TiDB Cloud for distributed SQL](https://www.pingcap.com/tidb/cloud/) to launch a cluster in minutes. Full documentation is available at [docs.pingcap.com](https://docs.pingcap.com).\n\n### TiDB Cloud\n\n**Best for:** Teams that want all of TiDB's capabilities with managed infrastructure, automated operations, and multi-cloud deployment.\n\n**Why it's on the list:** TiDB Cloud is the cloud-native database path for TiDB adoption. It removes the operational overhead of managing TiDB, TiKV, TiFlash, and PD components, replacing it with a fully managed service available on AWS, Google Cloud, Azure, and Alibaba. For organizations that want distributed SQL and HTAP without a dedicated platform team, TiDB Cloud is the relevant entry point.\n\n#### Key features\n- Starter and Essential tiers with automatic scaling and consumption-based pricing for variable workloads.\n- Dedicated tier for production workloads requiring guaranteed compute, storage isolation, and SLA commitments.\n- Multi-cloud support across AWS, Google Cloud, Azure, and Alibaba, with region selection for data residency requirements.\n- Automated backups, point-in-time recovery, and rolling upgrades handled by PingCAP operations.\n- Built-in monitoring, query profiling, and slow query analysis accessible through the TiDB Cloud console.\n\n#### Pros\n- Operational complexity of a distributed cluster is abstracted. Teams interact with a SQL endpoint, not infrastructure.\n- Free Starter tier supports development and testing with no upfront commitment.\n- Scaling compute and storage independently is handled through the console, not manual node management.\n\n#### Cons and tradeoffs\n- Cloud-managed deployment means less configuration flexibility than self-managed TiDB for specialized network or storage requirements.\n- Starter tier has limits on concurrent connections and compute that may require upgrading to Essential or Dedicated for high-traffic production workloads.\n\n**Getting started:** [Try TiDB Cloud for distributed SQL](https://www.pingcap.com/tidb/cloud/) and create a Starter or Essential cluster in under five minutes.\n\n### CockroachDB\n\n**Best for:** Cloud-native global OLTP with serializable isolation and multi-region active-active writes.\n\n**Why it's on the list:** CockroachDB is a mature distributed SQL database with strong serializable isolation guarantees and a developer-friendly PostgreSQL-compatible API. It was designed from the start for multi-region active-active deployments and has significant production adoption in financial services and SaaS applications.\n\n#### Key features\n- Serializable isolation as the default consistency level, preventing all anomalies including write skew.\n- Multi-region table configuration allowing data to be pinned to specific regions for latency and compliance.\n- PostgreSQL wire-protocol compatibility for most query and driver use cases.\n- Automatic rebalancing and self-healing when nodes are added or fail.\n\n#### Pros\n- Serializable isolation is the strongest possible consistency guarantee and is the default, not an opt-in.\n- Multi-region deployment is well-documented with explicit controls over data placement.\n- Postgres compatibility covers most applications without driver changes.\n\n#### Cons and tradeoffs\n- No native columnar storage engine. Analytical queries on large datasets run against the row-oriented store, which limits HTAP performance compared to TiDB.\n- Cockroach Labs changed its licensing from Apache 2.0 to a Business Source License in 2019, restricting commercial use of self-managed deployments without a license.\n- At high scale, CockroachDB Dedicated pricing can exceed comparable TiDB Cloud or YugabyteDB deployments. Evaluate total cost at your projected data volume.\n\n**Pricing:** CockroachDB Cloud has three tiers: Basic, Standard, and Advanced. A free trial is available. Enterprise licenses are available for additional features and support.\n\n**Getting started:** cockroachlabs.com offers a free trial and documentation for all Cloud tiers.\n\n### Google Cloud Spanner\n\n**Best for:** Managed multi-region SQL on Google Cloud with external consistency and zero operational overhead.\n\n**Why it's on the list:** Google Cloud Spanner is Google's managed distributed SQL service, based on the technology powering Google's own internal infrastructure. It offers external consistency (stronger than serializable) and near-zero operational overhead for teams that are already committed to Google Cloud.\n\n#### Key features\n- External consistency: Spanner's consistency model is stronger than serializable, using TrueTime to order transactions globally.\n- Fully managed with 99.999% SLA for multi-region configurations.\n- Automatic scaling of compute and storage without manual intervention.\n- PostgreSQL interface (in addition to Spanner's native API) available for migration compatibility.\n\n#### Pros\n- Strongest consistency guarantees of any database on this list.\n- No infrastructure management. Google handles all patching, scaling, and failover.\n- Deep integration with Google Cloud services (Dataflow, BigQuery, Pub/Sub).\n\n#### Cons and tradeoffs\n- GCP lock-in is total. There is no self-managed or multi-cloud Spanner option.\n- Pricing is among the highest on this list, particularly for multi-region configurations. Processing units (the billing unit) can accumulate quickly.\n- Teams evaluating **Google Spanner alternatives** typically cite cost, GCP lock-in, and limited SQL dialect support as the primary drivers for considering CockroachDB, TiDB, or YugabyteDB.\n\n**Pricing:** Charged per processing unit, storage, and network egress. Multi-region configurations carry a significant price premium over regional.\n\n**Getting started:** Available directly in the Google Cloud Console. A free trial instance is available for evaluation.\n\n### YugabyteDB\n\n**Best for:** Distributed SQL with high PostgreSQL compatibility and open-source self-managed deployment.\n\n**Why it's on the list:** YugabyteDB delivers distributed SQL with the most complete Postgres API compatibility on this list. Built on a DocDB storage layer using Raft for replication, it supports both a YSQL (PostgreSQL-compatible) and YCQL (Cassandra-compatible) API. The open-source version (Apache 2.0) enables self-managed deployment on any cloud or on-premises environment.\n\n#### Key features\n- YSQL: high PostgreSQL API compatibility including stored procedures, triggers, and advanced indexing.\n- Serializable and Snapshot Isolation support.\n- Distributed architecture with automatic sharding and rebalancing.\n- Multi-cloud and on-premises deployment with no licensing restrictions on the core open-source version.\n\n#### Pros\n- Highest Postgres compatibility of any distributed SQL option, minimizing migration friction from existing Postgres applications.\n- Apache 2.0 licensed core with no commercial use restrictions for self-managed deployments.\n- Active open-source community and Yugabyte Cloud managed service available.\n\n#### Cons and tradeoffs\n- No native columnar storage for HTAP workloads. Analytical performance on large aggregations is limited compared to TiDB.\n- Yugabyte Cloud managed service geographic coverage continues to expand; verify current region availability against your deployment requirements.\n- Performance on write-heavy OLTP workloads at very high concurrency can fall behind TiDB or CockroachDB; validate against your specific workload before committing.\n\n**Pricing:** Core is Apache 2.0 open-source. Yugabyte Cloud is priced by vCPU and storage with a free tier available.\n\n**Getting started:** yugabyte.com/download for self-managed. Yugabyte Cloud for managed deployment.\n\n### Amazon Aurora DSQL\n\n**Best for:** AWS-first teams with variable transactional workloads that want serverless distributed SQL without cluster management.\n\n**Why it's on the list:** Amazon Aurora DSQL is AWS's distributed SQL offering, announced in late 2024 and designed for serverless scale-out transactional workloads. It extends the Aurora family with distributed storage and multi-region active-active capability, targeting applications that have exhausted Aurora standard's vertical scaling limits.\n\n#### Key features\n- Serverless architecture with automatic scaling to zero and back under variable traffic.\n- PostgreSQL-compatible API.\n- Active-active multi-region with optimistic concurrency control.\n- Deep AWS integration with IAM, CloudWatch, and VPC networking.\n\n#### Pros\n- No cluster management. AWS handles all infrastructure scaling and failover.\n- Pay-per-use pricing scales to zero for idle workloads, reducing cost for non-production environments.\n- Native AWS integration is an advantage for organizations with existing AWS-centric architecture.\n\n#### Cons and tradeoffs\n- AWS lock-in with no self-managed or multi-cloud option.\n- Aurora DSQL is a newer service (GA'd 2024/2025) with less production evidence at large scale compared to TiDB, CockroachDB, or Spanner.\n- Optimistic concurrency control means higher abort rates under write contention, which can degrade throughput for certain workload patterns.\n- No HTAP capability. Analytical workloads require separate services (Redshift, Athena).\n\n**Pricing:** Charged per DPU (distributed processing unit) and storage. Pricing is GA; check AWS documentation for current rates.\n\n**Getting started:** Available in the AWS Console. Aurora DSQL documentation is at docs.aws.amazon.com/aurora-dsql.\n\n### SingleStore\n\n**Best for:** Real-time analytics running alongside operational transactions on a single cluster, especially for data-intensive applications.\n\n**Why it's on the list:** SingleStore (formerly MemSQL) delivers fast analytical query performance through a hybrid storage architecture: the row store is fully in memory for transactional workloads, while the column store uses disk with in-memory caching for analytical queries. It targets teams that need sub-second analytical latency on live data alongside OLTP, particularly in use cases like financial risk, AdTech, and operational intelligence.\n\n#### Key features\n- Hybrid row and column storage: rowstore for OLTP, columnstore for analytics, on the same cluster.\n- In-memory processing with disk persistence for handling large datasets.\n- MySQL-compatible API.\n- Distributed query execution optimized for aggregation and scan-heavy workloads.\n\n#### Pros\n- Analytical query speed on production data is a core strength, competitive with dedicated OLAP databases.\n- MySQL wire-protocol compatibility is an advantage for teams migrating from MySQL.\n- Supports large-scale concurrent OLTP alongside complex analytics without dedicated infrastructure.\n\n#### Cons and tradeoffs\n- SingleStore is primarily HTAP/analytics-optimized; multi-region distributed transactions are less mature than CockroachDB or TiDB.\n- The self-managed version has community and enterprise tiers but lacks the open-source model of TiDB or YugabyteDB.\n\n**Pricing:** Pricing is listed on the website. A free cloud trial and developer edition are available for evaluation.\n\n**Getting started:** singlestore.com offers a free cloud trial and developer edition for local testing.\n\n### Vitess\n\n**Best for:** Teams managing high-volume MySQL clusters that want explicit control over sharding without replacing the database engine.\n\n**Why it's on the list:** Vitess is a middleware sharding layer that sits in front of MySQL and distributes load across multiple MySQL instances. Originally built at YouTube to handle Google-scale MySQL traffic, it is the foundation of PlanetScale and is used by several large-scale production deployments. It does not replace MySQL; it extends it with horizontal scaling capabilities.\n\n#### Key features\n- Transparent connection pooling and query routing across MySQL shards.\n- Horizontal resharding with minimal downtime.\n- Schema change management with gh-ost integration.\n- CNCF project with active open-source community.\n\n#### Pros\n- Teams can keep MySQL as the underlying engine, preserving MySQL-specific operational expertise and tooling.\n- Horizontal scaling is achievable without migrating to a new database system.\n- CNCF graduation provides long-term open-source stability assurance.\n\n#### Cons and tradeoffs\n- Vitess supports atomic cross-shard transactions via 2PC, but does not provide full ACID isolation across shards. Application-level handling is required for workloads that depend on cross-shard isolation guarantees.\n- Schema complexity increases with Vitess. VSchema management adds an operational layer that teams must maintain.\n- Vitess requires significant Kubernetes expertise for production deployment. The operational baseline is higher than managed distributed SQL options.\n\n**Pricing:** Apache 2.0 open-source. PlanetScale (a Vitess-based managed service) has its own pricing.\n\n**Getting started:** vitess.io for documentation and the open-source operator. PlanetScale for a managed Vitess deployment.",
+        className: 'rich-text-block--raw-source',
+      },
+      style: {
+        background: 'none',
+        spacing: 'section',
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      },
+    },
+    {
+      id: 'cta-intro-2',
+      type: 'cta',
+      props: {
+        title: '',
+        subtitle:
+          'Ready to go beyond sharded MySQL? Evaluate TiDB against your production workload.',
+        primaryCta: {
+          text: 'Try TiDB Cloud for distributed SQL',
+          href: 'https://www.pingcap.com/tidb/cloud/',
+        },
+      },
+      style: {
+        background: 'brand-violet',
+        spacing: 'sm',
+        backgroundImage: {
+          image: {
+            url: 'https://static.pingcap.com/files/2025/06/22184957/1000011432.png',
+          },
+        },
+      },
+    },
+    {
+      id: 'pre-2',
+      type: 'richTextBlock',
+      props: {
+        content:
+          "## How to Choose the Right Distributed SQL Database\n\nWork through the steps below in sequence. Each step filters candidates further.\n\n### Step 1: Define the Workload Mix\n\nIdentify the ratio of writes to reads, the complexity of read queries, and whether analytical queries need to run against live production data.\n\n- Pure OLTP (simple reads, high-frequency writes, low-latency responses): **CockroachDB, YugabyteDB, Aurora DSQL, TiDB**\n- HTAP (transactional writes plus complex aggregations on live data): **TiDB** is the primary choice. SingleStore covers the analytics-heavy end of HTAP.\n- Analytics-primary with transactional inserts: **SingleStore, TiDB with TiFlash**\n\nReview [HTAP database explained for OLTP and analytics](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/) to understand where HTAP applies to your architecture.\n\n### Step 2: Define ACID and Consistency Requirements\n\nThe required isolation level eliminates several options immediately.\n\n- **Serializable isolation required:** CockroachDB (default), YugabyteDB (configurable), Google Cloud Spanner (external consistency exceeds serializable).\n- **Snapshot Isolation acceptable:** TiDB (default), most other options.\n- **Distributed transactions that span nodes required:** TiDB, CockroachDB, YugabyteDB, Spanner. Vitess does support this via 2PC, but does not provide full ACID isolation across shards.\n\nSee [distributed transactions with ACID guarantees](https://www.pingcap.com/blog/distributed-transactions-tidb/) for a detailed breakdown of how TiDB handles cross-node commits.\n\n### Step 3: Define the Scaling Profile\n\nIdentify your current data volume, projected growth rate, write throughput requirements, and the operational model your team can support.\n\n- If you are currently at under 1TB and need a migration path: start with TiDB Starter or Essential or YugabyteDB.\n- If you need to handle bursting unpredictable write traffic on AWS: Aurora DSQL's serverless model is most appropriate.\n- If scaling write throughput is the primary constraint and you have MySQL expertise: [SQL database horizontal scaling vs vertical scaling](https://www.pingcap.com/horizontal-scaling-vs-vertical-scaling/) covers the tradeoffs in detail.\n\n### Step 4: Decide Managed vs Self-Managed Deployment\n\n- **Managed preferred:** TiDB Cloud, CockroachDB Cloud, Yugabyte Cloud, Aurora DSQL, Google Cloud Spanner. All abstract infrastructure management.\n- **Self-managed required (compliance, on-premises, cost):** TiDB (Apache 2.0), YugabyteDB (Apache 2.0), Vitess (Apache 2.0).\n- **Multi-cloud required:** TiDB Cloud (AWS + GCP + Azure + Alibaba Cloud), CockroachDB Cloud, YugabyteDB. Spanner and Aurora DSQL are single-cloud only.\n\n### Step 5: Validate Multi-Region Behavior and Failover\n\nIf global users or regulatory data residency requirements are in scope, test multi-region behavior explicitly.\n\n- Verify write latency to each region under normal operation. Cross-region 2PC commits will add latency proportional to inter-region RTT.\n- Test regional failover: kill the primary region and measure time to recovery and any data loss.\n- Verify data placement controls. TiDB, CockroachDB, and Spanner all allow pinning data or replicas to specific regions for compliance.\n- Confirm that your application's consistency requirements are met after failover, not just under normal operation.\n\n## Architecture Patterns for Distributed SQL in Production\n\nChoosing the right database is only part of the decision. How you deploy and organize it determines whether you actually get the scale, latency, and reliability you evaluated for. The three patterns below cover the scenarios most teams encounter when moving distributed SQL into production.\n\n### Scalable Operational Core with HTAP Analytics\n\nThe most common architecture pattern for TiDB deployments combines a high-throughput OLTP core with real-time analytics on the same dataset. Transactional data is stored in TiKV and replicated asynchronously to TiFlash. OLTP queries go to TiKV. Analytical queries are routed to TiFlash automatically based on cost estimates from the query optimizer.\n\nThe practical outcome is that reporting dashboards, real-time aggregations, and complex analytical queries can run against production data without a separate ETL pipeline or data warehouse. The replication lag between TiKV writes and TiFlash availability is typically sub-second under normal load, which is acceptable for most operational reporting use cases.\n\nTeams using this pattern replace a common three-tier architecture: primary OLTP database, change data capture pipeline, and separate analytics database. The reduction in operational components is significant.\n\n### Multi-Region Architecture for Global Apps\n\nA global distributed SQL deployment requires explicit decisions about data placement, read locality, write locality, and failover design. These decisions interact with the consistency-latency tradeoff in non-obvious ways.\n\nFor write-heavy global workloads, placing Raft leaders (TiDB) or leaseholders (CockroachDB) in the region where most writes originate reduces cross-region write latency. Reads from other regions may pay a higher latency cost for strong consistency, or can be served from local followers with Snapshot Isolation.\n\nFor read-heavy global workloads with infrequent writes, follower reads from local replicas provide low-latency access with a bounded staleness guarantee. TiDB supports follower reads with a configurable staleness window.\n\nFailover design should specify the maximum acceptable data loss (RPO) and maximum acceptable downtime (RTO). Automated failover in TiDB Cloud can recover from a regional failure within the SLA windows documented for each deployment tier. Test this in your evaluation — do not assume it.\n\n### Migration from MySQL to Distributed SQL\n\nThe MySQL-compatible distributed database path is the most common migration scenario for teams moving from sharded MySQL to distributed SQL. TiDB's MySQL compatibility covers the protocol, most syntax, common data types, and the key features that MySQL applications depend on.\n\nThe recommended migration approach:\n- **Audit compatibility:** run your application schema and query patterns through TiDB's compatibility checker. Identify stored procedures, triggers, or MySQL-specific functions that require rewriting.\n- **Migrate in parallel:** use DM (Data Migration) tool to replicate from MySQL to TiDB with ongoing synchronization before cutting over.\n- **Validate under load:** run both databases simultaneously with traffic mirrored or replayed. Verify query results and performance match.\n- **Cut over incrementally:** route read traffic first, then write traffic, rather than switching all traffic simultaneously.\n- **Monitor and stabilize:** keep MySQL available as a fallback for at least 24–48 hours after full cutover.",
+        className: 'rich-text-block--raw-source',
+      },
+      style: {
+        background: 'none',
+        spacing: 'section',
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      },
+    },
+    {
+      id: 'faq',
+      type: 'faq',
+      props: {
+        title: 'FAQs',
+        items: [
+          {
+            q: 'What Is a Distributed SQL Database and How Is It Different from Sharding?',
+            a: 'A distributed SQL database stores data across multiple nodes and handles partitioning, replication, and cross-node transaction coordination internally, presenting a single SQL interface to applications. Manual sharding moves that responsibility to the application layer, which breaks cross-shard ACID guarantees and requires engineering effort every time data needs to be rebalanced across shards.',
+          },
+          {
+            q: 'What Is an HTAP Database and When Do You Need One?',
+            a: 'An HTAP (Hybrid Transactional/Analytical Processing) database handles both high-frequency transactional writes and complex analytical queries on the same dataset. You need one when you want real-time reporting on production data without a separate data warehouse or ETL pipeline. TiDB implements this through TiKV for transactions and TiFlash for columnar analytics, both fed from the same write stream. See [HTAP database explained for OLTP and analytics](https://www.pingcap.com/blog/harnessing-the-power-of-htap-databases/) for workload-specific guidance.',
+          },
+          {
+            q: 'Which Distributed SQL Databases Support ACID Transactions at Scale?',
+            a: 'TiDB, CockroachDB, Google Cloud Spanner, and YugabyteDB all support ACID transactions across distributed nodes. TiDB defaults to Snapshot Isolation using a Percolator-based 2PC protocol. CockroachDB defaults to Serializable. Spanner provides external consistency, which is stronger than serializable. Vitess supports cross-shard transactions via 2PC, but does not provide full ACID isolation across shards.',
+          },
+          {
+            q: 'TiDB vs CockroachDB vs Spanner vs YugabyteDB: Which Should I Choose?',
+            a: 'Start with your compatibility requirement and workload type. TiDB is the right choice for MySQL-compatible workloads that need HTAP or are migrating from sharded MySQL. CockroachDB fits Postgres-compatible global OLTP requiring serializable isolation. Spanner is the best fit if you are GCP-committed and want fully managed global SQL with zero operational overhead. YugabyteDB suits teams prioritizing maximum Postgres API fidelity with an open-source self-managed option.',
+          },
+          {
+            q: 'What Should I Benchmark for Distributed SQL Databases in 2026?',
+            a: 'Run benchmarks against your actual schema and query mix at production data volumes. Measure sustained TPS at p95 and p99 latency, not averages. Test cross-node transaction throughput under write contention, failover recovery time and data loss when a node fails mid-transaction, and if HTAP matters, run complex aggregations concurrently with peak OLTP load to verify neither workload degrades the other.',
+          },
+          {
+            q: 'Is a NewSQL Database the Same as Distributed SQL?',
+            a: 'Effectively yes. NewSQL was coined around 2011 to describe databases achieving horizontal scale while preserving SQL and ACID guarantees. Distributed SQL is the current standard term covering the same category. Some evaluators still use NewSQL specifically for MySQL or Postgres-compatible systems, but for practical evaluation purposes the terms refer to the same class of database.',
+          },
+          {
+            q: 'How Does a MySQL Compatible Distributed Database Reduce Migration Risk?',
+            a: 'MySQL wire-protocol compatibility means existing application code, drivers, and ORM frameworks connect without changes. Schema compatibility across data types, indexes, and common DDL reduces rewrite scope. Tools like TiDB DM support continuous replication from MySQL to TiDB so both run in parallel before cutover. Routing read traffic first, then write traffic, further limits the blast radius of the migration.',
+          },
+          {
+            q: 'What Does Multi-Region SQL Database Mean in Practice?',
+            a: 'Data is physically stored in nodes across multiple geographic regions, not replicated to a passive standby. Reads are served from local replicas, reducing latency for distributed users. Writes requiring strong consistency coordinate across regions, adding latency proportional to inter-region RTT. In managed deployments like TiDB Cloud, regional failover is automatic and does not require DNS changes or manual intervention.',
+          },
+        ],
+      },
+      style: {
+        background: 'none',
+        spacing: 'section',
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      },
+    },
+    {
+      id: 'main',
+      type: 'richTextBlock',
+      props: {
+        content:
+          "## Try TiDB's Distributed SQL Database\n\nIf your application has outgrown a single MySQL or Postgres instance and manual sharding is adding operational cost without solving the underlying scaling problem, TiDB is worth a direct evaluation.\n\nTiDB Cloud provides the full TiDB stack, including TiKV for distributed transactions and TiFlash for HTAP analytics, as a managed service on AWS, Google Cloud, Azure, and Alibaba Cloud. A Starter cluster is available at no cost for initial evaluation.\n\nFor architecture guidance, review the full [why distributed SQL databases power modern apps](https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/) guide or explore the [distributed transactions with ACID guarantees](https://www.pingcap.com/blog/distributed-transactions-tidb/) documentation.",
+        className: 'rich-text-block--raw-source',
+      },
+      style: {
+        background: 'none',
+        spacing: 'section',
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      },
+    },
+    {
+      id: 'cta-main-1',
+      type: 'cta',
+      props: {
+        title: '',
+        subtitle: 'Start with a free Starter cluster — no infrastructure setup required.',
+        primaryCta: {
+          text: 'Try TiDB Cloud for distributed SQL',
+          href: 'https://www.pingcap.com/tidb/cloud/',
+        },
+      },
+      style: {
+        background: 'brand-violet',
+        spacing: 'sm',
+        backgroundImage: {
+          image: {
+            url: 'https://static.pingcap.com/files/2025/06/22211020/1000011435.png',
+          },
+        },
+      },
+    },
+  ],
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}

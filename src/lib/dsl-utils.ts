@@ -32,6 +32,7 @@ import type {
   Testimonial,
   TestimonialsProps,
 } from './dsl-schema'
+import type { PageType } from '@/lib/admin/page-types'
 import { schemaMap } from './section-registry'
 
 export type LegacySectionNode = {
@@ -94,16 +95,17 @@ function fillMissingImages(
   for (const key of Object.keys(defaults)) {
     const defVal = defaults[key]
     const tgtVal = target[key]
+    const keyMissing = !(key in target) || tgtVal === undefined
 
     if (!defVal || typeof defVal !== 'object') continue
 
     if (isImageRefWithUrl(defVal)) {
-      if (!isImageRefWithUrl(tgtVal)) target[key] = defVal
+      if (keyMissing) target[key] = defVal
       continue
     }
 
     if (isImageContainerWithImage(defVal)) {
-      if (!isImageContainerWithImage(tgtVal)) target[key] = defVal
+      if (keyMissing) target[key] = defVal
       continue
     }
 
@@ -127,6 +129,15 @@ function fillMissingImages(
 function applyDefaultImages(type: SectionType, props: Record<string, unknown>): void {
   const defaults = schemaMap[type]?.defaultProps as Record<string, unknown> | undefined
   if (!defaults) return
+
+  // Long-form inline CTAs intentionally render without the default illustration.
+  // They are represented as titleless CTA sections, so skip the CTA image backfill
+  // when no heading is present.
+  if (type === 'cta') {
+    const title = typeof props.title === 'string' ? props.title.trim() : ''
+    if (!title) return
+  }
+
   fillMissingImages(props, defaults)
 }
 
@@ -527,6 +538,43 @@ function normalizeComparisonTableProps(value: unknown): ComparisonTableProps {
   }
 }
 
+function normalizeRichTextBlockProps(value: unknown): SectionPropsMap['richTextBlock'] {
+  const v = (value && typeof value === 'object' ? value : {}) as Record<string, unknown>
+  return {
+    content: typeof v.content === 'string' ? v.content : '',
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeCodeBlockProps(value: unknown): SectionPropsMap['codeBlock'] {
+  const v = (value && typeof value === 'object' ? value : {}) as Record<string, unknown>
+  return {
+    title: typeof v.title === 'string' ? v.title : undefined,
+    filename: typeof v.filename === 'string' ? v.filename : undefined,
+    language: typeof v.language === 'string' ? v.language : undefined,
+    code: typeof v.code === 'string' ? v.code : '',
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeTableOfContentsProps(value: unknown): SectionPropsMap['tableOfContents'] {
+  const v = (value && typeof value === 'object' ? value : {}) as Record<string, unknown>
+  return {
+    items: Array.isArray(v.items)
+      ? v.items.map((item: unknown) => {
+          const i = (item && typeof item === 'object' ? item : {}) as Record<string, unknown>
+          return {
+            id: typeof i.id === 'string' ? i.id : '',
+            label: typeof i.label === 'string' ? i.label : '',
+            level: i.level === 2 ? 2 : 1,
+          }
+        })
+      : [],
+    sticky: v.sticky !== false,
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
 function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMap[SectionType] {
   switch (type) {
     case 'hero':
@@ -559,6 +607,12 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeSpeakersProps(value)
     case 'comparisonTable':
       return normalizeComparisonTableProps(value)
+    case 'richTextBlock':
+      return normalizeRichTextBlockProps(value)
+    case 'codeBlock':
+      return normalizeCodeBlockProps(value)
+    case 'tableOfContents':
+      return normalizeTableOfContentsProps(value)
   }
 }
 
@@ -596,4 +650,58 @@ export function normalizeDSL(dsl: PageDSLInput): PageDSL {
     meta: dsl.meta,
     sections: dsl.sections.map((section, index) => normalizeSection(section, index)),
   }
+}
+
+export function enforceLongFormMaxWidth(dsl: PageDSL, pageType?: PageType) {
+  const normalizedType = pageType?.toLowerCase()
+  if (!normalizedType || !['listicle', 'playbook', 'compare'].includes(normalizedType)) return
+  for (const section of dsl.sections) {
+    if (section.type === 'richTextBlock') {
+      section.style = {
+        ...(section.style ?? {}),
+        removePaddingTop: true,
+        removePaddingBottom: true,
+      }
+    }
+    if (section.type === 'faq') {
+      section.style = {
+        ...(section.style ?? {}),
+        spacing: 'md',
+        className: [section.style?.className, 'faq-longform'].filter(Boolean).join(' '),
+      }
+    }
+  }
+}
+
+export function ensureLongFormLastUpdated(dsl: PageDSL, pageType?: PageType) {
+  const _dsl = dsl
+  const _pageType = pageType
+  void _dsl
+  void _pageType
+}
+
+export function ensureLongFormHero(dsl: PageDSL, pageType?: PageType) {
+  const normalizedType = pageType?.toLowerCase()
+  if (!normalizedType || !['listicle', 'playbook', 'compare'].includes(normalizedType)) return
+
+  const headline = dsl.pageName ?? dsl.meta?.title ?? 'Untitled'
+
+  const heroIndex = dsl.sections.findIndex((section) => section.type === 'hero')
+  if (heroIndex !== -1) {
+    const hero = dsl.sections[heroIndex]
+    const heroProps = hero.props as { subheadline?: string; layout?: string }
+    heroProps.layout = 'image-right'
+    hero.props = heroProps as SectionDefinition['props']
+    return
+  }
+
+  dsl.sections.unshift({
+    id: 'hero-1',
+    type: 'hero',
+    props: {
+      layout: 'image-right',
+      headline,
+    },
+    style: { background: 'primary', spacing: 'section' },
+  })
 }

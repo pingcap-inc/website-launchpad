@@ -15,6 +15,14 @@ interface MediaImage {
   uploadedAt: string
 }
 
+function deriveAltFromImageName(name: string) {
+  return name
+    .replace(/^[0-9a-f]{8}-/i, '')
+    .replace(/\.[^.]+$/, '')
+    .replace(/[-_]+/g, ' ')
+    .trim()
+}
+
 interface MediaCenterModalProps {
   open: boolean
   onClose: () => void
@@ -216,6 +224,7 @@ export function MediaCenterModal({
     const img = images.find((i) => i.url === selectedUrl)
     let width = img?.width
     let height = img?.height
+    const normalizedAlt = (img?.alt ?? '').trim() || (img ? deriveAltFromImageName(img.name) : '')
 
     if (!width || !height) {
       await new Promise<void>((resolve) => {
@@ -232,7 +241,7 @@ export function MediaCenterModal({
 
     const result: ImageRef = {
       url: selectedUrl,
-      ...(img?.alt ? { alt: img.alt } : {}),
+      ...(normalizedAlt ? { alt: normalizedAlt } : {}),
       ...(width ? { width } : {}),
       ...(height ? { height } : {}),
     }
@@ -388,7 +397,7 @@ export function MediaCenterModal({
                         ) : (
                           <>
                             {/* Tags row */}
-                            {editingTagsUrl === img.url ? (
+                            {/* {editingTagsUrl === img.url ? (
                               <div className="flex gap-1 mt-1" onClick={(e) => e.stopPropagation()}>
                                 <input
                                   autoFocus
@@ -451,7 +460,7 @@ export function MediaCenterModal({
                                   <Tag size={11} />
                                 </button>
                               </div>
-                            )}
+                            )} */}
 
                             {/* Properties summary + edit button */}
                             {selectedUrl === img.url && (
@@ -553,7 +562,7 @@ export function MediaCenterModal({
               {uploadError && <p className="text-red-500 text-label">{uploadError}</p>}
 
               {/* Tags input — hidden when hideTags */}
-              {!hideTags && (
+              {/* {!hideTags && (
                 <div>
                   <label className="block text-body-sm font-bold text-gray-700 mb-1.5">
                     <span className="flex items-center gap-1.5">
@@ -575,7 +584,7 @@ export function MediaCenterModal({
                     />
                   </div>
                 </div>
-              )}
+              )} */}
 
               {/* Upload button */}
               <button

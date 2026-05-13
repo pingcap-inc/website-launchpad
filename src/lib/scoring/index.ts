@@ -34,7 +34,7 @@ export async function scorePage(
   pageType?: ContentPageType
 ): Promise<PageScoreResult> {
   const llmScore = await evaluateWithLLM(dsl, pageType)
-  const ruleFindings = evaluateRules(dsl)
+  const ruleFindings = evaluateRules(dsl, pageType)
   const rulePenalties = sumRulePenalties(ruleFindings)
   const finalScore = Math.max(0, Math.round(llmScore.overallScore - rulePenalties))
   const ruleTopIssues: TopIssue[] = ruleFindings.map((finding) => ({

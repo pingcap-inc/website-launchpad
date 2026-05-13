@@ -2,13 +2,21 @@
 
 import { useState, useRef, useCallback } from 'react'
 import { Loader2, Upload } from 'lucide-react'
+import type { ImportPageType } from '@/lib/admin/page-types'
+import { cleanupImportedMarkdownEscapes } from '@/lib/imported-text'
 
 function extractGoogleDocId(url: string): string | null {
   const match = url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/)
   return match ? match[1] : null
 }
 
-export function ImportInput({ onImport }: { onImport: (text: string) => void }) {
+export function ImportInput({
+  onImport,
+}: {
+  onImport: (text: string, pageType: ImportPageType) => void
+}) {
+  const [importPageType] = useState<ImportPageType>('general')
+
   // Google Docs state
   const [gdocUrl, setGdocUrl] = useState('')
   const [gdocLoading, setGdocLoading] = useState(false)
@@ -38,7 +46,7 @@ export function ImportInput({ onImport }: { onImport: (text: string) => void }) 
       if (!res.ok || data.error) {
         throw new Error(data.error ?? 'Failed to fetch')
       }
-      onImport(data.text ?? '')
+      onImport(data.text ?? '', importPageType)
     } catch {
       setGdocError(
         "Could not access this document. Make sure it's set to 'Anyone with the link can view'."
@@ -56,14 +64,14 @@ export function ImportInput({ onImport }: { onImport: (text: string) => void }) 
 
       if (ext === 'md') {
         const text = await file.text()
-        onImport(text)
+        onImport(cleanupImportedMarkdownEscapes(text), importPageType)
       } else if (ext === 'docx') {
         setFileLoading(true)
         try {
           const mammoth = await import('mammoth')
           const arrayBuffer = await file.arrayBuffer()
           const result = await mammoth.extractRawText({ arrayBuffer })
-          onImport(result.value)
+          onImport(cleanupImportedMarkdownEscapes(result.value), importPageType)
         } catch {
           setFileError('Failed to read .docx file.')
         } finally {
@@ -73,7 +81,7 @@ export function ImportInput({ onImport }: { onImport: (text: string) => void }) 
         setFileError('Only .docx and .md files are supported.')
       }
     },
-    [onImport]
+    [onImport, importPageType]
   )
 
   const handleDrop = useCallback(
@@ -93,7 +101,8 @@ export function ImportInput({ onImport }: { onImport: (text: string) => void }) 
 
   // ── Paste ───────────────────────────────────────────────────────────────────
   const handlePasteImport = () => {
-    if (pastedText.trim()) onImport(pastedText.trim())
+    if (pastedText.trim())
+      onImport(cleanupImportedMarkdownEscapes(pastedText.trim()), importPageType)
   }
 
   return (

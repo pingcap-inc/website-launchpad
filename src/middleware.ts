@@ -6,7 +6,7 @@ export const config = {
 }
 
 export function middleware(_req: NextRequest) {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.VERCEL_ENV === 'production') {
     return new NextResponse(null, { status: 404 })
   }
 

@@ -67,6 +67,9 @@ import {
   Agenda,
   Speakers,
   ComparisonTable,
+  RichTextBlock,
+  CodeBlock,
+  TableOfContents,
 } from '@/components'
 import { HubSpotForm } from '@/components/ui/HubSpotForm'
 import { Header } from '@/components/ui/Header'
@@ -383,6 +386,34 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
+  richTextBlock: {
+    Component: RichTextBlock,
+    mapProps: (props: SectionPropsMap['richTextBlock']) => ({
+      content: props.content,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  codeBlock: {
+    Component: CodeBlock,
+    mapProps: (props: SectionPropsMap['codeBlock']) => ({
+      title: props.title,
+      filename: props.filename,
+      language: props.language,
+      code: props.code,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  tableOfContents: {
+    Component: TableOfContents,
+    mapProps: (props: SectionPropsMap['tableOfContents']) => ({
+      items: props.items,
+      sticky: props.sticky,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'none' },
+  },
 }
 
 // ─── Page renderer ───────────────────────────────────────────────────────────
@@ -392,30 +423,173 @@ interface PageRendererProps {
   withChrome?: boolean
 }
 
+/** Types that sit alongside the TOC sidebar in a two-column layout */
+const TOC_COMPANION_TYPES = new Set<SectionType>(['richTextBlock', 'faq', 'codeBlock', 'cta'])
+const LONG_FORM_GENERATED_TYPES = new Set<SectionType>([
+  'hero',
+  'tableOfContents',
+  'richTextBlock',
+  'faq',
+  'codeBlock',
+  'cta',
+])
+
+function isLongFormGeneratedPage(sections: PageDSL['sections']) {
+  const hasToc = sections.some((section) => section.type === 'tableOfContents')
+  const hasRichText = sections.some((section) => section.type === 'richTextBlock')
+  return (
+    hasToc &&
+    hasRichText &&
+    sections.every((section) => LONG_FORM_GENERATED_TYPES.has(section.type))
+  )
+}
+
+function renderSection(
+  section: {
+    id: string
+    type: SectionType
+    props: unknown
+    style?: SectionStyle
+  },
+  options?: { compactFaq?: boolean; longFormLightTheme?: boolean }
+) {
+  const entry = componentMap[section.type]
+  if (!entry) return null
+  const baseProps = entry.mapProps ? entry.mapProps(section.props as any) : (section.props as any)
+  const themedProps =
+    options?.longFormLightTheme && section.type === 'tableOfContents'
+      ? { ...baseProps, tone: 'light' as const }
+      : options?.longFormLightTheme && section.type === 'hero'
+        ? { ...baseProps, layout: 'image-right' as const }
+        : baseProps
+  const props =
+    section.type === 'faq' && options?.compactFaq ? { ...themedProps, compact: true } : themedProps
+  const resolvedStyle = sanitizeSpacingBySection(
+    section.type,
+    sanitizeBackgroundBySection(section.type, section.style)
+  )
+  const themedStyle =
+    options?.longFormLightTheme && section.type !== 'cta'
+      ? ({
+          ...(resolvedStyle ?? {}),
+          background:
+            section.type === 'tableOfContents'
+              ? 'none'
+              : section.type === 'hero'
+                ? 'primary'
+                : 'inverse',
+          className: [
+            resolvedStyle?.className,
+            section.type !== 'tableOfContents' && section.type !== 'hero' ? '!bg-white' : '',
+          ]
+            .filter(Boolean)
+            .join(' '),
+        } satisfies SectionStyle)
+      : resolvedStyle
+  const defaultStyle: SectionStyle = {
+    ...(entry.defaultStyle ?? {}),
+    background: getDefaultBackground(section.type),
+  }
+  return (
+    <SectionWrapper
+      key={section.id}
+      id={section.id}
+      style={themedStyle}
+      defaultStyle={defaultStyle}
+    >
+      <entry.Component {...props} />
+    </SectionWrapper>
+  )
+}
+
 export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
   const normalized = normalizeDSL(dsl)
   const sections = normalized.sections
-  const renderedSections = sections.map((section, index) => {
-    const entry = componentMap[section.type]
-    if (!entry) return null
-    const props = entry.mapProps ? entry.mapProps(section.props as any) : (section.props as any)
-    const resolvedStyle = sanitizeSpacingBySection(
-      section.type,
-      sanitizeBackgroundBySection(section.type, section.style)
-    )
-    const defaultStyle: SectionStyle = {
-      ...(entry.defaultStyle ?? {}),
-      background: getDefaultBackground(section.type),
+  const isLongFormGenerated = isLongFormGeneratedPage(sections)
+
+  // Detect TOC section for sidebar layout
+  const tocIndex = sections.findIndex((s) => s.type === 'tableOfContents')
+  const hasToc = tocIndex !== -1
+
+  // For pages without a hero (e.g. listicle), render pageName as H1
+  const hasHero = sections.some((s) => s.type === 'hero')
+  const pageH1 =
+    !hasHero && normalized.pageName ? (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-0">
+        <h1
+          className={`text-h1-mb md:text-h1 font-bold leading-tight ${
+            isLongFormGenerated ? 'text-text-primary' : 'text-text-inverse'
+          }`}
+        >
+          {normalized.pageName}
+        </h1>
+      </div>
+    ) : null
+
+  let renderedSections: React.ReactNode[]
+
+  if (hasToc) {
+    // Build three groups: before-TOC, TOC+companions, after-companions
+    const beforeToc = sections.slice(0, tocIndex)
+    const tocSection = sections[tocIndex]
+
+    // Collect companion sections after the TOC (right column), keep others below
+    const companionSections: typeof sections = []
+    const afterCompanions: typeof sections = []
+    for (let i = tocIndex + 1; i < sections.length; i += 1) {
+      const section = sections[i]
+      if (TOC_COMPANION_TYPES.has(section.type)) {
+        companionSections.push(section)
+      } else {
+        afterCompanions.push(section)
+      }
     }
 
-    return (
-      <SectionWrapper key={section.id} style={resolvedStyle} defaultStyle={defaultStyle}>
-        <entry.Component {...props} />
-      </SectionWrapper>
+    renderedSections = [
+      // Sections before TOC (e.g. intro richTextBlock)
+      ...beforeToc.map((s) => renderSection(s, { longFormLightTheme: isLongFormGenerated })),
+      // TOC sidebar layout
+      <div
+        key="toc-layout"
+        className={`contain py-10 lg:py-20 ${isLongFormGenerated ? 'longform-generated-page' : ''}`}
+      >
+        <div className="lg:flex lg:gap-12">
+          {/* TOC sidebar — rendered without SectionWrapper for direct flex control */}
+          {(() => {
+            const entry = componentMap[tocSection.type]
+            if (!entry) return null
+            const props = entry.mapProps
+              ? entry.mapProps(tocSection.props as any)
+              : (tocSection.props as any)
+            const themedProps = isLongFormGenerated ? { ...props, tone: 'light' as const } : props
+            return <entry.Component {...themedProps} />
+          })()}
+          {/* Main content alongside TOC */}
+          <div className="flex-1 min-w-0">
+            {companionSections.map((s) =>
+              renderSection(s, {
+                compactFaq: true,
+                longFormLightTheme: isLongFormGenerated,
+              })
+            )}
+          </div>
+        </div>
+      </div>,
+      // Remaining sections (FAQ, CTA, etc.)
+      ...afterCompanions.map((s) => renderSection(s, { longFormLightTheme: isLongFormGenerated })),
+    ]
+  } else {
+    renderedSections = sections.map((section) =>
+      renderSection(section, { longFormLightTheme: isLongFormGenerated })
     )
-  })
+  }
 
-  const content = <div className="bg-bg-primary">{renderedSections}</div>
+  const content = (
+    <div className={isLongFormGenerated ? 'bg-white longform-generated-page' : 'bg-bg-primary'}>
+      {pageH1}
+      {renderedSections}
+    </div>
+  )
 
   if (!withChrome) return content
 
