@@ -434,11 +434,11 @@ const terms = [
         fullName: 'Recovery Point Objective / Recovery Time Objective',
         definition: (
           <>
-            Two metrics used to characterize database disaster recovery posture. <strong>RPO</strong>{' '}
-            is the maximum acceptable data loss (measured in time) after a failure.{' '}
-            <strong>RTO</strong> is the maximum acceptable time to restore service. TiDB is designed
-            for near-zero RPO and low RTO through synchronous Raft replication. Committed data is
-            never lost provided a replica majority survives.
+            Two metrics used to characterize database disaster recovery posture.{' '}
+            <strong>RPO</strong> is the maximum acceptable data loss (measured in time) after a
+            failure. <strong>RTO</strong> is the maximum acceptable time to restore service. TiDB is
+            designed for near-zero RPO and low RTO through synchronous Raft replication. Committed
+            data is never lost provided a replica majority survives.
           </>
         ),
       },
@@ -600,7 +600,7 @@ export default function GlossaryPage() {
                 {category.items.map((item) => (
                   <article
                     key={item.term}
-                    className="py-10 grid-cols-1 md:grid-cols-4 gap-6 md:gap-12"
+                    className="py-10 grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-12"
                   >
                     {/* Term + full name */}
                     <div className="md:col-span-1">
