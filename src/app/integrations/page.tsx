@@ -157,9 +157,9 @@ const dsl: PageDSL = {
         items: [
           {
             icon: {
-              url: 'https://static.pingcap.com/images/cc84f879-image_209__1_.png',
-              alt: 'image 209 1',
-              width: 76,
+              url: 'https://static.pingcap.com/images/2877f79d-76px__1_.svg',
+              alt: '76px 1',
+              width: 241,
               height: 76,
             },
             title: 'Kubernetes (TiDB Operator)',
@@ -169,9 +169,9 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/bc97fc32-image_209__2_.png',
-              alt: 'image 209 2',
-              width: 76,
+              url: 'https://static.pingcap.com/images/ea29f73d-prometheus.svg',
+              alt: 'prometheus',
+              width: 241,
               height: 76,
             },
             title: 'Prometheus',
@@ -181,9 +181,9 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/ece366eb-image_209__3_.png',
-              alt: 'image 209 3',
-              width: 76,
+              url: 'https://static.pingcap.com/images/1806ddc0-grafana.svg',
+              alt: 'grafana',
+              width: 241,
               height: 76,
             },
             title: 'Grafana',
@@ -193,10 +193,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/f37580ea-group.png',
-              alt: 'group',
-              width: 177,
-              height: 45,
+              url: 'https://static.pingcap.com/images/096ebe2f-datadog.svg',
+              alt: 'datadog',
+              width: 241,
+              height: 76,
             },
             title: 'Datadog',
             description:
@@ -205,9 +205,9 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/75ac7f80-image_209__4_.png',
-              alt: 'image 209 4',
-              width: 76,
+              url: 'https://static.pingcap.com/images/370f462f-newrelic.svg',
+              alt: 'newrelic',
+              width: 241,
               height: 76,
             },
             title: 'New Relic',
@@ -264,10 +264,10 @@ const dsl: PageDSL = {
         items: [
           {
             icon: {
-              url: 'https://static.pingcap.com/images/b2eb0316-vector.png',
-              alt: 'vector',
-              width: 127,
-              height: 59,
+              url: 'https://static.pingcap.com/images/f222d1e9-kafka.svg',
+              alt: 'kafka',
+              width: 241,
+              height: 76,
             },
             title: 'Apache Kafka (TiCDC)',
             description:
@@ -276,9 +276,9 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/2f624605-flink_logo_1.png',
-              alt: 'flink logo 1',
-              width: 76,
+              url: 'https://static.pingcap.com/images/a54cda64-flink.svg',
+              alt: 'flink',
+              width: 241,
               height: 76,
             },
             title: 'Apache Flink',
@@ -288,10 +288,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/aebab6c2-group__1_.png',
-              alt: 'group 1',
-              width: 208,
-              height: 34,
+              url: 'https://static.pingcap.com/images/d02b2112-confluent.svg',
+              alt: 'confluent',
+              width: 241,
+              height: 76,
             },
             title: 'Confluent',
             description:
@@ -300,10 +300,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/7fcf8b38-image_210.png',
-              alt: 'image 210',
-              width: 78,
-              height: 78,
+              url: 'https://static.pingcap.com/images/ce99df81-airbyte.svg',
+              alt: 'airbyte',
+              width: 241,
+              height: 76,
             },
             title: 'Airbyte',
             description:
@@ -312,10 +312,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/d04f7083-group_1000011756.png',
-              alt: 'group 1000011756',
-              width: 93,
-              height: 56,
+              url: 'https://static.pingcap.com/images/8675b8f1-aws.svg',
+              alt: 'aws',
+              width: 241,
+              height: 76,
             },
             title: 'Amazon AppFlow',
             description:
@@ -324,10 +324,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/b26a8dbc-group_1000011757.png',
-              alt: 'group 1000011757',
-              width: 132,
-              height: 50,
+              url: 'https://static.pingcap.com/images/a8c1793c-dbt.svg',
+              alt: 'dbt',
+              width: 241,
+              height: 76,
             },
             title: 'dbt',
             description:
@@ -354,10 +354,10 @@ const dsl: PageDSL = {
         items: [
           {
             icon: {
-              url: 'https://static.pingcap.com/images/62c28e7b-group__2_.png',
-              alt: 'group 2',
-              width: 114,
-              height: 59,
+              url: 'https://static.pingcap.com/images/3229c1b9-spark.svg',
+              alt: 'spark',
+              width: 241,
+              height: 76,
             },
             title: 'Apache Spark (TiSpark)',
             description:
@@ -366,10 +366,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/6b439b6e-image_211.png',
-              alt: 'image 211',
-              width: 171,
-              height: 46,
+              url: 'https://static.pingcap.com/images/c5f45d3c-abeau.svg',
+              alt: 'abeau',
+              width: 241,
+              height: 76,
             },
             title: 'Tableau',
             description:
@@ -378,10 +378,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/71ef3d44-image_212.png',
-              alt: 'image 212',
-              width: 79,
-              height: 79,
+              url: 'https://static.pingcap.com/images/484030ae-bi.svg',
+              alt: 'bi',
+              width: 241,
+              height: 76,
             },
             title: 'PowerBI',
             description:
@@ -390,10 +390,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/2a039b5a-image_213.png',
-              alt: 'image 213',
-              width: 78,
-              height: 78,
+              url: 'https://static.pingcap.com/images/da5ab918-looker.svg',
+              alt: 'looker',
+              width: 241,
+              height: 76,
             },
             title: 'Looker',
             description:
@@ -402,10 +402,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/b618a629-image_214.png',
-              alt: 'image 214',
-              width: 98,
-              height: 98,
+              url: 'https://static.pingcap.com/images/6aa8296e-superset.svg',
+              alt: 'superset',
+              width: 241,
+              height: 76,
             },
             title: 'Apache Superset',
             description:
@@ -468,10 +468,10 @@ const dsl: PageDSL = {
           },
           {
             icon: {
-              url: 'https://static.pingcap.com/images/29432f87-image_218.png',
-              alt: 'image 218',
-              width: 138,
-              height: 138,
+              url: 'https://static.pingcap.com/images/45467d07-go.svg',
+              alt: 'go',
+              width: 241,
+              height: 76,
             },
             title: 'Go (gorm, database/sql)',
             description:
