@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Upload, X, Check, Loader2, Tag, Image as ImageIcon, Plus } from 'lucide-react'
+import { Upload, X, Check, Loader2, Tag, Image as ImageIcon, Plus, AlertCircle } from 'lucide-react'
 import type { ImageRef } from '@/lib/dsl-schema'
 
 interface MediaImage {
@@ -29,8 +29,8 @@ interface MediaCenterModalProps {
   onSelect: (img: ImageRef) => void
   currentUrl?: string
   initialTab?: 'library' | 'upload'
-  /** When provided, pre-load this file into the upload zone (not auto-uploaded) */
-  initialFile?: File
+  /** When provided, pre-load these files into the upload zone (not auto-uploaded) */
+  initialFiles?: File[]
   /** Hide the tags input in the upload tab (used when uploading from section fields) */
   hideTags?: boolean
   /** Default tag: pre-selects this tag in library filter and auto-tags uploads */
@@ -43,7 +43,7 @@ export function MediaCenterModal({
   onSelect,
   currentUrl,
   initialTab = 'library',
-  initialFile,
+  initialFiles,
   hideTags = false,
   defaultTag,
 }: MediaCenterModalProps) {
@@ -59,9 +59,17 @@ export function MediaCenterModal({
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Pending file — shown in upload zone but not yet uploaded
-  const [pendingFile, setPendingFile] = useState<File | null>(null)
-  const [pendingPreview, setPendingPreview] = useState<string | null>(null)
+  // Pending files — shown in upload zone but not yet uploaded
+  type PendingStatus = 'queued' | 'uploading' | 'done' | 'error'
+  interface PendingItem {
+    id: string
+    file: File
+    preview: string
+    status: PendingStatus
+    error?: string
+    uploadedUrl?: string
+  }
+  const [pendingItems, setPendingItems] = useState<PendingItem[]>([])
 
   // Tag editing
   const [editingTagsUrl, setEditingTagsUrl] = useState<string | null>(null)
@@ -94,9 +102,8 @@ export function MediaCenterModal({
       fetchImages()
     }
     if (!open) {
-      if (pendingPreview) URL.revokeObjectURL(pendingPreview)
-      setPendingFile(null)
-      setPendingPreview(null)
+      pendingItems.forEach((item) => URL.revokeObjectURL(item.preview))
+      setPendingItems([])
       setTagInput('')
       setUploadError('')
       setEditingMetaUrl(null)
@@ -105,58 +112,149 @@ export function MediaCenterModal({
   }, [open])
 
   useEffect(() => {
-    if (open && initialFile) {
-      setPending(initialFile)
+    if (open && initialFiles && initialFiles.length > 0) {
+      addFiles(initialFiles)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, initialFile])
+  }, [open, initialFiles])
 
-  const setPending = (file: File) => {
-    if (pendingPreview) URL.revokeObjectURL(pendingPreview)
-    setPendingFile(file)
-    setPendingPreview(URL.createObjectURL(file))
+  const addFiles = (files: File[]) => {
+    if (files.length === 0) return
+    const newItems: PendingItem[] = files.map((file) => ({
+      id:
+        typeof crypto !== 'undefined' && 'randomUUID' in crypto
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      file,
+      preview: URL.createObjectURL(file),
+      status: 'queued',
+    }))
+    setPendingItems((prev) => [...prev, ...newItems])
+    setUploadError('')
   }
 
-  const clearPending = () => {
-    if (pendingPreview) URL.revokeObjectURL(pendingPreview)
-    setPendingFile(null)
-    setPendingPreview(null)
+  const removeItem = (id: string) => {
+    setPendingItems((prev) => {
+      const target = prev.find((it) => it.id === id)
+      if (target) URL.revokeObjectURL(target.preview)
+      return prev.filter((it) => it.id !== id)
+    })
+  }
+
+  const clearAllPending = () => {
+    pendingItems.forEach((item) => URL.revokeObjectURL(item.preview))
+    setPendingItems([])
   }
 
   const handleUpload = async () => {
-    if (!pendingFile) return
-    if (pendingFile.size > 5 * 1024 * 1024) {
-      setUploadError('File must be under 5 MB')
-      return
-    }
+    const queued = pendingItems.filter((it) => it.status === 'queued' || it.status === 'error')
+    if (queued.length === 0) return
     setUploading(true)
     setUploadError('')
-    try {
-      const formData = new FormData()
-      formData.append('file', pendingFile)
-      formData.append('source', 'media')
-      if (!hideTags) formData.append('tags', tagInput)
-      else if (defaultTag) formData.append('tags', defaultTag)
-      const res = await fetch('/api/admin/upload-image', { method: 'POST', body: formData })
-      const data = (await res.json()) as { path?: string; error?: string }
-      if (!res.ok || data.error) throw new Error(data.error ?? 'Upload failed')
-      await fetchImages()
-      setSelectedUrl(data.path!)
-      clearPending()
-      setTab('library')
-      setTagInput('')
-    } catch (err) {
-      setUploadError(err instanceof Error ? err.message : 'Upload failed')
-    } finally {
+
+    const tagsValue = !hideTags ? tagInput : (defaultTag ?? '')
+    const tagsList = tagsValue
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean)
+    const hasTags = tagsList.length > 0
+
+    // Pre-validate sizes synchronously, then commit a pure state update.
+    // (Side effects inside a setState reducer don't run in time for the
+    // following `Promise.all`, and may also run twice under React strict mode.)
+    const MAX_SIZE = 5 * 1024 * 1024
+    const ready = queued.filter((it) => it.file.size <= MAX_SIZE)
+    const oversizedIds = new Set(queued.filter((it) => it.file.size > MAX_SIZE).map((it) => it.id))
+    const readyIds = new Set(ready.map((it) => it.id))
+    setPendingItems((prev) =>
+      prev.map((it) => {
+        if (oversizedIds.has(it.id)) {
+          return { ...it, status: 'error', error: 'File must be under 5 MB' }
+        }
+        if (readyIds.has(it.id)) {
+          return { ...it, status: 'uploading', error: undefined }
+        }
+        return it
+      })
+    )
+
+    if (ready.length === 0) {
       setUploading(false)
+      return
+    }
+
+    // Upload all files in parallel — much faster than the previous sequential loop.
+    // Tags are skipped during the upload and batch-applied below in a single
+    // tags.json read-modify-write to avoid race conditions on the shared file.
+    const results = await Promise.all(
+      ready.map(async (item) => {
+        try {
+          const formData = new FormData()
+          formData.append('file', item.file)
+          formData.append('source', 'media')
+          if (hasTags) {
+            formData.append('tags', tagsValue)
+            formData.append('skipTagsUpdate', '1')
+          }
+          const res = await fetch('/api/admin/upload-image', { method: 'POST', body: formData })
+          const data = (await res.json()) as { path?: string; error?: string }
+          if (!res.ok || data.error || !data.path) throw new Error(data.error ?? 'Upload failed')
+          return { id: item.id, ok: true as const, url: data.path }
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : 'Upload failed'
+          return { id: item.id, ok: false as const, error: msg }
+        }
+      })
+    )
+
+    // Apply per-file status updates from the results
+    setPendingItems((prev) =>
+      prev.map((it) => {
+        const r = results.find((x) => x.id === it.id)
+        if (!r) return it
+        return r.ok
+          ? { ...it, status: 'done', uploadedUrl: r.url }
+          : { ...it, status: 'error', error: r.error }
+      })
+    )
+
+    // One batch tag update for all successful uploads
+    const successUrls = results.filter((r) => r.ok).map((r) => r.url)
+    if (hasTags && successUrls.length > 0) {
+      try {
+        await fetch('/api/admin/media-index', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tagEntries: successUrls.map((url) => ({ url, tags: tagsList })),
+          }),
+        })
+      } catch {
+        // tags are best-effort; uploads themselves already succeeded
+      }
+    }
+
+    const firstSuccessUrl = successUrls[0]
+    const anyError = results.some((r) => !r.ok)
+
+    setUploading(false)
+
+    if (firstSuccessUrl) {
+      await fetchImages()
+      setSelectedUrl(firstSuccessUrl)
+      setTagInput('')
+      if (!anyError) {
+        clearAllPending()
+        setTab('library')
+      }
     }
   }
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragging(false)
-    const file = e.dataTransfer.files[0]
-    if (file) setPending(file)
+    const files = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith('image/'))
+    if (files.length > 0) addFiles(files)
   }
 
   const handleUpdateTags = async (url: string, newTags: string[]) => {
@@ -332,6 +430,8 @@ export function MediaCenterModal({
                         <img
                           src={img.url}
                           alt={img.alt || img.name}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-contain p-2"
                         />
                       </div>
@@ -489,48 +589,115 @@ export function MediaCenterModal({
 
           {/* ── Upload Tab ── */}
           {tab === 'upload' && (
-            <div className="space-y-4 max-w-md mx-auto">
+            <div
+              className="space-y-4 max-w-md mx-auto"
+              onDrop={handleDrop}
+              onDragOver={(e) => {
+                e.preventDefault()
+                setIsDragging(true)
+              }}
+              onDragLeave={(e) => {
+                if (e.currentTarget.contains(e.relatedTarget as Node | null)) return
+                setIsDragging(false)
+              }}
+            >
               {/* File picker */}
-              {pendingFile ? (
-                <div className="border-2 border-gray-200 rounded-xl overflow-hidden">
-                  <div className="bg-gray-50 flex items-center justify-center h-40">
-                    {pendingPreview ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={pendingPreview}
-                        alt=""
-                        className="max-h-full max-w-full object-contain p-3"
-                      />
-                    ) : (
-                      <ImageIcon size={40} strokeWidth={1} className="text-gray-300" />
-                    )}
-                  </div>
-                  <div className="px-4 py-3 bg-white flex items-center justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="text-body-sm font-bold text-gray-700 truncate">
-                        {pendingFile.name}
-                      </p>
-                      <p className="text-label text-gray-400">
-                        {(pendingFile.size / 1024).toFixed(0)} KB
-                      </p>
-                    </div>
+              {pendingItems.length > 0 ? (
+                <div
+                  className={`space-y-2 rounded-lg border-2 border-dashed p-2 transition-colors ${
+                    isDragging ? 'border-gray-500 bg-gray-50' : 'border-transparent'
+                  }`}
+                >
+                  <ul className="space-y-2">
+                    {pendingItems.map((item) => (
+                      <li
+                        key={item.id}
+                        className="flex items-center gap-3 border border-gray-200 rounded-lg p-2 bg-white"
+                      >
+                        <div className="w-14 h-14 shrink-0 bg-gray-50 rounded flex items-center justify-center overflow-hidden">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={item.preview}
+                            alt=""
+                            className="max-w-full max-h-full object-contain"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p
+                            className="text-body-sm font-bold text-gray-700 truncate"
+                            title={item.file.name}
+                          >
+                            {item.file.name}
+                          </p>
+                          <p className="text-label text-gray-400">
+                            {(item.file.size / 1024).toFixed(0)} KB
+                            {item.status === 'error' && item.error && (
+                              <span className="text-red-500"> · {item.error}</span>
+                            )}
+                          </p>
+                        </div>
+                        <div className="shrink-0 flex items-center gap-1.5">
+                          {item.status === 'uploading' && (
+                            <Loader2 size={16} className="animate-spin text-gray-500" />
+                          )}
+                          {item.status === 'done' && (
+                            <span className="text-green-600 inline-flex items-center justify-center w-5 h-5 rounded-full bg-green-50">
+                              <Check size={12} />
+                            </span>
+                          )}
+                          {item.status === 'error' && (
+                            <span className="text-red-500 inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-50">
+                              <AlertCircle size={12} />
+                            </span>
+                          )}
+                          {item.status !== 'uploading' && item.status !== 'done' && (
+                            <button
+                              type="button"
+                              onClick={() => removeItem(item.id)}
+                              disabled={uploading}
+                              className="text-label text-gray-400 hover:text-red-500 transition-colors disabled:opacity-40"
+                              title="Remove"
+                            >
+                              <X size={14} />
+                            </button>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex items-center justify-between gap-2">
                     <button
                       type="button"
-                      onClick={clearPending}
-                      className="text-label text-gray-400 hover:text-red-500 transition-colors shrink-0"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={uploading}
+                      className="inline-flex items-center gap-1.5 text-body-sm text-gray-600 hover:text-gray-900 disabled:opacity-40 transition-colors"
                     >
-                      Change
+                      <Plus size={13} /> Add more files
+                    </button>
+                    <button
+                      type="button"
+                      onClick={clearAllPending}
+                      disabled={uploading}
+                      className="text-label text-gray-400 hover:text-red-500 disabled:opacity-40 transition-colors"
+                    >
+                      Clear all
                     </button>
                   </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                    multiple
+                    className="hidden"
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files ?? [])
+                      if (files.length > 0) addFiles(files)
+                      e.target.value = ''
+                    }}
+                  />
                 </div>
               ) : (
                 <div
-                  onDrop={handleDrop}
-                  onDragOver={(e) => {
-                    e.preventDefault()
-                    setIsDragging(true)
-                  }}
-                  onDragLeave={() => setIsDragging(false)}
                   onClick={() => fileInputRef.current?.click()}
                   className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-colors ${
                     isDragging
@@ -541,18 +708,21 @@ export function MediaCenterModal({
                   <div className="flex flex-col items-center gap-2 text-gray-400">
                     <Upload size={28} />
                     <span className="text-body-sm font-bold text-gray-600">
-                      Drop image here or click to browse
+                      Drop images here or click to browse
                     </span>
-                    <span className="text-label">PNG, JPG, SVG, WebP · max 5 MB</span>
+                    <span className="text-label">
+                      PNG, JPG, SVG, WebP · max 5 MB each · multiple allowed
+                    </span>
                   </div>
                   <input
                     ref={fileInputRef}
                     type="file"
                     accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                    multiple
                     className="hidden"
                     onChange={(e) => {
-                      const f = e.target.files?.[0]
-                      if (f) setPending(f)
+                      const files = Array.from(e.target.files ?? [])
+                      if (files.length > 0) addFiles(files)
                       e.target.value = ''
                     }}
                   />
@@ -587,22 +757,30 @@ export function MediaCenterModal({
               )} */}
 
               {/* Upload button */}
-              <button
-                type="button"
-                disabled={!pendingFile || uploading}
-                onClick={handleUpload}
-                className="w-full flex items-center justify-center gap-2 py-2.5 bg-gray-900 hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-body-sm font-bold rounded-lg transition-colors"
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 size={14} className="animate-spin" /> Uploading…
-                  </>
-                ) : (
-                  <>
-                    <Upload size={14} /> Upload to Media Library
-                  </>
-                )}
-              </button>
+              {(() => {
+                const queuedCount = pendingItems.filter(
+                  (it) => it.status === 'queued' || it.status === 'error'
+                ).length
+                return (
+                  <button
+                    type="button"
+                    disabled={queuedCount === 0 || uploading}
+                    onClick={handleUpload}
+                    className="w-full flex items-center justify-center gap-2 py-2.5 bg-gray-900 hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-body-sm font-bold rounded-lg transition-colors"
+                  >
+                    {uploading ? (
+                      <>
+                        <Loader2 size={14} className="animate-spin" /> Uploading…
+                      </>
+                    ) : (
+                      <>
+                        <Upload size={14} /> Upload {queuedCount > 0 ? `${queuedCount} ` : ''}
+                        {queuedCount === 1 ? 'file' : 'files'} to Media Library
+                      </>
+                    )}
+                  </button>
+                )
+              })()}
             </div>
           )}
         </div>

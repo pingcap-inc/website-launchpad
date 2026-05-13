@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
   const slug = (formData.get('slug') as string | null) ?? 'admin'
   const source = (formData.get('source') as string | null) ?? ''
   const tagsRaw = (formData.get('tags') as string | null) ?? ''
+  const skipTagsUpdate = (formData.get('skipTagsUpdate') as string | null) === '1'
   const tags = tagsRaw
     .split(',')
     .map((t) => t.trim())
@@ -72,24 +73,27 @@ export async function POST(req: NextRequest) {
     )
     const publicUrl = `${CDN_BASE}/${s3Key}`
 
-    // Update tags.json
-    let tagsMap: Record<string, string[]> = {}
-    try {
-      const res = await s3.send(new GetObjectCommand({ Bucket: AWS_S3_BUCKET, Key: TAGS_KEY }))
-      const body = await res.Body?.transformToString()
-      if (body) tagsMap = JSON.parse(body) as Record<string, string[]>
-    } catch {
-      // tags.json doesn't exist yet — start fresh
+    // Skip tags.json read-modify-write when there's nothing to set, or when
+    // the caller plans to batch-update tags after a parallel upload.
+    if (!skipTagsUpdate && tags.length > 0) {
+      let tagsMap: Record<string, string[]> = {}
+      try {
+        const res = await s3.send(new GetObjectCommand({ Bucket: AWS_S3_BUCKET, Key: TAGS_KEY }))
+        const body = await res.Body?.transformToString()
+        if (body) tagsMap = JSON.parse(body) as Record<string, string[]>
+      } catch {
+        // tags.json doesn't exist yet — start fresh
+      }
+      tagsMap[publicUrl] = tags
+      await s3.send(
+        new PutObjectCommand({
+          Bucket: AWS_S3_BUCKET,
+          Key: TAGS_KEY,
+          Body: JSON.stringify(tagsMap, null, 2),
+          ContentType: 'application/json',
+        })
+      )
     }
-    tagsMap[publicUrl] = tags
-    await s3.send(
-      new PutObjectCommand({
-        Bucket: AWS_S3_BUCKET,
-        Key: TAGS_KEY,
-        Body: JSON.stringify(tagsMap, null, 2),
-        ContentType: 'application/json',
-      })
-    )
 
     return NextResponse.json({ path: publicUrl })
   }
