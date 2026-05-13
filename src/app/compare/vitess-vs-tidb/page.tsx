@@ -313,7 +313,7 @@ const dsl: PageDSL = {
       "id": "faq",
       "type": "faq",
       "props": {
-        "title": "FAQs: Vitess vs TiDB",
+        "title": "Vitess vs TiDB FAQs",
         "items": [
           {
             "q": "Is Vitess or TiDB better for scaling MySQL?",
