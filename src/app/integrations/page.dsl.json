@@ -175,7 +175,7 @@
       "id": "mysql-compatibility",
       "type": "cta",
       "props": {
-        "title": "TiDB is Fully MySQL Compatible",
+        "title": "TiDB Is Fully MySQL Compatible",
         "subtitle": " Most integrations rely on open standards like JDBC and ODBC — reducing friction when migrating or modernizing existing workloads. If you are modernizing legacy systems, see how to Modernize MySQL workloads with TiDB.",
         "image": {
           "image": {

@@ -3,11 +3,12 @@
  * check-title-case.mjs
  * Validates that H1-H6 headings in page files follow Title Case rules.
  *
- * Title Case Rules:
+ * Title Case Rules (Chicago-style):
  * - Capitalize the first word always
  * - Capitalize nouns, pronouns, verbs, adjectives, adverbs
  * - Do NOT capitalize: a an the and but or for nor on at to from by with of in into up as
- * - Capitalize BOTH parts of hyphenated words (e.g., AI-Powered)
+ * - Hyphenated compounds: ALWAYS capitalize the first part (e.g., On-Premises, At-a-Glance);
+ *   subsequent parts follow normal rules (content words capitalized, articles/prepositions lowercase)
  *
  * Usage:
  *   node scripts/check-title-case.mjs [file1.tsx] [file2.tsx] ...
@@ -40,6 +41,8 @@ const BRAND_SAFE = new Set([
   'JavaScript', 'TypeScript', 'Python', 'Java', 'Go', 'Rust',
   'React', 'Next.js', 'Node.js',
   'Vercel', 'Cloudflare', 'Netlify',
+  // Library / package names that are conventionally lowercase
+  'gorm', 'database/sql', 'npm', 'pnpm', 'yarn',
 ]);
 
 // Section components whose `title=` prop renders as an H2.
@@ -123,11 +126,15 @@ function shouldSkip(text) {
 /**
  * Validate a single word part (after splitting on '-') against Title Case rules.
  * @param {string} part - the word part to check
- * @param {boolean} isFirst - true if this is the very first part of the first word
- * @param {boolean} isHyphenPart - true if this is a subsequent part of a hyphenated word
+ * @param {boolean} isFirst - true if this is the very first word of the title
+ * @param {boolean} isHyphenStart - true if this is the first part of a hyphenated compound (j === 0 && parts.length > 1)
  * Returns null if valid, or a description of the violation.
+ *
+ * Per Chicago style: the first part of a hyphenated compound is always capitalized
+ * (e.g., "On-Premises", "At-a-Glance"); subsequent parts follow normal rules
+ * (articles/prepositions stay lowercase, content words capitalized).
  */
-function checkPart(part, isFirst, isHyphenPart = false) {
+function checkPart(part, isFirst, isHyphenStart = false) {
   // Strip leading punctuation characters (parens, brackets, symbols)
   const clean = part.replace(/^[^a-zA-Z]+/, '').replace(/[.,!?:;'"()\[\]]+$/, '');
   if (!clean) return null;
@@ -147,16 +154,17 @@ function checkPart(part, isFirst, isHyphenPart = false) {
   // Non-letter first char (symbol, etc.) → skip
   if (!/[a-zA-Z]/.test(firstChar)) return null;
 
-  if (isFirst) {
-    // First word must always be capitalized
+  if (isFirst || isHyphenStart) {
+    // First word of title OR first part of a hyphenated compound → always capitalize
     if (firstChar !== firstChar.toUpperCase() || firstChar === firstChar.toLowerCase()) {
-      return `"${part}" should be capitalized (it's the first word)`;
+      return isFirst
+        ? `"${part}" should be capitalized (it's the first word)`
+        : `"${part}" should be capitalized (first part of a hyphenated compound)`;
     }
-  } else if (!isHyphenPart && LOWERCASE_WORDS.has(lower)) {
-    // Prepositions/conjunctions must NOT be capitalized — but hyphenated parts are always capitalized
-    // per the rule: "Capitalize both parts of hyphenated words (e.g., AI-Powered)"
+  } else if (LOWERCASE_WORDS.has(lower)) {
+    // Articles/prepositions/conjunctions stay lowercase (applies to subsequent hyphen parts too)
     if (firstChar !== firstChar.toLowerCase()) {
-      return `"${part}" should be lowercase (it's a preposition/conjunction)`;
+      return `"${part}" should be lowercase (it's a preposition/conjunction/article)`;
     }
   } else {
     // Everything else must be capitalized
@@ -188,8 +196,8 @@ function checkTitleCase(text) {
       const parts = word.split('-');
       for (let j = 0; j < parts.length; j++) {
         const isFirst = i === 0 && j === 0;
-        const isHyphenPart = j > 0;
-        const violation = checkPart(parts[j], isFirst, isHyphenPart);
+        const isHyphenStart = parts.length > 1 && j === 0;
+        const violation = checkPart(parts[j], isFirst, isHyphenStart);
         if (violation) return violation;
       }
     }
@@ -224,12 +232,12 @@ function toTitleCase(text) {
 
         const lower = clean.toLowerCase();
         const isFirst = i === 0 && j === 0;
-        const isHyphenPart = j > 0;
+        const isHyphenStart = parts.length > 1 && j === 0;
 
         let corrected;
-        if (isFirst) {
+        if (isFirst || isHyphenStart) {
           corrected = clean[0].toUpperCase() + clean.slice(1);
-        } else if (!isHyphenPart && LOWERCASE_WORDS.has(lower)) {
+        } else if (LOWERCASE_WORDS.has(lower)) {
           corrected = lower;
         } else {
           corrected = clean[0].toUpperCase() + clean.slice(1);
