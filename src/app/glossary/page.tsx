@@ -42,7 +42,6 @@ export const metadata: Metadata = {
 }
 
 // ─── Glossary data ────────────────────────────────────────────────────────────
-
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -130,6 +129,72 @@ const terms = [
             — covering architecture, partitioning, and ACID at scale.
           </>
         ),
+      },
+      {
+        term: 'Quorum',
+        fullName: 'Quorum (Distributed Consensus)',
+        definition:
+          "The minimum number of replica nodes that must agree before a write is considered committed in a distributed database. TiDB's storage engine, TiKV, uses the Raft consensus protocol: a write must be acknowledged by a majority of replicas in a Raft group before it is durable. This ensures strong consistency even when individual nodes fail.",
+      },
+      {
+        term: 'Replication',
+        fullName: 'Data Replication',
+        definition:
+          'The process of maintaining multiple synchronized copies of data across nodes. In TiDB, TiKV automatically replicates each data Region to a configurable number of replicas (default: three) using the Raft consensus algorithm. Replication is the mechanism that delivers both fault tolerance and high availability.',
+      },
+      {
+        term: 'Sharding',
+        fullName: 'Data Sharding',
+        definition:
+          'The practice of splitting a dataset into smaller chunks (shards or partitions) distributed across multiple nodes. TiDB performs sharding transparently. Data is divided into Regions (fixed-size key-range chunks) and automatically distributed across TiKV nodes. Applications do not need to implement sharding logic or choose partition keys.',
+      },
+      {
+        term: 'Strong Consistency',
+        fullName: 'Strong Consistency (Linearizability)',
+        definition:
+          'A consistency model guaranteeing that once a write is committed, all subsequent reads reflect that write, regardless of which node serves the request. TiDB is strongly consistent by default. All reads see the latest committed state, eliminating the stale-read anomalies common in eventually consistent systems.',
+      },
+      {
+        term: 'Eventual Consistency',
+        fullName: 'Eventual Consistency',
+        definition:
+          'A weaker consistency model where replicas are allowed to diverge temporarily, converging to the same state only after sufficient time has passed with no new writes. Many NoSQL databases default to eventual consistency to maximize write throughput. TiDB does not use eventual consistency for primary reads. It provides strong consistency guarantees across the distributed cluster.',
+      },
+      {
+        term: 'CAP Theorem',
+        fullName: 'CAP Theorem (Consistency, Availability, Partition Tolerance)',
+        definition:
+          'A theoretical framework stating that a distributed system can fully guarantee at most two of three properties simultaneously: Consistency (every read returns the latest write), Availability (every request receives a response), and Partition Tolerance (the system continues operating despite network splits). TiDB prioritizes Consistency and Partition Tolerance (CP), ensuring strong consistency even during network partitions, with availability maintained through automatic failover.',
+      },
+      {
+        term: 'Serializable Isolation',
+        fullName: 'Serializable Isolation',
+        definition:
+          'The strictest standard transaction isolation level, guaranteeing that the outcome of concurrent transactions is identical to some serial (one-at-a-time) execution. TiDB supports Read Committed and Repeatable Read isolation levels, with Repeatable Read implemented as Snapshot Isolation via MVCC. TiDB does not expose Serializable as an isolation level. Pessimistic locking and `SELECT ... FOR UPDATE` can be used to prevent specific anomalies such as lost updates where stronger guarantees are required.',
+      },
+      {
+        term: 'Two-Phase Commit (2PC)',
+        fullName: 'Two-Phase Commit',
+        definition:
+          'A distributed protocol that ensures all participants in a distributed transaction either commit or abort together. TiDB uses a modified 2PC protocol, coordinated by the TiDB SQL node initiating the transaction, with globally consistent timestamps provided by PD (Placement Driver). The prepare phase locks the rows being modified across TiKV nodes; the commit phase finalizes them atomically.',
+      },
+      {
+        term: 'Consensus Algorithm',
+        fullName: 'Distributed Consensus Algorithm',
+        definition: (
+          <>
+            A protocol that enables nodes in a distributed system to agree on a single value or
+            state, even when failures occur. TiDB&apos;s storage layer (TiKV) uses the{' '}
+            <strong>Raft</strong> consensus algorithm, which elects a leader per Region and requires
+            a quorum of replicas to acknowledge each write before committing.
+          </>
+        ),
+      },
+      {
+        term: 'Write-Ahead Log (WAL)',
+        fullName: 'Write-Ahead Log',
+        definition:
+          'A durability mechanism in which changes are written to a sequential log before being applied to the main data store. If the node crashes mid-write, the WAL allows the database to replay or roll back incomplete operations during recovery. TiKV uses RocksDB as its storage engine, which maintains a WAL for crash recovery and durability.',
       },
     ],
   },
@@ -221,6 +286,71 @@ const terms = [
           </>
         ),
       },
+      {
+        term: 'Region',
+        fullName: 'TiDB Region',
+        definition:
+          'The fundamental unit of data distribution in TiDB. A Region is a contiguous key-range chunk of approximately 96 MB, stored and replicated as a Raft group across TiKV nodes. PD tracks all Regions and orchestrates their placement and load balancing across the cluster. When a Region grows beyond the size threshold, it splits automatically.',
+      },
+      {
+        term: 'TiCDC',
+        fullName: 'TiDB Change Data Capture',
+        definition:
+          "TiDB's real-time change data capture and replication tool. TiCDC reads the change log from TiKV and streams row-level changes to downstream systems (including Kafka, MySQL, and object storage) with low latency. It is used for event-driven architectures, data synchronization, and feeding analytics pipelines without ETL batch jobs.",
+      },
+      {
+        term: 'TiDB Operator',
+        fullName: 'TiDB Operator (Kubernetes)',
+        definition:
+          'The official Kubernetes operator for deploying and managing TiDB clusters on Kubernetes. TiDB Operator automates provisioning, scaling, upgrades, backup, and failover for TiDB components (TiDB, TiKV, PD, TiFlash) on any Kubernetes-compatible platform. Maintained by PingCAP, it is the recommended way to run TiDB on Kubernetes in production.',
+      },
+      {
+        term: 'Hot Spot',
+        fullName: 'Hot Spot (Write/Read Hot Spot)',
+        definition: (
+          <>
+            A condition where a disproportionate volume of read or write traffic concentrates on a
+            small number of TiKV nodes or Regions, degrading performance. Hot spots commonly occur
+            when applications use monotonically increasing keys (e.g., auto-increment IDs) as
+            primary keys, causing all new writes to target the same Region. TiDB provides{' '}
+            <a
+              className="underline decoration-text-inverse/30 hover:decoration-text-inverse/60 transition-colors"
+              href="https://docs.pingcap.com/tidb/stable/troubleshoot-hot-spot-issues/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              SHARD_ROW_ID_BITS and AUTO_RANDOM
+            </a>{' '}
+            to distribute write load evenly.
+          </>
+        ),
+      },
+      {
+        term: 'Placement Rules',
+        fullName: 'TiDB Placement Rules',
+        definition:
+          "A TiDB feature that controls where data is stored across nodes, availability zones, and regions by specifying constraints on Raft replica placement. Placement rules enable data locality. For example, certain tables can be restricted to specific geographic regions to satisfy data residency regulations. This is TiDB's mechanism for multi-region data control, distinct from geo-partitioning approaches.",
+      },
+      {
+        term: 'Resource Control (RU)',
+        fullName: 'Resource Control / Resource Units (RU)',
+        definition: (
+          <>
+            TiDB&apos;s workload isolation feature, allowing administrators to define Resource
+            Groups with guaranteed and burstable quotas expressed in Request Units (RUs). RUs
+            abstract CPU, I/O, and memory consumption into a single metric, enabling fair sharing of
+            cluster resources across different applications or tenants.{' '}
+            <a
+              className="underline decoration-text-inverse/30 hover:decoration-text-inverse/60 transition-colors"
+              href="https://docs.pingcap.com/tidb/stable/tidb-resource-control-ru-groups/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learn more in the TiDB docs.
+            </a>
+          </>
+        ),
+      },
     ],
   },
   // Cloud & Infrastructure Terms
@@ -293,6 +423,124 @@ const terms = [
           </>
         ),
       },
+      {
+        term: 'High Availability (HA)',
+        fullName: 'High Availability',
+        definition:
+          'A system property ensuring that a database remains accessible even when individual components fail. TiDB achieves high availability through Raft-based multi-replica storage: when a TiKV node fails, the Raft group automatically elects a new leader from surviving replicas, and PD rebalances data, typically within seconds and without data loss.',
+      },
+      {
+        term: 'RPO / RTO',
+        fullName: 'Recovery Point Objective / Recovery Time Objective',
+        definition: (
+          <>
+            Two metrics used to characterize database disaster recovery posture.{' '}
+            <strong>RPO</strong> is the maximum acceptable data loss (measured in time) after a
+            failure. <strong>RTO</strong> is the maximum acceptable time to restore service. TiDB is
+            designed for near-zero RPO and low RTO through synchronous Raft replication. Committed
+            data is never lost provided a replica majority survives.
+          </>
+        ),
+      },
+      {
+        term: 'Multi-Region Deployment',
+        fullName: 'Multi-Region Deployment',
+        definition:
+          "Running a database cluster across multiple geographic regions to reduce latency for global users and survive regional failures. TiDB supports multi-region deployments through placement rules and Raft-based replication across availability zones. Note: TiDB's active-active multi-region support is an upcoming capability. Current multi-region deployments use placement rules for data locality within a cluster.",
+      },
+      {
+        term: 'Availability Zone (AZ)',
+        fullName: 'Availability Zone',
+        definition:
+          'A physically isolated data center (or subset of a data center) within a cloud region, with independent power, networking, and cooling. Distributing TiKV replicas across availability zones ensures that a single-AZ failure does not cause data loss or downtime. TiDB recommends placing Raft replicas across at least three AZs for production clusters.',
+      },
+      {
+        term: 'Cloud-Native Database',
+        fullName: 'Cloud-Native Database',
+        definition:
+          "A database designed from the ground up to run on cloud infrastructure, taking advantage of elastic compute, managed storage, container orchestration, and pay-as-you-go pricing. Cloud-native databases separate storage from compute, support auto-scaling, and are typically deployed via containers or managed services. TiDB Cloud is PingCAP's fully managed cloud-native offering, available on AWS, Google Cloud, and Azure.",
+      },
+      {
+        term: 'Compute-Storage Separation',
+        fullName: 'Compute-Storage Separation (Disaggregated Architecture)',
+        definition:
+          'An architecture in which the query-processing layer (compute) and the data-persistence layer (storage) scale independently. This contrasts with shared-nothing architectures where compute and storage are bundled per node. TiDB Cloud Starter uses a disaggregated storage model, allowing compute and storage to scale independently and enabling cost-efficient elastic scaling for variable workloads.',
+      },
+      {
+        term: 'Change Data Capture (CDC)',
+        fullName: 'Change Data Capture',
+        definition: (
+          <>
+            A technique for tracking and streaming row-level changes (inserts, updates, deletes)
+            from a database to downstream consumers in real time. CDC enables event-driven
+            architectures, real-time data synchronization, and analytics on live operational data
+            without full table scans or batch ETL jobs. TiDB&apos;s CDC tool is{' '}
+            <a
+              className="underline decoration-text-inverse/30 hover:decoration-text-inverse/60 transition-colors"
+              href="https://docs.pingcap.com/tidb/stable/ticdc-overview/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TiCDC
+            </a>
+            .
+          </>
+        ),
+      },
+      {
+        term: 'ETL',
+        fullName: 'Extract, Transform, Load',
+        definition:
+          'A data integration pattern in which data is extracted from a source system, transformed into a target format, and loaded into a destination (typically a data warehouse). ETL pipelines introduce latency and operational complexity. HTAP databases like TiDB reduce the need for ETL by allowing analytical queries to run directly on live transactional data via TiFlash, the columnar storage extension.',
+      },
+      {
+        term: 'Vector Database',
+        fullName: 'Vector Database',
+        definition:
+          'A database optimized for storing, indexing, and querying high-dimensional vector embeddings, which are numerical representations of unstructured data such as text, images, or audio generated by machine learning models. Vector databases power similarity search, semantic search, and retrieval-augmented generation (RAG) in AI applications. TiDB supports vector search natively, enabling teams to combine structured SQL queries with vector similarity search in a single database without managing a separate vector store.',
+      },
+      {
+        term: 'RAG',
+        fullName: 'Retrieval-Augmented Generation',
+        definition:
+          "An AI architecture pattern that improves large language model (LLM) output by retrieving relevant context from an external knowledge base before generating a response. The retrieved context, often sourced via vector similarity search, grounds the LLM in factual, up-to-date information. TiDB's vector search capability makes it a natural fit for RAG pipelines that need both structured data queries and semantic retrieval in one system.",
+      },
+      {
+        term: 'Serverless Database',
+        fullName: 'Serverless Database',
+        definition:
+          "A database deployment model in which the cloud provider automatically provisions, scales, and manages infrastructure in response to workload. Users pay only for the resources consumed rather than provisioning fixed capacity. TiDB Cloud Starter is PingCAP's serverless-style tier, offering automatic scaling and consumption-based pricing for development and variable workloads.",
+      },
+    ],
+  },
+  // Consistency & Transaction Terms
+  {
+    category: 'Consistency & Transaction Terms',
+    items: [
+      {
+        term: 'Snapshot Isolation',
+        fullName: 'Snapshot Isolation (SI)',
+        definition:
+          'A transaction isolation level where each transaction reads from a consistent snapshot of the database taken at the start of the transaction, rather than being affected by concurrent writes. Snapshot isolation prevents dirty reads and non-repeatable reads while allowing high concurrency. TiDB uses Multi-Version Concurrency Control (MVCC) to implement snapshot isolation.',
+      },
+      {
+        term: 'MVCC',
+        fullName: 'Multi-Version Concurrency Control',
+        definition:
+          'A concurrency control mechanism that maintains multiple versions of each row to allow readers and writers to operate simultaneously without blocking each other. Readers access a consistent snapshot without locking rows; writers create new versions rather than overwriting existing ones. TiDB and TiKV use MVCC as the foundation for both snapshot isolation and non-blocking reads.',
+      },
+      {
+        term: 'Pessimistic Locking',
+        fullName: 'Pessimistic Locking',
+        definition:
+          'A concurrency control strategy that acquires locks on rows at the start of a transaction, before the actual write, to prevent conflicts. Pessimistic locking is suitable for high-contention workloads where conflicts are frequent. TiDB supports pessimistic transactions as the default mode, matching the behavior of MySQL and simplifying application migration.',
+      },
+      {
+        term: 'Optimistic Locking',
+        fullName: 'Optimistic Locking',
+        definition:
+          'A concurrency control strategy that defers conflict detection to commit time, assuming conflicts are rare. If another transaction has modified the same data since the current transaction read it, the commit fails and the application must retry. TiDB also supports optimistic transactions, which can outperform pessimistic locking in low-contention, read-heavy workloads.',
+      },
     ],
   },
 ]
@@ -314,12 +562,12 @@ const schema = buildPageSchema({
 })
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-
 export default function GlossaryPage() {
   return (
     <>
       <JsonLd data={schema} />
       <Header />
+
       <main className="pt-[62px] lg:pt-20">
         {/* Hero */}
         <section className="bg-bg-primary py-10 md:py-0">
@@ -400,6 +648,7 @@ export default function GlossaryPage() {
           />
         </section>
       </main>
+
       <Footer />
     </>
   )
