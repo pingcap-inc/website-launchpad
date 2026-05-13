@@ -26,12 +26,11 @@ interface PageItem {
   isCode: boolean
 }
 
-type PageStatus = 'code' | 'published' | 'published-with-draft' | 'draft'
+type PageStatus = 'code' | 'published' | 'draft'
 
 interface PageStatusInfo {
   status: PageStatus
   label: string
-  extraLabel?: string
   description: string
   color: 'gray' | 'green' | 'blue' | 'amber'
 }
@@ -55,19 +54,11 @@ function getPageStatus(page: {
       description: 'Managed in codebase, not editable here',
       color: 'gray',
     }
-  if (page.hasPublished && page.hasDraft)
-    return {
-      status: 'published-with-draft',
-      label: 'Published',
-      extraLabel: 'Edited',
-      description: 'Published to staging, but has unpublished draft changes',
-      color: 'green',
-    }
   if (page.hasPublished)
     return {
       status: 'published',
       label: 'Published',
-      description: 'Live on staging, no pending changes',
+      description: 'Live on staging',
       color: 'green',
     }
   return {
@@ -407,23 +398,7 @@ export default function PagesPage() {
                 <div className="flex items-center gap-1.5 flex-wrap">
                   {page &&
                     (() => {
-                      const { label, extraLabel, color, description } = getPageStatus(page)
-                      if (extraLabel) {
-                        return (
-                          <div className="flex items-center gap-1">
-                            <span
-                              className={`px-2 py-0.5 rounded-full text-label font-bold border ${STATUS_COLOR_MAP[color]}`}
-                              title={description}
-                            >
-                              {label}
-                            </span>
-                            <span
-                              className="w-2 h-2 rounded-full bg-amber-400 shrink-0 ml-1"
-                              title="Has unpublished draft changes"
-                            />
-                          </div>
-                        )
-                      }
+                      const { label, color, description } = getPageStatus(page)
                       return (
                         <span
                           className={`px-2 py-0.5 rounded-full text-label font-bold border ${STATUS_COLOR_MAP[color]}`}
@@ -438,26 +413,26 @@ export default function PagesPage() {
                   {page &&
                     (() => {
                       const { status } = getPageStatus(page)
+                      const editHref =
+                        status === 'published'
+                          ? `/admin/create?slug=${page.slug}&mode=edit&source=published`
+                          : `/admin/create?slug=${page.slug}&mode=edit`
                       return (
                         <>
                           {!page.isCode && (
                             <Link
-                              href={`/admin/create?slug=${page.slug}&mode=edit`}
+                              href={editHref}
                               className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
                               title="Edit page"
                             >
                               <Edit3 size={14} />
                             </Link>
                           )}
-                          {!page.isCode && status !== 'published' && (
+                          {!page.isCode && status === 'draft' && (
                             <Link
                               href={`/admin/create?slug=${page.slug}&mode=edit&action=review`}
                               className="border border-brand-violet-medium/30 text-brand-violet-medium hover:text-brand-violet-dark hover:border-brand-violet-medium p-1.5 rounded transition-colors"
-                              title={
-                                status === 'draft'
-                                  ? 'Review and publish this draft'
-                                  : 'Review and publish pending changes'
-                              }
+                              title="Review and publish this draft"
                             >
                               <CheckSquare size={14} />
                             </Link>
