@@ -1,0 +1,146 @@
+{
+  "pageName": "TiDB Engineering Playbooks",
+  "meta": {
+    "title": "TiDB Engineering Playbooks",
+    "description": "Step-by-step guides to solve common database problems for production engineers using TiDB.",
+    "canonical": "/tidb-engineering/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "TiDB Engineering Playbooks",
+        "headline": "Stop firefighting. Start building.",
+        "subheadline": "Step-by-step guides for the database problems",
+        "primaryCta": {
+          "text": "View all playbooks",
+          "href": "https://www.pingcap.com/tidb-engineering/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "featureGrid",
+      "type": "featureGrid",
+      "props": {
+        "title": "Published Playbooks",
+        "items": [
+          {
+            "icon": "Shield",
+            "title": "Silence the noisy neighbor in multi-tenant MySQL",
+            "description": "Detect tenant floods fast, contain blast radius without downtime, and harden your cluster so the next burst is a non-event — using TiDB resource groups, Placement Rules, and RBAC.",
+            "cta": {
+              "text": "Read the playbook",
+              "href": "https://www.pingcap.com/playbook-noisy-neighbor-multi-tenant-mysql/"
+            },
+            "layout": "vertical"
+          },
+          {
+            "icon": "Database",
+            "title": "Embed a vector DB and build RAG faster with TiDB",
+            "description": "Skip the separate vector store. Use TiDB's native vector indexing to build retrieval-augmented generation pipelines that query embeddings alongside your relational data — in a single MySQL-compatible database.",
+            "cta": {
+              "text": "Read the playbook",
+              "href": "https://www.pingcap.com/playbook-embed-vector-db-build-rag/"
+            },
+            "layout": "vertical"
+          },
+          {
+            "icon": "LayoutGrid",
+            "title": "Escape MySQL sharding pain and scale fast",
+            "description": "Break free from manual shards. See how TiDB's distributed SQL eliminates cross-shard joins, re-sharding downtime, and the routing layer you wrote and now dread touching.",
+            "cta": {
+              "text": "Read the playbook",
+              "href": "https://www.pingcap.com/playbook-escape-mysql-sharding-pain/"
+            },
+            "layout": "vertical"
+          }
+        ],
+        "columns": 1
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta",
+      "type": "cta",
+      "props": {
+        "title": "Try TiDB on your own data",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/865d8044-cta-cube-red-mini.svg",
+            "alt": "cta cube red mini",
+            "width": 278,
+            "height": 256
+          },
+          "alt": "cta cube red mini",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start for free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Read the docs",
+          "href": "https://docs.pingcap.com/"
+        }
+      },
+      "style": {
+        "background": "brand-red",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "upcoming",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Coming Soon\n\nMore playbooks in the pipeline — covering the full lifecycle from idea to production-ready AI app.\n\n### MySQL migration & operations\n\n#### Zero-downtime MySQL migration\n\nMove from MySQL to TiDB using DM with a live cutover — no maintenance window required. Covers schema compatibility, binlog replication, and the final switchover checklist.\n\n*Coming soon*\n\n### AI development for everyone\n\n#### The complete tech stack for vibe coding in 2026: what you actually need\n\nA no-fluff guide to the tools, databases, and deployment targets that matter in 2026 for developers building with AI. Covers what to pick, what to skip, and how TiDB fits in.\n\n*Coming soon*\n\n#### From idea to live app in a weekend: a step-by-step AI development playbook\n\nYou have an idea on Friday night. This playbook walks you through scoping, scaffolding, wiring up a database, and shipping by Sunday — using AI-assisted development workflows throughout.\n\n*Coming soon*\n\n#### How to turn a ChatGPT prompt into a production-ready agent\n\nPrompting is the easy part. This playbook covers what happens next: persisting agent state, handling retries and failures, connecting to a real database, and deploying something that won't break under load.\n\n*Coming soon*\n\n#### The vibe coder's workflow: idea → agent → database → deploy\n\nA practical, repeatable workflow for builders who move fast. Covers scoping an agent, choosing the right data layer, and getting to a deployed URL without drowning in infrastructure.\n\n*Coming soon*\n\n#### Building your first AI app without a CS degree: a real walkthrough\n\nA genuine beginner-friendly walkthrough — no assumed knowledge, no hand-waving. Goes from a blank screen to a working AI-powered app, with real code and real explanations at every step.\n\n*Coming soon*"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "community",
+      "type": "cta",
+      "props": {
+        "title": "Learn from your peers",
+        "subtitle": "Join the TiDB community on Discord.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Join Discord",
+          "href": "https://discord.com/invite/vYU9h56kAX"
+        },
+        "secondaryCta": {
+          "text": "Browse all resources",
+          "href": "https://www.pingcap.com/ebook-whitepaper/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
