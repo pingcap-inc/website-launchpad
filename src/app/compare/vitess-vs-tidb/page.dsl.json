@@ -11,7 +11,7 @@
       "type": "hero",
       "props": {
         "layout": "image-right",
-        "headline": "Vitess vs TiDB: How to Choose the Right Path for MySQL Scale",
+        "headline": "TiDB vs Vitess: How to Choose the Right Path for MySQL Scale",
         "heroImage": {
           "image": {
             "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"

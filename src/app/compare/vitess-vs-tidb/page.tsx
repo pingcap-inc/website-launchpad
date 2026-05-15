@@ -36,7 +36,7 @@ const schema = buildPageSchema({
   description: "Compare Vitess vs TiDB across sharding, consistency, Kubernetes, and operations. See which approach fits MySQL scale-out and distributed SQL needs.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Vitess vs TiDB: How to Choose the Right Path for MySQL Scale", path: "/compare/vitess-vs-tidb/" },
+    { name: "TiDB vs Vitess: How to Choose the Right Path for MySQL Scale", path: "/compare/vitess-vs-tidb/" },
   ],
 })
 
@@ -53,7 +53,7 @@ const dsl: PageDSL = {
       "type": "hero",
       "props": {
         "layout": "image-right",
-        "headline": "Vitess vs TiDB: How to Choose the Right Path for MySQL Scale",
+        "headline": "TiDB vs Vitess: How to Choose the Right Path for MySQL Scale",
         "heroImage": {
           "image": {
             "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
