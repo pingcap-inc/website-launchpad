@@ -129,11 +129,22 @@ const dsl: PageDSL = {
             }
           },
           {
+            "icon": "Layers",
             "title": "TiDB vs PostgreSQL",
             "description": "When Postgres hits its scaling limits (single-primary writes, vacuum overhead, sharding pain), distributed SQL becomes the conversation. Covers horizontal scaling, HTAP, and a realistic migration path.",
             "cta": {
               "text": "Compare",
               "href": "https://www.pingcap.com/compare/tidb-vs-postgresql-2026-comparison-guide/"
+            },
+            "layout": "vertical"
+          },
+          {
+            "icon": "Table",
+            "title": "TiDB vs Vitess",
+            "description": "Vitess adds sharding on top of MySQL. TiDB replaces the stack entirely. If you're hitting MySQL's write limits and weighing your options, this covers what that difference means in practice: consistency, ops overhead, and which one fits your team.",
+            "cta": {
+              "text": "Compare",
+              "href": "https://www.pingcap.com/compare/vitess-vs-tidb/"
             },
             "layout": "vertical"
           }
