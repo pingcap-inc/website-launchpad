@@ -1955,7 +1955,8 @@ function CreatePageInner() {
       isImport && IMPORT_PAGE_TYPES.includes(pageType) && pageType !== 'general'
     const manualType = hasManualImportType ? pageType.toLowerCase() : undefined
     const resolvedType = manualType ?? detectedType
-    const isLongForm = resolvedType !== 'marketing' || isInlineLongFormUpload
+    const isLongForm =
+      pageType !== 'general' && (resolvedType !== 'marketing' || isInlineLongFormUpload)
     const base64StrippedIntent = stripBase64Images(effectiveIntent)
     const sanitizedIntent =
       isImport || isInlineLongFormUpload
@@ -1968,7 +1969,7 @@ function CreatePageInner() {
         ? pageType
         : isLongForm
           ? resolvedType
-          : 'auto'
+          : 'general'
       : pageType
 
     try {
