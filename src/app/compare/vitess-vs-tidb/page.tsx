@@ -62,8 +62,8 @@ const dsl: PageDSL = {
             "height": 450
           },
           "alt": "group 1000011604",
-          "width": 590,
-          "height": 450
+          "width": 400,
+          "height": 300
         }
       },
       "style": {
