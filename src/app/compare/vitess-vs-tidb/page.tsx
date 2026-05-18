@@ -40,7 +40,7 @@ const schema = buildPageSchema({
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
-      name: 'Vitess vs TiDB: How to Choose the Right Path for MySQL Scale',
+      name: 'TiDB vs Vitess: How to Choose the Right Path for MySQL Scale',
       path: '/compare/vitess-vs-tidb/',
     },
   ],
@@ -60,13 +60,16 @@ const dsl: PageDSL = {
       type: 'hero',
       props: {
         layout: 'image-right',
-        headline: 'Vitess vs TiDB: How to Choose the Right Path for MySQL Scale',
+        headline: 'TiDB vs Vitess: How to Choose the Right Path for MySQL Scale',
         heroImage: {
           image: {
-            url: 'https://static.pingcap.com/images/f54533cc-1000011158.svg',
+            url: 'https://static.pingcap.com/images/bde753c9-group_1000011604.png',
+            alt: 'group 1000011604',
+            width: 590,
+            height: 450,
           },
-          alt: 'hero image',
-          width: 300,
+          alt: 'group 1000011604',
+          width: 400,
           height: 300,
         },
       },
