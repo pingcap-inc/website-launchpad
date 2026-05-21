@@ -52,7 +52,7 @@ const dsl: PageDSL = {
       "id": "hero",
       "type": "hero",
       "props": {
-        "layout": "split",
+        "layout": "centered",
         "headline": "Production database guides, written for engineers.",
         "subheadline": "Skip the theory. Each playbook covers a specific problem, the TiDB features that fix it, and how to implement them.",
         "primaryCta": {
