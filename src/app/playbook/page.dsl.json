@@ -1,8 +1,8 @@
 {
-  "pageName": "Playbook",
+  "pageName": "TiDB Engineering Playbooks | Hands-On Guides for Production Database Problems",
   "meta": {
-    "title": "TiDB Migration Playbook - Step-by-Step Guide",
-    "description": "Learn how to migrate your database to TiDB with our comprehensive step-by-step playbook. Perfect for database administrators and DevOps teams.",
+    "title": "TiDB Engineering Playbooks | Hands-On Guides for Production Database Problems",
+    "description": "Prudio is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
     "canonical": "/playbook/"
   },
   "sections": [
@@ -10,17 +10,16 @@
       "id": "hero",
       "type": "hero",
       "props": {
-        "layout": "centered",
-        "eyebrow": "",
-        "headline": "Playbook",
-        "subheadline": "",
+        "layout": "split",
+        "headline": "Production database guides, written for engineers.",
+        "subheadline": "Skip the theory. Each playbook covers a specific problem, the TiDB features that fix it, and how to implement them.",
         "primaryCta": {
-          "text": "",
-          "href": ""
+          "text": "Start free trial",
+          "href": "https://tidbcloud.com/free-trial/"
         },
         "secondaryCta": {
-          "text": "",
-          "href": ""
+          "text": "View docs",
+          "href": "https://docs.pingcap.com/"
         },
         "heroImage": {
           "image": {
@@ -33,6 +32,70 @@
       },
       "style": {
         "spacing": "hero"
+      }
+    },
+    {
+      "id": "published-playbooks",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Published Playbooks",
+        "title": "TiDB Engineering Playbooks",
+        "items": [
+          {
+            "icon": "Server",
+            "title": "Silence the Noisy Neighbor in Multi-Tenant MySQL",
+            "description": "One bad tenant shouldn't take down the rest. This covers how to detect the source, cap it with TiDB Resource Groups, and pin repeat offenders to their own nodes with Placement Rules.",
+            "cta": {
+              "text": "Read the playbook",
+              "href": "https://pingcap.com/playbook-noisy-neighbor-multi-tenant-mysql/"
+            }
+          },
+          {
+            "icon": "Sparkles",
+            "title": "Embed a Vector DB and Build RAG Faster with TiDB",
+            "description": "Running MySQL for transactions and a separate vector store for embeddings is two systems to babysit. TiDB handles both. This covers the native HNSW vector index, how to query embeddings alongside SQL in one statement, and a working RAG pipeline end to end.",
+            "cta": {
+              "text": "Read the playbook",
+              "href": "https://pingcap.com/playbook-embed-vector-db-build-rag/"
+            }
+          },
+          {
+            "icon": "LineChart",
+            "title": "Escape MySQL Sharding Pain and Scale Fast",
+            "description": "Manual sharding creates problems faster than it solves them. This covers what it actually costs to maintain sharded MySQL, how TiDB handles distribution at the storage layer, and how to migrate without a maintenance window.",
+            "cta": {
+              "text": "Read the playbook",
+              "href": "https://pingcap.com/playbook-escape-mysql-sharding-pain/"
+            }
+          }
+        ],
+        "columns": 2
+      }
+    },
+    {
+      "id": "cta",
+      "type": "cta",
+      "props": {
+        "title": "Try it on your own data. MySQL-compatible, no shard config, free tier available.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start free trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View docs",
+          "href": "https://docs.pingcap.com/"
+        }
+      },
+      "style": {
+        "background": "brand-violet"
       }
     }
   ]
