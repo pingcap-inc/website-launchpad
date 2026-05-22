@@ -73,7 +73,15 @@ const dsl: PageDSL = {
         }
       },
       "style": {
-        "spacing": "hero"
+        "spacing": "hero",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/dd93d65c-group_1000011614.png",
+            "alt": "group 1000011614",
+            "width": 1440,
+            "height": 601
+          }
+        }
       }
     },
     {
