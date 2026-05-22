@@ -6,12 +6,12 @@ import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
   title: "TiDB Engineering Playbooks | Hands-On Guides for Production Database Problems",
-  description: "Prudio is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
+  description: "This is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/playbook/' },
   openGraph: {
     title: "TiDB Engineering Playbooks | Hands-On Guides for Production Database Problems",
-    description: "Prudio is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
+    description: "This is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
     url: 'https://www.pingcap.com/playbook/',
     siteName: 'TiDB',
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 const schema = buildPageSchema({
   path: "/playbook/",
   title: "TiDB Engineering Playbooks | Hands-On Guides for Production Database Problems",
-  description: "Prudio is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
+  description: "This is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: "Production database guides, written for engineers.", path: "/playbook/" },
@@ -44,7 +44,7 @@ const dsl: PageDSL = {
   "pageName": "TiDB Engineering Playbooks | Hands-On Guides for Production Database Problems",
   "meta": {
     "title": "TiDB Engineering Playbooks | Hands-On Guides for Production Database Problems",
-    "description": "Prudio is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
+    "description": "This is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.",
     "canonical": "/playbook/"
   },
   "sections": [
