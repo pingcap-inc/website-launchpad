@@ -1,0 +1,75 @@
+{
+  "pageName": "TiDB Cloud Instance Capacity Plan | Apply for Higher-Scale Cluster Capacity",
+  "meta": {
+    "title": "TiDB Cloud Instance Capacity Plan | Apply for Higher-Scale Cluster Capacity",
+    "description": "Apply for the TiDB Cloud Instance Capacity Plan for agent and application platforms running large numbers of Starter instances and branches.",
+    "canonical": "/programs/agentic-ai-instance-capacity/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "split",
+        "eyebrow": "TiDB Cloud Instance Capacity Plan",
+        "headline": "Scale TiDB Cloud for every user application.",
+        "subheadline": "Scale TiDB Cloud for every user application.",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "form-block",
+      "type": "form",
+      "props": {
+        "title": "Apply for the Instance Capacity Plan",
+        "portalId": "4466002",
+        "formId": "YOUR_FORM_ID",
+        "region": "na1"
+      }
+    },
+    {
+      "id": "section-who-this-is-for",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "",
+        "title": "Built for teams creating databases at platform scale",
+        "items": [
+          {
+            "icon": "Zap",
+            "title": "",
+            "description": "Cluster and branch growth evaluated at the organization level"
+          }
+        ],
+        "columns": 3,
+        "itemLayout": "horizontal"
+      }
+    },
+    {
+      "id": "what-the-plan-supports",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "",
+        "title": "What the plan supports",
+        "items": [
+          {
+            "icon": "Zap",
+            "title": "",
+            "description": "Cluster and branch growth evaluated at the organization level"
+          }
+        ],
+        "columns": 2,
+        "itemLayout": "horizontal"
+      }
+    }
+  ]
+}
