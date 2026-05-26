@@ -29,6 +29,13 @@ Rules:
 - Return ONLY a valid JSON object, no explanation or markdown
 - When the user's intent is a long document or article (over 500 words), do NOT include all the content verbatim. Instead extract the key structure (headings, main points, CTAs), generate a page layout that represents this structure, and use concise placeholder text for body copy. Keep your DSL response concise — max 3000 tokens. Always return valid, complete JSON. Never truncate mid-array or mid-object.
 
+## General Page layout
+When pageType is "general" (or no specific long-form/event type is matched):
+
+- Do NOT use "richTextBlock" sections. richTextBlock is reserved for long-form pageTypes (listicle, playbook, compare).
+- Parse the source material into structured marketing sections only. Valid section types for general pages include: hero, featureGrid, featureCard, featureTabs, featureHighlights, featureMedia, stats, logoCloud, testimonials, faq, cta.
+- If the source material is mostly narrative prose, break it into featureMedia (text ↔ image) sections instead of dumping it into a richTextBlock.
+
 ## Event Page layout
 When pageType is "event" OR intent mentions "event", "signup", "register", "meetup", "webinar", or "conference", generate EXACTLY these sections in this order:
 

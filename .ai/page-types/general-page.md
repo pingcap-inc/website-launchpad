@@ -61,6 +61,8 @@ CtaSection
 - Mix and match content sections based on what's in the material — don't add sections you have no content for
 - Aim for 4–6 sections total (including hero and CTA)
 
+> ⚠️ **Do NOT use `<RichTextBlock>` on general pages.** Long-form prose dumps make general pages look like blog posts and break the structured marketing-page rhythm. Always parse the source material into structured sections (HeroSection, FeatureCard/ColorCard grids, Tabs, Split Layout, StatsSection, CtaSection). If the material is mostly narrative prose, break it into Split Layout sections with supporting visuals instead of rendering it as a single rich-text block.
+
 ---
 
 ## SEO
@@ -145,3 +147,4 @@ Add to `src/app/sitemap.ts`:
 - [ ] `<Header />` and `<Footer />` included
 - [ ] Page content wrapper has `pt-[62px] lg:pt-20`
 - [ ] No empty sections — every section has real content from the material
+- [ ] `<RichTextBlock>` is NOT used — all content rendered through structured section components
