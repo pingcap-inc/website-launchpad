@@ -1281,9 +1281,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'NVIDIA_API_KEY not configured' }, { status: 500 })
   }
   if (AI_PROVIDER === 'bedrock') {
-    if (!process.env.AWS_BEARER_TOKEN_BEDROCK)
+    if (!process.env.BEDROCK_AWS_ACCESS_KEY_ID || !process.env.BEDROCK_AWS_SECRET_ACCESS_KEY)
       return NextResponse.json(
-        { error: 'AWS_BEARER_TOKEN_BEDROCK not configured' },
+        { error: 'BEDROCK_AWS_ACCESS_KEY_ID / BEDROCK_AWS_SECRET_ACCESS_KEY not configured' },
         { status: 500 }
       )
     if (!process.env.ANTHROPIC_MODEL)
