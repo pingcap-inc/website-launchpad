@@ -14,11 +14,14 @@
         "headline": "The Complete Vibe Coding Tech Stack in 2026: What You Actually Need",
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+            "url": "https://static.pingcap.com/images/83d200e7-_____.png",
+            "width": 934,
+            "height": 664
           },
-          "alt": "hero image",
+          "alt": "",
           "width": 500,
-          "height": 400
+          "height": 1500,
+          "align": "right"
         }
       },
       "style": {
