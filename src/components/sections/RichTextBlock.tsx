@@ -739,7 +739,7 @@ function markdownToHtml(md: string, options?: { preserveLeadingHeadings?: boolea
 
 type RenderedChunk = { kind: 'richText'; html: string } | { kind: 'cta'; data: CtaFenceData }
 
-function renderRichTextChunk(content: string, preserveLeadingHeadings: boolean): string {
+export function renderRichTextChunk(content: string, preserveLeadingHeadings: boolean): string {
   const raw = markdownToHtml(content, { preserveLeadingHeadings })
   return raw.replace(
     /<table>[\s\S]*?<\/table>/g,

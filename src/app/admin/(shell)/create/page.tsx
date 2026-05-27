@@ -330,7 +330,7 @@ function stripLeadingMarkdownH1(markdown: string) {
 function splitMarkdownFaq(markdown: string) {
   const lines = markdown.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
   const faqHeadingRegex =
-    /^(#{2,4})\s+(faq|faqs|frequently asked questions)\b(?:\s*[:\-–—]\s*.+|\s*)$/i
+    /^(#{2,4})\s+(faq|faqs|frequently asked questions)\b(?:\s*(?:[:：\-–—]|for\b|about\b|on\b|regarding\b)\s*.+|\s*)$/i
   const headingRegex = /^(#{1,4})\s+(.+)$/
   const faqStart = lines.findIndex((line) => faqHeadingRegex.test(line.trim()))
 
