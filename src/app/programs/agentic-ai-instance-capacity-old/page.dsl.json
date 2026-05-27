@@ -1,0 +1,128 @@
+{
+  "pageName": "TiDB Cloud Instance Capacity Plan | Apply for Higher-Scale Cluster Capacity",
+  "meta": {
+    "title": "TiDB Cloud Instance Capacity Plan | Apply for Higher-Scale Cluster Capacity",
+    "description": "Apply for the TiDB Cloud Instance Capacity Plan for agent and application platforms running large numbers of Starter instances and branches.",
+    "canonical": "/programs/agentic-ai-instance-capacity/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "split",
+        "headline": "TiDB Cloud Instance Capacity Plan",
+        "subheadline": "Scale TiDB Cloud for every user application.",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        },
+        "heroForm": null
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "who-this-is-for",
+      "type": "featureHighlights",
+      "props": {
+        "title": "Built for teams creating databases at platform scale",
+        "items": [
+          {
+            "variant": "blue",
+            "title": "AI Agent Platforms",
+            "description": "That generate or deploy user applications requiring isolated database environments.",
+            "cta": {
+              "text": "",
+              "href": ""
+            }
+          },
+          {
+            "variant": "violet",
+            "title": "Multi-Tenant SaaS Platforms",
+            "description": "Creating isolated environments per customer or workspace with high concurrency.",
+            "cta": {
+              "text": "",
+              "href": ""
+            }
+          },
+          {
+            "variant": "teal",
+            "title": "Builder Platforms",
+            "description": "Relying on high volumes of TiDB Cloud Starter instances and branches for rapid prototyping.",
+            "cta": {
+              "text": "",
+              "href": ""
+            }
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "what-the-plan-supports",
+      "type": "featureGrid",
+      "props": {
+        "title": "Designed for high-scale TiDB Cloud usage",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "Large Numbers of Instances",
+            "description": "Support for organizations managing thousands of active Starter instances and branches."
+          },
+          {
+            "icon": "TrendingUp",
+            "title": "Organization-Level Scaling",
+            "description": "Cluster and branch growth evaluated and optimized at the organization level."
+          },
+          {
+            "icon": "Users",
+            "title": "Sales-Assisted Onboarding",
+            "description": "Dedicated support for higher-capacity organizations during setup and growth."
+          },
+          {
+            "icon": "BarChart2",
+            "title": "Transparent Billing",
+            "description": "Visibility into instance-capacity charges alongside existing usage billing."
+          }
+        ],
+        "columns": 2
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "apply-cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to scale your platform with TiDB Cloud?",
+        "subtitle": "Apply for the Instance Capacity Plan today.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Apply Now",
+          "href": "#hero"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
