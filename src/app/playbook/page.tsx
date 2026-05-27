@@ -117,6 +117,16 @@ const dsl: PageDSL = {
               "text": "Read the playbook",
               "href": "https://pingcap.com/playbook-escape-mysql-sharding-pain/"
             }
+          },
+          {
+            "icon": "Database",
+            "title": "Build a Vibe Coding Stack That Holds Up in Production",
+            "description": "AI-generated code ships fast and breaks in predictable ways. This covers the full stack: Next.js and TypeScript guardrails, how to set up AI coding agents with repo rules, and why TiDB Cloud handles your database, vector search, and RAG pipeline in one place — so you scale without a rewrite.",
+            "cta": {
+              "text": "Read the playbook",
+              "href": "pingcap.com/playbook/vibe-coding-tech-stack-guide/"
+            },
+            "layout": "vertical"
           }
         ],
         "columns": 2
