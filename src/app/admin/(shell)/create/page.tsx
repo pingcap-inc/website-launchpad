@@ -132,29 +132,6 @@ function sanitizeImportedContent(
   )
 }
 
-// ── Draft save helpers ───────────────────────────────────────────────────────
-
-function localDraftKey(slug: string) {
-  return `admin-draft-${slug || 'untitled'}`
-}
-
-function saveToLocalStorage(slug: string, dsl: PageDSL) {
-  try {
-    localStorage.setItem(localDraftKey(slug), JSON.stringify(dsl))
-  } catch {
-    /* ignore */
-  }
-}
-
-function loadFromLocalStorage(slug: string): PageDSL | null {
-  try {
-    const raw = localStorage.getItem(localDraftKey(slug))
-    return raw ? normalizeDSL(JSON.parse(raw) as PageDSL) : null
-  } catch {
-    return null
-  }
-}
-
 function isValidSlugPath(slug: string) {
   if (!slug) return false
   const segments = slug.split('/').filter(Boolean)
@@ -1452,7 +1429,6 @@ function CreatePageInner() {
   const previewScrollRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const iframeReadyRef = useRef(false)
-  const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const initialSlugRef = useRef<string | null>(null)
   const autoLoadedDraftRef = useRef(false)
   const initializedFromQueryRef = useRef(false)
@@ -1571,18 +1547,6 @@ function CreatePageInner() {
     }
     loadParents()
   }, [])
-
-  // Auto-save to localStorage on DSL change (debounced 2s)
-  useEffect(() => {
-    if (!dsl) return
-    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
-    autoSaveTimer.current = setTimeout(() => {
-      saveToLocalStorage(slug || 'untitled', dsl)
-    }, 2000)
-    return () => {
-      if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
-    }
-  }, [dsl, slug])
 
   const snapshotState = (nextDsl: PageDSL, nextSlug: string) =>
     JSON.stringify({ dsl: nextDsl, slug: nextSlug })
@@ -1855,12 +1819,6 @@ function CreatePageInner() {
     }
 
     setCheckingDraft(false)
-    const localDraft = loadFromLocalStorage(slug)
-    if (localDraft) {
-      setDraftAvailable(true)
-      return
-    }
-
     let aborted = false
     setCheckingDraft(true)
     const timer = setTimeout(async () => {
@@ -2349,15 +2307,6 @@ function CreatePageInner() {
 
   const handleLoadDraft = useCallback(async () => {
     if (!slug || !isValidSlugPath(slug)) return
-    const localDraft = loadFromLocalStorage(slug)
-    if (localDraft) {
-      setDsl(localDraft)
-      setBaselineState(localDraft, slug)
-      setLocalJson(JSON.stringify(localDraft, null, 2))
-      setEditingPublishedSource(false)
-      return
-    }
-
     try {
       const draftRes = await fetch(`/api/pages/${slug}?branch=${encodeURIComponent(DRAFT_BRANCH)}`)
       if (draftRes.ok) {
