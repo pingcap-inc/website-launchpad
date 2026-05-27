@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { renderRichTextChunk } from '@/components/sections/RichTextBlock'
+import { renderRichTextChunk } from '@/lib/rich-text-render'
 
 export interface FaqItem {
   q: string

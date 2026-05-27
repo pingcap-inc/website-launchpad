@@ -340,7 +340,7 @@
 }
 
 /* ─── Rich Text Block (Markdown content for listicle pages) ─── */
-.rich-text-block {
+.longform-generated-page .rich-text-block {
   color: #5d6974;
   line-height: 1.75;
   font-size: 16px;
