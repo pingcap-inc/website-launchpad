@@ -116,6 +116,8 @@ export interface SectionStyle {
     | 'brand-teal'
     | 'none'
   spacing?: 'none' | 'sm' | 'md' | 'lg' | 'section' | 'hero'
+  /** Optional HTML anchor id for in-page navigation. Falls back to section.id when empty. */
+  anchorId?: string
   /** Remove top padding on this section. */
   removePaddingTop?: boolean
   /** Remove bottom padding on this section. */

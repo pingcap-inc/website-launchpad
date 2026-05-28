@@ -186,6 +186,8 @@ function normalizeSectionStyle(style?: SectionStyle): SectionStyle | undefined {
 
   const background = v.background || undefined
   const spacing = v.spacing || undefined
+  const anchorId =
+    typeof v.anchorId === 'string' && v.anchorId.trim() ? v.anchorId.trim() : undefined
   const className = v.className || undefined
   const backgroundImageOpacityClassName =
     typeof v.backgroundImageOpacityClassName === 'string'
@@ -203,6 +205,7 @@ function normalizeSectionStyle(style?: SectionStyle): SectionStyle | undefined {
   return {
     background,
     spacing,
+    anchorId,
     removePaddingTop,
     removePaddingBottom,
     className,
