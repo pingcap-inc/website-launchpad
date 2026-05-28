@@ -56,8 +56,8 @@ const dsl: PageDSL = {
         "headline": "TiDB Cloud Instance Capacity Plan",
         "subheadline": "Scale TiDB Cloud for every user application.\n",
         "primaryCta": {
-          "text": "Apply for the Instance Capacity Plan",
-          "href": "https://www.pingcap.com/contact-us/"
+          "text": "",
+          "href": ""
         },
         "heroImage": {
           "image": {
@@ -78,6 +78,9 @@ const dsl: PageDSL = {
         "portalId": "4466002",
         "formId": "YOUR_FORM_ID",
         "region": "na1"
+      },
+      "style": {
+        "anchorId": "#form"
       }
     },
     {
