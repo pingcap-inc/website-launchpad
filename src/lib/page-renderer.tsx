@@ -493,7 +493,7 @@ function renderSection(
   return (
     <SectionWrapper
       key={section.id}
-      id={section.id}
+      id={section.style?.anchorId || section.id}
       style={themedStyle}
       defaultStyle={defaultStyle}
     >

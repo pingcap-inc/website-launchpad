@@ -1,5 +1,8 @@
+'use client'
+
 import { cn } from '@/lib/utils'
 import { externalLinkProps } from '@/lib/links'
+import { handleInPageScroll } from '@/lib/in-page-scroll'
 
 interface PrimaryButtonProps {
   children: React.ReactNode
@@ -66,7 +69,15 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
 
   if (href) {
     return (
-      <a href={href} className={classes} {...externalLinkProps(href)}>
+      <a
+        href={href}
+        className={classes}
+        onClick={(event) => {
+          handleInPageScroll(event, href)
+          onClick?.()
+        }}
+        {...externalLinkProps(href)}
+      >
         {content}
       </a>
     )

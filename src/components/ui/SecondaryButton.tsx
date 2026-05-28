@@ -1,6 +1,9 @@
+'use client'
+
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 import { externalLinkProps } from '@/lib/links'
+import { handleInPageScroll } from '@/lib/in-page-scroll'
 
 interface SecondaryButtonProps {
   children: React.ReactNode
@@ -93,6 +96,10 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
           ref={ref as React.Ref<HTMLAnchorElement>}
           href={href}
           className={classes}
+          onClick={(event) => {
+            handleInPageScroll(event, href)
+            onClick?.()
+          }}
           {...externalLinkProps(href)}
         >
           {content}
