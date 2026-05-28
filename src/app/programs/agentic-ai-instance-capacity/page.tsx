@@ -162,11 +162,12 @@ const dsl: PageDSL = {
         },
         "primaryCta": {
           "text": "Apply",
-          "href": "https://www.pingcap.com/contact-us/"
+          "href": "#form"
         }
       },
       "style": {
-        "background": "brand-violet"
+        "background": "brand-violet",
+        "spacing": "md"
       }
     }
   ]
