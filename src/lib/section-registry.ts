@@ -348,6 +348,18 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         ],
       },
       {
+        type: 'select',
+        key: 'iconSize',
+        label: 'Icon Size',
+        valueType: 'number',
+        noEmptyOption: true,
+        options: [
+          { label: 'Default (original)', value: '' },
+          { label: '32px', value: '32' },
+          { label: '48px', value: '48' },
+        ],
+      },
+      {
         type: 'array',
         key: 'items',
         label: 'Features',
@@ -484,6 +496,30 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
       {
+        type: 'select',
+        key: 'columns',
+        label: 'Columns',
+        noEmptyOption: true,
+        valueType: 'number',
+        options: [
+          { label: '2', value: '2' },
+          { label: '3', value: '3' },
+          { label: '4', value: '4' },
+        ],
+      },
+      {
+        type: 'select',
+        key: 'iconSize',
+        label: 'Icon Size',
+        valueType: 'number',
+        noEmptyOption: true,
+        options: [
+          { label: 'Default (original)', value: '' },
+          { label: '32px', value: '32' },
+          { label: '48px', value: '48' },
+        ],
+      },
+      {
         type: 'array',
         key: 'items',
         label: 'Highlights',
@@ -510,18 +546,6 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
           { type: 'textarea', key: 'description', label: 'Description', rows: 2 },
           { type: 'cta', key: 'cta', label: 'CTA' },
           { type: 'icon', key: 'icon', label: 'Icon' },
-        ],
-      },
-      {
-        type: 'select',
-        key: 'columns',
-        label: 'Columns',
-        noEmptyOption: true,
-        valueType: 'number',
-        options: [
-          { label: '2', value: '2' },
-          { label: '3', value: '3' },
-          { label: '4', value: '4' },
         ],
       },
       { type: 'cta', key: 'viewMore', label: 'View More' },

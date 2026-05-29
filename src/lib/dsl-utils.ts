@@ -357,6 +357,7 @@ function normalizeFeatureGridProps(value: unknown): FeatureGridProps {
     columns: v.columns,
     viewMore: v.viewMore,
     itemLayout: v.itemLayout,
+    iconSize: v.iconSize,
     className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
@@ -401,6 +402,7 @@ function normalizeFeatureHighlightsProps(value: unknown): FeatureHighlightsProps
     items: items as FeatureHighlightItem[],
     columns: v.columns,
     viewMore: v.viewMore,
+    iconSize: v.iconSize,
     className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
