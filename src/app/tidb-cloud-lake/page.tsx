@@ -149,7 +149,7 @@ const dsl: PageDSL = {
             "imagePosition": "right"
           },
           {
-            "title": "Query Your Data in Place",
+            "title": "2. Query Your Data in Place",
             "description": "Use ANSI SQL analytics, full-text search, vector search, and geospatial functions to explore, analyze, and retrieve data from object storage.",
             "image": {
               "image": {
@@ -164,7 +164,7 @@ const dsl: PageDSL = {
             "imagePosition": "left"
           },
           {
-            "title": "Connect Your Stack",
+            "title": "3. Connect Your Stack",
             "description": "Point Tableau, Looker, dbt, or your ML pipeline at the warehouse endpoint. Real-time insights and AI-ready workflows in minutes.",
             "image": {
               "image": {
