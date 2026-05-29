@@ -117,6 +117,9 @@ const dsl: PageDSL = {
         ],
         "columns": 3,
         "iconSize": 32
+      },
+      "style": {
+        "removePaddingTop": true
       }
     },
     {
