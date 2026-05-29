@@ -9,14 +9,12 @@ export const metadata: Metadata = {
   description:
     'Learn how TiDB silences noisy neighbors in multi-tenant environments, ensuring consistent performance and reliability.',
   robots: { index: true, follow: true },
-  alternates: {
-    canonical: 'https://www.pingcap.com/playbook/playbook-noisy-neighbor-multi-tenant-mysql/',
-  },
+  alternates: { canonical: 'https://www.pingcap.com/playbook/noisy-neighbor-multi-tenant-mysql/' },
   openGraph: {
     title: "TiDB's Noisy-Neighbor Playbook | TiDB",
     description:
       'Learn how TiDB silences noisy neighbors in multi-tenant environments, ensuring consistent performance and reliability.',
-    url: 'https://www.pingcap.com/playbook/playbook-noisy-neighbor-multi-tenant-mysql/',
+    url: 'https://www.pingcap.com/playbook/noisy-neighbor-multi-tenant-mysql/',
     siteName: 'TiDB',
     images: [
       {
@@ -35,7 +33,7 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: '/playbook/playbook-noisy-neighbor-multi-tenant-mysql/',
+  path: '/playbook/noisy-neighbor-multi-tenant-mysql/',
   title: "TiDB's Noisy-Neighbor Playbook | TiDB",
   description:
     'Learn how TiDB silences noisy neighbors in multi-tenant environments, ensuring consistent performance and reliability.',
@@ -43,7 +41,7 @@ const schema = buildPageSchema({
     { name: 'Home', path: '/' },
     {
       name: 'Silence the Screams: TiDB’s Noisy-Neighbor Playbook',
-      path: '/playbook/playbook-noisy-neighbor-multi-tenant-mysql/',
+      path: '/playbook/noisy-neighbor-multi-tenant-mysql/',
     },
   ],
 })
@@ -54,7 +52,7 @@ const dsl: PageDSL = {
     title: "TiDB's Noisy-Neighbor Playbook | TiDB",
     description:
       'Learn how TiDB silences noisy neighbors in multi-tenant environments, ensuring consistent performance and reliability.',
-    canonical: '/playbook/playbook-noisy-neighbor-multi-tenant-mysql/',
+    canonical: '/playbook/noisy-neighbor-multi-tenant-mysql/',
   },
   sections: [
     {

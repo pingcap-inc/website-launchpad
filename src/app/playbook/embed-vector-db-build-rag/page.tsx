@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   description:
     "Compare TiDB's embedded vector DB approach against the classic two-DB setup for RAG. Discover how TiDB unifies vector and SQL in one system.",
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/playbook/playbook-embed-vector-db-build-rag/' },
+  alternates: { canonical: 'https://www.pingcap.com/playbook/embed-vector-db-build-rag/' },
   openGraph: {
     title: 'TiDB vs Pinecone: RAG Stack Simplified | TiDB',
     description:
       "Compare TiDB's embedded vector DB approach against the classic two-DB setup for RAG. Discover how TiDB unifies vector and SQL in one system.",
-    url: 'https://www.pingcap.com/playbook/playbook-embed-vector-db-build-rag/',
+    url: 'https://www.pingcap.com/playbook/embed-vector-db-build-rag/',
     siteName: 'TiDB',
     images: [
       {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: '/playbook/playbook-embed-vector-db-build-rag/',
+  path: '/playbook/embed-vector-db-build-rag/',
   title: 'TiDB vs Pinecone: RAG Stack Simplified | TiDB',
   description:
     "Compare TiDB's embedded vector DB approach against the classic two-DB setup for RAG. Discover how TiDB unifies vector and SQL in one system.",
@@ -41,7 +41,7 @@ const schema = buildPageSchema({
     { name: 'Home', path: '/' },
     {
       name: 'RAG Without Extra Luggage: TiDB’s Embedded Vector DB',
-      path: '/playbook/playbook-embed-vector-db-build-rag/',
+      path: '/playbook/embed-vector-db-build-rag/',
     },
   ],
 })
@@ -52,7 +52,7 @@ const dsl: PageDSL = {
     title: 'TiDB vs Pinecone: RAG Stack Simplified | TiDB',
     description:
       "Compare TiDB's embedded vector DB approach against the classic two-DB setup for RAG. Discover how TiDB unifies vector and SQL in one system.",
-    canonical: '/playbook/playbook-embed-vector-db-build-rag/',
+    canonical: '/playbook/embed-vector-db-build-rag/',
   },
   sections: [
     {

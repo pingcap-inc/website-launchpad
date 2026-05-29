@@ -3,7 +3,7 @@
   "meta": {
     "title": "TiDB's Noisy-Neighbor Playbook | TiDB",
     "description": "Learn how TiDB silences noisy neighbors in multi-tenant environments, ensuring consistent performance and reliability.",
-    "canonical": "/playbook/playbook-noisy-neighbor-multi-tenant-mysql/"
+    "canonical": "/playbook/noisy-neighbor-multi-tenant-mysql/"
   },
   "sections": [
     {
