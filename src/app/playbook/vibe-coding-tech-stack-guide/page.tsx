@@ -378,8 +378,8 @@ const dsl: PageDSL = {
       id: 'faq',
       type: 'faq',
       props: {
-        // title-case-ignore
-        title: 'FAQs: for choosing a vibe coding tech stack',
+        // title-case-ignore -- "For" is capitalized as the first word after the colon
+        title: 'FAQs: For Choosing a Vibe Coding Tech Stack',
         items: [
           {
             q: 'Is vibe coding ready to ship to production in 2026?',

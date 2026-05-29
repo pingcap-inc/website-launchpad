@@ -206,7 +206,7 @@
           },
           {
             "id": "faq",
-            "label": "FAQs: for choosing a vibe coding tech stack",
+            "label": "FAQs: For Choosing a Vibe Coding Tech Stack",
             "level": 1
           },
           {
@@ -324,7 +324,7 @@
       "id": "faq",
       "type": "faq",
       "props": {
-        "title": "FAQs: for choosing a vibe coding tech stack",
+        "title": "FAQs: For Choosing a Vibe Coding Tech Stack",
         "items": [
           {
             "q": "Is vibe coding ready to ship to production in 2026?",
