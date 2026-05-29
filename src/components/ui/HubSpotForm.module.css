@@ -14,7 +14,7 @@
   box-sizing: border-box;
   width: 100%;
   background: transparent;
-  @apply border border-border-primary text-text-inverse;
+  @apply border border-border-form text-text-inverse;
   font-family: var(--font-moderat);
   font-size: 16px;
   line-height: 1.4;
@@ -26,7 +26,6 @@
   appearance: none;
 }
 
-.root :global(input[type='text']:focus),
 .root :global(input[type='email']:focus),
 .root :global(input[type='tel']:focus),
 .root :global(select:focus),
@@ -36,7 +35,7 @@
 
 .root :global(input::placeholder),
 .root :global(textarea::placeholder) {
-  @apply text-carbon-500;
+  @apply text-text-inverse;
   opacity: 1;
 }
 
@@ -51,6 +50,10 @@
 
 .root :global(select option) {
   @apply text-text-inverse;
+}
+
+.root :global(input[type='submit']) {
+  width: 150px;
 }
 
 .root :global(.actions) {
