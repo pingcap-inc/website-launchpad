@@ -67,6 +67,16 @@ const dsl: PageDSL = {
           "width": 500,
           "height": 400
         }
+      },
+      "style": {
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/d078c99c-module___headline_10.svg",
+            "alt": "module headline 10",
+            "width": 1440,
+            "height": 664
+          }
+        }
       }
     },
     {
@@ -105,7 +115,8 @@ const dsl: PageDSL = {
             "description": "Rely on high volumes of TiDB Cloud Starter instances and branches."
           }
         ],
-        "columns": 3
+        "columns": 3,
+        "iconSize": 32
       }
     },
     {
@@ -126,7 +137,7 @@ const dsl: PageDSL = {
             "icon": "Database"
           },
           {
-            "variant": "red",
+            "variant": "violet",
             "title": "Cluster and Branch Growth Evaluated at Organization Level",
             "description": "Pricing and limits are reviewed with Sales and not publicly self-serve.",
             "cta": {
@@ -136,7 +147,7 @@ const dsl: PageDSL = {
             "icon": "Gauge"
           },
           {
-            "variant": "red",
+            "variant": "blue",
             "title": "Sales-Assisted Onboarding for Higher-Capacity Organizations",
             "description": "Our team will review your application and contact you about eligibility and onboarding.",
             "cta": {
@@ -144,8 +155,20 @@ const dsl: PageDSL = {
               "href": ""
             },
             "icon": "Shield"
+          },
+          {
+            "variant": "teal",
+            "title": "Billing Visibility for Instance-Capacity Charges",
+            "description": "Gain clear visibility into instance-capacity charges alongside existing usage charges in your billing dashboard.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "DollarSign"
           }
-        ]
+        ],
+        "columns": 2,
+        "iconSize": 32
       }
     },
     {
