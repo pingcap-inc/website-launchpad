@@ -54,6 +54,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { url: '/compare/yugabytedb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/compare/vitess-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    // Playbook pages
+    { url: '/playbook/', priority: 0.8, changeFrequency: 'weekly' },
+    { url: '/playbook/embed-vector-db-build-rag/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/playbook/escape-mysql-sharding-pain/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/playbook/noisy-neighbor-multi-tenant-mysql/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    { url: '/playbook/vibe-coding-tech-stack-guide/', priority: 0.7, changeFrequency: 'monthly' },
     // Campaign / program pages
     // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
     // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },

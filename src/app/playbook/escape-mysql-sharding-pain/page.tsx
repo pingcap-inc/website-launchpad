@@ -9,14 +9,12 @@ export const metadata: Metadata = {
   description:
     'Discover how TiDB helps you escape the MySQL sharding trap. Learn the benefits and get a clear migration path with this practical playbook.',
   robots: { index: true, follow: true },
-  alternates: {
-    canonical: 'https://www.pingcap.com/playbook/playbook-escape-mysql-sharding-pain/',
-  },
+  alternates: { canonical: 'https://www.pingcap.com/playbook/escape-mysql-sharding-pain/' },
   openGraph: {
     title: "Unshard Your Future: TiDB's Playbook for Escaping MySQL",
     description:
       'Discover how TiDB helps you escape the MySQL sharding trap. Learn the benefits and get a clear migration path with this practical playbook.',
-    url: 'https://www.pingcap.com/playbook/playbook-escape-mysql-sharding-pain/',
+    url: 'https://www.pingcap.com/playbook/escape-mysql-sharding-pain/',
     siteName: 'TiDB',
     images: [
       {
@@ -35,7 +33,7 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: '/playbook/playbook-escape-mysql-sharding-pain/',
+  path: '/playbook/escape-mysql-sharding-pain/',
   title: "Unshard Your Future: TiDB's Playbook for Escaping MySQL",
   description:
     'Discover how TiDB helps you escape the MySQL sharding trap. Learn the benefits and get a clear migration path with this practical playbook.',
@@ -43,7 +41,7 @@ const schema = buildPageSchema({
     { name: 'Home', path: '/' },
     {
       name: 'Unshard Your Future: TiDB’s Playbook for MySQL Sharding Escape',
-      path: '/playbook/playbook-escape-mysql-sharding-pain/',
+      path: '/playbook/escape-mysql-sharding-pain/',
     },
   ],
 })
@@ -54,7 +52,7 @@ const dsl: PageDSL = {
     title: "Unshard Your Future: TiDB's Playbook for Escaping MySQL",
     description:
       'Discover how TiDB helps you escape the MySQL sharding trap. Learn the benefits and get a clear migration path with this practical playbook.',
-    canonical: '/playbook/playbook-escape-mysql-sharding-pain/',
+    canonical: '/playbook/escape-mysql-sharding-pain/',
   },
   sections: [
     {

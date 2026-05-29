@@ -3,7 +3,7 @@
   "meta": {
     "title": "Unshard Your Future: TiDB's Playbook for Escaping MySQL",
     "description": "Discover how TiDB helps you escape the MySQL sharding trap. Learn the benefits and get a clear migration path with this practical playbook.",
-    "canonical": "/playbook/playbook-escape-mysql-sharding-pain/"
+    "canonical": "/playbook/escape-mysql-sharding-pain/"
   },
   "sections": [
     {
