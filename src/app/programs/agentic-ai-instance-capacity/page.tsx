@@ -76,12 +76,10 @@ const dsl: PageDSL = {
         "title": "Apply for the Instance Capacity Plan",
         "subtitle": "Tell us what you're building and the scale you expect. Our team will review your application and contact you about eligibility and onboarding.",
         "portalId": "4466002",
-        "formId": "YOUR_FORM_ID",
+        "formId": "43f6cc09-1df6-4751-a4a4-4fbb2f09f987",
         "region": "na1"
       },
-      "style": {
-        "anchorId": "#form"
-      }
+      "style": {}
     },
     {
       "id": "who-for",
