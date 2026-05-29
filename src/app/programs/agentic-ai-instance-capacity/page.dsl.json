@@ -128,8 +128,8 @@
             "icon": "DollarSign"
           }
         ],
-        "iconSize": 32,
-        "columns": 2
+        "columns": 2,
+        "iconSize": 32
       }
     },
     {
