@@ -71,6 +71,7 @@ const config: Config = {
           primary: '#424D57',
           subtle: '#CBD1D7',
           strong: '#A2ADB9',
+          form: '#5D6974',
         },
         accent: {
           primary: '#DC150B',
