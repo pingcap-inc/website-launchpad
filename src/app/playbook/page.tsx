@@ -97,7 +97,7 @@ const dsl: PageDSL = {
             "description": "One bad tenant shouldn't take down the rest. This covers how to detect the source, cap it with TiDB Resource Groups, and pin repeat offenders to their own nodes with Placement Rules.",
             "cta": {
               "text": "Read the playbook",
-              "href": "https://pingcap.com/playbook-noisy-neighbor-multi-tenant-mysql/"
+              "href": "/playbook/noisy-neighbor-multi-tenant-mysql/"
             }
           },
           {
@@ -106,7 +106,7 @@ const dsl: PageDSL = {
             "description": "Running MySQL for transactions and a separate vector store for embeddings is two systems to babysit. TiDB handles both. This covers the native HNSW vector index, how to query embeddings alongside SQL in one statement, and a working RAG pipeline end to end.",
             "cta": {
               "text": "Read the playbook",
-              "href": "https://pingcap.com/playbook-embed-vector-db-build-rag/"
+              "href": "/playbook/embed-vector-db-build-rag/"
             }
           },
           {
@@ -115,7 +115,7 @@ const dsl: PageDSL = {
             "description": "Manual sharding creates problems faster than it solves them. This covers what it actually costs to maintain sharded MySQL, how TiDB handles distribution at the storage layer, and how to migrate without a maintenance window.",
             "cta": {
               "text": "Read the playbook",
-              "href": "https://pingcap.com/playbook-escape-mysql-sharding-pain/"
+              "href": "/playbook/escape-mysql-sharding-pain/"
             }
           },
           {
@@ -124,7 +124,7 @@ const dsl: PageDSL = {
             "description": "AI-generated code ships fast and breaks in predictable ways. This covers the full stack: Next.js and TypeScript guardrails, how to set up AI coding agents with repo rules, and why TiDB Cloud handles your database, vector search, and RAG pipeline in one place — so you scale without a rewrite.",
             "cta": {
               "text": "Read the playbook",
-              "href": "pingcap.com/playbook/vibe-coding-tech-stack-guide/"
+              "href": "/playbook/vibe-coding-tech-stack-guide/"
             },
             "layout": "vertical"
           }
