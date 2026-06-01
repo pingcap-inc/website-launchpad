@@ -131,8 +131,8 @@ const dsl: PageDSL = {
             "title": "Real-Time Insight",
             "description": "Query live operational data and historical events in milliseconds",
             "cta": {
-              "text": "",
-              "href": ""
+              "text": "Lear more",
+              "href": "https://www.pingcap.com/article/transforming-logistics-with-tidbs-real-time-analytics/"
             },
             "icon": "Zap"
           },
@@ -141,8 +141,8 @@ const dsl: PageDSL = {
             "title": "Elastic Scale",
             "description": "Handle unpredictable spikes from orders, tracking, and optimization workloads",
             "cta": {
-              "text": "",
-              "href": ""
+              "text": "Learn more",
+              "href": "https://docs.pingcap.com/tidbcloud/scalability-concepts/"
             },
             "icon": "Layers"
           },
@@ -151,8 +151,8 @@ const dsl: PageDSL = {
             "title": "Always-On Availability",
             "description": "Built-in high availability across regions for 24/7 logistics operations",
             "cta": {
-              "text": "",
-              "href": ""
+              "text": "Learn more",
+              "href": "https://docs.pingcap.com/tidb/stable/high-availability-faq/"
             },
             "icon": "Shield"
           }
