@@ -416,9 +416,9 @@
       "type": "form",
       "props": {
         "title": "See TiDB in Action",
+        "subtitle": "Get to know TiDB in the way that fits you best",
         "portalId": "4466002",
-        "formId": "066e9d00-f659-43b2-8fa5-71fb88dfab59",
-        "subtitle": "Get to know TiDB in the way that fits you best"
+        "formId": "066e9d00-f659-43b2-8fa5-71fb88dfab59"
       },
       "style": {
         "background": "primary",
