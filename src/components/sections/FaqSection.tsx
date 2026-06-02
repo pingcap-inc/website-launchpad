@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { renderRichTextChunk } from '@/lib/rich-text-render'
 
 export interface FaqItem {
   q: string
@@ -19,43 +20,14 @@ interface SectionFaqProps {
   className?: string
 }
 
-function renderFaqAnswerHtml(text: string) {
-  const escapeHtml = (value: string) =>
-    value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-
-  const sanitizeUrl = (raw: string) => {
-    const trimmed = raw.trim()
-    if (!trimmed) return null
-    if (trimmed.startsWith('/') || trimmed.startsWith('#')) return trimmed
-    try {
-      const parsed = new URL(trimmed)
-      const protocol = parsed.protocol.toLowerCase()
-      if (protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:') {
-        return parsed.toString()
-      }
-    } catch {
-      return null
-    }
-    return null
-  }
-
-  const escaped = escapeHtml(text)
-  const withLinks = escaped.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, label, url) => {
-    const safe = sanitizeUrl(String(url))
-    if (!safe) return label
-    return `<a href="${safe}" target="_blank" rel="noopener noreferrer">${label}</a>`
-  })
-
-  return withLinks.replace(/\n/g, '<br />')
-}
-
 function renderFaqAnswer(answer: FaqItem['a']) {
   if (typeof answer !== 'string') return answer
 
   return (
     <div
+      className="rich-text-block"
       // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: renderFaqAnswerHtml(answer) }}
+      dangerouslySetInnerHTML={{ __html: renderRichTextChunk(answer, true) }}
     />
   )
 }

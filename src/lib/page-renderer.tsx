@@ -178,14 +178,21 @@ function sanitizeSpacingBySection(
   return style
 }
 
-function renderIcon(value?: IconValue) {
+function renderIcon(value?: IconValue, size?: number) {
   if (!value) return undefined
   if (typeof value === 'object' && 'url' in value) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={value.url} alt="" className="object-contain" />
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={value.url}
+        alt=""
+        className="object-contain"
+        style={size ? { width: size, height: size } : undefined}
+      />
+    )
   }
   const Icon = ICON_MAP[value as IconName] ?? Zap
-  return createElement(Icon, { className: '', strokeWidth: 1.5 })
+  return createElement(Icon, { className: '', strokeWidth: 1.5, ...(size ? { size } : {}) })
 }
 
 // SectionWrapper now lives in components/ui for reuse outside the renderer.
@@ -233,7 +240,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       eyebrow: props.eyebrow,
       title: props.title,
       subtitle: props.subtitle,
-      features: props.items.map((f) => ({ ...f, icon: renderIcon(f.icon) })),
+      features: props.items.map((f) => ({ ...f, icon: renderIcon(f.icon, props.iconSize) })),
       columns: props.columns,
       viewMore: props.viewMore,
       itemLayout: props.itemLayout,
@@ -273,7 +280,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       eyebrow: props.eyebrow,
       title: props.title,
       subtitle: props.subtitle,
-      items: props.items.map((item) => ({ ...item, icon: renderIcon(item.icon) })),
+      items: props.items.map((item) => ({ ...item, icon: renderIcon(item.icon, props.iconSize) })),
       columns: props.columns,
       viewMore: props.viewMore,
       className: props.className,
@@ -493,7 +500,7 @@ function renderSection(
   return (
     <SectionWrapper
       key={section.id}
-      id={section.id}
+      id={section.style?.anchorId || section.id}
       style={themedStyle}
       defaultStyle={defaultStyle}
     >

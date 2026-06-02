@@ -778,6 +778,26 @@ export function SectionFieldEditor({
             </select>
           </FieldRow>
 
+          <FieldRow label="Anchor ID">
+            <TextInput
+              value={node.style?.anchorId ?? node.id}
+              onChange={(v) =>
+                onChange({
+                  ...node,
+                  style: {
+                    ...node.style,
+                    anchorId: (() => {
+                      const normalized = v.trim()
+                      if (!normalized || normalized === node.id) return undefined
+                      return normalized
+                    })(),
+                  },
+                })
+              }
+              placeholder={node.id}
+            />
+          </FieldRow>
+
           <FieldRow label="Background Image">
             <ImageField
               value={node.style?.backgroundImage?.image as any}

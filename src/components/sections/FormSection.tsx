@@ -24,7 +24,7 @@ export function FormSection({
       {(title || subtitle) && (
         <SectionHeader title={title ?? ''} subtitle={subtitle} className="mb-8" />
       )}
-      <LazyHubSpotForm portalId={portalId} formId={formId} region={region} />
+      <LazyHubSpotForm portalId={portalId} formId={formId} region={region} className="mt-4" />
     </div>
   )
 }
