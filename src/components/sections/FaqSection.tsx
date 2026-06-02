@@ -33,22 +33,9 @@ function renderFaqAnswer(answer: FaqItem['a']) {
 }
 
 export function FaqSection({ items, title, compact = false, className }: SectionFaqProps) {
-  const faqSchema =
-    items.length > 0
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: items.map((faq) => ({
-            '@type': 'Question',
-            name: faq.q,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: typeof faq.a === 'string' ? faq.a : '',
-            },
-          })),
-        }
-      : null
-
+  // NOTE: FAQPage JSON-LD is intentionally NOT emitted here. FAQ structured data
+  // is owned by the page's buildPageSchema graph (via faqSchema / withFaqFromDSL)
+  // so each page has exactly one FAQPage entity. See src/lib/schema.ts.
   return (
     <div className={cn(compact ? 'space-y-6' : 'space-y-16', className)}>
       {title && <SectionHeader title={title} align="left" h2Size="sm" />}
@@ -64,13 +51,6 @@ export function FaqSection({ items, title, compact = false, className }: Section
           </AccordionItem>
         ))}
       </Accordion>
-      {faqSchema && (
-        <script
-          type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-      )}
     </div>
   )
 }
