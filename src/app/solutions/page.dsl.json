@@ -1,0 +1,304 @@
+{
+  "pageName": "TiDB Solutions for Modern Data Challenges",
+  "meta": {
+    "title": "TiDB Solutions for Modern Data Challenges",
+    "description": "Discover how TiDB delivers scalable, cloud-native database solutions for modern data challenges.",
+    "canonical": "/solutions/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "TiDB Solutions",
+        "headline": "Solve Modern Data Challenges with <span class=\"text-gradient-blue\">TiDB</span>",
+        "subheadline": "Scalable, MySQL-compatible database built for the cloud",
+        "primaryCta": {
+          "text": "Start for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "View Demo",
+          "href": "https://www.pingcap.com/demo/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "stats",
+      "type": "stats",
+      "props": {
+        "eyebrow": "By the Numbers",
+        "title": "TiDB in Action",
+        "items": [
+          {
+            "icon": "Gauge",
+            "value": "99.99%",
+            "label": "Uptime SLA",
+            "description": "Ensure your applications stay online with enterprise-grade reliability"
+          },
+          {
+            "icon": "Scale",
+            "value": "10x",
+            "label": "Performance Increase",
+            "description": "Scale reads and writes without performance degradation"
+          },
+          {
+            "icon": "DollarSign",
+            "value": "$0",
+            "label": "Hidden Costs",
+            "description": "Transparent pricing with no surprises"
+          },
+          {
+            "icon": "Shield",
+            "value": "Enterprise",
+            "label": "Grade Security",
+            "description": "Built-in encryption and compliance features"
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "feature-grid",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Key Capabilities",
+        "title": "Why Choose TiDB",
+        "subtitle": "Designed for modern applications requiring scale, consistency, and high availability",
+        "items": [
+          {
+            "icon": "Layers",
+            "title": "Horizontal Scaling",
+            "description": "Scale out compute and storage independently without downtime"
+          },
+          {
+            "icon": "Globe",
+            "title": "Cloud Native",
+            "description": "Built for Kubernetes environments with full containerization support"
+          },
+          {
+            "icon": "Database",
+            "title": "MySQL Compatibility",
+            "description": "Run existing MySQL applications without code changes"
+          },
+          {
+            "icon": "Activity",
+            "title": "Real-time Analytics",
+            "description": "HTAP architecture processes transactions and analytics simultaneously"
+          },
+          {
+            "icon": "Shield",
+            "title": "Enterprise Security",
+            "description": "End-to-end encryption, audit logging, and compliance certifications"
+          },
+          {
+            "icon": "RefreshCw",
+            "title": "Automated Operations",
+            "description": "Self-healing, auto-scaling, and zero-downtime upgrades"
+          }
+        ],
+        "columns": 3,
+        "itemLayout": "vertical",
+        "iconSize": 48
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "feature-tabs",
+      "type": "featureTabs",
+      "props": {
+        "eyebrow": "Architecture",
+        "title": "TiDB's Distributed Architecture",
+        "subtitle": "Engineered for scale, resilience, and performance",
+        "tabs": [
+          {
+            "id": "scalability",
+            "label": "Massive Scalability",
+            "description": "TiDB's architecture separates compute from storage, enabling independent scaling of components.",
+            "bullets": [
+              "Scale to 1,000+ node clusters",
+              "Independent scaling of compute and storage",
+              "No downtime during scaling operations"
+            ],
+            "primaryCta": {
+              "text": "View Documentation",
+              "href": "https://docs.pingcap.com/"
+            },
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "consistency",
+            "label": "Strong Consistency",
+            "description": "Distributed transactions with ACID compliance ensure data integrity across the cluster.",
+            "bullets": [
+              "Distributed ACID transactions",
+              "Multi-version concurrency control (MVCC)",
+              "Raft consensus algorithm for data replication"
+            ],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "cloud",
+            "label": "Cloud Integration",
+            "description": "Native support for public cloud deployments with full Kubernetes integration.",
+            "bullets": [
+              "Available on AWS, GCP, and Azure",
+              "Managed service option with TiDB Cloud",
+              "Kubernetes operators for self-managed deployments"
+            ],
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg"
+              },
+              "alt": "tab image",
+              "width": 1200,
+              "height": 800
+            }
+          }
+        ],
+        "autoSwitch": true,
+        "autoSwitchInterval": 6000
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "feature-card",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Use Cases",
+        "title": "Solutions for Every Industry",
+        "subtitle": "TiDB powers mission-critical applications across diverse industries",
+        "items": [
+          {
+            "icon": "BarChart2",
+            "title": "Real-time Analytics",
+            "description": "Process transactions and analytics simultaneously with HTAP architecture",
+            "borderColor": "blue",
+            "href": "https://www.pingcap.com/tidb/cloud/"
+          },
+          {
+            "icon": "Building",
+            "title": "Financial Services",
+            "description": "High availability and strong consistency for mission-critical financial systems",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Users",
+            "title": "Scalable Applications",
+            "description": "Scale user-facing applications without compromising performance",
+            "borderColor": "teal"
+          },
+          {
+            "icon": "Cloud",
+            "title": "Cloud Migration",
+            "description": "Modernize legacy databases with cloud-native architecture",
+            "borderColor": "red"
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "testimonials",
+      "type": "testimonials",
+      "props": {
+        "eyebrow": "Success Stories",
+        "title": "Trusted by Innovators",
+        "items": [
+          {
+            "quote": "TiDB has enabled us to scale our user-facing applications while maintaining consistent performance during peak loads.",
+            "author": "Tech Lead, E-commerce Platform",
+            "cta": {
+              "text": "Read Case Study",
+              "href": "https://www.pingcap.com/case-studies/"
+            },
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+              },
+              "alt": "dify"
+            }
+          },
+          {
+            "quote": "The MySQL compatibility of TiDB allowed us to migrate our existing applications without major rewrites while gaining horizontal scalability.",
+            "author": "CTO, Fintech Startup",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+              },
+              "alt": "dify"
+            }
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta",
+      "type": "cta",
+      "props": {
+        "title": "Ready to Scale Your Database?",
+        "subtitle": "Experience the power of TiDB with a free trial on TiDB Cloud",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free Trial",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Contact Sales",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
