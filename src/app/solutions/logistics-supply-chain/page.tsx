@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: "Real-Time Logistics Data Platform | TiDB",
   description: "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/logistics-supply-chain/' },
+  alternates: { canonical: 'https://www.pingcap.com/solutions/logistics-supply-chain/' },
   openGraph: {
     title: "Real-Time Logistics Data Platform | TiDB",
     description: "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
-    url: 'https://www.pingcap.com/logistics-supply-chain/',
+    url: 'https://www.pingcap.com/solutions/logistics-supply-chain/',
     siteName: 'TiDB',
     images: [
       {
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: "/logistics-supply-chain/",
+  path: "/solutions/logistics-supply-chain/",
   title: "Real-Time Logistics Data Platform | TiDB",
   description: "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Real-Time Logistics Data Platform for Global <br><span class=\"text-gradient-violet\">Supply Chain Visibility</span>", path: "/logistics-supply-chain/" },
+    { name: "Real-Time Logistics Data Platform for Global <br><span class=\"text-gradient-violet\">Supply Chain Visibility</span>", path: "/solutions/logistics-supply-chain/" },
   ],
 })
 
@@ -45,7 +45,7 @@ const dsl: PageDSL = {
   "meta": {
     "title": "Real-Time Logistics Data Platform | TiDB",
     "description": "TiDB powers real-time supply chain visibility by unifying operational and analytical data in a single distributed SQL platform for global logistics operations.",
-    "canonical": "/logistics-supply-chain/"
+    "canonical": "/solutions/logistics-supply-chain/"
   },
   "sections": [
     {
