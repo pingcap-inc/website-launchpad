@@ -42,8 +42,8 @@ export function resolveSectionStyle(style?: SectionStyle, defaults?: SectionStyl
 type ContentWidth = 'sm' | 'md' | 'lg'
 
 const CONTENT_WIDTH_CLASS: Record<ContentWidth, string> = {
-  sm: 'max-w-content-sm mx-auto',
-  md: 'max-w-content-md mx-auto',
+  sm: 'contain lg:max-w-content-sm',
+  md: 'contain lg:max-w-content-md',
   lg: 'contain',
 }
 
