@@ -64,6 +64,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
     },
     { url: '/playbook/vibe-coding-tech-stack-guide/', priority: 0.7, changeFrequency: 'monthly' },
+    // Programs pages
+    {
+      url: '/programs/agentic-ai-instance-capacity/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
     // Campaign / program pages
     // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
     // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
