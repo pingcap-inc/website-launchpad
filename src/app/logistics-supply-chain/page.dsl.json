@@ -160,12 +160,12 @@
             ],
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/fd14d65a-graphic-1.svg",
-                "alt": "graphic 1",
+                "url": "https://static.pingcap.com/images/b4340e16-graphic_3.svg",
+                "alt": "graphic 3",
                 "width": 910,
                 "height": 480
               },
-              "alt": "graphic 1",
+              "alt": "graphic 3",
               "width": 910,
               "height": 480
             }
@@ -180,13 +180,14 @@
             ],
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/3e425381-clip-group.svg",
-                "width": 1440,
-                "height": 360
+                "url": "https://static.pingcap.com/images/0fd3d5aa-graphic_4.svg",
+                "alt": "graphic 4",
+                "width": 910,
+                "height": 480
               },
-              "alt": "",
-              "width": 1440,
-              "height": 360
+              "alt": "graphic 4",
+              "width": 910,
+              "height": 480
             }
           }
         ],
@@ -237,13 +238,14 @@
             "description": "Connect TMS/WMS/OMS systems, IoT gateways, and Kafka streams. TiDB handles real-time large-scale data ingestion without intermediate ETL layers.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/6355cf1c-rapid_productivity_illustration.svg",
-                "width": 600,
-                "height": 600
+                "url": "https://static.pingcap.com/images/94f9cf3e-rapid_productivity_illustration.svg",
+                "alt": "rapid productivity illustration",
+                "width": 586,
+                "height": 550
               },
-              "alt": "",
+              "alt": "rapid productivity illustration",
               "width": 600,
-              "height": 400
+              "height": 550
             },
             "imagePosition": "right"
           },
@@ -252,13 +254,14 @@
             "description": "Consolidate operational tables, event streams, and aggregates in one schema. Run logistics analytics queries without copying data to separate warehouses.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/ba3f695e-rapid_productivity_illustration__1_.svg",
+                "url": "https://static.pingcap.com/images/672ab54e-rapid_productivity_illustration_1.svg",
+                "alt": "rapid productivity illustration 1",
                 "width": 600,
-                "height": 600
+                "height": 489
               },
-              "alt": "",
+              "alt": "rapid productivity illustration 1",
               "width": 600,
-              "height": 400
+              "height": 489
             },
             "imagePosition": "left"
           },
@@ -267,13 +270,14 @@
             "description": "Use standard SQL to detect anomalies directly on live data. Power real-time dashboards with Prometheus and Grafana integration. Enable advanced analytics without exporting data.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/56659e4e-rapid_productivity_illustration__2_.svg",
+                "url": "https://static.pingcap.com/images/24dffffb-rapid_productivity_illustration_2.svg",
+                "alt": "rapid productivity illustration 2",
                 "width": 600,
-                "height": 600
+                "height": 480
               },
-              "alt": "",
+              "alt": "rapid productivity illustration 2",
               "width": 600,
-              "height": 600
+              "height": 480
             },
             "imagePosition": "right"
           }
