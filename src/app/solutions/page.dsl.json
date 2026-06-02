@@ -36,44 +36,6 @@
       }
     },
     {
-      "id": "stats",
-      "type": "stats",
-      "props": {
-        "eyebrow": "By the Numbers",
-        "title": "TiDB in Action",
-        "items": [
-          {
-            "icon": "Gauge",
-            "value": "99.99%",
-            "label": "Uptime SLA",
-            "description": "Ensure your applications stay online with enterprise-grade reliability"
-          },
-          {
-            "icon": "Scale",
-            "value": "10x",
-            "label": "Performance Increase",
-            "description": "Scale reads and writes without performance degradation"
-          },
-          {
-            "icon": "DollarSign",
-            "value": "$0",
-            "label": "Hidden Costs",
-            "description": "Transparent pricing with no surprises"
-          },
-          {
-            "icon": "Shield",
-            "value": "Enterprise",
-            "label": "Grade Security",
-            "description": "Built-in encryption and compliance features"
-          }
-        ],
-        "columns": 4
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
       "id": "feature-grid",
       "type": "featureGrid",
       "props": {
@@ -230,43 +192,6 @@
         ],
         "columns": 2,
         "borderStyle": "color"
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
-      "id": "testimonials",
-      "type": "testimonials",
-      "props": {
-        "eyebrow": "Success Stories",
-        "title": "Trusted by Innovators",
-        "items": [
-          {
-            "quote": "TiDB has enabled us to scale our user-facing applications while maintaining consistent performance during peak loads.",
-            "author": "Tech Lead, E-commerce Platform",
-            "cta": {
-              "text": "Read Case Study",
-              "href": "https://www.pingcap.com/case-studies/"
-            },
-            "logo": {
-              "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
-              },
-              "alt": "dify"
-            }
-          },
-          {
-            "quote": "The MySQL compatibility of TiDB allowed us to migrate our existing applications without major rewrites while gaining horizontal scalability.",
-            "author": "CTO, Fintech Startup",
-            "logo": {
-              "image": {
-                "url": "https://static.pingcap.com/images/712552a8-dify.png"
-              },
-              "alt": "dify"
-            }
-          }
-        ]
       },
       "style": {
         "spacing": "section"
