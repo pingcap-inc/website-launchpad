@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema } from '@/lib/schema'
+import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -378,7 +378,7 @@ const dsl: PageDSL = {
 export default function GeneratedPage() {
   return (
     <>
-      <JsonLd data={schema} />
+      <JsonLd data={withFaqFromDSL(schema, dsl)} />
       <PageRenderer dsl={dsl} withChrome />
     </>
   )

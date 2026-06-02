@@ -26,6 +26,8 @@
  *   })
  */
 
+import type { FaqProps, PageDSL } from './dsl-schema'
+
 const SITE_URL = 'https://www.pingcap.com'
 const SITE_NAME = 'TiDB | SQL at Scale'
 const ORG_ID = `${SITE_URL}/#organization`
@@ -236,6 +238,45 @@ export function faqSchema(items: { question: string; answer: string }[]): Record
       },
     })),
   }
+}
+
+/**
+ * Build a FAQPage node from a DSL page's `faq` sections. Returns `null` when the
+ * page has no faq section (or no string answers). Only string answers are
+ * included — JSON-LD `text` must be plain text.
+ *
+ * Single source of truth for FAQ structured data: pages collect their FAQ schema
+ * here (via buildPageSchema / withFaqFromDSL) instead of letting <FaqSection>
+ * emit its own, which would produce duplicate FAQPage entities on one page.
+ */
+export function faqSchemaFromDSL(dsl: PageDSL): Record<string, unknown> | null {
+  const items: { question: string; answer: string }[] = []
+  for (const section of dsl.sections) {
+    if (section.type !== 'faq') continue
+    // props is typed as a union (SectionDefinition is not discriminated); the
+    // type guard above guarantees this is a faq section.
+    const faqProps = section.props as FaqProps
+    for (const item of faqProps.items ?? []) {
+      if (typeof item.a === 'string' && item.a.length > 0) {
+        items.push({ question: item.q, answer: item.a })
+      }
+    }
+  }
+  return items.length > 0 ? faqSchema(items) : null
+}
+
+/**
+ * Append a FAQPage node (derived from a DSL page's faq sections) to a schema
+ * graph produced by buildPageSchema. No-op when the page has no faq content.
+ */
+export function withFaqFromDSL(
+  base: Record<string, unknown>,
+  dsl: PageDSL
+): Record<string, unknown> {
+  const faq = faqSchemaFromDSL(dsl)
+  if (!faq) return base
+  const graph = Array.isArray(base['@graph']) ? (base['@graph'] as unknown[]) : []
+  return { ...base, '@graph': [...graph, faq] }
 }
 
 /**

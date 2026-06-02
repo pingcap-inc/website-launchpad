@@ -18,7 +18,7 @@ import {
   SecondaryButton,
 } from '@/components'
 import type { ColorCardItem } from '@/components/sections/FeatureHighlightsSection'
-import { buildPageSchema, faqSchema, softwareApplicationSchema } from '@/lib/schema'
+import { articleSchema, buildPageSchema, faqSchema, softwareApplicationSchema } from '@/lib/schema'
 import { VideoDialog } from '@/components/ui/VideoDialog'
 import { HeroVideo } from './_components/HeroVideo'
 
@@ -67,6 +67,15 @@ const schema = buildPageSchema({
     { name: 'What is TiDB?', path: '/what-is-tidb/' },
   ],
   extraSchemas: [
+    articleSchema({
+      title: 'What is TiDB?',
+      description:
+        'Learn what TiDB is, how its HTAP architecture works, and how TiDB Server, TiKV, TiFlash, and PD work together in one distributed SQL system.',
+      url: 'https://www.pingcap.com/what-is-tidb/',
+      datePublished: '2026-04-27T13:58:08+08:00',
+      dateModified: '2026-04-30T11:21:32+08:00',
+      image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+    }),
     softwareApplicationSchema({
       name: 'TiDB',
       description:
