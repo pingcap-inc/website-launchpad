@@ -11,7 +11,9 @@ import {
   CountUp,
   FaqSection,
   SectionWrapper,
+  JsonLd,
 } from '@/components'
+import { buildPageSchema, faqSchema } from '@/lib/schema'
 import { CreditTabs } from './_components/CreditTabs'
 
 const CLAIM_URL = 'https://ossinsight.io/open-source-heroes/'
@@ -26,7 +28,7 @@ export const metadata: Metadata = {
     description:
       'Fuel your next big idea with up to $2,000 in TiDB Cloud Serverless credits for open source contributors.',
     url: 'https://www.pingcap.com/open-source-heroes/',
-    siteName: 'PingCAP',
+    siteName: 'TiDB',
     type: 'website',
   },
   twitter: {
@@ -34,6 +36,7 @@ export const metadata: Metadata = {
     title: 'Open Source Heroes — Claim FREE TiDB Cloud Serverless Credits',
     description:
       'Claim up to $2,000 in TiDB Cloud Serverless credits based on your open source contributions.',
+    site: '@PingCAP',
     creator: '@PingCAP',
   },
   robots: { index: true, follow: true },
@@ -241,9 +244,22 @@ const tagMeta: Record<string, { icon: React.ReactNode; style: string }> = {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
+const schema = buildPageSchema({
+  path: '/open-source-heroes/',
+  title: 'Open Source Heroes Claim FREE TiDB Cloud Serverless Credits!',
+  description:
+    'TiDB Cloud Serverless rewards your contributions with up to $1,000 in FREE credits to build modern, scalable, AI-powered applications. Power your next big idea with a powerful serverless database. Learn more & qualify!',
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    { name: 'Open Source Heroes', path: '/open-source-heroes/' },
+  ],
+  extraSchemas: [faqSchema(faqs.map((faq) => ({ question: faq.q, answer: faq.a })))],
+})
+
 export default function OpenSourceHeroesPage() {
   return (
     <>
+      <JsonLd data={schema} />
       <Header />
       <main className="pt-[62px] lg:pt-20 bg-bg-primary text-text-inverse">
         {/* ── 1. Hero ── */}
