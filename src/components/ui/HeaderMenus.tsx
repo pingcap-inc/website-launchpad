@@ -21,7 +21,6 @@ import {
   FileTIcon,
   BookTIcon,
   VideoIcon,
-  ScaleTIcon,
   CalendarTIcon,
   CommentsTIcon,
   CodeTIcon,
@@ -34,13 +33,15 @@ import {
   BriefcaseIcon,
   HandshakeIcon,
   AtIcon,
+  cashIcon,
+  menuIcon,
 } from './header-icons'
 import { PrimaryButton } from './PrimaryButton'
 
 interface DropdownItem {
   label: string
   href: string
-  icon?: LucideIcon | React.FC<IconProps>
+  icon?: LucideIcon | React.FC<IconProps> | string
   description?: string
 }
 
@@ -54,6 +55,7 @@ interface DropdownSection {
 interface NavDropdown {
   label: string
   translateX?: string
+  panelWidth?: string
   featured?: {
     description: string
     cta: { label: string; href: string }
@@ -74,6 +76,42 @@ function isDropdown(item: NavItem): item is NavDropdown {
 }
 
 const dropdowns: NavDropdown[] = [
+  {
+    label: 'AI',
+    translateX: '-translate-x-[12%]',
+    panelWidth: 'min-w-[420px]',
+    sections: [
+      {
+        title: 'TiDB for Agentic AI',
+        items: [
+          {
+            label: 'Database for Agentic AI',
+            href: 'https://www.pingcap.com/agentic-ai/',
+            icon: 'https://static.pingcap.com/files/2026/04/14001529/Database-for-Agentic-Al.svg',
+            description: 'Purpose-built for agent memory, state, and multi-hop reasoning',
+          },
+          {
+            label: 'Vector Search & RAG',
+            href: 'https://www.pingcap.com/ai/vector-search/',
+            icon: 'https://static.pingcap.com/files/2026/04/14001530/Vector-Search-RAG.svg',
+            description: 'Native vector indexing and retrieval-augmented generation pipelines',
+          },
+          {
+            label: 'Quick Start: Agentic Memory',
+            href: 'https://zero.tidbcloud.com/',
+            icon: 'https://static.pingcap.com/files/2026/04/14001529/Quick-Start.svg',
+            description: 'Spin up persistent agent memory in seconds — zero config',
+          },
+          {
+            label: 'Build AI Applications',
+            href: 'https://www.pingcap.com/developers/build-ai-apps/',
+            icon: 'https://static.pingcap.com/files/2026/04/14001528/Build-AI-Applications.svg',
+            description: 'SDKs, guides, and templates for shipping AI apps fast',
+          },
+        ],
+      },
+    ],
+  },
   {
     label: 'Product',
     translateX: '-translate-x-[24%]',
@@ -100,7 +138,8 @@ const dropdowns: NavDropdown[] = [
         items: [
           { label: 'Integrations', href: 'https://www.pingcap.com/integrations/', icon: GearIcon },
           { label: 'TiKV', href: 'https://github.com/tikv/tikv', icon: SlidersIcon },
-          { label: 'TiSpark', href: 'https://github.com/pingcap/tispark', icon: StarIcon },
+          { label: 'mem9', href: 'https://github.com/mem9-ai/mem9', icon: cashIcon },
+          { label: 'drive9', href: 'https://github.com/mem9-ai/drive9', icon: WalletTIcon },
           { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
         ],
       },
@@ -170,10 +209,11 @@ const dropdowns: NavDropdown[] = [
           },
           { label: 'Videos & Replays', href: 'https://www.pingcap.com/videos/', icon: VideoIcon },
           {
-            label: 'Horizontal Scaling',
-            href: 'https://www.pingcap.com/horizontal-scaling-vs-vertical-scaling/',
-            icon: ScaleTIcon,
+            label: 'Compare Databases',
+            href: 'https://www.pingcap.com/compare/',
+            icon: menuIcon,
           },
+          { label: 'Playbooks', href: 'https://www.pingcap.com/playbook/', icon: StackTIcon },
         ],
       },
       {
@@ -184,7 +224,11 @@ const dropdowns: NavDropdown[] = [
             href: 'https://www.pingcap.com/event/',
             icon: CalendarTIcon,
           },
-          { label: 'Discord Community', href: 'https://discord.gg/pingcap', icon: CommentsTIcon },
+          {
+            label: 'Discord Community',
+            href: 'https://discord.com/invite/vYU9h56kAX',
+            icon: CommentsTIcon,
+          },
           { label: 'Developer Hub', href: 'https://www.pingcap.com/developers/', icon: CodeTIcon },
           {
             label: 'TiDB SCaiLE',
@@ -246,13 +290,15 @@ function MegaMenu({ item }: { item: NavDropdown }) {
   const hasFeatured = !!item.featured
   const translateX = item.translateX ?? '-translate-x-1/2'
 
-  const panelMinWidth = hasFeatured
-    ? 'min-w-[828px]'
-    : sectionCount === 1
-      ? 'min-w-[260px]'
-      : sectionCount === 2
-        ? 'min-w-[500px]'
-        : 'min-w-[660px]'
+  const panelMinWidth =
+    item.panelWidth ??
+    (hasFeatured
+      ? 'min-w-[828px]'
+      : sectionCount === 1
+        ? 'min-w-[260px]'
+        : sectionCount === 2
+          ? 'min-w-[500px]'
+          : 'min-w-[660px]')
 
   return (
     <div className={cn('absolute top-full left-1/2 pt-3 block z-50', translateX)}>
@@ -269,7 +315,7 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                 height={25}
                 className="block"
               />
-              <p className="text-[15px] text-carbon-400 my-4 leading-relaxed">
+              <p className="text-[15px] text-carbon-400 my-4 leading-relaxed font-light">
                 {item.featured.description}
               </p>
               <a
@@ -315,16 +361,18 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                     </p>
                   ))}
                 {section.description && section.items.length === 0 && (
-                  <p className="text-base text-carbon-400 leading-relaxed">{section.description}</p>
+                  <p className="text-base text-carbon-400 leading-relaxed font-light">
+                    {section.description}
+                  </p>
                 )}
                 {section.items.map((sub) => (
                   <a
                     key={sub.label}
                     href={sub.href}
-                    className="flex items-start gap-3 text-carbon-400 hover:text-carbon-800 group/item font-medium"
+                    className="flex items-base gap-3 text-carbon-400 hover:text-carbon-800 group/item font-medium"
                     {...externalLinkProps(sub.href)}
                   >
-                    {sub.icon && <sub.icon size={16} className="shrink-0 mt-0.5" />}
+                    {sub.icon && <sub.icon size={18} className="shrink-0" />}
                     <span>
                       <span className="block text-body-md whitespace-nowrap">{sub.label}</span>
                       {sub.description && (
@@ -411,7 +459,9 @@ function MobileAccordionItem({
                   <p className="text-base font-medium text-text-inverse">{section.title}</p>
                 ))}
               {section.description && section.items.length === 0 && (
-                <p className="text-base text-carbon-400 leading-relaxed">{section.description}</p>
+                <p className="text-base text-carbon-400 leading-relaxed font-light">
+                  {section.description}
+                </p>
               )}
               {section.items.length > 0 && (
                 <div className="grid grid-cols-2 gap-x-4 gap-y-3">
@@ -436,9 +486,59 @@ function MobileAccordionItem({
   )
 }
 
+// The "AI" menu uses a dedicated single-column layout (large icon + title +
+// description per row), distinct from the generic columns MegaMenu.
+function AiMegaMenu({ item }: { item: NavDropdown }) {
+  const translateX = '-translate-x-1/2'
+  const section = item.sections[0]
+  if (!section) return null
+
+  return (
+    <div className={cn('absolute top-full left-1/2 pt-6 block z-50', translateX)}>
+      <div
+        className={cn(
+          'bg-bg-primary border border-carbon-800 shadow-card p-5 overflow-hidden',
+          item.panelWidth ?? 'min-w-[460px]'
+        )}
+      >
+        {section.title && (
+          <p className="text-label font-bold uppercase tracking-wider text-white/30">
+            {section.title}
+          </p>
+        )}
+        <div className="flex flex-col divide-y divide-[#53555e4d]">
+          {section.items.map((sub) => (
+            <a
+              key={sub.label}
+              href={sub.href}
+              className="group/item flex items-center gap-4 py-3"
+              {...externalLinkProps(sub.href)}
+            >
+              {sub.icon && typeof sub.icon === 'string' && (
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center">
+                  <Image src={sub.icon} alt="" width={40} height={40} />
+                </span>
+              )}
+              <span className="flex flex-col">
+                <span className="text-body-md font-medium text-text-inverse">{sub.label}</span>
+                {sub.description && (
+                  <span className="mt-0.5 text-sm leading-snug text-text-secondary font-light">
+                    {sub.description}
+                  </span>
+                )}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function HeaderMegaMenu({ label }: { label: string }) {
   const item = dropdownMap.get(label)
   if (!item) return null
+  if (label === 'AI') return <AiMegaMenu item={item} />
   return <MegaMenu item={item} />
 }
 

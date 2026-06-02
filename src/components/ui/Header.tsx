@@ -7,6 +7,7 @@ import { PrimaryButton } from './PrimaryButton'
 import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { isExternalHref } from '@/lib/links'
+import { cn } from '@/lib/utils'
 
 const HeaderMegaMenu = dynamic(() => import('./HeaderMenus').then((mod) => mod.HeaderMegaMenu))
 const HeaderMobileMenu = dynamic(() => import('./HeaderMenus').then((mod) => mod.HeaderMobileMenu))
@@ -30,6 +31,7 @@ function isDropdown(item: NavItemLite): item is NavDropdownLite {
 }
 
 const navItems: NavItemLite[] = [
+  { label: 'AI', kind: 'dropdown' },
   { label: 'Product', kind: 'dropdown' },
   { label: 'Solutions', kind: 'dropdown' },
   { label: 'Resources', kind: 'dropdown' },
@@ -80,7 +82,17 @@ function Navbar() {
               }
             }}
           >
-            <button className="flex items-center gap-1 px-3 py-2 hover:text-carbon-400 transition-colors duration-150 cursor-pointer">
+            <button
+              className={cn(
+                'flex items-center gap-1.5 px-3 py-2 transition-colors duration-150 cursor-pointer',
+                item.label === 'AI'
+                  ? 'bg-brand-red-primary text-text-inverse h-5 mr-3'
+                  : 'hover:text-carbon-400'
+              )}
+            >
+              {item.label === 'AI' && (
+                <span className="inline-block w-1 h-1 rounded-full bg-white animate-pulse" />
+              )}
               {item.label}
             </button>
             {openDropdown === item.label && <HeaderMegaMenu label={item.label} />}
