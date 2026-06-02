@@ -49,7 +49,7 @@ export function ColorCard({ variant, title, description, cta, icon, className }:
     </>
   )
 
-  if (cta) {
+  if (cta?.href) {
     return (
       <a href={cta.href} className={rootClassName} {...externalLinkProps(cta.href)}>
         {content}
