@@ -33,8 +33,9 @@ import {
   BriefcaseIcon,
   HandshakeIcon,
   AtIcon,
-  cashIcon,
-  menuIcon,
+  CashIcon,
+  MenuIcon,
+  ArchiveIcon,
 } from './header-icons'
 import { PrimaryButton } from './PrimaryButton'
 
@@ -138,7 +139,7 @@ const dropdowns: NavDropdown[] = [
         items: [
           { label: 'Integrations', href: 'https://www.pingcap.com/integrations/', icon: GearIcon },
           { label: 'TiKV', href: 'https://github.com/tikv/tikv', icon: SlidersIcon },
-          { label: 'mem9', href: 'https://github.com/mem9-ai/mem9', icon: cashIcon },
+          { label: 'mem9', href: 'https://github.com/mem9-ai/mem9', icon: CashIcon },
           { label: 'drive9', href: 'https://github.com/mem9-ai/drive9', icon: WalletTIcon },
           { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
         ],
@@ -185,6 +186,11 @@ const dropdowns: NavDropdown[] = [
             icon: BagT1Icon,
           },
           { label: 'SaaS', href: 'https://www.pingcap.com/solutions/saas/', icon: DesktopTIcon },
+          {
+            label: 'Logistics & Supply Chain',
+            href: 'https://www.pingcap.com/solutions/logistics-supply-chain/',
+            icon: ArchiveIcon,
+          },
         ],
       },
       {
@@ -211,7 +217,7 @@ const dropdowns: NavDropdown[] = [
           {
             label: 'Compare Databases',
             href: 'https://www.pingcap.com/compare/',
-            icon: menuIcon,
+            icon: MenuIcon,
           },
           { label: 'Playbooks', href: 'https://www.pingcap.com/playbook/', icon: StackTIcon },
         ],
@@ -369,7 +375,7 @@ function MegaMenu({ item }: { item: NavDropdown }) {
                   <a
                     key={sub.label}
                     href={sub.href}
-                    className="flex items-base gap-3 text-carbon-400 hover:text-carbon-800 group/item font-medium"
+                    className="flex items-center gap-3 text-carbon-400 hover:text-carbon-800 group/item font-medium"
                     {...externalLinkProps(sub.href)}
                   >
                     {sub.icon && <sub.icon size={18} className="shrink-0" />}
