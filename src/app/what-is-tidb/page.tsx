@@ -1062,7 +1062,7 @@ export default function WhatIsTidbPage() {
                 paradigm.
               </p>
               <div className="mt-10">
-                <PrimaryButton href="https://www.pingcap.com/tidb/">
+                <PrimaryButton href="https://www.pingcap.com/compare/">
                   See How TiDB Compares
                 </PrimaryButton>
               </div>
