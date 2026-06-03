@@ -18,7 +18,8 @@ function makeIcon(path: string, displayName: string): React.FC<IconProps> {
       style={style}
       aria-hidden="true"
     >
-      <g transform="translate(0,1024) scale(1,-1)">
+      {/* font-derived glyphs center at y≈384; translate 896 (=1024−128) lands them on the 512 midline */}
+      <g transform="translate(0,896) scale(1,-1)">
         <path d={path} />
       </g>
     </svg>
@@ -167,7 +168,7 @@ export const AtIcon = makeIcon(
   'AtIcon'
 )
 
-export const cashIcon: React.FC<IconProps> = ({ size = 18, className, style }) => (
+export const CashIcon: React.FC<IconProps> = ({ size = 18, className, style }) => (
   <svg
     width={size}
     height={size}
@@ -192,9 +193,31 @@ export const cashIcon: React.FC<IconProps> = ({ size = 18, className, style }) =
     />
   </svg>
 )
-cashIcon.displayName = 'CashIcon'
+CashIcon.displayName = 'CashIcon'
 
-export const menuIcon = makeIcon(
+export const MenuIcon = makeIcon(
   'M128 256H896V320H128ZM128 448H896V512H128ZM128 640H896V704H128Z',
   'MenuIcon'
 )
+
+export const ArchiveIcon: React.FC<IconProps> = ({ size = 18, className, style }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    style={style}
+    aria-hidden="true"
+  >
+    <path d="M9 14.5H15V13.5H9V14.5Z" fill="currentColor" />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M2.5 2.5H21.5V10.5H19.5V21.5H4.5V10.5H2.5V2.5ZM5.5 10.5H18.5V20.5H5.5V10.5ZM20.5 9.5H3.5V3.5H20.5V9.5Z"
+      fill="currentColor"
+    />
+  </svg>
+)
+ArchiveIcon.displayName = 'ArchiveIcon'
