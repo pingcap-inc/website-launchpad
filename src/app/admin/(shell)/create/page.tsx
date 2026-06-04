@@ -187,7 +187,16 @@ function parseTextToDsl(text: string, slug?: string): PageDSL {
   const featureHeadingIndex = lines.findIndex((line) =>
     /^(features|benefits|highlights|use cases)$/i.test(line.replace(/:$/, ''))
   )
-  const faqHeadingIndex = lines.findIndex((line) => /^faqs?$/i.test(line.replace(/:$/, '')))
+  const faqHeadingIndex = lines.findIndex((line) => {
+    const text = line.replace(/:$/, '').trim()
+    // FAQ token leading ("FAQ", "FAQs about TiDB") or trailing
+    // ("Cursor AI Database Integration FAQs", "TiDB Cloud FAQ").
+    return (
+      /^(?:faqs?|frequently asked questions)\b(?:\s+(?:for|about|on|regarding)\b.*|\s*)$/i.test(
+        text
+      ) || /\s(?:faqs?|frequently asked questions)$/i.test(text)
+    )
+  })
   const ctaHeadingIndex = lines.findIndex((line) =>
     /^(cta|call to action|next steps)$/i.test(line.replace(/:$/, ''))
   )
@@ -306,8 +315,13 @@ function stripLeadingMarkdownH1(markdown: string) {
 
 function splitMarkdownFaq(markdown: string) {
   const lines = markdown.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
+  // A level 2–4 heading is treated as the FAQ section when the FAQ token appears
+  // either at the START ("## FAQ", "## FAQs about TiDB", "## FAQ: ...") or at the
+  // END of the heading ("## Cursor AI Database Integration FAQs", "## TiDB Cloud FAQ").
+  // Long-form docs commonly phrase the heading with FAQ as a trailing word, so a
+  // prefix-only match silently dropped their FAQ section (and FAQPage schema).
   const faqHeadingRegex =
-    /^(#{2,4})\s+(faq|faqs|frequently asked questions)\b(?:\s*(?:[:：\-–—]|for\b|about\b|on\b|regarding\b)\s*.+|\s*)$/i
+    /^(#{2,4})\s+(?:(?:faqs?|frequently asked questions)\b(?:\s*(?:[:：\-–—]|for\b|about\b|on\b|regarding\b)\s*.+|\s*)|.+?\s(?:faqs?|frequently asked questions)\s*[:：]?\s*)$/i
   const headingRegex = /^(#{1,4})\s+(.+)$/
   const faqStart = lines.findIndex((line) => faqHeadingRegex.test(line.trim()))
 
