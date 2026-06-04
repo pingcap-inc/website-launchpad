@@ -1,0 +1,422 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: "TiDB vs OceanBase 2026 Comparison Guide - TiDB",
+  description: "Compare TiDB vs OceanBase across HTAP, OLTP, architecture, cloud operations, and ecosystem fit so your team can choose with confidence.",
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/compare/tidb-vs-oceanbase/' },
+  openGraph: {
+    title: "TiDB vs OceanBase 2026 Comparison Guide - TiDB",
+    description: "Compare TiDB vs OceanBase across HTAP, OLTP, architecture, cloud operations, and ecosystem fit so your team can choose with confidence.",
+    url: 'https://www.pingcap.com/compare/tidb-vs-oceanbase/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: "/compare/tidb-vs-oceanbase/",
+  title: "TiDB vs OceanBase 2026 Comparison Guide - TiDB",
+  description: "Compare TiDB vs OceanBase across HTAP, OLTP, architecture, cloud operations, and ecosystem fit so your team can choose with confidence.",
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    { name: "TiDB vs OceanBase: How to Choose the Right Distributed SQL Database", path: "/compare/tidb-vs-oceanbase/" },
+  ],
+})
+
+const dsl: PageDSL = {
+  "pageName": "TiDB vs OceanBase: How to Choose the Right Distributed SQL Database",
+  "meta": {
+    "title": "TiDB vs OceanBase 2026 Comparison Guide - TiDB",
+    "description": "Compare TiDB vs OceanBase across HTAP, OLTP, architecture, cloud operations, and ecosystem fit so your team can choose with confidence.",
+    "canonical": "/compare/tidb-vs-oceanbase/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "TiDB vs OceanBase: How to Choose the Right Distributed SQL Database",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/51aea1f3-group_1000011300_2x.png",
+            "alt": "group 1000011300 2x",
+            "width": 720,
+            "height": 590
+          },
+          "alt": "group 1000011300 2x",
+          "width": 720,
+          "height": 590
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "tidb-vs-oceanbase-at-a-glance",
+            "label": "TiDB vs OceanBase at a Glance",
+            "level": 1
+          },
+          {
+            "id": "three-differences-that-drive-the-decision",
+            "label": "Three Differences That Drive the Decision",
+            "level": 2
+          },
+          {
+            "id": "what-makes-tidb-and-oceanbase-architecturally-different",
+            "label": "What Makes TiDB and OceanBase Architecturally Different?",
+            "level": 1
+          },
+          {
+            "id": "tidb-compute-and-storage-separation",
+            "label": "TiDB Compute and Storage Separation",
+            "level": 2
+          },
+          {
+            "id": "oceanbase-integrated-architecture-and-partition-model",
+            "label": "OceanBase Integrated Architecture and Partition Model",
+            "level": 2
+          },
+          {
+            "id": "how-design-choices-affect-scale-and-control",
+            "label": "How Design Choices Affect Scale and Control",
+            "level": 2
+          },
+          {
+            "id": "which-database-is-stronger-for-htap-oltp-and-mixed-workloads",
+            "label": "Which Database Is Stronger for HTAP, OLTP, and Mixed Workloads?",
+            "level": 1
+          },
+          {
+            "id": "tidb-for-real-time-htap",
+            "label": "TiDB for Real-Time HTAP",
+            "level": 2
+          },
+          {
+            "id": "oceanbase-for-transaction-heavy-oltp",
+            "label": "OceanBase for Transaction-Heavy OLTP",
+            "level": 2
+          },
+          {
+            "id": "matching-workload-to-platform",
+            "label": "Matching Workload to Platform",
+            "level": 2
+          },
+          {
+            "id": "how-do-tidb-and-oceanbase-compare-on-compatibility-and-migration",
+            "label": "How Do TiDB and OceanBase Compare on Compatibility and Migration?",
+            "level": 1
+          },
+          {
+            "id": "mysql-compatibility-and-ecosystem-fit",
+            "label": "MySQL Compatibility and Ecosystem Fit",
+            "level": 2
+          },
+          {
+            "id": "oracle-migration-considerations",
+            "label": "Oracle Migration Considerations",
+            "level": 2
+          },
+          {
+            "id": "which-platform-is-better-for-ai-and-vector-workloads",
+            "label": "Which Platform Is Better for AI and Vector Workloads?",
+            "level": 1
+          },
+          {
+            "id": "tidb-for-unified-ai-application-data",
+            "label": "TiDB for Unified AI Application Data",
+            "level": 2
+          },
+          {
+            "id": "oceanbase-for-ai-at-transactional-scale",
+            "label": "OceanBase for AI at Transactional Scale",
+            "level": 2
+          },
+          {
+            "id": "matching-ai-workload-to-platform",
+            "label": "Matching AI Workload to Platform",
+            "level": 2
+          },
+          {
+            "id": "which-platform-is-easier-to-run-in-cloud-native-environments",
+            "label": "Which Platform Is Easier to Run in Cloud-Native Environments?",
+            "level": 1
+          },
+          {
+            "id": "kubernetes-and-automation",
+            "label": "Kubernetes and Automation",
+            "level": 2
+          },
+          {
+            "id": "multi-cloud-and-deployment-flexibility",
+            "label": "Multi-Cloud and Deployment Flexibility",
+            "level": 2
+          },
+          {
+            "id": "operations-and-scaling-over-time",
+            "label": "Operations and Scaling Over Time",
+            "level": 2
+          },
+          {
+            "id": "what-should-buyers-know-about-governance-support-and-ecosystem-maturity",
+            "label": "What Should Buyers Know About Governance, Support, and Ecosystem Maturity?",
+            "level": 1
+          },
+          {
+            "id": "open-source-momentum-and-community-signals",
+            "label": "Open-Source Momentum and Community Signals",
+            "level": 2
+          },
+          {
+            "id": "enterprise-support-and-documentation-depth",
+            "label": "Enterprise Support and Documentation Depth",
+            "level": 2
+          },
+          {
+            "id": "how-should-buyers-compare-pricing-models-and-total-cost",
+            "label": "How Should Buyers Compare Pricing Models and Total Cost?",
+            "level": 1
+          },
+          {
+            "id": "infrastructure-and-operating-costs",
+            "label": "Infrastructure and Operating Costs",
+            "level": 2
+          },
+          {
+            "id": "when-a-unified-htap-stack-changes-total-cost",
+            "label": "When a Unified HTAP Stack Changes Total Cost",
+            "level": 2
+          },
+          {
+            "id": "checklist-when-should-you-choose-tidb-vs-oceanbase",
+            "label": "Checklist: When Should You Choose TiDB vs OceanBase?",
+            "level": 1
+          },
+          {
+            "id": "choose-tidb-if",
+            "label": "Choose TiDB if",
+            "level": 2
+          },
+          {
+            "id": "choose-oceanbase-if",
+            "label": "Choose OceanBase if",
+            "level": 2
+          },
+          {
+            "id": "where-tidb-fits-when-the-combined-problem-is-scale-analytics-and-availability",
+            "label": "Where TiDB Fits When the Combined Problem Is Scale, Analytics, and Availability",
+            "level": 1
+          },
+          {
+            "id": "a-practical-fit-for-modern-distributed-sql-adoption",
+            "label": "A Practical Fit for Modern Distributed SQL Adoption",
+            "level": 2
+          },
+          {
+            "id": "how-to-evaluate-tidb-against-your-own-workload",
+            "label": "How to Evaluate TiDB Against Your Own Workload",
+            "level": 1
+          },
+          {
+            "id": "faq",
+            "label": "TiDB vs OceanBase FAQs",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "**Updated May 2026 | Author: M. Nivanya (Content Marketing Manager) | Reviewed by: Ivan Chandra (Senior Solutions Architect)**\n\nTiDB and OceanBase both target teams that need a distributed SQL database beyond what a single MySQL instance can handle, but they are built around different problems. TiDB is a cloud-native [distributed SQL database](https://www.pingcap.com/tidb/) with a MySQL-compatible wire protocol, automatic data distribution, Raft-based strong consistency, and built-in HTAP analytics that runs transactions and analytics on the same data without a pipeline between them. OceanBase is an integrated distributed database engineered for financial-grade OLTP at extreme concurrency, with native Oracle-compatible tenancy and a Paxos-based replication model built on decades of production use at Ant Group and Alipay.\n\nThis comparison is for senior engineers, platform architects, and database leaders evaluating how to scale beyond a single relational database without inheriting long-term operational complexity. It covers architecture, workload fit, MySQL and Oracle compatibility, Kubernetes operations, analytics, and total cost.\n\n:::card tone=light\n\n**Verdict:** Choose OceanBase when you are replacing Oracle, need PL/SQL compatibility inside a single cluster, or are running financial-grade OLTP workloads that require extreme transactional throughput. Choose TiDB when you want automatic data distribution, HTAP analytics on live transactional data, Raft-based zero-data-loss failover, and a cloud-native operational model that runs cleanly on Kubernetes across any cloud.\n\n:::\n\n## TiDB vs OceanBase at a Glance\n\n| Category | TiDB | OceanBase |\n|---|---|---|\n| **Architecture** | Separated compute (TiDB Server) + row storage (TiKV) + columnar storage (TiFlash) | Integrated OBServer nodes; compute and storage co-located per zone |\n| **Workload strength** | HTAP: OLTP and real-time OLAP on the same data, no ETL required | High-concurrency OLTP; financial-grade transaction throughput |\n| **MySQL compatibility** | Full MySQL 5.7/8.0 protocol and syntax; wire-compatible | High MySQL 5.7/8.0 compatibility; also supports Oracle-mode tenant |\n| **Oracle compatibility** | Not supported | Native Oracle-compatible tenant; PL/SQL, stored procedures, Oracle data types |\n| **Scaling model** | Independent scale-out of compute, row storage, and columnar storage | Horizontal scale-out; Paxos log-stream-based replication |\n| **High availability** | Multi-Raft consensus; automatic failover; no single point of failure | Multi-Paxos consensus; RPO = 0, RTO < 8 seconds |\n| **Analytics** | TiFlash columnar engine; MPP execution; real-time replication from TiKV | Integrated AP layer added in V4.3; single-engine approach |\n| **Cloud-native operations** | TiDB Operator for Kubernetes (open source, CNCF ecosystem); TiDB Cloud on AWS, GCP, Azure; TiDB Serverless for burst workloads, AI startup use cases, and pay-as-you-go autoscaling with no minimum commitment | ob-operator for Kubernetes; OceanBase Cloud on major clouds |\n| **AI workloads** | Native vector search support; HTAP architecture supports AI application data layers requiring both transactional writes and semantic search | Vector search support available; primary focus remains OLTP and Oracle replacement workloads |\n| **Best fit** | Teams modernizing MySQL at scale, cloud-native platform teams, real-time analytics on transactional data | Enterprises replacing Oracle, financial institutions with peak OLTP requirements, multi-tenant consolidation |\n*Table 1: TiDB vs OceanBase feature comparison at a glance.*\n\n### Three Differences That Drive the Decision\n\nThe central architectural distinction is storage separation versus storage integration. TiDB disaggregates the row store (TiKV), the columnar store (TiFlash), and the SQL compute layer (TiDB Server) into independent tiers you scale separately. OceanBase runs compute and storage together inside OBServer nodes, achieving strong per-node efficiency at the cost of less granular independent scaling.\n\nThe second distinction is workload design center. TiDB was built around HTAP and has extended that architecture to support native vector search, making it a single system for transactional workloads, real-time analytics, and AI applications — RAG pipelines, semantic retrieval, and agent memory — without a separate vector store or analytical database alongside it. OceanBase was built for high-concurrency OLTP at Ant Group. Its analytical and vector capabilities have grown with each major version, but AI-ready infrastructure is not its primary design center.\n\nThe third distinction is compatibility surface. OceanBase supports both MySQL-mode and Oracle-mode tenants within a single cluster. TiDB is MySQL-first and does not support Oracle syntax. If your migration source is Oracle, this distinction alone may close the evaluation.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-1",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Test TiDB against your own workload with a managed environment and no infrastructure setup.",
+        "primaryCta": {
+          "text": "Start Evaluating TiDB",
+          "href": "https://www.pingcap.com/pricing/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22092103/1000011430.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-1",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## What Makes TiDB and OceanBase Architecturally Different?\n\nTiDB separates compute from storage into three independently scalable tiers. OceanBase co-locates compute and storage inside integrated OBServer nodes. That single design choice shapes every downstream decision about elasticity, tenant isolation, and operational flexibility — and it is where vendor positioning and independent analysis diverge most sharply.\n\n### TiDB Compute and Storage Separation\n\nThe TiDB Server layer is stateless SQL compute: it parses queries, builds execution plans, and coordinates distributed ACID transactions. Because it carries no data, adding TiDB Server nodes increases SQL compute capacity without moving any data. TiKV stores rows across three replicas by default using the Raft consensus algorithm, providing Snapshot Isolation guarantees. TiFlash is the columnar extension — it replicates from TiKV in real time via Multi-Raft Learner and backs an MPP engine for analytical queries. An OLTP cluster runs without TiFlash entirely; an HTAP cluster scales TiFlash replicas without touching TiKV. TiKV's CNCF graduation in September 2020 gives the storage layer validation beyond TiDB's own documentation.\n\n![tidb architecture v6](https://static.pingcap.com/images/1d4c74b6-tidb-architecture-v6.png)\n*Figure 1. TiDB's architecture depicting compute, storage, and metadata orchestration layers.*\n### OceanBase Integrated Architecture and Partition Model\n\nOceanBase uses a zone-based architecture where OBServer nodes co-locate compute and storage. Partitions replicate across zones using Multi-Paxos consensus on log streams — a design that reduces per-partition coordination overhead compared to OceanBase's earlier V3 approach. OBProxy routes client requests to the correct OBServer by partition leader. The LSM-tree storage engine provides write-optimized persistence; OceanBase's documentation claims 70–90% compression versus InnoDB, though this varies significantly by schema and data type and should be validated against your workload before factoring into cost planning.\n\nOne area where the integrated model produces a genuine advantage: multi-tenancy. A single OceanBase cluster enforces CPU, IOPS, disk, and memory quotas per tenant at the database level — a first-class architectural feature, not an application-layer abstraction.\n\n![screenshot 2026 06 04 at 2.33.17 pm](https://static.pingcap.com/images/986a3b44-screenshot_2026-06-04_at_2.33.17_pm.png)\n*Figure 2. Oceanbase's architecture showing how OBServer nodes co-locate compute and storage.*\n\n### How Design Choices Affect Scale and Control\n\nTiDB's separation gives platform teams more levers. Compute scales without touching storage; TiFlash scales without touching TiKV; you pay for only the tiers you deploy. The cost is a more complex operational surface — four component types, each with independent scaling decisions.\n\nOceanBase's integrated model is simpler for bounded, well-understood workloads: scaling an OBServer node scales compute and storage together. OceanBase frames this as a performance advantage — tighter co-location reduces cross-node coordination for single-partition transactions. Independent benchmarks comparing TiDB, OceanBase, PolarDB-X, and CockroachDB on secondary index write workloads have produced mixed results depending on partition count, concurrency level, and index type. Neither framing is wrong; they reflect different workload assumptions. Run your own benchmark before treating published figures as definitive.\n\n## Which Database Is Stronger for HTAP, OLTP, and Mixed Workloads?\n\nTiDB owns the HTAP case more completely. OceanBase owns the peak-OLTP case. Each has a clear design center.\n\n### TiDB for Real-Time HTAP\n\nMost teams running OLTP and analytics on the same data end up with a CDC pipeline, a data warehouse, and 15–30 minutes of lag before analytical queries reflect current transactions. TiDB removes that pipeline: writes land in TiKV, TiFlash replicates them in real time, and analytical queries run against the columnar replica without touching OLTP throughput. The query optimizer routes to TiKV or TiFlash automatically — applications do not need to specify which engine handles each query.\n\nA 30-minute warehouse lag breaks two workloads in particular. A financial settlement system running batch range calculations across live transaction data cannot wait for replication to catch up. A fraud detection pipeline analyzing behavioral patterns against current account state needs writes and reads on the same data, not replicated copies from a downstream warehouse.\n\nTrip.com's hotel settlement business is the clearest production illustration. The workload spans billion-scale records across supplier, hotel, and user dimensions that do not fit a single MySQL sharding key, with mixed OLTP and OLAP queries at around 8 TB. TiDB replaced a fragmented SQL Server and sharded MySQL architecture, enabling [real-time data processing and financial settlement](https://www.pingcap.com/case-study/trip-com-boosts-real-time-data-processing-and-financial-settlement-with-tidb/) across all three dimensions in one system. That is what an [HTAP database solution](https://www.pingcap.com/solutions/enable-operational-intelligence/) eliminates: the pipeline, the lag, and the second system.\n\n### OceanBase for Transaction-Heavy OLTP\n\nOceanBase's design center is OLTP, and its benchmark record reflects it. OceanBase holds the TPC-C world record at 707 million tpmC. At Alipay's Double 11 2023 event, it handled a peak of 61 million QPS. For enterprises replacing a high-concurrency Oracle OLTP system or running financial core banking workloads with strict consistency requirements, that performance profile is the right fit. The LSM-tree engine provides high write throughput with strong consistency, and Paxos-based replication delivers RPO = 0 with automated failover.\n\n### Matching Workload to Platform\n\nTwo tests resolve most evaluations. Does your team need analytical queries on live transactional data without a separate pipeline? TiDB. Is your primary constraint peak OLTP throughput or Oracle replacement? OceanBase.\n\nTiDB pushes complexity into storage-tier management. OceanBase pushes it into schema compatibility planning during migration. Choose the complexity your team is better equipped to handle.\n\n## How Do TiDB and OceanBase Compare on Compatibility and Migration?\n\nBoth databases offer strong MySQL compatibility. The evaluation fork is Oracle. If your migration source is Oracle, OceanBase's Oracle-mode tenant changes the calculus entirely. Four compatibility points decide most evaluations.\n\n### MySQL Compatibility and Ecosystem Fit\n\n**Wire compatibility.** TiDB is wire-compatible with MySQL 5.7 and MySQL 8.0 protocols. Existing MySQL clients, drivers, and tooling connect on port 4000 without modification. OceanBase's MySQL-compatible tenant mode supports MySQL 5.7 and 8.0 syntax, protocols, and drivers. Both handle standard MySQL application migrations with minimal or no SQL changes.\n\n**Downstream ecosystem.** OceanBase supports the MySQL Binlog protocol, enabling direct integration with CDC systems and downstream MySQL ecosystem tooling. TiDB provides TiCDC for change data capture and supports Binlog-compatible replication for downstream consumers.\n\n**Sharded MySQL migration.** TiDB's migration path from sharded MySQL is direct. TiDB Data Migration (DM) replicates data from sharded MySQL or MariaDB tables into TiDB, allowing teams to use TiDB as a replication target during cutover. Because the TiDB Server layer is stateless, MySQL applications connect without an intermediary proxy for most workloads.\n\n### Oracle Migration Considerations\n\n**Oracle-compatible tenant.** OceanBase supports PL/SQL, stored procedures, Oracle data types, and Oracle system views inside a dedicated Oracle-mode tenant. A single cluster hosts both MySQL-mode and Oracle-mode tenants simultaneously, which allows incremental migration without running separate clusters.\n\n**Migration tooling.** OceanBase Migration Assessment (OMA) assesses DDL and SQL compatibility from Oracle 11g and 19c, PostgreSQL, MySQL, DB2 LUW, and other sources, and generates transformation recommendations for objects that require changes.\n\n**TiDB's position.** TiDB does not support Oracle compatibility. An Oracle-to-TiDB migration requires converting PL/SQL stored procedures, Oracle-specific data types, and proprietary SQL constructs to MySQL-compatible equivalents before migration begins. For organizations with deep Oracle dependencies — stored procedures, triggers, sequences, Oracle-specific analytic functions — that is substantial application-layer work. If Oracle replacement is the primary driver of this evaluation, OceanBase resolves the largest migration risk. TiDB is the lower-friction path for teams migrating from MySQL with standard SQL and no heavy extensions.\n\n## Which Platform Is Better for AI and Vector Workloads?\n\nThe question for teams building [RAG pipelines](https://www.pingcap.com/article/building-a-rag-application-from-scratch-understanding-rag-and-preparing-your-data/), recommendation systems, or AI agents is not just whether a database supports vector search. It is whether vector retrieval, transactional writes, and real-time feature computation can run in the same system without a separate vector store sitting alongside it. On that measure, TiDB and OceanBase are not equivalent.\n\n### TiDB for Unified AI Application Data\n\nTiDB supports native vector search inside the same database that handles transactions and analytics. The retrieval path and the write path share the same data without synchronization lag. A RAG pipeline querying for semantically relevant documents gets results from the same store that recorded the latest user interactions, not from a vector index that trails behind by minutes.\n\nTwo production cases illustrate the fit. [Manus](https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/), an AI agent platform, migrated to TiDB Cloud in two weeks to handle the data layer for thousands of agent context iterations per task, a workload that mixes transactional state management with high-frequency reads. [Dify](https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/) consolidated close to half a million isolated database containers, covering vectors, documents, relational data, and chat histories, into a single TiDB deployment and cut infrastructure costs by 80%. In both cases, managing separate systems for different data types became the operational bottleneck before the model did.\n\nTiDB Serverless is the lowest-friction entry point for AI teams. Pay-as-you-go pricing, autoscaling, and no minimum commitment mean teams can ship a RAG pipeline or semantic retrieval feature without provisioning for peak before they know what peak looks like. For a broader look at how TiDB positions against dedicated vector stores, see the [best vector database for AI](https://www.pingcap.com/compare/best-vector-database/) comparison.\n\n### OceanBase for AI at Transactional Scale\n\nOceanBase supports vector search, but it is not the primary design center. The stronger fit is when the AI workload is additive to a high-concurrency OLTP core: recommendation systems running on top of financial transaction data, or personalization features attached to a retail transaction engine. OceanBase's OLTP performance profile and multi-tenant isolation serve the transactional foundation; the AI layer operates alongside it.\n\n### Matching AI Workload to Platform\n\nThe deciding question is whether your AI feature needs to read and write transactional data in the same query path. RAG pipelines, AI agents maintaining session state, and real-time recommendation systems that update on each user action all do. For those workloads, TiDB's unified HTAP and vector architecture is the lower-complexity choice. If the AI layer is a separate feature running against a read replica or a dedicated index, either platform can support it, and the selection returns to the OLTP and compatibility criteria covered later in this article.\n\n## Which Platform Is Easier to Run in Cloud-Native Environments?\n\nTiDB has a deeper Kubernetes operational story, built over a longer period and rooted in the CNCF ecosystem. OceanBase has a functioning Kubernetes operator and a managed cloud service. For Kubernetes-first platform teams, the gap is meaningful. For a direct comparison with another Kubernetes-native distributed SQL option, see the [YugabyteDB vs TiDB analysis](https://www.pingcap.com/article/yugabytedb-vs-tidb-choosing-the-right-distributed-sql/).\n\n### Kubernetes and Automation\n\nTiDB Operator, open-sourced in 2018, manages the full lifecycle of TiDB clusters on Kubernetes: deployment, scaling, upgrades, backup, failover, and configuration changes. It uses standard Kubernetes primitives — Pods for stateless TiDB Server nodes, StatefulSets for TiKV and TiFlash storage nodes, and PersistentVolumes for durable storage. Prometheus and Grafana deploy by default for cluster monitoring. TiDB Operator is available via Helm and integrates with the CNCF toolchain.\n\nPlatform teams with existing Kubernetes expertise deploy, scale, and operate a TiDB cluster using the same tooling they use for other workloads. Adding compute or storage means adding nodes; the operator handles data rebalancing.\n\nOceanBase provides ob-operator for Kubernetes deployment, and OceanBase Cloud is available on AWS, GCP, Huawei Cloud, Alibaba Cloud, and Azure. The operator supports deployment, scaling, and management of OceanBase clusters, and it has matured since its initial release. For teams already in the Alibaba Cloud or Huawei Cloud ecosystems, OceanBase Cloud integration is more native.\n\n### Multi-Cloud and Deployment Flexibility\n\nTiDB Cloud runs on AWS, GCP, and Azure in two modes. TiDB Dedicated provides fully managed clusters for production workloads: cluster operations, backups, monitoring, and version upgrades are handled by the service. TiDB Serverless provides consumption-based, elastic scaling with no minimum commitment. It scales to zero when idle and scales up automatically under load. For AI teams and early-stage products, that model removes the infrastructure provisioning step entirely. For self-managed deployments, TiDB Operator supports any Kubernetes environment including on-premises clusters, giving platform teams full control over data residency and cloud vendor selection.\n\nOceanBase Cloud provides managed deployments on multiple clouds with cross-cloud active-active and primary-standby high-availability architectures. Self-managed on-premises deployment is well-established, given OceanBase's origins in large-scale enterprise data centers. The operational overhead is lower for teams already familiar with zone-based database management. The serverless and elastic-scaling options available in TiDB Cloud do not have a direct equivalent in OceanBase's current managed offering.\n\n### Operations and Scaling Over Time\n\nTiDB's compute-storage separation means day-two operations involve four component types: TiDB Server, PD, TiKV, and optionally TiFlash, each with independent scaling and configuration. TiDB Operator automates the mechanics, but the operational model requires understanding each tier's role and capacity drivers.\n\nOceanBase's integrated OBServer model reduces component count but couples compute and storage scaling. Zone-based deployment requires at least three zones for standard high availability, which sets a minimum cluster footprint that may exceed what teams need for development or staging environments.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-2",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "See how TiDB's Kubernetes-native operations and HTAP architecture fit your platform.",
+        "primaryCta": {
+          "text": "Explore TiDB",
+          "href": "https://www.pingcap.com/tidb/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22184957/1000011432.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-2",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## What Should Buyers Know About Governance, Support, and Ecosystem Maturity?\n\nThe practical question is not which project has more stars. It is how much independent expertise, tooling, and documentation exists outside the vendor's own team when something breaks at 2 AM. On that measure, TiDB and OceanBase are not equal, and the gap matters more to some teams than others.\n\n### Open-Source Momentum and Community Signals\n\nTiDB has been open source under Apache 2.0 since 2015. The GitHub repository has over 39,900 stars and more than 1,200 contributors across North America, Europe, and Asia. TiKV graduated from the CNCF in September 2020, making it one of the few database storage layers to achieve that level of independent community validation. The surrounding toolchain, TiDB Operator, TiDB Data Migration, TiCDC, and TiUP, is documented in English, maintained publicly, and backed by a contributor base that spans multiple continents and companies. Stack Overflow answers, independent runbooks, and third-party blog posts exist in volume because the community has had a decade to produce them.\n\nThat breadth has a practical consequence. When something breaks at 2 AM, a globally distributed open-source community is more likely to have seen your specific failure mode than a community concentrated in one region and deployment context.\n\nOceanBase was open-sourced in June 2021 under the Mulan Public License v2, with approximately 10,000 GitHub stars and over 315 reported contributors. Its community is concentrated in Asia-Pacific enterprise and financial deployments. English-language community content, independent tutorials, and third-party tooling integrations are thinner than TiDB's. For teams operating primarily in those ecosystems with direct vendor support, that gap is manageable. For teams outside that context who rely on community-sourced answers and independent documentation, it is a real operational consideration.\n\n### Enterprise Support and Documentation Depth\n\nBoth platforms provide SLA-backed enterprise support. TiDB enterprise support covers self-managed deployments and TiDB Cloud. OceanBase covers its Enterprise Edition and OceanBase Cloud tiers. TiDB's English-language documentation covers architecture, operations, performance tuning, and migration in depth. OceanBase's English documentation has improved materially since 2021, though Chinese-language materials remain more extensive for advanced topics.\n\nOceanBase received Honorable Mention in the Gartner Magic Quadrant for Cloud DBMS in 2023 and 2024, and was named a Challenger in the Forrester Wave Q4 2024 report. Confirm current G2, Gartner Peer Insights, and PeerSpot scores directly before citing them. These figures change with each review cycle.\n\n## How Should Buyers Compare Pricing Models and Total Cost?\n\nNeither TiDB nor OceanBase publishes standard per-node or per-vCPU list pricing for self-managed enterprise deployments. Compare pricing models and request quotes directly for your specific workload.\n\n### Infrastructure and Operating Costs\n\n| Cost Area | TiDB Considerations | OceanBase Considerations |\n|---|---|---|\n| **Infrastructure** | TiDB Server, PD, and TiKV are required; TiFlash is optional and adds cost; compute and storage scale independently | Minimum three zones for standard HA; integrated compute-storage per node raises the minimum footprint |\n| **Analytics consolidation** | TiFlash can replace a separate data warehouse for real-time workloads; net saving depends on the incumbent analytics stack | AP capabilities added in V4.3; complex warehouse workloads may still require a separate system |\n| **Support** | Enterprise support; included in TiDB Cloud tiers | OceanBase enterprise support; included in OceanBase Cloud tiers |\n| **Staffing** | Requires Kubernetes familiarity; four component types each need capacity planning expertise | Fewer component types; zone-based model is more approachable without container expertise |\n| **Operational complexity** | TiDB Operator automates lifecycle management; complexity shifts to Kubernetes configuration and multi-tier observability | OBProxy and OBServer model is simpler to operate at steady state; OceanBase Cloud reduces this further |\n*Table 2: Infrastructure and operating cost considerations for TiDB and OceanBase.*\n\n### When a Unified HTAP Stack Changes Total Cost\n\nThe calculation shifts materially when TiFlash eliminates a separate data warehouse and its associated CDC pipeline. If your team currently runs MySQL for transactions and a warehouse for reporting, the comparison is TiDB's total cost against the combined cost of both systems. Consolidation favors TiDB when TiFlash's MPP engine meets your query requirements. Large aggregations and complex multi-join workloads that benefit from dedicated warehouse optimization may still justify a separate system, run the comparison against your actual query patterns before assuming consolidation holds.\n\n## Checklist: When Should You Choose TiDB vs OceanBase?\n\nMost evaluations come down to three variables: migration source, workload mix, and operational platform. The items below map each to a concrete fit. If more than one applies, weigh the one that represents your hardest constraint. That is the one that will cost you most to get wrong.\n\n### Choose TiDB if\n\n- **Your workload mixes OLTP and real-time analytics on the same data.** TiDB's TiFlash columnar engine replicates from TiKV in real time with no ETL step. This is TiDB's primary architectural advantage and the scenario it was built for.\n- **You are modernizing a sharded MySQL architecture.** TiDB is wire-compatible with MySQL and provides transparent horizontal scaling without application-layer sharding logic. TiDB Data Migration handles replication from existing sharded MySQL instances.\n- **Your platform team runs Kubernetes and wants operational consistency.** TiDB Operator provides full lifecycle management through Kubernetes primitives. Teams that already manage stateful workloads through Kubernetes operators gain a consistent operational model for the database tier without hiring specialist DBA support.\n- **Ecosystem breadth and cloud portability matter more than peak specialization.** If your workload does not have a hard fintech-grade OLTP requirement or an Oracle dependency, TiDB's broader global community, multi-cloud managed service on AWS, GCP, and Azure, and CNCF-graduated storage layer make it the lower-friction choice for teams that want reliable distributed SQL without building around a narrow performance ceiling.\n- **You are building a multi-tenant SaaS platform on cloud-native infrastructure.** TiDB's Kubernetes-native deployment and horizontal scaling model fit teams that need the database to grow with the product, not ahead of it.\n\n### Choose OceanBase if\n\n- **You are replacing Oracle and need PL/SQL compatibility.** OceanBase's Oracle-mode tenant supports PL/SQL, stored procedures, Oracle data types, and Oracle system views in a single cluster alongside MySQL-mode tenants. No other distributed SQL database covers this compatibility surface as completely.\n- **Your primary workload is fintech-grade OLTP at extreme concurrency.** OceanBase's TPC-C benchmark record and production track record at Alipay (61 million QPS peak in 2023) reflect a system built for sustained transactional throughput under peak financial load.\n- **Your workload requires hard multi-tenant resource isolation in a single cluster.** OceanBase's native multi-tenancy enforces CPU, IOPS, disk, and memory quotas per tenant at the database level, which maps directly to enterprise consolidation and SaaS scenarios with strict isolation requirements.\n- **You operate primarily in Alibaba Cloud, Huawei Cloud, or a Chinese cloud ecosystem.** OceanBase Cloud's integrations and enterprise support are deepest in these environments.\n\n## Where TiDB Fits When the Combined Problem Is Scale, Analytics, and Availability\n\nTiDB's case is straightforward. One system handles transactions and analytics on the same data, scales horizontally without application-layer sharding, and runs on Kubernetes with the same tooling a platform team already uses for everything else. MySQL compatibility means the migration path from an existing stack is direct, application code, drivers, and tooling carry over without rewriting.\n\nHigh availability is structural, not configured. Multi-Raft consensus replicates data to three nodes by default, and the cluster self-heals on node failure without operator intervention. For teams that have managed manual failover on a primary-replica MySQL setup, that difference in operational posture is significant.\n\nTrip.com's hotel settlement platform is the clearest production illustration. The business required multi-dimensional range calculations across supplier, hotel, and user records at around 8 TB of data, a workload that did not fit a single sharding key and needed both transactional writes and analytical queries on the same live data. TiDB replaced a fragmented SQL Server and sharded MySQL architecture and handled all three business dimensions in a single system, eliminating the settlement lag that a warehouse-based approach would have introduced. The full account is in the [real-time data processing case study](https://www.pingcap.com/case-study/trip-com-boosts-real-time-data-processing-and-financial-settlement-with-tidb/).\n\n### A Practical Fit for Modern Distributed SQL Adoption\n\nTiDB fits best when the problem is not a single bottleneck but a combination: MySQL that cannot scale further, analytics that lag behind transactions, and a platform team that needs the database to behave like the rest of its Kubernetes infrastructure. It does not require specialist DBA expertise to operate, and it does not require choosing between transactional performance and analytical freshness. For teams also evaluating CockroachDB, the [CockroachDB vs TiDB comparison](https://www.pingcap.com/compare/cockroachdb-vs-tidb/) covers where the architectural and operational tradeoffs differ. For a broader view on AI-ready data infrastructure, see the [best vector database for AI](https://www.pingcap.com/compare/best-vector-database/) comparison.\n\n## How to Evaluate TiDB Against Your Own Workload\n\nTiDB suits teams modernizing MySQL at scale, running mixed OLTP and analytical workloads, or building cloud-native data infrastructure that needs to grow without manual sharding or separate analytical pipelines. OceanBase is the stronger choice when Oracle replacement is the primary requirement or when peak OLTP throughput at financial scale is the defining constraint.\n\nEvaluate TiDB as your distributed SQL database against your own data and query patterns. TiDB Cloud provides a managed environment where you can test your workload without infrastructure setup.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-3",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "TiDB Cloud provides a managed environment where you can test your workload without infrastructure setup.",
+        "primaryCta": {
+          "text": "Start Evaluating TiDB Against Your Workload",
+          "href": "https://www.pingcap.com/pricing/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22211020/1000011435.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-3",
+      "type": "richTextBlock",
+      "props": {
+        "content": "\n*Nivanya M is a Content Marketing Manager at TiDB, specializing in technical content, customer stories, and thought leadership for distributed database and AI infrastructure audiences. She has prior experience in B2B SaaS content strategy and performance marketing.*\n\n*Ivan Chandra is a Senior Solutions Architect at PingCAP, with prior roles at Amazon Web Services and Oracle. He specializes in cloud architecture, distributed data systems, and enterprise solution design.*\n\n*This comparison was developed by reviewing official TiDB and OceanBase documentation, public technical materials from the CNCF, and customer case studies. All benchmark figures and product capabilities should be verified against current vendor documentation before use in procurement or evaluation materials.*",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "TiDB vs OceanBase FAQs",
+        "items": [
+          {
+            "q": "Is TiDB or OceanBase Better for HTAP Workloads?",
+            "a": "TiDB is the stronger choice. TiFlash replicates from TiKV in real time and provides an MPP execution engine for analytical queries. The query optimizer routes to TiKV or TiFlash automatically; applications do not manage which engine handles each query. OceanBase added row-to-column storage conversion in V4.3, but its design center remains OLTP. For teams that need real-time analytics on live transactional data with no ETL pipeline, TiDB's HTAP architecture is more mature."
+          },
+          {
+            "q": "Is OceanBase Better for Oracle Replacement?",
+            "a": "Yes, for most Oracle replacement scenarios. OceanBase's Oracle-compatible tenant supports PL/SQL, stored procedures, Oracle data types, and Oracle system views. A single cluster hosts Oracle-mode and MySQL-mode tenants simultaneously, enabling incremental migration without running separate clusters. TiDB does not support Oracle compatibility. An Oracle-to-TiDB migration requires converting PL/SQL and Oracle-specific constructs to MySQL-compatible equivalents before migration begins. If Oracle is your source, OceanBase resolves the largest migration risk."
+          },
+          {
+            "q": "Which Database Is Easier to Operate in Kubernetes?",
+            "a": "TiDB. TiDB Operator, open-sourced in 2018, manages the full cluster lifecycle using standard Kubernetes primitives: Pods, StatefulSets, PersistentVolumes, and Helm charts. TiKV's CNCF graduation gives the storage layer external validation. OceanBase's ob-operator is functional for production use but younger, with a smaller Kubernetes community footprint. For platform teams whose infrastructure is already Kubernetes-native, TiDB's operator ecosystem and documentation depth make it the lower-friction choice."
+          },
+          {
+            "q": "Are TiDB and OceanBase Both MySQL Compatible?",
+            "a": "Both offer strong MySQL compatibility. TiDB is wire-compatible with MySQL 5.7 and 8.0 protocols; applications connect on port 4000 using standard MySQL drivers without modification. OceanBase's MySQL-compatible tenant mode supports MySQL 5.7 and 8.0 syntax and also the MySQL Binlog protocol for downstream CDC integration. Workloads that rely on MySQL-specific stored procedures or proprietary extensions should validate compatibility against each platform's documented compatibility matrix before migrating."
+          },
+          {
+            "q": "When Should a Team Choose TiDB Over OceanBase?",
+            "a": "Choose TiDB when the workload mixes OLTP and real-time analytics on the same data, when you are modernizing a sharded MySQL architecture, or when Kubernetes-native operations are a platform requirement. Choose OceanBase when Oracle replacement with PL/SQL compatibility is the primary driver, when peak OLTP throughput at financial scale is the defining constraint, or when your team operates primarily in Alibaba Cloud or Huawei Cloud environments."
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    }
+  ]
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}
