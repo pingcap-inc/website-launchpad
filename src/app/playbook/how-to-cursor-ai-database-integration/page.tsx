@@ -333,17 +333,36 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "pre-3",
-      "type": "richTextBlock",
+      "id": "faq-1780555052895",
+      "type": "faq",
       "props": {
-        "content": "## Cursor AI Database Integration FAQs\n\n### Can Cursor connect to TiDB directly?\n\nCursor connects to TiDB through the TiDB MCP Server, a local process that handles schema introspection and query execution on Cursor's behalf. There is no direct database connector built into Cursor. TiDB Cloud simplifies the setup by providing connection strings, CA certificates, and IP allowlisting from one console. Self-managed TiDB clusters use the same MCP configuration but require independent cert distribution and network access management.\n\n### What is MCP in Cursor?\n\nMCP (Model Context Protocol) is the open standard that defines how Cursor invokes external tools and injects their results into the model context before generating a response. An MCP server is a local process Cursor spawns on demand. For database integration, the MCP server handles the connection to TiDB, retrieves schema metadata or query results, and returns structured data that Cursor appends to the prompt. The model never has direct database access. All queries go through the MCP server process and are bounded by the database user's permissions.\n\n### Is it safe to give Cursor access to a live database?\n\nSafe with the right controls in place. Use a dedicated database user with SELECT-only permissions. Never use the admin credential, and never grant DROP, DELETE, or DDL rights, even on a dev cluster. Schema metadata goes into the model context and is transmitted to Cursor's model provider, so teams with sensitive column names or regulated schemas should connect against a sanitized read replica. Keep the connection pointed at a development or staging cluster during active AI-assisted development, and review every generated query before executing it in production.\n\n### How long does it take to connect TiDB to Cursor?\n\nUnder 30 minutes for a first-time TiDB Cloud setup from cluster creation to a working AI-assisted query. The steps that actually take time are creating and verifying the database user, downloading the CA certificate and setting the correct path, and adding your machine's IP to the TiDB Cloud allowlist. The MCP config itself is a handful of environment variable entries. Self-managed cluster setups take longer because network access and certificate management are not automated.\n\n### Can Cursor help write SQL for TiDB?\n\nYes, and the quality of the output is meaningfully higher with the MCP server connected than without it. With live schema access, Cursor generates SQL with your actual column names, data types, and foreign key relationships rather than inferred or hallucinated ones. TiDB's MySQL compatibility means that SQL works without dialect adjustment for teams on MySQL drivers. That said, review generated queries before production execution. Correct schema context does not eliminate logical errors in JOIN conditions, filter clauses, or aggregation keys.",
-        "className": "rich-text-block--raw-source"
+        "title": "Cursor AI Database Integration FAQs",
+        "items": [
+          {
+            "q": "Can Cursor connect to TiDB directly?",
+            "a": "Cursor connects to TiDB through the TiDB MCP Server, a local process that handles schema introspection and query execution on Cursor's behalf. There is no direct database connector built into Cursor. TiDB Cloud simplifies the setup by providing connection strings, CA certificates, and IP allowlisting from one console. Self-managed TiDB clusters use the same MCP configuration but require independent cert distribution and network access management."
+          },
+          {
+            "q": "What is MCP in Cursor?",
+            "a": "MCP (Model Context Protocol) is the open standard that defines how Cursor invokes external tools and injects their results into the model context before generating a response. An MCP server is a local process Cursor spawns on demand. For database integration, the MCP server handles the connection to TiDB, retrieves schema metadata or query results, and returns structured data that Cursor appends to the prompt. The model never has direct database access. All queries go through the MCP server process and are bounded by the database user's permissions."
+          },
+          {
+            "q": "Is it safe to give Cursor access to a live database?",
+            "a": "Safe with the right controls in place. Use a dedicated database user with SELECT-only permissions. Never use the admin credential, and never grant DROP, DELETE, or DDL rights, even on a dev cluster. Schema metadata goes into the model context and is transmitted to Cursor's model provider, so teams with sensitive column names or regulated schemas should connect against a sanitized read replica. Keep the connection pointed at a development or staging cluster during active AI-assisted development, and review every generated query before executing it in production."
+          },
+          {
+            "q": "How long does it take to connect TiDB to Cursor?",
+            "a": "Under 30 minutes for a first-time TiDB Cloud setup from cluster creation to a working AI-assisted query. The steps that actually take time are creating and verifying the database user, downloading the CA certificate and setting the correct path, and adding your machine's IP to the TiDB Cloud allowlist. The MCP config itself is a handful of environment variable entries. Self-managed cluster setups take longer because network access and certificate management are not automated."
+          },
+          {
+            "q": "Can Cursor help write SQL for TiDB?",
+            "a": "Yes, and the quality of the output is meaningfully higher with the MCP server connected than without it. With live schema access, Cursor generates SQL with your actual column names, data types, and foreign key relationships rather than inferred or hallucinated ones. TiDB's MySQL compatibility means that SQL works without dialect adjustment for teams on MySQL drivers. That said, review generated queries before production execution. Correct schema context does not eliminate logical errors in JOIN conditions, filter clauses, or aggregation keys."
+          }
+        ]
       },
       "style": {
-        "background": "none",
-        "spacing": "section",
-        "removePaddingTop": true,
-        "removePaddingBottom": true
+        "background": "gradient-dark-bottom",
+        "spacing": "section"
       }
     }
   ]
