@@ -361,8 +361,8 @@ const dsl: PageDSL = {
         ]
       },
       "style": {
-        "background": "gradient-dark-bottom",
-        "spacing": "section"
+        "background": "primary",
+        "spacing": "sm"
       }
     }
   ]
