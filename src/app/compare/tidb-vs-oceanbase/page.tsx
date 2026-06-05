@@ -369,7 +369,7 @@ const dsl: PageDSL = {
       },
       "style": {
         "background": "none",
-        "spacing": "section",
+        "spacing": "sm",
         "removePaddingBottom": true
       }
     },

@@ -327,7 +327,7 @@
       },
       "style": {
         "background": "none",
-        "spacing": "section",
+        "spacing": "sm",
         "removePaddingBottom": true
       }
     },
