@@ -23,7 +23,8 @@ const footerNav = [
     links: [
       { label: 'Integrations', href: 'https://www.pingcap.com/integrations/' },
       { label: 'TiKV', href: 'https://github.com/tikv/tikv' },
-      { label: 'TiSpark', href: 'https://github.com/pingcap/tispark' },
+      { label: 'mem9', href: 'https://mem9.ai/' },
+      { label: 'drive9', href: 'https://drive9.ai/' },
       { label: 'OSS Insight', href: 'https://ossinsight.io/' },
     ],
   },
