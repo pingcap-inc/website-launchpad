@@ -520,6 +520,7 @@
   display: block;
   max-width: 100%;
   height: auto;
+  margin: auto;
 }
 .rich-text-block .rt-inline-image {
   margin: 1rem 0;
@@ -581,7 +582,7 @@
 }
 .rich-text-block strong {
   color: #000;
-  font-weight: 500;
+  font-weight: 700;
 }
 .rich-text-block em {
   font-style: italic;
