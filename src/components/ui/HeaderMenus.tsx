@@ -138,8 +138,8 @@ const dropdowns: NavDropdown[] = [
         items: [
           { label: 'Integrations', href: 'https://www.pingcap.com/integrations/', icon: GearIcon },
           { label: 'TiKV', href: 'https://github.com/tikv/tikv', icon: SlidersIcon },
-          { label: 'mem9', href: 'https://github.com/mem9-ai/mem9', icon: cashIcon },
-          { label: 'drive9', href: 'https://github.com/mem9-ai/drive9', icon: WalletTIcon },
+          { label: 'mem9', href: 'https://mem9.ai/', icon: cashIcon },
+          { label: 'drive9', href: 'https://drive9.ai/', icon: WalletTIcon },
           { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
         ],
       },
