@@ -60,6 +60,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/playbook/embed-vector-db-build-rag/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/playbook/escape-mysql-sharding-pain/', priority: 0.7, changeFrequency: 'monthly' },
     {
+      url: '/playbook/how-to-cursor-ai-database-integration/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    {
       url: '/playbook/noisy-neighbor-multi-tenant-mysql/',
       priority: 0.7,
       changeFrequency: 'monthly',
