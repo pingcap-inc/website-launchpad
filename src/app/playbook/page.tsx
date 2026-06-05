@@ -127,6 +127,16 @@ const dsl: PageDSL = {
               "href": "/playbook/vibe-coding-tech-stack-guide/"
             },
             "layout": "vertical"
+          },
+          {
+            "icon": "Settings",
+            "title": "Connect Cursor to a Live Database Without Breaking Things",
+            "description": "AI coding assistants hallucinate schema. MCP fixes that by giving Cursor live access to your tables, types, and relationships before it generates a query. This covers the full setup path for TiDB, the trust model, and what to review before any generated SQL touches production.",
+            "cta": {
+              "text": "Read the playbook",
+              "href": "/playbook/how-to-cursor-ai-database-integration"
+            },
+            "layout": "vertical"
           }
         ],
         "columns": 2
