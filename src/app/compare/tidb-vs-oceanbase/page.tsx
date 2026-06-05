@@ -56,14 +56,14 @@ const dsl: PageDSL = {
         "headline": "TiDB vs OceanBase: How to Choose the Right Distributed SQL Database",
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/51aea1f3-group_1000011300_2x.png",
-            "alt": "group 1000011300 2x",
-            "width": 720,
-            "height": 590
+            "url": "https://static.pingcap.com/images/16339302-1000011604.svg",
+            "alt": "1000011604",
+            "width": 590,
+            "height": 450
           },
-          "alt": "group 1000011300 2x",
-          "width": 720,
-          "height": 590
+          "alt": "1000011604",
+          "width": 400,
+          "height": 450
         }
       },
       "style": {
@@ -370,7 +370,6 @@ const dsl: PageDSL = {
       "style": {
         "background": "none",
         "spacing": "section",
-        "removePaddingTop": true,
         "removePaddingBottom": true
       }
     },
