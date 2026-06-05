@@ -520,6 +520,7 @@
   display: block;
   max-width: 100%;
   height: auto;
+  margin: auto;
 }
 .rich-text-block .rt-inline-image {
   margin: 1rem 0;
