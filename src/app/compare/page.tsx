@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
+import { buildPageSchema } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -147,6 +147,15 @@ const dsl: PageDSL = {
               "href": "https://www.pingcap.com/compare/vitess-vs-tidb/"
             },
             "layout": "vertical"
+          },
+          {
+            "title": "TiDB vs OceanBase",
+            "description": "Two distributed SQL databases, different design centers. OceanBase for peak OLTP and Oracle replacement. TiDB when you need transactions and real-time analytics on the same data.",
+            "cta": {
+              "text": "Compare",
+              "href": "https://www.pingcap.com/compare/tidb-vs-oceanbase/"
+            },
+            "layout": "vertical"
           }
         ],
         "columns": 2,
@@ -193,6 +202,12 @@ const dsl: PageDSL = {
             "title": "Best Database for AI Applications",
             "description": "A practical comparison of 10 databases for RAG pipelines, vector search, and real-time AI workloads. Covers SQL support, ACID compliance, scalability, and when to use a unified platform vs. purpose-built tools.",
             "href": "https://www.pingcap.com/compare/best-database-building-ai-apps/"
+          },
+          {
+            "icon": "Package",
+            "title": "Best MySQL-Compatible Databases",
+            "description": "MySQL compatibility doesn't mean MySQL behavior. Covers forks, managed services, sharding tools, and distributed SQL and what each one costs you at scale.",
+            "href": "pingcap.com/compare/mysql-compatible-database"
           }
         ],
         "columns": 2,
@@ -321,7 +336,7 @@ const dsl: PageDSL = {
 export default function GeneratedPage() {
   return (
     <>
-      <JsonLd data={withFaqFromDSL(schema, dsl)} />
+      <JsonLd data={schema} />
       <PageRenderer dsl={dsl} withChrome />
     </>
   )
