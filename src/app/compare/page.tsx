@@ -227,7 +227,7 @@ const dsl: PageDSL = {
             title: 'Best MySQL-Compatible Databases',
             description:
               "MySQL compatibility doesn't mean MySQL behavior. Covers forks, managed services, sharding tools, and distributed SQL and what each one costs you at scale.",
-            href: 'pingcap.com/compare/mysql-compatible-database',
+            href: '/compare/mysql-compatible-database',
           },
         ],
         columns: 2,
