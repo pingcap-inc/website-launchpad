@@ -1,0 +1,354 @@
+{
+  "pageName": "7 Best MySQL-Compatible Databases for Modern Workloads",
+  "meta": {
+    "title": "Best MySQL-Compatible Databases in 2026 - TiDB",
+    "description": "Compare the best mysql compatible database options for scale, analytics, and operations. See which tools fit MySQL teams in 2026.",
+    "canonical": "/compare/mysql-compatible-database/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "7 Best MySQL-Compatible Databases for Modern Workloads",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/dd0669e1-clip_path_group.png",
+            "alt": "clip path group",
+            "width": 720,
+            "height": 664
+          },
+          "alt": "clip path group",
+          "width": 720,
+          "height": 664
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "key-takeaways",
+            "label": "Key Takeaways",
+            "level": 1
+          },
+          {
+            "id": "quick-answer-which-mysql-compatible-database-is-best-for-your-use-case",
+            "label": "Quick Answer: Which MySQL-Compatible Database Is Best for Your Use Case?",
+            "level": 1
+          },
+          {
+            "id": "compare-the-best-mysql-compatible-databases-at-a-glance",
+            "label": "Compare the Best MySQL-Compatible Databases at a Glance",
+            "level": 1
+          },
+          {
+            "id": "how-should-you-read-this-mysql-compatible-database-table",
+            "label": "How Should You Read This MySQL-Compatible Database Table?",
+            "level": 1
+          },
+          {
+            "id": "what-framework-makes-one-mysql-compatible-database-better-than-another",
+            "label": "What Framework Makes One MySQL-Compatible Database Better Than Another?",
+            "level": 1
+          },
+          {
+            "id": "compatibility-depth",
+            "label": "Compatibility Depth",
+            "level": 2
+          },
+          {
+            "id": "scaling-path",
+            "label": "Scaling Path",
+            "level": 2
+          },
+          {
+            "id": "workload-breadth",
+            "label": "Workload Breadth",
+            "level": 2
+          },
+          {
+            "id": "how-we-chose-the-best-mysql-compatible-databases",
+            "label": "How We Chose the Best MySQL-Compatible Databases",
+            "level": 1
+          },
+          {
+            "id": "how-should-you-benchmark-a-mysql-compatible-database-for-your-workload",
+            "label": "How Should You Benchmark a MySQL-Compatible Database for Your Workload?",
+            "level": 1
+          },
+          {
+            "id": "define-your-production-like-workload",
+            "label": "Define Your Production-Like Workload",
+            "level": 2
+          },
+          {
+            "id": "measure-performance-and-failure-behavior",
+            "label": "Measure Performance and Failure Behavior",
+            "level": 2
+          },
+          {
+            "id": "compare-operational-cost-and-complexity",
+            "label": "Compare Operational Cost and Complexity",
+            "level": 2
+          },
+          {
+            "id": "best-mysql-compatible-databases-reviewed",
+            "label": "Best MySQL-Compatible Databases Reviewed",
+            "level": 1
+          },
+          {
+            "id": "mariadb",
+            "label": "MariaDB",
+            "level": 2
+          },
+          {
+            "id": "percona-server-for-mysql",
+            "label": "Percona Server for MySQL",
+            "level": 2
+          },
+          {
+            "id": "amazon-aurora-mysql",
+            "label": "Amazon Aurora MySQL",
+            "level": 2
+          },
+          {
+            "id": "google-cloud-sql-for-mysql",
+            "label": "Google Cloud SQL for MySQL",
+            "level": 2
+          },
+          {
+            "id": "tidb",
+            "label": "TiDB",
+            "level": 2
+          },
+          {
+            "id": "vitess",
+            "label": "Vitess",
+            "level": 2
+          },
+          {
+            "id": "planetscale",
+            "label": "PlanetScale",
+            "level": 2
+          },
+          {
+            "id": "when-is-tidb-the-best-mysql-compatible-database",
+            "label": "When Is TiDB the Best MySQL-Compatible Database?",
+            "level": 1
+          },
+          {
+            "id": "best-for-scaling-mysql-without-manual-sharding",
+            "label": "Best for Scaling MySQL Without Manual Sharding",
+            "level": 2
+          },
+          {
+            "id": "best-for-mixed-transactional-and-analytical-workloads",
+            "label": "Best for Mixed Transactional and Analytical Workloads",
+            "level": 2
+          },
+          {
+            "id": "best-for-teams-that-want-simpler-operations",
+            "label": "Best for Teams That Want Simpler Operations",
+            "level": 2
+          },
+          {
+            "id": "how-do-you-choose-the-right-mysql-compatible-database",
+            "label": "How Do You Choose the Right MySQL-Compatible Database?",
+            "level": 1
+          },
+          {
+            "id": "step-1-define-your-migration-and-usage-goals",
+            "label": "Step 1: Define Your Migration and Usage Goals",
+            "level": 2
+          },
+          {
+            "id": "step-2-match-requirements-to-architecture",
+            "label": "Step 2: Match Requirements to Architecture",
+            "level": 2
+          },
+          {
+            "id": "step-3-plan-for-growth-and-operations",
+            "label": "Step 3: Plan for Growth and Operations",
+            "level": 2
+          },
+          {
+            "id": "step-4-validate-ecosystem-and-support-needs",
+            "label": "Step 4: Validate Ecosystem and Support Needs",
+            "level": 2
+          },
+          {
+            "id": "what-architecture-patterns-work-best-with-a-mysql-compatible-database",
+            "label": "What Architecture Patterns Work Best with a MySQL-Compatible Database?",
+            "level": 1
+          },
+          {
+            "id": "drop-in-replacement-pattern",
+            "label": "Drop-In Replacement Pattern",
+            "level": 2
+          },
+          {
+            "id": "managed-mysql-pattern",
+            "label": "Managed MySQL Pattern",
+            "level": 2
+          },
+          {
+            "id": "distributed-sql-consolidation-pattern",
+            "label": "Distributed SQL Consolidation Pattern",
+            "level": 2
+          },
+          {
+            "id": "ready-to-modernize-beyond-traditional-mysql-limits",
+            "label": "Ready to Modernize Beyond Traditional MySQL Limits?",
+            "level": 1
+          },
+          {
+            "id": "faq",
+            "label": "MySQL-Compatible Database FAQs",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "**Updated June 2026 | Author: Akshata Hire, Product Marketing Lead | Reviewed by: Ravish Patel, Solutions Engineer**\n\nRunning MySQL at scale eventually forces a choice: shard it, offload analytics, or migrate. Each path adds complexity that teams spend years managing. A MySQL-compatible database is a system that accepts the MySQL wire protocol, SQL syntax, connectors, and common client tools, letting teams keep existing application code while the database handles more of the hard operational work.\n\nThis list is for software architects, senior engineers, and database teams evaluating their options after running into the limits of standard MySQL, Aurora, or RDS. If your app uses MySQL drivers and your team is comparing forks, managed services, sharding middleware, and distributed SQL databases, this guide maps each option to the workloads and trade-offs it actually fits.\n\nOne thing worth saying plainly: the database most compatible with MySQL is not always the right database. Some teams need a drop-in replacement with minimal migration effort. Others need horizontal scale, high availability across regions, or mixed transactional and analytical workloads. Those are different problems, and they have different answers.\n\n*Conflict disclosure: PingCAP, the publisher of this article, is also the company behind TiDB. TiDB appears on this list because it meets the evaluation criteria applied to every option here, not because it is the publisher's product.*\n\n## Key Takeaways\n\n- MySQL compatibility is a spectrum, not a yes/no label. Forks like MariaDB offer near-identical behavior, while distributed systems like TiDB support the MySQL protocol with some documented differences.\n- The closest MySQL drop-in is rarely the best long-term choice. Teams hitting sharding limits, replication lag, or read-replica sprawl often need a different architecture, not a tighter fork.\n- TiDB handles OLTP and real-time OLAP in one system, removing the need to maintain a separate analytics pipeline on fresh transactional data.\n- Managed MySQL services (Amazon Aurora, Google Cloud SQL) reduce operational overhead, but they inherit single-writer scaling limits and require manual sharding when data volumes grow.\n- Sharding-first tools like Vitess and PlanetScale scale MySQL horizontally, but application teams still need to design around shard keys and rebalancing constraints.\n\n## Quick Answer: Which MySQL-Compatible Database Is Best for Your Use Case?\n\n:::card tone=light\n\n**Best drop-in fork:** MariaDB. Near-identical syntax and behavior, well-documented differences, active community.\n\n**Best drop-in fork with performance focus:** Percona Server for MySQL. Adds InnoDB diagnostics and performance improvements without changing MySQL behavior.\n\n**Best managed MySQL service:** Amazon Aurora MySQL. High availability, auto-scaling read replicas, and tight AWS integration.\n\n**Best managed MySQL on Google Cloud:** Google Cloud SQL for MySQL. Simple deployment for GCP-first teams.\n\n**Best for horizontal scaling with MySQL sharding:** Vitess. Used by large-scale MySQL deployments that need to scale writes across shards.\n\n**Best managed sharding-first database:** PlanetScale. Built on Vitess with a developer-friendly deployment model.\n\n**Best MySQL-compatible distributed SQL database:** [TiDB](https://www.pingcap.com/tidb/). Horizontal scaling, strong ACID consistency, high availability, and real-time OLAP on live transactional data in one system.\n\n:::\n\nJump to: [Comparison table](#compare-the-best-mysql-compatible-databases-at-a-glance) | [Framework](#what-framework-makes-one-mysql-compatible-database-better-than-another) | [How we chose](#how-we-chose-the-best-mysql-compatible-databases) | [Benchmark guide](#how-should-you-benchmark-a-mysql-compatible-database-for-your-workload) | [In-depth reviews](#best-mysql-compatible-databases-reviewed) | [How to choose](#how-do-you-choose-the-right-mysql-compatible-database) | [FAQs](#mysql-compatible-database-faqs) | [Next steps](#ready-to-modernize-beyond-traditional-mysql-limits)",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-1",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Ready to see how TiDB fits your MySQL migration?",
+        "primaryCta": {
+          "text": "MySQL compatible distributed SQL database",
+          "href": "https://www.pingcap.com/solutions/modernize-mysql-workloads/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22092103/1000011430.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-1",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Compare the Best MySQL-Compatible Databases at a Glance\n\nUse this table to narrow the field. The columns follow the framework this article uses throughout: how deeply each database supports MySQL behavior, how it handles growth, and what workloads it fits.\n\n| Database | Best for | Compatibility depth | Scaling model | Deployment model | Key tradeoff | Getting started |\n|---|---|---|---|---|---|---|\n| MariaDB | Drop-in MySQL replacement | Very high (MySQL 5.7/8.0 syntax, some divergence) | Vertical + read replicas | Self-hosted, cloud via providers | Same single-node limits as MySQL | mariadb.com / package managers |\n| Percona Server | MySQL with InnoDB tuning | Very high (MySQL-compatible binary) | Vertical + read replicas | Self-hosted | Same scaling limits as MySQL; no built-in HA | percona.com / Percona repositories |\n| Amazon Aurora MySQL | Managed MySQL on AWS | High (MySQL 5.7/8.0 compatible) | Storage auto-scales; read replicas | AWS managed service | Proprietary storage layer; AWS lock-in | AWS Console / RDS |\n| Google Cloud SQL for MySQL | Managed MySQL on GCP | High (MySQL 5.7/8.0 compatible) | Vertical + read replicas | GCP managed service | Single-writer limit; GCP dependency | Google Cloud Console |\n| TiDB | Scale-out HTAP workloads | High (MySQL 5.7/8.0 protocol + partial 8.0 syntax) | Horizontal scale-out (automatic) | Self-hosted via TiDB Operator / TiDB Cloud | Some MySQL features unsupported; operational model differs from MySQL | tidbcloud.com / TiDB Operator |\n| Vitess | MySQL horizontal sharding | High (MySQL protocol) | Horizontal sharding via VTGate | Self-hosted (Kubernetes-native) | Application must be shard-aware; operational complexity | vitess.io |\n| PlanetScale | Managed sharding for developers | High (MySQL protocol, Vitess-based) | Horizontal sharding (managed) | SaaS / cloud-hosted | Limited foreign key support; schema changes via deploy requests | planetscale.com |\n\n*Table 1: Comparison of the best MySQL-compatible databases across compatibility depth, scaling model, deployment model, key tradeoff, and getting started resources.*\n\n## How Should You Read This MySQL-Compatible Database Table?\n\nThis table maps the three things that actually drive database decisions at scale: how the system behaves with your existing MySQL code, how it grows with your data, and what workloads it handles without adding more systems.\n\n- If your team needs near-zero migration effort and your scale fits a single writer, start with MariaDB or Percona Server. Both behave like MySQL and run on the same hardware you already have.\n- If you want to remove operational overhead without changing architecture, Aurora MySQL or Cloud SQL for MySQL handle backups, patching, and availability without significant application changes.\n- If your write volume is growing past what a single node handles, sharding-first tools like Vitess or PlanetScale extend MySQL horizontally. The cost is that your application and schema need to be designed around a shard key.\n- If you need horizontal scale, strong consistency across nodes, and the ability to run analytical queries on live data without a separate pipeline, a distributed SQL database like TiDB addresses all three in one system. The migration is not zero-effort, but the operational surface stays manageable.\n- No single tool wins every category. Teams that outgrow managed MySQL but want to avoid the complexity of sharding middleware often find distributed SQL is the cleaner long-term path.\n\n## What Framework Makes One MySQL-Compatible Database Better Than Another?\n\nEvery vendor review in this article uses the same three lenses. Understanding them before reading the reviews will make the trade-offs easier to compare.\n\n### Compatibility Depth\n\nHow much of your existing MySQL code, schema, and tooling works without changes. Deep compatibility means fewer rewrites during migration. At the top end, a binary-compatible fork like Percona Server runs standard MySQL clients and connectors without configuration. At the other end, a distributed SQL database like TiDB supports the MySQL protocol and most syntax but has documented differences, for example around certain DDL behaviors or specific MySQL-only functions. Compatibility depth matters most for teams migrating existing applications with complex stored procedures, specific SQL behaviors, or tightly coupled ORMs.\n\n### Scaling Path\n\nHow the database grows with your data. Vertical scaling means adding CPU and memory to a single node. Read replicas reduce read load but do not distribute writes. Sharding splits data across multiple nodes by a key but requires application awareness of how data is distributed. Distributed SQL manages data distribution automatically, so applications write to one endpoint and the database handles partitioning and rebalancing internally. For teams that expect write volume to grow unpredictably, the distinction between sharding and automatic distribution matters when scale events happen at inconvenient times.\n\n### Workload Breadth\n\nHow many different workload types the database handles without requiring additional systems. A standard MySQL fork handles OLTP well and needs a separate analytics layer for heavy reporting. Managed MySQL services inherit the same limit. Sharding-first tools extend OLTP scale but do not add analytical capabilities. TiDB includes TiFlash, a columnar engine that replicates data from TiKV without ETL, which means teams can run real-time, lightweight OLAP queries on live transactional data in the same cluster. This is not a replacement for dedicated analytical platforms like Snowflake or BigQuery, but for dashboard queries, usage aggregations, and cohort analysis on fresh data, it removes the need for a separate pipeline.\n\n## How We Chose the Best MySQL-Compatible Databases\n\nThis list covers the databases that come up most often in real MySQL modernization decisions. The scope includes MySQL forks, managed MySQL services, sharding-based systems, and distributed SQL databases that support the MySQL protocol.\n\nOptions were evaluated against five criteria: MySQL version support (5.7 and/or 8.0), deployment choices (self-hosted, cloud managed, or both), scaling method, analytical query support, and quality of documentation and operational tooling. Databases without meaningful MySQL protocol support were excluded. General-purpose OLAP systems and wire-protocol-compatible Postgres databases were also excluded because the comparison context is MySQL, not SQL at large.\n\nSelection criteria used for each entry:\n- MySQL version compatibility (5.7 and/or 8.0 support)\n- Production deployment options (self-hosted, fully managed, or both)\n- Horizontal scaling capability and mechanism\n- Analytical workload support\n- Documentation quality, ecosystem maturity, and community activity\n\n*Conflict disclosure: PingCAP produces this content and also builds TiDB. TiDB is included because it meets the criteria above, not because of who publishes the page.*\n\n## How Should You Benchmark a MySQL-Compatible Database for Your Workload?\n\nGeneric TPC-C numbers tell you about the database under lab conditions. What actually matters is how it behaves with your dataset, your query patterns, and your operational requirements. Here is a practical checklist.\n\n### Define Your Production-Like Workload\n\n- Use a dataset that matches your production size, including cardinality and distribution, not a sample.\n- Specify your read/write ratio and peak concurrency. A workload that is 95% reads behaves very differently from one that is 60% writes.\n- Include any analytical queries that run alongside OLTP, such as real-time dashboards, aggregations, or reporting jobs.\n- Document your schema: table sizes, index count, foreign key relationships, and any partitioning already in place.\n\n### Measure Performance and Failure Behavior\n\n- Test at multiple concurrency levels. Latency at p99 under 10 connections versus 500 connections reveals different bottlenecks.\n- Simulate a node failure and measure recovery time. For high-availability claims to matter, you need to observe actual failover behavior in your environment.\n- Measure replication lag under write load for any system that uses replication for reads.\n- For analytical queries, compare query times on the same dataset across the candidates. Include queries that mix fresh data from recent inserts.\n\n### Compare Operational Cost and Complexity\n\n- Estimate the total cost of ownership across compute, storage, and any cloud service fees for the expected data volume and traffic.\n- Test backup, restore, and encryption configuration. Time the restore process from a cold backup.\n- Evaluate the migration effort from your current setup, including schema changes, driver updates, and application code review.\n- If you are evaluating multi-region options, test actual cross-region write latency rather than relying on marketing specifications.\n\n## Best MySQL-Compatible Databases Reviewed\n\n### MariaDB\n\n**Best for:** Teams that need a MySQL drop-in replacement with an active open-source community and predictable migration path.\n\n**Why it's on the list:** MariaDB started as a community fork of MySQL 5.1 and has maintained close MySQL compatibility through multiple versions. It ships the same InnoDB storage engine, uses identical data types and SQL syntax for the most common operations, and works with standard MySQL drivers. Most MySQL 5.7 applications migrate with no code changes.\n\n**Key features:**\n- MySQL 5.7 and partial 8.0 syntax compatibility\n- Pluggable storage engines including Aria, ColumnStore (for analytics), and Spider (for sharding)\n- Galera Cluster for synchronous multi-primary replication\n- Active community and MariaDB Enterprise with commercial support\n\n**Pros:**\n- Closest behavior to MySQL for migration-sensitive applications\n- Well-documented divergence from MySQL, so teams know what to test\n- Available as a managed service through several cloud providers\n\n**Cons and tradeoffs:**\n- Inherits MySQL's single-writer architecture; write scaling still requires sharding or middleware\n- ColumnStore analytics engine is a separate add-on, not built into the default deployment\n- Some MySQL 8.0 features are absent or implemented differently\n\n**Pricing:** MariaDB Community Server is free and open source. MariaDB Enterprise requires a commercial subscription; contact MariaDB for current pricing.\n\n**Getting started:** Available through package managers (apt, yum), Docker, and the official MariaDB repositories at mariadb.com.\n\n### Percona Server for MySQL\n\n**Best for:** Database teams that run MySQL and need better InnoDB visibility, improved write throughput, and production diagnostics without changing application behavior.\n\n**Why it's on the list:** Percona Server is a binary-compatible drop-in replacement for MySQL. It adds performance improvements and observability tools, including the Percona Monitoring and Management stack, without diverging from MySQL SQL syntax or wire protocol. Teams already familiar with MySQL can deploy it with no application changes.\n\n**Key features:**\n- Binary compatibility with MySQL 8.0\n- Enhanced InnoDB metrics, adaptive hash index controls, and thread pool\n- Percona XtraDB Cluster for synchronous multi-node replication\n- Percona Monitoring and Management (PMM) for query analytics and diagnostics\n\n**Pros:**\n- Zero application changes required when replacing MySQL\n- Strong open-source tooling ecosystem for backup (XtraBackup) and monitoring\n- Well-regarded in the MySQL DBA community for production reliability\n\n**Cons and tradeoffs:**\n- Same vertical scaling limits as MySQL; no native horizontal write scaling\n- High-availability clustering via XtraDB Cluster adds operational complexity\n- No built-in analytical workload support\n\n**Pricing:** Percona Server for MySQL is open source and free. Percona offers paid enterprise support and managed services; see percona.com for current plans.\n\n**Getting started:** Available from Percona repositories at percona.com and compatible with standard MySQL tooling.\n\n### Amazon Aurora MySQL\n\n**Best for:** Teams running on AWS that need managed high availability, automatic storage scaling, and read replica performance without managing a MySQL cluster themselves.\n\n**Why it's on the list:** Aurora MySQL reimplements MySQL storage on a distributed, SSD-backed layer that automatically scales up to 256 TiB, replicates six copies across three availability zones, and fails over in seconds. It is compatible with MySQL 5.7 and 8.0 and works with existing MySQL drivers and tools. The trade-off is that the storage layer is proprietary and the service is AWS-only.\n\n**Key features:**\n- MySQL 5.7 and 8.0 compatibility\n- Auto-scaling storage up to 256 TiB with six-way replication\n- Up to 15 read replicas with sub-10ms replica lag\n- Aurora Serverless v2 for auto-scaling compute capacity\n\n**Pros:**\n- High availability without manual cluster management\n- Tight integration with AWS services (IAM, Secrets Manager, CloudWatch)\n- Familiar MySQL interface for teams already on AWS\n\n**Cons and tradeoffs:**\n- Proprietary storage layer means limited portability outside AWS\n- Write scaling requires application-level sharding; single writer per cluster is the default. Aurora Global Database supports cross-region reads and disaster recovery, not write scaling.\n- Costs increase significantly at high storage and request volumes\n\n**Pricing:** Billed per ACU (Aurora Capacity Unit) for Serverless v2, or per instance hour and storage for provisioned clusters. See the AWS pricing page for current rates.\n\n**Getting started:** Available through the AWS Management Console, AWS CLI, or infrastructure-as-code tools like Terraform and CloudFormation.\n\n### Google Cloud SQL for MySQL\n\n**Best for:** GCP-first teams that need managed MySQL without the operational overhead of running their own database servers.\n\n**Why it's on the list:** Cloud SQL for MySQL is a fully managed service that supports MySQL 5.7 and 8.0, handles patching and backups automatically, and integrates with GCP's identity and monitoring stack. It is the straightforward choice for teams already building on GCP who do not want to manage MySQL infrastructure.\n\n**Key features:**\n- MySQL 5.7 and 8.0 support\n- Automated backups, point-in-time recovery, and maintenance windows\n- Read replicas and high availability with automatic failover\n- Integration with Cloud IAM, Cloud Logging, and Cloud Monitoring\n\n**Pros:**\n- No infrastructure management; patching and backups are automatic\n- Private IP connectivity and VPC integration for security-sensitive workloads\n- Simple provisioning from the Google Cloud Console\n\n**Cons and tradeoffs:**\n- Single-writer architecture; write scaling requires application-level sharding\n- Instance type changes require downtime in some configurations; storage can be increased online\n- Less advanced than Aurora MySQL in terms of availability features and read replica performance\n\n**Pricing:** Billed per instance hour, storage (GB/month), and network egress. See the Google Cloud pricing calculator for current rates.\n\n**Getting started:** Available through the Google Cloud Console, gcloud CLI, or Terraform.\n\n### TiDB\n\n**Best for:** Teams that need MySQL-compatible horizontal scaling, strong ACID consistency, high availability, and real-time analytics on live transactional data, without building separate systems for each.\n\n**Why it's on the list:** TiDB is an open-source [MySQL-compatible distributed database](https://www.pingcap.com/tidb/) that separates compute from storage and distributes data transparently across TiKV nodes. Applications connect with standard MySQL drivers and write SQL as they normally would. TiDB handles sharding internally using key-range regions, so there is no application-level shard key design. TiFlash, TiDB's columnar extension, can be configured per table to replicate data from TiKV and serve lightweight OLAP queries without ETL. This means a team can run dashboard queries and OLTP on the same cluster without maintaining a separate analytics pipeline.\n\n**Key features:**\n- MySQL 5.7 and partial 8.0 protocol and syntax compatibility\n- Horizontal scale-out via TiKV, with transparent range-based sharding\n- TiFlash columnar engine for real-time lightweight OLAP on live transactional data\n- Distributed ACID transactions using two-phase commit coordinated by the TiDB server, with PD supplying timestamps (TSO)\n- TiDB Operator for Kubernetes-native cluster management\n- TiCDC for real-time change data capture and replication to downstream systems\n- Available as TiDB Cloud (Starter, Essential, and Dedicated tiers) or self-hosted\n\n**Pros:**\n- Horizontal scaling without application-level sharding logic\n- Consistent reads and writes across all nodes; no eventual consistency trade-offs\n- One system for OLTP and real-time OLAP on fresh data, reducing infrastructure footprint\n- Active open-source project with PingCAP commercial support and a cloud-hosted option\n\n**Cons and tradeoffs:**\n- Some MySQL features are unsupported or behave differently; see the MySQL compatibility documentation before migrating\n- Multi-region Active-Active support is planned but not yet generally available; current multi-region deployment uses Raft-based placement rules\n- The distributed architecture means higher minimum resource requirements than a single-node MySQL replacement\n- Hot-spot behavior is possible on monotonically increasing keys (such as auto-increment IDs at high write rates); this is a known limitation to plan for during schema design\n\n**Pricing:** TiDB is open source (Apache 2.0). TiDB Cloud Starter has a free tier. TiDB Cloud Essential is in public preview. TiDB Cloud Dedicated pricing is based on cluster size and region; see tidbcloud.com for current rates.\n\n**Getting started:** Sign up at tidbcloud.com, or deploy self-hosted using [TiDB Operator](https://docs.pingcap.com/tidb-in-kubernetes/stable/) on Kubernetes.\n\n### Vitess\n\n**Best for:** Engineering teams that need to scale MySQL writes horizontally and are comfortable managing the operational complexity of a sharding middleware layer.\n\n**Why it's on the list:** Vitess is a database clustering system for horizontal scaling of MySQL. It sits in front of MySQL instances and handles connection pooling, query routing, and resharding. YouTube developed it to scale MySQL at Google-level traffic and open-sourced it in 2012. It became a Cloud Native Computing Foundation graduated project in 2019.\n\n**Key features:**\n- MySQL-compatible wire protocol via VTGate query routing layer\n- Horizontal sharding with online resharding capability\n- Connection pooling that reduces MySQL per-connection overhead at scale\n- Kubernetes-native deployment; graduated CNCF project\n\n**Pros:**\n- Proven at very large MySQL deployments (YouTube, Slack, GitHub)\n- Kubernetes-native with strong operator tooling\n- Open source with active community maintenance\n\n**Cons and tradeoffs:**\n- Application teams must design schemas around a shard key; cross-shard queries require a scatter-gather pattern that can be expensive\n- Operational complexity is high; running Vitess requires expertise in both MySQL administration and the Vitess stack (VTGate, VTTablet, VTCtld)\n- No built-in analytical workload support\n\n**Pricing:** Vitess is open source and free. Managed Vitess is available through PlanetScale and other providers.\n\n**Getting started:** Documentation and deployment guides at vitess.io.\n\n### PlanetScale\n\n**Best for:** Developer teams that want managed MySQL sharding without operating Vitess themselves, and who can work within the constraint of no enforced cross-shard foreign keys.\n\n**Why it's on the list:** PlanetScale is a database platform built on Vitess that adds a developer-friendly deployment workflow, including non-blocking schema changes via deploy requests and branching for database schema development. It abstracts the operational complexity of Vitess while keeping horizontal MySQL sharding as the scaling model.\n\n**Key features:**\n- Managed horizontal sharding on Vitess\n- Non-blocking schema migrations via deploy requests (no table locks)\n- Database branching for development and staging workflows\n- MySQL-compatible wire protocol\n\n**Pros:**\n- No Vitess operations experience required; PlanetScale manages the infrastructure\n- Schema migration workflow reduces downtime risk from DDL operations\n- Developer experience focus with CLI tooling and GitHub-style branching\n\n**Cons and tradeoffs:**\n- Cross-shard foreign key enforcement is not supported; referential integrity across shards must be handled in application code\n- Sharding model means cross-shard queries carry the same scatter-gather cost as Vitess\n- Pricing scales with usage in ways that can be surprising at high read/write rates\n\n**Pricing:** PlanetScale no longer offers a free tier; all plans are paid. See planetscale.com for current pricing.\n\n**Getting started:** Sign up at planetscale.com; documentation covers setup, branching, and schema deployments.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-2",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Ready to see how TiDB handles MySQL-compatible workloads at scale?",
+        "primaryCta": {
+          "text": "MySQL compatible distributed SQL database",
+          "href": "https://www.pingcap.com/solutions/modernize-mysql-workloads/"
+        },
+        "secondaryCta": {
+          "text": "Explore TiDB",
+          "href": "https://www.pingcap.com/tidb/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22184957/1000011432.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-2",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## When Is TiDB the Best MySQL-Compatible Database?\n\nTiDB is a good fit when MySQL has become the bottleneck rather than just the interface. That typically means teams are hitting write limits on a single node, building manual sharding logic to distribute data, maintaining separate analytical infrastructure to avoid slowing down OLTP, or managing multiple systems that should be doing the work of one.\n\n### Best for Scaling MySQL Without Manual Sharding\n\nWhen write volume outgrows what a single MySQL node handles, the usual options are vertical scaling, adding read replicas, or implementing application-level sharding. All three create operational or architectural debt. TiDB scales horizontally by distributing data across TiKV nodes automatically. Applications continue connecting with MySQL drivers and issuing standard SQL. The database manages region splits and rebalancing internally. Teams that have already written sharding logic for MySQL report that removing it after moving to TiDB is a meaningful simplification.\n\n### Best for Mixed Transactional and Analytical Workloads\n\nMost MySQL deployments eventually develop a separate analytics path: a read replica dedicated to reporting, an ETL job feeding a data warehouse, or a caching layer to avoid running aggregations on the primary. Each adds latency, infrastructure cost, and data freshness lag. TiDB's TiFlash engine replicates data from TiKV on a per-table basis once TiFlash replicas are configured for those tables. OLAP queries route to TiFlash; OLTP queries go to TiKV. Both run in the same cluster. This makes TiDB useful for teams that need real-time analytical queries on live data, such as usage dashboards, per-user aggregations, or operational reports that need to reflect recent writes.\n\nFor a deeper comparison of TiDB against other distributed SQL options, see [best MySQL-compatible database for HTAP](https://www.pingcap.com/compare/best-distributed-sql-databases/).\n\n### Best for Teams That Want Simpler Operations\n\nDistributed systems carry a reputation for operational complexity, and TiDB is not exempt. But compared to managing MySQL plus a sharding layer plus a separate analytics database, TiDB often reduces the number of moving parts. The TiDB Operator handles cluster management on Kubernetes. TiDB Cloud offers fully managed deployments. Teams that have evaluated TiDB against their existing multi-system MySQL stack often find the operational model comparable or simpler, depending on how their current stack is built.\n\nFor a real-world account of why one team chose TiDB over MySQL and MongoDB, see this [NewSQL MySQL alternative case study](https://www.pingcap.com/case-study/embracing-newsql-why-we-chose-tidb-over-mongodb-and-mysql/). For a broader comparison of open-source options, see [open source MySQL compatible database](https://www.pingcap.com/article/choosing-the-best-open-source-database-tidb-vs-mysql-postgresql-mongodb/).\n\n## How Do You Choose the Right MySQL-Compatible Database?\n\nMost teams arrive at the wrong answer by starting with the question 'what is most compatible with MySQL?' The better starting point is what problem the current database is failing to solve. That usually narrows the field quickly.\n\n### Step 1: Define Your Migration and Usage Goals\n\nIf the goal is to reduce operational overhead without changing application behavior, start with managed MySQL services. If the goal is to keep MySQL syntax while gaining horizontal scale, the question becomes whether you want to manage the sharding layer yourself (Vitess) or use a managed platform (PlanetScale). If the goal is to consolidate multiple systems into one, distributed SQL is worth evaluating.\n\n### Step 2: Match Requirements to Architecture\n\nMatch your current and projected workload to the scaling model each database uses. Single-node vertical scaling runs out eventually. Read replicas help with reads but not writes. Sharding scales writes but adds schema and application constraints. Distributed SQL scales automatically but has a higher minimum resource footprint and documented MySQL compatibility gaps to test against.\n\n### Step 3: Plan for Growth and Operations\n\nThe right database for your current data size may not be the right database in two years. Ask how each option handles 10x data growth. Does the scaling path require migration, resharding, or just adding nodes? Also consider the operational skills required. Running Vitess requires MySQL DBA expertise plus Vitess-specific knowledge. TiDB Cloud or Aurora MySQL offload that work to the provider.\n\n### Step 4: Validate Ecosystem and Support Needs\n\nCheck that your ORM, migration framework, and monitoring tools work with the database. Most MySQL-compatible databases handle standard drivers well, but specific behaviors (DDL locking, certain SQL functions, JSON handling) can surface during testing. Verify against the documented differences for each candidate before committing.\n\nFor a detailed comparison of TiDB and CockroachDB, including distributed SQL MySQL compatibility, see [distributed SQL MySQL compatibility comparison](https://www.pingcap.com/compare/cockroachdb-vs-tidb/).\n\n## What Architecture Patterns Work Best with a MySQL-Compatible Database?\n\nThe four common deployment patterns map to different parts of the compatibility spectrum. Where you land depends on what you need to preserve and what you need to gain.\n\n### Drop-In Replacement Pattern\n\nSwap MySQL for a compatible fork (MariaDB, Percona Server) or a managed MySQL service. Application code stays the same. This works when the problem is operational overhead, not scale. Teams that need lower management burden but have data volumes and write rates a single node handles comfortably should start here. The scaling ceiling is the same as MySQL.\n\n### Managed MySQL Pattern\n\nMove to a cloud-managed MySQL service like Aurora MySQL or Cloud SQL for MySQL. This removes patching, backup management, and basic high-availability setup. Read replicas scale reads. Write scaling still requires application-level sharding when data outgrows a single writer. This pattern works for teams on AWS or GCP who want to reduce database operations without changing their data model.\n\n> **Pitfall to avoid:** Assuming read replica complexity scales linearly. Managing 10+ replicas, lag monitoring, and promotion logic adds operational surface that negates some of the managed service benefit.\n\n### Distributed SQL Consolidation Pattern\n\nReplace MySQL plus sharding middleware plus a separate analytics layer with a single distributed SQL database. This is the higher-effort migration but tends to produce a simpler operational picture over time. TiDB fits this pattern: one cluster handles OLTP and real-time OLAP, scales writes horizontally, and maintains ACID consistency across nodes.\n\nScaling pitfalls to avoid with standard MySQL before reaching this pattern:\n- Re-sharding an existing sharded MySQL deployment is expensive and error-prone; plan the shard key carefully or avoid manual sharding entirely\n- Read replica sprawl increases replication lag monitoring and failover complexity proportionally\n- Analytics on MySQL replicas slows replication and affects OLTP availability; a separate pipeline adds freshness lag\n\nFor more on how distributed SQL handles HTAP workloads, see [best MySQL-compatible database for HTAP](https://www.pingcap.com/compare/best-distributed-sql-databases/).\n\n## Ready to Modernize Beyond Traditional MySQL Limits?\n\nIf MySQL is the interface your team knows, and the problem is what MySQL cannot do at scale, these options give you different ways forward. Forks and managed services are the lowest-friction path. Sharding-first tools extend MySQL writes horizontally. Distributed SQL consolidates scale, consistency, analytics, and high availability into one system.\n\nThe right choice depends on your current scale, your projected growth, and how much of your operational complexity is worth trading for migration effort.\n\n:::card tone=light\n\n**Editorial policy:**\n- Options on this list were selected using the criteria described in the 'How we chose' section. No vendor paid for inclusion.\n- This page is reviewed and updated when product changes, pricing updates, or new evaluation-relevant options warrant revision.\n- Pricing, feature availability, and benchmark figures should be verified against primary vendor sources before publication.\n- PingCAP is the publisher of this content and the company behind TiDB. Reasonable effort has been made to evaluate all options by the same criteria, but readers should factor in that conflict when weighing the analysis.\n\n:::",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "MySQL-Compatible Database FAQs",
+        "items": [
+          {
+            "q": "What Is the Best MySQL-Compatible Database?",
+            "a": "- There is no single best option; the right database depends on your workload, scale, and operational goals.\n- For a drop-in replacement with minimal migration friction, MariaDB or Percona Server are the closest to MySQL.\n- For managed MySQL with cloud-native availability, Amazon Aurora MySQL (on AWS) or Google Cloud SQL (on GCP) reduce operational overhead.\n- For horizontal scale, strong consistency, and real-time analytics in one system, TiDB is the MySQL-compatible distributed SQL option."
+          },
+          {
+            "q": "Is MariaDB Fully Compatible with MySQL?",
+            "a": "- MariaDB is broadly compatible with MySQL 5.7 and handles most MySQL migrations without code changes.\n- MariaDB has diverged from MySQL in specific areas, including some JSON function behavior, certain stored procedure handling, and replication details.\n- The divergence is documented; teams should run their application's test suite against MariaDB before migrating production workloads.\n- Compatibility is high enough for most MySQL apps, but version-level testing still matters for complex applications."
+          },
+          {
+            "q": "Is TiDB a MySQL-Compatible Database?",
+            "a": "- Yes. TiDB supports the MySQL 5.7 and partial 8.0 wire protocol, SQL syntax, and standard MySQL drivers and connectors.\n- TiDB has documented compatibility differences, including some unsupported MySQL functions and different DDL behavior; see the official MySQL compatibility documentation before migrating.\n- Beyond compatibility, TiDB adds distributed scale-out, strong ACID consistency across nodes, and TiFlash for real-time lightweight OLAP on live transactional data.\n- TiDB is not a MySQL fork; it is a distributed SQL database built to accept MySQL connections, which is a meaningful architectural difference."
+          },
+          {
+            "q": "What Is the Difference Between a MySQL Fork and a Distributed SQL Database?",
+            "a": "- A MySQL fork like MariaDB or Percona Server starts from MySQL source code and maintains compatibility while adding improvements; the architecture is still single-writer with optional replication.\n- A distributed SQL database like TiDB is built from the ground up to distribute data across multiple nodes, handling sharding, replication, and failover internally.\n- Forks optimize for compatibility and low migration friction; distributed SQL optimizes for horizontal scale, consistency across nodes, and mixed workloads.\n- The two categories solve different problems; a fork is not a scaling substitute for a distributed system."
+          },
+          {
+            "q": "Which MySQL-Compatible Database Is Best for Analytics?",
+            "a": "- Standard MySQL forks and managed MySQL services handle OLTP and require a separate analytics layer for heavy reporting workloads.\n- TiDB includes TiFlash, a columnar engine that replicates from TiKV without ETL and serves real-time, lightweight OLAP queries on live transactional data.\n- TiFlash is suited for dashboard queries, per-user aggregations, and operational reporting on fresh data, not for petabyte-scale historical analytics.\n- Teams that need deep historical analytics at large scale typically still pair TiDB with a dedicated OLAP platform like Snowflake or BigQuery."
+          },
+          {
+            "q": "Can I Migrate an Existing MySQL App Without Changing Code?",
+            "a": "- MySQL forks (MariaDB, Percona Server) and managed MySQL services (Aurora MySQL, Cloud SQL) typically allow migration with no application code changes, though testing is still required.\n- TiDB supports MySQL syntax and drivers, so many applications migrate without code changes, but compatibility differences in specific SQL functions, DDL behavior, or stored procedures can require schema or query adjustments.\n- Sharding-based systems like Vitess or PlanetScale may require schema changes to add a shard key, especially if the current schema relies on foreign key constraints.\n- The practical answer is to run your application's test suite against the target database before migrating production; no MySQL-compatible database is a guaranteed zero-change migration for every workload.\n\n:::cta bg=\"https://static.pingcap.com/files/2025/06/22211020/1000011435.png\"\nEvaluate TiDB as your next step.\n[MySQL compatible distributed SQL database](https://www.pingcap.com/solutions/modernize-mysql-workloads/)\n[Read the TiDB documentation](https://docs.pingcap.com/tidb/stable/)\n:::"
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    }
+  ]
+}
