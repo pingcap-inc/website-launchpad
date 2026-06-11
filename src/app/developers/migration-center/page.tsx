@@ -236,7 +236,7 @@ export default function MigrationCenterPage() {
                   Coming from MySQL? Check compatibility first, then follow the guided path from
                   staging to cutover. Nothing touches production until you say so.
                   <br />
-                  Try our latest AI-assisted database migration toolkit -{' '}
+                  You can also try our latest AI-assisted database migration toolkit -{' '}
                   <a
                     className="underline"
                     href="https://partners.pingcap.com/tishift"
