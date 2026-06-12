@@ -243,9 +243,10 @@ export default function MigrationCenterPage() {
                     TiShift
                   </a>
                   .
-                  <br />
-                  Coming from MySQL? Check compatibility first, then follow the guided path from
-                  staging to cutover. Nothing touches production until you say so.
+                  <p className="mt-4">
+                    Coming from MySQL? Check compatibility first, then follow the guided path from
+                    staging to cutover. Nothing touches production until you say so.
+                  </p>
                 </>
               }
               className="pb-8"
