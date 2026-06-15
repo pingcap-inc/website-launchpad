@@ -56,11 +56,14 @@ const dsl: PageDSL = {
         "headline": "7 Best HTAP Databases for Real-Time Operational Analytics",
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+            "url": "https://static.pingcap.com/images/cdfb884c-group_1000011623.png",
+            "alt": "group 1000011623",
+            "width": 946,
+            "height": 664
           },
-          "alt": "hero image",
-          "width": 500,
-          "height": 400
+          "alt": "group 1000011623",
+          "width": 946,
+          "height": 664
         }
       },
       "style": {
