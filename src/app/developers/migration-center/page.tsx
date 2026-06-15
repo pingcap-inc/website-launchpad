@@ -233,9 +233,6 @@ export default function MigrationCenterPage() {
               headline="Migrate to TiDB with Confidence"
               subheadline={
                 <>
-                  Coming from MySQL? Check compatibility first, then follow the guided path from
-                  staging to cutover. Nothing touches production until you say so.
-                  <br />
                   Try our latest AI-assisted database migration toolkit -{' '}
                   <a
                     className="underline"
@@ -246,6 +243,10 @@ export default function MigrationCenterPage() {
                     TiShift
                   </a>
                   .
+                  <p className="mt-4">
+                    Coming from MySQL? Check compatibility first, then follow the guided path from
+                    staging to cutover. Nothing touches production until you say so.
+                  </p>
                 </>
               }
               className="pb-8"
