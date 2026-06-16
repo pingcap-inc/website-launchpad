@@ -5,13 +5,13 @@ import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
-  title: "TiDB | 7 Best Databases for Real-Time Analytics in 2026",
-  description: "**Last reviewed: June 2026 | Author: Akshata Hire, Product Marketing Lead | Reviewed by: Ravish Patel, Solutions Engineer**",
+  title: "Best Database for Real-Time Analytics in 2026 - TiDB",
+  description: "Compare the best database for real time analytics across latency, ingest, scale, and workload fit. See which platforms lead in 2026.",
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/compare/best-database-for-real-time-analytics/' },
   openGraph: {
-    title: "TiDB | 7 Best Databases for Real-Time Analytics in 2026",
-    description: "**Last reviewed: June 2026 | Author: Akshata Hire, Product Marketing Lead | Reviewed by: Ravish Patel, Solutions Engineer**",
+    title: "Best Database for Real-Time Analytics in 2026 - TiDB",
+    description: "Compare the best database for real time analytics across latency, ingest, scale, and workload fit. See which platforms lead in 2026.",
     url: 'https://www.pingcap.com/compare/best-database-for-real-time-analytics/',
     siteName: 'TiDB',
     images: [
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: "/compare/best-database-for-real-time-analytics/",
-  title: "TiDB | 7 Best Databases for Real-Time Analytics in 2026",
-  description: "**Last reviewed: June 2026 | Author: Akshata Hire, Product Marketing Lead | Reviewed by: Ravish Patel, Solutions Engineer**",
+  title: "Best Database for Real-Time Analytics in 2026 - TiDB",
+  description: "Compare the best database for real time analytics across latency, ingest, scale, and workload fit. See which platforms lead in 2026.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: "7 Best Databases for Real-Time Analytics in 2026", path: "/compare/best-database-for-real-time-analytics/" },
@@ -43,8 +43,8 @@ const schema = buildPageSchema({
 const dsl: PageDSL = {
   "pageName": "7 Best Databases for Real-Time Analytics in 2026",
   "meta": {
-    "title": "TiDB | 7 Best Databases for Real-Time Analytics in 2026",
-    "description": "**Last reviewed: June 2026 | Author: Akshata Hire, Product Marketing Lead | Reviewed by: Ravish Patel, Solutions Engineer**",
+    "title": "Best Database for Real-Time Analytics in 2026 - TiDB",
+    "description": "Compare the best database for real time analytics across latency, ingest, scale, and workload fit. See which platforms lead in 2026.",
     "canonical": "/compare/best-database-for-real-time-analytics/"
   },
   "sections": [
