@@ -1,0 +1,182 @@
+{
+  "pageName": "TiDB Cloud Startup Program | $100K Credits for Founders",
+  "meta": {
+    "title": "TiDB Cloud Startup Program | $100K Credits for Founders",
+    "description": "加入 TiDB Cloud 初创企业计划，获取高达 10 万美元的云数据库额度。专为高增长初创公司设计，提供无限弹性扩展、零前置成本及企业级支持，助您从 MVP 快速迈向规模化成功。",
+    "canonical": "/startup-program/"
+  },
+  "sections": [
+    {
+      "id": "hero-section",
+      "type": "hero",
+      "props": {
+        "layout": "split",
+        "eyebrow": "初创企业专属计划",
+        "headline": "极速启动。<span class=\"text-gradient-violet animate-glow-sweep\">无限扩展</span>。获取 10 万美元 TiDB Cloud 额度",
+        "subheadline": "立即申请，构建伴随您成长的分布式 SQL 数据库——从最小可行产品 (MVP) 到服务数百万用户，全程无忧。",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        },
+        "heroForm": {
+          "formId": "8d439c40-4e6b-4192-a99b-a2c619ad4146",
+          "portalId": "4466002",
+          "region": "na1"
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "benefits-section",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "核心优势",
+        "title": "为什么高增长初创公司选择 TiDB",
+        "subtitle": "消除数据库瓶颈，专注于产品创新与市场扩张",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "高达 10 万美元额度",
+            "description": "大幅降低基础设施成本，将宝贵的资金用于产品研发与市场推广，而非昂贵的数据库账单。",
+            "cta": {
+              "text": "了解额度详情",
+              "href": "/startup-program/"
+            },
+            "icon": "DollarSign"
+          },
+          {
+            "variant": "blue",
+            "title": "Serverless 弹性伸缩",
+            "description": "自动应对流量洪峰，无需预配置资源。从每秒几个请求到百万级并发，性能始终如一。",
+            "cta": {
+              "text": "查看技术架构",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            },
+            "icon": "Scale"
+          },
+          {
+            "variant": "teal",
+            "title": "零前置成本",
+            "description": "无需信用卡即可开始构建。按需付费模式确保您只为实际使用的资源买单，现金流更健康。",
+            "cta": {
+              "text": "免费开始",
+              "href": "https://tidbcloud.com/free-trial/"
+            },
+            "icon": "Shield"
+          },
+          {
+            "variant": "red",
+            "title": "企业级技术支持",
+            "description": "获得与付费企业客户同等的技术支持与 SLA 保障，确保您的关键业务始终在线。",
+            "cta": {
+              "text": "联系支持团队",
+              "href": "https://www.pingcap.com/contact-us/"
+            },
+            "icon": "Users"
+          }
+        ],
+        "columns": 2
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "testimonials-section",
+      "type": "testimonials",
+      "props": {
+        "eyebrow": "用户故事",
+        "title": "初创团队的成功之选",
+        "items": [
+          {
+            "quote": "TiDB Cloud 的 Serverless 特性让我们在产品上线初期就无需担心数据库扩容问题。10 万美元的额度更是帮助我们节省了巨大的早期成本，让我们能全身心投入业务逻辑的创新。",
+            "author": "李明",
+            "cta": "某知名金融科技初创公司 CTO",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+              },
+              "alt": "dify"
+            }
+          },
+          {
+            "quote": "从几千用户到百万级日活，我们的数据库架构没有做过任何修改。TiDB 的自动扩展能力简直是初创公司的福音，让我们真正实现了‘构建一次，随处扩展’。",
+            "author": "王强",
+            "cta": "某社交平台创始人",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/712552a8-dify.png"
+              },
+              "alt": "dify"
+            }
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "faq-section",
+      "type": "faq",
+      "props": {
+        "title": "常见问题解答",
+        "items": [
+          {
+            "q": "申请 TiDB Cloud 初创企业计划需要满足什么条件？",
+            "a": "我们主要面向获得种子轮及以后融资的初创企业，或具有明显高增长潜力的技术团队。申请后，我们的团队会在 3 个工作日内完成审核。"
+          },
+          {
+            "q": "10 万美元的额度如何使用？有效期是多久？",
+            "a": "额度将直接注入您的 TiDB Cloud 账户，可用于抵扣所有 Serverless 或专用集群的资源消耗。额度通常有效期为 12-24 个月，具体取决于您的成长阶段与审核结果。"
+          },
+          {
+            "q": "如果我的用量超过了免费额度怎么办？",
+            "a": "超出部分将按照标准的按量付费价格计算。随着您的业务增长，我们提供灵活的升级路径和企业级折扣，确保持续的成本优势。"
+          },
+          {
+            "q": "我可以将 TiDB 用于生产环境吗？",
+            "a": "当然。TiDB Cloud 提供 99.99% 的 SLA 保障，具备多可用区容灾、自动备份与时间点恢复功能，完全满足生产环境的严苛要求。"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta-section",
+      "type": "cta",
+      "props": {
+        "title": "准备好加速您的创业之旅了吗？",
+        "subtitle": "立即加入 TiDB Cloud 初创企业计划，获取资金支持与技术护航。",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "立即申请额度",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "联系销售顾问",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
