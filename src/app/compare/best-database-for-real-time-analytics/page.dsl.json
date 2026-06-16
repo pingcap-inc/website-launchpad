@@ -1,0 +1,353 @@
+{
+  "pageName": "7 Best Databases for Real-Time Analytics in 2026",
+  "meta": {
+    "title": "TiDB | 7 Best Databases for Real-Time Analytics in 2026",
+    "description": "**Last reviewed: June 2026 | Author: Akshata Hire, Product Marketing Lead | Reviewed by: Ravish Patel, Solutions Engineer**",
+    "canonical": "/compare/best-database-for-real-time-analytics/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "7 Best Databases for Real-Time Analytics in 2026",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/73d17eb9-group__3_.png",
+            "alt": "group 3",
+            "width": 880,
+            "height": 664
+          },
+          "alt": "group 3",
+          "width": 880,
+          "height": 664
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "quick-answer-which-database-is-best-for-real-time-analytics",
+            "label": "Quick Answer: Which Database Is Best for Real-Time Analytics?",
+            "level": 1
+          },
+          {
+            "id": "compare-the-best-real-time-analytics-databases-at-a-glance",
+            "label": "Compare the Best Real-Time Analytics Databases at a Glance",
+            "level": 1
+          },
+          {
+            "id": "how-should-you-read-this-real-time-analytics-table",
+            "label": "How Should You Read This Real-Time Analytics Table?",
+            "level": 1
+          },
+          {
+            "id": "what-framework-separates-a-great-real-time-analytics-database-from-a-fast-but-narrow-one",
+            "label": "What Framework Separates a Great Real-Time Analytics Database From a Fast but Narrow One?",
+            "level": 1
+          },
+          {
+            "id": "freshness",
+            "label": "Freshness",
+            "level": 2
+          },
+          {
+            "id": "concurrency",
+            "label": "Concurrency",
+            "level": 2
+          },
+          {
+            "id": "workload-breadth",
+            "label": "Workload Breadth",
+            "level": 2
+          },
+          {
+            "id": "how-we-chose-the-best-databases-for-real-time-analytics",
+            "label": "How We Chose the Best Databases for Real-Time Analytics",
+            "level": 1
+          },
+          {
+            "id": "how-should-you-benchmark-a-database-for-real-time-analytics",
+            "label": "How Should You Benchmark a Database for Real-Time Analytics?",
+            "level": 1
+          },
+          {
+            "id": "define-your-ingest-and-freshness-targets",
+            "label": "Define Your Ingest and Freshness Targets",
+            "level": 2
+          },
+          {
+            "id": "test-user-facing-query-concurrency",
+            "label": "Test User-Facing Query Concurrency",
+            "level": 2
+          },
+          {
+            "id": "measure-cost-and-operational-overhead",
+            "label": "Measure Cost and Operational Overhead",
+            "level": 2
+          },
+          {
+            "id": "best-databases-for-real-time-analytics-reviewed",
+            "label": "Best Databases for Real-Time Analytics Reviewed",
+            "level": 1
+          },
+          {
+            "id": "tidb",
+            "label": "TiDB",
+            "level": 2
+          },
+          {
+            "id": "clickhouse",
+            "label": "ClickHouse",
+            "level": 2
+          },
+          {
+            "id": "apache-druid",
+            "label": "Apache Druid",
+            "level": 2
+          },
+          {
+            "id": "apache-pinot",
+            "label": "Apache Pinot",
+            "level": 2
+          },
+          {
+            "id": "singlestore",
+            "label": "SingleStore",
+            "level": 2
+          },
+          {
+            "id": "timescaledb",
+            "label": "TimescaleDB",
+            "level": 2
+          },
+          {
+            "id": "starrocks",
+            "label": "StarRocks",
+            "level": 2
+          },
+          {
+            "id": "when-is-tidb-the-best-database-for-real-time-analytics",
+            "label": "When Is TiDB the Best Database for Real-Time Analytics?",
+            "level": 1
+          },
+          {
+            "id": "best-for-fresh-operational-analytics",
+            "label": "Best for Fresh Operational Analytics",
+            "level": 2
+          },
+          {
+            "id": "best-for-hybrid-transactional-and-analytical-workloads",
+            "label": "Best for Hybrid Transactional and Analytical Workloads",
+            "level": 2
+          },
+          {
+            "id": "best-for-simplifying-a-fragmented-analytics-stack",
+            "label": "Best for Simplifying a Fragmented Analytics Stack",
+            "level": 2
+          },
+          {
+            "id": "how-do-you-choose-the-right-real-time-analytics-platform",
+            "label": "How Do You Choose the Right Real-Time Analytics Platform?",
+            "level": 1
+          },
+          {
+            "id": "step-1-define-your-real-time-use-case",
+            "label": "Step 1: Define Your Real-Time Use Case",
+            "level": 2
+          },
+          {
+            "id": "step-2-define-your-data-flow-and-freshness-needs",
+            "label": "Step 2: Define Your Data Flow and Freshness Needs",
+            "level": 2
+          },
+          {
+            "id": "step-3-define-your-concurrency-and-scale-profile",
+            "label": "Step 3: Define Your Concurrency and Scale Profile",
+            "level": 2
+          },
+          {
+            "id": "step-4-define-your-operational-complexity-budget",
+            "label": "Step 4: Define Your Operational Complexity Budget",
+            "level": 2
+          },
+          {
+            "id": "what-architecture-patterns-work-best-for-real-time-analytics",
+            "label": "What Architecture Patterns Work Best for Real-Time Analytics?",
+            "level": 1
+          },
+          {
+            "id": "customer-facing-analytics-pattern",
+            "label": "Customer-Facing Analytics Pattern",
+            "level": 2
+          },
+          {
+            "id": "streaming-analytics-pattern",
+            "label": "Streaming Analytics Pattern",
+            "level": 2
+          },
+          {
+            "id": "operational-intelligence-pattern",
+            "label": "Operational Intelligence Pattern",
+            "level": 2
+          },
+          {
+            "id": "ready-to-evaluate-a-real-time-analytics-platform",
+            "label": "Ready to Evaluate a Real-Time Analytics Platform?",
+            "level": 1
+          },
+          {
+            "id": "faq",
+            "label": "Best Database for Real-Time Analytics FAQs",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "**Last reviewed: June 2026 | Author: Akshata Hire, Product Marketing Lead | Reviewed by: Ravish Patel, Solutions Engineer**\n\nThe best database for real-time analytics depends on what 'real-time' means for your workload. A database that delivers sub-millisecond query results on pre-ingested event data is solving a different problem than one that returns fresh results on data written two seconds ago. Getting this distinction wrong is the most common source of architecture regret in analytics infrastructure.\n\nA real-time analytics database needs to do at least three things well: ingest data quickly, answer analytical queries at low latency, and maintain performance when many users query it simultaneously. Beyond that, the right choice depends on data shape, freshness requirements, whether the system also needs to handle transactional writes, and how much operational complexity the team can absorb.\n\nOne common mistake is choosing the fastest pure OLAP engine for a workload that also includes live operational data. A dedicated columnar database like ClickHouse will outperform an HTAP system on analytical scan throughput, but it does not handle transactional writes or keep data current without a separate pipeline. For teams that need operational intelligence, the total architecture cost matters as much as query latency on a single benchmark.\n\nThis list covers real-time OLAP databases, streaming analytics platforms, and hybrid transactional and analytical systems. It is for software architects, platform engineers, data engineers, and engineering leaders evaluating options for customer-facing dashboards, operational intelligence, event analytics, and real-time reporting.\n\n**Key Takeaways:**\n:::card tone=light\n\n- The fastest analytical engine is not always the best platform when teams also need fresh operational data.\n- ClickHouse, Apache Druid, and Apache Pinot are purpose-built for fast OLAP on event data.\n- TiDB handles real-time analytics on live transactional data through TiFlash, eliminating the ETL pipeline.\n- Sub-second query latency under high concurrency is the key benchmark for customer-facing dashboards.\n- Match the tool to the data flow: event-first, operational, streaming, or mixed workloads behave differently.\n:::\n\n## Quick Answer: Which Database Is Best for Real-Time Analytics?\n\n:::card tone=light\n\n**Best overall OLAP database:** ClickHouse. Fastest columnar scan performance for event and time-series analytical workloads at scale.\n\n**Best for streaming event analytics:** Apache Druid. Sub-second queries on high-velocity event streams with strong Kafka integration.\n\n**Best for customer-facing low-latency dashboards:** Apache Pinot. Designed specifically for user-facing analytical applications with high concurrency.\n\n**Best for real-time operational analytics on live transactional data:** TiDB. HTAP architecture with TiFlash replication from live OLTP, no ETL required.\n\n**Best for in-memory HTAP performance:** SingleStore. Rowstore (in-memory) and disk-based columnar engine in one system for fast analytical queries.\n\n**Best for time-series and IoT analytics:** TimescaleDB. PostgreSQL-native time-series optimizations with analytical extensions.\n\n**Best for large-scale real-time OLAP with push-based ingestion:** StarRocks. High-concurrency real-time OLAP with strong BI tool integration.\n\n:::",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-1",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Explore TiDB as a real-time analytics platform — no ETL pipeline required.",
+        "primaryCta": {
+          "text": "Explore TiDB for Operational Analytics",
+          "href": "https://www.pingcap.com/solutions/enable-operational-intelligence/"
+        },
+        "secondaryCta": {
+          "text": "Start Free on TiDB Cloud",
+          "href": "https://tidbcloud.com"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22092103/1000011430.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-1",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Compare the Best Real-Time Analytics Databases at a Glance\n\nThe columns cover the criteria that matter most for real-time analytics selection: how the system ingests data, how fast it returns analytical queries, how it handles many concurrent users, and the honest trade-off for each option.\n\n| Database | Best For | Ingest Profile | Query Latency | Concurrency | Architecture | Deployment | Key Tradeoff | Getting Started |\n|---|---|---|---|---|---|---|---|---|\n| TiDB | Operational analytics on live OLTP data | Continuous OLTP writes via TiDB server; TiFlash replicates in seconds | Sub-second to seconds for OLAP (TiFlash columnar) | Moderate (HTAP, not pure OLAP) | Distributed HTAP (TiKV + TiFlash) | Self-hosted (TiDB Operator) / TiDB Cloud | Not the fastest for pure scan-heavy OLAP; TiFlash targets real-time operational queries, not historical warehouse workloads | tidbcloud.com |\n| ClickHouse | Fast OLAP on event and log data | High-throughput batch and streaming ingest | Sub-second on large columnar scans | High (optimized for scan workloads) | Column-oriented OLAP | Self-hosted / ClickHouse Cloud | Designed for append-heavy analytics; updates and deletes are expensive | clickhouse.com |\n| Apache Druid | Streaming event analytics | Real-time Kafka/Kinesis ingest | Sub-second on pre-aggregated segments | High (designed for high-concurrency queries) | Real-time OLAP, streaming-first | Self-hosted (Kubernetes-native) | Query flexibility limited vs SQL-standard; schema must be defined at ingest | druid.apache.org |\n| Apache Pinot | User-facing real-time dashboards | Low-latency streaming ingest (Kafka) | Sub-second on indexed data | Very high (built for dashboard concurrency) | Real-time OLAP, index-optimized | Self-hosted / StarTree Cloud | Less flexible for ad-hoc analytical queries; index design matters | pinot.apache.org |\n| SingleStore | In-memory HTAP, mixed workloads | High-throughput real-time ingest | Sub-millisecond on in-memory data (rowstore); disk-based columnar for analytics | High | Unified rowstore (in-memory) + disk-based columnar engine | Self-hosted / SingleStore Cloud | Memory-intensive for rowstore; cost scales with hot data volume | singlestore.com |\n| TimescaleDB | Time-series and IoT analytics | Optimized for time-ordered inserts | Fast on time-range queries | Moderate | Postgres extension, column-optimized | Self-hosted / Tiger Cloud | Best for time-series; general OLAP performance less competitive than ClickHouse | timescale.com |\n| StarRocks | Real-time OLAP with BI integration | Push-based streaming and batch ingest | Sub-second on columnar data | High (built for BI dashboards) | MPP columnar OLAP | Self-hosted / Phoenix AI (phoenixdata.ai) | Smaller ecosystem than ClickHouse; no native OLTP support | starrocks.io |\n\n*Table 1: Comparison of the best real-time analytics databases across key selection criteria.*\n\nExplore TiDB as a [real-time analytics platform](https://www.pingcap.com/solutions/enable-operational-intelligence/).\n\n## How Should You Read This Real-Time Analytics Table?\n\nThe right database depends on what type of real-time analytics problem you are solving. Use these mappings to narrow the field before reading individual reviews.\n\n- For customer-facing dashboards, concurrency is the most important column. Apache Pinot and StarRocks are designed for this pattern. ClickHouse handles it well too, but Pinot is purpose-built for user-facing latency at scale.\n- For event stream analytics, ingest profile matters most. Druid and Pinot both integrate with Kafka and make new events queryable within seconds of ingestion.\n- For IoT and time-ordered data, TimescaleDB's time-series optimizations (automatic partitioning, time-range indexes, retention policies) fit better than a general-purpose OLAP engine.\n- For analytics on live operational data, TiDB's TiFlash handles the freshness requirement without a separate ETL pipeline. The trade-off is that TiFlash is not as fast as ClickHouse for pure scan-heavy queries on cold historical data.\n- A single-tool approach is insufficient when you need both petabyte-scale historical analytics and sub-second freshness on live writes. In those cases, a TiDB cluster for operational analytics paired with a dedicated warehouse for historical analysis is a reasonable architecture.\n\n## What Framework Separates a Great Real-Time Analytics Database From a Fast but Narrow One?\n\nThree criteria determine whether a database is the right fit for a real-time analytics workload, not just a fast one in a benchmark.\n\n### Freshness\n\nHow close query results stay to live data. Some databases require data to be batched and reloaded before it is queryable. Others make new events queryable within milliseconds of ingestion. For operational analytics on transactional data, freshness is the most important criterion. For historical analysis on days-old data, it matters less.\n\n### Concurrency\n\nWhether the database maintains low latency when many users query it simultaneously. A system that answers analytical queries fast under a single user but degrades to multi-second latency under 500 concurrent dashboard users fails the customer-facing use case. Databases designed for user-facing analytics (Pinot, StarRocks) optimize specifically for this.\n\n### Workload Breadth\n\nWhether the platform supports only analytics or also handles transactional patterns. A pure OLAP database does not support concurrent transactional writes without a separate ingestion pipeline. An HTAP database like TiDB handles both in one system. For teams that also run OLTP workloads and need analytics on live data, workload breadth determines whether one system can replace two.\n\n## How We Chose the Best Databases for Real-Time Analytics\n\nThis list covers databases with real support for real-time analytical query workloads. Generic monitoring tools, ETL platforms, and databases that require full data warehouse pipelines to return analytical results were excluded. The focus is on tools that can return results quickly on data that reflects recent events.\n\nEvaluation criteria applied to each entry:\n- Streaming or near-real-time ingest support (not batch-only)\n- Sub-second query performance on analytical workloads at moderate to high data volumes\n- Concurrency performance: how the system behaves when many users query simultaneously\n- Data freshness: how quickly newly ingested data becomes queryable\n- Operational simplicity: deployment options, managed services, and maintenance requirements\n- Ecosystem maturity: connectors, BI tool compatibility, and community support\n- Scale model: whether the system scales horizontally and at what operational cost\n\n## How Should You Benchmark a Database for Real-Time Analytics?\n\nThe most misleading benchmarks test query speed on a static dataset under a single connection. Real production conditions involve fresh data, high concurrency, and unpredictable query patterns. Here is a more useful checklist.\n\n### Define Your Ingest and Freshness Targets\n\n- Measure ingest throughput at your expected peak event rate, not average rate. Ingest backpressure during traffic spikes is a real production failure mode.\n- Define how recently-written data must appear in analytical queries. If the answer is 'within 5 seconds,' test for that specifically under load.\n- Test ingest and query simultaneously, not sequentially. Many systems perform well when ingesting or querying but degrade when doing both at once.\n\n### Test User-Facing Query Concurrency\n\n- Run your most common dashboard queries at 50, 200, and 500 concurrent connections and measure p50, p95, and p99 latency at each level.\n- Include queries with filters, multi-table joins, and window functions that reflect real user behavior, not just count(*) queries.\n- Test with a realistic data volume: if your production dataset is 500GB, benchmark on 500GB, not 10GB.\n\n### Measure Cost and Operational Overhead\n\n- Estimate total cost of ownership at your projected data volume and traffic, including compute, storage, and managed service fees.\n- Time how long it takes to restore from a backup and what happens to query availability during a node failure.\n- Evaluate whether your existing BI tools, ORM, and monitoring stack integrate without custom connectors.\n\n## Best Databases for Real-Time Analytics Reviewed\n\nEach database below is evaluated against the same seven criteria: best for, why it's on the list, key features, pros, cons and tradeoffs, pricing, and getting started. The list begins with TiDB because the operational analytics case is the least well understood; the remaining entries follow in rough order of OLAP specialisation.\n\n### TiDB\n\n**Best For:** Teams that need real-time analytics on live transactional data, strong consistency, horizontal scale, and a simpler infrastructure footprint without a separate ETL pipeline. See [database for real-time analytics](https://www.pingcap.com/tidb/) for more.\n\n**Why It's on the List:** TiDB is an HTAP database that handles both transactional writes and real-time analytical queries in one system. TiKV is the row-based storage engine for OLTP. TiFlash is the columnar engine; per-table TiFlash replicas are configured explicitly, after which replication from TiKV is automatic, making analytical queries reflect data written seconds earlier without ETL. For teams that run operational systems and need analytics on fresh data, this architecture removes the pipeline entirely.\n\n**Key Features:**\n- TiKV row store for distributed OLTP with strong ACID consistency\n- TiFlash columnar engine: replicas configured per table, then automatically replicated from TiKV for lightweight OLAP on live data\n- MySQL 5.7 and partial 8.0 wire protocol compatibility\n- Horizontal scale-out with transparent range-based sharding\n- TiDB Operator for Kubernetes-native cluster management\n- TiCDC for real-time change data capture to downstream systems\n- TiDB Cloud tiers: Starter (free), Essential (public preview), Premium (public preview), Dedicated\n\n**Pros:**\n- One system for OLTP and real-time analytical queries on fresh operational data\n- Eliminates the ETL pipeline between transactional and analytical layers for moderate-scale operational analytics\n- Horizontal write scaling without application-level sharding logic\n- Strong ACID consistency across all nodes\n\n**Cons and Tradeoffs:**\n- TiFlash is designed for real-time, lightweight OLAP on live transactional data; it is not a replacement for ClickHouse or Druid on pure scan-heavy historical analytical workloads\n- Higher minimum resource requirements than a single-node analytical database\n- Active-Active multi-region support is planned but not yet generally available\n- Some MySQL features are unsupported; review compatibility documentation before migrating\n\n**Pricing:** TiDB is open source (Apache 2.0). TiDB Cloud Starter is free. TiDB Cloud Essential and Premium are in public preview. TiDB Cloud Dedicated is priced by cluster size and region; see [tidbcloud.com](https://tidbcloud.com) for current rates.\n\n**Getting Started:** Sign up at [tidbcloud.com](https://tidbcloud.com) or deploy self-hosted using TiDB Operator on Kubernetes.\n\n### ClickHouse\n\n**Best For:** Teams that need the fastest possible columnar scan performance on large volumes of event, log, or time-series data.\n\n**Why It's on the List:** ClickHouse is a column-oriented database designed for analytical queries at scale. It uses vectorized query execution and column-level compression to return results on billions of rows in sub-second time. It is the dominant choice for high-volume event analytics, log analysis, and any workload where scan throughput on append-heavy data is the primary requirement.\n\n**Key Features:**\n- Column-oriented storage with aggressive compression for scan-heavy workloads\n- Vectorized query execution across multiple CPU cores\n- Real-time and batch ingest via Kafka, HTTP, and native clients\n- Materialized views for pre-aggregating common query patterns\n- ClickHouse Cloud managed service with auto-scaling\n\n**Pros:**\n- Fastest single-system OLAP performance on scan-heavy analytical queries\n- Handles billions of rows without query degradation on supported access patterns\n- Strong ecosystem with connectors for Kafka, dbt, Grafana, and common BI tools\n\n**Cons and Tradeoffs:**\n- Updates and deletes are expensive; ClickHouse is optimized for append-heavy workloads, not frequent row mutations\n- Does not support OLTP transactional writes; requires a separate pipeline to feed data from operational systems\n- Joins on large tables with low cardinality can be slower than expected; query planning expertise matters\n\n**Pricing:** ClickHouse Community is open source and free. ClickHouse Cloud pricing is usage-based; see [clickhouse.com](https://clickhouse.com) for current rates.\n\n**Getting Started:** Open source packages and documentation at [clickhouse.com](https://clickhouse.com). ClickHouse Cloud offers a free trial.\n\n### Apache Druid\n\n**Best For:** Teams building streaming analytics pipelines where new events must be queryable within seconds of ingestion and query patterns are known at schema design time.\n\n**Why It's on the List:** Apache Druid is a real-time OLAP database designed for event-driven analytics. It ingests data from Kafka and other streaming sources and pre-aggregates metrics at ingest time, making queries extremely fast for workloads that match the pre-aggregated schema. It is widely used for product analytics, clickstream analysis, and operational monitoring.\n\n**Key Features:**\n- Native Kafka and Kinesis integration for real-time streaming ingest\n- Pre-aggregation at ingest time for fast query responses on known metrics\n- Segment-based storage with automatic tiering to cold storage\n- SQL interface with Druid-native extensions for time-series operations\n\n**Pros:**\n- Sub-second query latency on pre-aggregated event data at high concurrency\n- Strong real-time streaming ingest with Kafka connector ecosystem\n- Apache Software Foundation project with broad production track record\n\n**Cons and Tradeoffs:**\n- Schema must be defined at ingest time; ad-hoc analytical queries that do not match the pre-aggregated schema are slow or unsupported\n- Operational complexity is high; a production Druid cluster requires multiple service types (Broker, Coordinator, Historical, MiddleManager) each requiring tuning\n- No transactional write support; Druid is a pure OLAP system\n\n**Pricing:** Apache Druid is open source and free. Managed Druid is available through Imply and other providers; see [imply.io](https://imply.io) for commercial options.\n\n**Getting Started:** Documentation and quickstart at [druid.apache.org](https://druid.apache.org).\n\n### Apache Pinot\n\n**Best For:** Teams building customer-facing real-time dashboards where individual users need sub-second query responses at high concurrent load.\n\n**Why It's on the List:** Apache Pinot was developed at LinkedIn to power user-facing analytics products. It is designed for low-latency queries at very high concurrency, with an index architecture that keeps query latency predictable even when hundreds of users query simultaneously. LinkedIn, Uber, and other large-scale data engineering teams use it for real-time product analytics.\n\n**Key Features:**\n- Index-optimized columnar storage for sub-second latency at high concurrency\n- Real-time Kafka ingestion with segment-level freshness\n- Star-tree index for ultra-fast aggregation on high-cardinality dimensions\n- Multi-stage query engine for complex analytical queries\n\n**Pros:**\n- Purpose-built for user-facing real-time analytics at scale; proven at LinkedIn, Uber, and similar environments\n- Consistent sub-second latency even under high dashboard concurrency\n- Apache project with StarTree providing commercial managed service\n\n**Cons and Tradeoffs:**\n- Index design requires upfront schema planning; incorrect index choices lead to slow ad-hoc queries\n- Operational complexity is high for self-hosted deployments; tuning segment sizes and indexes requires expertise\n- Less flexible than ClickHouse for exploratory or ad-hoc analytical queries outside the indexed schema\n\n**Pricing:** Apache Pinot is open source and free. StarTree Cloud provides a managed option; see [startree.ai](https://startree.ai) for current pricing.\n\n**Getting Started:** Documentation and quickstart at [pinot.apache.org](https://pinot.apache.org).\n\n\n### SingleStore\n\n**Best For:** Teams that need fast HTAP performance with sub-millisecond rowstore latency and analytical queries on a disk-based columnar engine in one unified system.\n\n**Why It's on the List:** SingleStore uses a unified engine combining an in-memory rowstore for fast transactional writes and a disk-based columnar store for analytical queries. It handles concurrent transactional inserts and large analytical scans without routing between separate physical engines. For workloads where analytical query latency under 10 milliseconds is a hard requirement on hot data, it is among the fastest options available.\n\n**Key Features:**\n- Unified engine: in-memory rowstore for OLTP, disk-based columnar store for analytics\n- MySQL-compatible SQL interface\n- Distributed architecture with horizontal scaling\n- Connectors for Kafka, Spark, and standard BI tools\n\n**Pros:**\n- Sub-millisecond analytical query latency on in-memory rowstore datasets\n- No separate analytical engine to sync; row and columnar storage coexist in the same node\n- Strong ecosystem and commercial support\n\n**Cons and Tradeoffs:**\n- In-memory rowstore increases infrastructure cost as hot data volume grows\n- Commercial licensing required for production workloads beyond the free tier\n- Less mature Kubernetes-native operational tooling compared to TiDB\n\n**Pricing:** SingleStore offers a free tier. Production deployments require a paid license; see [singlestore.com](https://singlestore.com) for current rates.\n\n**Getting Started:** Cloud and self-managed options at [singlestore.com](https://singlestore.com).\n\n\n### TimescaleDB\n\n**Best For:** Teams already running PostgreSQL that need time-series analytics on IoT data, metrics, or any dataset with high-frequency time-ordered writes.\n\n**Why It's on the List:** TimescaleDB extends PostgreSQL with automatic time-based partitioning (hypertables), columnar compression for older data, and time-series specific SQL functions. Teams with PostgreSQL expertise can add time-series analytical performance without migrating to a new system. For IoT sensor data, application metrics, and monitoring workloads, it is a strong fit.\n\n**Key Features:**\n- Hypertables: automatic time-based partitioning on top of PostgreSQL\n- Columnar compression for efficient storage of older time-series data\n- Continuous aggregates for pre-computed real-time rollups\n- Time-series SQL functions: time_bucket(), first(), last(), and others\n\n**Pros:**\n- Zero learning curve for PostgreSQL users; standard Postgres SQL and drivers work unchanged\n- Efficient storage and query performance on time-ordered data\n- Available as open source or via Tiger Cloud managed service\n\n**Cons and Tradeoffs:**\n- General OLAP scan performance on non-time-ordered data is less competitive than ClickHouse or Druid\n- Does not replace a dedicated HTAP or OLAP platform for mixed transactional and large-scale analytical workloads\n- Horizontal write scaling requires additional configuration beyond a single PostgreSQL node\n\n**Pricing:** TimescaleDB is open source. Tiger Cloud is the managed service; see [timescale.com](https://timescale.com) for current pricing.\n\n**Getting Started:** Available as a PostgreSQL extension or via Tiger Cloud at [timescale.com](https://timescale.com).\n\n### StarRocks\n\n**Best For:** Teams that need high-concurrency real-time OLAP with strong BI tool integration and push-based data ingestion from Flink or Kafka.\n\n**Why It's on the List:** StarRocks is a massively parallel columnar OLAP database designed for real-time analytics at high concurrency. It uses a vectorized execution engine, real-time materialized views, and a push-based ingestion model that keeps data fresh without batch loads. For BI-heavy workloads where many analysts query simultaneously and data needs to be current, StarRocks competes directly with ClickHouse and Pinot.\n\n**Key Features:**\n- MPP columnar execution engine for parallel analytical queries\n- Real-time materialized views that update as data changes\n- Streaming ingest via Flink, Kafka, and native Stream Load\n- Standard SQL with support for complex joins and window functions\n\n**Pros:**\n- Strong BI tool integration (Tableau, Superset, Grafana, Looker)\n- Real-time materialized views reduce query latency on pre-computable aggregations\n- Good query flexibility for ad-hoc analytics compared to Pinot\n\n**Cons and Tradeoffs:**\n- Smaller ecosystem and fewer enterprise integrations than ClickHouse\n- Less production track record at extreme scale compared to ClickHouse or Druid\n- No native OLTP support; transactional writes require a separate operational database\n\n**Pricing:** StarRocks is an open-source Linux Foundation project. The commercial vendor is Phoenix AI; see [phoenixdata.ai](https://phoenixdata.ai) for pricing.\n\n**Getting Started:** Documentation and quickstart at [starrocks.io](https://starrocks.io).",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-2",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "TiDB handles both OLTP and real-time analytics in one cluster — no pipeline required.",
+        "primaryCta": {
+          "text": "See How TiDB Works",
+          "href": "https://www.pingcap.com/tidb/"
+        },
+        "secondaryCta": {
+          "text": "Try TiDB Cloud Free",
+          "href": "https://tidbcloud.com"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22184957/1000011432.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-2",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## When Is TiDB the Best Database for Real-Time Analytics?\n\nTiDB is not the fastest database for pure analytical scan throughput on cold historical data. ClickHouse and Druid beat it on that dimension. TiDB is the right choice when the analytics problem is inseparable from the operational data problem.\n\n### Best for Fresh Operational Analytics\n\nThe clearest case for TiDB is when analytics must reflect data written in the last few seconds by application transactions. A fraud detection system that checks whether a current payment matches a user's recent transaction pattern, or an inventory dashboard that must show current stock levels across all warehouses, needs to query live operational data. Per-table TiFlash replicas are configured explicitly; replication from TiKV then runs automatically, so those queries return current results without a pipeline delay.\n\nFor a detailed guide to this use case, see [mastering real-time data analytics](https://www.pingcap.com/article/mastering-real-time-data-analytics-with-tidb-a-comprehensive-guide/) and the [HTAP solution for real-time analytics](https://www.pingcap.com/article/tidb-the-ultimate-htap-solution-for-real-time-analytics/).\n\n### Best for Hybrid Transactional and Analytical Workloads\n\nTeams that run a MySQL or MySQL-compatible database and want to add real-time analytics often end up building a pipeline from the operational database to an analytical store. TiDB eliminates that pipeline for moderate-scale operational analytics. Applications connect to TiDB using standard MySQL drivers; TiDB writes to TiKV. TiFlash replicates those writes automatically. Analytical queries run against TiFlash without touching the OLTP workload.\n\nAn e-commerce platform that needs both high-throughput order processing and real-time per-category revenue aggregations for an internal dashboard is a concrete example. With TiDB, both workloads run in the same cluster. Without TiDB, they require at least two systems and a synchronization mechanism between them.\n\nFor a real-world example of this architecture, see this [real-time data warehouse solution](https://www.pingcap.com/case-study/why-we-chose-a-scale-out-data-warehouse-for-real-time-analytics/) case study.\n\n### Best for Simplifying a Fragmented Analytics Stack\n\nWhen the operational database, streaming pipeline, and analytical store each require separate tuning, monitoring, and failure handling, the total maintenance burden across the stack is often higher than any single system's operational requirements. Teams that have consolidated onto TiDB report that removing the pipeline and the secondary analytical store simplifies their incident response and schema evolution workflows, because both workloads move through the same database change process.\n\n## How Do You Choose the Right Real-Time Analytics Platform?\n\nStart with what the data is doing, not with which database is trending. The right tool is the one that matches your data's shape and your users' latency requirements.\n\n### Step 1: Define Your Real-Time Use Case\n\nCustomer-facing dashboards need consistent sub-second latency under high concurrency. Streaming event pipelines need fast ingest and low query latency on recent events. Operational intelligence needs freshness close to live transactional data. Historical trend analysis is more tolerant of latency and more demanding of scan throughput. These are different problems, and the database that excels at one often trades off against another.\n\n### Step 2: Define Your Data Flow and Freshness Needs\n\nAsk how old the data can be when a user sees it. If the answer is under 10 seconds, you need near-real-time ingest and replication. If the answer is under 1 minute, streaming pipelines to a columnar store work. If the answer is under 1 day, batch ETL is sufficient. Your freshness requirement determines whether you need a streaming-first architecture, an HTAP system, or a warehouse.\n\n### Step 3: Define Your Concurrency and Scale Profile\n\nHow many users query simultaneously at peak? A single analyst running monthly reports has different requirements than 10,000 end users all loading a dashboard at the same moment. Concurrency stress testing at your expected peak, not your average, is essential before committing to an architecture. Databases that look equivalent at low concurrency often diverge significantly under load.\n\n### Step 4: Define Your Operational Complexity Budget\n\nA self-hosted Druid or Pinot cluster requires multiple service components, careful tuning, and operational expertise. TiDB Cloud and ClickHouse Cloud reduce that overhead. For small teams or teams without dedicated database engineering capacity, managed services significantly change the operational calculus.\n\nFor a broader look at distributed SQL options for analytical workloads, see [best distributed SQL databases](https://www.pingcap.com/compare/best-distributed-sql-databases/).\n\n## What Architecture Patterns Work Best for Real-Time Analytics?\n\nThe right architecture depends on where the data comes from, how fresh it needs to be, and whether the same system also handles operational writes.\n\n### Customer-Facing Analytics Pattern\n\nEvent data streams into a low-latency OLAP database (Pinot, StarRocks, or ClickHouse). End users query that database directly through a thin API layer. The operational write path is separate. This pattern works well when event volume is high, query patterns are mostly known, and freshness of a few seconds is acceptable.\n\n**Pitfall to avoid:** Building customer-facing analytics on a database not designed for high concurrency. A system that handles 10 queries per second fine may degrade to 10-second latency at 1,000 concurrent users.\n\n### Streaming Analytics Pattern\n\nA Kafka or Kinesis stream feeds into a real-time OLAP engine (Druid or Pinot). Queries run against the ingested stream with sub-second freshness. This pattern is standard for product analytics, operational monitoring, and clickstream analysis.\n\n**Pitfall to avoid:** Overloading the analytical cluster with ingest pressure. High ingest rates compete with query processing. Separate ingest and query resource pools where the database supports it.\n\nFor a look at how one team approached the scale-out data warehouse challenge, see this [real-time data warehouse solution](https://www.pingcap.com/case-study/why-we-chose-a-scale-out-data-warehouse-for-real-time-analytics/).\n\n### Operational Intelligence Pattern\n\nAn HTAP database handles both transactional writes and analytical queries. TiDB is the primary example: TiKV for OLTP, TiFlash for OLAP, with per-table replica configuration followed by automatic replication. This pattern fits teams that cannot tolerate the latency of an external pipeline between their operational and analytical layers.\n\n**Pitfall to avoid:** Expecting HTAP performance on workloads that require petabyte-scale historical analytics. TiFlash is optimized for real-time, moderate-scale OLAP on live data. Deep historical analysis at warehouse scale still belongs in a dedicated analytical platform.\n\n## Ready to Evaluate a Real-Time Analytics Platform?\n\nThe right database for real-time analytics is the one that matches your data flow, freshness requirements, concurrency targets, and operational capacity. Fast OLAP engines like ClickHouse and Druid win on pure scan throughput. User-facing databases like Pinot and StarRocks win on concurrency consistency. TiDB wins when the analytical workload is inseparable from live operational data and pipeline complexity is a real cost.\n\nExplore TiDB as a [real-time analytics platform](https://www.pingcap.com/solutions/enable-operational-intelligence/).\n\n**Editorial Policy:**\n- Options were selected using the criteria in the 'How We Chose' section. No vendor paid for inclusion.\n- This page is reviewed and updated when significant product changes or new relevant tools emerge.\n- Pricing and benchmark figures should be verified against primary vendor sources before publication.\n- PingCAP is the publisher and the company behind TiDB. Readers should factor in that conflict when weighing the TiDB analysis.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Best Database for Real-Time Analytics FAQs",
+        "items": [
+          {
+            "q": "What Is the Best Database for Real-Time Analytics?",
+            "a": "There is no single best option. For fast OLAP on event data, ClickHouse is the strongest performer on scan-heavy workloads. For customer-facing dashboards at high concurrency, Apache Pinot and StarRocks are purpose-built for that use case. For real-time analytics on live transactional data without a separate pipeline, TiDB's HTAP architecture is the right fit."
+          },
+          {
+            "q": "Is ClickHouse Good for Real-Time Analytics?",
+            "a": "Yes. ClickHouse delivers the fastest scan performance of any database on this list for append-heavy analytical workloads. It handles real-time ingest via Kafka and makes new data queryable within seconds. Updates and deletes are expensive, and it does not handle OLTP transactional writes natively. Teams that also need fresh operational analytics from transactional data should compare ClickHouse against TiDB for the full architecture cost, including the pipeline between the operational database and ClickHouse."
+          },
+          {
+            "q": "Can TiDB Handle Real-Time Analytics?",
+            "a": "Yes. TiDB's TiFlash engine serves real-time, lightweight OLAP queries on live transactional data within the same cluster. TiFlash replicas are configured per table, after which replication from TiKV is automatic; analytical queries reflect data written seconds earlier without ETL. TiDB is not a replacement for ClickHouse or Druid on pure scan-heavy OLAP. For teams running OLTP and needing analytics on the same live dataset, TiDB is the most architecturally complete option on this list."
+          },
+          {
+            "q": "What Is the Difference Between a Real-Time OLAP Database and an HTAP Database?",
+            "a": "A real-time OLAP database (ClickHouse, Druid, Pinot) is optimized for analytical queries on ingested data and does not support concurrent transactional writes. An HTAP database (TiDB, SingleStore) supports both OLTP writes and OLAP queries on the same live dataset. The key difference is whether the database is the source of operational truth or only the analytical layer downstream from it. OLAP databases are faster for pure analytics on cold data; HTAP databases eliminate the pipeline between the operational system and the analytical layer."
+          },
+          {
+            "q": "Which Database Is Best for Customer-Facing Real-Time Dashboards?",
+            "a": "Apache Pinot is purpose-built for user-facing real-time analytics: consistent sub-second latency at high concurrency is its primary design goal. StarRocks is a strong alternative with better query flexibility for ad-hoc analytical queries. ClickHouse handles high concurrency well but is less optimized for consistent per-query latency under extreme user-facing load than Pinot. If the dashboard data also comes from live transactional sources that need freshness under 5 seconds, TiDB's TiFlash is worth evaluating."
+          },
+          {
+            "q": "How Should I Benchmark a Real-Time Analytics Database?",
+            "a": "Test ingest and query simultaneously at your expected peak rate, not separately; most databases degrade under concurrent ingest and query load. Measure p95 and p99 latency at your expected peak concurrency, not just average latency under a single connection. Use a dataset that matches your production size and cardinality. Include freshness measurement: write a row and time how long until it appears in an analytical query result under normal load.\n\n:::cta bg=\"https://static.pingcap.com/files/2025/06/22211020/1000011435.png\"\nGet the full architecture guide to real-time analytics with TiDB.\n[Read the HTAP Deep Dive](https://www.pingcap.com/article/tidb-the-ultimate-htap-solution-for-real-time-analytics/)\n[Start Free on TiDB Cloud](https://tidbcloud.com)\n:::"
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    }
+  ]
+}
