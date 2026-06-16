@@ -866,6 +866,102 @@ function sanitizeHeadingsInProps(
   }
 }
 
+// ─── Markdown table preservation ────────────────────────────────────────────
+// The AI fill step routinely rewrites Markdown table cells (e.g. turning
+// "[TiDB Cloud](https://tidbcloud.com)" into plain "tidbcloud.com"), dropping
+// the link syntax. We extract tables from the source verbatim and re-inject
+// them so hyperlinks and exact cell content survive AI generation.
+
+interface SourceTable {
+  headerCells: string[]
+  raw: string
+}
+
+const isTableRow = (line: string) => /^\|.*\|$/.test(line.trim())
+
+const splitTableCells = (line: string) =>
+  line
+    .trim()
+    .replace(/^\||\|$/g, '')
+    .split('|')
+    .map((c) => c.trim())
+
+/** Collect every Markdown table (header + separator + body) from source text. */
+function extractMarkdownTables(md: string): SourceTable[] {
+  const lines = md.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
+  const tables: SourceTable[] = []
+  let i = 0
+  while (i < lines.length) {
+    if (!isTableRow(lines[i])) {
+      i += 1
+      continue
+    }
+    const block: string[] = []
+    while (i < lines.length && isTableRow(lines[i])) {
+      block.push(lines[i])
+      i += 1
+    }
+    // A real table needs at least a header row and a separator row.
+    if (block.length >= 2) {
+      tables.push({
+        headerCells: splitTableCells(block[0]).map((c) => c.toLowerCase()),
+        raw: block.join('\n'),
+      })
+    }
+  }
+  return tables
+}
+
+/**
+ * Replace each Markdown table found in AI-generated content with the verbatim
+ * source table whose header row best matches. Returns content unchanged when
+ * there are no source tables or no confident match.
+ */
+function restoreSourceMarkdownTables(aiContent: string, sourceTables: SourceTable[]): string {
+  if (!sourceTables.length || !aiContent.includes('|')) return aiContent
+  const lines = aiContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
+  const out: string[] = []
+  const used = new Set<number>()
+  let i = 0
+  while (i < lines.length) {
+    if (!isTableRow(lines[i])) {
+      out.push(lines[i])
+      i += 1
+      continue
+    }
+    const block: string[] = []
+    while (i < lines.length && isTableRow(lines[i])) {
+      block.push(lines[i])
+      i += 1
+    }
+    if (block.length < 2) {
+      out.push(...block)
+      continue
+    }
+    const header = splitTableCells(block[0]).map((c) => c.toLowerCase())
+    let bestIdx = -1
+    let bestScore = 0
+    sourceTables.forEach((table, idx) => {
+      if (used.has(idx)) return
+      const overlap = header.filter((c) => c && table.headerCells.includes(c)).length
+      const score = overlap / Math.max(header.length, table.headerCells.length)
+      if (score > bestScore) {
+        bestScore = score
+        bestIdx = idx
+      }
+    })
+    // Require a strong header match before substituting to avoid clobbering
+    // an unrelated table the AI may have created.
+    if (bestIdx >= 0 && bestScore >= 0.5) {
+      out.push(sourceTables[bestIdx].raw)
+      used.add(bestIdx)
+    } else {
+      out.push(...block)
+    }
+  }
+  return out.join('\n')
+}
+
 async function generateLongFormDslFromOutline(
   content: string,
   pageType: PageType,
@@ -917,6 +1013,7 @@ async function generateLongFormDslFromOutline(
   }
   const sourceMarkdownHeadings =
     pageType.toLowerCase() === 'compare' ? extractSourceMarkdownHeadings(normalizedContent) : null
+  const sourceTables = extractMarkdownTables(normalizedContent)
   const split = splitIntroMainFromSource(normalizedContent)
   const outlineSections = outline.sections
   const filledSections = await Promise.all(
@@ -978,6 +1075,15 @@ async function generateLongFormDslFromOutline(
         const introContent = typeof props.content === 'string' ? props.content : ''
         if (introContent) {
           props.content = trimToParagraphs(introContent, 3)
+        }
+      }
+      // Restore any source Markdown tables verbatim so hyperlinks and exact
+      // cell content survive the AI rewrite. Runs after trimming so we only
+      // touch tables that remain in the section.
+      if (section.sectionType === 'richTextBlock' && sourceTables.length) {
+        const content = typeof props.content === 'string' ? props.content : ''
+        if (content) {
+          props.content = restoreSourceMarkdownTables(content, sourceTables)
         }
       }
       if (!cached) setCachedSection(cacheKey, props)
