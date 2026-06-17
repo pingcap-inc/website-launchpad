@@ -109,11 +109,11 @@
           {
             "title": "TiDB vs OceanBase",
             "description": "Two distributed SQL databases, different design centers. OceanBase for peak OLTP and Oracle replacement. TiDB when you need transactions and real-time analytics on the same data.",
-            "layout": "vertical",
             "cta": {
               "text": "Compare",
               "href": "https://www.pingcap.com/compare/tidb-vs-oceanbase/"
-            }
+            },
+            "layout": "vertical"
           }
         ],
         "columns": 2,
@@ -162,10 +162,22 @@
             "href": "https://www.pingcap.com/compare/best-database-building-ai-apps/"
           },
           {
+            "icon": "Package",
             "title": "Best MySQL-Compatible Databases",
             "description": "MySQL compatibility doesn't mean MySQL behavior. Covers forks, managed services, sharding tools, and distributed SQL and what each one costs you at scale.",
-            "icon": "Package",
             "href": "pingcap.com/compare/mysql-compatible-database"
+          },
+          {
+            "title": "Best Databases for Real-Time Analytics",
+            "description": "Query latency, data freshness, and concurrency under load. Covers pure OLAP engines, streaming-first systems, and HTAP databases — and when each architecture is the right call.",
+            "icon": "TrendingUp",
+            "href": "https://www.pingcap.com/compare/best-databases-for-real-time-analytics/"
+          },
+          {
+            "title": "Best HTAP Database",
+            "description": "What it actually means to run transactions and analytics on the same live data. Covers architecture trade-offs, freshness guarantees, and how HTAP compares to a dedicated pipeline.",
+            "icon": "Puzzle",
+            "href": "https://www.pingcap.com/compare/htap-database/"
           }
         ],
         "columns": 2,
