@@ -1,0 +1,391 @@
+{
+  "pageName": "7 Best HTAP Databases for Real-Time Operational Analytics",
+  "meta": {
+    "title": "Best HTAP Databases in 2026 - TiDB",
+    "description": "Compare the best htap database options for real-time analytics, OLTP, and scale. See which platforms fit hybrid workloads best.",
+    "canonical": "/compare/htap-database/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "7 Best HTAP Databases for Real-Time Operational Analytics",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/cdfb884c-group_1000011623.png",
+            "alt": "group 1000011623",
+            "width": 946,
+            "height": 664
+          },
+          "alt": "group 1000011623",
+          "width": 946,
+          "height": 664
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "quick-answer-which-htap-database-is-best-for-your-workload",
+            "label": "Quick Answer: Which HTAP Database Is Best for Your Workload?",
+            "level": 1
+          },
+          {
+            "id": "compare-the-best-htap-databases-at-a-glance",
+            "label": "Compare the Best HTAP Databases at a Glance",
+            "level": 1
+          },
+          {
+            "id": "how-should-you-read-this-htap-database-table",
+            "label": "How Should You Read This HTAP Database Table?",
+            "level": 1
+          },
+          {
+            "id": "what-framework-separates-a-real-htap-database-from-a-hybrid-workaround",
+            "label": "What Framework Separates a Real HTAP Database from a Hybrid Workaround?",
+            "level": 1
+          },
+          {
+            "id": "freshness",
+            "label": "Freshness",
+            "level": 2
+          },
+          {
+            "id": "isolation",
+            "label": "Isolation",
+            "level": 2
+          },
+          {
+            "id": "operational-simplicity",
+            "label": "Operational Simplicity",
+            "level": 2
+          },
+          {
+            "id": "how-we-chose-the-best-htap-databases",
+            "label": "How We Chose the Best HTAP Databases",
+            "level": 1
+          },
+          {
+            "id": "how-should-you-benchmark-an-htap-database-for-your-workload",
+            "label": "How Should You Benchmark an HTAP Database for Your Workload?",
+            "level": 1
+          },
+          {
+            "id": "define-the-live-transactional-workload",
+            "label": "Define the Live Transactional Workload",
+            "level": 2
+          },
+          {
+            "id": "define-the-analytical-workload-on-fresh-data",
+            "label": "Define the Analytical Workload on Fresh Data",
+            "level": 2
+          },
+          {
+            "id": "measure-contention-lag-and-recovery",
+            "label": "Measure Contention, Lag, and Recovery",
+            "level": 2
+          },
+          {
+            "id": "best-htap-databases-reviewed",
+            "label": "Best HTAP Databases Reviewed",
+            "level": 1
+          },
+          {
+            "id": "tidb",
+            "label": "TiDB",
+            "level": 2
+          },
+          {
+            "id": "singlestore",
+            "label": "SingleStore",
+            "level": 2
+          },
+          {
+            "id": "mariadb-with-columnstore",
+            "label": "MariaDB with ColumnStore",
+            "level": 2
+          },
+          {
+            "id": "google-bigtable-hybrid-services",
+            "label": "Google Bigtable Hybrid Services",
+            "level": 2
+          },
+          {
+            "id": "opentenbase",
+            "label": "OpenTenBase",
+            "level": 2
+          },
+          {
+            "id": "space-and-time",
+            "label": "Space and Time",
+            "level": 2
+          },
+          {
+            "id": "yugabytedb",
+            "label": "YugabyteDB",
+            "level": 2
+          },
+          {
+            "id": "when-is-tidb-the-best-htap-database",
+            "label": "When Is TiDB the Best HTAP Database?",
+            "level": 1
+          },
+          {
+            "id": "best-for-real-time-operational-analytics",
+            "label": "Best for Real-Time Operational Analytics",
+            "level": 2
+          },
+          {
+            "id": "best-for-reducing-etl-and-pipeline-sprawl",
+            "label": "Best for Reducing ETL and Pipeline Sprawl",
+            "level": 2
+          },
+          {
+            "id": "best-for-distributed-scale-with-strong-consistency",
+            "label": "Best for Distributed Scale with Strong Consistency",
+            "level": 2
+          },
+          {
+            "id": "how-do-you-choose-the-right-htap-database",
+            "label": "How Do You Choose the Right HTAP Database?",
+            "level": 1
+          },
+          {
+            "id": "step-1-define-how-fresh-your-analytics-must-be",
+            "label": "Step 1: Define How Fresh Your Analytics Must Be",
+            "level": 2
+          },
+          {
+            "id": "step-2-define-your-contention-tolerance",
+            "label": "Step 2: Define Your Contention Tolerance",
+            "level": 2
+          },
+          {
+            "id": "step-3-define-your-scaling-and-multi-tenant-profile",
+            "label": "Step 3: Define Your Scaling and Multi-Tenant Profile",
+            "level": 2
+          },
+          {
+            "id": "step-4-define-your-operational-and-ecosystem-needs",
+            "label": "Step 4: Define Your Operational and Ecosystem Needs",
+            "level": 2
+          },
+          {
+            "id": "what-architecture-patterns-work-best-for-htap-workloads",
+            "label": "What Architecture Patterns Work Best for HTAP Workloads?",
+            "level": 1
+          },
+          {
+            "id": "unified-htap-architecture",
+            "label": "Unified HTAP Architecture",
+            "level": 2
+          },
+          {
+            "id": "hybrid-services-architecture",
+            "label": "Hybrid Services Architecture",
+            "level": 2
+          },
+          {
+            "id": "separate-systems-with-controlled-sync",
+            "label": "Separate Systems with Controlled Sync",
+            "level": 2
+          },
+          {
+            "id": "faq",
+            "label": "HTAP Database FAQs",
+            "level": 1
+          },
+          {
+            "id": "ready-to-evaluate-a-distributed-htap-database",
+            "label": "Ready to Evaluate a Distributed HTAP Database?",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "**Updated June 2026 | Author: Akshata Hire, Product Marketing Lead | Reviewed by: Ravish Patel, Solutions Engineer**\n\n:::card tone=light\n\n**Key Takeaways**\n\n- HTAP databases eliminate the ETL gap by serving transactional and analytical workloads from the same live dataset.\n- Freshness, isolation, and operational simplicity separate a real HTAP platform from a hybrid workaround.\n- TiDB's TiKV row store and TiFlash columnar engine handle OLTP and real-time OLAP in one cluster without ETL.\n- Separate OLTP and OLAP systems still outperform HTAP for petabyte-scale historical analytics.\n- The HTAP label varies widely; architecture, isolation model, and consistency guarantees differ across vendors.\n\n:::\n\nWhen transactional data lives in one system and analytical queries run against a stale copy in another, the gap between the two is a pipeline you maintain. An HTAP database, short for hybrid transactional/analytical processing, is a single database that handles both OLTP and OLAP workloads on live operational data, removing the need for a separate synchronization layer.\n\nOLTP databases are optimized for high-concurrency reads and writes against individual rows: order inserts, account updates, session management. OLAP systems scan large volumes of data for aggregations, reports, and trend analysis. In traditional architectures those two patterns live in different engines. HTAP systems run both in one platform, keeping analytics close to current data without the latency and cost of continuous ETL.\n\nThis list is for software architects, senior engineers, platform teams, and database leaders evaluating whether a unified HTAP platform fits their operational intelligence, fraud detection, SaaS analytics, or inventory use case. It covers purpose-built HTAP systems, hybrid service extensions, and adjacent options that support both workload types.\n\n*Disclosure: PingCAP builds TiDB and publishes this article. TiDB earned its place here by meeting the same criteria applied to every other tool on this list.*\n\n## Quick Answer: Which HTAP Database Is Best for Your Workload?\n\n:::card tone=light\n\n**Best overall HTAP database:** TiDB. Distributed SQL with row and columnar storage, strong ACID consistency, and real-time analytics on live transactional data.\n\n**Best for in-memory HTAP performance:** SingleStore. Row and columnar storage in one engine with aggressive in-memory optimization for sub-millisecond analytical queries.\n\n**Best MySQL-compatible HTAP option:** TiDB. Accepts MySQL wire protocol, scales horizontally, and adds real-time OLAP without application rewrites.\n\n**Best for extending an existing MySQL deployment with analytics:** MariaDB with ColumnStore. Adds columnar analytics to a familiar MySQL-compatible environment.\n\n**Best for high-scale NoSQL with hybrid analytics:** Google Bigtable. Hybrid service patterns for wide-column operational workloads with limited analytical extension.\n\n**Best open-source distributed HTAP on PostgreSQL:** OpenTenBase. PostgreSQL-compatible distributed SQL with HTAP design.\n\n**Best for verifiable real-time analytics with cryptographic proofs:** Space and Time. Blockchain-anchored HTAP for use cases where query tamper-proof guarantees matter.\n:::\n",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "sm",
+        "removePaddingTop": true
+      }
+    },
+    {
+      "id": "cta-intro-1",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Try TiDB, the leading distributed HTAP database — no ETL required.",
+        "primaryCta": {
+          "text": "Start Free on TiDB Cloud",
+          "href": "https://tidbcloud.com"
+        },
+        "secondaryCta": {
+          "text": "Explore TiDB Architecture",
+          "href": "https://www.pingcap.com/tidb/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22092103/1000011430.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-1",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Compare the Best HTAP Databases at a Glance\n\nThe columns follow the framework this article uses throughout: how strong each system is at OLTP and OLAP, how the architecture achieves both, and the honest trade-off that matters most in production.\n\n| Database | Best For | OLTP Strength | OLAP Strength | Architecture Style | Deployment Model | Key Tradeoff | Getting Started |\n|---|---|---|---|---|---|---|---|\n| TiDB | Distributed HTAP with MySQL compatibility | High (TiKV row store, distributed ACID) | High (TiFlash columnar, real-time replication) | Distributed SQL, separate row + columnar engines | Self-hosted (TiDB Operator) / TiDB Cloud | Higher minimum resource floor than single-node MySQL | [TiDB Cloud](https://tidbcloud.com) |\n| SingleStore | In-memory HTAP, low-latency operational analytics | High (row store, in-memory) | High (disk-based columnar engine) | In-memory row store + disk-based columnar engine | Self-hosted / SingleStore Cloud | Cost at scale; memory-heavy workloads add to infrastructure spend | [singlestore.com](https://www.singlestore.com) |\n| MariaDB + ColumnStore | MySQL-familiar HTAP extension | High (InnoDB-compatible) | Moderate (ColumnStore add-on) | Add-on columnar engine on top of MariaDB | Self-hosted | ColumnStore is a separate deployment; not unified in one engine | [mariadb.com](https://mariadb.com) |\n| Google Bigtable | NoSQL wide-column ops with hybrid analytics | High (wide-column, low-latency ops) | Moderate (native SQL and Data Boost for lighter analytics; deeper analytics route through BigQuery) | Wide-column NoSQL with native SQL support; deeper analytics via BigQuery federation | GCP managed service | Deeper analytical workloads still route through BigQuery federation | [Google Cloud Console](https://console.cloud.google.com/bigtable) |\n| OpenTenBase | PostgreSQL-compatible distributed HTAP | High (Postgres-compatible OLTP) | Moderate (HTAP-positioned; columnar engine unconfirmed) | Distributed PostgreSQL with HTAP extensions | Self-hosted (open source) | Smaller community and ecosystem than TiDB or SingleStore | [github.com/OpenTenBase](https://github.com/OpenTenBase/OpenTenBase) |\n| Space and Time | Verifiable analytics with cryptographic proof | Moderate (hybrid operational layer) | High (decentralized query with proof generation) | Blockchain-anchored distributed SQL | Cloud/managed | Niche use case; proof overhead unsuitable for pure performance workloads | [spaceandtime.io](https://www.spaceandtime.io) |\n| YugabyteDB | Geo-distributed Postgres-compatible HTAP | High (distributed ACID, Postgres compatible) | Moderate (follower reads; limited columnar) | Distributed Postgres, Raft consensus | Self-hosted / Yugabyte Cloud | Analytical workloads require separate tooling; not a true HTAP columnar engine | [yugabyte.com](https://www.yugabyte.com) |\n\n*Table 1: Side-by-side comparison of the seven best HTAP databases across OLTP and OLAP strength, architecture, deployment model, and key trade-offs.*\n\nExplore TiDB as your [distributed HTAP database](https://www.pingcap.com/tidb/).\n\n## How Should You Read This HTAP Database Table?\n\nThe HTAP label covers a wide range of architectures. Use these guidelines to match your actual workload to the right category before reading individual reviews.\n\n- If you need real-time analytics on live operational data with no ETL pipeline, look for databases that keep transactions and analytics in the same system. TiDB does this through separate row and columnar engines with automatic per-table replication (TiKV to TiFlash). SingleStore does this through a unified in-memory row store and disk-based columnar engine in one system. The two approaches differ in architecture but both avoid a separate pipeline.\n- If your team already runs MySQL and needs analytical queries without a full migration, MariaDB with ColumnStore adds columnar processing to an existing MySQL-compatible environment, though it is not a unified engine.\n- If your workload is primarily NoSQL key-value or wide-column operations with occasional aggregations, Bigtable handles OLTP well but routes analytics to BigQuery, which is a federated query rather than true HTAP.\n- If verifiable query results and tamper-proof audit trails matter more than raw analytical performance, Space and Time fits that specific requirement. It is not the right choice for general HTAP workloads.\n- Separate OLTP and OLAP systems still make sense when analytics run on petabyte-scale historical data or when the analytical engine needs to be purpose-built for complex transformations.\n\n## What Framework Separates a Real HTAP Database from a Hybrid Workaround?\n\nThree criteria drive the difference between a system that genuinely unifies transactional and analytical processing and one that adds a secondary mode onto a single-workload engine.\n\n### Freshness\n\nHow close analytical results stay to live operational data. A true HTAP system keeps analytics current without requiring a batch ETL job, either through near-real-time replication from a transactional engine to a separate analytical engine (as TiDB does with TiKV to TiFlash), or through a unified engine that serves both workloads from the same storage layer (as SingleStore does). Systems that sync to a separate read replica or external warehouse on a schedule have a freshness gap that grows with ingest volume and schedule latency.\n\n### Isolation\n\nHow well the system prevents analytical queries from competing with transactional workloads for resources. Row-store operations are typically short and high-concurrency. Columnar scans are long-running and resource-intensive. Without physical or logical isolation between the two, a heavy analytical query can cause latency spikes on OLTP traffic. Strong HTAP architectures route each query type to the appropriate engine with resource controls that keep them from interfering.\n\n### Operational Simplicity\n\nHow many systems, pipelines, and synchronization jobs the team has to manage to serve both workload types. A hybrid workaround often means running a database plus a streaming pipeline plus a separate analytical store, each requiring monitoring, tuning, and failure handling. A genuine HTAP platform reduces that surface to one system.\n\n## How We Chose the Best HTAP Databases\n\nThis list covers databases with documented support for both OLTP and OLAP workloads, either through a unified architecture or a closely integrated hybrid extension. Pure OLAP systems, ETL platforms, and monitoring tools were excluded. Generic analytical databases without transactional capabilities were also excluded.\n\nEvaluation criteria applied to each entry:\n- Row and columnar execution support within the same platform\n- Real-time or near-real-time data replication between transactional and analytical layers\n- Consistency model for concurrent OLTP and OLAP operations\n- Workload isolation mechanism (physical engine separation, resource groups, or in-memory routing)\n- Horizontal scaling model for both read and write workloads\n- Deployment flexibility (self-hosted, managed cloud, or both)\n- Ecosystem maturity, documentation quality, and community or vendor support\n\n## How Should You Benchmark an HTAP Database for Your Workload?\n\nGeneric HTAP benchmarks test OLTP and OLAP in isolation. What matters is how both workloads perform simultaneously, since that is the actual production condition an HTAP system is supposed to handle.\n\n### Define the Live Transactional Workload\n\n- Use a dataset that reflects your production row count, write rate, and key distribution, not a clean synthetic sample.\n- Measure OLTP latency at p50, p95, and p99 with a concurrency level that matches your peak connection count.\n- Include mixed read-write transactions, not just isolated inserts or point reads.\n- Test with your ORM or driver stack, not raw SQL, since connection pooling and query patterns affect behavior in real deployments.\n\n### Define the Analytical Workload on Fresh Data\n\n- Run analytical queries against data that was written in the last 30 seconds, not against a static snapshot. Freshness lag shows up here.\n- Include multi-table joins, aggregations with GROUP BY and HAVING, and window functions that represent your actual reporting queries.\n- Measure query latency at multiple data volumes (1GB, 10GB, 100GB) to understand how the columnar engine scales with dataset size.\n\n### Measure Contention, Lag, and Recovery\n\n- Run OLTP and OLAP workloads concurrently and measure OLTP latency degradation compared to the OLTP-only baseline. Good isolation means small degradation.\n- Measure the lag between a committed write and the time that write appears in an analytical query result. This is the freshness number.\n- Test failover by removing a node mid-workload and measuring recovery time and whether any transactions were lost.\n- Estimate total cost of ownership including compute, storage, and any managed service fees at your projected data volume and traffic.\n\n## Best HTAP Databases Reviewed\n\nEach entry below uses the same structure: best for, why it made the list, key features, pros, cons and tradeoffs, pricing, and getting started. The goal is a consistent basis for comparison, not a ranking. Read the entries that match your workload type first.\n\n### TiDB\n\n**Best for:** Teams that need MySQL-compatible distributed SQL, real-time analytics on live transactional data, and horizontal scaling — all from one system without a separate ETL pipeline.\n\n**Why it's on the list:** TiDB is an open-source distributed SQL database built for HTAP workloads. TiKV, the row-based storage engine, handles OLTP with distributed ACID transactions coordinated by the TiDB server, with PD supplying timestamps and cluster metadata. TiFlash, the columnar engine, replicates data from TiKV on a per-table basis once TiFlash replicas are configured for those tables. OLAP queries route to TiFlash; OLTP queries route to TiKV. Both run in the same cluster behind the same MySQL-compatible interface. For more on [real-time analytics with HTAP](https://www.pingcap.com/article/unlocking-htap-real-time-analytics-with-tidb/), PingCAP has published a detailed breakdown of the architecture.\n\n**Key features:**\n- TiKV row store for distributed OLTP with strong ACID consistency across nodes\n- TiFlash columnar engine for real-time, lightweight OLAP on live transactional data, with no ETL required\n- Per-table TiFlash replica configuration; once configured, replication from TiKV is automatic with freshness typically measured in seconds\n- MySQL 5.7 and partial 8.0 wire protocol compatibility; works with standard MySQL drivers\n- TiDB Operator for Kubernetes-native cluster management\n- TiCDC for real-time change data capture and streaming to downstream systems\n- TiDB Cloud managed service with Starter, Essential (public preview), Premium (public preview), and Dedicated tiers\n\n**Pros:**\n- One system for both OLTP and real-time lightweight OLAP, reducing the infrastructure footprint\n- Horizontal scale-out without application-level sharding logic\n- Strong consistency across all nodes; no eventual consistency trade-offs on OLTP writes\n- Reduces or eliminates the need for a separate analytics pipeline on fresh operational data\n\n**Cons and tradeoffs:**\n- TiFlash is suited for real-time, moderate-scale OLAP, not for petabyte-scale deep historical analytics that belong in a dedicated warehouse like Snowflake or BigQuery\n- Higher minimum resource requirements than a single-node MySQL or Postgres instance\n- Some MySQL features are unsupported or behave differently; review the compatibility documentation before migrating\n- Active-Active multi-region support is planned but not yet generally available; current multi-region deployment uses Raft-based placement rules\n\n**Pricing:** TiDB is open source (Apache 2.0). TiDB Cloud Starter has a free tier. TiDB Cloud Essential and Premium are in public preview. TiDB Cloud Dedicated pricing is based on cluster size and region. See [tidbcloud.com](https://tidbcloud.com) for current rates.\n\n**Getting started:** Sign up at [tidbcloud.com](https://tidbcloud.com) or deploy self-hosted using TiDB Operator on Kubernetes.\n\n### SingleStore\n\n**Best for:** Teams that need sub-millisecond analytical query performance on in-memory data and are willing to pay for the memory-heavy infrastructure that performance requires.\n\n**Why it's on the list:** SingleStore uses a unified engine with both row and columnar storage, optimized for in-memory performance. It handles concurrent OLTP inserts and OLAP scans without routing between separate physical engines. For workloads where query latency must stay under 10 milliseconds even on large aggregations, SingleStore is among the fastest options available.\n\n**Key features:**\n- Unified row and columnar storage in one engine\n- In-memory optimized architecture for sub-millisecond analytical queries\n- MySQL-compatible SQL interface\n- Distributed architecture with horizontal scaling\n\n**Pros:**\n- Industry-leading analytical query latency for in-memory workloads\n- No separate columnar engine to manage; row and column storage coexist in the same node\n- Strong ecosystem with connectors for Kafka, Spark, and BI tools\n\n**Cons and tradeoffs:**\n- Memory-intensive architecture increases infrastructure cost at scale compared to disk-based HTAP systems\n- Less mature Kubernetes-native operational tooling compared to TiDB\n- Commercial licensing required for production deployments beyond the free tier\n\n**Pricing:** SingleStore offers a free tier. Production workloads require a paid license; see [singlestore.com](https://singlestore.com) for current pricing.\n\n**Getting started:** Available at [singlestore.com](https://singlestore.com) with cloud-hosted and self-managed options.\n\n### MariaDB with ColumnStore\n\n**Best for:** Teams already running MariaDB that want to add columnar analytics without migrating to a new database platform.\n\n**Why it's on the list:** MariaDB ColumnStore is a columnar storage engine that runs alongside the default InnoDB engine. Teams can query both row and columnar data using standard MariaDB SQL. It is not a tightly integrated HTAP architecture in the way TiDB or SingleStore are, but for MySQL-familiar teams extending an existing deployment, it reduces the distance to a hybrid analytical capability.\n\n**Key features:**\n- ColumnStore columnar engine as an add-on to MariaDB\n- MySQL-compatible SQL across both row and columnar tables\n- Designed for bulk data loading and large analytical scans\n- MariaDB Enterprise includes commercial support for ColumnStore deployments\n\n**Pros:**\n- Low migration friction for teams already on MariaDB\n- Familiar SQL interface for both OLTP and analytical queries\n- Open source with commercial enterprise option\n\n**Cons and tradeoffs:**\n- ColumnStore is a separate deployment from the main MariaDB row engine, adding operational complexity\n- Data synchronization between InnoDB tables and ColumnStore tables requires explicit ETL or application logic, not automatic replication\n- Not a native distributed system; scaling requires additional configuration\n\n**Pricing:** MariaDB Community is open source and free. MariaDB Enterprise, which includes ColumnStore support, requires a commercial subscription. See [mariadb.com](https://mariadb.com) for current rates.\n\n**Getting started:** Available at [mariadb.com](https://mariadb.com). ColumnStore documentation covers setup alongside standard MariaDB.\n\n### Google Bigtable Hybrid Services\n\n**Best for:** GCP-native teams with wide-column NoSQL operational workloads that need to run analytical queries via BigQuery federation without moving to a different operational database.\n\n**Why it's on the list:** Bigtable is a high-performance wide-column store built for operational workloads at massive scale. Its hybrid service pattern runs analytical queries against Bigtable data through BigQuery federation, keeping operational writes in Bigtable and analytical reads in BigQuery. This is not a unified HTAP architecture, but it is a common pattern for teams already on GCP that need both.\n\n**Key features:**\n- Petabyte-scale wide-column NoSQL operational store\n- BigQuery federation for analytical queries on Bigtable data\n- Sub-10ms latency for individual row lookups at scale\n- Fully managed on GCP with SLA-backed availability\n\n**Pros:**\n- Exceptional single-row operational read and write performance\n- Fully managed; no infrastructure to provision or patch\n- Scales to petabytes without performance degradation for operational access patterns\n\n**Cons and tradeoffs:**\n- Bigtable added native SQL support and Data Boost in 2024 for lighter analytical workloads; deeper analytics and complex aggregations still route through BigQuery federation\n- No SQL for OLTP operations; Bigtable uses a key-value API, not relational SQL\n- GCP lock-in; portability to other environments requires a significant migration\n\n**Pricing:** Billed per node, storage, and network usage. See the Google Cloud pricing page for current Bigtable rates.\n\n**Getting started:** Available through the Google Cloud Console and client libraries for Java, Go, Python, and other languages.\n\n### OpenTenBase\n\n**Best for:** Teams that need a PostgreSQL-compatible distributed SQL database with HTAP support and are comfortable with a smaller community ecosystem.\n\n**Why it's on the list:** OpenTenBase, open-sourced by Tencent, is a distributed database built on PostgreSQL with HTAP positioning. It is used in production at Tencent for high-concurrency transactional and analytical workloads. It is less well-known outside China but is a genuine distributed HTAP system. Note: the presence of a dedicated columnar engine has not been independently confirmed; review the project documentation before assuming columnar storage capabilities.\n\n**Key features:**\n- PostgreSQL-compatible distributed SQL\n- HTAP-positioned architecture for concurrent transactional and analytical workloads\n- Open source with production use at scale within Tencent\n- Supports both OLTP and OLAP query patterns\n\n**Pros:**\n- PostgreSQL compatibility lowers migration friction for Postgres-native teams\n- Genuine distributed HTAP design, not an add-on to a single-node database\n- Open source with no licensing cost\n\n**Cons and tradeoffs:**\n- Smaller community and ecosystem compared to TiDB or SingleStore\n- Documentation and operational tooling are less mature for non-Chinese-language teams\n- Limited managed deployment options; primarily self-hosted\n\n**Pricing:** Open source and free to use. No managed cloud offering at the time of writing; self-hosted deployment costs depend on infrastructure.\n\n**Getting started:** Source code and documentation available at [github.com/OpenTenBase/OpenTenBase](https://github.com/OpenTenBase/OpenTenBase).\n\n### Space and Time\n\n**Best for:** Teams building applications where analytical query results must be cryptographically verifiable, such as blockchain-adjacent financial services or audit-sensitive regulatory workloads.\n\n**Why it's on the list:** Space and Time is a decentralized data warehouse that adds a proof layer, called Proof of SQL, to analytical queries. Query results are anchored to a blockchain, making them tamper-evident. It supports hybrid transactional and analytical patterns but its primary differentiator is verifiability, not raw performance. For workloads where the integrity of the result matters as much as the result itself, no other database on this list addresses that requirement.\n\n**Key features:**\n- Proof of SQL: cryptographic proof generation for analytical query results\n- Hybrid operational and analytical storage\n- Blockchain data indexing for on-chain and off-chain data joins\n- SQL interface with support for standard analytical queries\n\n**Pros:**\n- Unique tamper-proof query result verification; no other database on this list provides this\n- Useful for DeFi, compliance, and audit use cases that require verifiable data pipelines\n- Supports standard SQL, reducing the learning curve\n\n**Cons and tradeoffs:**\n- Proof generation adds latency overhead that makes it unsuitable for pure low-latency HTAP workloads\n- Niche use case; for teams that do not need verifiable query proofs, TiDB or SingleStore are better fits\n- Smaller ecosystem and less production track record than established HTAP databases\n\n**Pricing:** Contact Space and Time for current pricing. See [spaceandtime.io](https://spaceandtime.io) for deployment options.\n\n**Getting started:** Documentation and signup available at [spaceandtime.io](https://spaceandtime.io).\n\n### YugabyteDB\n\n**Best for:** Teams that need geo-distributed PostgreSQL-compatible OLTP with follower reads for lightweight analytical access, especially when data locality matters.\n\n**Why it's on the list:** YugabyteDB is a distributed SQL database with PostgreSQL and Cassandra-compatible APIs, strong consistency, and geo-partitioning. It handles distributed OLTP well. Its HTAP capabilities are limited compared to TiDB or SingleStore: it does not include a dedicated columnar engine. However, for teams that need distributed ACID transactions with geo-partitioning and are considering distributed SQL databases for operational intelligence, YugabyteDB is worth including in evaluation.\n\n**Key features:**\n- PostgreSQL and Cassandra-compatible APIs in one distributed database\n- Geo-partitioning for data locality across regions\n- Raft-based strong consistency for OLTP transactions\n- Follower reads for reduced read latency on less time-sensitive queries\n\n**Pros:**\n- Strong geo-distribution and data locality model, differentiating it from TiDB\n- PostgreSQL compatibility with familiar tooling\n- Well-documented with an active community and commercial support from Yugabyte\n\n**Cons and tradeoffs:**\n- No native columnar engine; complex analytical workloads need a separate OLAP system or external analytics layer\n- HTAP label applies loosely; stronger on distributed OLTP than on unified analytical processing\n- Geo-partitioning complexity adds schema design requirements compared to TiDB's placement rules approach\n\n**Pricing:** YugabyteDB is open source. Yugabyte Aeon is the managed option; see [yugabyte.com](https://yugabyte.com) for current pricing.\n\n**Getting started:** Documentation and downloads available at [yugabyte.com](https://yugabyte.com).",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-2",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "See how TiDB handles real-time analytics without ETL — read the architecture breakdown.",
+        "primaryCta": {
+          "text": "Explore TiDB HTAP Architecture",
+          "href": "https://www.pingcap.com/blog/real-world-htap-a-look-at-tidb-and-singlestore-and-their-architectures/"
+        },
+        "secondaryCta": {
+          "text": "Try TiDB Cloud Free",
+          "href": "https://tidbcloud.com"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22184957/1000011432.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-2",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## When Is TiDB the Best HTAP Database?\n\nTiDB fits best when the problem is not just analytical speed in isolation, but the combination of live operational data, consistent transactions, horizontal scale, and the complexity cost of managing multiple systems. These are the specific scenarios where TiDB's architecture addresses the problem directly.\n\n### Best for Real-Time Operational Analytics\n\nWhen a business needs to query transactional data seconds after it is written, the usual answers are a dedicated read replica or a streaming pipeline to a warehouse. Both introduce lag. TiDB's TiFlash engine replicates from TiKV on a per-table basis once TiFlash replicas are configured for those tables. A query that asks \"what is the current inventory level across all regions?\" routes to TiFlash without touching TiKV, returning results from data that is current to within seconds of the last write.\n\nFraud detection is a concrete example. A transaction system that needs to check whether a user's current spending pattern matches their historical behavior must query both live OLTP data and aggregated history at the same time. With TiDB, that query runs in one system. With a traditional stack, it requires joining results across a live database and a warehouse, coordinating latency and consistency across both.\n\n### Best for Reducing ETL and Pipeline Sprawl\n\nTeams that run MySQL or a MySQL-compatible database plus a separate analytics store plus a Kafka or Flink pipeline between them often find that the pipeline is itself a source of failures, delays, and engineering time. TiDB's TiFlash replication removes the need for that pipeline for real-time, moderate-scale analytical queries. The architectural simplification is one fewer system to monitor, tune, and recover when it breaks.\n\nFor more on how TiDB reduces analytical pipeline complexity, see [Hybrid Transactional and Analytical Processing solutions](https://www.pingcap.com/solutions/enable-operational-intelligence/) and the [HTAP database architecture comparison](https://www.pingcap.com/blog/real-world-htap-a-look-at-tidb-and-singlestore-and-their-architectures/).\n\n### Best for Distributed Scale with Strong Consistency\n\nTiDB scales writes horizontally across TiKV nodes using range-based sharding without application-level shard key design. Distributed transactions use two-phase commit coordinated by the TiDB server, with PD providing timestamps and cluster metadata, maintaining strong ACID consistency across nodes. For multi-tenant SaaS platforms, high-volume ecommerce, or fintech applications where both write volume and analytical demand grow unpredictably, TiDB's architecture scales both dimensions without requiring a migration to a different database.\n\n## How Do You Choose the Right HTAP Database?\n\nMost teams ask \"which HTAP database is fastest?\" before they answer the more important questions. The right starting point is what problem the current stack is failing to solve.\n\n### Step 1: Define How Fresh Your Analytics Must Be\n\nIf analytics lag of 15 minutes is acceptable, a managed read replica or a periodic ETL job to a warehouse may be good enough. If analytics must reflect data written in the last few seconds, you need a database with real-time replication between its transactional and analytical layers, or a streaming architecture with low-latency delivery. This single question rules out most options.\n\n### Step 2: Define Your Contention Tolerance\n\nIf your analytical queries are long-running scans over hundreds of millions of rows, running them on the same engine as high-concurrency OLTP writes will create contention. Databases that physically separate row and columnar storage (TiDB, to a degree SingleStore) handle this better than those that rely on query scheduling or read replicas alone. Define how much OLTP latency degradation you can absorb when analytical queries are active, then test against that threshold.\n\n### Step 3: Define Your Scaling and Multi-Tenant Profile\n\nSingle-node HTAP systems hit write limits faster than distributed ones. If your write volume is expected to grow beyond what a single node handles, or if you run multi-tenant workloads where different tenants have different analytical demands, a distributed HTAP system is the more defensible long-term choice.\n\n### Step 4: Define Your Operational and Ecosystem Needs\n\nCheck that your analytics tooling, BI stack, and ORM work with the database before committing. Most SQL-compatible HTAP databases handle standard connectors, but specific behaviors around DDL, transaction isolation, or JSON functions can surface during integration testing. Also evaluate whether you need a self-hosted deployment with Kubernetes operator support, a fully managed cloud service, or both.\n\nFor more on OLTP versus OLAP workload patterns and how to match them to architecture, see [OLAP vs OLTP database workloads](https://www.pingcap.com/blog/how-an-htap-database-handles-oltp-and-olap-workloads-at-the-same-time/).\n\n## What Architecture Patterns Work Best for HTAP Workloads?\n\nThe right architecture depends on how tightly transactional and analytical workloads are coupled and how much operational complexity you can absorb.\n\n### Unified HTAP Architecture\n\nOne cluster, two physical storage engines, with automatic replication between them. TiDB uses this pattern: TiKV for row-based OLTP, TiFlash for columnar OLAP, with TiFlash replicating from TiKV continuously. Queries are routed to the appropriate engine automatically. This pattern gives the best freshness and the cleanest operational footprint.\n\n> **Pitfall to avoid:** Assuming OLTP and OLAP can share resources without limits. Even with physical isolation, very heavy analytical scans on a small cluster will affect available resources for transactional traffic. Right-sizing the cluster for both workload types is essential.\n\nFor a deep dive on what HTAP architecture means in practice, see [what is an HTAP database](https://www.pingcap.com/blog/htap-demystified-defining-modern-data-architecture-tidb/).\n\n### Hybrid Services Architecture\n\nAn operational database handles transactions. A separate federated query layer (such as BigQuery against Bigtable, or ColumnStore alongside MariaDB) handles analytical queries. The two do not share storage, but they share the data through periodic sync or federation. Freshness is lower than unified HTAP, and the operational surface is higher. This pattern suits teams that cannot migrate their existing operational store but need to add analytical capability.\n\n> **Pitfall to avoid:** Assuming BigQuery federation against Bigtable, or similar federated query patterns, introduces data staleness. Federation typically reads live data at query time; the real trade-offs are query latency and cost at scale, not freshness. Staleness is a genuine concern for patterns that involve ETL between systems, such as syncing InnoDB tables to ColumnStore on a schedule. Know which pattern you are running before assuming freshness guarantees.\n\n### Separate Systems with Controlled Sync\n\nOLTP in one system, OLAP in another, connected by a CDC stream or batch ETL job. This pattern is familiar and gives both engines room to be optimized for their workload. It is still the right choice when analytical queries need petabyte-scale historical data or complex transformations that are outside the scope of an HTAP columnar engine.\n\n> **Pitfall to avoid:** Underestimating sync complexity. A pipeline that looks simple on day one (a Kafka topic feeding a Flink job feeding a warehouse) usually accumulates schema evolution debt, failure modes, and monitoring requirements that add to engineering maintenance over time.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "HTAP Database FAQs",
+        "items": [
+          {
+            "q": "What Is an HTAP Database?",
+            "a": "An HTAP database is a single system that handles both OLTP and OLAP workloads on live operational data. Traditional architectures separate these into different databases connected by ETL pipelines that introduce latency and maintenance overhead. HTAP eliminates or reduces that gap by replicating data between transactional and analytical storage within the same cluster, so analytics can query data written seconds ago without waiting for a batch job."
+          },
+          {
+            "q": "What Is the Difference Between HTAP and OLAP?",
+            "a": "OLAP systems are built for analytical queries on large datasets: aggregations, scans, and reporting. They do not support high-concurrency transactional writes. HTAP systems handle both OLTP and OLAP in one platform, so analytical data stays close to the transactional source. A dedicated OLAP system like ClickHouse or Apache Druid will be faster for pure analytical workloads, but HTAP removes the need for a separate pipeline when the data you are querying is still being written by live application traffic."
+          },
+          {
+            "q": "What Is the Difference Between OLTP and OLAP Databases?",
+            "a": "OLTP databases handle high-concurrency short transactions: inserts, updates, and point reads. They use row-based storage because each operation touches a small number of individual records. OLAP databases run large-scale scans, aggregations, and joins over historical or batched data. They use columnar storage because queries read many values from a few columns across millions of rows. HTAP systems run both storage models in the same platform."
+          },
+          {
+            "q": "Is TiDB an HTAP Database?",
+            "a": "Yes. TiDB is purpose-built for HTAP workloads, using TiKV for row-based OLTP and TiFlash for columnar OLAP within the same cluster. TiFlash replicas are configured per table; once configured, replication from TiKV is automatic so analytical queries run against data that is current to within seconds of the last write. Applications use a single MySQL-compatible connection endpoint, and queries route to the appropriate engine automatically. TiDB's HTAP design is one of its core architectural differentiators from a MySQL fork or managed MySQL service."
+          },
+          {
+            "q": "When Should I Choose an HTAP Database over Separate Systems?",
+            "a": "Choose an HTAP database when analytics must reflect data written in the last few seconds and a batch ETL lag is not acceptable, when the pipeline between your OLTP and OLAP systems is a recurring source of failures, or when operational complexity is already high and adding another system would make things worse. Separate systems are still better when analytics require petabyte-scale historical data, complex warehouse transformations, or workloads that a dedicated OLAP platform handles more cost-effectively."
+          },
+          {
+            "q": "Are HTAP Databases Good for Real-Time Analytics?",
+            "a": "Yes, for analytics on live operational data: dashboards, fraud checks, inventory queries, and per-user aggregations on recent transactions. HTAP systems are not always the fastest for pure analytical throughput on historical data; dedicated OLAP engines like ClickHouse typically outperform on scan-heavy workloads over cold data. Performance under shared OLTP and OLAP load should always be validated with a production-like benchmark. TiFlash is designed for real-time, lightweight OLAP on live data; for complex analytical workloads at petabyte scale, pairing TiDB with a dedicated warehouse remains the more appropriate architecture."
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "main",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Ready to Evaluate a Distributed HTAP Database?\n\nIf your team is running separate transactional and analytical systems and the gap between them is a problem, HTAP platforms reduce that complexity. The right option depends on how fresh your analytics need to be, how much contention your current architecture creates, and how much operational overhead you are willing to trade for a simpler stack.\n\nTiDB handles real-time lightweight OLAP on live transactional data, scales horizontally without application-level sharding, and reduces the number of systems needed to serve both workload types.\n\n**Evaluate TiDB:** [distributed HTAP database](https://www.pingcap.com/tidb/).\n\n---\n\n**Editorial Policy**\n\n- Vendors on this list were evaluated against the criteria described in the \"How We Chose\" section. No vendor paid for inclusion.\n- This page is reviewed and updated when product changes, pricing updates, or new relevant platforms warrant revision.\n- Pricing, feature availability, and benchmark figures should be verified against primary vendor sources before publication.\n- PingCAP is the publisher and the company behind TiDB. TiDB is evaluated by the same criteria as other entries, but readers should factor in the conflict when weighing the analysis.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-main-1",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Go deeper on TiDB's HTAP architecture — read the technical breakdown.",
+        "primaryCta": {
+          "text": "Read the HTAP Architecture Guide",
+          "href": "https://www.pingcap.com/blog/htap-demystified-defining-modern-data-architecture-tidb/"
+        },
+        "secondaryCta": {
+          "text": "Try TiDB Cloud Free",
+          "href": "https://tidbcloud.com"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22211020/1000011435.png"
+          }
+        }
+      }
+    }
+  ]
+}

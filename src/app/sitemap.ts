@@ -56,6 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { url: '/compare/yugabytedb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/compare/vitess-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/htap-database/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/compare/best-databases-for-real-time-analytics/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
     // Playbook pages
     { url: '/playbook/', priority: 0.8, changeFrequency: 'weekly' },
     { url: '/playbook/embed-vector-db-build-rag/', priority: 0.7, changeFrequency: 'monthly' },
