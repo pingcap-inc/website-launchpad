@@ -227,7 +227,21 @@ const dsl: PageDSL = {
             title: 'Best MySQL-Compatible Databases',
             description:
               "MySQL compatibility doesn't mean MySQL behavior. Covers forks, managed services, sharding tools, and distributed SQL and what each one costs you at scale.",
-            href: '/compare/mysql-compatible-database',
+            href: 'https://www.pingcap.com/compare/mysql-compatible-database',
+          },
+          {
+            icon: 'TrendingUp',
+            title: 'Best Databases for Real-Time Analytics',
+            description:
+              'Query latency, data freshness, and concurrency under load. Covers pure OLAP engines, streaming-first systems, and HTAP databases — and when each architecture is the right call.',
+            href: 'https://www.pingcap.com/compare/best-databases-for-real-time-analytics/',
+          },
+          {
+            icon: 'Puzzle',
+            title: 'Best HTAP Database',
+            description:
+              'What it actually means to run transactions and analytics on the same live data. Covers architecture trade-offs, freshness guarantees, and how HTAP compares to a dedicated pipeline.',
+            href: 'https://www.pingcap.com/compare/htap-database/',
           },
         ],
         columns: 2,
