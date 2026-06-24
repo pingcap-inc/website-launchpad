@@ -1,0 +1,270 @@
+{
+  "pageName": "AI Agent Memory and State: Unified Storage Layer | TiDB",
+  "meta": {
+    "title": "AI Agent Memory and State: Unified Storage Layer | TiDB",
+    "description": "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+    "canonical": "/solutions/ai-agent-memory/"
+  },
+  "sections": [
+    {
+      "id": "hero-01",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Unified Storage for AI",
+        "headline": "AI Agent <span class=\"text-gradient-violet animate-glow-sweep\">Memory</span> and State",
+        "subheadline": "Per-Agent Isolation and Workspace Context in One Unified Storage Platform. Stop scattering context across vector stores and caches.",
+        "primaryCta": {
+          "text": "Start Free on TiDB Cloud",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Explore mem9",
+          "href": "https://www.pingcap.com/tidb/cloud/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "problem-01",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "The Context Problem",
+        "title": "Why Agents Need Memory That Lasts",
+        "subtitle": "Without a durable memory and state layer, agents repeat work, lose preferences, and cannot reliably resume tasks.",
+        "items": [
+          {
+            "title": "Memory Fragments Across Disconnected Systems",
+            "description": "Many agent stacks use one system for semantic search, another for session state, and another for files. This increases latency, complicates debugging, and turns context persistence into an application problem.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "left"
+          },
+          {
+            "title": "Execution Environments Reset",
+            "description": "When temporary sessions end, agents lose conversation history and task progress unless stored durably. Persistent memory allows agents to resume work exactly where they left off.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "right"
+          },
+          {
+            "title": "Per-Agent Isolation Gets Expensive",
+            "description": "Dedicated infrastructure improves isolation but is costly. TiDB provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "left"
+          }
+        ],
+        "startPosition": "left"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "solution-01",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "One Engine for Everything",
+        "title": "Memory, State, and Workspace Context",
+        "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "Persistent Memory with mem9",
+            "description": "Agents write conversation turns, preferences, and decisions through mem9. Memory persists across sessions and remains queryable with MVCC isolation.",
+            "cta": {
+              "text": "Learn More About mem9",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            }
+          },
+          {
+            "icon": "Layers",
+            "title": "Durable State with drive9",
+            "description": "Store files, code, documents, and generated artifacts persistently. Agents pick up active tasks, generated files, and project context instantly.",
+            "cta": {
+              "text": "Learn More About drive9",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            }
+          },
+          {
+            "icon": "Shield",
+            "title": "Per-Agent Isolation",
+            "description": "Logical isolation separates agents with hard data boundaries while physical infrastructure is shared. Scale isolation without multiplying costs.",
+            "cta": {
+              "text": "View Architecture",
+              "href": "https://docs.pingcap.com/"
+            }
+          },
+          {
+            "icon": "Search",
+            "title": "Unified Query Layer",
+            "description": "Query account tiers, prior tickets, and semantic matches in one SQL statement. No need to sync three different systems for a single context view.",
+            "cta": {
+              "text": "See Vector Search",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            }
+          },
+          {
+            "icon": "Activity",
+            "title": "Real-Time Analytics",
+            "description": "TiFlash handles analytical queries on live memory data. Gain operational insights without moving data to a separate warehouse.",
+            "cta": {
+              "text": "Explore HTAP",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            }
+          },
+          {
+            "icon": "Globe",
+            "title": "MySQL Compatibility",
+            "description": "Integrate with existing drivers, ORMs, and tools. Move agent memory to TiDB without abandoning your SQL ecosystem.",
+            "cta": {
+              "text": "View Docs",
+              "href": "https://docs.pingcap.com/"
+            }
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "use-cases-01",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Real-World Applications",
+        "title": "Use Cases for AI Agent Memory",
+        "subtitle": "From support bots to coding assistants, unified state powers reliable agents.",
+        "items": [
+          {
+            "icon": "MessageSquare",
+            "title": "Customer Support Agents",
+            "description": "Carry context across conversations. Triage and resolution agents share history without asking users to repeat themselves.",
+            "borderColor": "border-blue-500"
+          },
+          {
+            "icon": "Code2",
+            "title": "Code Generation Agents",
+            "description": "Maintain repository structure and dependency context. Planning and implementation agents share state without conflicting write access.",
+            "borderColor": "border-violet-500"
+          },
+          {
+            "icon": "Building",
+            "title": "Enterprise AI Platforms",
+            "description": "Secure multi-tenant isolation. Scale context persistence and security boundaries for platforms serving thousands of customers.",
+            "borderColor": "border-teal-500"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "architecture-01",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "Under the Hood",
+        "title": "Architecture: How TiDB Supports AI Agent Memory",
+        "subtitle": "A production memory layer needs transactional writes, semantic retrieval, and analytical visibility.",
+        "items": [
+          {
+            "title": "The Unified Stack",
+            "description": "Agent Frameworks (LangChain, LlamaIndex, MCP) connect to the TiDB SQL Layer. TiKV stores transactional memory while TiFlash enables real-time analytics. Raft and MVCC ensure consistency as agents read and write simultaneously.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "right"
+          }
+        ],
+        "startPosition": "left"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "social-proof-01",
+      "type": "stats",
+      "props": {
+        "eyebrow": "Proven Results",
+        "title": "Production-Ready at Scale",
+        "subtitle": "TiDB Cloud supports large-scale conversational workloads with efficient resource usage.",
+        "items": [
+          {
+            "value": "99.99%",
+            "label": "Availability",
+            "description": "Reliable memory persistence for critical agent workflows"
+          },
+          {
+            "value": "10x",
+            "label": "Faster Context",
+            "description": "Unified queries eliminate cross-system latency"
+          },
+          {
+            "value": "$0",
+            "label": "Migration Cost",
+            "description": "MySQL compatibility reduces integration overhead"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta-01",
+      "type": "cta",
+      "props": {
+        "title": "Get Started With TiDB for AI Agent Memory",
+        "subtitle": "From prototypes to production, build agents that remember.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free on TiDB Cloud",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Contact Sales",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
