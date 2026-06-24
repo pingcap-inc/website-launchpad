@@ -1,0 +1,306 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: "AI Agent Memory and State: Unified Storage Layer | TiDB",
+  description: "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/solutions/ai-agent-memory/' },
+  openGraph: {
+    title: "AI Agent Memory and State: Unified Storage Layer | TiDB",
+    description: "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+    url: 'https://www.pingcap.com/solutions/ai-agent-memory/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: "/solutions/ai-agent-memory/",
+  title: "AI Agent Memory and State: Unified Storage Layer | TiDB",
+  description: "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    { name: "AI Agent Memory and State: <span class=\"text-gradient-violet animate-glow-sweep\">Unified Storage Layer</span>", path: "/solutions/ai-agent-memory/" },
+  ],
+})
+
+const dsl: PageDSL = {
+  "pageName": "AI Agent Memory and State: Unified Storage Layer | TiDB",
+  "meta": {
+    "title": "AI Agent Memory and State: Unified Storage Layer | TiDB",
+    "description": "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+    "canonical": "/solutions/ai-agent-memory/"
+  },
+  "sections": [
+    {
+      "id": "hero-01",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Unified Storage for AI",
+        "headline": "AI Agent Memory and State: <span class=\"text-gradient-violet animate-glow-sweep\">Unified Storage Layer</span>",
+        "subheadline": "Per-Agent Isolation and Workspace Context in One Unified Storage Platform. Stop scattering context across vector stores and caches.",
+        "primaryCta": {
+          "text": "Start Free on TiDB Cloud",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "",
+          "href": ""
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "featureMedia-1782330445561",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "The Context Problem",
+        "title": "Why Agents Need Memory That Lasts",
+        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes.\n\nIn production, memory is part of a broader state problem. Agent state also includes workflow progress, permissions, files, generated outputs, task history, tool results, runtime context, and operational metadata.\n\nWithout a durable memory and state layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started.",
+        "items": [],
+        "startPosition": "right"
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "problem-01",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "The Challenge",
+        "title": "Why Traditional Agent Architectures Break Down",
+        "subtitle": "",
+        "items": [
+          {
+            "title": "Memory Fragments Across Disconnected Systems",
+            "description": "Many agent stacks use one system for semantic search, another for session state, and another for files. This increases latency, complicates debugging, and turns context persistence into an application problem.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "left"
+          },
+          {
+            "title": "Execution Environments Reset",
+            "description": "When temporary sessions end, agents lose conversation history and task progress unless stored durably. Persistent memory allows agents to resume work exactly where they left off.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "right"
+          },
+          {
+            "title": "Per-Agent Isolation Gets Expensive",
+            "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "left"
+          }
+        ],
+        "startPosition": "left"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "solution-01",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "One Engine for Everything",
+        "title": "Memory, State, and Workspace Context",
+        "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "Persistent Memory with mem9",
+            "description": "mem9 is TiDB Cloud’s persistent memory layer. Agents write conversation turns, preferences, facts, and decisions through mem9. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB’s MVCC isolation keeps concurrent reads and writes consistent without locking.",
+            "cta": {
+              "text": "Learn More About mem9",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            }
+          },
+          {
+            "icon": "Layers",
+            "title": "Durable State with drive9",
+            "description": "State is what an agent needs to continue: the active task, generated files, successful tool calls, user approvals, and project context. drive9 stores files, code, documents, and generated artifacts persistently so agents can pick up where they left off.",
+            "cta": {
+              "text": "Learn More About drive9",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            }
+          },
+          {
+            "icon": "Shield",
+            "title": "Per-Agent Isolation",
+            "description": "TiDB Cloud's distributed architecture separates logical isolation from physical infrastructure. Each agent gets its own database with hard data boundaries, while the underlying compute and storage are shared across the cluster.",
+            "cta": {
+              "text": "View Architecture",
+              "href": "https://docs.pingcap.com/"
+            }
+          },
+          {
+            "icon": "Search",
+            "title": "Unified Query Layer for Memory, State, and Analytics",
+            "description": "A support agent should not need three systems to look up a user’s account tier, prior tickets, and semantic matches from past conversations. On TiDB Cloud, that can be one query.\n\nA coding agent pulling repository metadata, generated files, and task history follows the same pattern. TiFlash handles analytical queries on live data without a separate pipeline, so fresh operational insights do not require moving data elsewhere",
+            "cta": {
+              "text": "See Vector Search",
+              "href": "https://www.pingcap.com/tidb/cloud/"
+            }
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "use-cases-01",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Real-World Applications",
+        "title": "Use Cases for AI Agent Memory",
+        "subtitle": "From support bots to coding assistants, unified state powers reliable agents.",
+        "items": [
+          {
+            "icon": "MessageSquare",
+            "title": "Customer Support Agents With Conversation History",
+            "description": "Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB Cloud while keeping their data boundaries intact.",
+            "borderColor": "border-blue-500"
+          },
+          {
+            "icon": "Code2",
+            "title": "Code Generation Agents With Project Context",
+            "description": "Coding agents need memory and state for repository structure, generated code, dependencies, file changes, and prior decisions. Persistent workspace context lets agents continue earlier work instead of starting from a blank prompt.\n\nIn multi-agent coding workflows, a planning agent and an implementation agent can share repository state without sharing write access.",
+            "borderColor": "border-violet-500"
+          },
+          {
+            "icon": "Building",
+            "title": "Enterprise AI Platforms With Tenant Isolation",
+            "description": "Enterprise AI products need context persistence, security boundaries, and predictable scaling. TiDB Cloud supports per-agent isolation and agent memory scaling for platforms serving many customers, teams, and workloads from a shared foundation.",
+            "borderColor": "border-teal-500"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "architecture-01",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "Architecture",
+        "title": "How TiDB Supports AI Agent Memory and State",
+        "subtitle": "A production memory layer needs transactional writes, semantic retrieval, analytical visibility, and operational consistency. TiDB Cloud brings these into one architecture.",
+        "items": [
+          {
+            "title": "Agent Integration Layer",
+            "description": "TiDB Cloud works with common AI application patterns, including PyTiDB, MCP-based architectures, LangChain, LlamaIndex, and MySQL-compatible tools.\n\nMySQL compatibility matters because many teams already have drivers, ORMs, migration scripts, and operational practices built around SQL. Moving agent memory into TiDB Cloud does not require abandoning that ecosystem.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            },
+            "imagePosition": "right"
+          },
+          {
+            "title": "SQL, Vector Search, and Structured State",
+            "description": "The TiDB SQL layer provides a SQL interface, transaction processing, vector search, and access to structured memory and state. Teams can store and query memory, state, retrieval data, and operational context through one durable database layer.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          },
+          {
+            "title": "Storage and Consistency Model",
+            "description": "TiKV stores transactional data across the cluster. TiFlash replicates from TiKV and runs real-time analytical queries on live data. PD coordinates placement and scheduling. Raft and MVCC maintain consistency and isolation as many agents read and write memory at once.\n\nThe result: memory, state, and retrieval share one durable database boundary instead of relying on synchronization between separate systems.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ],
+        "startPosition": "left"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta-01",
+      "type": "cta",
+      "props": {
+        "title": "Get Started With TiDB for AI Agent Memory",
+        "subtitle": "From prototypes to production, build agents that remember.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Start Free on TiDB Cloud",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Contact Sales",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}
