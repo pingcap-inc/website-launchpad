@@ -132,29 +132,11 @@
           },
           {
             "icon": "Search",
-            "title": "Unified Query Layer",
-            "description": "A support agent should not need three systems to look up a user’s account tier, prior tickets, and semantic matches from past conversations. On TiDB, that can be one query.\n\nA coding agent pulling repository metadata, generated files, and task history follows the same pattern. TiFlash handles analytical queries on live data without a separate pipeline, so fresh operational insights do not require moving data elsewhere.",
+            "title": "Unified Query Layer for Memory, State, and Analytics",
+            "description": "A support agent should not need three systems to look up a user’s account tier, prior tickets, and semantic matches from past conversations. On TiDB, that can be one query.\n\nA coding agent pulling repository metadata, generated files, and task history follows the same pattern. TiFlash handles analytical queries on live data without a separate pipeline, so fresh operational insights do not require moving data elsewhere",
             "cta": {
               "text": "See Vector Search",
               "href": "https://www.pingcap.com/tidb/cloud/"
-            }
-          },
-          {
-            "icon": "Activity",
-            "title": "Real-Time Analytics",
-            "description": "TiFlash handles analytical queries on live memory data. Gain operational insights without moving data to a separate warehouse.",
-            "cta": {
-              "text": "Explore HTAP",
-              "href": "https://www.pingcap.com/tidb/cloud/"
-            }
-          },
-          {
-            "icon": "Globe",
-            "title": "MySQL Compatibility",
-            "description": "Integrate with existing drivers, ORMs, and tools. Move agent memory to TiDB without abandoning your SQL ecosystem.",
-            "cta": {
-              "text": "View Docs",
-              "href": "https://docs.pingcap.com/"
             }
           }
         ],
@@ -174,20 +156,20 @@
         "items": [
           {
             "icon": "MessageSquare",
-            "title": "Customer Support Agents",
-            "description": "Carry context across conversations. Triage and resolution agents share history without asking users to repeat themselves.",
+            "title": "Customer Support Agents With Conversation History",
+            "description": "Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB while keeping their data boundaries intact.",
             "borderColor": "border-blue-500"
           },
           {
             "icon": "Code2",
-            "title": "Code Generation Agents",
-            "description": "Maintain repository structure and dependency context. Planning and implementation agents share state without conflicting write access.",
+            "title": "Code Generation Agents With Project Context",
+            "description": "Coding agents need memory and state for repository structure, generated code, dependencies, file changes, and prior decisions. Persistent workspace context lets agents continue earlier work instead of starting from a blank prompt.\n\nIn multi-agent coding workflows, a planning agent and an implementation agent can share repository state without sharing write access.",
             "borderColor": "border-violet-500"
           },
           {
             "icon": "Building",
-            "title": "Enterprise AI Platforms",
-            "description": "Secure multi-tenant isolation. Scale context persistence and security boundaries for platforms serving thousands of customers.",
+            "title": "Enterprise AI Platforms With Tenant Isolation",
+            "description": "Enterprise AI products need context persistence, security boundaries, and predictable scaling. TiDB Cloud supports per-agent isolation and agent memory scaling for platforms serving many customers, teams, and workloads from a shared foundation.",
             "borderColor": "border-teal-500"
           }
         ],
@@ -202,19 +184,37 @@
       "id": "architecture-01",
       "type": "featureMedia",
       "props": {
-        "eyebrow": "Under the Hood",
-        "title": "Architecture: How TiDB Supports AI Agent Memory",
-        "subtitle": "A production memory layer needs transactional writes, semantic retrieval, and analytical visibility.",
+        "eyebrow": "Architecture",
+        "title": "How TiDB Supports AI Agent Memory and State",
+        "subtitle": "A production memory layer needs transactional writes, semantic retrieval, analytical visibility, and operational consistency. TiDB Cloud brings these into one architecture.",
         "items": [
           {
-            "title": "The Unified Stack",
-            "description": "Agent Frameworks (LangChain, LlamaIndex, MCP) connect to the TiDB SQL Layer. TiKV stores transactional memory while TiFlash enables real-time analytics. Raft and MVCC ensure consistency as agents read and write simultaneously.",
+            "title": "Agent Integration Layer",
+            "description": "TiDB Cloud works with common AI application patterns, including PyTiDB, MCP-based architectures, LangChain, LlamaIndex, and MySQL-compatible tools.\n\nMySQL compatibility matters because many teams already have drivers, ORMs, migration scripts, and operational practices built around SQL. Moving agent memory into TiDB Cloud does not require abandoning that ecosystem.",
             "image": {
               "image": {
                 "url": ""
               }
             },
             "imagePosition": "right"
+          },
+          {
+            "title": "SQL, Vector Search, and Structured State",
+            "description": "The TiDB SQL layer provides a SQL interface, transaction processing, vector search, and access to structured memory and state. Teams can store and query memory, state, retrieval data, and operational context through one durable database layer.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          },
+          {
+            "title": "Storage and Consistency Model",
+            "description": "TiKV stores transactional data across the cluster. TiFlash replicates from TiKV and runs real-time analytical queries on live data. PD coordinates placement and scheduling. Raft and MVCC maintain consistency and isolation as many agents read and write memory at once.\n\nThe result: memory, state, and retrieval share one durable database boundary instead of relying on synchronization between separate systems.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
           }
         ],
         "startPosition": "left"
