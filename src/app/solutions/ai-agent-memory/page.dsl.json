@@ -12,15 +12,15 @@
       "props": {
         "layout": "centered",
         "eyebrow": "Unified Storage for AI",
-        "headline": "AI Agent <span class=\"text-gradient-violet animate-glow-sweep\">Memory</span> and State",
+        "headline": "AI Agent Memory and State: <span class=\"text-gradient-violet animate-glow-sweep\">Unified Storage Layer</span>",
         "subheadline": "Per-Agent Isolation and Workspace Context in One Unified Storage Platform. Stop scattering context across vector stores and caches.",
         "primaryCta": {
           "text": "Start Free on TiDB Cloud",
           "href": "https://tidbcloud.com/free-trial/"
         },
         "secondaryCta": {
-          "text": "Explore mem9",
-          "href": "https://www.pingcap.com/tidb/cloud/"
+          "text": "",
+          "href": ""
         },
         "heroImage": {
           "image": {
@@ -36,12 +36,27 @@
       }
     },
     {
+      "id": "featureMedia-1782330445561",
+      "type": "featureMedia",
+      "props": {
+        "title": "Why Agents Need Memory That Lasts",
+        "startPosition": "right",
+        "items": [],
+        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes.\n\nIn production, memory is part of a broader state problem. Agent state also includes workflow progress, permissions, files, generated outputs, task history, tool results, runtime context, and operational metadata.\n\nWithout a durable memory and state layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started.",
+        "eyebrow": "The Context Problem"
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
       "id": "problem-01",
       "type": "featureMedia",
       "props": {
-        "eyebrow": "The Context Problem",
-        "title": "Why Agents Need Memory That Lasts",
-        "subtitle": "Without a durable memory and state layer, agents repeat work, lose preferences, and cannot reliably resume tasks.",
+        "eyebrow": "The Challenge",
+        "title": "Why Traditional Agent Architectures Break Down",
+        "subtitle": "",
         "items": [
           {
             "title": "Memory Fragments Across Disconnected Systems",
@@ -91,7 +106,7 @@
           {
             "icon": "Database",
             "title": "Persistent Memory with mem9",
-            "description": "Agents write conversation turns, preferences, and decisions through mem9. Memory persists across sessions and remains queryable with MVCC isolation.",
+            "description": "mem9 is TiDB’s persistent memory layer. Agents write conversation turns, preferences, facts, and decisions through mem9. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB’s MVCC isolation keeps concurrent reads and writes consistent without locking.",
             "cta": {
               "text": "Learn More About mem9",
               "href": "https://www.pingcap.com/tidb/cloud/"
@@ -100,7 +115,7 @@
           {
             "icon": "Layers",
             "title": "Durable State with drive9",
-            "description": "Store files, code, documents, and generated artifacts persistently. Agents pick up active tasks, generated files, and project context instantly.",
+            "description": "State is what an agent needs to continue: the active task, generated files, successful tool calls, user approvals, and project context. drive9 stores files, code, documents, and generated artifacts persistently so agents can pick up where they left off.",
             "cta": {
               "text": "Learn More About drive9",
               "href": "https://www.pingcap.com/tidb/cloud/"
@@ -109,7 +124,7 @@
           {
             "icon": "Shield",
             "title": "Per-Agent Isolation",
-            "description": "Logical isolation separates agents with hard data boundaries while physical infrastructure is shared. Scale isolation without multiplying costs.",
+            "description": "TiDB’s distributed architecture separates logical isolation from physical infrastructure. Each agent gets its own database with hard data boundaries, while the underlying compute and storage are shared across the cluster.",
             "cta": {
               "text": "View Architecture",
               "href": "https://docs.pingcap.com/"
@@ -118,7 +133,7 @@
           {
             "icon": "Search",
             "title": "Unified Query Layer",
-            "description": "Query account tiers, prior tickets, and semantic matches in one SQL statement. No need to sync three different systems for a single context view.",
+            "description": "A support agent should not need three systems to look up a user’s account tier, prior tickets, and semantic matches from past conversations. On TiDB, that can be one query.\n\nA coding agent pulling repository metadata, generated files, and task history follows the same pattern. TiFlash handles analytical queries on live data without a separate pipeline, so fresh operational insights do not require moving data elsewhere.",
             "cta": {
               "text": "See Vector Search",
               "href": "https://www.pingcap.com/tidb/cloud/"
