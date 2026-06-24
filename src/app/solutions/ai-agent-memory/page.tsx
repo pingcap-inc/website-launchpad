@@ -182,7 +182,7 @@ const dsl: PageDSL = {
             }
           }
         ],
-        "columns": 3
+        "columns": 2
       },
       "style": {
         "spacing": "section"
