@@ -80,7 +80,7 @@
           },
           {
             "title": "Per-Agent Isolation Gets Expensive",
-            "description": "Dedicated infrastructure improves isolation but is costly. TiDB provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
+            "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
             "image": {
               "image": {
                 "url": ""
@@ -106,7 +106,7 @@
           {
             "icon": "Database",
             "title": "Persistent Memory with mem9",
-            "description": "mem9 is TiDB’s persistent memory layer. Agents write conversation turns, preferences, facts, and decisions through mem9. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB’s MVCC isolation keeps concurrent reads and writes consistent without locking.",
+            "description": "mem9 is TiDB Cloud’s persistent memory layer. Agents write conversation turns, preferences, facts, and decisions through mem9. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB’s MVCC isolation keeps concurrent reads and writes consistent without locking.",
             "cta": {
               "text": "Learn More About mem9",
               "href": "https://www.pingcap.com/tidb/cloud/"
@@ -124,7 +124,7 @@
           {
             "icon": "Shield",
             "title": "Per-Agent Isolation",
-            "description": "TiDB’s distributed architecture separates logical isolation from physical infrastructure. Each agent gets its own database with hard data boundaries, while the underlying compute and storage are shared across the cluster.",
+            "description": "TiDB Cloud's distributed architecture separates logical isolation from physical infrastructure. Each agent gets its own database with hard data boundaries, while the underlying compute and storage are shared across the cluster.",
             "cta": {
               "text": "View Architecture",
               "href": "https://docs.pingcap.com/"
@@ -133,7 +133,7 @@
           {
             "icon": "Search",
             "title": "Unified Query Layer for Memory, State, and Analytics",
-            "description": "A support agent should not need three systems to look up a user’s account tier, prior tickets, and semantic matches from past conversations. On TiDB, that can be one query.\n\nA coding agent pulling repository metadata, generated files, and task history follows the same pattern. TiFlash handles analytical queries on live data without a separate pipeline, so fresh operational insights do not require moving data elsewhere",
+            "description": "A support agent should not need three systems to look up a user’s account tier, prior tickets, and semantic matches from past conversations. On TiDB Cloud, that can be one query.\n\nA coding agent pulling repository metadata, generated files, and task history follows the same pattern. TiFlash handles analytical queries on live data without a separate pipeline, so fresh operational insights do not require moving data elsewhere",
             "cta": {
               "text": "See Vector Search",
               "href": "https://www.pingcap.com/tidb/cloud/"
@@ -157,7 +157,7 @@
           {
             "icon": "MessageSquare",
             "title": "Customer Support Agents With Conversation History",
-            "description": "Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB while keeping their data boundaries intact.",
+            "description": "Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB Cloud while keeping their data boundaries intact.",
             "borderColor": "border-blue-500"
           },
           {
@@ -230,23 +230,7 @@
         "eyebrow": "Proven Results",
         "title": "Production-Ready at Scale",
         "subtitle": "TiDB Cloud supports large-scale conversational workloads with efficient resource usage.",
-        "items": [
-          {
-            "value": "99.99%",
-            "label": "Availability",
-            "description": "Reliable memory persistence for critical agent workflows"
-          },
-          {
-            "value": "10x",
-            "label": "Faster Context",
-            "description": "Unified queries eliminate cross-system latency"
-          },
-          {
-            "value": "$0",
-            "label": "Migration Cost",
-            "description": "MySQL compatibility reduces integration overhead"
-          }
-        ],
+        "items": [],
         "columns": 3
       },
       "style": {
