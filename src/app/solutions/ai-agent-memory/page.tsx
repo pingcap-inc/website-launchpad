@@ -121,14 +121,14 @@ const dsl: PageDSL = {
             "description": "When temporary sessions end, agents lose conversation history and task progress unless stored durably. Persistent memory allows agents to resume work exactly where they left off.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/aae06692-chatgpt_image_jun_24__2026__08_18_08_pm.png",
-                "alt": "chatgpt image jun 24 2026 08 18 08 pm",
-                "width": 1672,
-                "height": 941
+                "url": "https://static.pingcap.com/images/4d85a521-20260625-133302.png",
+                "alt": "20260625 133302",
+                "width": 7507,
+                "height": 3726
               },
-              "alt": "chatgpt image jun 24 2026 08 18 08 pm",
-              "width": 1672,
-              "height": 941
+              "alt": "20260625 133302",
+              "width": 7507,
+              "height": 3726
             },
             "imagePosition": "right"
           },
@@ -137,12 +137,12 @@ const dsl: PageDSL = {
             "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/97ed8001-20260624-095351.png",
-                "alt": "20260624 095351",
+                "url": "https://static.pingcap.com/images/a7aec924-20260625-133312.png",
+                "alt": "20260625 133312",
                 "width": 8712,
                 "height": 3726
               },
-              "alt": "20260624 095351",
+              "alt": "20260625 133312",
               "width": 8712,
               "height": 3726
             },
