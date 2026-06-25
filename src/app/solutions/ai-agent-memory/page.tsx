@@ -105,14 +105,14 @@ const dsl: PageDSL = {
             "description": "Many agent stacks use one system for semantic search, another for session state, and another for files. This increases latency, complicates debugging, and turns context persistence into an application problem.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/8b7f30fc-whiteboard_exported_image__1_.png",
-                "alt": "whiteboard exported image 1",
-                "width": 1487,
-                "height": 1641
+                "url": "https://static.pingcap.com/images/c465e30c-45bc5b59-e933-4f65-87c1-a4cee967b54a.png",
+                "alt": "45bc5b59 e933 4f65 87c1 a4cee967b54a",
+                "width": 1122,
+                "height": 1402
               },
-              "alt": "whiteboard exported image 1",
-              "width": 1487,
-              "height": 1641
+              "alt": "45bc5b59 e933 4f65 87c1 a4cee967b54a",
+              "width": 1122,
+              "height": 1402
             },
             "imagePosition": "left"
           },
