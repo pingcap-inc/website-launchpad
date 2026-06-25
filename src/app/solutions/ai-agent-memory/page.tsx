@@ -88,7 +88,7 @@ const dsl: PageDSL = {
         "startPosition": "right"
       },
       "style": {
-        "background": "primary",
+        "background": "inverse",
         "spacing": "section"
       }
     },
@@ -105,8 +105,14 @@ const dsl: PageDSL = {
             "description": "Many agent stacks use one system for semantic search, another for session state, and another for files. This increases latency, complicates debugging, and turns context persistence into an application problem.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/8b7f30fc-whiteboard_exported_image__1_.png",
+                "alt": "whiteboard exported image 1",
+                "width": 1487,
+                "height": 1641
+              },
+              "alt": "whiteboard exported image 1",
+              "width": 1487,
+              "height": 1641
             },
             "imagePosition": "left"
           },
@@ -125,8 +131,14 @@ const dsl: PageDSL = {
             "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/97ed8001-20260624-095351.png",
+                "alt": "20260624 095351",
+                "width": 8712,
+                "height": 3726
+              },
+              "alt": "20260624 095351",
+              "width": 8712,
+              "height": 3726
             },
             "imagePosition": "left"
           }
@@ -141,8 +153,8 @@ const dsl: PageDSL = {
       "id": "solution-01",
       "type": "featureGrid",
       "props": {
-        "eyebrow": "One Engine for Everything",
-        "title": "Memory, State, and Workspace Context",
+        "eyebrow": "Unified Infrastructure",
+        "title": "One Engine for Everything: Memory, State, and Workspace Context",
         "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.",
         "items": [
           {
@@ -185,41 +197,8 @@ const dsl: PageDSL = {
         "columns": 2
       },
       "style": {
-        "spacing": "section"
-      }
-    },
-    {
-      "id": "use-cases-01",
-      "type": "featureCard",
-      "props": {
-        "eyebrow": "Real-World Applications",
-        "title": "Use Cases for AI Agent Memory",
-        "subtitle": "From support bots to coding assistants, unified state powers reliable agents.",
-        "items": [
-          {
-            "icon": "MessageSquare",
-            "title": "Customer Support Agents With Conversation History",
-            "description": "Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB Cloud while keeping their data boundaries intact.",
-            "borderColor": "border-blue-500"
-          },
-          {
-            "icon": "Code2",
-            "title": "Code Generation Agents With Project Context",
-            "description": "Coding agents need memory and state for repository structure, generated code, dependencies, file changes, and prior decisions. Persistent workspace context lets agents continue earlier work instead of starting from a blank prompt.\n\nIn multi-agent coding workflows, a planning agent and an implementation agent can share repository state without sharing write access.",
-            "borderColor": "border-violet-500"
-          },
-          {
-            "icon": "Building",
-            "title": "Enterprise AI Platforms With Tenant Isolation",
-            "description": "Enterprise AI products need context persistence, security boundaries, and predictable scaling. TiDB Cloud supports per-agent isolation and agent memory scaling for platforms serving many customers, teams, and workloads from a shared foundation.",
-            "borderColor": "border-teal-500"
-          }
-        ],
-        "columns": 3,
-        "borderStyle": "gray"
-      },
-      "style": {
-        "spacing": "section"
+        "background": "gradient-dark-top",
+        "spacing": "lg"
       }
     },
     {
@@ -259,9 +238,45 @@ const dsl: PageDSL = {
             }
           }
         ],
-        "startPosition": "left"
+        "startPosition": "right"
       },
       "style": {
+        "background": "gradient-dark-top",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "use-cases-01",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Real-World Applications",
+        "title": "Use Cases for AI Agent Memory",
+        "subtitle": "From support bots to coding assistants, unified state powers reliable agents.",
+        "items": [
+          {
+            "icon": "MessageSquare",
+            "title": "Customer Support Agents With Conversation History",
+            "description": "Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB Cloud while keeping their data boundaries intact.",
+            "borderColor": "border-blue-500"
+          },
+          {
+            "icon": "Code2",
+            "title": "Code Generation Agents With Project Context",
+            "description": "Coding agents need memory and state for repository structure, generated code, dependencies, file changes, and prior decisions. Persistent workspace context lets agents continue earlier work instead of starting from a blank prompt.\n\nIn multi-agent coding workflows, a planning agent and an implementation agent can share repository state without sharing write access.",
+            "borderColor": "border-violet-500"
+          },
+          {
+            "icon": "Building",
+            "title": "Enterprise AI Platforms With Tenant Isolation",
+            "description": "Enterprise AI products need context persistence, security boundaries, and predictable scaling. TiDB Cloud supports per-agent isolation and agent memory scaling for platforms serving many customers, teams, and workloads from a shared foundation.",
+            "borderColor": "border-teal-500"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "background": "gradient-dark-top",
         "spacing": "section"
       }
     },
