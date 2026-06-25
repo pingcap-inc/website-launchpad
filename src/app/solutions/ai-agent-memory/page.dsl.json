@@ -79,8 +79,14 @@
             "description": "When temporary sessions end, agents lose conversation history and task progress unless stored durably. Persistent memory allows agents to resume work exactly where they left off.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/aae06692-chatgpt_image_jun_24__2026__08_18_08_pm.png",
+                "alt": "chatgpt image jun 24 2026 08 18 08 pm",
+                "width": 1672,
+                "height": 941
+              },
+              "alt": "chatgpt image jun 24 2026 08 18 08 pm",
+              "width": 1672,
+              "height": 941
             },
             "imagePosition": "right"
           },
