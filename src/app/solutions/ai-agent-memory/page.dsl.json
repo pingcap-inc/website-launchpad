@@ -2,7 +2,7 @@
   "pageName": "AI Agent Memory and State: Unified Storage Layer | TiDB",
   "meta": {
     "title": "AI Agent Memory and State: Unified Storage Layer | TiDB",
-    "description": "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+    "description": "Build persistent AI agent memory, durable state, and workspace context with TiDB Cloud, mem9, and drive9 for scalable per-agent isolation.",
     "canonical": "/solutions/ai-agent-memory/"
   },
   "sections": [

@@ -6,12 +6,12 @@ import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
   title: "AI Agent Memory and State: Unified Storage Layer | TiDB",
-  description: "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+  description: "Build persistent AI agent memory, durable state, and workspace context with TiDB Cloud, mem9, and drive9 for scalable per-agent isolation.",
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/solutions/ai-agent-memory/' },
   openGraph: {
     title: "AI Agent Memory and State: Unified Storage Layer | TiDB",
-    description: "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+    description: "Build persistent AI agent memory, durable state, and workspace context with TiDB Cloud, mem9, and drive9 for scalable per-agent isolation.",
     url: 'https://www.pingcap.com/solutions/ai-agent-memory/',
     siteName: 'TiDB',
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 const schema = buildPageSchema({
   path: "/solutions/ai-agent-memory/",
   title: "AI Agent Memory and State: Unified Storage Layer | TiDB",
-  description: "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+  description: "Build persistent AI agent memory, durable state, and workspace context with TiDB Cloud, mem9, and drive9 for scalable per-agent isolation.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: "AI Agent Memory and State: <span class=\"text-gradient-violet animate-glow-sweep\">Unified Storage Layer</span>", path: "/solutions/ai-agent-memory/" },
@@ -44,7 +44,7 @@ const dsl: PageDSL = {
   "pageName": "AI Agent Memory and State: Unified Storage Layer | TiDB",
   "meta": {
     "title": "AI Agent Memory and State: Unified Storage Layer | TiDB",
-    "description": "Solve AI agent context loss with TiDB Cloud. A unified storage layer for persistent memory, durable state, and workspace context with per-agent isolation.",
+    "description": "Build persistent AI agent memory, durable state, and workspace context with TiDB Cloud, mem9, and drive9 for scalable per-agent isolation.",
     "canonical": "/solutions/ai-agent-memory/"
   },
   "sections": [
