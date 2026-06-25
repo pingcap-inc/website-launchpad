@@ -46,7 +46,7 @@
         "eyebrow": "The Context Problem"
       },
       "style": {
-        "background": "primary",
+        "background": "inverse",
         "spacing": "section"
       }
     },
@@ -63,8 +63,14 @@
             "description": "Many agent stacks use one system for semantic search, another for session state, and another for files. This increases latency, complicates debugging, and turns context persistence into an application problem.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/8b7f30fc-whiteboard_exported_image__1_.png",
+                "alt": "whiteboard exported image 1",
+                "width": 1487,
+                "height": 1641
+              },
+              "alt": "whiteboard exported image 1",
+              "width": 1487,
+              "height": 1641
             },
             "imagePosition": "left"
           },
@@ -83,8 +89,14 @@
             "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/97ed8001-20260624-095351.png",
+                "alt": "20260624 095351",
+                "width": 8712,
+                "height": 3726
+              },
+              "alt": "20260624 095351",
+              "width": 8712,
+              "height": 3726
             },
             "imagePosition": "left"
           }
@@ -99,8 +111,8 @@
       "id": "solution-01",
       "type": "featureGrid",
       "props": {
-        "eyebrow": "One Engine for Everything",
-        "title": "Memory, State, and Workspace Context",
+        "eyebrow": "Unified Infrastructure",
+        "title": "One Engine for Everything: Memory, State, and Workspace Context",
         "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.",
         "items": [
           {
@@ -140,10 +152,10 @@
             }
           }
         ],
-        "columns": 3
+        "columns": 2
       },
       "style": {
-        "spacing": "section"
+        "spacing": "lg"
       }
     },
     {
@@ -217,21 +229,7 @@
             }
           }
         ],
-        "startPosition": "left"
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
-      "id": "social-proof-01",
-      "type": "stats",
-      "props": {
-        "eyebrow": "Proven Results",
-        "title": "Production-Ready at Scale",
-        "subtitle": "TiDB Cloud supports large-scale conversational workloads with efficient resource usage.",
-        "items": [],
-        "columns": 3
+        "startPosition": "right"
       },
       "style": {
         "spacing": "section"
