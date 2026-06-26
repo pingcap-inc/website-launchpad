@@ -99,8 +99,10 @@ function HeroTextBlock({
             centered && 'justify-center'
           )}
         >
-          {primaryCta && <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>}
-          {secondaryCta && (
+          {primaryCta?.text && (
+            <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>
+          )}
+          {secondaryCta?.text && (
             <SecondaryButton href={secondaryCta.href}>{secondaryCta.text}</SecondaryButton>
           )}
         </div>
