@@ -275,7 +275,7 @@
                 "label": "Tenants supported"
               }
             ],
-            "cta": "Read the story →",
+            "cta": "Read the story",
             "href": "https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/"
           },
           {
@@ -303,7 +303,7 @@
                 "label": "TiDB Cloud clusters in production"
               }
             ],
-            "cta": "Read the story →",
+            "cta": "Read the story",
             "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/"
           },
           {
@@ -331,7 +331,7 @@
                 "label": "DB tenants"
               }
             ],
-            "cta": "Read the story →",
+            "cta": "Read the story",
             "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/"
           }
         ]

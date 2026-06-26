@@ -318,7 +318,7 @@ const dsl: PageDSL = {
               }
             ],
             "href": "https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/",
-            "cta": "Read the story →"
+            "cta": "Read the story"
           },
           {
             "badge": "Agentic AI",
@@ -346,7 +346,7 @@ const dsl: PageDSL = {
               }
             ],
             "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/",
-            "cta": "Read the story →"
+            "cta": "Read the story"
           },
           {
             "badge": "Agentic AI",
@@ -374,7 +374,7 @@ const dsl: PageDSL = {
               }
             ],
             "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
-            "cta": "Read the story →"
+            "cta": "Read the story"
           }
         ]
       },
