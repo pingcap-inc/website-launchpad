@@ -42,8 +42,8 @@ function Card({ badge, logo, title, description, stats, href, cta }: CaseStudyCa
       {...(href ? externalLinkProps(href) : {})}
     >
       {badge ? (
-        <div className="mb-5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#f65b67]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#f65b67]" />
+        <div className="mb-8 flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#e54545]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#e54545]" />
           <span>{badge}</span>
         </div>
       ) : null}
@@ -60,19 +60,19 @@ function Card({ badge, logo, title, description, stats, href, cta }: CaseStudyCa
         </div>
       ) : null}
       <h3 className="text-h3-sm font-bold leading-[1.15] text-white">{title}</h3>
-      <p className="mt-5 text-base leading-7 text-secondary font-light">{description}</p>
-      <div className="mt-12 grid gap-8 sm:grid-cols-2 border-t border-carbon-900 pt-8">
+      <p className="mt-5 text-base leading-7 text-secondary font-light flex-1">{description}</p>
+      <div className="mt-12 grid gap-8 sm:grid-cols-2 border-t border-carbon-900 py-8">
         {stats.map((stat, index) => (
           <div
             key={`${title}-${stat.value}-${index}`}
             className="rounded-lg bg-white/5 border border-carbon-900 px-4 py-4"
           >
             <div className="text-[36px] font-bold leading-none text-white">{stat.value}</div>
-            <div className="mt-2 text-sm leading-5 text-secondary">{stat.label}</div>
+            <div className="mt-2 min-h-10 text-sm leading-5 text-secondary">{stat.label}</div>
           </div>
         ))}
       </div>
-      <div className="mt-auto pt-8">
+      <div className="mt-auto">
         <SecondaryButton as="span" className="text-white">
           {cta || 'Read the story'}
         </SecondaryButton>
