@@ -89,6 +89,7 @@ export type SectionType =
   | 'stats'
   | 'featureGrid'
   | 'featureCard'
+  | 'caseStudyCards'
   | 'featureTabs'
   | 'featureHighlights'
   | 'featureMedia'
@@ -248,6 +249,33 @@ export interface FeatureCardItem {
   borderColor?: string
   href?: string
   className?: string
+}
+
+export interface CaseStudyCardsProps {
+  eyebrow?: string
+  title: string
+  items: CaseStudyCardItem[]
+  className?: string
+}
+
+export interface CaseStudyCardItem {
+  badge?: string
+  logo?: {
+    image: ImageRef
+    alt?: string
+    width?: number
+    height?: number
+  }
+  title: string
+  description: string
+  stats: CaseStudyCardStat[]
+  href?: string
+  cta?: string
+}
+
+export interface CaseStudyCardStat {
+  value: string
+  label: string
 }
 
 // ─── Feature Tabs ────────────────────────────────────────────────────────────
@@ -503,6 +531,7 @@ export type SectionPropsMap = {
   stats: StatsProps
   featureGrid: FeatureGridProps
   featureCard: FeatureCardProps
+  caseStudyCards: CaseStudyCardsProps
   featureTabs: FeatureTabsProps
   featureHighlights: FeatureHighlightsProps
   featureMedia: FeatureMediaProps
@@ -663,6 +692,7 @@ Available section types (choose appropriate mix):
 - { type: "stats", props: { eyebrow?, title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4, className? } }
 - { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, viewMore?: {text, href}, itemLayout?: "horizontal"|"vertical", iconSize?: 32|48, className? } }
 - { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
+- { type: "caseStudyCards", props: { eyebrow?, title, items: [{badge?, logo?: { image: {assetId?, url}, alt?, width?, height? }, title, description, stats: [{value, label}], href?, cta?}], className? } }
 - { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, content?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval?, className? } }
 - { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href}, iconSize?: 32|48, className? } }
 - { type: "featureMedia", props: { eyebrow?, title?, subtitle?, items: [{title, description, image: {image: {assetId?, url}, alt?, width?, height?}, imagePosition?: "left"|"right"}], startPosition?: "left"|"right", className? } }

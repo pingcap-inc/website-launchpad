@@ -170,6 +170,13 @@ Keep all fields that don't need changing. Preserve the "type" field exactly.${
       }
     }
 
+    // This endpoint edits a single existing section in place, so we always keep
+    // the original section identity even if the model mutates those fields.
+    candidate.type = section.type
+    if (!candidate.id) {
+      candidate.id = section.id
+    }
+
     stripImageFields(candidate)
     stripSectionBackground(candidate)
     applyFeatureTabsDefaultsToSection(candidate)
@@ -180,9 +187,7 @@ Keep all fields that don't need changing. Preserve the "type" field exactly.${
     if (!updated.style && section.style) updated.style = section.style
 
     // Ensure type is preserved
-    if (updated.type !== section.type) {
-      return NextResponse.json({ error: 'AI changed section type — rejected' }, { status: 422 })
-    }
+    updated.type = section.type
 
     // Sanitize icons
     const fakeDSL = { meta: { title: '', description: '', canonical: '/' }, sections: [updated] }

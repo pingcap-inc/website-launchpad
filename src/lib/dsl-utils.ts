@@ -1,5 +1,8 @@
 import type {
   AgendaProps,
+  CaseStudyCardItem,
+  CaseStudyCardStat,
+  CaseStudyCardsProps,
   ComparisonTableProps,
   CtaProps,
   FeatureCardItem,
@@ -316,6 +319,40 @@ function normalizeTestimonial(value: unknown): Testimonial | null {
   }
 }
 
+function normalizeCaseStudyCardStat(value: unknown): CaseStudyCardStat | null {
+  if (!value || typeof value !== 'object') return null
+  const v = value as CaseStudyCardStat
+  return {
+    value: v.value ?? '',
+    label: v.label ?? '',
+  }
+}
+
+function normalizeCaseStudyCardItem(value: unknown): CaseStudyCardItem | null {
+  if (!value || typeof value !== 'object') return null
+  const v = value as CaseStudyCardItem & { logo?: { src?: unknown; image?: unknown } }
+  const stats = Array.isArray(v.stats)
+    ? v.stats.map(normalizeCaseStudyCardStat).filter(Boolean)
+    : []
+  const logoImage = normalizeImageRef(v.logo?.image ?? v.logo?.src)
+  return {
+    badge: v.badge ?? '',
+    logo: logoImage
+      ? {
+          image: logoImage,
+          alt: v.logo?.alt,
+          width: v.logo?.width,
+          height: v.logo?.height,
+        }
+      : undefined,
+    title: v.title ?? '',
+    description: v.description ?? '',
+    stats: stats as CaseStudyCardStat[],
+    href: v.href,
+    cta: v.cta,
+  }
+}
+
 function normalizeHeroProps(value: unknown): HeroProps {
   const v = (value ?? {}) as HeroProps & {
     heroImage?: unknown
@@ -467,6 +504,19 @@ function normalizeTestimonialsProps(value: unknown): TestimonialsProps {
   }
 }
 
+function normalizeCaseStudyCardsProps(value: unknown): CaseStudyCardsProps {
+  const v = (value ?? {}) as CaseStudyCardsProps
+  const items = Array.isArray(v.items)
+    ? v.items.map(normalizeCaseStudyCardItem).filter(Boolean)
+    : []
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title ?? '',
+    items: items as CaseStudyCardItem[],
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
 function normalizeFaqProps(value: unknown): FaqProps {
   const v = (value ?? {}) as FaqProps
   return {
@@ -590,6 +640,8 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeFeatureGridProps(value)
     case 'featureCard':
       return normalizeFeatureCardProps(value)
+    case 'caseStudyCards':
+      return normalizeCaseStudyCardsProps(value)
     case 'featureTabs':
       return normalizeFeatureTabsProps(value)
     case 'featureHighlights':

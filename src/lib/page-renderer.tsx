@@ -55,6 +55,7 @@ import {
   HeroSection,
   FeatureGridSection,
   FeatureCardSection,
+  CaseStudyCardsSection,
   StatsSection,
   CtaSection,
   LogoCloudSection,
@@ -260,6 +261,16 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  caseStudyCards: {
+    Component: CaseStudyCardsSection,
+    mapProps: (props: SectionPropsMap['caseStudyCards']) => ({
+      eyebrow: props.eyebrow,
+      title: props.title,
+      items: props.items,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'gradient-dark-bottom', spacing: 'section' },
   },
   featureTabs: {
     Component: FeatureTabsSection,

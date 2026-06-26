@@ -33,6 +33,7 @@ const SECTION_COLORS: Record<string, string> = {
   stats: 'bg-blue-100 text-blue-700',
   featureGrid: 'bg-emerald-100 text-emerald-700',
   featureCard: 'bg-teal-100 text-teal-700',
+  caseStudyCards: 'bg-amber-100 text-amber-700',
   featureTabs: 'bg-cyan-100 text-cyan-700',
   featureHighlights: 'bg-fuchsia-100 text-fuchsia-700',
   featureMedia: 'bg-sky-100 text-sky-700',
@@ -59,6 +60,8 @@ function sectionSummary(node: SectionNode): string {
     case 'featureCard':
       const featureProps = node.props as FeatureGridProps
       return featureProps.title
+    case 'caseStudyCards':
+      return `${((node.props as any).items ?? []).length} cards — ${String((node.props as any).title ?? '')}`
     case 'featureTabs':
       const featureTabsProps = node.props as FeatureTabsProps
       return `${featureTabsProps.tabs.length} tabs — ${featureTabsProps.title}`
