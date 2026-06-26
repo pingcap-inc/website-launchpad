@@ -287,6 +287,102 @@ const dsl: PageDSL = {
       }
     },
     {
+      "id": "caseStudyCards-1782472692660",
+      "type": "caseStudyCards",
+      "props": {
+        "title": "Proven AI Agent Results",
+        "items": [
+          {
+            "badge": "Agentic AI",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/68b65a2a-20260525-230213.png",
+                "alt": "20260525 230213",
+                "width": 1511,
+                "height": 512
+              },
+              "alt": "20260525 230213",
+              "width": 1511,
+              "height": 512
+            },
+            "title": "Millions of Agent-Created Databases, Provisioned in Under a Second",
+            "description": "Kimi's K2.6 agent builds and hosts full-stack web applications for millions of users, provisioning an isolated database per site instantly, powered by TiDB Cloud's multi-tenant architecture.",
+            "stats": [
+              {
+                "value": "<1s",
+                "label": "Database provisioning per site"
+              },
+              {
+                "value": "10M+",
+                "label": "Tenants supported"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/",
+            "cta": "Read the story →"
+          },
+          {
+            "badge": "Agentic AI",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/ac3136ec-plaud-logo-white.png",
+                "alt": "plaud logo white",
+                "width": 11500,
+                "height": 4260
+              },
+              "alt": "plaud logo white",
+              "width": 11500,
+              "height": 4260
+            },
+            "title": "From Two Data Stores to One Unified Database",
+            "description": "Plaud migrated from MySQL + Amazon S3 to TiDB Cloud, eliminating S3 retrieval latency and unlocking online DDL for 2M+ users across 170 countries.",
+            "stats": [
+              {
+                "value": "10x",
+                "label": "OPS improvement under peak load"
+              },
+              {
+                "value": "13",
+                "label": "TiDB Cloud clusters in production"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/",
+            "cta": "Read the story →"
+          },
+          {
+            "badge": "Agentic AI",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/0fc78057-manus.svg",
+                "alt": "manus",
+                "width": 165,
+                "height": 48
+              },
+              "alt": "manus",
+              "width": 165,
+              "height": 48
+            },
+            "title": "From Viral Launch to 1M+ Database Tenants",
+            "description": "Migrated to TiDB Cloud in two weeks to support explosive growth. TiDB now powers context persistence behind Manus's agent swarms and full-stack app generation.",
+            "stats": [
+              {
+                "value": "2 wks",
+                "label": "Migration time"
+              },
+              {
+                "value": "1M+",
+                "label": "DB tenants"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
+            "cta": "Read the story →"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
       "id": "cta-01",
       "type": "cta",
       "props": {
