@@ -279,7 +279,7 @@ const dsl: PageDSL = {
           }
         ],
         "columns": 3,
-        "borderStyle": "gray"
+        "borderStyle": "color"
       },
       "style": {
         "background": "gradient-dark-top",
