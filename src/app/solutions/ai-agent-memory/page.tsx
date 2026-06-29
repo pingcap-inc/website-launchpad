@@ -74,7 +74,15 @@ const dsl: PageDSL = {
         }
       },
       "style": {
-        "spacing": "hero"
+        "spacing": "hero",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/314f2d42-group_1000011631.png",
+            "alt": "group 1000011631",
+            "width": 1440,
+            "height": 664
+          }
+        }
       }
     },
     {
@@ -220,8 +228,14 @@ const dsl: PageDSL = {
             "description": "TiDB Cloud works with common AI application patterns, including PyTiDB, MCP-based architectures, LangChain, LlamaIndex, and MySQL-compatible tools.\n\nMySQL compatibility matters because many teams already have drivers, ORMs, migration scripts, and operational practices built around SQL. Moving agent memory into TiDB Cloud does not require abandoning that ecosystem.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/32f25147-agent_layer_integration.svg",
+                "alt": "agent layer integration",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "agent layer integration",
+              "width": 600,
+              "height": 600
             },
             "imagePosition": "right"
           },
@@ -230,8 +244,14 @@ const dsl: PageDSL = {
             "description": "The TiDB SQL layer provides a SQL interface, transaction processing, vector search, and access to structured memory and state. Teams can store and query memory, state, retrieval data, and operational context through one durable database layer.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/31a5228c-sql_vector_search.svg",
+                "alt": "sql vector search",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "sql vector search",
+              "width": 600,
+              "height": 600
             }
           },
           {
@@ -239,8 +259,14 @@ const dsl: PageDSL = {
             "description": "TiKV stores transactional data across the cluster. TiFlash replicates from TiKV and runs real-time analytical queries on live data. PD coordinates placement and scheduling. Raft and MVCC maintain consistency and isolation as many agents read and write memory at once.\n\nThe result: memory, state, and retrieval share one durable database boundary instead of relying on synchronization between separate systems.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/1f2623fb-storage_and_consistency_.svg",
+                "alt": "storage and consistency",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "storage and consistency",
+              "width": 600,
+              "height": 600
             }
           }
         ],
