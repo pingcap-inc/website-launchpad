@@ -163,7 +163,7 @@
           },
           {
             "q": "Is TiDB Cloud Lake available now?",
-            "a": "TiDB Cloud Lake is now in Public Preview."
+            "a": "TiDB Cloud Lake is now in Public Preview"
           }
         ]
       },
@@ -176,7 +176,7 @@
       "type": "cta",
       "props": {
         "title": "Ready to Unify OLTP, Analytics, and AI on One Platform?",
-        "subtitle": "Start free in TiDB Cloud and request Public Preview access to TiDB Cloud Lake today.",
+        "subtitle": "Start free in TiDB Cloud and request Private Beta access to TiDB Cloud Lake today.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"

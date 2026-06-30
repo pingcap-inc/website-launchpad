@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
+import { buildPageSchema } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -40,7 +40,7 @@ const schema = buildPageSchema({
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
-      name: 'TiDB Cloud Lake',
+      name: 'Cloud-Native Analytics Warehouse for AI and Modern <span class="text-gradient-violet">Analytics</span>',
       path: '/tidb-cloud-lake/',
     },
   ],
@@ -220,7 +220,7 @@ const dsl: PageDSL = {
           },
           {
             q: 'Is TiDB Cloud Lake available now?',
-            a: 'TiDB Cloud Lake is now in Public Preview.',
+            a: 'TiDB Cloud Lake is now in Public Preview',
           },
         ],
       },
@@ -234,7 +234,7 @@ const dsl: PageDSL = {
       props: {
         title: 'Ready to Unify OLTP, Analytics, and AI on One Platform?',
         subtitle:
-          'Start free in TiDB Cloud and request Public Preview access to TiDB Cloud Lake today.',
+          'Start free in TiDB Cloud and request Private Beta access to TiDB Cloud Lake today.',
         image: {
           image: {
             url: 'https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg',
@@ -263,7 +263,7 @@ const dsl: PageDSL = {
 export default function GeneratedPage() {
   return (
     <>
-      <JsonLd data={withFaqFromDSL(schema, dsl)} />
+      <JsonLd data={schema} />
       <PageRenderer dsl={dsl} withChrome />
     </>
   )
