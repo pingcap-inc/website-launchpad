@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/glossary/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/what-is-tidb/', priority: 0.8, changeFrequency: 'monthly' },
     { url: '/integrations/', priority: 0.8, changeFrequency: 'weekly' },
+    { url: '/tidb-cloud-lake/', priority: 0.8, changeFrequency: 'weekly' },
     // AI pages
     { url: '/ai/', priority: 0.8, changeFrequency: 'weekly' },
     { url: '/ai/vector-search/', priority: 0.7, changeFrequency: 'monthly' },
