@@ -205,7 +205,7 @@ const dsl: PageDSL = {
           },
           {
             "q": "Is TiDB Cloud Lake available now?",
-            "a": "TiDB Cloud Lake is now in. Public Preview"
+            "a": "TiDB Cloud Lake is now in Public Preview"
           }
         ]
       },
