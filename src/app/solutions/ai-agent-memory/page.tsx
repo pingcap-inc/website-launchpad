@@ -113,14 +113,14 @@ const dsl: PageDSL = {
             "description": "Many agent stacks use one system for semantic search, another for session state, and another for files. This increases latency, complicates debugging, and turns context persistence into an application problem.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/c465e30c-45bc5b59-e933-4f65-87c1-a4cee967b54a.png",
-                "alt": "45bc5b59 e933 4f65 87c1 a4cee967b54a",
-                "width": 1122,
-                "height": 1402
+                "url": "https://static.pingcap.com/images/2fbd206e-group_1000011657.png",
+                "alt": "group 1000011657",
+                "width": 4898,
+                "height": 2515
               },
-              "alt": "45bc5b59 e933 4f65 87c1 a4cee967b54a",
-              "width": 1122,
-              "height": 1402
+              "alt": "group 1000011657",
+              "width": 4898,
+              "height": 2515
             },
             "imagePosition": "left"
           },
@@ -129,14 +129,14 @@ const dsl: PageDSL = {
             "description": "When temporary sessions end, agents lose conversation history and task progress unless stored durably. Persistent memory allows agents to resume work exactly where they left off.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/4d85a521-20260625-133302.png",
-                "alt": "20260625 133302",
-                "width": 7507,
-                "height": 3726
+                "url": "https://static.pingcap.com/images/843bdc29-group_1000011657__1_.png",
+                "alt": "group 1000011657 1",
+                "width": 6386,
+                "height": 2647
               },
-              "alt": "20260625 133302",
-              "width": 7507,
-              "height": 3726
+              "alt": "group 1000011657 1",
+              "width": 6386,
+              "height": 2647
             },
             "imagePosition": "right"
           },
@@ -145,14 +145,14 @@ const dsl: PageDSL = {
             "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/a7aec924-20260625-133312.png",
-                "alt": "20260625 133312",
-                "width": 8712,
-                "height": 3726
+                "url": "https://static.pingcap.com/images/e49050a0-group_1000011658.png",
+                "alt": "group 1000011658",
+                "width": 7974,
+                "height": 2616
               },
-              "alt": "20260625 133312",
-              "width": 8712,
-              "height": 3726
+              "alt": "group 1000011658",
+              "width": 7974,
+              "height": 2616
             },
             "imagePosition": "left"
           }
