@@ -470,9 +470,7 @@ function normalizeFeatureMediaProps(value: unknown): FeatureMediaProps {
     subtitle: v.subtitle,
     items: items as FeatureMediaItemDSL[],
     startPosition:
-      v.startPosition === 'left' || v.startPosition === 'right' || v.startPosition === 'full'
-        ? v.startPosition
-        : undefined,
+      v.startPosition === 'left' || v.startPosition === 'right' ? v.startPosition : undefined,
     className: typeof v.className === 'string' ? v.className : undefined,
   }
 }

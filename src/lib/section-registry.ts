@@ -618,7 +618,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
   featureMedia: {
     type: 'featureMedia',
     label: 'Feature Media',
-    description: 'Text + image rows with optional full-width layout',
+    description: 'Text + image rows with alternating left/right layout',
     defaultProps: defaultFeatureMediaProps,
     defaultStyle: { background: 'primary', spacing: 'section' },
     fields: [
@@ -632,7 +632,6 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         options: [
           { label: 'Right', value: 'right' },
           { label: 'Left', value: 'left' },
-          { label: 'Full width', value: 'full' },
         ],
       },
       {

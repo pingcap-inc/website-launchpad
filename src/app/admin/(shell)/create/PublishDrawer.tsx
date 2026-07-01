@@ -269,15 +269,6 @@ export function PublishDrawer({
         case 'featureGrid':
         case 'featureCard':
         case 'featureHighlights':
-          if (!props.title?.trim()) {
-            nextLint.push({
-              label: 'Section',
-              status: 'fail',
-              detail: `${prefix} · Title is required.`,
-            })
-          } else {
-            nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Title` })
-          }
           if (!props.items?.length) {
             nextLint.push({
               label: 'Section',
@@ -295,15 +286,6 @@ export function PublishDrawer({
           }
           break
         case 'featureTabs':
-          if (!props.title?.trim()) {
-            nextLint.push({
-              label: 'Section',
-              status: 'fail',
-              detail: `${prefix} · Title is required.`,
-            })
-          } else {
-            nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Title` })
-          }
           if (!props.tabs?.length) {
             nextLint.push({
               label: 'Section',

@@ -23,8 +23,8 @@ interface FeatureMediaSectionProps {
   title?: string
   subtitle?: string
   items: FeatureMediaItem[]
-  /** Layout mode. Use 'full' for a stacked full-width section. Default: 'right' */
-  startPosition?: 'left' | 'right' | 'full'
+  /** Which side the first image appears on. Default: 'right' */
+  startPosition?: 'left' | 'right'
   /** Enable SlideIn scroll animations. Default: true */
   animate?: boolean
   className?: string
@@ -43,17 +43,15 @@ export function FeatureMediaSection({
     <div className={cn('space-y-16', className)}>
       {title && <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />}
       {items.map((item, index) => {
-        const isFullWidthLayout = startPosition === 'full'
-        const imageOnRight = isFullWidthLayout
-          ? 'right'
-          : (item.imagePosition ??
-            (index % 2 === 0
-              ? startPosition !== 'left'
-                ? 'right'
-                : 'left'
-              : startPosition === 'left'
-                ? 'right'
-                : 'left'))
+        const imageOnRight =
+          item.imagePosition ??
+          (index % 2 === 0
+            ? startPosition !== 'left'
+              ? 'right'
+              : 'left'
+            : startPosition === 'left'
+              ? 'right'
+              : 'left')
         const isImageRight = imageOnRight === 'right'
 
         const textContent = item.content ?? (
@@ -69,7 +67,7 @@ export function FeatureMediaSection({
           <div
             className={cn(
               'relative w-full overflow-hidden flex justify-center',
-              isFullWidthLayout ? 'mx-auto' : isImageRight ? 'lg:justify-end' : 'lg:justify-start'
+              isImageRight ? 'lg:justify-end' : 'lg:justify-start'
             )}
           >
             <Image
@@ -77,10 +75,7 @@ export function FeatureMediaSection({
               alt={item.image.alt ?? ''}
               width={item.image.width ?? 600}
               height={item.image.height ?? 600}
-              className={cn(
-                'w-full h-auto object-contain',
-                isFullWidthLayout ? 'max-w-none' : 'max-w-full xlg:max-w-[600px] max-h-[600px]'
-              )}
+              className="w-full h-auto object-contain max-w-full xlg:max-w-[600px] max-h-[600px]"
             />
           </div>
         )
@@ -90,11 +85,7 @@ export function FeatureMediaSection({
         return (
           <div
             key={item.title ? `${item.title}-${index}` : `feature-media-${index}`}
-            className={cn(
-              isFullWidthLayout
-                ? 'w-full space-y-8 lg:space-y-10'
-                : 'grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center'
-            )}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
           >
             <Wrapper
               {...(animate
@@ -103,10 +94,7 @@ export function FeatureMediaSection({
                     variant: 'fade',
                   }
                 : {})}
-              className={cn(
-                isFullWidthLayout ? 'w-full max-w-4xl mx-auto' : 'lg:col-span-6',
-                !isFullWidthLayout && !isImageRight && 'lg:order-2'
-              )}
+              className={cn('lg:col-span-6', !isImageRight && 'lg:order-2')}
             >
               {textContent}
             </Wrapper>
@@ -115,13 +103,10 @@ export function FeatureMediaSection({
                 ? {
                     direction: 'up',
                     variant: 'fade',
-                    delay: isFullWidthLayout ? 0 : 150,
+                    delay: 150,
                   }
                 : {})}
-              className={cn(
-                isFullWidthLayout ? 'w-full max-w-5xl mx-auto' : 'lg:col-span-6',
-                !isFullWidthLayout && !isImageRight && 'lg:order-1'
-              )}
+              className={cn('lg:col-span-6', !isImageRight && 'lg:order-1')}
             >
               {item.image.image.url && imageContent}
             </Wrapper>
