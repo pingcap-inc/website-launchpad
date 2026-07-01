@@ -3,6 +3,7 @@ import type {
   CaseStudyCardItem,
   CaseStudyCardStat,
   CaseStudyCardsProps,
+  ColumnsProps,
   ComparisonTableProps,
   CtaProps,
   FeatureCardItem,
@@ -29,6 +30,7 @@ import type {
   SectionPropsMap,
   SectionStyle,
   SectionType,
+  ShortcodeProps,
   SpeakersProps,
   StatsItem,
   StatsProps,
@@ -475,6 +477,33 @@ function normalizeFeatureMediaProps(value: unknown): FeatureMediaProps {
   }
 }
 
+function normalizeColumnsProps(value: unknown): ColumnsProps {
+  const v = (value ?? {}) as ColumnsProps
+  const imageValue =
+    (v.image as { image?: unknown; src?: unknown } | undefined)?.image ??
+    (v.image as { image?: unknown; src?: unknown } | undefined)?.src ??
+    v.image
+  const image = normalizeImageRef(imageValue)
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title,
+    subtitle: v.subtitle,
+    titleFullWidth: v.titleFullWidth !== false,
+    layout: v.layout === 'single' || v.layout === 'split' ? v.layout : 'split',
+    mediaType: v.mediaType === 'shortcode' ? 'shortcode' : 'image',
+    image: image
+      ? {
+          image,
+          alt: (v.image as { alt?: unknown } | undefined)?.alt as string | undefined,
+          width: (v.image as { width?: unknown } | undefined)?.width as number | undefined,
+          height: (v.image as { height?: unknown } | undefined)?.height as number | undefined,
+        }
+      : undefined,
+    shortCode: typeof v.shortCode === 'string' ? v.shortCode : undefined,
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
 function normalizeLogoCloudProps(value: unknown): LogoCloudProps {
   const v = (value ?? {}) as LogoCloudProps
   const logos = Array.isArray(v.logos) ? v.logos.map(normalizeLogo).filter(Boolean) : []
@@ -601,6 +630,14 @@ function normalizeRichTextBlockProps(value: unknown): SectionPropsMap['richTextB
   }
 }
 
+function normalizeShortcodeProps(value: unknown): SectionPropsMap['shortcode'] {
+  const v = (value && typeof value === 'object' ? value : {}) as ShortcodeProps
+  return {
+    shortCode: typeof v.shortCode === 'string' ? v.shortCode : '',
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
 function normalizeCodeBlockProps(value: unknown): SectionPropsMap['codeBlock'] {
   const v = (value && typeof value === 'object' ? value : {}) as Record<string, unknown>
   return {
@@ -648,6 +685,8 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeFeatureHighlightsProps(value)
     case 'featureMedia':
       return normalizeFeatureMediaProps(value)
+    case 'columns':
+      return normalizeColumnsProps(value)
     case 'logoCloud':
       return normalizeLogoCloudProps(value)
     case 'testimonials':
@@ -666,6 +705,8 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeComparisonTableProps(value)
     case 'richTextBlock':
       return normalizeRichTextBlockProps(value)
+    case 'shortcode':
+      return normalizeShortcodeProps(value)
     case 'codeBlock':
       return normalizeCodeBlockProps(value)
     case 'tableOfContents':

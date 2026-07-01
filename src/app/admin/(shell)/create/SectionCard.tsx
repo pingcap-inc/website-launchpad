@@ -14,6 +14,7 @@ import {
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import type {
+  ColumnsProps,
   CtaProps,
   FaqProps,
   FeatureGridProps,
@@ -37,6 +38,7 @@ const SECTION_COLORS: Record<string, string> = {
   featureTabs: 'bg-cyan-100 text-cyan-700',
   featureHighlights: 'bg-fuchsia-100 text-fuchsia-700',
   featureMedia: 'bg-sky-100 text-sky-700',
+  columns: 'bg-slate-100 text-slate-700',
   logoCloud: 'bg-orange-100 text-orange-700',
   testimonials: 'bg-yellow-100 text-yellow-700',
   faq: 'bg-pink-100 text-pink-700',
@@ -77,6 +79,9 @@ function sectionSummary(node: SectionNode): string {
     case 'faq':
       const faqProps = node.props as FaqProps
       return `${faqProps.items.length} Q&A`
+    case 'columns':
+      const columnsProps = node.props as ColumnsProps
+      return columnsProps.title || 'Columns'
     case 'cta':
       const ctaProps = node.props as CtaProps
       return ctaProps.title

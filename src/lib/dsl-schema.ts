@@ -93,6 +93,7 @@ export type SectionType =
   | 'featureTabs'
   | 'featureHighlights'
   | 'featureMedia'
+  | 'columns'
   | 'logoCloud'
   | 'testimonials'
   | 'faq'
@@ -102,6 +103,7 @@ export type SectionType =
   | 'speakers'
   | 'comparisonTable'
   | 'richTextBlock'
+  | 'shortcode'
   | 'tableOfContents'
   | 'codeBlock'
 
@@ -427,6 +429,32 @@ export interface FeatureMediaItemDSL {
   imagePosition?: 'left' | 'right'
 }
 
+// ─── Columns ───────────────────────────────────────────────────────────────
+
+export interface ColumnsProps {
+  eyebrow?: string
+  title?: string
+  subtitle?: string
+  titleFullWidth?: boolean
+  layout?: 'single' | 'split'
+  mediaType?: 'image' | 'shortcode'
+  image?: {
+    image: ImageRef
+    alt?: string
+    width?: number
+    height?: number
+  }
+  shortCode?: string
+  className?: string
+}
+
+// ─── Shortcode ──────────────────────────────────────────────────────────────
+
+export interface ShortcodeProps {
+  shortCode: string
+  className?: string
+}
+
 // ─── HubSpot Form ────────────────────────────────────────────────────────────
 
 export interface FormProps {
@@ -535,6 +563,7 @@ export type SectionPropsMap = {
   featureTabs: FeatureTabsProps
   featureHighlights: FeatureHighlightsProps
   featureMedia: FeatureMediaProps
+  columns: ColumnsProps
   logoCloud: LogoCloudProps
   testimonials: TestimonialsProps
   faq: FaqProps
@@ -544,6 +573,7 @@ export type SectionPropsMap = {
   speakers: SpeakersProps
   comparisonTable: ComparisonTableProps
   richTextBlock: RichTextBlockProps
+  shortcode: ShortcodeProps
   tableOfContents: TableOfContentsProps
   codeBlock: CodeBlockProps
 }

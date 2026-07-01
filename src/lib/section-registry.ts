@@ -1,6 +1,7 @@
 import type {
   AgendaProps,
   CaseStudyCardsProps,
+  ColumnsProps,
   ComparisonTableProps,
   CodeBlockProps,
   CtaProps,
@@ -18,6 +19,7 @@ import type {
   SectionPropsMap,
   SectionStyle,
   SectionType,
+  ShortcodeProps,
   SpeakersProps,
   StatsProps,
   TableOfContentsProps,
@@ -179,6 +181,14 @@ const defaultFeatureMediaProps: FeatureMediaProps = {
   ],
 }
 
+const defaultColumnsProps: ColumnsProps = {
+  title: '',
+  titleFullWidth: true,
+  layout: 'split',
+  mediaType: 'image',
+  shortCode: '[agent-memory-timeline]',
+}
+
 const defaultLogoCloudProps: LogoCloudProps = {
   title: '',
   logos: [
@@ -247,6 +257,10 @@ const defaultCodeBlockProps: CodeBlockProps = {
   filename: '',
   language: 'bash',
   code: '',
+}
+
+const defaultShortcodeProps: ShortcodeProps = {
+  shortCode: '[agent-memory-timeline]',
 }
 
 export const schemaMap: Record<SectionType, SectionSchema<any>> = {
@@ -661,6 +675,61 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
       },
     ],
   },
+  columns: {
+    type: 'columns',
+    label: 'Columns',
+    description: 'Single-column or split layout with text and media or embedded code',
+    defaultProps: defaultColumnsProps,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: [
+      { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
+      { type: 'text', key: 'title', label: 'Title' },
+      { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
+      {
+        type: 'toggle',
+        key: 'titleFullWidth',
+        label: 'Title full width',
+        showWhen: (props) => props.layout === 'single',
+      },
+      {
+        type: 'select',
+        key: 'layout',
+        label: 'Layout',
+        options: [
+          { label: 'Single', value: 'single' },
+          { label: 'Split', value: 'split' },
+        ],
+      },
+      {
+        type: 'select',
+        key: 'mediaType',
+        label: 'Media type',
+        options: [
+          { label: 'Image', value: 'image' },
+          { label: 'Short code', value: 'shortcode' },
+        ],
+      },
+      {
+        type: 'object',
+        key: 'image',
+        label: 'Image',
+        showWhen: (props) => props.mediaType !== 'shortcode',
+        fields: [
+          { type: 'image', key: 'image', label: 'Image' },
+          { type: 'number', key: 'width', label: 'Width' },
+          { type: 'number', key: 'height', label: 'Height' },
+        ],
+      },
+      {
+        type: 'textarea',
+        key: 'shortCode',
+        label: 'Short code',
+        placeholder: '输入 [agent-memory-timeline]、Agent Memory Timeline.html，或可信 HTML 片段',
+        rows: 6,
+        showWhen: (props) => props.mediaType === 'shortcode',
+      },
+    ],
+  },
   logoCloud: {
     type: 'logoCloud',
     label: 'Logo Cloud',
@@ -877,6 +946,22 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
     defaultProps: { content: '' } as RichTextBlockProps,
     defaultStyle: { background: 'primary', spacing: 'section' },
     fields: [{ type: 'textarea', key: 'content', label: 'Content (Markdown)', rows: 10 }],
+  },
+  shortcode: {
+    type: 'shortcode',
+    label: 'Shortcode',
+    description: 'Reusable live embed such as Agent Memory Timeline',
+    defaultProps: defaultShortcodeProps,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: [
+      {
+        type: 'textarea',
+        key: 'shortCode',
+        label: 'Shortcode / embed',
+        placeholder: '输入 [agent-memory-timeline]、Agent Memory Timeline.html，或可信 HTML 片段',
+        rows: 6,
+      },
+    ],
   },
   tableOfContents: {
     type: 'tableOfContents',

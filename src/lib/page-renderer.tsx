@@ -64,11 +64,13 @@ import {
   FeatureTabsSection,
   FeatureHighlightsSection,
   FeatureMediaSection,
+  ColumnsSection,
   FormSection,
   Agenda,
   Speakers,
   ComparisonTable,
   RichTextBlock,
+  ShortcodeSection,
   CodeBlock,
   TableOfContents,
 } from '@/components'
@@ -310,6 +312,21 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
   },
+  columns: {
+    Component: ColumnsSection,
+    mapProps: (props: SectionPropsMap['columns']) => ({
+      eyebrow: props.eyebrow,
+      title: props.title,
+      subtitle: props.subtitle,
+      titleFullWidth: props.titleFullWidth,
+      layout: props.layout,
+      mediaType: props.mediaType,
+      image: props.image,
+      shortCode: props.shortCode,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
   logoCloud: {
     Component: LogoCloudSection,
     mapProps: (props: SectionPropsMap['logoCloud']) => ({
@@ -408,6 +425,14 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     Component: RichTextBlock,
     mapProps: (props: SectionPropsMap['richTextBlock']) => ({
       content: props.content,
+      className: props.className,
+    }),
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
+  shortcode: {
+    Component: ShortcodeSection,
+    mapProps: (props: SectionPropsMap['shortcode']) => ({
+      shortCode: props.shortCode,
       className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },

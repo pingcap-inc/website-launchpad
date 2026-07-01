@@ -18,6 +18,7 @@ export const ALLOWED_BG_BY_SECTION: Record<SectionType, Set<SectionStyle['backgr
   featureTabs: DEFAULT_ALLOWED_BG,
   featureHighlights: DEFAULT_ALLOWED_BG,
   featureMedia: DEFAULT_ALLOWED_BG,
+  columns: DEFAULT_ALLOWED_BG,
   logoCloud: DEFAULT_ALLOWED_BG,
   faq: DEFAULT_ALLOWED_BG,
   form: DEFAULT_ALLOWED_BG,
@@ -25,6 +26,7 @@ export const ALLOWED_BG_BY_SECTION: Record<SectionType, Set<SectionStyle['backgr
   speakers: DEFAULT_ALLOWED_BG,
   comparisonTable: DEFAULT_ALLOWED_BG,
   richTextBlock: DEFAULT_ALLOWED_BG,
+  shortcode: DEFAULT_ALLOWED_BG,
   codeBlock: DEFAULT_ALLOWED_BG,
   tableOfContents: new Set(['primary', 'none'] as SectionStyle['background'][]),
 }
@@ -42,6 +44,7 @@ export const ALLOWED_SPACING_BY_SECTION: Record<SectionType, Set<SectionStyle['s
   featureTabs: DEFAULT_ALLOWED_SPACING,
   featureHighlights: DEFAULT_ALLOWED_SPACING,
   featureMedia: DEFAULT_ALLOWED_SPACING,
+  columns: DEFAULT_ALLOWED_SPACING,
   logoCloud: DEFAULT_ALLOWED_SPACING,
   faq: DEFAULT_ALLOWED_SPACING,
   form: DEFAULT_ALLOWED_SPACING,
@@ -49,6 +52,7 @@ export const ALLOWED_SPACING_BY_SECTION: Record<SectionType, Set<SectionStyle['s
   speakers: DEFAULT_ALLOWED_SPACING,
   comparisonTable: DEFAULT_ALLOWED_SPACING,
   richTextBlock: DEFAULT_ALLOWED_SPACING,
+  shortcode: DEFAULT_ALLOWED_SPACING,
   codeBlock: DEFAULT_ALLOWED_SPACING,
   tableOfContents: new Set(['none', 'sm', 'md'] as SectionStyle['spacing'][]),
 }

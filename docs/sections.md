@@ -215,6 +215,17 @@ Stat item:
 | `label`       | `string`    | Required label.       |
 | `description` | `string`    | Optional description. |
 
+### ShortcodeSection
+
+File: `src/components/sections/ShortcodeSection.tsx`
+
+Props:
+
+| Prop        | Type     | Notes                                                                              |
+| ----------- | -------- | ---------------------------------------------------------------------------------- |
+| `shortCode` | `string` | Supports `[agent-memory-timeline]`, `Agent Memory Timeline.html`, or trusted HTML. |
+| `className` | `string` | Root class.                                                                        |
+
 ### TestimonialsSection
 
 File: `src/components/sections/TestimonialsSection.tsx` (client component)
