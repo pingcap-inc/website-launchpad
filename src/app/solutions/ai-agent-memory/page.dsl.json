@@ -44,14 +44,16 @@
       }
     },
     {
-      "id": "featureMedia-1782330445561",
-      "type": "featureMedia",
+      "id": "columns-1782897376614",
+      "type": "columns",
       "props": {
-        "eyebrow": "The Context Problem",
         "title": "Why Agents Need Memory That Lasts",
-        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes.\n\nIn production, memory is part of a broader state problem. Agent state also includes workflow progress, permissions, files, generated outputs, task history, tool results, runtime context, and operational metadata.\n\nWithout a durable memory and state layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started.",
-        "items": [],
-        "startPosition": "right"
+        "titleFullWidth": true,
+        "layout": "split",
+        "mediaType": "shortcode",
+        "shortCode": "[agent-memory-timeline]",
+        "eyebrow": "The Context Problem",
+        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes. In production, memory is part of a broader state problem. Agent state also includes workflow progress, permissions, files, generated outputs, task history, tool results, runtime context, and operational metadata. Without a durable memory and state layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started."
       },
       "style": {
         "background": "inverse",
@@ -122,30 +124,27 @@
       }
     },
     {
-      "id": "featureMedia-1782890071857",
-      "type": "featureMedia",
+      "id": "columns-1782897431316",
+      "type": "columns",
       "props": {
         "title": "One Engine for Everything: Memory, State, and Workspace Context",
-        "startPosition": "left",
-        "items": [
-          {
-            "title": "",
-            "description": "",
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/793ec158-chatgpt_image_jul_1__2026__02_48_21_pm.png",
-                "alt": "chatgpt image jul 1 2026 02 48 21 pm",
-                "width": 1681,
-                "height": 935
-              },
-              "alt": "chatgpt image jul 1 2026 02 48 21 pm",
-              "width": 1681,
-              "height": 935
-            }
-          }
-        ],
+        "titleFullWidth": true,
+        "layout": "single",
+        "mediaType": "image",
+        "shortCode": "[agent-memory-timeline]",
         "eyebrow": "Unified Infrastructure",
-        "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity."
+        "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.\n\n",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/793ec158-chatgpt_image_jul_1__2026__02_48_21_pm.png",
+            "alt": "chatgpt image jul 1 2026 02 48 21 pm",
+            "width": 1681,
+            "height": 935
+          },
+          "alt": "chatgpt image jul 1 2026 02 48 21 pm",
+          "width": 1681,
+          "height": 935
+        }
       },
       "style": {
         "background": "primary",
@@ -158,7 +157,7 @@
       "type": "featureGrid",
       "props": {
         "eyebrow": "",
-        "title": " test",
+        "title": "",
         "subtitle": "",
         "items": [
           {
