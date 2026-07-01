@@ -50,7 +50,12 @@ export function ColumnsSection({
       <div className={cn('min-w-0 space-y-8', className)}>
         {hasHeader && (
           <div className={cn('min-w-0', !titleFullWidth && 'max-w-3xl')}>
-            <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} h2Size="md" />
+            <SectionHeader
+              eyebrow={eyebrow}
+              title={title}
+              subtitle={subtitle}
+              fullWidth={titleFullWidth}
+            />
           </div>
         )}
         {media ? <div className="pt-2">{media}</div> : null}
