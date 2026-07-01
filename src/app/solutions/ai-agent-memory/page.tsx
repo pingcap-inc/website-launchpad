@@ -183,8 +183,8 @@ const dsl: PageDSL = {
             "height": 935
           },
           "alt": "chatgpt image jul 1 2026 02 48 21 pm",
-          "width": 1681,
-          "height": 935
+          "width": 1200,
+          "height": 667
         },
         "shortCode": "[agent-memory-timeline]"
       },
