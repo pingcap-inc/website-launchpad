@@ -164,12 +164,44 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "solution-01",
-      "type": "featureGrid",
+      "id": "featureMedia-1782890071857",
+      "type": "featureMedia",
       "props": {
         "eyebrow": "Unified Infrastructure",
         "title": "One Engine for Everything: Memory, State, and Workspace Context",
         "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.",
+        "items": [
+          {
+            "title": "",
+            "description": "",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/793ec158-chatgpt_image_jul_1__2026__02_48_21_pm.png",
+                "alt": "chatgpt image jul 1 2026 02 48 21 pm",
+                "width": 1681,
+                "height": 935
+              },
+              "alt": "chatgpt image jul 1 2026 02 48 21 pm",
+              "width": 1681,
+              "height": 935
+            }
+          }
+        ],
+        "startPosition": "full"
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section",
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "solution-01",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "",
+        "title": " test",
+        "subtitle": "",
         "items": [
           {
             "icon": "Database",
@@ -211,8 +243,9 @@ const dsl: PageDSL = {
         "columns": 2
       },
       "style": {
-        "background": "gradient-dark-top",
-        "spacing": "lg"
+        "background": "primary",
+        "spacing": "lg",
+        "removePaddingTop": true
       }
     },
     {
