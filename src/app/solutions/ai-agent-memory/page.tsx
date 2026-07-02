@@ -77,10 +77,10 @@ const dsl: PageDSL = {
         "spacing": "hero",
         "backgroundImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/314f2d42-group_1000011631.png",
-            "alt": "group 1000011631",
-            "width": 1440,
-            "height": 664
+            "url": "https://static.pingcap.com/images/9ae4143a-hero-lattice-bg.png",
+            "alt": "hero lattice bg",
+            "width": 1920,
+            "height": 1080
           }
         }
       }
@@ -115,14 +115,14 @@ const dsl: PageDSL = {
             "description": "Many agent stacks use one system for semantic search, another for session state, and another for files. This increases latency, complicates debugging, and turns context persistence into an application problem.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/fdd438c2-frame_43.svg",
-                "alt": "frame 43",
-                "width": 6408,
-                "height": 3726
+                "url": "https://static.pingcap.com/images/2fbd206e-group_1000011657.png",
+                "alt": "group 1000011657",
+                "width": 4898,
+                "height": 2515
               },
-              "alt": "frame 43",
-              "width": 6408,
-              "height": 3726
+              "alt": "group 1000011657",
+              "width": 4898,
+              "height": 2524
             },
             "imagePosition": "left"
           },
@@ -131,14 +131,14 @@ const dsl: PageDSL = {
             "description": "When temporary sessions end, agents lose conversation history and task progress unless stored durably. Persistent memory allows agents to resume work exactly where they left off.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/483efa3c-frame_44.svg",
-                "alt": "frame 44",
-                "width": 7898,
-                "height": 3726
+                "url": "https://static.pingcap.com/images/843bdc29-group_1000011657__1_.png",
+                "alt": "group 1000011657 1",
+                "width": 6386,
+                "height": 2647
               },
-              "alt": "frame 44",
-              "width": 7898,
-              "height": 3726
+              "alt": "group 1000011657 1",
+              "width": 6386,
+              "height": 2647
             },
             "imagePosition": "right"
           },
@@ -147,14 +147,14 @@ const dsl: PageDSL = {
             "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/8f237470-frame_40.svg",
-                "alt": "frame 40",
-                "width": 9387,
-                "height": 3726
+                "url": "https://static.pingcap.com/images/e49050a0-group_1000011658.png",
+                "alt": "group 1000011658",
+                "width": 7974,
+                "height": 2616
               },
-              "alt": "frame 40",
-              "width": 9387,
-              "height": 3726
+              "alt": "group 1000011658",
+              "width": 7974,
+              "height": 2616
             },
             "imagePosition": "left"
           }
@@ -177,14 +177,14 @@ const dsl: PageDSL = {
         "mediaType": "image",
         "image": {
           "image": {
-            "url": "https://static.pingcap.com/images/9adaa521-20260702-181213.png",
-            "alt": "20260702 181213",
-            "width": 2641,
-            "height": 1300
+            "url": "https://static.pingcap.com/images/793ec158-chatgpt_image_jul_1__2026__02_48_21_pm.png",
+            "alt": "chatgpt image jul 1 2026 02 48 21 pm",
+            "width": 1681,
+            "height": 935
           },
-          "alt": "20260702 181213",
+          "alt": "chatgpt image jul 1 2026 02 48 21 pm",
           "width": 1200,
-          "height": 590
+          "height": 667
         },
         "shortCode": "[agent-memory-timeline]"
       },
@@ -260,14 +260,14 @@ const dsl: PageDSL = {
             "description": "TiDB Cloud works with common AI application patterns, including PyTiDB, MCP-based architectures, LangChain, LlamaIndex, and MySQL-compatible tools.\n\nMySQL compatibility matters because many teams already have drivers, ORMs, migration scripts, and operational practices built around SQL. Moving agent memory into TiDB Cloud does not require abandoning that ecosystem.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/2aeed35a-rapid_productivity_illustration_2_.svg",
-                "alt": "rapid productivity illustration 2",
-                "width": 500,
-                "height": 448
+                "url": "https://static.pingcap.com/images/32f25147-agent_layer_integration.svg",
+                "alt": "agent layer integration",
+                "width": 600,
+                "height": 600
               },
-              "alt": "rapid productivity illustration 2",
-              "width": 500,
-              "height": 448
+              "alt": "agent layer integration",
+              "width": 600,
+              "height": 600
             },
             "imagePosition": "right"
           },
@@ -276,14 +276,14 @@ const dsl: PageDSL = {
             "description": "The TiDB SQL layer provides a SQL interface, transaction processing, vector search, and access to structured memory and state. Teams can store and query memory, state, retrieval data, and operational context through one durable database layer.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/853056b9-rapid_productivity_illustration-1.svg",
-                "alt": "rapid productivity illustration 1",
-                "width": 500,
-                "height": 448
+                "url": "https://static.pingcap.com/images/31a5228c-sql_vector_search.svg",
+                "alt": "sql vector search",
+                "width": 600,
+                "height": 600
               },
-              "alt": "rapid productivity illustration 1",
-              "width": 500,
-              "height": 448
+              "alt": "sql vector search",
+              "width": 600,
+              "height": 600
             }
           },
           {
@@ -291,14 +291,14 @@ const dsl: PageDSL = {
             "description": "TiKV stores transactional data across the cluster. TiFlash replicates from TiKV and runs real-time analytical queries on live data. PD coordinates placement and scheduling. Raft and MVCC maintain consistency and isolation as many agents read and write memory at once.\n\nThe result: memory, state, and retrieval share one durable database boundary instead of relying on synchronization between separate systems.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
-                "alt": "rapid productivity illustration 3",
-                "width": 500,
-                "height": 448
+                "url": "https://static.pingcap.com/images/1f2623fb-storage_and_consistency_.svg",
+                "alt": "storage and consistency",
+                "width": 600,
+                "height": 600
               },
-              "alt": "rapid productivity illustration 3",
-              "width": 500,
-              "height": 448
+              "alt": "storage and consistency",
+              "width": 600,
+              "height": 600
             }
           }
         ],
