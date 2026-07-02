@@ -75,7 +75,7 @@ export function FeatureMediaSection({
               alt={item.image.alt ?? ''}
               width={item.image.width ?? 600}
               height={item.image.height ?? 600}
-              className="w-full h-auto object-contain max-w-full xlg:max-w-[600px] max-h-[600px]"
+              className="object-contain max-w-full lg:max-w-[600px] max-h-[600px]"
             />
           </div>
         )
