@@ -108,7 +108,7 @@ const dsl: PageDSL = {
       "props": {
         "eyebrow": "The Challenge",
         "title": "Why Traditional Agent Architectures Break Down",
-        "subtitle": "",
+        "subtitle": "Most agent platforms don't break because of bad engineering. They break because memory, state, and files were never designed to live in the same place.",
         "items": [
           {
             "title": "Memory Fragments Across Disconnected Systems",
@@ -122,7 +122,7 @@ const dsl: PageDSL = {
               },
               "alt": "group 1000011657",
               "width": 4898,
-              "height": 2515
+              "height": 2524
             },
             "imagePosition": "left"
           },

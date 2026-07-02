@@ -47,13 +47,13 @@
       "id": "columns-1782897376614",
       "type": "columns",
       "props": {
+        "eyebrow": "The Context Problem",
         "title": "Why Agents Need Memory That Lasts",
+        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes. In production, memory is part of a broader state problem. Agent state also includes workflow progress, permissions, files, generated outputs, task history, tool results, runtime context, and operational metadata. Without a durable memory and state layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started.",
         "titleFullWidth": true,
         "layout": "split",
         "mediaType": "shortcode",
-        "shortCode": "[agent-memory-timeline]",
-        "eyebrow": "The Context Problem",
-        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes. In production, memory is part of a broader state problem. Agent state also includes workflow progress, permissions, files, generated outputs, task history, tool results, runtime context, and operational metadata. Without a durable memory and state layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started."
+        "shortCode": "[agent-memory-timeline]"
       },
       "style": {
         "background": "inverse",
@@ -66,7 +66,7 @@
       "props": {
         "eyebrow": "The Challenge",
         "title": "Why Traditional Agent Architectures Break Down",
-        "subtitle": "",
+        "subtitle": "Most agent platforms don't break because of bad engineering. They break because memory, state, and files were never designed to live in the same place.",
         "items": [
           {
             "title": "Memory Fragments Across Disconnected Systems",
@@ -80,7 +80,7 @@
               },
               "alt": "group 1000011657",
               "width": 4898,
-              "height": 2515
+              "height": 2524
             },
             "imagePosition": "left"
           },
@@ -127,13 +127,12 @@
       "id": "columns-1782897431316",
       "type": "columns",
       "props": {
+        "eyebrow": "Unified Infrastructure",
         "title": "One Engine for Everything: Memory, State, and Workspace Context",
+        "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.\n\n",
         "titleFullWidth": true,
         "layout": "single",
         "mediaType": "image",
-        "shortCode": "[agent-memory-timeline]",
-        "eyebrow": "Unified Infrastructure",
-        "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.\n\n",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/793ec158-chatgpt_image_jul_1__2026__02_48_21_pm.png",
@@ -144,7 +143,8 @@
           "alt": "chatgpt image jul 1 2026 02 48 21 pm",
           "width": 1200,
           "height": 667
-        }
+        },
+        "shortCode": "[agent-memory-timeline]"
       },
       "style": {
         "background": "primary",
