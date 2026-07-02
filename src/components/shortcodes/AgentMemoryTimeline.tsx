@@ -167,7 +167,6 @@ export function AgentMemoryTimeline({
           borderRadius: 8,
           padding: '22px 26px 24px',
           boxShadow: '0 1px 2px rgba(10,10,10,0.03)',
-          fontFamily: "'DM Sans', system-ui, sans-serif",
         }}
       >
         <button
@@ -215,7 +214,6 @@ export function AgentMemoryTimeline({
             </span>
             <span
               style={{
-                fontFamily: "'DM Mono', monospace",
                 fontSize: 15,
                 fontWeight: 500,
                 letterSpacing: '.06em',
@@ -229,7 +227,7 @@ export function AgentMemoryTimeline({
           <span
             style={{
               fontSize: 13,
-              fontWeight: 600,
+              fontWeight: 500,
               color: durable ? '#6B7077' : '#9AA0A6',
               textAlign: 'right',
             }}
@@ -305,7 +303,6 @@ export function AgentMemoryTimeline({
                   position: 'absolute',
                   left: `${((start + end) / 2) * 100}%`,
                   transform: 'translateX(-50%)',
-                  fontFamily: "'DM Mono', monospace",
                   fontSize: 10.5,
                   letterSpacing: '.1em',
                   color: visualState.activeIndex === index ? '#0A0A0A' : '#AEB3B9',
@@ -319,7 +316,6 @@ export function AgentMemoryTimeline({
           <div
             style={{
               textAlign: 'center',
-              fontFamily: "'DM Mono', monospace",
               fontSize: 10,
               letterSpacing: '.18em',
               color: '#C2C6CC',
@@ -334,7 +330,7 @@ export function AgentMemoryTimeline({
         <div>
           <div
             style={{
-              fontWeight: 600,
+              fontWeight: 500,
               fontSize: 15,
               letterSpacing: '-.01em',
               color: '#0A0A0A',
@@ -359,7 +355,6 @@ export function AgentMemoryTimeline({
             {visualState.chipBaseAlpha < 0.04 ? (
               <div
                 style={{
-                  fontFamily: "'DM Mono', monospace",
                   fontSize: 12,
                   color: '#C2C6CC',
                   fontStyle: 'italic',
@@ -380,7 +375,6 @@ export function AgentMemoryTimeline({
                     padding: '7px 11px',
                     border: '1px dashed #C7CBD1',
                     borderRadius: 5,
-                    fontFamily: "'DM Mono', monospace",
                     fontSize: 12,
                     color: '#7A8088',
                     background: '#fff',
@@ -399,7 +393,7 @@ export function AgentMemoryTimeline({
         <div style={{ marginTop: 24 }}>
           <div
             style={{
-              fontWeight: 600,
+              fontWeight: 500,
               fontSize: 15,
               letterSpacing: '-.01em',
               color: durable ? '#0A0A0A' : '#B7BBC1',
@@ -442,7 +436,6 @@ export function AgentMemoryTimeline({
                     />
                     <span
                       style={{
-                        fontFamily: "'DM Mono', monospace",
                         fontSize: 12.5,
                         color: '#C7CBD0',
                       }}
@@ -464,7 +457,6 @@ export function AgentMemoryTimeline({
                     <span style={{ width: 8, height: 8, background: accent, flexShrink: 0 }} />
                     <span
                       style={{
-                        fontFamily: "'DM Mono', monospace",
                         fontSize: 13,
                         color: '#0A0A0A',
                       }}
@@ -474,7 +466,6 @@ export function AgentMemoryTimeline({
                     <span
                       style={{
                         marginLeft: 'auto',
-                        fontFamily: "'DM Mono', monospace",
                         fontSize: 12.5,
                         color: '#6B7077',
                       }}
@@ -492,7 +483,6 @@ export function AgentMemoryTimeline({
       <div
         style={{
           marginTop: 12,
-          fontFamily: "'DM Mono', monospace",
           fontSize: 11,
           letterSpacing: '.04em',
           color: '#9AA0A6',
