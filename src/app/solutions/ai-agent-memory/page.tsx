@@ -302,7 +302,7 @@ const dsl: PageDSL = {
             }
           }
         ],
-        "startPosition": "right"
+        "startPosition": "left"
       },
       "style": {
         "background": "gradient-dark-top",
