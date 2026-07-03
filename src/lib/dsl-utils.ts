@@ -458,8 +458,6 @@ function normalizeFeatureMediaItem(raw: unknown): FeatureMediaItemDSL | null {
       width: v.image?.width ?? (v as any).width,
       height: v.image?.height ?? (v as any).height,
     },
-    imagePosition:
-      v.imagePosition === 'left' || v.imagePosition === 'right' ? v.imagePosition : undefined,
   }
 }
 

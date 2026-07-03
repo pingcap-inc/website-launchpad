@@ -15,7 +15,6 @@ export interface FeatureMediaItem {
     width?: number
     height?: number
   }
-  imagePosition?: 'left' | 'right'
 }
 
 interface FeatureMediaSectionProps {
@@ -43,16 +42,7 @@ export function FeatureMediaSection({
     <div className={cn('space-y-16', className)}>
       {title && <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />}
       {items.map((item, index) => {
-        const imageOnRight =
-          item.imagePosition ??
-          (index % 2 === 0
-            ? startPosition !== 'left'
-              ? 'right'
-              : 'left'
-            : startPosition === 'left'
-              ? 'right'
-              : 'left')
-        const isImageRight = imageOnRight === 'right'
+        const isImageRight = index % 2 === 0 ? startPosition !== 'left' : startPosition === 'left'
 
         const textContent = item.content ?? (
           <>
@@ -75,7 +65,7 @@ export function FeatureMediaSection({
               alt={item.image.alt ?? ''}
               width={item.image.width ?? 600}
               height={item.image.height ?? 600}
-              className="object-contain max-w-full lg:max-w-[600px] max-h-[600px]"
+              className="max-w-full xlg:max-w-[600px] max-h-[600px] h-auto object-contain"
             />
           </div>
         )
