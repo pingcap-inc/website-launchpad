@@ -266,7 +266,7 @@ const dsl: PageDSL = {
                 "height": 448
               },
               "alt": "rapid productivity illustration 2",
-              "width": 500,
+              "width": 450,
               "height": 448
             },
             "imagePosition": "right"
