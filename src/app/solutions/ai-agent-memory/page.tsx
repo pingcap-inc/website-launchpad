@@ -183,8 +183,8 @@ const dsl: PageDSL = {
             "height": 1300
           },
           "alt": "20260702 181213",
-          "width": 2641,
-          "height": 1300
+          "width": 1200,
+          "height": 590
         },
         "shortCode": "[agent-memory-timeline]"
       },
