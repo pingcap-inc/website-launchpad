@@ -1,8 +1,8 @@
 {
   "pageName": "MySQL Schema Change at Lunch, Not 2 A.M.",
   "meta": {
-    "title": "MySQL Schema Change at Lunch, Not 2 A.M. | TiDB",
-    "description": "Execute MySQL online schema changes during business hours with TiDB. Avoid 2 A.M. maintenance windows and external tools for zero-downtime migrations.",
+    "title": "Playbook: End 2 A.M. Schema Changes with TiDB Online DDL",
+    "description": "Stop midnight maintenance. TiDB’s online DDL keeps reads/writes live, so schema changes ship at lunch—no toolchain chaos, no lock drama. Try TiDB today.",
     "canonical": "/playbook/schema-changes-midnight-maintenance/"
   },
   "sections": [
