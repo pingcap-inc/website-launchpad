@@ -272,31 +272,6 @@
         "removePaddingTop": true,
         "removePaddingBottom": true
       }
-    },
-    {
-      "id": "cta-intro-3",
-      "type": "cta",
-      "props": {
-        "title": "",
-        "subtitle": "Stop scheduling 2 A.M. maintenance. Ship schema changes at lunch with TiDB online DDL.",
-        "primaryCta": {
-          "text": "Start Free Trial",
-          "href": "https://tidbcloud.com/free-trial/"
-        },
-        "secondaryCta": {
-          "text": "Request a Workshop",
-          "href": "https://www.pingcap.com/contact-us/"
-        }
-      },
-      "style": {
-        "background": "brand-violet",
-        "spacing": "sm",
-        "backgroundImage": {
-          "image": {
-            "url": "https://static.pingcap.com/files/2025/06/22211020/1000011435.png"
-          }
-        }
-      }
     }
   ]
 }
