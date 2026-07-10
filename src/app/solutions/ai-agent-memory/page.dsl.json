@@ -125,8 +125,8 @@
       "type": "columns",
       "props": {
         "eyebrow": "Unified Infrastructure",
-        "title": "One Engine for Everything: Memory, State, and Workspace Context",
-        "subtitle": "TiDB Cloud, mem9, and drive9 provide a single foundation for retrieval and continuity.\n\n",
+        "title": "One Engine for Agent Memory, Retrieval, and Analytics",
+        "subtitle": "TiDB Cloud provides a single foundation for agent memory, retrieval, and continuity.",
         "titleFullWidth": true,
         "layout": "single",
         "mediaType": "image",
