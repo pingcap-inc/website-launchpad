@@ -201,10 +201,10 @@ const dsl: PageDSL = {
         "items": [
           {
             "icon": "Database",
-            "title": "Persistent Memory with mem9",
-            "description": "Retitle to Persistent, Queryable Memory. Body: \"Agents write conversation turns, preferences, facts, and decisions to TiDB Cloud. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB keeps concurrent reads and writes consistent without locking, so many agents can work against shared memory safely.",
+            "title": "Persistent, Queryable Memory",
+            "description": "Agents write conversation turns, preferences, facts, and decisions to TiDB Cloud. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB keeps concurrent reads and writes consistent without locking, so many agents can work against shared memory safely.",
             "cta": {
-              "text": "Learn More About mem9",
+              "text": "Explore TiDB Cloud",
               "href": "https://www.pingcap.com/tidb/cloud/"
             }
           },
@@ -219,7 +219,7 @@ const dsl: PageDSL = {
           },
           {
             "icon": "Search",
-            "title": "Unified Query Layer for Memory, State, and Analytics",
+            "title": "Unified Query Layer for Memory and Analytics",
             "description": "A support agent should not need three systems to look up a user’s account tier, prior tickets, and semantic matches from past conversations. On TiDB Cloud, that runs in one query.\n\nA coding agent pulling repository metadata and task history follows the same pattern. TiFlash handles analytical queries on live data without a separate pipeline, so fresh operational insights do not require moving data elsewhere",
             "cta": {
               "text": "See Vector Search",
@@ -240,8 +240,8 @@ const dsl: PageDSL = {
       "type": "featureMedia",
       "props": {
         "eyebrow": "Architecture",
-        "title": "How TiDB Supports AI Agent Memory and State",
-        "subtitle": "A production memory layer needs transactional writes, semantic retrieval, analytical visibility, and operational consistency. TiDB Cloud brings these into one architecture.",
+        "title": "How TiDB Supports AI Agent Memory",
+        "subtitle": "The section above covers what agents get. This is how TiDB delivers it: the components behind transactional writes, semantic retrieval, and analytical visibility in one architecture.\n",
         "items": [
           {
             "title": "Agent Integration Layer",
@@ -259,8 +259,8 @@ const dsl: PageDSL = {
             }
           },
           {
-            "title": "SQL, Vector Search, and Structured State",
-            "description": "The TiDB SQL layer provides a SQL interface, transaction processing, vector search, and access to structured memory and state. Teams can store and query memory, state, retrieval data, and operational context through one durable database layer.",
+            "title": "SQL, Vector Search, and Structured Memory",
+            "description": "The TiDB SQL layer provides transactions, vector search, and access to structured memory through one interface.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/853056b9-rapid_productivity_illustration-1.svg",
@@ -275,7 +275,7 @@ const dsl: PageDSL = {
           },
           {
             "title": "Storage and Consistency Model",
-            "description": "TiKV stores transactional data across the cluster. TiFlash replicates from TiKV and runs real-time analytical queries on live data. PD coordinates placement and scheduling. Raft and MVCC maintain consistency and isolation as many agents read and write memory at once.\n\nThe result: memory, state, and retrieval share one durable database boundary instead of relying on synchronization between separate systems.",
+            "description": "TiKV stores transactional data across the cluster. TiFlash replicates from TiKV and runs real-time analytical queries on live data. PD coordinates placement and scheduling. Raft consensus and multi-version concurrency control (MVCC) maintain consistency and isolation as many agents read and write memory at once.\n\nThe result: memory, retrieval, and operational context share one durable database boundary instead of relying on synchronization between separate systems.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
@@ -313,7 +313,7 @@ const dsl: PageDSL = {
           {
             "icon": "Code2",
             "title": "Code Generation Agents With Project Context",
-            "description": "Coding agents need memory and state for repository structure, generated code, dependencies, file changes, and prior decisions. Persistent workspace context lets agents continue earlier work instead of starting from a blank prompt.\n\nIn multi-agent coding workflows, a planning agent and an implementation agent can share repository state without sharing write access.",
+            "description": "Coding agents need memory for repository structure, dependencies, and prior decisions. Persistent project context lets agents continue earlier work instead of starting from a blank prompt. In multi-agent coding workflows, a planning agent and an implementation agent can share repository context without sharing write access.",
             "borderColor": "border-violet-500"
           },
           {
