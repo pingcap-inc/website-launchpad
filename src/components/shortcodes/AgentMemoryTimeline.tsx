@@ -498,7 +498,6 @@ export function AgentMemoryTimeline({
           fontSize: 13,
           lineHeight: 1.5,
           color: '#6B7077',
-          textAlign: 'center',
         }}
       >
         Short-term memory clears when a session ends. Persistent memory carries context into the
