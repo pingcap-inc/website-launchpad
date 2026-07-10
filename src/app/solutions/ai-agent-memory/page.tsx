@@ -91,7 +91,7 @@ const dsl: PageDSL = {
       "props": {
         "eyebrow": "The Context Problem",
         "title": "Why Agents Need Memory That Lasts",
-        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes. In production, memory is part of a broader state problem. Agent state also includes workflow progress, permissions, files, generated outputs, task history, tool results, runtime context, and operational metadata. Without a durable memory and state layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started.",
+        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Context is what an agent needs to know; memory is how it keeps that context over time. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes. In production, memory spans more than conversation history. Agents also depend on preferences, prior decisions, task history, and tool results. Without a durable memory layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started.",
         "titleFullWidth": true,
         "layout": "split",
         "mediaType": "shortcode",
