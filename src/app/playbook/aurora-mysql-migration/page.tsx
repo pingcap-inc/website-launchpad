@@ -1,0 +1,352 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: "Playbook: Aurora MySQL Migration: Scale Writes with TiDB",
+  description: "Hit Aurora’s limits? Migrate to TiDB— a distributed SQL database for MySQL horizontal scaling, higher write throughput, and simpler HA. Start your migration.",
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/playbook/aurora-mysql-migration/' },
+  openGraph: {
+    title: "Playbook: Aurora MySQL Migration: Scale Writes with TiDB",
+    description: "Hit Aurora’s limits? Migrate to TiDB— a distributed SQL database for MySQL horizontal scaling, higher write throughput, and simpler HA. Start your migration.",
+    url: 'https://www.pingcap.com/playbook/aurora-mysql-migration/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: "/playbook/aurora-mysql-migration/",
+  title: "Playbook: Aurora MySQL Migration: Scale Writes with TiDB",
+  description: "Hit Aurora’s limits? Migrate to TiDB— a distributed SQL database for MySQL horizontal scaling, higher write throughput, and simpler HA. Start your migration.",
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    { name: "Aurora MySQL Migration: Scale Writes, Ditch Limits", path: "/playbook/aurora-mysql-migration/" },
+  ],
+})
+
+const dsl: PageDSL = {
+  "pageName": "Aurora MySQL Migration: Scale Writes, Ditch Limits",
+  "meta": {
+    "title": "Playbook: Aurora MySQL Migration: Scale Writes with TiDB",
+    "description": "Hit Aurora’s limits? Migrate to TiDB— a distributed SQL database for MySQL horizontal scaling, higher write throughput, and simpler HA. Start your migration.",
+    "canonical": "/playbook/aurora-mysql-migration/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "Aurora MySQL Migration: Scale Writes, Ditch Limits",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "audience-storage-leads-and-sres",
+            "label": "Audience: Storage Leads and SREs",
+            "level": 1
+          },
+          {
+            "id": "pain-amazon-aurora-mysql-limitations-block-growth",
+            "label": "Pain: Amazon Aurora MySQL Limitations Block Growth",
+            "level": 1
+          },
+          {
+            "id": "the-single-writer-ceiling",
+            "label": "The Single-Writer Ceiling",
+            "level": 2
+          },
+          {
+            "id": "portability-friction-and-vendor-lock-in",
+            "label": "Portability Friction and Vendor Lock-In",
+            "level": 2
+          },
+          {
+            "id": "solution-a-distributed-sql-database",
+            "label": "Solution: A Distributed SQL Database",
+            "level": 1
+          },
+          {
+            "id": "mysql-compatibility-horizontal-scale",
+            "label": "MySQL Compatibility, Horizontal Scale",
+            "level": 2
+          },
+          {
+            "id": "built-in-ha-and-operational-simplicity",
+            "label": "Built-In HA and Operational Simplicity",
+            "level": 2
+          },
+          {
+            "id": "with-vs-without-tidb-breaking-the-wall",
+            "label": "With vs. Without TiDB: Breaking the Wall",
+            "level": 1
+          },
+          {
+            "id": "without-tidb-shards-routers-runbooks",
+            "label": "Without TiDB: Shards, Routers, Runbooks",
+            "level": 2
+          },
+          {
+            "id": "with-tidb-linear-mysql-write-throughput",
+            "label": "With TiDB: Linear MySQL Write Throughput",
+            "level": 2
+          },
+          {
+            "id": "migration-flight-plan-zero-drama-aurora-mysql-migration",
+            "label": "Migration Flight Plan: Zero-Drama Aurora MySQL Migration",
+            "level": 1
+          },
+          {
+            "id": "phase-1-discovery-and-scope",
+            "label": "Phase 1: Discovery and Scope",
+            "level": 2
+          },
+          {
+            "id": "phase-2-compatibility-and-ddl-validation",
+            "label": "Phase 2: Compatibility and DDL Validation",
+            "level": 2
+          },
+          {
+            "id": "phase-3-data-migration",
+            "label": "Phase 3: Data Migration",
+            "level": 2
+          },
+          {
+            "id": "phase-4-cutover",
+            "label": "Phase 4: Cutover",
+            "level": 2
+          },
+          {
+            "id": "phase-5-performance-tuning",
+            "label": "Phase 5: Performance Tuning",
+            "level": 2
+          },
+          {
+            "id": "day-2-ops-high-availability-at-scale",
+            "label": "Day-2 Ops: High Availability at Scale",
+            "level": 1
+          },
+          {
+            "id": "capacity-planning-for-sustained-growth",
+            "label": "Capacity Planning for Sustained Growth",
+            "level": 2
+          },
+          {
+            "id": "unified-monitoring-and-alerting",
+            "label": "Unified Monitoring and Alerting",
+            "level": 2
+          },
+          {
+            "id": "standardized-backup-restore-and-dr",
+            "label": "Standardized Backup, Restore, and DR",
+            "level": 2
+          },
+          {
+            "id": "proof-and-next-steps",
+            "label": "Proof and Next Steps",
+            "level": 1
+          },
+          {
+            "id": "plaid-migrating-234-databases-off-amazon-aurora-mysql",
+            "label": "Plaid: Migrating 234 Databases off Amazon Aurora MySQL",
+            "level": 2
+          },
+          {
+            "id": "next-steps",
+            "label": "Next Steps",
+            "level": 2
+          },
+          {
+            "id": "try-tidb-cloud",
+            "label": "Try TiDB Cloud",
+            "level": 2
+          },
+          {
+            "id": "book-a-workshop",
+            "label": "Book a Workshop",
+            "level": 2
+          },
+          {
+            "id": "faq",
+            "label": "FAQs",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "\nYou built on Amazon Aurora MySQL because it promised scale and managed convenience. Now you are hitting walls. Write throughput plateaus even after you add read replicas. You are eyeing application-side sharding, but that means rewriting routing logic, managing cross-shard transactions, and multiplying your operational surface. Every new tenant or workload threatens to push you over the edge.\n\nThere is a clearer path forward. TiDB is a [distributed SQL database](https://www.pingcap.com/blog/why-distributed-sql-databases-elevate-modern-app-dev/) that gives you MySQL horizontal scaling without the architectural gymnastics. Write throughput scales as you add nodes. You keep MySQL compatibility and avoid vendor lock-in. And migration happens with minimal application changes or rewrites: you point your connection strings at a new endpoint. This playbook shows you how to execute an Amazon Aurora MySQL migration that unlocks growth instead of multiplying complexity.\n\n## Audience: Storage Leads and SREs\n\nStorage leads own the database platform: capacity planning, cost, the managed-versus-control trade-off, and the long-term shape of your [horizontal scaling](https://www.pingcap.com/horizontal-scaling-vs-vertical-scaling/) plan. When Amazon Aurora's architecture constrains growth, they are the ones tasked with finding Aurora alternatives that preserve uptime while enabling the next phase of scale.\n\nSREs live with the consequences. They own uptime SLAs, incident response, and the runbooks that keep services healthy. For them, Amazon Aurora's single-writer ceiling and proprietary features create operational friction that compounds with every new cluster.\n\nIf any of these sound familiar, you are the audience:\n\n- Your write throughput is trending toward the limit of your largest Aurora instance.\n- Your team is designing an application-side sharding scheme to buy headroom.\n- Your best engineers are maintaining routing and re-shard tooling instead of shipping.\n- Amazon Aurora-specific features have quietly spread through your codebase.\n\nWhat both groups need from an Amazon Aurora migration:\n\n- Predictable cutover with minimal risk and a clear rollback path.\n- Fewer moving parts than sharding across multiple Aurora clusters.\n- MySQL write throughput that grows with demand, not with architectural complexity.\n- Preserved MySQL high availability without vendor-specific dependencies.\n\n## Pain: Amazon Aurora MySQL Limitations Block Growth\n\nTeams do not migrate away from Amazon Aurora on a whim. The decision comes after hitting specific ceilings that force uncomfortable architectural choices. Here is what the breaking point looks like.\n\n### The Single-Writer Ceiling\n\nAmazon Aurora separates compute from storage, which is excellent for read scaling: you add read replicas easily and they share the same storage layer. But writes flow through a single writer instance. According to AWS's own figures, Amazon Aurora MySQL processes up to roughly 200,000 writes per second on its largest supported instance class, and its original published benchmark measured about 101,000 write requests per second. Those numbers are ceilings, not floors: they represent the top of what a single writer can do, and once you reach them there is no larger instance to buy. Your real-world ceiling is typically lower, since production workloads rarely match a tuned sysbench benchmark.\n\nAs you approach the ceiling, the symptoms are consistent:\n\n- **Write latency climbs**: p95 and p99 rise as the writer instance saturates CPU or network.\n- **Connection pools exhaust**: applications queue waiting for the overloaded writer.\n- **Replication lag appears**: read replicas fall behind during write bursts, causing stale reads.\n- **Instance headroom runs out**: you are already on the largest class available.\n\nAt this point your options narrow. You can shard at the application layer, which means rewriting core logic and accepting cross-shard transaction complexity. Or you can move to a distributed SQL architecture that scales writes horizontally with minimal application changes or rewrites.\n\n### Portability Friction and Vendor Lock-In\n\nAmazon Aurora's proprietary features are convenient early and constraining later. Capabilities like Backtrack and Aurora Serverless do not map cleanly to other MySQL-compatible databases, which locks you into AWS in subtle ways:\n\n- **Migration complexity**: moving clouds or on-premises means auditing every Aurora-specific feature and finding equivalents.\n- **Negotiation leverage**: without a credible exit option, you have less room in pricing discussions.\n- **Multi-cloud strategy**: data-residency or disaster-recovery goals that span clouds become architecturally hard.\n\nTeams usually realize portability matters at an inconvenient moment: a new region where Amazon Aurora options are limited, a compliance requirement for data residency, or an acquisition running on different infrastructure. By then the Amazon Aurora-specific dependencies are already spread through the codebase.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-1",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "See how a distributed SQL database removes the single-writer ceiling and scales writes with node count.",
+        "primaryCta": {
+          "text": "Start for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Request a Workshop",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22092103/1000011430.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-1",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Solution: A Distributed SQL Database\n\nTiDB addresses Amazon Aurora MySQL limitations with a different architecture. Instead of a single-writer model, TiDB distributes data and writes across many nodes. You get MySQL horizontal scaling for reads and writes, keep MySQL compatibility for a straightforward migration, and preserve portability across clouds and on-premises.\n\n### MySQL Compatibility, Horizontal Scale\n\nTiDB is [MySQL compatible](https://docs.pingcap.com/tidb/stable/mysql-compatibility/) at the protocol and syntax level, so existing applications, ORMs, and tools work with minimal modification. Unlike Amazon Aurora's single writer, TiDB distributes writes across the cluster. As you add storage nodes, write capacity grows.\n\nThe architecture has three parts:\n\n- [**TiDB nodes**](https://docs.pingcap.com/tidb/stable/tidb-architecture/): a stateless SQL layer that handles queries and transactions. Add nodes to increase query concurrency.\n- [**TiKV nodes**](https://docs.pingcap.com/tidb/stable/tikv-overview/): the distributed storage layer that holds data in Regions. Add nodes to increase storage capacity and write throughput.\n- [**PD (Placement Driver)**](https://docs.pingcap.com/tidb/stable/tidb-scheduling/): coordinates the cluster, manages metadata, and rebalances data automatically as nodes join or leave.\n\n```sql\n-- Connect with a standard MySQL client\nmysql -h tidb-cluster.example.com -P 4000 -u root\n\n-- Run standard MySQL queries\nSELECT COUNT(*) FROM orders WHERE created_at > NOW() - INTERVAL 1 DAY;\n```\n\nThis distribution removes the need for application-level sharding. The database grows by adding nodes, not by fragmenting your data model or your routing logic. Because writes spread across TiKV nodes rather than funneling through one writer, write capacity scales roughly linearly with node count, so you raise the ceiling by adding hardware instead of hitting a single-instance wall. Exact throughput depends on your schema, workload, and hardware, so benchmark against your own workload rather than a headline number.\n\n### Built-In HA and Operational Simplicity\n\nMySQL high availability in TiDB is automatic and does not depend on proprietary services. Data replicates using the [Raft consensus algorithm](https://www.pingcap.com/article/understanding-tidbs-raft-consensus-for-distributed-databases/) across multiple nodes, typically three replicas. If a node fails, the cluster elects a new leader for the affected Regions within seconds, with no manual failover orchestration.\n\n- **No single-writer bottleneck**: writes distribute across the cluster.\n- **Automatic rebalancing**: PD redistributes data when you add or remove nodes.\n- **Online schema changes**: add indexes or modify schemas without downtime.\n- **Unified monitoring**: built-in dashboards cover cluster health and query performance across all nodes.\n- **Standard backup and restore**: point-in-time recovery works the same way regardless of cluster size.\n\nWith TiDB you manage one logical database instead of a fleet of Aurora clusters. Backups, monitoring, access control, and capacity planning operate at the cluster level, not per shard.\n\n## With vs. Without TiDB: Breaking the Wall\n\nWhen you hit Aurora's write ceiling, one path leads to sharding complexity and the other to horizontal scale without architectural surgery.\n\n### Without TiDB: Shards, Routers, Runbooks\n\nThe conventional answer to Aurora's write ceiling is more Aurora clusters plus application-level sharding. It is well documented and painful.\n\n- Design a shard key that distributes writes evenly.\n- Implement routing logic to direct queries to the correct shard.\n- Rewrite cross-shard queries as scatter-gather patterns.\n- Handle cross-shard transactions, which often means giving up ACID guarantees.\n- Build re-sharding tools for when data distribution skews.\n\n```python\n# Example: app-side routing logic (illustrative)\ndef get_shard_for_user(user_id):\n    shard_number = hash(user_id) % TOTAL_SHARDS\n    return SHARD_CONNECTIONS[shard_number]\n\n# Cross-shard reads become an application problem\ndef get_recent_orders_all_users(cutoff):\n    results = []\n    for shard in SHARD_CONNECTIONS:\n        partial = shard.query(\n            \"SELECT * FROM orders WHERE created_at > ?\", cutoff)\n        results.extend(partial)\n    return sorted(results, key=lambda x: x.created_at)\n```\n\n- **Per-shard runbooks**: failover, backup, and monitoring configs multiply by shard count.\n- **Coordinated changes**: schema changes and deployments must line up across every shard.\n- **Uneven load**: some shards run hot while others sit idle, with no easy rebalance.\n- **Cost growth**: each cluster needs multiple instances for HA, so shard count multiplies your instance count.\n- **Velocity drag**: every new feature has to account for sharding and cross-shard edge cases.\n\n### With TiDB: Linear MySQL Write Throughput\n\nTiDB removes the sharding logic by distributing writes at the storage layer. Your application sees one logical database. The cluster handles distribution, replication, and rebalancing.\n\n```sql\n-- Same query, distribution handled transparently\nINSERT INTO orders (user_id, product_id, amount)\nVALUES (12345, 67890, 99.99);\n-- The application does not know which node stores this row.\n```\n\n- **Single endpoint**: applications connect to one cluster address.\n- **Unified monitoring**: one dashboard for cluster-wide health and performance.\n- **Standard SQL**: cross-partition queries just work, with no scatter-gather.\n- **Consistent transactions**: full ACID across the cluster, not per-shard compromises.\n- **One backup schedule**: point-in-time recovery covers the whole cluster.\n\n| Capability | Aurora Sharding | TiDB |\n|---|---|---|\n| Write throughput | Ceiling per cluster; grows only by adding shards | Grows with node count |\n| Application changes | Extensive: routing, cross-shard logic, transaction compromises | Minimal: same MySQL protocol and SQL |\n| Operational complexity | Multiplies with shard count | Constant: one cluster |\n| Cross-partition queries | Application responsibility (scatter-gather) | Native SQL joins and aggregations |\n| Rebalancing | Manual re-sharding | Automatic (PD) |\n| ACID guarantees | Per-shard; cross-shard is eventual | Full ACID across the cluster |\n*Table 1: Aurora application-level sharding versus TiDB distributed SQL across key operational dimensions.*\n\n## Migration Flight Plan: Zero-Drama Aurora MySQL Migration\n\nMigrating from Aurora to TiDB follows a structured path that minimizes risk and keeps service continuity. Here is the flight plan.\n\n### Phase 1: Discovery and Scope\n\nInventory your Aurora usage to find dependencies and compatibility concerns: Aurora-specific features, storage-engine variations, and custom extensions.\n\n```sql\n-- Inventory Aurora-specific variables\nSHOW VARIABLES LIKE 'aurora%';\n\n-- Identify the largest tables for migration planning\nSELECT TABLE_SCHEMA, TABLE_NAME,\n       ROUND((DATA_LENGTH + INDEX_LENGTH)/1024/1024/1024, 2) AS size_gb,\n       TABLE_ROWS\nFROM information_schema.TABLES\nWHERE TABLE_SCHEMA NOT IN ('mysql','information_schema','performance_schema')\nORDER BY (DATA_LENGTH + INDEX_LENGTH) DESC\nLIMIT 20;\n```\n\nDocument the Aurora-specific features your application relies on. Most have TiDB equivalents or can be refactored, but knowing them up front prevents cutover surprises.\n\n### Phase 2: Compatibility and DDL Validation\n\nNormalize dialect differences and validate the schema on a TiDB staging cluster.\n\n```bash\n# Export the Aurora schema (illustrative)\nmysqldump --no-data --skip-triggers --triggers \\\n  -h aurora-cluster.amazonaws.com -u admin -p mydatabase > schema.sql\n\n# Import on a TiDB staging cluster (illustrative)\nmysql -h tidb-staging.example.com -P 4000 -u root mydatabase < schema.sql\n```\n\nRun your application's integration tests against staging. This confirms queries behave correctly and surfaces any differences early.\n\n### Phase 3: Data Migration\n\nChoose your tool by downtime tolerance and data volume. For minimal downtime, use [TiDB Data Migration (DM)](https://docs.pingcap.com/tidb/stable/dm-overview/) or AWS Database Migration Service to replicate continuously from Aurora to TiDB.\n\n```yaml\n# TiDB Data Migration task (illustrative)\nname: aurora-to-tidb\ntask-mode: all   # full load + incremental\ntarget-database:\n  host: \"tidb-prod.example.com\"\n  port: 4000\nmysql-instances:\n  - source-id: \"aurora-source\"\n```\n\n```bash\n# Start replication and monitor lag\ntiup dmctl --master-addr <addr>:8261 start-task dm-task.yaml\ntiup dmctl --master-addr <addr>:8261 query-status aurora-to-tidb\n```\n\n### Phase 4: Cutover\n\nExecute the switchover when replication lag is minimal and validation passes. Two strategies:\n\nDual-write (lower risk, requires application changes): write to TiDB as the new source of truth and to Aurora as a rollback safety net during a validation window, then remove the Aurora writes.\n\nDirect switchover (faster, brief write freeze):\n\n1. Set Aurora to read-only.\n2. Wait for replication lag to reach zero.\n3. Run validation queries to confirm data parity.\n4. Point application connection strings at TiDB.\n5. Resume writes and monitor.\n6. Verify HA failover behaves as expected.\n\n```sql\n-- Validation pattern: compare counts across critical tables\n-- Run on both Aurora and TiDB immediately before cutover\nSELECT 'orders' AS table_name, COUNT(*) AS row_count,\n       MAX(created_at) AS latest FROM orders\nUNION ALL\nSELECT 'customers' AS table_name, COUNT(*) AS row_count,\n       MAX(updated_at) AS latest FROM customers;\n```\n\n### Phase 5: Performance Tuning\n\nAfter cutover, tune for your workload: set placement policies for hot data, configure resource control if needed, and scale out to meet your throughput targets.\n\n```sql\n-- Find the slowest statements post-migration\nSELECT digest_text,\n       SUM(sum_latency)/SUM(exec_count)/1000000 AS avg_ms,\n       MAX(max_latency)/1000000 AS max_ms,\n       SUM(exec_count) AS exec_count\nFROM information_schema.cluster_statements_summary\nGROUP BY digest, digest_text\nORDER BY avg_ms DESC LIMIT 20;\n```",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-2",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Map your Aurora usage into a phased migration sequence with clear validation gates and a clean rollback path.",
+        "primaryCta": {
+          "text": "Request a Workshop",
+          "href": "https://www.pingcap.com/contact-us/"
+        },
+        "secondaryCta": {
+          "text": "Start for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22184957/1000011432.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-2",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Day-2 Ops: High Availability at Scale\n\nAfter migration, build operational patterns that use TiDB's architecture instead of inheriting Aurora's complexity.\n\n### Capacity Planning for Sustained Growth\n\nUnlike a single-writer ceiling, TiDB capacity planning is predictable: monitor write-throughput trends and add nodes before you hit constraints. A good rule is to scale out when sustained writes approach roughly 80% of current cluster capacity.\n\n### Unified Monitoring and Alerting\n\nTiDB provides built-in dashboards and Prometheus metrics for cluster-wide observability. Key metrics: query latency (p95, p99), write throughput, Region distribution balance, storage utilization per node, and replication lag.\n\n### Standardized Backup, Restore, and DR\n\nUse TiDB's [Backup & Restore (BR)](https://docs.pingcap.com/tidb/stable/backup-and-restore-overview/) for cluster-wide backups. One schedule covers the whole distributed database instead of per-shard choreography.\n\n```bash\n# Illustrative BR full backup\ntiup br backup full \\\n  --pd \"${PD_IP}:2379\" \\\n  --storage \"s3://backups/tidb/$(date +%Y%m%d)\"\n```\n\n## Proof and Next Steps\n\nReal teams have moved off Aurora's single-writer constraints onto TiDB and kept performance predictable as workloads grew.\n\n### Plaid: Migrating 234 Databases off Amazon Aurora MySQL\n\n[Plaid migrated from Amazon Aurora MySQL to TiDB](https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/) to escape the reliability, maintenance, and scaling limits of a single-writer architecture. The scale of the project is the proof point: a six-person team moved 234 databases across roughly 100 services from Aurora to self-hosted TiDB over about two and a half years, using a phased approach that started with non-critical services and frontloaded the riskiest Tier 0 workloads.\n\nThe operational results are the part worth showing leadership:\n\n- **Upgrade effort collapsed.** In early 2023, upgrading from Amazon Aurora 5.6 to 5.7 cost Plaid 104 minutes of planned downtime and 26 engineering weeks. In 2025, upgrading all TiDB clusters took about one engineering week with zero downtime, eliminating 100% of the downtime and 96% of the effort.\n- **Cutovers got faster and safer.** As their automation compounded, per-service cutovers dropped from three to four weeks to around one week, with write downtime falling from roughly five minutes to under 60 seconds.\n- **Scaling stopped being an event.** TiDB's online schema changes and horizontal scale-out let Plaid handle demand spikes and modify large tables without taking services offline, addressing the exact single-writer pain that drove the migration.\n\nPlaid evaluated alternatives including Google Spanner and chose TiDB for its MySQL compatibility, horizontal scalability, and distributed transactions, a direct match for teams looking for an Amazon Aurora alternative that does not require rewriting the application layer.\n\n[Why Plaid Migrated from Managed MySQL to TiDB](https://www.youtube.com/watch?v=jRsZ35K1wx8)\n\n### Next Steps\n\nIf you are ready to validate an exit plan with real workload data, these steps get you to a go/no-go decision quickly.\n\n:::card\n\n#### Try TiDB Cloud\n\nRun your real workload patterns against a single SQL endpoint and turn \"it should work\" into proof. Real results without shard boundaries, and a before/after ops comparison you can take to leadership.\n\n[Start for Free](https://tidbcloud.com/free-trial/)\n:::\n\n:::card\n\n#### Book a Workshop\n\nA working session that maps your Aurora usage into a phased migration sequence with clear validation gates and a clean rollback path.\n\n[Request a Workshop](https://www.pingcap.com/contact-us/)\n:::",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "FAQs",
+        "items": [
+          {
+            "q": "Can I migrate from Amazon Aurora MySQL to TiDB without downtime?",
+            "a": "Near-zero-downtime migration is the standard approach. Using TiDB Data Migration or AWS DMS, you perform a full load followed by continuous replication, then cut over during a short write freeze once replication lag reaches zero and validation passes."
+          },
+          {
+            "q": "Does TiDB support the same SQL and drivers as Amazon Aurora MySQL?",
+            "a": "TiDB is compatible with the MySQL wire protocol and supports most MySQL syntax, so standard MySQL drivers, ORMs, and tooling connect without changes. Aurora-specific proprietary features as well as any MySQL features TiDB does not support (such as stored procedures, triggers, and events) are the main items to audit during discovery."
+          },
+          {
+            "q": "How does TiDB scale writes when Amazon Aurora cannot?",
+            "a": "Aurora routes all writes through a single writer instance. TiDB distributes data into Regions across many TiKV nodes and processes writes across the cluster, so write capacity grows as you add nodes rather than stopping at one instance."
+          },
+          {
+            "q": "What happens to high availability after migrating from Amazon Aurora?",
+            "a": "TiDB replicates data with the Raft consensus algorithm, typically across three replicas. If a node fails, the cluster elects a new leader for affected Regions automatically within seconds, without proprietary failover services."
+          },
+          {
+            "q": "How long does an Amazon Aurora to TiDB migration take?",
+            "a": "Timelines vary with data volume and application complexity. A typical production migration runs several weeks across discovery, compatibility validation, data replication, and cutover, with most of the time spent in testing and validation rather than the cutover itself."
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    }
+  ]
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}
