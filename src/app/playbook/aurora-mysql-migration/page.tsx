@@ -59,8 +59,8 @@ const dsl: PageDSL = {
             "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
           },
           "alt": "hero image",
-          "width": 500,
-          "height": 400
+          "width": 300,
+          "height": 300
         }
       },
       "style": {
