@@ -92,22 +92,22 @@ const dropdowns: NavDropdown[] = [
             description: 'Purpose-built for agent memory, state, and multi-hop reasoning',
           },
           {
-            label: 'Vector Search & RAG',
-            href: 'https://www.pingcap.com/ai/vector-search/',
-            icon: 'https://static.pingcap.com/files/2026/04/14001530/Vector-Search-RAG.svg',
-            description: 'Native vector indexing and retrieval-augmented generation pipelines',
-          },
-          {
-            label: 'Quick Start: Agentic Memory',
-            href: 'https://zero.tidbcloud.com/',
+            label: 'AI Agent Memory',
+            href: 'https://www.pingcap.com/solutions/ai-agent-memory/',
             icon: 'https://static.pingcap.com/files/2026/04/14001529/Quick-Start.svg',
-            description: 'Spin up persistent agent memory in seconds — zero config',
+            description: 'Persistent, queryable memory for AI agents with per-agent isolation',
           },
           {
             label: 'Build AI Applications',
             href: 'https://www.pingcap.com/developers/build-ai-apps/',
             icon: 'https://static.pingcap.com/files/2026/04/14001528/Build-AI-Applications.svg',
             description: 'SDKs, guides, and templates for shipping AI apps fast',
+          },
+          {
+            label: 'Vector Search & RAG',
+            href: 'https://www.pingcap.com/ai/vector-search/',
+            icon: 'https://static.pingcap.com/files/2026/04/14001530/Vector-Search-RAG.svg',
+            description: 'Native vector indexing and retrieval-augmented generation pipelines',
           },
         ],
       },
@@ -169,6 +169,11 @@ const dropdowns: NavDropdown[] = [
             icon: CloudTIcon,
           },
           { label: 'Build GenAI Applications', href: 'https://www.pingcap.com/ai/', icon: AiTIcon },
+          {
+            label: 'Build AI Agent Memory',
+            href: 'https://www.pingcap.com/solutions/ai-agent-memory/',
+            icon: AiTIcon,
+          },
         ],
       },
       {
