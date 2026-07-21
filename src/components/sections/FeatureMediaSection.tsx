@@ -7,8 +7,7 @@ import type { ImageRef } from '@/lib/dsl-schema'
 
 /** Inline-link markdown: [label](url). Internal (starts with / or #) → <Link>, external → <a>. */
 const INLINE_LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g
-const LINK_CLASS =
-  'text-brand-red-primary underline underline-offset-2 hover:no-underline transition-colors'
+const LINK_CLASS = 'underline'
 
 function renderDescription(text: string): React.ReactNode {
   if (!text.includes('](')) return text
