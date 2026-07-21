@@ -1,8 +1,50 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { SlideIn } from '@/components/ui/SlideIn'
 import type { ImageRef } from '@/lib/dsl-schema'
+
+/** Inline-link markdown: [label](url). Internal (starts with / or #) → <Link>, external → <a>. */
+const INLINE_LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g
+const LINK_CLASS =
+  'text-brand-red-primary underline underline-offset-2 hover:no-underline transition-colors'
+
+function renderDescription(text: string): React.ReactNode {
+  if (!text.includes('](')) return text
+
+  const nodes: React.ReactNode[] = []
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  INLINE_LINK_RE.lastIndex = 0
+
+  while ((match = INLINE_LINK_RE.exec(text)) !== null) {
+    const [full, label, href] = match
+    if (match.index > lastIndex) nodes.push(text.slice(lastIndex, match.index))
+    const isInternal = href.startsWith('/') || href.startsWith('#')
+    nodes.push(
+      isInternal ? (
+        <Link key={match.index} href={href} className={LINK_CLASS}>
+          {label}
+        </Link>
+      ) : (
+        <a
+          key={match.index}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={LINK_CLASS}
+        >
+          {label}
+        </a>
+      )
+    )
+    lastIndex = match.index + full.length
+  }
+  if (lastIndex < text.length) nodes.push(text.slice(lastIndex))
+
+  return nodes
+}
 
 export interface FeatureMediaItem {
   title: string
@@ -48,7 +90,7 @@ export function FeatureMediaSection({
           <>
             <h3 className="text-h3-lg md:text-h2-sm font-bold mb-4">{item.title}</h3>
             <p className="text-body-2xl text-secondary leading-relaxed whitespace-pre-line">
-              {item.description}
+              {renderDescription(item.description)}
             </p>
           </>
         )
