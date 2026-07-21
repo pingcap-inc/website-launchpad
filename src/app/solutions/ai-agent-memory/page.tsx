@@ -245,7 +245,7 @@ const dsl: PageDSL = {
         "items": [
           {
             "title": "Agent Integration Layer",
-            "description": "TiDB Cloud works with common AI application patterns, including PyTiDB, MCP-based architectures, LangChain, LlamaIndex, and MySQL-compatible tools.\n\nMySQL compatibility matters because many teams already have drivers, ORMs, migration scripts, and operational practices built around SQL. Moving agent memory into TiDB Cloud does not require abandoning that ecosystem. The open source mem9 SDK provides the memory API layer for agent frameworks.",
+            "description": "TiDB Cloud works with common AI application patterns, including PyTiDB, MCP-based architectures, LangChain, LlamaIndex, and MySQL-compatible tools.\n\nMySQL compatibility matters because many teams already have drivers, ORMs, migration scripts, and operational practices built around SQL. Moving agent memory into TiDB Cloud does not require abandoning that ecosystem. The open source [mem9](https://github.com/mem9-ai/mem9) SDK provides the memory API layer for agent frameworks.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/2aeed35a-rapid_productivity_illustration_2_.svg",
