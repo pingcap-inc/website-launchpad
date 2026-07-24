@@ -126,6 +126,8 @@ export interface SectionStyle {
   /** Remove bottom padding on this section. */
   removePaddingBottom?: boolean
   className?: string
+  /** Optional full-bleed animated background effect rendered behind the section content. */
+  backgroundEffect?: 'agent-memory'
   /** Tailwind opacity class for section background image, e.g. "opacity-60". */
   backgroundImageOpacityClassName?: string
   /** Optional overlay class (e.g. "bg-black/40"). No overlay unless provided. */

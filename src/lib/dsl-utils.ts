@@ -194,6 +194,7 @@ function normalizeSectionStyle(style?: SectionStyle): SectionStyle | undefined {
   const anchorId =
     typeof v.anchorId === 'string' && v.anchorId.trim() ? v.anchorId.trim() : undefined
   const className = v.className || undefined
+  const backgroundEffect = v.backgroundEffect === 'agent-memory' ? v.backgroundEffect : undefined
   const backgroundImageOpacityClassName =
     typeof v.backgroundImageOpacityClassName === 'string'
       ? v.backgroundImageOpacityClassName
@@ -214,6 +215,7 @@ function normalizeSectionStyle(style?: SectionStyle): SectionStyle | undefined {
     removePaddingTop,
     removePaddingBottom,
     className,
+    backgroundEffect,
     backgroundImageOpacityClassName,
     backgroundImageOverlayClassName,
     backgroundImage,
