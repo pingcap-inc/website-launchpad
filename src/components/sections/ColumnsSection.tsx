@@ -3,16 +3,45 @@
 import Image from 'next/image'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { ShortcodeRenderer } from '@/components/shortcodes/ShortcodeRenderer'
-import { cn } from '@/lib/utils'
+import { cn, isVideoUrl } from '@/lib/utils'
 import type { ColumnsProps } from '@/lib/dsl-schema'
 
 interface ColumnsSectionProps extends ColumnsProps {
   className?: string
 }
 
-function renderMedia({ mediaType, image, shortCode }: ColumnsProps) {
+function renderMedia({ mediaType, image, video, shortCode }: ColumnsProps) {
   if (mediaType === 'shortcode') {
     return <ShortcodeRenderer shortCode={shortCode} />
+  }
+
+  // A video URL dropped into the image field (via the media library) renders as
+  // a video automatically — no separate `video` config or mediaType needed.
+  const videoSources = video?.sources?.filter((s) => s.src) ?? []
+  const imageUrl = image?.image?.url
+  const videoSrc = video?.src ?? (isVideoUrl(imageUrl) ? imageUrl : undefined)
+
+  if (videoSrc || videoSources.length > 0) {
+    return (
+      <div className="overflow-hidden flex justify-center">
+        <video
+          src={videoSources.length > 0 ? undefined : videoSrc}
+          poster={video?.poster}
+          width={video?.width ?? image?.width ?? 1200}
+          height={video?.height ?? image?.height ?? 800}
+          autoPlay={video?.autoPlay ?? true}
+          loop={video?.loop ?? true}
+          muted={video?.muted ?? true}
+          controls={video?.controls ?? false}
+          playsInline
+          className="max-w-full h-auto object-contain"
+        >
+          {videoSources.map((s, i) => (
+            <source key={`${s.src}-${i}`} src={s.src} type={s.type} />
+          ))}
+        </video>
+      </div>
+    )
   }
 
   if (image?.image?.url) {
@@ -39,11 +68,12 @@ export function ColumnsSection({
   layout = 'split',
   mediaType = 'image',
   image,
+  video,
   shortCode,
   className,
 }: ColumnsSectionProps) {
   const hasHeader = Boolean(eyebrow || title || subtitle)
-  const media = renderMedia({ mediaType, image, shortCode })
+  const media = renderMedia({ mediaType, image, video, shortCode })
 
   if (layout === 'single') {
     return (

@@ -322,6 +322,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       layout: props.layout,
       mediaType: props.mediaType,
       image: props.image,
+      video: props.video,
       shortCode: props.shortCode,
       className: props.className,
     }),

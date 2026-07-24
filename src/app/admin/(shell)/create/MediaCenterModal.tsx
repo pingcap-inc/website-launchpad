@@ -3,6 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Upload, X, Check, Loader2, Tag, Image as ImageIcon, Plus, AlertCircle } from 'lucide-react'
 import type { ImageRef } from '@/lib/dsl-schema'
+import { isVideoUrl } from '@/lib/utils'
+
+/** Accepted upload types, shared by the file picker, drag-drop, and help text. */
+const ACCEPT_TYPES = 'image/png,image/jpeg,image/svg+xml,image/webp,video/mp4'
+const IMAGE_MAX_SIZE = 5 * 1024 * 1024
+const VIDEO_MAX_SIZE = 50 * 1024 * 1024
+
+const isVideoFile = (file: File) => file.type.startsWith('video/')
 
 interface MediaImage {
   url: string

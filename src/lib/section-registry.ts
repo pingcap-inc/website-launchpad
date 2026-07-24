@@ -705,17 +705,17 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         key: 'mediaType',
         label: 'Media type',
         options: [
-          { label: 'Image', value: 'image' },
+          { label: 'Image / Video', value: 'image' },
           { label: 'Short code', value: 'shortcode' },
         ],
       },
       {
         type: 'object',
         key: 'image',
-        label: 'Image',
+        label: 'Image / Video',
         showWhen: (props) => props.mediaType !== 'shortcode',
         fields: [
-          { type: 'image', key: 'image', label: 'Image' },
+          { type: 'image', key: 'image', label: 'Image / Video' },
           { type: 'number', key: 'width', label: 'Width' },
           { type: 'number', key: 'height', label: 'Height' },
         ],

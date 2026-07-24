@@ -449,12 +449,27 @@ export interface ColumnsProps {
   subtitle?: string
   titleFullWidth?: boolean
   layout?: 'single' | 'split'
-  mediaType?: 'image' | 'shortcode'
+  mediaType?: 'image' | 'video' | 'shortcode'
   image?: {
     image: ImageRef
     alt?: string
     width?: number
     height?: number
+  }
+  /**
+   * When present (or when the image field holds a video URL), a video is
+   * rendered as the column media instead of the image.
+   */
+  video?: {
+    src?: string
+    sources?: { src: string; type?: string }[]
+    poster?: string
+    width?: number
+    height?: number
+    autoPlay?: boolean
+    loop?: boolean
+    muted?: boolean
+    controls?: boolean
   }
   shortCode?: string
   className?: string

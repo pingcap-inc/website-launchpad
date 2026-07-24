@@ -520,7 +520,7 @@ function normalizeColumnsProps(value: unknown): ColumnsProps {
     subtitle: v.subtitle,
     titleFullWidth: v.titleFullWidth !== false,
     layout: v.layout === 'single' || v.layout === 'split' ? v.layout : 'split',
-    mediaType: v.mediaType === 'shortcode' ? 'shortcode' : 'image',
+    mediaType: v.mediaType === 'shortcode' || v.mediaType === 'video' ? v.mediaType : 'image',
     image: image
       ? {
           image,
@@ -529,8 +529,38 @@ function normalizeColumnsProps(value: unknown): ColumnsProps {
           height: (v.image as { height?: unknown } | undefined)?.height as number | undefined,
         }
       : undefined,
+    video: normalizeColumnsVideo((v as { video?: unknown }).video),
     shortCode: typeof v.shortCode === 'string' ? v.shortCode : undefined,
     className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeColumnsVideo(raw: unknown): ColumnsProps['video'] {
+  if (!raw || typeof raw !== 'object') return undefined
+  const v = raw as Record<string, unknown>
+  const src = typeof v.src === 'string' && v.src ? v.src : undefined
+  const sources = Array.isArray(v.sources)
+    ? v.sources
+        .filter((s): s is Record<string, unknown> => Boolean(s) && typeof s === 'object')
+        .map((s) => ({
+          src: typeof s.src === 'string' ? s.src : '',
+          type: typeof s.type === 'string' ? s.type : undefined,
+        }))
+        .filter((s) => s.src)
+    : undefined
+  if (!src && (!sources || sources.length === 0)) return undefined
+  const bool = (x: unknown) => (typeof x === 'boolean' ? x : undefined)
+  const num = (x: unknown) => (typeof x === 'number' ? x : undefined)
+  return {
+    src,
+    sources: sources && sources.length > 0 ? sources : undefined,
+    poster: typeof v.poster === 'string' ? v.poster : undefined,
+    width: num(v.width),
+    height: num(v.height),
+    autoPlay: bool(v.autoPlay),
+    loop: bool(v.loop),
+    muted: bool(v.muted),
+    controls: bool(v.controls),
   }
 }
 

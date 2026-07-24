@@ -49,7 +49,7 @@ export function ShortcodeRenderer({ shortCode, className }: ShortcodeRendererPro
   if (resolvedShortcode === 'agent-memory-timeline') {
     return (
       <div className={className}>
-        <div className="mx-auto w-full max-w-[560px]">
+        <div className="mx-auto w-full max-w-[600px]">
           <AgentMemoryTimeline />
         </div>
       </div>

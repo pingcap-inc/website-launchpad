@@ -29,3 +29,10 @@ const customTwMerge = extendTailwindMerge({
 export function cn(...inputs: ClassValue[]) {
   return customTwMerge(clsx(inputs))
 }
+
+/** A media URL that points to a video file — rendered as <video> rather than <Image>. */
+const VIDEO_URL_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i
+
+export function isVideoUrl(url?: string): boolean {
+  return Boolean(url && VIDEO_URL_RE.test(url))
+}
