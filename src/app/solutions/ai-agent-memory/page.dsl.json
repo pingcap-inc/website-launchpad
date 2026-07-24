@@ -42,7 +42,7 @@
       "props": {
         "eyebrow": "The Context Problem",
         "title": "Why Agents Need Memory That Lasts",
-        "subtitle": "AI agent memory helps agents retain, retrieve, and update useful context across interactions. Context is what an agent needs to know; memory is how it keeps that context over time. Short-term memory supports the current task or conversation. Persistent memory preserves important context across sessions, workflows, tools, and approved scopes. In production, memory spans more than conversation history. Agents also depend on preferences, prior decisions, task history, and tool results. Without a durable memory layer, agents repeat work, lose preferences, forget previous decisions, and cannot reliably resume tasks they already started.",
+        "subtitle": "Context is everything an agent needs to do its work. Memory is the part that carries useful information forward from earlier interactions. Short-term memory supports the current task or conversation. Persistent memory preserves preferences, prior decisions, task history, and tool results across sessions and workflows. Without a durable data layer underneath it, agents repeat work, lose progress, and struggle to resume tasks they already started.",
         "titleFullWidth": true,
         "layout": "split",
         "mediaType": "shortcode",
@@ -57,13 +57,13 @@
       "id": "problem-01",
       "type": "featureMedia",
       "props": {
-        "eyebrow": "The Challenge",
-        "title": "Why Traditional Agent Architectures Break Down",
-        "subtitle": "Most agent platforms don’t break because of bad engineering. They break because memory and context were never designed to live in the same place.",
+        "eyebrow": "From Prototype to Production",
+        "title": "Agent Context Gets Harder in Production",
+        "subtitle": "Using a different tool for each job can work at first. The pressure shows up in production, when state has to stay in sync across systems, task outlive runtimes, and agents or tenants need their own data boundaries. ",
         "items": [
           {
-            "title": "Memory Fragments Across Disconnected Systems",
-            "description": "Many agent stacks use one system for semantic search, another for session state, and another for long-lived context. This increases latency, complicates debugging, and turns context persistence into an application problem.",
+            "title": "Agent State Gets Split Across Systems",
+            "description": "Many agent stacks use one system for semantic search, another for session state, and another for long-lived context. This adds latency, creates more failure points, and makes it harder to debug what the agent saw and did.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/624ba90e-fragment-reveal.mp4",
@@ -77,8 +77,8 @@
             }
           },
           {
-            "title": "Execution Environments Reset",
-            "description": "When temporary sessions end, agents lose conversation history and task progress unless stored durably. Persistent memory allows agents to resume work exactly where they left off.",
+            "title": "The Runtime Ends Before the Work Does",
+            "description": "Sandboxes, sessions, and processes can end while a task is still in progress. If the agent's plan, tool results, and checkpoint are not stored durably, it may repeat work, waste model spend, or fail to resume safely.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/9d28be2a-execution-reset.mp4",
@@ -92,8 +92,8 @@
             }
           },
           {
-            "title": "Per-Agent Isolation Gets Expensive",
-            "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
+            "title": "Isolation Gets Expensive at Agent Scale",
+            "description": "Each agent, tenant, or workspace may need its own data boundary. Running dedicated infrastructure for every environment becomes expensive as they multiply, especially when many are short-lived or mostly idle.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/5c5c71d9-isolation-cost.mp4",
@@ -119,8 +119,8 @@
       "type": "columns",
       "props": {
         "eyebrow": "Unified Infrastructure",
-        "title": "One Engine for Agent Memory, Retrieval, and Analytics",
-        "subtitle": "TiDB Cloud provides a single foundation for agent memory, retrieval, and continuity.",
+        "title": "A Persistent State Layer for the Agent Stack You Already Use",
+        "subtitle": "Keep your model, framework, standbox, and memory systems. TiDB Cloud gives your stack one durable place to store and query checkpoints, memory records, operational data, and vectors. ",
         "titleFullWidth": true,
         "layout": "single",
         "mediaType": "image",
@@ -154,7 +154,7 @@
           {
             "icon": "Database",
             "title": "Persistent, Queryable Memory",
-            "description": "Agents write conversation turns, preferences, facts, and decisions to TiDB Cloud. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB keeps concurrent reads and writes consistent without locking, so many agents can work against shared memory safely.",
+            "description": "Agents write conversation turns, preferences, facts, and decisions to TiDB Cloud. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB keeps checkpoints consistent with the application data the agent changed, so the agent can resume from reliable state.",
             "cta": {
               "text": "Explore TiDB Cloud",
               "href": "https://www.pingcap.com/tidb/cloud/"
@@ -162,7 +162,7 @@
           },
           {
             "icon": "Shield",
-            "title": "Per-Agent Isolation",
+            "title": "Agent and Tenant Isolation ",
             "description": "TiDB Cloud's distributed architecture separates logical isolation from physical infrastructure. Each agent gets its own database with hard data boundaries, while the underlying compute and storage are shared across the cluster.",
             "cta": {
               "text": "View Architecture",
@@ -172,7 +172,7 @@
           {
             "icon": "Search",
             "title": "Unified Query Layer for Memory and Analytics",
-            "description": "A support agent should not need three systems to look up a user’s account tier, prior tickets, and semantic matches from past conversations. On TiDB Cloud, that runs in one query.\n\nA coding agent pulling repository metadata and task history follows the same pattern. TiFlash handles analytical queries on live data without a separate pipeline, so fresh operational insights do not require moving data elsewhere",
+            "description": "On TiDB Cloud, a support agent can query a customer's account tier, open tickets, and semantically similar past conversations in one SQL statement. TiFlash handles analytical queries on live data without needing a separate pipeline.",
             "cta": {
               "text": "See Vector Search",
               "href": "https://www.pingcap.com/tidb/cloud/"
@@ -192,12 +192,12 @@
       "type": "featureMedia",
       "props": {
         "eyebrow": "Architecture",
-        "title": "How TiDB Supports AI Agent Memory",
-        "subtitle": "The section above covers what agents get. This is how TiDB delivers it: the components behind transactional writes, semantic retrieval, and analytical visibility in one architecture.\n",
+        "title": "How TiDB Supports Persistent Agent Context",
+        "subtitle": "",
         "items": [
           {
             "title": "Agent Integration Layer",
-            "description": "TiDB Cloud works with common AI application patterns, including PyTiDB, MCP-based architectures, LangChain, LlamaIndex, and MySQL-compatible tools.\n\nMySQL compatibility matters because many teams already have drivers, ORMs, migration scripts, and operational practices built around SQL. Moving agent memory into TiDB Cloud does not require abandoning that ecosystem. The open source [mem9](https://github.com/mem9-ai/mem9) SDK provides the memory API layer for agent frameworks.",
+            "description": "TiDB Cloud fits into the AI stack teams already use, with PyTiDB, integrations for LangChain and LlamaIndex, and the TiDB MCP Server. \n\n[mem9](https://github.com/mem9-ai/mem9) is an optional, open-source memory layer for AI agents. Teams can use mem9 or another memory system, with TiDB serving as the persistent state layer underneath.\n\nTiDB's MySQL-compatible protocol also works with many existing drivers, ORMs, and database tools.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/2aeed35a-rapid_productivity_illustration_2_.svg",
@@ -212,7 +212,7 @@
           },
           {
             "title": "SQL, Vector Search, and Structured Memory",
-            "description": "The TiDB SQL layer provides transactions, vector search, and access to structured memory through one interface.",
+            "description": "Agents often need semantic matches alongside current application data. TiDB Cloud lets the application combine vector similarity with SQL filters, metadata, and recency in one query. The memory or orchestration layer can then decide which results to pass to the model.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/853056b9-rapid_productivity_illustration-1.svg",
@@ -227,7 +227,7 @@
           },
           {
             "title": "Storage and Consistency Model",
-            "description": "TiKV stores transactional data across the cluster. TiFlash replicates from TiKV and runs real-time analytical queries on live data. PD coordinates placement and scheduling. Raft consensus and multi-version concurrency control (MVCC) maintain consistency and isolation as many agents read and write memory at once.\n\nThe result: memory, retrieval, and operational context share one durable database boundary instead of relying on synchronization between separate systems.",
+            "description": "Raft consensus and multi-version concurrency control (MVCC) maintain consistency and isolation as many agents read and update state at the same time. \n\nThe result is one durable database for checkpoints, memory records, application data, and analytics, with fewer cross-system writes and data copies to manage.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
@@ -253,7 +253,7 @@
       "type": "featureCard",
       "props": {
         "eyebrow": "Real-World Applications",
-        "title": "Use Cases for AI Agent Memory",
+        "title": "When Agents Need Persistent Context",
         "subtitle": "From support bots to coding assistants, unified state powers reliable agents.",
         "items": [
           {
@@ -290,7 +290,7 @@
         "title": "Proven AI Agent Results",
         "items": [
           {
-            "badge": "Agentic AI",
+            "badge": "Provisioning at Scale",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/68b65a2a-20260525-230213.png",
@@ -318,7 +318,7 @@
             "cta": "Read the story"
           },
           {
-            "badge": "Agentic AI",
+            "badge": "Data Consolidation",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/a9c1110c-logo-plaud.png",
@@ -346,7 +346,7 @@
             "cta": "Read the story"
           },
           {
-            "badge": "Agentic AI",
+            "badge": "Tenant Isolation at Scale",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/0fc78057-manus.svg",
