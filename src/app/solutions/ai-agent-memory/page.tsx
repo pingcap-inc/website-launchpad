@@ -36,7 +36,7 @@ const schema = buildPageSchema({
   description: "Give AI agents memory that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Agents are ephemeral. Their state shouldn't be.", path: "/solutions/ai-agent-memory/" },
+    { name: "Agents are Ephemeral. Their State Shouldn't Be.", path: "/solutions/ai-agent-memory/" },
   ],
 })
 
@@ -54,7 +54,7 @@ const dsl: PageDSL = {
       "props": {
         "layout": "centered",
         "eyebrow": "Persistent Context for AI agents",
-        "headline": "Agents are ephemeral. Their state shouldn't be.",
+        "headline": "Agents are Ephemeral. Their State Shouldn't Be.",
         "subheadline": "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors. Agents can resume work across sessions and runtime restarts.",
         "primaryCta": {
           "text": "Start Free on TiDB Cloud",
