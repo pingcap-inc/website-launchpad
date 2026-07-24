@@ -363,14 +363,14 @@ const dsl: PageDSL = {
             "badge": "Agentic AI",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/ac3136ec-plaud-logo-white.png",
-                "alt": "plaud logo white",
-                "width": 11500,
-                "height": 4260
+                "url": "https://static.pingcap.com/images/a9c1110c-logo-plaud.png",
+                "alt": "logo plaud",
+                "width": 362,
+                "height": 100
               },
-              "alt": "plaud logo white",
-              "width": 11500,
-              "height": 4260
+              "alt": "logo plaud",
+              "width": 362,
+              "height": 100
             },
             "title": "From Two Data Stores to One Unified Database",
             "description": "Plaud migrated from MySQL + Amazon S3 to TiDB Cloud, eliminating S3 retrieval latency and unlocking online DDL for 2M+ users across 170 countries.",
