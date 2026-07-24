@@ -132,14 +132,14 @@
         "mediaType": "image",
         "image": {
           "image": {
-            "url": "https://static.pingcap.com/images/9adaa521-20260702-181213.png",
-            "alt": "20260702 181213",
-            "width": 2641,
-            "height": 1300
+            "url": "https://static.pingcap.com/images/6eab39b0-one-engine-e.mp4",
+            "alt": "one engine e",
+            "width": 1920,
+            "height": 1720
           },
-          "alt": "20260702 181213",
-          "width": 1200,
-          "height": 590
+          "alt": "one engine e",
+          "width": 1920,
+          "height": 1720
         },
         "shortCode": "[agent-memory-timeline]"
       },
