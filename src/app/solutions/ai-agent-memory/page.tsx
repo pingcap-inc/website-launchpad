@@ -115,14 +115,14 @@ const dsl: PageDSL = {
             "description": "Many agent stacks use one system for semantic search, another for session state, and another for long-lived context. This increases latency, complicates debugging, and turns context persistence into an application problem.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/fdd438c2-frame_43.svg",
-                "alt": "frame 43",
-                "width": 6408,
-                "height": 3726
+                "url": "https://static.pingcap.com/images/624ba90e-fragment-reveal.mp4",
+                "alt": "fragment reveal",
+                "width": 1326,
+                "height": 772
               },
-              "alt": "frame 43",
-              "width": 6408,
-              "height": 3726
+              "alt": "fragment reveal",
+              "width": 1326,
+              "height": 772
             }
           },
           {
@@ -130,14 +130,14 @@ const dsl: PageDSL = {
             "description": "When temporary sessions end, agents lose conversation history and task progress unless stored durably. Persistent memory allows agents to resume work exactly where they left off.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/483efa3c-frame_44.svg",
-                "alt": "frame 44",
-                "width": 7898,
-                "height": 3726
+                "url": "https://static.pingcap.com/images/9d28be2a-execution-reset.mp4",
+                "alt": "execution reset",
+                "width": 1324,
+                "height": 624
               },
-              "alt": "frame 44",
-              "width": 7898,
-              "height": 3726
+              "alt": "execution reset",
+              "width": 1324,
+              "height": 624
             }
           },
           {
@@ -145,14 +145,14 @@ const dsl: PageDSL = {
             "description": "Dedicated infrastructure improves isolation but is costly. TiDB Cloud provides per-agent isolation with hard data boundaries while sharing underlying infrastructure efficiently.",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/8f237470-frame_40.svg",
-                "alt": "frame 40",
-                "width": 9387,
-                "height": 3726
+                "url": "https://static.pingcap.com/images/5c5c71d9-isolation-cost.mp4",
+                "alt": "isolation cost",
+                "width": 1324,
+                "height": 526
               },
-              "alt": "frame 40",
-              "width": 9387,
-              "height": 3726
+              "alt": "isolation cost",
+              "width": 1324,
+              "height": 526
             }
           }
         ],
