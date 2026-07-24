@@ -180,7 +180,7 @@ const dsl: PageDSL = {
             "height": 1720
           },
           "alt": "one engine e",
-          "width": 1920,
+          "width": 1000,
           "height": 1720
         },
         "shortCode": "[agent-memory-timeline]"
