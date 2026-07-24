@@ -75,14 +75,7 @@ const dsl: PageDSL = {
       },
       "style": {
         "spacing": "hero",
-        "backgroundImage": {
-          "image": {
-            "url": "https://static.pingcap.com/images/9ae4143a-hero-lattice-bg.png",
-            "alt": "hero lattice bg",
-            "width": 1920,
-            "height": 1080
-          }
-        }
+        "backgroundEffect": "agent-memory"
       }
     },
     {
