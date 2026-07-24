@@ -149,7 +149,8 @@ const dsl: PageDSL = {
             }
           }
         ],
-        "startPosition": "left"
+        "startPosition": "left",
+        "spacing": "xl"
       },
       "style": {
         "spacing": "section"
