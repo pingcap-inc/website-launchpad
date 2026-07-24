@@ -15,12 +15,12 @@
         "headline": "Agents are ephemeral. Their state shouldn't be.",
         "subheadline": "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors. Agents can resume work across sessions and runtime restarts.",
         "primaryCta": {
-          "text": "See the Architecture",
-          "href": ""
-        },
-        "secondaryCta": {
           "text": "Start Free on TiDB Cloud",
           "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "See the Architecture",
+          "href": ""
         },
         "heroImage": {
           "image": {
