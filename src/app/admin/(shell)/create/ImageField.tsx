@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { Upload, FolderOpen } from 'lucide-react'
 
 import type { ImageRef } from '@/lib/dsl-schema'
-import { MediaCenterModal } from './MediaCenterModal'
-import { isVideoUrl } from '@/lib/utils'
+import { MediaCenterModal, isVideoUrl } from './MediaCenterModal'
 
 interface ImageFieldProps {
   value?: ImageRef
