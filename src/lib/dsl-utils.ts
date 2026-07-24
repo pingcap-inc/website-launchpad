@@ -505,6 +505,10 @@ function normalizeFeatureMediaProps(value: unknown): FeatureMediaProps {
     items: items as FeatureMediaItemDSL[],
     startPosition:
       v.startPosition === 'left' || v.startPosition === 'right' ? v.startPosition : undefined,
+    spacing:
+      v.spacing === 'sm' || v.spacing === 'md' || v.spacing === 'lg' || v.spacing === 'xl'
+        ? v.spacing
+        : undefined,
     className: typeof v.className === 'string' ? v.className : undefined,
   }
 }

@@ -649,6 +649,17 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         ],
       },
       {
+        type: 'select',
+        key: 'spacing',
+        label: 'Row spacing',
+        options: [
+          { label: 'Small', value: 'sm' },
+          { label: 'Medium', value: 'md' },
+          { label: 'Large', value: 'lg' },
+          { label: 'Extra large', value: 'xl' },
+        ],
+      },
+      {
         type: 'array',
         key: 'items',
         label: 'Items',

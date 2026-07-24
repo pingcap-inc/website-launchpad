@@ -416,6 +416,8 @@ export interface FeatureMediaProps {
   subtitle?: string
   items: FeatureMediaItemDSL[]
   startPosition?: 'left' | 'right'
+  /** Vertical gap between feature rows. Default: 'lg' */
+  spacing?: 'sm' | 'md' | 'lg' | 'xl'
   className?: string
 }
 
@@ -767,7 +769,7 @@ Available section types (choose appropriate mix):
 - { type: "caseStudyCards", props: { eyebrow?, title, items: [{badge?, logo?: { image: {assetId?, url}, alt?, width?, height? }, title, description, stats: [{value, label}], href?, cta?}], className? } }
 - { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, content?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval?, className? } }
 - { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href}, iconSize?: 32|48, className? } }
-- { type: "featureMedia", props: { eyebrow?, title?, subtitle?, items: [{title, description (supports inline links via [label](url)), image: {image: {assetId?, url}, alt?, width?, height?}, video?: {src?, sources?: [{src, type?}], poster?, width?, height?, autoPlay?, loop?, muted?, controls?} (when present, renders a video instead of the image; use sources for multiple formats), imagePosition?: "left"|"right"}], startPosition?: "left"|"right", className? } }
+- { type: "featureMedia", props: { eyebrow?, title?, subtitle?, items: [{title, description (supports inline links via [label](url)), image: {image: {assetId?, url}, alt?, width?, height?}, video?: {src?, sources?: [{src, type?}], poster?, width?, height?, autoPlay?, loop?, muted?, controls?} (when present, renders a video instead of the image; use sources for multiple formats)}], startPosition?: "left"|"right", spacing?: "sm"|"md"|"lg"|"xl", className? } }
 - { type: "faq", props: { title?, items: [{q, a}], className? } }
 - { type: "cta", props: { title, subtitle?, primaryCta: {text,href}, secondaryCta?: {text,href}, image?: { image: {assetId?, url}, alt?, width?, height? }, className? } }
 - { type: "testimonials", props: { eyebrow?, title, items: [{quote, author, href?, cta?, logo?: { image: {assetId?, url}, alt?, size? }}], className? } }

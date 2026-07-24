@@ -308,6 +308,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       subtitle: props.subtitle,
       items: props.items,
       startPosition: props.startPosition,
+      spacing: props.spacing,
       className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },

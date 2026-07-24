@@ -88,9 +88,18 @@ interface FeatureMediaSectionProps {
   items: FeatureMediaItem[]
   /** Which side the first image appears on. Default: 'right' */
   startPosition?: 'left' | 'right'
+  /** Vertical gap between feature rows. Default: 'lg' */
+  spacing?: 'sm' | 'md' | 'lg' | 'xl'
   /** Enable SlideIn scroll animations. Default: true */
   animate?: boolean
   className?: string
+}
+
+const SPACING_CLASS: Record<NonNullable<FeatureMediaSectionProps['spacing']>, string> = {
+  sm: 'space-y-8',
+  md: 'space-y-12',
+  lg: 'space-y-16',
+  xl: 'space-y-24',
 }
 
 export function FeatureMediaSection({
@@ -99,11 +108,12 @@ export function FeatureMediaSection({
   subtitle,
   items,
   startPosition = 'right',
+  spacing = 'lg',
   animate = true,
   className,
 }: FeatureMediaSectionProps) {
   return (
-    <div className={cn('space-y-16', className)}>
+    <div className={cn(SPACING_CLASS[spacing] ?? SPACING_CLASS.lg, className)}>
       {title && <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />}
       {items.map((item, index) => {
         const isImageRight = index % 2 === 0 ? startPosition !== 'left' : startPosition === 'left'
