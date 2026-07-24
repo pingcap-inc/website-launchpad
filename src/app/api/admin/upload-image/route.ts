@@ -35,14 +35,31 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'file is required' }, { status: 400 })
   }
 
-  const MAX_SIZE = 5 * 1024 * 1024
+  const isVideo = file.type.startsWith('video/')
+
+  const MAX_SIZE = isVideo ? 50 * 1024 * 1024 : 5 * 1024 * 1024
   if (file.size > MAX_SIZE) {
-    return NextResponse.json({ error: 'File must be under 5 MB' }, { status: 413 })
+    return NextResponse.json(
+      { error: `File must be under ${isVideo ? 50 : 5} MB` },
+      { status: 413 }
+    )
   }
 
-  const allowed = ['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp']
+  const allowed = ['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp', 'video/mp4']
   if (!allowed.includes(file.type)) {
-    return NextResponse.json({ error: 'Only PNG, JPG, SVG, WebP are allowed' }, { status: 415 })
+    return NextResponse.json(
+      { error: 'Only PNG, JPG, SVG, WebP, MP4 are allowed' },
+      { status: 415 }
+    )
+  }
+
+  // Videos are large binaries — they must go to S3 (Media Center), never the
+  // GitHub Contents API, which base64-encodes into a commit.
+  if (isVideo && source !== 'media') {
+    return NextResponse.json(
+      { error: 'Videos can only be uploaded via the Media Library' },
+      { status: 400 }
+    )
   }
 
   const bytes = await file.arrayBuffer()

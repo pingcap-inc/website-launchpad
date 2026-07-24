@@ -458,6 +458,38 @@ function normalizeFeatureMediaItem(raw: unknown): FeatureMediaItemDSL | null {
       width: v.image?.width ?? (v as any).width,
       height: v.image?.height ?? (v as any).height,
     },
+    video: normalizeFeatureMediaVideo((v as any).video),
+    imagePosition:
+      v.imagePosition === 'left' || v.imagePosition === 'right' ? v.imagePosition : undefined,
+  }
+}
+
+function normalizeFeatureMediaVideo(raw: unknown): FeatureMediaItemDSL['video'] {
+  if (!raw || typeof raw !== 'object') return undefined
+  const v = raw as Record<string, unknown>
+  const src = typeof v.src === 'string' && v.src ? v.src : undefined
+  const sources = Array.isArray(v.sources)
+    ? v.sources
+        .filter((s): s is Record<string, unknown> => Boolean(s) && typeof s === 'object')
+        .map((s) => ({
+          src: typeof s.src === 'string' ? s.src : '',
+          type: typeof s.type === 'string' ? s.type : undefined,
+        }))
+        .filter((s) => s.src)
+    : undefined
+  if (!src && (!sources || sources.length === 0)) return undefined
+  const bool = (x: unknown) => (typeof x === 'boolean' ? x : undefined)
+  const num = (x: unknown) => (typeof x === 'number' ? x : undefined)
+  return {
+    src,
+    sources: sources && sources.length > 0 ? sources : undefined,
+    poster: typeof v.poster === 'string' ? v.poster : undefined,
+    width: num(v.width),
+    height: num(v.height),
+    autoPlay: bool(v.autoPlay),
+    loop: bool(v.loop),
+    muted: bool(v.muted),
+    controls: bool(v.controls),
   }
 }
 

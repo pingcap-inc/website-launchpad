@@ -5,6 +5,9 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { SlideIn } from '@/components/ui/SlideIn'
 import type { ImageRef } from '@/lib/dsl-schema'
 
+/** A media URL that points to a video file — rendered as <video> rather than <Image>. */
+const VIDEO_URL_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i
+
 /** Inline-link markdown: [label](url). Internal (starts with / or #) → <Link>, external → <a>. */
 const INLINE_LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g
 const LINK_CLASS = 'underline'
@@ -56,6 +59,26 @@ export interface FeatureMediaItem {
     width?: number
     height?: number
   }
+  /** When present, a video is rendered on the media side instead of the image. */
+  video?: {
+    /** Video source URL (mp4/webm). Use `sources` instead to offer multiple formats. */
+    src?: string
+    /** Multiple encodings; the browser picks the first it can play (e.g. webm then mp4). */
+    sources?: { src: string; type?: string }[]
+    /** Poster image URL shown before playback. */
+    poster?: string
+    width?: number
+    height?: number
+    /** Default: true. Autoplaying video is forced muted + playsInline by browsers. */
+    autoPlay?: boolean
+    /** Default: true */
+    loop?: boolean
+    /** Default: true */
+    muted?: boolean
+    /** Default: false. Show native playback controls. */
+    controls?: boolean
+  }
+  imagePosition?: 'left' | 'right'
 }
 
 interface FeatureMediaSectionProps {
@@ -94,20 +117,48 @@ export function FeatureMediaSection({
           </>
         )
 
-        const imageContent = (
+        const video = item.video ?? {}
+        const videoSources = video.sources?.filter((s) => s.src) ?? []
+        const imageUrl = item.image?.image?.url ?? ''
+        // A video URL dropped into the image field (via the media library) is
+        // rendered as a video automatically — no separate `video` config needed.
+        const imageUrlIsVideo = VIDEO_URL_RE.test(imageUrl)
+        const videoSrc = video.src ?? (imageUrlIsVideo ? imageUrl : undefined)
+        const hasVideo = Boolean(videoSrc || videoSources.length > 0)
+
+        const mediaContent = (
           <div
             className={cn(
               'relative w-full overflow-hidden flex justify-center',
               isImageRight ? 'lg:justify-end' : 'lg:justify-start'
             )}
           >
-            <Image
-              src={item.image.image.url}
-              alt={item.image.alt ?? ''}
-              width={item.image.width ?? 600}
-              height={item.image.height ?? 600}
-              className="max-w-full xlg:max-w-[600px] max-h-[600px] h-auto object-contain"
-            />
+            {hasVideo ? (
+              <video
+                src={videoSources.length > 0 ? undefined : videoSrc}
+                poster={video.poster}
+                width={video.width ?? item.image?.width ?? 600}
+                height={video.height ?? item.image?.height ?? 600}
+                autoPlay={video.autoPlay ?? true}
+                loop={video.loop ?? true}
+                muted={video.muted ?? true}
+                controls={video.controls ?? false}
+                playsInline
+                className="max-w-full xlg:max-w-[600px] max-h-[600px] h-auto object-contain"
+              >
+                {videoSources.map((s, i) => (
+                  <source key={`${s.src}-${i}`} src={s.src} type={s.type} />
+                ))}
+              </video>
+            ) : (
+              <Image
+                src={imageUrl}
+                alt={item.image.alt ?? ''}
+                width={item.image.width ?? 600}
+                height={item.image.height ?? 600}
+                className="max-w-full xlg:max-w-[600px] max-h-[600px] h-auto object-contain"
+              />
+            )}
           </div>
         )
 
@@ -139,7 +190,7 @@ export function FeatureMediaSection({
                 : {})}
               className={cn('lg:col-span-6', !isImageRight && 'lg:order-1')}
             >
-              {item.image.image.url && imageContent}
+              {(hasVideo || imageUrl) && mediaContent}
             </Wrapper>
           </div>
         )

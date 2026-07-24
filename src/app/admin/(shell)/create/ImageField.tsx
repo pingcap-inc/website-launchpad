@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Upload, FolderOpen } from 'lucide-react'
 
 import type { ImageRef } from '@/lib/dsl-schema'
-import { MediaCenterModal } from './MediaCenterModal'
+import { MediaCenterModal, isVideoUrl } from './MediaCenterModal'
 
 interface ImageFieldProps {
   value?: ImageRef
@@ -45,7 +45,9 @@ export function ImageField({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragging(false)
-    const files = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith('image/'))
+    const files = Array.from(e.dataTransfer.files).filter(
+      (f) => f.type.startsWith('image/') || f.type.startsWith('video/')
+    )
     if (files.length > 0) openUpload(files)
   }
 
@@ -58,8 +60,18 @@ export function ImageField({
       {/* Preview */}
       {value?.url && (
         <div className="relative w-full h-24 border border-gray-200 rounded overflow-hidden bg-gray-50">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value.url} alt="" className="w-full h-full object-contain p-2" />
+          {isVideoUrl(value.url) ? (
+            <video
+              src={value.url}
+              muted
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-contain p-2"
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={value.url} alt="" className="w-full h-full object-contain p-2" />
+          )}
           <button
             type="button"
             onClick={() => onChange(undefined)}
