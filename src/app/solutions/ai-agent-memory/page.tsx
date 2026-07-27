@@ -53,7 +53,7 @@ const dsl: PageDSL = {
       "type": "hero",
       "props": {
         "layout": "centered",
-        "eyebrow": "Persistent Context for AI agents",
+        "eyebrow": "Persistent Context for AI Agents",
         "headline": "Agents are Ephemeral. Their State Shouldn't Be.",
         "subheadline": "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors. Agents can resume work across sessions and runtime restarts.",
         "primaryCta": {
