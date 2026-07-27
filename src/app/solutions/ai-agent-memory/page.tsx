@@ -62,7 +62,7 @@ const dsl: PageDSL = {
         },
         "secondaryCta": {
           "text": "See the Architecture",
-          "href": ""
+          "href": "#architecture"
         },
         "heroImage": {
           "image": {
@@ -287,7 +287,8 @@ const dsl: PageDSL = {
       },
       "style": {
         "background": "gradient-dark-top",
-        "spacing": "section"
+        "spacing": "section",
+        "anchorId": "architecture"
       }
     },
     {
