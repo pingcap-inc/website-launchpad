@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { AgentMemoryTimeline } from './AgentMemoryTimeline'
+import { TiDBPersistentLayer } from './TiDBPersistentLayer'
 import { isHtmlShortcode, resolveRegisteredShortcode } from '@/lib/shortcodes'
 
 interface ShortcodeRendererProps {
@@ -54,6 +55,10 @@ export function ShortcodeRenderer({ shortCode, className }: ShortcodeRendererPro
         </div>
       </div>
     )
+  }
+
+  if (resolvedShortcode === 'tidb-persistent-layer-animation') {
+    return <TiDBPersistentLayer className={className} />
   }
 
   if (isHtmlShortcode(shortCode)) {
