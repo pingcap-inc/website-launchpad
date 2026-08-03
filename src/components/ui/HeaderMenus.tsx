@@ -92,7 +92,7 @@ const dropdowns: NavDropdown[] = [
             description: 'Purpose-built for agent memory, state, and multi-hop reasoning',
           },
           {
-            label: 'AI Agent Memory',
+            label: 'Persistent Context for AI Agents',
             href: 'https://www.pingcap.com/solutions/ai-agent-memory/',
             icon: 'https://static.pingcap.com/files/2026/04/14001529/Quick-Start.svg',
             description: 'Persistent, queryable memory for AI agents with per-agent isolation',
@@ -170,7 +170,7 @@ const dropdowns: NavDropdown[] = [
           },
           { label: 'Build GenAI Applications', href: 'https://www.pingcap.com/ai/', icon: AiTIcon },
           {
-            label: 'Build AI Agent Memory',
+            label: 'Build Persistent Context for AI Agents',
             href: 'https://www.pingcap.com/solutions/ai-agent-memory/',
             icon: AiTIcon,
           },
