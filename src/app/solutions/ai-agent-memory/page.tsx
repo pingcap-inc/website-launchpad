@@ -165,7 +165,7 @@ const dsl: PageDSL = {
         "subtitle": "Keep your model, framework, standbox, and memory systems. TiDB Cloud gives your stack one durable place to store and query checkpoints, memory records, operational data, and vectors. ",
         "titleFullWidth": true,
         "layout": "single",
-        "mediaType": "image",
+        "mediaType": "shortcode",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/6eab39b0-one-engine-e.mp4",
@@ -177,7 +177,7 @@ const dsl: PageDSL = {
           "width": 1000,
           "height": 1720
         },
-        "shortCode": "[agent-memory-timeline]"
+        "shortCode": "[tidb-persistent-layer-animation]"
       },
       "style": {
         "background": "primary",
