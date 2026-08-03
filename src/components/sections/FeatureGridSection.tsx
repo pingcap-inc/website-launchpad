@@ -20,6 +20,7 @@ interface FeaturesGridProps {
   viewMore?: { text: string; href: string }
   className?: string
   itemLayout?: 'horizontal' | 'vertical'
+  dark?: boolean
 }
 
 const colsMap = {
@@ -37,6 +38,7 @@ export function FeatureGridSection({
   viewMore,
   className,
   itemLayout = 'vertical',
+  dark = false,
 }: FeaturesGridProps) {
   return (
     <div className={cn('space-y-16', className)}>
@@ -61,7 +63,7 @@ export function FeatureGridSection({
       </div>
       {viewMore && (
         <div className="mt-12 flex justify-center">
-          <SecondaryButton href={viewMore.href} dark={false}>
+          <SecondaryButton href={viewMore.href} dark={dark}>
             {viewMore.text}
           </SecondaryButton>
         </div>

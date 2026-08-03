@@ -108,6 +108,7 @@ export interface SectionStyle {
   background?:
     | 'primary'
     | 'inverse'
+    | 'gray'
     | 'gradient-dark-top'
     | 'gradient-dark-bottom'
     | 'brand-red'

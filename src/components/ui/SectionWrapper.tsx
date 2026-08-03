@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 const BACKGROUND_CLASS: Record<string, string> = {
   primary: 'bg-bg-primary',
   inverse: 'bg-bg-inverse',
+  gray: 'bg-bg-gray',
   'gradient-dark-top': 'bg-gradient-dark-top',
   'gradient-dark-bottom': 'bg-gradient-dark-bottom',
   'brand-red': 'bg-brand-red-bg',
@@ -48,7 +49,9 @@ const CONTENT_WIDTH_CLASS: Record<ContentWidth, string> = {
 }
 
 export function getToneFromBackground(background?: SectionStyle['background']): 'light' | 'dark' {
-  return background === 'inverse' || background === 'none' ? 'dark' : 'light'
+  return background === 'inverse' || background === 'gray' || background === 'none'
+    ? 'dark'
+    : 'light'
 }
 
 interface SectionWrapperProps {
