@@ -61,8 +61,8 @@ const dsl: PageDSL = {
           "href": "https://tidbcloud.com/free-trial/"
         },
         "secondaryCta": {
-          "text": "See the Architecture",
-          "href": "#architecture"
+          "text": "",
+          "href": ""
         },
         "heroImage": {
           "image": {
@@ -227,68 +227,6 @@ const dsl: PageDSL = {
         "background": "primary",
         "spacing": "lg",
         "removePaddingTop": true
-      }
-    },
-    {
-      "id": "architecture-01",
-      "type": "featureMedia",
-      "props": {
-        "eyebrow": "Architecture",
-        "title": "How TiDB Supports Persistent Agent Context",
-        "subtitle": "",
-        "items": [
-          {
-            "title": "Agent Integration Layer",
-            "description": "TiDB Cloud fits into the AI stack teams already use, with PyTiDB, integrations for LangChain and LlamaIndex, and the TiDB MCP Server. \n\n[mem9](https://github.com/mem9-ai/mem9) is an optional, open-source memory layer for AI agents. Teams can use mem9 or another memory system, with TiDB serving as the persistent state layer underneath.\n\nTiDB's MySQL-compatible protocol also works with many existing drivers, ORMs, and database tools.",
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/2aeed35a-rapid_productivity_illustration_2_.svg",
-                "alt": "rapid productivity illustration 2",
-                "width": 500,
-                "height": 448
-              },
-              "alt": "rapid productivity illustration 2",
-              "width": 450,
-              "height": 448
-            }
-          },
-          {
-            "title": "SQL, Vector Search, and Structured Memory",
-            "description": "Agents often need semantic matches alongside current application data. TiDB Cloud lets the application combine vector similarity with SQL filters, metadata, and recency in one query. The memory or orchestration layer can then decide which results to pass to the model.",
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/853056b9-rapid_productivity_illustration-1.svg",
-                "alt": "rapid productivity illustration 1",
-                "width": 500,
-                "height": 448
-              },
-              "alt": "rapid productivity illustration 1",
-              "width": 500,
-              "height": 448
-            }
-          },
-          {
-            "title": "Storage and Consistency Model",
-            "description": "Raft consensus and multi-version concurrency control (MVCC) maintain consistency and isolation as many agents read and update state at the same time. \n\nThe result is one durable database for checkpoints, memory records, application data, and analytics, with fewer cross-system writes and data copies to manage.",
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
-                "alt": "rapid productivity illustration 3",
-                "width": 500,
-                "height": 448
-              },
-              "alt": "rapid productivity illustration 3",
-              "width": 500,
-              "height": 448
-            }
-          }
-        ],
-        "startPosition": "left"
-      },
-      "style": {
-        "background": "gradient-dark-top",
-        "spacing": "section",
-        "anchorId": "architecture"
       }
     },
     {
