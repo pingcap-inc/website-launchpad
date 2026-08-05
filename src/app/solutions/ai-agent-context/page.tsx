@@ -5,14 +5,14 @@ import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
-  title: "TiDB Agent Memory: Persistent Context for AI Agents | TiDB",
-  description: "Give AI agents memory that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
+  title: "Persistent Context for AI Agents | TiDB",
+  description: "Give AI agents persistent context that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/solutions/ai-agent-memory/' },
+  alternates: { canonical: 'https://www.pingcap.com/solutions/ai-agent-context/' },
   openGraph: {
-    title: "TiDB Agent Memory: Persistent Context for AI Agents | TiDB",
-    description: "Give AI agents memory that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
-    url: 'https://www.pingcap.com/solutions/ai-agent-memory/',
+    title: "Persistent Context for AI Agents | TiDB",
+    description: "Give AI agents persistent context that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
+    url: 'https://www.pingcap.com/solutions/ai-agent-context/',
     siteName: 'TiDB',
     images: [
       {
@@ -31,21 +31,21 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: "/solutions/ai-agent-memory/",
-  title: "TiDB Agent Memory: Persistent Context for AI Agents | TiDB",
-  description: "Give AI agents memory that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
+  path: "/solutions/ai-agent-context/",
+  title: "Persistent Context for AI Agents | TiDB",
+  description: "Give AI agents persistent context that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Agents are Ephemeral. Their State Shouldn't Be.", path: "/solutions/ai-agent-memory/" },
+    { name: "Agents are Ephemeral. Their State Shouldn't Be.", path: "/solutions/ai-agent-context/" },
   ],
 })
 
 const dsl: PageDSL = {
-  "pageName": "TiDB Agent Memory: Persistent Context for AI Agents | TiDB",
+  "pageName": "Persistent Context for AI Agents | TiDB",
   "meta": {
-    "title": "TiDB Agent Memory: Persistent Context for AI Agents | TiDB",
-    "description": "Give AI agents memory that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
-    "canonical": "/solutions/ai-agent-memory/"
+    "title": "Persistent Context for AI Agents | TiDB",
+    "description": "Give AI agents persistent context that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
+    "canonical": "/solutions/ai-agent-context/"
   },
   "sections": [
     {
