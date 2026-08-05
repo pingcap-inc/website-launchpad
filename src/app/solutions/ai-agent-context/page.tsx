@@ -6,12 +6,12 @@ import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
   title: "Persistent Context for AI Agents | TiDB",
-  description: "Give AI agents persistent context that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
+  description: "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors.",
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/solutions/ai-agent-context/' },
   openGraph: {
     title: "Persistent Context for AI Agents | TiDB",
-    description: "Give AI agents persistent context that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
+    description: "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors.",
     url: 'https://www.pingcap.com/solutions/ai-agent-context/',
     siteName: 'TiDB',
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 const schema = buildPageSchema({
   path: "/solutions/ai-agent-context/",
   title: "Persistent Context for AI Agents | TiDB",
-  description: "Give AI agents persistent context that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
+  description: "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: "Agents are Ephemeral. Their State Shouldn't Be.", path: "/solutions/ai-agent-context/" },
@@ -44,7 +44,7 @@ const dsl: PageDSL = {
   "pageName": "Persistent Context for AI Agents | TiDB",
   "meta": {
     "title": "Persistent Context for AI Agents | TiDB",
-    "description": "Give AI agents persistent context that lasts. TiDB Cloud unifies persistent agent memory, vector search, and per-agent isolation in one distributed SQL engine.",
+    "description": "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors.",
     "canonical": "/solutions/ai-agent-context/"
   },
   "sections": [
