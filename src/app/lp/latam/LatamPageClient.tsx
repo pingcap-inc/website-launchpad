@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import {
   Network,
@@ -8,7 +8,6 @@ import {
   Shield,
   Bot,
   Brain,
-  ArrowRight,
   Database,
   RefreshCw,
   Layers,
@@ -405,18 +404,11 @@ const modernizationIcons = [
 
 const modernizationSecondaryHrefs = [
   'https://www.pingcap.com/developers/migration-center/',
-  'https://www.pingcap.com/customer-stories/',
+  'https://www.pingcap.com/customers/',
   'https://www.pingcap.com/tidb/cloud/',
 ]
 
-const partnerPlaceholders = [
-  'AWS',
-  'Google Cloud',
-  'Regional SI',
-  'Service Partner',
-  'Observability',
-  'Security ISV',
-]
+const partnerPlaceholders = ['Multi-Cloud', 'Regional SI', 'Service Partner', 'Security ISV']
 
 const whyTidbMeta = [
   { index: '01', illustration: <CostIllustration /> },
@@ -657,29 +649,6 @@ export function LatamPageClient() {
                 title={t.modernization.title}
                 subtitle={t.modernization.subtitle}
               />
-
-              {/* Migration flow */}
-              <div className="mt-8 flex items-center gap-2 md:gap-3 border border-carbon-200 bg-white p-4 max-w-[640px]">
-                {t.modernization.flowSteps.map((step, i) => (
-                  <Fragment key={step}>
-                    <span
-                      className={`flex-1 text-center font-mono text-label uppercase font-bold py-4 px-2 border ${
-                        i === t.modernization.flowSteps.length - 1
-                          ? 'border-brand-red-primary bg-brand-red-primary text-text-inverse'
-                          : 'border-carbon-200 text-text-primary'
-                      }`}
-                    >
-                      {step}
-                    </span>
-                    {i < t.modernization.flowSteps.length - 1 && (
-                      <ArrowRight
-                        className="w-4 h-4 shrink-0 text-brand-red-primary"
-                        strokeWidth={1.5}
-                      />
-                    )}
-                  </Fragment>
-                ))}
-              </div>
 
               {/* Link stack */}
               <div className="mt-8 flex flex-col items-start gap-4">

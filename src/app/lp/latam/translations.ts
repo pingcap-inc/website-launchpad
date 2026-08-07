@@ -60,7 +60,6 @@ export interface LatamCopy {
     title: string
     subtitle: string
     features: FeatureText[]
-    flowSteps: string[]
     secondaryLinks: string[]
   }
   ecosystem: {
@@ -164,7 +163,7 @@ export const translations: Record<Locale, LatamCopy> = {
     },
     modernization: {
       eyebrow: '03 / Modernization',
-      title: 'Database Modernization with TiDB and TiShift',
+      title: 'Database Modernization with TiDB',
       subtitle:
         'Move from single-node stacks to a MySQL-compatible distributed SQL path with guided migration tooling.',
       features: [
@@ -189,7 +188,6 @@ export const translations: Record<Locale, LatamCopy> = {
             'Run transactional processing and real-time analytics on one distributed SQL platform instead of maintaining multiple specialized databases.',
         },
       ],
-      flowSteps: ['Single-node', 'TiShift', 'TiDB'],
       secondaryLinks: [
         'Explore TiDB for MySQL modernization',
         'See how teams modernize MySQL with TiDB in production',
@@ -200,7 +198,7 @@ export const translations: Record<Locale, LatamCopy> = {
       eyebrow: '04 / Ecosystem',
       title: 'Grounded Partner Ecosystem',
       paragraphs: [
-        'Run TiDB Cloud on AWS and Google Cloud using infrastructure your teams already trust.',
+        'Run TiDB Cloud on AWS, Google Cloud and Alibaba Cloud using infrastructure your teams already trust.',
         'Work with regional implementation partners who understand local regulations, performance expectations, and enterprise deployment requirements across Latin America.',
         'Integrate TiDB with your existing security, observability, and data ecosystem instead of rebuilding your technology stack.',
       ],
@@ -361,7 +359,6 @@ export const translations: Record<Locale, LatamCopy> = {
             'Ejecuta el procesamiento transaccional y la analítica en tiempo real en una sola plataforma SQL distribuida, en lugar de mantener múltiples bases de datos especializadas.',
         },
       ],
-      flowSteps: ['Nodo único', 'TiShift', 'TiDB'],
       secondaryLinks: [
         'Descubre TiDB para la modernización de MySQL',
         'Descubre cómo los equipos modernizan MySQL con TiDB en producción',
@@ -372,7 +369,7 @@ export const translations: Record<Locale, LatamCopy> = {
       eyebrow: '04 / Ecosistema',
       title: 'Ecosistema de Socios con Presencia Local',
       paragraphs: [
-        'Ejecuta TiDB Cloud en AWS y Google Cloud usando la infraestructura en la que tus equipos ya confían.',
+        'Ejecuta TiDB Cloud en AWS, Google Cloud y Alibaba Cloud usando la infraestructura en la que tus equipos ya confían.',
         'Trabaja con socios de implementación regionales que comprenden las regulaciones locales, las expectativas de rendimiento y los requisitos de implementación empresarial en toda América Latina.',
         'Integra TiDB con tu ecosistema existente de seguridad, observabilidad y datos, en lugar de reconstruir tu stack tecnológico.',
       ],
@@ -533,7 +530,6 @@ export const translations: Record<Locale, LatamCopy> = {
             'Execute processamento transacional e análises em tempo real em uma única plataforma SQL distribuída, em vez de manter vários bancos de dados especializados.',
         },
       ],
-      flowSteps: ['Nó único', 'TiShift', 'TiDB'],
       secondaryLinks: [
         'Conheça o TiDB para modernização do MySQL',
         'Veja como as equipes modernizam o MySQL com o TiDB em produção',
@@ -544,7 +540,7 @@ export const translations: Record<Locale, LatamCopy> = {
       eyebrow: '04 / Ecossistema',
       title: 'Ecossistema de Parceiros com Presença Local',
       paragraphs: [
-        'Execute o TiDB Cloud na AWS e no Google Cloud usando a infraestrutura em que suas equipes já confiam.',
+        'Execute o TiDB Cloud na AWS, no Google Cloud e na Alibaba Cloud usando a infraestrutura em que suas equipes já confiam.',
         'Trabalhe com parceiros de implementação regionais que entendem as regulamentações locais, as expectativas de desempenho e os requisitos de implantação empresarial em toda a América Latina.',
         'Integre o TiDB ao seu ecossistema existente de segurança, observabilidade e dados, em vez de reconstruir sua pilha tecnológica.',
       ],
