@@ -1,29 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import Image from 'next/image'
 import {
   Network,
   Sparkles,
   Shield,
+  Bot,
+  Brain,
+  ArrowRight,
   Database,
   RefreshCw,
   Layers,
   GitMerge,
-  Cloud,
-  Users,
-  Building,
-  Bot,
-  Brain,
 } from 'lucide-react'
 import {
   Header,
   Footer,
   HeroSection,
   FeatureGridSection,
-  CtaSection,
   SectionWrapper,
   SectionHeader,
+  SecondaryButton,
+  PrimaryButton,
 } from '@/components'
 import { type Locale, type LatamCopy, locales, translations } from './translations'
 
@@ -398,16 +397,25 @@ const highScaleMeta = [
 ]
 
 const modernizationIcons = [
-  <Database key="database" strokeWidth={1.5} />,
-  <RefreshCw key="refresh" strokeWidth={1.5} />,
-  <Layers key="layers" strokeWidth={1.5} />,
-  <GitMerge key="gitmerge" strokeWidth={1.5} />,
+  <Database key="db" className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
+  <RefreshCw key="refresh" className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
+  <Layers key="layers" className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
+  <GitMerge key="merge" className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
 ]
 
-const partnerIcons = [
-  <Cloud key="cloud" strokeWidth={1.5} />,
-  <Users key="users" strokeWidth={1.5} />,
-  <Building key="building" strokeWidth={1.5} />,
+const modernizationSecondaryHrefs = [
+  'https://www.pingcap.com/developers/migration-center/',
+  'https://www.pingcap.com/customer-stories/',
+  'https://www.pingcap.com/tidb/cloud/',
+]
+
+const partnerPlaceholders = [
+  'AWS',
+  'Google Cloud',
+  'Regional SI',
+  'Service Partner',
+  'Observability',
+  'Security ISV',
 ]
 
 const whyTidbMeta = [
@@ -509,20 +517,6 @@ export function LatamPageClient() {
     ctaText: card.ctaText,
   }))
 
-  const modernizationFeatures = t.modernization.features.map((feature, i) => ({
-    icon: modernizationIcons[i],
-    title: feature.title,
-    description: feature.description,
-    layout: 'vertical' as const,
-  }))
-
-  const partnerFeatures = t.ecosystem.features.map((feature, i) => ({
-    icon: partnerIcons[i],
-    title: feature.title,
-    description: feature.description,
-    layout: 'vertical' as const,
-  }))
-
   const whyTidbCards = t.whyTidb.cards.map((card, i) => ({
     ...whyTidbMeta[i],
     title: card.title,
@@ -582,29 +576,23 @@ export function LatamPageClient() {
             features={architectureFeatures}
             columns={3}
             itemLayout="vertical"
+            dark={true}
             viewMore={{
               text: t.architecture.viewMoreText,
               href: 'https://www.pingcap.com/ai/',
+              openInNewTab: true,
             }}
           />
         </SectionWrapper>
 
         {/* ── 3. High-scale operations ── */}
         <SectionWrapper style={{ background: 'inverse', spacing: 'section' }}>
-          {/* Header: title left, supporting copy right */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-12 lg:mb-16">
-            <div className="lg:col-span-8">
-              <p className="font-mono text-eyebrow text-brand-red-primary mb-4">
-                {t.highScale.eyebrow}
-              </p>
-              <h2 className="text-h2-mb md:text-h2-md font-bold text-text-primary leading-tight">
-                {t.highScale.title}
-              </h2>
-            </div>
-            <p className="lg:col-span-4 text-body-md text-secondary leading-relaxed lg:pt-2">
-              {t.highScale.subtitle}
-            </p>
-          </div>
+          <SectionHeader
+            className="mb-16"
+            eyebrow={t.highScale.eyebrow}
+            title={t.highScale.title}
+            subtitle={t.highScale.subtitle}
+          />
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -649,15 +637,11 @@ export function LatamPageClient() {
                   </ul>
                 </div>
 
-                {/* Explore link */}
-                <a
-                  href={card.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border-t border-carbon-200 px-6 lg:px-8 py-5 font-bold text-body-md text-brand-red-primary transition-colors duration-150 ease-in-out hover:bg-carbon-100"
-                >
-                  {card.ctaText}
-                </a>
+                <div className="border-t border-carbon-200 px-6 lg:px-8 py-5">
+                  <SecondaryButton href={card.href} dark={false}>
+                    {card.ctaText}
+                  </SecondaryButton>
+                </div>
               </article>
             ))}
           </div>
@@ -665,37 +649,104 @@ export function LatamPageClient() {
 
         {/* ── 4. Modernization ── */}
         <SectionWrapper style={{ background: 'gray', spacing: 'section' }}>
-          <FeatureGridSection
-            eyebrow={t.modernization.eyebrow}
-            title={t.modernization.title}
-            subtitle={t.modernization.subtitle}
-            features={modernizationFeatures}
-            columns={2}
-            itemLayout="vertical"
-            viewMore={{
-              text: t.modernization.viewMoreText,
-              href: 'https://www.pingcap.com/developers/migration-center/',
-              openInNewTab: true,
-            }}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Left: intro + migration flow + link stack */}
+            <div className="lg:col-span-6">
+              <SectionHeader
+                eyebrow={t.modernization.eyebrow}
+                title={t.modernization.title}
+                subtitle={t.modernization.subtitle}
+              />
+
+              {/* Migration flow */}
+              <div className="mt-8 flex items-center gap-2 md:gap-3 border border-carbon-200 bg-white p-4 max-w-[640px]">
+                {t.modernization.flowSteps.map((step, i) => (
+                  <Fragment key={step}>
+                    <span
+                      className={`flex-1 text-center font-mono text-label uppercase font-bold py-4 px-2 border ${
+                        i === t.modernization.flowSteps.length - 1
+                          ? 'border-brand-red-primary bg-brand-red-primary text-text-inverse'
+                          : 'border-carbon-200 text-text-primary'
+                      }`}
+                    >
+                      {step}
+                    </span>
+                    {i < t.modernization.flowSteps.length - 1 && (
+                      <ArrowRight
+                        className="w-4 h-4 shrink-0 text-brand-red-primary"
+                        strokeWidth={1.5}
+                      />
+                    )}
+                  </Fragment>
+                ))}
+              </div>
+
+              {/* Link stack */}
+              <div className="mt-8 flex flex-col items-start gap-4">
+                {t.modernization.secondaryLinks.map((text, i) => (
+                  <SecondaryButton href={modernizationSecondaryHrefs[i]} dark={false} key={text}>
+                    {text}
+                  </SecondaryButton>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: 2x2 cards */}
+            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {t.modernization.features.map((feature, i) => (
+                <article
+                  key={feature.title}
+                  className="border border-carbon-200 bg-white p-6 lg:p-8"
+                >
+                  <div className="mb-4">{modernizationIcons[i]}</div>
+                  <h3 className="text-h3-sm font-bold text-text-primary leading-snug mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-body-md text-secondary leading-relaxed">
+                    {feature.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
         </SectionWrapper>
 
         {/* ── 5. Partner ecosystem ── */}
         <SectionWrapper style={{ background: 'brand-red', spacing: 'section' }}>
-          <FeatureGridSection
-            eyebrow={t.ecosystem.eyebrow}
-            title={t.ecosystem.title}
-            subtitle={t.ecosystem.subtitle}
-            features={partnerFeatures}
-            columns={3}
-            itemLayout="vertical"
-            viewMore={{
-              text: t.ecosystem.viewMoreText,
-              href: 'https://www.pingcap.com/partners/',
-              openInNewTab: true,
-            }}
-            dark={true}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Left: customer-facing copy + cross-link */}
+            <div className="lg:col-span-6">
+              <SectionHeader eyebrow={t.ecosystem.eyebrow} title={t.ecosystem.title} />
+              <ul className="mt-8 space-y-5">
+                {t.ecosystem.paragraphs.map((paragraph) => (
+                  <li
+                    key={paragraph}
+                    className="flex items-start gap-3 text-body-lg text-carbon-100 leading-relaxed"
+                  >
+                    <span className="mt-[10px] w-2 h-2 shrink-0 bg-text-inverse" />
+                    {paragraph}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-10">
+                <SecondaryButton href="https://www.pingcap.com/partners/" dark={true} openInNewTab>
+                  {t.ecosystem.viewMoreText}
+                </SecondaryButton>
+              </div>
+            </div>
+
+            {/* Right: partner-category placeholders */}
+            <div className="lg:col-span-6 grid grid-cols-2 gap-4">
+              {partnerPlaceholders.map((label) => (
+                <div
+                  key={label}
+                  className="flex items-center justify-center h-24 px-3 text-center border border-text-inverse/20 font-mono text-label uppercase text-carbon-100"
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+          </div>
         </SectionWrapper>
 
         {/* ── 6. Why TiDB ── */}
@@ -727,18 +778,37 @@ export function LatamPageClient() {
 
         {/* ── 7. CTA ── */}
         <SectionWrapper style={{ background: 'primary', spacing: 'section' }}>
-          <CtaSection
-            title={t.cta.title}
-            subtitle={t.cta.subtitle}
-            primaryCta={{
-              text: t.cta.primaryCta,
-              href: 'https://tidbcloud.com/free-trial/',
-            }}
-            secondaryCta={{
-              text: t.cta.secondaryCta,
-              href: 'https://www.pingcap.com/contact-us/',
-            }}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* CTA 1 — modernize */}
+            <div className="flex min-h-[300px] flex-col items-start border border-carbon-800 p-8 lg:p-10">
+              <p className="font-mono text-eyebrow uppercase text-brand-red-primary mb-4">
+                {t.cta.modernize.eyebrow}
+              </p>
+              <h2 className="text-h2-mb md:text-h2-sm font-bold text-text-inverse leading-tight">
+                {t.cta.modernize.title}
+              </h2>
+              <div className="mt-auto pt-8">
+                <PrimaryButton href="https://www.pingcap.com/tidb-cloud/">
+                  {t.cta.modernize.button}
+                </PrimaryButton>
+              </div>
+            </div>
+
+            {/* CTA 2 — co-design */}
+            <div className="flex min-h-[300px] flex-col items-start border border-carbon-800 p-8 lg:p-10">
+              <p className="font-mono text-eyebrow uppercase text-brand-red-primary mb-4">
+                {t.cta.coDesign.eyebrow}
+              </p>
+              <h2 className="text-h2-mb md:text-h2-sm font-bold text-text-inverse leading-tight">
+                {t.cta.coDesign.title}
+              </h2>
+              <div className="mt-auto pt-8">
+                <SecondaryButton href="https://www.pingcap.com/contact-us/" dark={true}>
+                  {t.cta.coDesign.button}
+                </SecondaryButton>
+              </div>
+            </div>
+          </div>
         </SectionWrapper>
       </main>
       <Footer />

@@ -60,13 +60,13 @@ export interface LatamCopy {
     title: string
     subtitle: string
     features: FeatureText[]
-    viewMoreText: string
+    flowSteps: string[]
+    secondaryLinks: string[]
   }
   ecosystem: {
     eyebrow: string
     title: string
-    subtitle: string
-    features: FeatureText[]
+    paragraphs: string[]
     viewMoreText: string
   }
   whyTidb: {
@@ -76,10 +76,8 @@ export interface LatamCopy {
     cards: WhyCardText[]
   }
   cta: {
-    title: string
-    subtitle: string
-    primaryCta: string
-    secondaryCta: string
+    modernize: { eyebrow: string; title: string; button: string }
+    coDesign: { eyebrow: string; title: string; button: string }
   }
 }
 
@@ -142,7 +140,7 @@ export const translations: Record<Locale, LatamCopy> = {
             'Deliver real-time balances, authorizations, and ledger updates with strong consistency and high availability.',
             'Keep always-on payment and state-update flows responsive under high concurrency without hand-crafted sharding.',
           ],
-          ctaText: 'Explore TiDB for Fintech →',
+          ctaText: 'Explore TiDB for Fintech',
         },
         {
           metricCaption: 'QPS',
@@ -151,7 +149,7 @@ export const translations: Record<Locale, LatamCopy> = {
             'Handle orders, sessions, inventory, and flash events from a single distributed SQL cluster.',
             'Absorb seasonal peaks and unpredictable workload growth while keeping critical user journeys fast.',
           ],
-          ctaText: 'Explore TiDB for eCommerce →',
+          ctaText: 'Explore TiDB for eCommerce',
         },
         {
           metricCaption: 'Unified data layer',
@@ -160,13 +158,13 @@ export const translations: Record<Locale, LatamCopy> = {
             'Unify live application state, agent memory, relational data, and vector embeddings in one database.',
             'Let AI agents read and write operational state while performing semantic search over knowledge and events.',
           ],
-          ctaText: 'Explore TiDB for AI →',
+          ctaText: 'Explore TiDB for AI',
         },
       ],
     },
     modernization: {
       eyebrow: '03 / Modernization',
-      title: 'Database Modernization with TiDB',
+      title: 'Database Modernization with TiDB and TiShift',
       subtitle:
         'Move from single-node stacks to a MySQL-compatible distributed SQL path with guided migration tooling.',
       features: [
@@ -191,31 +189,22 @@ export const translations: Record<Locale, LatamCopy> = {
             'Run transactional processing and real-time analytics on one distributed SQL platform instead of maintaining multiple specialized databases.',
         },
       ],
-      viewMoreText: 'Explore TiDB for MySQL modernization',
+      flowSteps: ['Single-node', 'TiShift', 'TiDB'],
+      secondaryLinks: [
+        'Explore TiDB for MySQL modernization',
+        'See how teams modernize MySQL with TiDB in production',
+        "Learn more about TiDB's large-scale OLTP capabilities",
+      ],
     },
     ecosystem: {
       eyebrow: '04 / Ecosystem',
       title: 'Grounded Partner Ecosystem',
-      subtitle:
-        'Run TiDB Cloud on AWS, Google Cloud and Alibaba Cloud using infrastructure your teams already trust, work with regional implementation partners who understand local requirements across Latin America, and integrate with your existing security, observability, and data ecosystem.',
-      features: [
-        {
-          title: 'Multi-Cloud Strategy',
-          description:
-            'Run TiDB Cloud on AWS and Google Cloud using the infrastructure and controls your teams already operate, with data residing closer to users throughout the region.',
-        },
-        {
-          title: 'Service Partners',
-          description:
-            'Engage delivery partners for architecture, migration, and production operations support.',
-        },
-        {
-          title: 'Regional SIs',
-          description:
-            'Work with local system integrators who understand regional regulations and enterprise deployment.',
-        },
+      paragraphs: [
+        'Run TiDB Cloud on AWS and Google Cloud using infrastructure your teams already trust.',
+        'Work with regional implementation partners who understand local regulations, performance expectations, and enterprise deployment requirements across Latin America.',
+        'Integrate TiDB with your existing security, observability, and data ecosystem instead of rebuilding your technology stack.',
       ],
-      viewMoreText: 'Explore the PingCAP partner ecosystem',
+      viewMoreText: 'Explore the PingCAP Partner Ecosystem',
     },
     whyTidb: {
       eyebrow: '05 / WHY TIDB',
@@ -251,11 +240,16 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     cta: {
-      title: 'Ready to modernize your database for Latin America?',
-      subtitle:
-        'Co-design a high-scale, AI-ready architecture with our solutions team—or start building on TiDB Cloud today.',
-      primaryCta: 'Get started with TiDB Cloud',
-      secondaryCta: 'Talk to our solutions team',
+      modernize: {
+        eyebrow: 'Ready for the next step?',
+        title: 'Ready to modernize your database for Latin America?',
+        button: 'Get started with TiDB Cloud',
+      },
+      coDesign: {
+        eyebrow: 'Architecture workshop',
+        title: 'Want to co-design a high-scale architecture with our team?',
+        button: 'Talk to our solutions team',
+      },
     },
   },
 
@@ -367,29 +361,20 @@ export const translations: Record<Locale, LatamCopy> = {
             'Ejecuta el procesamiento transaccional y la analítica en tiempo real en una sola plataforma SQL distribuida, en lugar de mantener múltiples bases de datos especializadas.',
         },
       ],
-      viewMoreText: 'Descubre TiDB para la modernización de MySQL',
+      flowSteps: ['Nodo único', 'TiShift', 'TiDB'],
+      secondaryLinks: [
+        'Descubre TiDB para la modernización de MySQL',
+        'Descubre cómo los equipos modernizan MySQL con TiDB en producción',
+        'Conoce más sobre las capacidades OLTP a gran escala de TiDB',
+      ],
     },
     ecosystem: {
       eyebrow: '04 / Ecosistema',
       title: 'Ecosistema de Socios con Presencia Local',
-      subtitle:
-        'Ejecuta TiDB Cloud en AWS, Google Cloud y Alibaba Cloud usando la infraestructura en la que tus equipos ya confían, trabaja con socios de implementación regionales que comprenden los requisitos locales en toda América Latina, e intégralo con tu ecosistema existente de seguridad, observabilidad y datos.',
-      features: [
-        {
-          title: 'Estrategia Multi-Nube',
-          description:
-            'Ejecuta TiDB Cloud en AWS y Google Cloud usando la infraestructura y los controles que tus equipos ya operan, con datos ubicados más cerca de los usuarios en toda la región.',
-        },
-        {
-          title: 'Socios de Servicio',
-          description:
-            'Colabora con socios de implementación para arquitectura, migración y soporte de operaciones en producción.',
-        },
-        {
-          title: 'Integradores Regionales',
-          description:
-            'Trabaja con integradores de sistemas locales que comprenden las regulaciones regionales y la implementación empresarial.',
-        },
+      paragraphs: [
+        'Ejecuta TiDB Cloud en AWS y Google Cloud usando la infraestructura en la que tus equipos ya confían.',
+        'Trabaja con socios de implementación regionales que comprenden las regulaciones locales, las expectativas de rendimiento y los requisitos de implementación empresarial en toda América Latina.',
+        'Integra TiDB con tu ecosistema existente de seguridad, observabilidad y datos, en lugar de reconstruir tu stack tecnológico.',
       ],
       viewMoreText: 'Descubre el ecosistema de socios de PingCAP',
     },
@@ -427,11 +412,16 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     cta: {
-      title: '¿Listo para modernizar tu base de datos para América Latina?',
-      subtitle:
-        'Co-diseña una arquitectura de alta escala y lista para IA con nuestro equipo de soluciones, o comienza a construir en TiDB Cloud hoy mismo.',
-      primaryCta: 'Comienza con TiDB Cloud',
-      secondaryCta: 'Habla con nuestro equipo de soluciones',
+      modernize: {
+        eyebrow: '¿Listo para el siguiente paso?',
+        title: '¿Listo para modernizar tu base de datos para América Latina?',
+        button: 'Comienza con TiDB Cloud',
+      },
+      coDesign: {
+        eyebrow: 'Taller de arquitectura',
+        title: '¿Quieres co-diseñar una arquitectura de alta escala con nuestro equipo?',
+        button: 'Habla con nuestro equipo de soluciones',
+      },
     },
   },
 
@@ -543,29 +533,20 @@ export const translations: Record<Locale, LatamCopy> = {
             'Execute processamento transacional e análises em tempo real em uma única plataforma SQL distribuída, em vez de manter vários bancos de dados especializados.',
         },
       ],
-      viewMoreText: 'Conheça o TiDB para modernização do MySQL',
+      flowSteps: ['Nó único', 'TiShift', 'TiDB'],
+      secondaryLinks: [
+        'Conheça o TiDB para modernização do MySQL',
+        'Veja como as equipes modernizam o MySQL com o TiDB em produção',
+        'Saiba mais sobre os recursos OLTP em larga escala do TiDB',
+      ],
     },
     ecosystem: {
       eyebrow: '04 / Ecossistema',
       title: 'Ecossistema de Parceiros com Presença Local',
-      subtitle:
-        'Execute o TiDB Cloud na AWS, Google Cloud e Alibaba Cloud usando a infraestrutura em que suas equipes já confiam, trabalhe com parceiros de implementação regionais que entendem os requisitos locais em toda a América Latina, e integre-se ao seu ecossistema existente de segurança, observabilidade e dados.',
-      features: [
-        {
-          title: 'Estratégia Multi-Nuvem',
-          description:
-            'Execute o TiDB Cloud na AWS e no Google Cloud usando a infraestrutura e os controles que suas equipes já operam, com dados localizados mais próximos dos usuários em toda a região.',
-        },
-        {
-          title: 'Parceiros de Serviço',
-          description:
-            'Conte com parceiros de implementação para arquitetura, migração e suporte de operações em produção.',
-        },
-        {
-          title: 'Integradores Regionais',
-          description:
-            'Trabalhe com integradores de sistemas locais que entendem as regulamentações regionais e a implementação empresarial.',
-        },
+      paragraphs: [
+        'Execute o TiDB Cloud na AWS e no Google Cloud usando a infraestrutura em que suas equipes já confiam.',
+        'Trabalhe com parceiros de implementação regionais que entendem as regulamentações locais, as expectativas de desempenho e os requisitos de implantação empresarial em toda a América Latina.',
+        'Integre o TiDB ao seu ecossistema existente de segurança, observabilidade e dados, em vez de reconstruir sua pilha tecnológica.',
       ],
       viewMoreText: 'Conheça o ecossistema de parceiros da PingCAP',
     },
@@ -603,11 +584,16 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     cta: {
-      title: 'Pronto para modernizar seu banco de dados para a América Latina?',
-      subtitle:
-        'Co-crie uma arquitetura de alta escala e pronta para IA com nossa equipe de soluções—ou comece a construir no TiDB Cloud hoje mesmo.',
-      primaryCta: 'Comece com o TiDB Cloud',
-      secondaryCta: 'Fale com nossa equipe de soluções',
+      modernize: {
+        eyebrow: 'Pronto para o próximo passo?',
+        title: 'Pronto para modernizar seu banco de dados para a América Latina?',
+        button: 'Comece com o TiDB Cloud',
+      },
+      coDesign: {
+        eyebrow: 'Workshop de arquitetura',
+        title: 'Quer co-criar uma arquitetura de alta escala com nossa equipe?',
+        button: 'Fale com nossa equipe de soluções',
+      },
     },
   },
 }
