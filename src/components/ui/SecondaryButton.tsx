@@ -92,6 +92,13 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
     }
 
     if (as === 'a' || href) {
+      const tabProps =
+        openInNewTab === false
+          ? {}
+          : openInNewTab === true
+            ? { target: '_blank', rel: 'noopener noreferrer' }
+            : externalLinkProps(href)
+
       return (
         <a
           ref={ref as React.Ref<HTMLAnchorElement>}
@@ -101,8 +108,7 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
             handleInPageScroll(event, href)
             onClick?.()
           }}
-          {...externalLinkProps(href)}
-          {...(openInNewTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          {...tabProps}
         >
           {content}
         </a>

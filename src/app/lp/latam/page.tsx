@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Header, Footer } from '@/components'
 import { LatamPageClient } from './LatamPageClient'
 
 export const metadata: Metadata = {
@@ -31,5 +32,11 @@ export const metadata: Metadata = {
 }
 
 export default function LatamLandingPage() {
-  return <LatamPageClient />
+  return (
+    <>
+      <Header />
+      <LatamPageClient />
+      <Footer />
+    </>
+  )
 }

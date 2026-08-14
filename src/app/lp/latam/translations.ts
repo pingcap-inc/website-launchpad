@@ -31,14 +31,6 @@ export interface LatamCopy {
     primaryCta: string
     secondaryCta: string
   }
-  heroVisual: {
-    topline: string
-    live: string
-    transactions: string
-    agentState: string
-    vectorSql: string
-    oneQuery: string
-  }
   logos: {
     trustedBy: string
   }
@@ -90,14 +82,6 @@ export const translations: Record<Locale, LatamCopy> = {
         'Build scalable, AI-ready applications on a distributed SQL platform designed for always-on transactions, real-time intelligence, and cloud-native growth across Latin America.',
       primaryCta: 'Get started with TiDB Cloud',
       secondaryCta: 'Talk to our solutions team',
-    },
-    heroVisual: {
-      topline: 'LATAM DATA PLANE',
-      live: 'live',
-      transactions: 'transactions',
-      agentState: 'agent state',
-      vectorSql: 'vector + SQL',
-      oneQuery: 'one query',
     },
     logos: {
       trustedBy: 'Trusted by teams building the future',
@@ -261,14 +245,6 @@ export const translations: Record<Locale, LatamCopy> = {
       primaryCta: 'Comienza con TiDB Cloud',
       secondaryCta: 'Habla con nuestro equipo de soluciones',
     },
-    heroVisual: {
-      topline: 'PLANO DE DATOS LATAM',
-      live: 'en vivo',
-      transactions: 'transacciones',
-      agentState: 'estado del agente',
-      vectorSql: 'vector + SQL',
-      oneQuery: 'una consulta',
-    },
     logos: {
       trustedBy: 'La confianza de equipos que construyen el futuro',
     },
@@ -431,14 +407,6 @@ export const translations: Record<Locale, LatamCopy> = {
         'Crie aplicações escaláveis e prontas para IA em uma plataforma SQL distribuída projetada para transações sempre ativas, inteligência em tempo real e crescimento nativo em nuvem em toda a América Latina.',
       primaryCta: 'Comece com o TiDB Cloud',
       secondaryCta: 'Fale com nossa equipe de soluções',
-    },
-    heroVisual: {
-      topline: 'PLANO DE DADOS LATAM',
-      live: 'ao vivo',
-      transactions: 'transações',
-      agentState: 'estado do agente',
-      vectorSql: 'vetor + SQL',
-      oneQuery: 'uma consulta',
     },
     logos: {
       trustedBy: 'A confiança de equipes que constroem o futuro',

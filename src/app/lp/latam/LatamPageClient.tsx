@@ -14,8 +14,6 @@ import {
   GitMerge,
 } from 'lucide-react'
 import {
-  Header,
-  Footer,
   HeroSection,
   FeatureGridSection,
   SectionWrapper,
@@ -23,7 +21,7 @@ import {
   SecondaryButton,
   PrimaryButton,
 } from '@/components'
-import { type Locale, type LatamCopy, locales, translations } from './translations'
+import { type Locale, locales, translations } from './translations'
 
 // ─── Card illustrations (wireframe mini-dashboards) ─────────────────────────────
 
@@ -162,207 +160,27 @@ function AiNativeIllustration() {
   )
 }
 
-function MiniGridBg({ id }: { id: string }) {
+function CardVideo({ src }: { src: string }) {
   return (
-    <>
-      <defs>
-        <pattern id={id} width="20" height="18" patternUnits="userSpaceOnUse">
-          <path d="M20 0H0V18" fill="none" stroke="#E5E8EB" strokeWidth="1" />
-        </pattern>
-      </defs>
-      <rect x="0.5" y="0.5" width="199" height="89" fill="#F8FAFB" stroke="#E5E8EB" />
-      <rect x="0.5" y="0.5" width="199" height="89" fill={`url(#${id})`} />
-    </>
+    <video autoPlay loop muted playsInline className="w-full h-auto border border-carbon-200">
+      <source src={src} type="video/mp4" />
+    </video>
   )
 }
 
-function CostIllustration() {
-  return (
-    <svg viewBox="0 0 200 90" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      <MiniGridBg id="illo-cost" />
-      <rect x="62" y="16" width="10" height="58" fill="#DC150B" />
-      <rect x="95" y="16" width="10" height="58" fill="#2C80CE" />
-      <rect x="128" y="16" width="10" height="58" fill="#1AA8A8" />
-    </svg>
-  )
-}
+// ─── Hero visual (animated LATAM network loop) ───────────────────────────────
 
-function MultiCloudIllustration() {
+function HeroNetworkVideo() {
   return (
-    <svg viewBox="0 0 200 90" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      <MiniGridBg id="illo-cloud" />
-      <line x1="40" y1="45" x2="160" y2="45" stroke="#CBD1D7" strokeWidth="1.5" />
-      <circle cx="62" cy="45" r="7" fill="#DC150B" />
-      <circle cx="100" cy="45" r="7" fill="#2C80CE" />
-      <circle cx="138" cy="45" r="7" fill="#1AA8A8" />
-    </svg>
-  )
-}
-
-function ModernizationIllustration() {
-  return (
-    <svg viewBox="0 0 200 90" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      <MiniGridBg id="illo-modern" />
-      <line
-        x1="45"
-        y1="74"
-        x2="162"
-        y2="16"
-        stroke="#DC150B"
-        strokeWidth="9"
-        strokeLinecap="square"
-      />
-    </svg>
-  )
-}
-
-function SecurityIllustration() {
-  return (
-    <svg viewBox="0 0 200 90" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      <MiniGridBg id="illo-sec" />
-      <rect x="58" y="16" width="14" height="58" fill="#DC150B" />
-      <rect x="80" y="16" width="14" height="58" fill="#0D3152" />
-      <rect x="102" y="16" width="14" height="58" fill="#0F5353" />
-    </svg>
-  )
-}
-
-function AiConnectedIllustration() {
-  return (
-    <svg viewBox="0 0 200 90" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      <MiniGridBg id="illo-aiconn" />
-      <line x1="18" y1="45" x2="182" y2="45" stroke="#DC150B" strokeWidth="2" />
-      <line x1="100" y1="14" x2="100" y2="76" stroke="#DC150B" strokeWidth="2" />
-      <circle cx="100" cy="45" r="28" fill="none" stroke="#2C80CE" strokeWidth="2" />
-      <circle cx="100" cy="45" r="11" fill="#F35048" fillOpacity="0.3" />
-    </svg>
-  )
-}
-
-// ─── Hero visual (isometric cube scene + runtime terminal) ──────────────────────
-
-function HeroVisual({ copy }: { copy: LatamCopy['heroVisual'] }) {
-  return (
-    <svg
-      viewBox="0 0 480 540"
-      className="w-full h-auto max-w-[480px] mx-auto"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="Distributed SQL and AI data layer for Latin America"
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="w-full h-auto max-w-[560px] mx-auto border border-white/10"
     >
-      <defs>
-        <pattern
-          id="hero-iso"
-          width="60"
-          height="34"
-          patternUnits="userSpaceOnUse"
-          patternTransform="skewY(-30)"
-        >
-          <path d="M60 0H0V34" fill="none" stroke="#FFFFFF" strokeOpacity="0.1" strokeWidth="1" />
-        </pattern>
-      </defs>
-
-      {/* ── Isometric cube scene ── */}
-      <g>
-        <rect
-          x="70"
-          y="0"
-          width="410"
-          height="322"
-          fill="#0D3152"
-          stroke="#FFFFFF"
-          strokeOpacity="0.18"
-        />
-        <rect x="70" y="0" width="410" height="322" fill="url(#hero-iso)" />
-
-        {/* Blue iso cubes (staggered) */}
-        <polygon
-          points="185,138 233,166 185,194 137,166"
-          fill="#2C80CE"
-          fillOpacity="0.72"
-          stroke="#FFFFFF"
-          strokeOpacity="0.7"
-        />
-        <polygon
-          points="312,104 360,132 312,160 264,132"
-          fill="#2C80CE"
-          fillOpacity="0.55"
-          stroke="#FFFFFF"
-          strokeOpacity="0.55"
-        />
-        <polygon
-          points="360,196 408,224 360,252 312,224"
-          fill="#2C80CE"
-          fillOpacity="0.4"
-          stroke="#FFFFFF"
-          strokeOpacity="0.4"
-        />
-
-        {/* Red cornerstone cube — three faces */}
-        <polygon points="255,150 305,179 255,208 205,179" fill="#F35048" />
-        <polygon points="205,179 255,208 255,268 205,239" fill="#DC150B" />
-        <polygon points="305,179 255,208 255,268 305,239" fill="#87120C" />
-      </g>
-
-      {/* ── Runtime terminal panel ── */}
-      <g fontFamily="'Moderat Mono', ui-monospace, SFMono-Regular, Menlo, monospace">
-        <rect x="14" y="336" width="380" height="196" fill="#DC150B" fillOpacity="0.22" />
-        <rect
-          x="0"
-          y="322"
-          width="380"
-          height="196"
-          fill="#000000"
-          stroke="#FFFFFF"
-          strokeOpacity="0.18"
-        />
-
-        {/* Topline */}
-        <text x="22" y="350" fill="#CBD1D7" fontSize="11" fontWeight="700" letterSpacing="0.5">
-          {copy.topline}
-        </text>
-        <circle cx="316" cy="346" r="4" fill="#DC150B" />
-        <text x="326" y="350" fill="#F35048" fontSize="11" fontWeight="700">
-          {copy.live}
-        </text>
-        <line x1="22" y1="364" x2="358" y2="364" stroke="#FFFFFF" strokeOpacity="0.16" />
-
-        {/* Signal rows */}
-        <text x="22" y="388" fill="#B9C2CA" fontSize="11">
-          {copy.transactions}
-        </text>
-        <text x="358" y="388" fill="#FFFFFF" fontSize="11" fontWeight="700" textAnchor="end">
-          35K QPS
-        </text>
-        <text x="22" y="410" fill="#B9C2CA" fontSize="11">
-          {copy.agentState}
-        </text>
-        <text x="358" y="410" fill="#FFFFFF" fontSize="11" fontWeight="700" textAnchor="end">
-          ACID
-        </text>
-        <text x="22" y="432" fill="#B9C2CA" fontSize="11">
-          {copy.vectorSql}
-        </text>
-        <text x="358" y="432" fill="#FFFFFF" fontSize="11" fontWeight="700" textAnchor="end">
-          {copy.oneQuery}
-        </text>
-        <line x1="22" y1="448" x2="358" y2="448" stroke="#FFFFFF" strokeOpacity="0.16" />
-
-        {/* SQL snippet (code stays in English — SQL keywords aren't translated) */}
-        <text x="22" y="470" fill="#E5E8EB" fontSize="10.5">
-          SELECT app_state, embedding
-        </text>
-        <text x="22" y="486" fill="#E5E8EB" fontSize="10.5">
-          FROM live_workloads
-        </text>
-        <text x="22" y="502" fill="#E5E8EB" fontSize="10.5">
-          WHERE region IN (&apos;BR&apos;, &apos;MX&apos;, &apos;CL&apos;)
-        </text>
-        <text x="22" y="518" fill="#E5E8EB" fontSize="10.5">
-          ORDER BY relevance DESC;
-        </text>
-      </g>
-    </svg>
+      <source src="/videos/latam-network.mp4" type="video/mp4" />
+    </video>
   )
 }
 
@@ -411,11 +229,11 @@ const modernizationSecondaryHrefs = [
 const partnerPlaceholders = ['Multi-Cloud', 'Regional SI', 'Service Partner', 'Security ISV']
 
 const whyTidbMeta = [
-  { index: '01', illustration: <CostIllustration /> },
-  { index: '02', illustration: <MultiCloudIllustration /> },
-  { index: '03', illustration: <ModernizationIllustration /> },
-  { index: '04', illustration: <SecurityIllustration /> },
-  { index: '05', illustration: <AiConnectedIllustration /> },
+  { index: '01', illustration: <CardVideo src="/videos/triple-bar-growth.mp4" /> },
+  { index: '02', illustration: <CardVideo src="/videos/deploy-scale.mp4" /> },
+  { index: '03', illustration: <CardVideo src="/videos/compatible-line.mp4" /> },
+  { index: '04', illustration: <CardVideo src="/videos/enterprise-security.mp4" /> },
+  { index: '05', illustration: <CardVideo src="/videos/target-pulse.mp4" /> },
 ]
 
 const customerLogos = [
@@ -518,7 +336,6 @@ export function LatamPageClient() {
   return (
     <>
       <LanguageSwitcher locale={locale} onChange={setLocale} />
-      <Header />
       <main className="pt-[98px] lg:pt-[116px]">
         {/* ── 1. Hero ── */}
         <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>
@@ -530,12 +347,14 @@ export function LatamPageClient() {
             primaryCta={{
               text: t.hero.primaryCta,
               href: 'https://tidbcloud.com/free-trial/',
+              openInNewTab: false,
             }}
             secondaryCta={{
               text: t.hero.secondaryCta,
               href: 'https://www.pingcap.com/contact-us/',
+              openInNewTab: false,
             }}
-            rightSlot={<HeroVisual copy={t.heroVisual} />}
+            rightSlot={<HeroNetworkVideo />}
           />
         </SectionWrapper>
 
@@ -572,7 +391,7 @@ export function LatamPageClient() {
             viewMore={{
               text: t.architecture.viewMoreText,
               href: 'https://www.pingcap.com/ai/',
-              openInNewTab: true,
+              openInNewTab: false,
             }}
           />
         </SectionWrapper>
@@ -630,7 +449,7 @@ export function LatamPageClient() {
                 </div>
 
                 <div className="border-t border-carbon-200 px-6 lg:px-8 py-5">
-                  <SecondaryButton href={card.href} dark={false}>
+                  <SecondaryButton href={card.href} dark={false} openInNewTab={false}>
                     {card.ctaText}
                   </SecondaryButton>
                 </div>
@@ -653,7 +472,12 @@ export function LatamPageClient() {
               {/* Link stack */}
               <div className="mt-8 flex flex-col items-start gap-4">
                 {t.modernization.secondaryLinks.map((text, i) => (
-                  <SecondaryButton href={modernizationSecondaryHrefs[i]} dark={false} key={text}>
+                  <SecondaryButton
+                    href={modernizationSecondaryHrefs[i]}
+                    dark={false}
+                    openInNewTab={false}
+                    key={text}
+                  >
                     {text}
                   </SecondaryButton>
                 ))}
@@ -698,7 +522,11 @@ export function LatamPageClient() {
                 ))}
               </ul>
               <div className="mt-10">
-                <SecondaryButton href="https://www.pingcap.com/partners/" dark={true} openInNewTab>
+                <SecondaryButton
+                  href="https://www.pingcap.com/partners/"
+                  dark={true}
+                  openInNewTab={false}
+                >
                   {t.ecosystem.viewMoreText}
                 </SecondaryButton>
               </div>
@@ -757,7 +585,7 @@ export function LatamPageClient() {
                 {t.cta.modernize.title}
               </h2>
               <div className="mt-auto pt-8">
-                <PrimaryButton href="https://www.pingcap.com/tidb-cloud/">
+                <PrimaryButton href="https://www.pingcap.com/tidb-cloud/" openInNewTab={false}>
                   {t.cta.modernize.button}
                 </PrimaryButton>
               </div>
@@ -772,7 +600,11 @@ export function LatamPageClient() {
                 {t.cta.coDesign.title}
               </h2>
               <div className="mt-auto pt-8">
-                <SecondaryButton href="https://www.pingcap.com/contact-us/" dark={true}>
+                <SecondaryButton
+                  href="https://www.pingcap.com/contact-us/"
+                  dark={true}
+                  openInNewTab={false}
+                >
                   {t.cta.coDesign.button}
                 </SecondaryButton>
               </div>
@@ -780,7 +612,6 @@ export function LatamPageClient() {
           </div>
         </SectionWrapper>
       </main>
-      <Footer />
     </>
   )
 }
