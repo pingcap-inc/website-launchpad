@@ -277,19 +277,16 @@ const architectureIcons = [
 
 const highScaleMeta = [
   {
-    index: '01',
     metric: '99.99%',
     icon: <CreditCard className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
     href: 'https://www.pingcap.com/solutions/fintech/',
   },
   {
-    index: '02',
     metric: '1M',
     icon: <ShoppingCart className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
     href: 'https://www.pingcap.com/solutions/e-commerce/',
   },
   {
-    index: '03',
     metric: '1',
     icon: <Bot className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
     href: 'https://www.pingcap.com/ai/',
@@ -317,11 +314,11 @@ const ecosystemIcons = [
 ]
 
 const whyTidbMeta = [
-  { index: '01', illustration: <CardVideo src="/videos/triple-bar-growth.mp4" /> },
-  { index: '02', illustration: <CardVideo src="/videos/deploy-scale.mp4" /> },
-  { index: '03', illustration: <CardVideo src="/videos/compatible-line.mp4" /> },
-  { index: '04', illustration: <CardVideo src="/videos/enterprise-security.mp4" /> },
-  { index: '05', illustration: <CardVideo src="/videos/target-pulse.mp4" /> },
+  { illustration: <CardVideo src="/videos/triple-bar-growth.mp4" /> },
+  { illustration: <CardVideo src="/videos/deploy-scale.mp4" /> },
+  { illustration: <CardVideo src="/videos/compatible-line.mp4" /> },
+  { illustration: <CardVideo src="/videos/enterprise-security.mp4" /> },
+  { illustration: <CardVideo src="/videos/target-pulse.mp4" /> },
 ]
 
 const customerLogos = [
@@ -501,19 +498,14 @@ export function LatamPageClient() {
                 <div className="h-1 bg-gradient-to-r from-brand-red-primary via-brand-blue-medium to-brand-teal-medium" />
 
                 <div className="flex flex-col gap-6 p-6 lg:p-8 flex-1">
-                  {/* Index + metric */}
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="font-mono text-eyebrow text-brand-red-primary">
-                      {card.index}
-                    </span>
-                    <div className="text-right">
-                      <p className="text-h3-lg font-bold text-text-primary leading-none">
-                        {card.metric}
-                      </p>
-                      <p className="font-mono text-label uppercase text-carbon-500 mt-1 whitespace-pre-line leading-tight">
-                        {card.metricCaption}
-                      </p>
-                    </div>
+                  {/* Metric */}
+                  <div className="text-right">
+                    <p className="text-h3-lg font-bold text-text-primary leading-none">
+                      {card.metric}
+                    </p>
+                    <p className="font-mono text-label uppercase text-carbon-500 mt-1 whitespace-pre-line leading-tight">
+                      {card.metricCaption}
+                    </p>
                   </div>
 
                   {/* Icon + title */}
@@ -656,7 +648,6 @@ export function LatamPageClient() {
                 key={card.title}
                 className="flex flex-col gap-5 border border-carbon-200 bg-white p-6"
               >
-                <span className="font-mono text-eyebrow text-brand-red-primary">{card.index}</span>
                 {card.illustration}
                 <h3 className="text-h3-sm font-bold text-text-primary leading-snug">
                   {card.title}

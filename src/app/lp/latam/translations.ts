@@ -88,7 +88,7 @@ export const translations: Record<Locale, LatamCopy> = {
       trustedBy: 'Trusted by teams building the future',
     },
     architecture: {
-      eyebrow: '01 / Architecture',
+      eyebrow: 'Architecture',
       title: 'Digital-Native and AI-First Architectures',
       subtitle:
         'A unified operational layer for real-time applications and AI agents that need live data, semantic retrieval, and reliable state.',
@@ -112,7 +112,7 @@ export const translations: Record<Locale, LatamCopy> = {
       viewMoreText: 'Learn more about TiDB as an AI database with built-in vector search',
     },
     highScale: {
-      eyebrow: '02 / SCALE',
+      eyebrow: 'SCALE',
       title: 'High-Scale Operations',
       subtitle:
         'Keep critical operational journeys responsive across fintech, ecommerce, and AI-native workloads as demand expands across clouds and regions.',
@@ -147,7 +147,7 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     modernization: {
-      eyebrow: '03 / Modernization',
+      eyebrow: 'Modernization',
       title: 'Database Modernization with TiDB',
       subtitle:
         'Move from single-node stacks to a MySQL-compatible distributed SQL path with guided migration tooling.',
@@ -180,7 +180,7 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     ecosystem: {
-      eyebrow: '04 / Ecosystem',
+      eyebrow: 'Ecosystem',
       title: 'Grounded Partner Ecosystem',
       paragraphs: [
         'Run TiDB Cloud on AWS, Google Cloud and Alibaba Cloud.',
@@ -212,7 +212,7 @@ export const translations: Record<Locale, LatamCopy> = {
       viewMoreText: 'Explore the PingCAP Partner Ecosystem',
     },
     whyTidb: {
-      eyebrow: '05 / WHY TIDB',
+      eyebrow: 'WHY TIDB',
       title: 'Why Teams in Latin America Choose TiDB',
       subtitle:
         'Practical reasons to consolidate, scale, and build AI-connected applications on one distributed SQL platform.',
@@ -272,7 +272,7 @@ export const translations: Record<Locale, LatamCopy> = {
       trustedBy: 'La confianza de equipos que construyen el futuro',
     },
     architecture: {
-      eyebrow: '01 / Arquitectura',
+      eyebrow: 'Arquitectura',
       title: 'Arquitecturas Nativas Digitales y con IA Primero',
       subtitle:
         'Una capa operativa unificada para aplicaciones en tiempo real y agentes de IA que necesitan datos en vivo, recuperación semántica y un estado confiable.',
@@ -297,7 +297,7 @@ export const translations: Record<Locale, LatamCopy> = {
         'Descubre más sobre TiDB como base de datos de IA con búsqueda vectorial integrada',
     },
     highScale: {
-      eyebrow: '02 / ESCALA',
+      eyebrow: 'ESCALA',
       title: 'Operaciones de Alta Escala',
       subtitle:
         'Mantén los flujos operativos críticos con buen rendimiento en fintech, comercio electrónico y cargas de trabajo nativas de IA, a medida que la demanda crece en nubes y regiones.',
@@ -332,7 +332,7 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     modernization: {
-      eyebrow: '03 / Modernización',
+      eyebrow: 'Modernización',
       title: 'Modernización de Bases de Datos con TiDB',
       subtitle:
         'Pasa de arquitecturas de un solo nodo a una ruta SQL distribuida compatible con MySQL, con herramientas de migración guiada.',
@@ -365,7 +365,7 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     ecosystem: {
-      eyebrow: '04 / Ecosistema',
+      eyebrow: 'Ecosistema',
       title: 'Ecosistema de Socios con Presencia Local',
       paragraphs: [
         'Ejecuta TiDB Cloud en AWS, Google Cloud y Alibaba Cloud.',
@@ -397,7 +397,7 @@ export const translations: Record<Locale, LatamCopy> = {
       viewMoreText: 'Descubre el ecosistema de socios de PingCAP',
     },
     whyTidb: {
-      eyebrow: '05 / POR QUÉ TIDB',
+      eyebrow: 'POR QUÉ TIDB',
       title: 'Por Qué los Equipos en América Latina Eligen TiDB',
       subtitle:
         'Razones prácticas para consolidar, escalar y construir aplicaciones conectadas a IA sobre una sola plataforma SQL distribuida.',
@@ -457,7 +457,7 @@ export const translations: Record<Locale, LatamCopy> = {
       trustedBy: 'A confiança de equipes que constroem o futuro',
     },
     architecture: {
-      eyebrow: '01 / Arquitetura',
+      eyebrow: 'Arquitetura',
       title: 'Arquiteturas Nativas Digitais e Focadas em IA',
       subtitle:
         'Uma camada operacional unificada para aplicações em tempo real e agentes de IA que precisam de dados em tempo real, recuperação semântica e estado confiável.',
@@ -482,7 +482,7 @@ export const translations: Record<Locale, LatamCopy> = {
         'Saiba mais sobre o TiDB como banco de dados de IA com busca vetorial integrada',
     },
     highScale: {
-      eyebrow: '02 / ESCALA',
+      eyebrow: 'ESCALA',
       title: 'Operações de Alta Escala',
       subtitle:
         'Mantenha os fluxos operacionais críticos responsivos em fintech, e-commerce e cargas de trabalho nativas de IA, à medida que a demanda cresce em nuvens e regiões.',
@@ -517,7 +517,7 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     modernization: {
-      eyebrow: '03 / Modernização',
+      eyebrow: 'Modernização',
       title: 'Modernização de Banco de Dados com o TiDB',
       subtitle:
         'Migre de estruturas de nó único para um caminho SQL distribuído compatível com MySQL, com ferramentas de migração guiada.',
@@ -550,7 +550,7 @@ export const translations: Record<Locale, LatamCopy> = {
       ],
     },
     ecosystem: {
-      eyebrow: '04 / Ecossistema',
+      eyebrow: 'Ecossistema',
       title: 'Ecossistema de Parceiros com Presença Local',
       paragraphs: [
         'Execute o TiDB Cloud na AWS, no Google Cloud e na Alibaba Cloud.',
@@ -582,7 +582,7 @@ export const translations: Record<Locale, LatamCopy> = {
       viewMoreText: 'Conheça o ecossistema de parceiros da PingCAP',
     },
     whyTidb: {
-      eyebrow: '05 / POR QUE O TIDB',
+      eyebrow: 'POR QUE O TIDB',
       title: 'Por Que as Equipes na América Latina Escolhem o TiDB',
       subtitle:
         'Razões práticas para consolidar, escalar e construir aplicações conectadas a IA em uma única plataforma SQL distribuída.',
