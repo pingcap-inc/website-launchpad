@@ -3,7 +3,10 @@ import nextConfig from 'eslint-config-next'
 export default [
   ...nextConfig,
   {
-    ignores: ['.next/', 'node_modules/'],
+    // latam-animations-source holds Remotion sources for the LATAM page videos.
+    // Remotion is not a dependency of this app (the clips are pre-rendered to
+    // public/videos), so these files are excluded from tsc and eslint.
+    ignores: ['.next/', 'node_modules/', 'latam-animations-source/'],
   },
   {
     // Disable overly strict react-hooks v5 rules that produce false positives
