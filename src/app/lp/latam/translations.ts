@@ -58,6 +58,7 @@ export interface LatamCopy {
     eyebrow: string
     title: string
     paragraphs: string[]
+    partners: FeatureText[]
     viewMoreText: string
   }
   whyTidb: {
@@ -182,9 +183,31 @@ export const translations: Record<Locale, LatamCopy> = {
       eyebrow: '04 / Ecosystem',
       title: 'Grounded Partner Ecosystem',
       paragraphs: [
-        'Run TiDB Cloud on AWS, Google Cloud and Alibaba Cloud using infrastructure your teams already trust.',
-        'Work with regional implementation partners who understand local regulations, performance expectations, and enterprise deployment requirements across Latin America.',
-        'Integrate TiDB with your existing security, observability, and data ecosystem instead of rebuilding your technology stack.',
+        'Run TiDB Cloud on AWS, Google Cloud and Alibaba Cloud.',
+        'Work with regional partners who understand local regulations.',
+        'Integrate with your existing stack instead of rebuilding it.',
+      ],
+      partners: [
+        {
+          title: 'Multi-Cloud',
+          description:
+            'Deploy on AWS, Google Cloud, and Alibaba Cloud using infrastructure your teams already run.',
+        },
+        {
+          title: 'Regional SI',
+          description:
+            'Implementation partners who understand local regulations and enterprise delivery across Latin America.',
+        },
+        {
+          title: 'Service Partner',
+          description:
+            'Managed services, migration support, and regional teams to keep production workloads healthy.',
+        },
+        {
+          title: 'Security ISV',
+          description:
+            'Connect TiDB to the security and data tooling already approved inside your organization.',
+        },
       ],
       viewMoreText: 'Explore the PingCAP Partner Ecosystem',
     },
@@ -286,7 +309,7 @@ export const translations: Record<Locale, LatamCopy> = {
             'Entrega saldos en tiempo real, autorizaciones y actualizaciones de libro mayor con fuerte consistencia y alta disponibilidad.',
             'Mantén los flujos de pago y actualización de estado siempre activos y con buen rendimiento bajo alta concurrencia, sin sharding manual.',
           ],
-          ctaText: 'Descubre TiDB para Fintech →',
+          ctaText: 'Descubre TiDB para Fintech',
         },
         {
           metricCaption: 'QPS',
@@ -295,7 +318,7 @@ export const translations: Record<Locale, LatamCopy> = {
             'Gestiona pedidos, sesiones, inventario y eventos de alta demanda desde un solo clúster SQL distribuido.',
             'Absorbe picos estacionales y crecimiento impredecible de la carga de trabajo manteniendo rápidos los recorridos críticos del usuario.',
           ],
-          ctaText: 'Descubre TiDB para eCommerce →',
+          ctaText: 'Descubre TiDB para eCommerce',
         },
         {
           metricCaption: 'Capa de datos unificada',
@@ -304,7 +327,7 @@ export const translations: Record<Locale, LatamCopy> = {
             'Unifica el estado de la aplicación en vivo, la memoria de los agentes, los datos relacionales y los embeddings vectoriales en una sola base de datos.',
             'Permite que los agentes de IA lean y escriban el estado operativo mientras realizan búsquedas semánticas sobre conocimiento y eventos.',
           ],
-          ctaText: 'Descubre TiDB para IA →',
+          ctaText: 'Descubre TiDB para IA',
         },
       ],
     },
@@ -345,9 +368,31 @@ export const translations: Record<Locale, LatamCopy> = {
       eyebrow: '04 / Ecosistema',
       title: 'Ecosistema de Socios con Presencia Local',
       paragraphs: [
-        'Ejecuta TiDB Cloud en AWS, Google Cloud y Alibaba Cloud usando la infraestructura en la que tus equipos ya confían.',
-        'Trabaja con socios de implementación regionales que comprenden las regulaciones locales, las expectativas de rendimiento y los requisitos de implementación empresarial en toda América Latina.',
-        'Integra TiDB con tu ecosistema existente de seguridad, observabilidad y datos, en lugar de reconstruir tu stack tecnológico.',
+        'Ejecuta TiDB Cloud en AWS, Google Cloud y Alibaba Cloud.',
+        'Trabaja con socios regionales que comprenden las regulaciones locales.',
+        'Integra TiDB con tu stack existente, sin reconstruirlo.',
+      ],
+      partners: [
+        {
+          title: 'Multinube',
+          description:
+            'Despliega en AWS, Google Cloud y Alibaba Cloud usando la infraestructura que tus equipos ya operan.',
+        },
+        {
+          title: 'Integradores Regionales',
+          description:
+            'Socios de implementación que comprenden las regulaciones locales y la entrega empresarial en América Latina.',
+        },
+        {
+          title: 'Socios de Servicio',
+          description:
+            'Servicios administrados, soporte de migración y equipos regionales para mantener sanas tus cargas productivas.',
+        },
+        {
+          title: 'ISV de Seguridad',
+          description:
+            'Conecta TiDB con las herramientas de seguridad y datos ya aprobadas dentro de tu organización.',
+        },
       ],
       viewMoreText: 'Descubre el ecosistema de socios de PingCAP',
     },
@@ -449,7 +494,7 @@ export const translations: Record<Locale, LatamCopy> = {
             'Entregue saldos em tempo real, autorizações e atualizações de razão contábil com forte consistência e alta disponibilidade.',
             'Mantenha os fluxos de pagamento e atualização de estado sempre ativos e responsivos sob alta concorrência, sem sharding manual.',
           ],
-          ctaText: 'Conheça o TiDB para Fintech →',
+          ctaText: 'Conheça o TiDB para Fintech',
         },
         {
           metricCaption: 'QPS',
@@ -458,7 +503,7 @@ export const translations: Record<Locale, LatamCopy> = {
             'Gerencie pedidos, sessões, estoque e eventos de pico a partir de um único cluster SQL distribuído.',
             'Absorva picos sazonais e crescimento imprevisível da carga de trabalho mantendo rápidas as jornadas críticas do usuário.',
           ],
-          ctaText: 'Conheça o TiDB para eCommerce →',
+          ctaText: 'Conheça o TiDB para eCommerce',
         },
         {
           metricCaption: 'Camada de dados unificada',
@@ -467,7 +512,7 @@ export const translations: Record<Locale, LatamCopy> = {
             'Unifique o estado da aplicação em tempo real, a memória dos agentes, os dados relacionais e os embeddings vetoriais em um único banco de dados.',
             'Permita que agentes de IA leiam e gravem o estado operacional enquanto realizam buscas semânticas sobre conhecimento e eventos.',
           ],
-          ctaText: 'Conheça o TiDB para IA →',
+          ctaText: 'Conheça o TiDB para IA',
         },
       ],
     },
@@ -508,9 +553,31 @@ export const translations: Record<Locale, LatamCopy> = {
       eyebrow: '04 / Ecossistema',
       title: 'Ecossistema de Parceiros com Presença Local',
       paragraphs: [
-        'Execute o TiDB Cloud na AWS, no Google Cloud e na Alibaba Cloud usando a infraestrutura em que suas equipes já confiam.',
-        'Trabalhe com parceiros de implementação regionais que entendem as regulamentações locais, as expectativas de desempenho e os requisitos de implantação empresarial em toda a América Latina.',
-        'Integre o TiDB ao seu ecossistema existente de segurança, observabilidade e dados, em vez de reconstruir sua pilha tecnológica.',
+        'Execute o TiDB Cloud na AWS, no Google Cloud e na Alibaba Cloud.',
+        'Trabalhe com parceiros regionais que entendem as regulamentações locais.',
+        'Integre o TiDB à sua pilha existente, sem reconstruí-la.',
+      ],
+      partners: [
+        {
+          title: 'Multinuvem',
+          description:
+            'Implante na AWS, no Google Cloud e na Alibaba Cloud usando a infraestrutura que suas equipes já operam.',
+        },
+        {
+          title: 'Integradores Regionais',
+          description:
+            'Parceiros de implementação que entendem as regulamentações locais e a entrega empresarial na América Latina.',
+        },
+        {
+          title: 'Parceiros de Serviço',
+          description:
+            'Serviços gerenciados, suporte à migração e equipes regionais para manter suas cargas de produção saudáveis.',
+        },
+        {
+          title: 'ISV de Segurança',
+          description:
+            'Conecte o TiDB às ferramentas de segurança e dados já aprovadas dentro da sua organização.',
+        },
       ],
       viewMoreText: 'Conheça o ecossistema de parceiros da PingCAP',
     },

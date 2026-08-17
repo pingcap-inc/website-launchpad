@@ -317,6 +317,109 @@
   background-clip: text;
 }
 
+/* ─── LATAM hero looping sequence ───────────────────────────────────────── */
+/* Beam shoots in from the left → rays extend → badges pop → hold → fade out */
+/* → repeat. Every element shares the same 5s cycle so the pieces stay in    */
+/* lockstep; per-element stagger comes from animation-delay at the call site */
+/* (a delay shifts phase but keeps the period, so stagger survives looping). */
+
+@keyframes beam-loop {
+  0%,
+  2% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 1;
+  }
+  16% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  88% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  96%,
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+}
+
+@keyframes ray-loop {
+  0%,
+  17% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  30% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  88% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  96%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes badge-loop {
+  0%,
+  26% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  36% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  88% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  96%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes fade-loop {
+  0%,
+  28% {
+    opacity: 0;
+  }
+  38% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  96%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-beam-loop {
+  animation: beam-loop 5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.animate-ray-loop {
+  stroke-dasharray: 1;
+  animation: ray-loop 5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.animate-badge-loop {
+  animation: badge-loop 5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+
+.animate-fade-loop {
+  animation: fade-loop 5s ease-out infinite;
+}
+
 .text-gradient-red {
   background: linear-gradient(
     90deg,
@@ -724,5 +827,15 @@
   }
   .animate-glow-sweep {
     animation: none;
+  }
+  /* LATAM hero: skip the looping sequence, render the final state directly */
+  .animate-beam-loop,
+  .animate-ray-loop,
+  .animate-badge-loop,
+  .animate-fade-loop {
+    animation: none;
+  }
+  .animate-ray-loop {
+    stroke-dashoffset: 0;
   }
 }

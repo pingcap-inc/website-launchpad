@@ -7,11 +7,19 @@ import {
   Sparkles,
   Shield,
   Bot,
-  Brain,
+  CreditCard,
+  ShoppingCart,
   Database,
   RefreshCw,
   Layers,
   GitMerge,
+  BarChart3,
+  Zap,
+  Globe,
+  Cloud,
+  Building2,
+  LifeBuoy,
+  ShieldCheck,
 } from 'lucide-react'
 import {
   HeroSection,
@@ -23,143 +31,6 @@ import {
 } from '@/components'
 import { type Locale, locales, translations } from './translations'
 
-// ─── Card illustrations (wireframe mini-dashboards) ─────────────────────────────
-
-function IllustrationChrome({ id }: { id: string }) {
-  return (
-    <>
-      <defs>
-        <pattern id={id} width="22" height="22" patternUnits="userSpaceOnUse">
-          <path d="M22 0H0V22" fill="none" stroke="#E5E8EB" strokeWidth="1" />
-        </pattern>
-      </defs>
-      <rect x="0.5" y="0.5" width="339" height="149" fill="#F8FAFB" stroke="#E5E8EB" />
-      <rect x="0.5" y="0.5" width="339" height="149" fill={`url(#${id})`} />
-    </>
-  )
-}
-
-const currencyCoins = [
-  { symbol: '$', cx: 70, color: '#DC150B' },
-  { symbol: '€', cx: 170, color: '#1AA8A8' },
-  { symbol: '₿', cx: 270, color: '#E99100' },
-]
-
-function FintechIllustration() {
-  return (
-    <svg viewBox="0 0 340 150" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      <IllustrationChrome id="illo-fin" />
-
-      {currencyCoins.map((coin) => (
-        <g key={coin.symbol}>
-          <ellipse cx={coin.cx} cy="120" rx="26" ry="6" fill="#111111" fillOpacity="0.08" />
-          <circle cx={coin.cx} cy="82" r="32" fill="#FFFFFF" stroke="#CBD1D7" strokeWidth="1.5" />
-          <text
-            x={coin.cx}
-            y="94"
-            fontSize="32"
-            fontWeight="800"
-            fill={coin.color}
-            textAnchor="middle"
-            fontFamily="ui-sans-serif, system-ui, sans-serif"
-          >
-            {coin.symbol}
-          </text>
-        </g>
-      ))}
-    </svg>
-  )
-}
-
-function EcommIllustration() {
-  return (
-    <svg viewBox="0 0 340 150" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      <IllustrationChrome id="illo-ecom" />
-
-      {/* Storefront */}
-      <g transform="translate(30,50)">
-        <rect x="0" y="0" width="90" height="14" fill="#DC150B" />
-        <rect x="0" y="0" width="16" height="14" fill="#FFFFFF" />
-        <rect x="32" y="0" width="16" height="14" fill="#FFFFFF" />
-        <rect x="64" y="0" width="16" height="14" fill="#FFFFFF" />
-        <rect x="6" y="14" width="78" height="56" fill="#FFFFFF" stroke="#2C80CE" strokeWidth="2" />
-        <rect
-          x="12"
-          y="26"
-          width="16"
-          height="16"
-          fill="#509DEA"
-          fillOpacity="0.22"
-          stroke="#2C80CE"
-        />
-        <rect
-          x="62"
-          y="26"
-          width="16"
-          height="16"
-          fill="#509DEA"
-          fillOpacity="0.22"
-          stroke="#2C80CE"
-        />
-        <rect
-          x="33"
-          y="38"
-          width="24"
-          height="32"
-          fill="#FFFFFF"
-          stroke="#2C80CE"
-          strokeWidth="2"
-        />
-      </g>
-
-      {/* Payment cards */}
-      <g>
-        <rect
-          x="228"
-          y="55"
-          width="74"
-          height="48"
-          rx="6"
-          fill="#FFFFFF"
-          stroke="#CBD1D7"
-          strokeWidth="1.5"
-        />
-        <rect
-          x="220"
-          y="45"
-          width="74"
-          height="48"
-          rx="6"
-          fill="#FFFFFF"
-          stroke="#2C80CE"
-          strokeWidth="2"
-        />
-        <rect x="220" y="59" width="74" height="10" fill="#DC150B" />
-      </g>
-    </svg>
-  )
-}
-
-const aiNativeIcons = [
-  { Icon: Bot, cx: 130, color: '#2C80CE' },
-  { Icon: Brain, cx: 230, color: '#DC150B' },
-]
-
-function AiNativeIllustration() {
-  return (
-    <svg viewBox="0 0 340 150" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-      <IllustrationChrome id="illo-ai" />
-      {aiNativeIcons.map(({ Icon, cx, color }) => (
-        <g key={cx}>
-          <ellipse cx={cx} cy="118" rx="28" ry="6" fill="#111111" fillOpacity="0.08" />
-          <circle cx={cx} cy="80" r="34" fill="#FFFFFF" stroke="#CBD1D7" strokeWidth="1.5" />
-          <Icon x={cx - 18} y={62} width={36} height={36} color={color} strokeWidth={1.6} />
-        </g>
-      ))}
-    </svg>
-  )
-}
-
 function CardVideo({ src }: { src: string }) {
   return (
     <video autoPlay loop muted playsInline className="w-full h-auto border border-carbon-200">
@@ -168,19 +39,231 @@ function CardVideo({ src }: { src: string }) {
   )
 }
 
-// ─── Hero visual (animated LATAM network loop) ───────────────────────────────
+// ─── Hero visual (LATAM map + light beam + rainbow data rays) ────────────────
 
-function HeroNetworkVideo() {
+// Ray/badge endpoints in the 600x450 composition space (see viewBox below).
+const rayOrigin = { x: 330, y: 225 }
+const rayNodes = [
+  {
+    icon: BarChart3,
+    x: 575,
+    y: 55,
+    ringClass: 'border-brand-blue-medium text-brand-blue-medium',
+    bgClass: 'bg-brand-blue-bg',
+    glow: '0 0 26px rgba(80,157,234,0.5)',
+  },
+  {
+    icon: Database,
+    x: 600,
+    y: 172,
+    ringClass: 'border-brand-teal-medium text-brand-teal-medium',
+    bgClass: 'bg-brand-teal-bg',
+    glow: '0 0 26px rgba(80,219,217,0.5)',
+  },
+  {
+    icon: Zap,
+    x: 600,
+    y: 292,
+    ringClass: 'border-brand-mango text-brand-mango',
+    bgClass: 'bg-brand-mango-800',
+    glow: '0 0 26px rgba(225,161,65,0.5)',
+  },
+  {
+    icon: Globe,
+    x: 565,
+    y: 405,
+    ringClass: 'border-brand-violet-medium text-brand-violet-medium',
+    bgClass: 'bg-brand-violet-bg',
+    glow: '0 0 26px rgba(199,111,242,0.5)',
+  },
+]
+
+// Gradient stop colors mirror the brand tokens in tailwind.config.ts —
+// SVG <stop>/<feGaussianBlur> can't reference Tailwind classes, only raw values.
+const rayGradients = [
+  { id: 'ray-blue', color: '#509DEA' },
+  { id: 'ray-teal', color: '#50DBD9' },
+  { id: 'ray-mango', color: '#E1A141' },
+  { id: 'ray-violet', color: '#C76FF2' },
+]
+
+function BinaryRain() {
+  const columns = 20
+  const rows = 16
   return (
-    <video
-      autoPlay
-      loop
-      muted
-      playsInline
-      className="w-full h-auto max-w-[560px] mx-auto border border-white/10"
-    >
-      <source src="/videos/latam-network.mp4" type="video/mp4" />
-    </video>
+    <div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden opacity-[0.12]">
+      <div
+        className="grid h-full w-full"
+        style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+      >
+        {Array.from({ length: columns }).map((_, col) => (
+          <div
+            key={col}
+            className="flex flex-col items-center justify-between font-mono text-[10px] leading-none text-brand-red-light"
+          >
+            {Array.from({ length: rows }).map((_, row) => (
+              <span key={row}>{(col * 13 + row * 7) % 5 === 0 ? '1' : '0'}</span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// The looping sequence's phases live in the keyframes (see globals.css);
+// these are per-element stagger offsets within that shared 5s cycle.
+const RAY_STAGGER = 90
+const BADGE_STAGGER = 120
+
+function HeroVisual() {
+  return (
+    <div className="relative w-full max-w-[600px] mx-auto aspect-[4/3]">
+      {/* Background digital-rain texture */}
+      <BinaryRain />
+
+      {/* White light beam — horizontal, sits behind the map and stops at the
+          ray origin so it never reads as crossing the landmass. */}
+      <div
+        aria-hidden="true"
+        className="animate-beam-loop absolute left-0 top-1/2 z-0 h-16 -translate-y-1/2 bg-white/20 blur-2xl"
+        style={{ width: `${(rayOrigin.x / 600) * 100}%` }}
+      />
+      <div
+        aria-hidden="true"
+        className="animate-beam-loop absolute left-0 top-1/2 z-0 h-1 -translate-y-1/2 blur-[1px]"
+        style={{
+          width: `${(rayOrigin.x / 600) * 100}%`,
+          // Short fade-in at the far left, then full white the rest of the way —
+          // the stretch left of the map is what's actually visible.
+          background:
+            'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 100%)',
+        }}
+      />
+
+      {/* Hotspot glow where the rays emanate from the map's edge */}
+      <div
+        aria-hidden="true"
+        className="animate-fade-loop absolute z-[5] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/30 blur-3xl"
+        style={{
+          left: `${(rayOrigin.x / 600) * 100}%`,
+          top: `${(rayOrigin.y / 450) * 100}%`,
+        }}
+      />
+
+      {/* Map */}
+      <div className="absolute inset-y-0 left-0 flex w-[58%] items-center justify-center">
+        <Image
+          src="/images/latam-map-red.svg"
+          alt="Map of Latin America"
+          width={620}
+          height={708}
+          className="relative z-10 h-auto max-h-full w-full object-contain drop-shadow-[0_0_30px_rgba(220,21,11,0.35)]"
+          priority
+        />
+      </div>
+
+      {/* Rainbow data rays */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 600 450"
+        preserveAspectRatio="none"
+        className="absolute inset-0 z-10 h-full w-full overflow-visible"
+        style={{ mixBlendMode: 'screen' }}
+      >
+        <defs>
+          {rayGradients.map(({ id, color }) => (
+            <linearGradient
+              key={id}
+              id={id}
+              x1={rayOrigin.x}
+              y1={rayOrigin.y}
+              x2="620"
+              y2={rayOrigin.y}
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+              <stop offset="14%" stopColor="#FFFFFF" stopOpacity="0.95" />
+              <stop offset="48%" stopColor={color} stopOpacity="0.85" />
+              <stop offset="100%" stopColor={color} stopOpacity="0.95" />
+            </linearGradient>
+          ))}
+          <filter id="beam-blur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="7" />
+          </filter>
+        </defs>
+        {/* soft glow layer */}
+        <g filter="url(#beam-blur)">
+          {rayNodes.map((node, i) => (
+            <line
+              key={`glow-${rayGradients[i].id}`}
+              className="animate-ray-loop"
+              pathLength={1}
+              x1={rayOrigin.x}
+              y1={rayOrigin.y}
+              x2={node.x}
+              y2={node.y}
+              stroke={`url(#${rayGradients[i].id})`}
+              strokeWidth="18"
+              strokeLinecap="round"
+              style={{ animationDelay: `${i * RAY_STAGGER}ms` }}
+            />
+          ))}
+        </g>
+        {/* crisp core layer */}
+        {rayNodes.map((node, i) => (
+          <line
+            key={`core-${rayGradients[i].id}`}
+            className="animate-ray-loop"
+            pathLength={1}
+            x1={rayOrigin.x}
+            y1={rayOrigin.y}
+            x2={node.x}
+            y2={node.y}
+            stroke={`url(#${rayGradients[i].id})`}
+            strokeWidth="3"
+            strokeLinecap="round"
+            style={{ animationDelay: `${i * RAY_STAGGER}ms` }}
+          />
+        ))}
+      </svg>
+
+      {/* Icon badges at ray endpoints */}
+      {rayNodes.map(({ icon: Icon, x, y, ringClass, bgClass, glow }, i) => (
+        <div
+          key={rayGradients[i].id}
+          className={`animate-badge-loop absolute z-20 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 backdrop-blur-sm md:h-16 md:w-16 ${ringClass} ${bgClass}`}
+          style={{
+            left: `${(x / 600) * 100}%`,
+            top: `${(y / 450) * 100}%`,
+            boxShadow: glow,
+            animationDelay: `${i * BADGE_STAGGER}ms`,
+          }}
+        >
+          <Icon className="h-6 w-6 md:h-7 md:w-7" strokeWidth={1.5} />
+        </div>
+      ))}
+
+      {/* Sparkle accents */}
+      <Sparkles
+        className="animate-fade-loop absolute z-20 h-6 w-6 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+        strokeWidth={1.5}
+        style={{
+          left: `${(500 / 600) * 100}%`,
+          top: `${(8 / 450) * 100}%`,
+          animationDelay: `${4 * BADGE_STAGGER}ms`,
+        }}
+      />
+      <Sparkles
+        className="animate-fade-loop absolute z-20 h-4 w-4 text-white/70 drop-shadow-[0_0_6px_rgba(255,255,255,0.7)]"
+        strokeWidth={1.5}
+        style={{
+          left: `${(505 / 600) * 100}%`,
+          top: `${(447 / 450) * 100}%`,
+          animationDelay: `${5 * BADGE_STAGGER}ms`,
+        }}
+      />
+    </div>
   )
 }
 
@@ -196,19 +279,19 @@ const highScaleMeta = [
   {
     index: '01',
     metric: '99.99%',
-    illustration: <FintechIllustration />,
+    icon: <CreditCard className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
     href: 'https://www.pingcap.com/solutions/fintech/',
   },
   {
     index: '02',
     metric: '1M',
-    illustration: <EcommIllustration />,
+    icon: <ShoppingCart className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
     href: 'https://www.pingcap.com/solutions/e-commerce/',
   },
   {
     index: '03',
     metric: '1',
-    illustration: <AiNativeIllustration />,
+    icon: <Bot className="w-8 h-8 text-brand-red-primary" strokeWidth={1.5} />,
     href: 'https://www.pingcap.com/ai/',
   },
 ]
@@ -226,7 +309,12 @@ const modernizationSecondaryHrefs = [
   'https://www.pingcap.com/tidb/cloud/',
 ]
 
-const partnerPlaceholders = ['Multi-Cloud', 'Regional SI', 'Service Partner', 'Security ISV']
+const ecosystemIcons = [
+  <Cloud key="cloud" className="w-7 h-7 text-text-inverse" strokeWidth={1.5} />,
+  <Building2 key="si" className="w-7 h-7 text-text-inverse" strokeWidth={1.5} />,
+  <LifeBuoy key="service" className="w-7 h-7 text-text-inverse" strokeWidth={1.5} />,
+  <ShieldCheck key="security" className="w-7 h-7 text-text-inverse" strokeWidth={1.5} />,
+]
 
 const whyTidbMeta = [
   { index: '01', illustration: <CardVideo src="/videos/triple-bar-growth.mp4" /> },
@@ -354,7 +442,7 @@ export function LatamPageClient() {
               href: 'https://www.pingcap.com/contact-us/',
               openInNewTab: false,
             }}
-            rightSlot={<HeroNetworkVideo />}
+            rightSlot={<HeroVisual />}
           />
         </SectionWrapper>
 
@@ -428,11 +516,11 @@ export function LatamPageClient() {
                     </div>
                   </div>
 
-                  {/* Illustration */}
-                  {card.illustration}
-
-                  {/* Title */}
-                  <h3 className="text-h3-lg font-bold text-text-primary">{card.title}</h3>
+                  {/* Icon + title */}
+                  <div className="flex items-center gap-3">
+                    {card.icon}
+                    <h3 className="text-h3-lg font-bold text-text-primary">{card.title}</h3>
+                  </div>
 
                   {/* Bullets */}
                   <ul className="space-y-3">
@@ -532,15 +620,21 @@ export function LatamPageClient() {
               </div>
             </div>
 
-            {/* Right: partner-category placeholders */}
-            <div className="lg:col-span-6 grid grid-cols-2 gap-4">
-              {partnerPlaceholders.map((label) => (
-                <div
-                  key={label}
-                  className="flex items-center justify-center h-24 px-3 text-center border border-text-inverse/20 font-mono text-label uppercase text-carbon-100"
+            {/* Right: partner categories */}
+            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {t.ecosystem.partners.map((partner, i) => (
+                <article
+                  key={partner.title}
+                  className="flex flex-col gap-3 border border-text-inverse/20 bg-text-inverse/[0.04] p-6"
                 >
-                  {label}
-                </div>
+                  {ecosystemIcons[i]}
+                  <h3 className="font-mono text-label uppercase text-text-inverse">
+                    {partner.title}
+                  </h3>
+                  <p className="text-body-md text-carbon-100 leading-relaxed">
+                    {partner.description}
+                  </p>
+                </article>
               ))}
             </div>
           </div>
