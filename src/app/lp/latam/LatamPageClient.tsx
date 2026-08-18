@@ -30,6 +30,7 @@ import {
   PrimaryButton,
 } from '@/components'
 import { type Locale, locales, translations } from './translations'
+import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE } from './detect-locale'
 
 function CardVideo({ src }: { src: string }) {
   return (
@@ -393,9 +394,16 @@ function LanguageSwitcher({
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export function LatamPageClient() {
-  const [locale, setLocale] = useState<Locale>('en')
+export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Locale }) {
+  const [locale, setLocale] = useState<Locale>(initialLocale)
   const t = translations[locale]
+
+  // Remember an explicitly chosen language so auto-detection doesn't override
+  // it on the next visit. Server-side detection reads this cookie first.
+  const handleLocaleChange = (next: Locale) => {
+    setLocale(next)
+    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; samesite=lax`
+  }
 
   const architectureFeatures = t.architecture.features.map((feature, i) => ({
     icon: architectureIcons[i],
@@ -420,7 +428,7 @@ export function LatamPageClient() {
 
   return (
     <>
-      <LanguageSwitcher locale={locale} onChange={setLocale} />
+      <LanguageSwitcher locale={locale} onChange={handleLocaleChange} />
       <main className="pt-[98px] lg:pt-[116px]">
         {/* ── 1. Hero ── */}
         <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>

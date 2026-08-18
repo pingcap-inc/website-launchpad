@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
+import { cookies, headers } from 'next/headers'
 import { Header, Footer } from '@/components'
 import { LatamPageClient } from './LatamPageClient'
+import { LOCALE_COOKIE, countryFromHeaders, detectLocale } from './detect-locale'
 
 export const metadata: Metadata = {
   title: "Distributed SQL for Latin America's Digital Future | TiDB",
@@ -31,11 +33,25 @@ export const metadata: Metadata = {
   },
 }
 
-export default function LatamLandingPage() {
+export default async function LatamLandingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const [headerList, cookieStore, params] = await Promise.all([headers(), cookies(), searchParams])
+
+  const langParam = params.lang
+  const { locale } = detectLocale({
+    queryParam: Array.isArray(langParam) ? langParam[0] : langParam,
+    cookie: cookieStore.get(LOCALE_COOKIE)?.value,
+    acceptLanguage: headerList.get('accept-language'),
+    country: countryFromHeaders((name) => headerList.get(name)),
+  })
+
   return (
     <>
       <Header />
-      <LatamPageClient />
+      <LatamPageClient initialLocale={locale} />
       <Footer />
     </>
   )
