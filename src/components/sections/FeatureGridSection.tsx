@@ -17,7 +17,7 @@ interface FeaturesGridProps {
   subtitle?: string
   features: Feature[]
   columns?: 2 | 3 | 4
-  viewMore?: { text: string; href: string; openInNewTab?: boolean }
+  viewMore?: { text: string; href: string; openInNewTab?: boolean; className?: string }
   className?: string
   itemLayout?: 'horizontal' | 'vertical'
   dark?: boolean
@@ -63,7 +63,12 @@ export function FeatureGridSection({
       </div>
       {viewMore && (
         <div className="mt-12 flex justify-center">
-          <SecondaryButton href={viewMore.href} dark={dark} openInNewTab={viewMore.openInNewTab}>
+          <SecondaryButton
+            href={viewMore.href}
+            dark={dark}
+            openInNewTab={viewMore.openInNewTab}
+            className={viewMore.className}
+          >
             {viewMore.text}
           </SecondaryButton>
         </div>

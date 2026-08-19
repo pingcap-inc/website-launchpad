@@ -119,85 +119,106 @@ const BADGE_STAGGER = 120
 
 function HeroVisual() {
   return (
-    <div className="relative w-full max-w-[600px] mx-auto aspect-[4/3]">
-      {/* Background digital-rain texture */}
-      <BinaryRain />
+    // The badges sit at the right edge of the composition and are centred on it,
+    // so they'd stick out by half their width. HeroSection clips overflow, which
+    // sliced them on narrower screens — the right padding keeps them inside.
+    <div className="w-full max-w-[640px] mx-auto pr-8 md:pr-10">
+      <div className="relative w-full aspect-[4/3]">
+        {/* Background digital-rain texture */}
+        <BinaryRain />
 
-      {/* White light beam — horizontal, sits behind the map and stops at the
+        {/* White light beam — horizontal, sits behind the map and stops at the
           ray origin so it never reads as crossing the landmass. */}
-      <div
-        aria-hidden="true"
-        className="animate-beam-loop absolute left-0 top-1/2 z-0 h-16 -translate-y-1/2 bg-white/20 blur-2xl"
-        style={{ width: `${(rayOrigin.x / 600) * 100}%` }}
-      />
-      <div
-        aria-hidden="true"
-        className="animate-beam-loop absolute left-0 top-1/2 z-0 h-1 -translate-y-1/2 blur-[1px]"
-        style={{
-          width: `${(rayOrigin.x / 600) * 100}%`,
-          // Short fade-in at the far left, then full white the rest of the way —
-          // the stretch left of the map is what's actually visible.
-          background:
-            'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 100%)',
-        }}
-      />
-
-      {/* Hotspot glow where the rays emanate from the map's edge */}
-      <div
-        aria-hidden="true"
-        className="animate-fade-loop absolute z-[5] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/30 blur-3xl"
-        style={{
-          left: `${(rayOrigin.x / 600) * 100}%`,
-          top: `${(rayOrigin.y / 450) * 100}%`,
-        }}
-      />
-
-      {/* Map */}
-      <div className="absolute inset-y-0 left-0 flex w-[58%] items-center justify-center">
-        <Image
-          src="/images/latam-map-red.svg"
-          alt="Map of Latin America"
-          width={620}
-          height={708}
-          className="relative z-10 h-auto max-h-full w-full object-contain drop-shadow-[0_0_30px_rgba(220,21,11,0.35)]"
-          priority
+        <div
+          aria-hidden="true"
+          className="animate-beam-loop absolute left-0 top-1/2 z-0 h-16 -translate-y-1/2 bg-white/20 blur-2xl"
+          style={{ width: `${(rayOrigin.x / 600) * 100}%` }}
         />
-      </div>
+        <div
+          aria-hidden="true"
+          className="animate-beam-loop absolute left-0 top-1/2 z-0 h-1 -translate-y-1/2 blur-[1px]"
+          style={{
+            width: `${(rayOrigin.x / 600) * 100}%`,
+            // Short fade-in at the far left, then full white the rest of the way —
+            // the stretch left of the map is what's actually visible.
+            background:
+              'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 100%)',
+          }}
+        />
 
-      {/* Rainbow data rays */}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 600 450"
-        preserveAspectRatio="none"
-        className="absolute inset-0 z-10 h-full w-full overflow-visible"
-        style={{ mixBlendMode: 'screen' }}
-      >
-        <defs>
-          {rayGradients.map(({ id, color }) => (
-            <linearGradient
-              key={id}
-              id={id}
-              x1={rayOrigin.x}
-              y1={rayOrigin.y}
-              x2="620"
-              y2={rayOrigin.y}
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
-              <stop offset="14%" stopColor="#FFFFFF" stopOpacity="0.95" />
-              <stop offset="48%" stopColor={color} stopOpacity="0.85" />
-              <stop offset="100%" stopColor={color} stopOpacity="0.95" />
-            </linearGradient>
-          ))}
-          <filter id="beam-blur" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="7" />
-          </filter>
-        </defs>
-        {/* soft glow layer */}
-        <g filter="url(#beam-blur)">
+        {/* Hotspot glow where the rays emanate from the map's edge */}
+        <div
+          aria-hidden="true"
+          className="animate-fade-loop absolute z-[5] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/30 blur-3xl"
+          style={{
+            left: `${(rayOrigin.x / 600) * 100}%`,
+            top: `${(rayOrigin.y / 450) * 100}%`,
+          }}
+        />
+
+        {/* Map */}
+        <div className="absolute inset-y-0 left-0 flex w-[58%] items-center justify-center">
+          <Image
+            src="/images/latam-map-red.svg"
+            alt="Map of Latin America"
+            width={620}
+            height={708}
+            className="relative z-10 h-auto max-h-full w-full object-contain drop-shadow-[0_0_30px_rgba(220,21,11,0.35)]"
+            priority
+          />
+        </div>
+
+        {/* Rainbow data rays */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 600 450"
+          preserveAspectRatio="none"
+          className="absolute inset-0 z-10 h-full w-full overflow-visible"
+          style={{ mixBlendMode: 'screen' }}
+        >
+          <defs>
+            {rayGradients.map(({ id, color }) => (
+              <linearGradient
+                key={id}
+                id={id}
+                x1={rayOrigin.x}
+                y1={rayOrigin.y}
+                x2="620"
+                y2={rayOrigin.y}
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+                <stop offset="14%" stopColor="#FFFFFF" stopOpacity="0.95" />
+                <stop offset="48%" stopColor={color} stopOpacity="0.85" />
+                <stop offset="100%" stopColor={color} stopOpacity="0.95" />
+              </linearGradient>
+            ))}
+            <filter id="beam-blur" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="7" />
+            </filter>
+          </defs>
+          {/* soft glow layer */}
+          <g filter="url(#beam-blur)">
+            {rayNodes.map((node, i) => (
+              <line
+                key={`glow-${rayGradients[i].id}`}
+                className="animate-ray-loop"
+                pathLength={1}
+                x1={rayOrigin.x}
+                y1={rayOrigin.y}
+                x2={node.x}
+                y2={node.y}
+                stroke={`url(#${rayGradients[i].id})`}
+                strokeWidth="18"
+                strokeLinecap="round"
+                style={{ animationDelay: `${i * RAY_STAGGER}ms` }}
+              />
+            ))}
+          </g>
+          {/* crisp core layer */}
           {rayNodes.map((node, i) => (
             <line
-              key={`glow-${rayGradients[i].id}`}
+              key={`core-${rayGradients[i].id}`}
               className="animate-ray-loop"
               pathLength={1}
               x1={rayOrigin.x}
@@ -205,65 +226,49 @@ function HeroVisual() {
               x2={node.x}
               y2={node.y}
               stroke={`url(#${rayGradients[i].id})`}
-              strokeWidth="18"
+              strokeWidth="3"
               strokeLinecap="round"
               style={{ animationDelay: `${i * RAY_STAGGER}ms` }}
             />
           ))}
-        </g>
-        {/* crisp core layer */}
-        {rayNodes.map((node, i) => (
-          <line
-            key={`core-${rayGradients[i].id}`}
-            className="animate-ray-loop"
-            pathLength={1}
-            x1={rayOrigin.x}
-            y1={rayOrigin.y}
-            x2={node.x}
-            y2={node.y}
-            stroke={`url(#${rayGradients[i].id})`}
-            strokeWidth="3"
-            strokeLinecap="round"
-            style={{ animationDelay: `${i * RAY_STAGGER}ms` }}
-          />
+        </svg>
+
+        {/* Icon badges at ray endpoints */}
+        {rayNodes.map(({ icon: Icon, x, y, ringClass, bgClass, glow }, i) => (
+          <div
+            key={rayGradients[i].id}
+            className={`animate-badge-loop absolute z-20 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 backdrop-blur-sm sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-16 lg:w-16 ${ringClass} ${bgClass}`}
+            style={{
+              left: `${(x / 600) * 100}%`,
+              top: `${(y / 450) * 100}%`,
+              boxShadow: glow,
+              animationDelay: `${i * BADGE_STAGGER}ms`,
+            }}
+          >
+            <Icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-7 lg:w-7" strokeWidth={1.5} />
+          </div>
         ))}
-      </svg>
 
-      {/* Icon badges at ray endpoints */}
-      {rayNodes.map(({ icon: Icon, x, y, ringClass, bgClass, glow }, i) => (
-        <div
-          key={rayGradients[i].id}
-          className={`animate-badge-loop absolute z-20 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 backdrop-blur-sm md:h-16 md:w-16 ${ringClass} ${bgClass}`}
+        {/* Sparkle accents */}
+        <Sparkles
+          className="animate-fade-loop absolute z-20 h-4 w-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] md:h-6 md:w-6"
+          strokeWidth={1.5}
           style={{
-            left: `${(x / 600) * 100}%`,
-            top: `${(y / 450) * 100}%`,
-            boxShadow: glow,
-            animationDelay: `${i * BADGE_STAGGER}ms`,
+            left: `${(500 / 600) * 100}%`,
+            top: `${(8 / 450) * 100}%`,
+            animationDelay: `${4 * BADGE_STAGGER}ms`,
           }}
-        >
-          <Icon className="h-6 w-6 md:h-7 md:w-7" strokeWidth={1.5} />
-        </div>
-      ))}
-
-      {/* Sparkle accents */}
-      <Sparkles
-        className="animate-fade-loop absolute z-20 h-6 w-6 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-        strokeWidth={1.5}
-        style={{
-          left: `${(500 / 600) * 100}%`,
-          top: `${(8 / 450) * 100}%`,
-          animationDelay: `${4 * BADGE_STAGGER}ms`,
-        }}
-      />
-      <Sparkles
-        className="animate-fade-loop absolute z-20 h-4 w-4 text-white/70 drop-shadow-[0_0_6px_rgba(255,255,255,0.7)]"
-        strokeWidth={1.5}
-        style={{
-          left: `${(505 / 600) * 100}%`,
-          top: `${(447 / 450) * 100}%`,
-          animationDelay: `${5 * BADGE_STAGGER}ms`,
-        }}
-      />
+        />
+        <Sparkles
+          className="animate-fade-loop absolute z-20 h-3 w-3 text-white/70 drop-shadow-[0_0_6px_rgba(255,255,255,0.7)] md:h-4 md:w-4"
+          strokeWidth={1.5}
+          style={{
+            left: `${(505 / 600) * 100}%`,
+            top: `${(447 / 450) * 100}%`,
+            animationDelay: `${5 * BADGE_STAGGER}ms`,
+          }}
+        />
+      </div>
     </div>
   )
 }
@@ -328,35 +333,35 @@ const customerLogos = [
     src: '/images/logos/latam-databricks-logo-white.png',
     width: 576,
     height: 204,
-    className: 'h-20',
+    className: 'h-12 sm:h-16 lg:h-20',
   },
   {
     name: 'Square',
     src: '/images/logos/latam-square-logo-white.svg',
     width: 138,
     height: 42,
-    className: 'h-9',
+    className: 'h-7 sm:h-8 lg:h-9',
   },
   {
     name: 'Manus',
     src: '/images/logos/latam-manus-logo-white.svg',
     width: 207,
     height: 60,
-    className: 'h-12',
+    className: 'h-9 sm:h-10 lg:h-12',
   },
   {
     name: 'Pinterest',
     src: '/images/logos/latam-pinterest-logo-white.svg',
     width: 181,
     height: 50,
-    className: 'h-12',
+    className: 'h-9 sm:h-10 lg:h-12',
   },
   {
     name: 'Kimi',
     src: '/images/logos/latam-kimi-logo-white.svg',
     width: 118,
     height: 40,
-    className: 'h-10',
+    className: 'h-8 sm:h-9 lg:h-10',
   },
 ]
 
@@ -458,13 +463,16 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
             {customerLogos.map((logo) => (
-              <div key={logo.name} className="flex items-center justify-center h-24">
+              <div
+                key={logo.name}
+                className="flex items-center justify-center h-16 sm:h-20 lg:h-24"
+              >
                 <Image
                   src={logo.src}
                   alt={logo.name}
                   width={logo.width}
                   height={logo.height}
-                  className={`${logo.className} w-auto object-contain`}
+                  className={`${logo.className} w-auto max-w-full object-contain`}
                 />
               </div>
             ))}
@@ -485,6 +493,7 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
               text: t.architecture.viewMoreText,
               href: 'https://www.pingcap.com/ai/',
               openInNewTab: false,
+              className: 'whitespace-normal text-left',
             }}
           />
         </SectionWrapper>
@@ -537,7 +546,12 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                 </div>
 
                 <div className="border-t border-carbon-200 px-6 lg:px-8 py-5">
-                  <SecondaryButton href={card.href} dark={false} openInNewTab={false}>
+                  <SecondaryButton
+                    href={card.href}
+                    dark={false}
+                    openInNewTab={false}
+                    className="whitespace-normal text-left"
+                  >
                     {card.ctaText}
                   </SecondaryButton>
                 </div>
@@ -564,6 +578,7 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                     href={modernizationSecondaryHrefs[i]}
                     dark={false}
                     openInNewTab={false}
+                    className="whitespace-normal text-left"
                     key={text}
                   >
                     {text}
@@ -614,6 +629,7 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                   href="https://www.pingcap.com/partners/"
                   dark={true}
                   openInNewTab={false}
+                  className="whitespace-normal text-left"
                 >
                   {t.ecosystem.viewMoreText}
                 </SecondaryButton>
@@ -697,6 +713,7 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                   href="https://www.pingcap.com/contact-us/"
                   dark={true}
                   openInNewTab={false}
+                  className="whitespace-normal text-left"
                 >
                   {t.cta.coDesign.button}
                 </SecondaryButton>
