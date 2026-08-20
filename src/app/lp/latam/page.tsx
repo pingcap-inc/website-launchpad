@@ -5,15 +5,15 @@ import { LatamPageClient } from './LatamPageClient'
 import { LOCALE_COOKIE, countryFromHeaders, detectLocale } from './detect-locale'
 
 export const metadata: Metadata = {
-  title: "Distributed SQL for Latin America's Digital Future | TiDB",
+  title: 'Scale Your AI Agents on One Data Platform | TiDB Cloud',
   description:
-    "Build scalable, AI-ready apps on TiDB's distributed SQL platform for always-on transactions, real-time intelligence, and cloud-native growth across Latin America.",
+    "Build scalable, AI-ready apps on TiDB's data platform for always-on transactions, real-time intelligence, and cloud-native growth.",
   robots: { index: false, follow: false },
   alternates: { canonical: 'https://www.pingcap.com/lp/latam/' },
   openGraph: {
-    title: "Distributed SQL for Latin America's Digital Future | TiDB",
+    title: 'Scale Your AI Agents on One Data Platform | TiDB Cloud',
     description:
-      "Build scalable, AI-ready apps on TiDB's distributed SQL platform for always-on transactions, real-time intelligence, and cloud-native growth across Latin America.",
+      "Build scalable, AI-ready apps on TiDB's data platform for always-on transactions, real-time intelligence, and cloud-native growth.",
     url: 'https://www.pingcap.com/lp/latam/',
     siteName: 'TiDB',
     images: [
