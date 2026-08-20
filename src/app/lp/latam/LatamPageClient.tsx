@@ -31,6 +31,22 @@ import {
 } from '@/components'
 import { type Locale, locales, translations } from './translations'
 import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE } from './detect-locale'
+import { cn } from '@/lib/utils'
+
+/**
+ * Hero headline size, per locale.
+ *
+ * The headline has to land on exactly two lines. Spanish and Portuguese run
+ * ~35% longer than the English source, so no single size serves all three —
+ * each locale gets the largest size that still fits two lines in the hero's
+ * text column. Values measured at 1024 / 1280 / 1440px; re-measure if the
+ * headline copy or the hero split ratio changes.
+ */
+const HERO_TITLE_SIZE: Record<Locale, string> = {
+  en: 'lg:text-[44px] xl:text-[58px] 2xl:text-[68px]',
+  es: 'lg:text-[36px] xl:text-[42px] 2xl:text-[52px]',
+  pt: 'lg:text-[34px] xl:text-[39px] 2xl:text-[48px]',
+}
 
 function CardVideo({ src }: { src: string }) {
   return (
@@ -237,7 +253,7 @@ function HeroVisual() {
         {rayNodes.map(({ icon: Icon, x, y, ringClass, bgClass, glow }, i) => (
           <div
             key={rayGradients[i].id}
-            className={`animate-badge-loop absolute z-20 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 backdrop-blur-sm sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-16 lg:w-16 ${ringClass} ${bgClass}`}
+            className={`animate-badge-loop absolute z-20 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 backdrop-blur-sm sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-12 lg:w-12 xl:h-14 xl:w-14 2xl:h-16 2xl:w-16 ${ringClass} ${bgClass}`}
             style={{
               left: `${(x / 600) * 100}%`,
               top: `${(y / 450) * 100}%`,
@@ -245,7 +261,10 @@ function HeroVisual() {
               animationDelay: `${i * BADGE_STAGGER}ms`,
             }}
           >
-            <Icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-7 lg:w-7" strokeWidth={1.5} />
+            <Icon
+              className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6 2xl:h-7 2xl:w-7"
+              strokeWidth={1.5}
+            />
           </div>
         ))}
 
@@ -439,8 +458,10 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
         <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>
           <HeroSection
             layout="split"
+            splitRatio="text-heavy"
             eyebrow={t.hero.eyebrow}
             headline={t.hero.headline}
+            headlineClassName={cn('text-balance', HERO_TITLE_SIZE[locale])}
             subheadline={t.hero.subheadline}
             primaryCta={{
               text: t.hero.primaryCta,
