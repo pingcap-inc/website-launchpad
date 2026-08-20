@@ -138,12 +138,7 @@ function HeroVisual() {
     // The badges sit at the right edge of the composition and are centred on it,
     // so they'd stick out by half their width. HeroSection clips overflow, which
     // sliced them on narrower screens — the right padding keeps them inside.
-    //
-    // The upward nudge sits closer to the header. It uses translate rather than a
-    // negative margin because the grid centres this cell: shrinking the cell's
-    // height would re-centre it and eat half the shift. Desktop only — on mobile
-    // the composition sits below the CTAs, where moving up would crowd them.
-    <div className="w-full max-w-[640px] mx-auto pr-8 md:pr-10 lg:-translate-y-8">
+    <div className="w-full max-w-[640px] mx-auto pr-8 md:pr-10">
       <div className="relative w-full aspect-[4/3]">
         {/* Background digital-rain texture */}
         <BinaryRain />
