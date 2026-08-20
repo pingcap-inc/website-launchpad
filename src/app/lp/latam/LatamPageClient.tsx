@@ -138,7 +138,11 @@ function HeroVisual() {
     // The badges sit at the right edge of the composition and are centred on it,
     // so they'd stick out by half their width. HeroSection clips overflow, which
     // sliced them on narrower screens — the right padding keeps them inside.
-    <div className="w-full max-w-[640px] mx-auto pr-8 md:pr-10">
+    //
+    // The leftward nudge closes the gap to the headline. 32px is the grid gutter,
+    // so it brings the composition flush against the text column without covering
+    // it. Desktop only — below lg the two stack vertically, so there is no gap.
+    <div className="w-full max-w-[640px] mx-auto pr-8 md:pr-10 lg:-translate-x-8">
       <div className="relative w-full aspect-[4/3]">
         {/* Background digital-rain texture */}
         <BinaryRain />
