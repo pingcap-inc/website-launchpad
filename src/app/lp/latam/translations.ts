@@ -60,6 +60,8 @@ export interface LatamCopy {
     paragraphs: string[]
     partners: FeatureText[]
     viewMoreText: string
+    /** Label above the regional partner logo row. */
+    partnerLogosTitle: string
   }
   whyTidb: {
     eyebrow: string
@@ -209,6 +211,7 @@ export const translations: Record<Locale, LatamCopy> = {
         },
       ],
       viewMoreText: 'Explore the PingCAP Partner Ecosystem',
+      partnerLogosTitle: 'Building futures with regional partners',
     },
     whyTidb: {
       eyebrow: 'WHY TIDB',
@@ -394,6 +397,7 @@ export const translations: Record<Locale, LatamCopy> = {
         },
       ],
       viewMoreText: 'Descubre el ecosistema de socios de PingCAP',
+      partnerLogosTitle: 'Construyendo el futuro con socios regionales',
     },
     whyTidb: {
       eyebrow: 'POR QUÉ TIDB',
@@ -579,6 +583,7 @@ export const translations: Record<Locale, LatamCopy> = {
         },
       ],
       viewMoreText: 'Conheça o ecossistema de parceiros da PingCAP',
+      partnerLogosTitle: 'Construindo o futuro com parceiros regionais',
     },
     whyTidb: {
       eyebrow: 'POR QUE O TIDB',

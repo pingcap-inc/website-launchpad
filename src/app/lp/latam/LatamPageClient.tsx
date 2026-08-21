@@ -390,6 +390,33 @@ const customerLogos = [
   },
 ]
 
+// Regional implementation partners. Rendered white on the deep-red section
+// background, matching the customer row above. Overlabs only ships a JPEG on
+// black, so its asset was knocked out to transparent and flattened to white.
+const partnerLogos = [
+  {
+    name: 'AIR — Agentic AI Engineering',
+    src: '/images/logos/latam-air-logo-white.png',
+    width: 1044,
+    height: 220,
+    className: 'h-10 sm:h-12 lg:h-14',
+  },
+  {
+    name: 'Derevo, powered by iLink Digital',
+    src: '/images/logos/latam-derevo-logo-white.png',
+    width: 704,
+    height: 220,
+    className: 'h-12 sm:h-14 lg:h-16',
+  },
+  {
+    name: 'Overlabs',
+    src: '/images/logos/latam-overlabs-logo-white.png',
+    width: 983,
+    height: 220,
+    className: 'h-10 sm:h-12 lg:h-14',
+  },
+]
+
 // ─── Language switcher ───────────────────────────────────────────────────────
 
 function LanguageSwitcher({
@@ -678,6 +705,27 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                     {partner.description}
                   </p>
                 </article>
+              ))}
+            </div>
+          </div>
+
+          {/* Regional partner logos — same treatment as the customer row in the
+            hero, so the two logo strips read as a matched pair. */}
+          <div className="mt-16 border-t border-text-inverse/15 pt-12">
+            <p className="font-mono text-eyebrow text-carbon-100 mb-8 text-center">
+              {t.ecosystem.partnerLogosTitle}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8">
+              {partnerLogos.map((logo) => (
+                <div key={logo.name} className="flex items-center justify-center h-16 lg:h-20">
+                  <Image
+                    src={logo.src}
+                    alt={logo.name}
+                    width={logo.width}
+                    height={logo.height}
+                    className={`${logo.className} w-auto max-w-full object-contain`}
+                  />
+                </div>
               ))}
             </div>
           </div>
