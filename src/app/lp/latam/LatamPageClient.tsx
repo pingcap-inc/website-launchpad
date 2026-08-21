@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import {
   Network,
@@ -20,6 +20,8 @@ import {
   Building2,
   LifeBuoy,
   ShieldCheck,
+  ChevronDown,
+  Check,
 } from 'lucide-react'
 import {
   HeroSection,
@@ -419,6 +421,15 @@ const partnerLogos = [
 
 // ─── Language switcher ───────────────────────────────────────────────────────
 
+// Flags stand for the market each translation is written for, not the language
+// in the abstract: Portuguese here is Brazilian Portuguese, so it carries the
+// Brazilian flag rather than Portugal's.
+const LOCALE_FLAG: Record<Locale, string> = {
+  en: '🇺🇸',
+  es: '🇪🇸',
+  pt: '🇧🇷',
+}
+
 function LanguageSwitcher({
   locale,
   onChange,
@@ -426,24 +437,90 @@ function LanguageSwitcher({
   locale: Locale
   onChange: (locale: Locale) => void
 }) {
+  const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Close on outside click and on Escape. Bound only while open so the page
+  // isn't carrying two document-level listeners the whole time it's mounted.
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (event: MouseEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) setOpen(false)
+    }
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
+  const active = locales.find(({ code }) => code === locale) ?? locales[0]
+
   return (
     <div className="fixed top-[62px] lg:top-20 left-0 right-0 z-40 bg-bg-primary border-b border-carbon-800">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 h-9 flex items-center justify-end gap-1">
-        {locales.map(({ code, label }) => (
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 h-11 flex items-center justify-end">
+        <div ref={containerRef} className="relative">
           <button
-            key={code}
             type="button"
-            onClick={() => onChange(code)}
-            aria-current={locale === code}
-            className={`px-3 py-1 text-label font-mono uppercase transition-colors duration-150 ${
-              locale === code
-                ? 'bg-brand-red-primary text-text-inverse'
-                : 'text-carbon-500 hover:text-text-inverse'
-            }`}
+            onClick={() => setOpen((wasOpen) => !wasOpen)}
+            aria-haspopup="listbox"
+            aria-expanded={open}
+            aria-label="Change language"
+            className="flex items-center gap-2 border border-carbon-800 bg-bg-surface px-3 py-1.5 text-label text-text-inverse transition-colors duration-150 hover:border-carbon-700 hover:bg-carbon-900"
           >
-            {label}
+            <Globe className="h-4 w-4 text-brand-red-light" strokeWidth={1.5} />
+            <span aria-hidden="true" className="text-base leading-none">
+              {LOCALE_FLAG[active.code]}
+            </span>
+            <span className="font-mono uppercase">{active.label}</span>
+            <ChevronDown
+              className={`h-4 w-4 text-carbon-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+              strokeWidth={1.5}
+            />
           </button>
-        ))}
+
+          {open && (
+            <ul
+              role="listbox"
+              aria-label="Language"
+              className="absolute right-0 top-full z-50 mt-2 min-w-[220px] border border-carbon-800 bg-bg-surface py-1 shadow-2xl"
+            >
+              {locales.map(({ code, label }) => {
+                const isActive = code === locale
+                return (
+                  <li key={code}>
+                    <button
+                      type="button"
+                      role="option"
+                      aria-selected={isActive}
+                      onClick={() => {
+                        onChange(code)
+                        setOpen(false)
+                      }}
+                      className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-body-md transition-colors duration-150 ${
+                        isActive
+                          ? 'bg-text-inverse/10 text-text-inverse'
+                          : 'text-carbon-300 hover:bg-text-inverse/5 hover:text-text-inverse'
+                      }`}
+                    >
+                      <span aria-hidden="true" className="text-lg leading-none">
+                        {LOCALE_FLAG[code]}
+                      </span>
+                      <span className="flex-1">{label}</span>
+                      {isActive && (
+                        <Check className="h-4 w-4 shrink-0 text-brand-red-light" strokeWidth={2} />
+                      )}
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -486,7 +563,9 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
   return (
     <>
       <LanguageSwitcher locale={locale} onChange={handleLocaleChange} />
-      <main className="pt-[98px] lg:pt-[116px]">
+      {/* Header (62/80px) + the language bar (44px) are both fixed, so the
+        content has to clear their combined height. */}
+      <main className="pt-[106px] lg:pt-[124px]">
         {/* ── 1. Hero ── */}
         <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>
           <HeroSection
