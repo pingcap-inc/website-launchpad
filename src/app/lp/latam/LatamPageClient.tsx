@@ -176,14 +176,16 @@ function HeroVisual() {
           }}
         />
 
-        {/* Map */}
+        {/* Map — neutral carbon fill, not brand red: a saturated single colour over
+          a whole region reads as a political or risk map. The glow is neutral for
+          the same reason; a coloured halo would put that reading straight back. */}
         <div className="absolute inset-y-0 left-0 flex w-[58%] items-center justify-center">
           <Image
-            src="/images/latam-map-red.svg"
+            src="/images/latam-map.svg"
             alt="Map of Latin America"
             width={620}
             height={708}
-            className="relative z-10 h-auto max-h-full w-full object-contain drop-shadow-[0_0_30px_rgba(220,21,11,0.35)]"
+            className="relative z-10 h-auto max-h-full w-full object-contain drop-shadow-[0_0_30px_rgba(185,194,202,0.3)]"
             priority
           />
         </div>

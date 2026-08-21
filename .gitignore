@@ -35,3 +35,7 @@ settings.json
 .vercel
 
 *.tsbuildinfo
+
+# Local design scratch — colour/variant explorations kept beside the project,
+# deliberately not part of the repo (large PNGs, not shipped assets).
+map-color-options/
