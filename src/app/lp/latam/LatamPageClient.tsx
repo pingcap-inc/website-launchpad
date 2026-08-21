@@ -462,7 +462,9 @@ function LanguageSwitcher({
 
   return (
     <div className="fixed top-[62px] lg:top-20 left-0 right-0 z-40 bg-bg-primary border-b border-carbon-800">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 h-11 flex items-center justify-end">
+      {/* Same `contain` container the header's nav uses, so this control's right
+        edge lines up with "Start for Free" at every breakpoint. */}
+      <div className="contain h-11 flex items-center justify-end">
         <div ref={containerRef} className="relative">
           <button
             type="button"
