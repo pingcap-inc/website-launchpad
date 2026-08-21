@@ -472,7 +472,9 @@ function LanguageSwitcher({
             aria-label="Change language"
             className="flex items-center gap-2 border border-carbon-800 bg-bg-surface px-3 py-1.5 text-label text-text-inverse transition-colors duration-150 hover:border-carbon-700 hover:bg-carbon-900"
           >
-            <Globe className="h-4 w-4 text-brand-red-light" strokeWidth={1.5} />
+            {/* White, not an accent colour: red reads as error/destructive on a
+              control whose job is entirely routine. */}
+            <Globe className="h-4 w-4 text-text-inverse" strokeWidth={1.5} />
             <span aria-hidden="true" className="text-base leading-none">
               {LOCALE_FLAG[active.code]}
             </span>
@@ -512,7 +514,7 @@ function LanguageSwitcher({
                       </span>
                       <span className="flex-1">{label}</span>
                       {isActive && (
-                        <Check className="h-4 w-4 shrink-0 text-brand-red-light" strokeWidth={2} />
+                        <Check className="h-4 w-4 shrink-0 text-text-inverse" strokeWidth={2} />
                       )}
                     </button>
                   </li>
