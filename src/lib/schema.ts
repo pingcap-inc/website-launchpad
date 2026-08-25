@@ -156,7 +156,12 @@ export function softwareApplicationSchema(options: {
   name: string
   description: string
   url: string
-  price?: string
+  /**
+   * Price for the Offer node. Omitted from the payload when `null` — use that
+   * for products with no published price, so the schema doesn't assert "free"
+   * on a page whose own copy says pricing isn't published yet.
+   */
+  price?: string | null
 }): Record<string, unknown> {
   return {
     '@type': 'SoftwareApplication',
@@ -165,11 +170,15 @@ export function softwareApplicationSchema(options: {
     operatingSystem: 'Linux, macOS, Windows',
     description: options.description,
     url: options.url,
-    offers: {
-      '@type': 'Offer',
-      price: options.price ?? '0',
-      priceCurrency: 'USD',
-    },
+    ...(options.price === null
+      ? {}
+      : {
+          offers: {
+            '@type': 'Offer',
+            price: options.price ?? '0',
+            priceCurrency: 'USD',
+          },
+        }),
   }
 }
 

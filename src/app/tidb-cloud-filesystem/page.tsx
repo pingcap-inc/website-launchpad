@@ -23,8 +23,34 @@ import { LoopStrip } from './LoopStrip'
 import { PrismBackground } from './PrismBackground'
 
 // Mechanism captions from the "1st cut" design.
-// Defaults on for the 2026-08-10 internal review; flip off for launch.
+// Kept on for launch (Heidi, 2026-08-25): the CLI commands and mechanism
+// names are what the coding-agent audience reads this section for, and the
+// "preview, not guaranteed" note on step 07 is a useful honest disclosure.
 const SHOW_MECHANISMS = true
+
+// LAUNCH GATE — the ti CLI docs are still unpublished; every /ai/ti-* path
+// below 404s on docs.pingcap.com today, so these links still point at the
+// Cloudflare preview build. Swap this one constant to
+// 'https://docs.pingcap.com' once Docs publishes, and re-run the link check.
+const DOCS_BASE = 'https://ai.pingcap-docsite-preview.pages.dev'
+// "Get Started with TiDB Cloud CLI" — install, configure, pick a first
+// workflow. The Quickstart CTAs used to land on the agent-sandbox tutorial,
+// which opens by re-explaining the agent problem this page has already spent
+// three sections making; not what someone clicking "Quickstart" wants.
+const DOCS_QUICKSTART = `${DOCS_BASE}/ai/ti-quick-start/`
+const DOCS_CLI_OVERVIEW = `${DOCS_BASE}/ai/ti-overview/`
+const DOCS_REGIONS = `${DOCS_BASE}/ai/ti-regions-security-and-limitations/`
+// "Persist Agent State Across Disposable Sandboxes" — its three steps
+// (provision, start the first sandbox, resume in a replacement) are what the
+// closing section's copy describes, so the closing CTA lands there rather than
+// back on the quickstart the hero already offered.
+const DOCS_SANDBOX_HANDOFF = `${DOCS_BASE}/ai/ti-persistent-agent-state-example/`
+
+// LAUNCH GATE — the Kimi Work story has no published URL yet, and per the
+// evidence canon its outcome wording has to come from the authorization
+// holder rather than be inferred. The CTA renders only once this is set, so
+// no dead link ships in the meantime.
+const KIMI_STORY_URL: string | null = null
 
 const TITLE = 'TiDB Cloud Filesystem: The Workspace Your Agents Share'
 const DESCRIPTION =
@@ -79,9 +105,9 @@ const faqItems: {
   },
   {
     value: 'sandbox-persistence',
-    q: 'My sandbox already has persistence — do I need another layer?',
+    q: 'My sandbox already has persistence — do I need TiDB Cloud Filesystem too?',
     plain: {
-      question: 'My sandbox already has persistence — do I need another layer?',
+      question: 'My sandbox already has persistence — do I need TiDB Cloud Filesystem too?',
       answer:
         "Native snapshots, pause/resume or volumes cover a workflow that stays inside one platform. A separate workspace layer matters once the active directory has to cross a boundary that platform doesn't cover — another runtime, another agent, a human reviewer, a CI job.",
     },
@@ -120,7 +146,7 @@ const faqItems: {
       <>
         Region is a required flag when you create a filesystem.{' '}
         <a
-          href="https://ai.pingcap-docsite-preview.pages.dev/ai/ti-regions-security-and-limitations/"
+          href={DOCS_REGIONS}
           className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
         >
           See the list of available regions
@@ -131,9 +157,9 @@ const faqItems: {
   },
   {
     value: 'laptop-mount',
-    q: 'Can I mount it on my laptop?',
+    q: 'Can I mount TiDB Cloud Filesystem on my laptop?',
     plain: {
-      question: 'Can I mount it on my laptop?',
+      question: 'Can I mount TiDB Cloud Filesystem on my laptop?',
       answer:
         "Supported, but not what we recommend for evaluation. Run it from a cloud VM in the same region as the filesystem. If you only need to read a file from your own machine, ti fs read-file doesn't require a mount at all.",
     },
@@ -147,9 +173,9 @@ const faqItems: {
   },
   {
     value: 'posix-support',
-    q: 'Does it support POSIX?',
+    q: 'Does TiDB Cloud Filesystem support POSIX?',
     plain: {
-      question: 'Does it support POSIX?',
+      question: 'Does TiDB Cloud Filesystem support POSIX?',
       answer:
         'Yes. When mounted, TiDB Cloud Filesystem is POSIX-compatible, so agents can use ordinary paths, shell commands, filesystem APIs, and development tools. It is designed for AI coding agent workloads.',
     },
@@ -163,9 +189,9 @@ const faqItems: {
   },
   {
     value: 'sdk',
-    q: 'Is there an SDK?',
+    q: 'Is there a TiDB Cloud Filesystem SDK?',
     plain: {
-      question: 'Is there an SDK?',
+      question: 'Is there a TiDB Cloud Filesystem SDK?',
       answer:
         'Not yet. The CLI is the full surface during the technical preview. TypeScript and Python SDKs are coming soon.',
     },
@@ -178,9 +204,9 @@ const faqItems: {
   },
   {
     value: 'semantic-search',
-    q: 'Does it support semantic or vector search over my files?',
+    q: 'Does TiDB Cloud Filesystem support semantic or vector search over my files?',
     plain: {
-      question: 'Does it support semantic or vector search over my files?',
+      question: 'Does TiDB Cloud Filesystem support semantic or vector search over my files?',
       answer:
         'Full-text content search and filename matching are what to rely on today — fs search-file-content and fs find-files. Semantic retrieval is in the product design and is not part of what the technical preview guarantees.',
     },
@@ -195,9 +221,9 @@ const faqItems: {
   },
   {
     value: 'checkpoint',
-    q: 'Does the preview include checkpoint and rollback?',
+    q: 'Does the TiDB Cloud Filesystem preview include checkpoint and rollback?',
     plain: {
-      question: 'Does the preview include checkpoint and rollback?',
+      question: 'Does the TiDB Cloud Filesystem preview include checkpoint and rollback?',
       answer:
         "Layer checkpoints and rollback are part of the product design, and the commands are visible in the CLI, but they are not part of what the technical preview guarantees yet. What's ready today is cross-runtime continuity — write from one runtime, read from another.",
     },
@@ -211,9 +237,9 @@ const faqItems: {
   },
   {
     value: 'sla',
-    q: 'Is there an SLA?',
+    q: 'Is there an SLA for TiDB Cloud Filesystem?',
     plain: {
-      question: 'Is there an SLA?',
+      question: 'Is there an SLA for TiDB Cloud Filesystem?',
       answer:
         "No. Keep evaluation data recoverable elsewhere, and report anything that doesn't behave as expected.",
     },
@@ -226,9 +252,9 @@ const faqItems: {
   },
   {
     value: 'retention',
-    q: 'What happens to my workspace after the preview ends?',
+    q: 'What happens to my workspace after the TiDB Cloud Filesystem preview ends?',
     plain: {
-      question: 'What happens to my workspace after the preview ends?',
+      question: 'What happens to my workspace after the TiDB Cloud Filesystem preview ends?',
       answer:
         "The retention and deletion policy after the technical preview is still an open product decision. Until it's settled, keep an independently recoverable copy of anything you can't afford to lose.",
     },
@@ -242,9 +268,9 @@ const faqItems: {
   },
   {
     value: 'cost',
-    q: 'What does it cost?',
+    q: 'What does TiDB Cloud Filesystem cost?',
     plain: {
-      question: 'What does it cost?',
+      question: 'What does TiDB Cloud Filesystem cost?',
       answer:
         "There is no published price during the technical preview. Usage limits apply per account, and we'll show the ones that apply to yours before you start.",
     },
@@ -270,6 +296,11 @@ const schema = buildPageSchema({
       name: 'TiDB Cloud Filesystem',
       description: DESCRIPTION,
       url: CANONICAL,
+      // No published price during the technical preview — see the "What does
+      // TiDB Cloud Filesystem cost?" answer below. null omits the Offer node
+      // entirely rather than asserting price "0", which would read as "free"
+      // in rich results and contradict the copy.
+      price: null,
     }),
     faqSchema(faqItems.map((item) => item.plain)),
   ],
@@ -311,13 +342,25 @@ const gitBands: { n: string; name: string; caption: string; className: string }[
 const persistedFiles = ['source', 'lock file', 'patches', 'test results', 'failure logs']
 const localOnlyFiles = ['node_modules', '.tsbuildinfo', 'dist', '.turbo', 'coverage']
 
-const fitRows: [string, string][] = [
-  ['A durable disk attached to one workload', 'Block storage'],
-  ['A shared POSIX filesystem for compute clients in one cloud', 'Network file storage'],
-  ['Objects, artifacts, datasets, backups or archives', 'Object storage'],
-  ['Committed source history, branches and merges', 'Git hosting'],
-  ['What an agent remembers across conversations', 'Agent memory'],
-  ['Snapshots and forks of work inside one sandbox platform', 'Platform-native persistence'],
+/** `href` turns the "use" cell into a link — for the categories TiDB itself ships. */
+const fitRows: { need: string; use: string; href?: string }[] = [
+  { need: 'A durable disk attached to one workload', use: 'Block storage' },
+  {
+    need: 'A shared POSIX filesystem for compute clients in one cloud',
+    use: 'Network file storage',
+  },
+  { need: 'Objects, artifacts, datasets, backups or archives', use: 'Object storage' },
+  {
+    need: 'Analytics over large tables, or an AI data workflow',
+    use: 'TiDB Cloud Lake',
+    href: 'https://www.pingcap.com/tidb-cloud-lake/',
+  },
+  { need: 'Committed source history, branches and merges', use: 'Git hosting' },
+  { need: 'What an agent remembers across conversations', use: 'Agent memory' },
+  {
+    need: 'Snapshots and forks of work inside one sandbox platform',
+    use: 'Platform-native persistence',
+  },
 ]
 
 /** Official Kimi wordmark (kimi.com), currentColor so it takes the page's text color. */
@@ -442,12 +485,19 @@ export default function TidbCloudFilesystemPage() {
           <HeroShade />
           <div className="relative z-10 mx-auto grid max-w-container grid-cols-1 items-start gap-14 px-4 md:px-8 lg:grid-cols-2 lg:px-16">
             <div data-shade-dim>
-              <div className="mb-7 flex items-center gap-3">
-                <span className="font-mono text-[13px] text-carbon-400">TiDB Cloud Filesystem</span>
+              {/* Phase label sits on its own line above the H1 — it is page
+                  metadata, not part of the heading. */}
+              <div className="mb-4">
                 <Badge variant="secondary">Technical Preview</Badge>
               </div>
               {/* title-case-ignore */}
               <h1 className="mb-6 max-w-[640px] text-pretty text-h1-mb font-bold leading-tight tracking-[-0.025em] md:text-h1">
+                {/* The product name sits inside the H1 so it carries heading
+                    weight instead of being an unranked span above it, but stays
+                    at eyebrow scale so the hero reads the same. */}
+                <span className="mb-7 block font-mono text-[13px] font-normal leading-none tracking-normal text-carbon-400">
+                  TiDB Cloud Filesystem
+                </span>
                 The workspace your agents share.
               </h1>
               <p className="mb-9 max-w-[580px] text-pretty text-body-2xl text-carbon-400">
@@ -455,9 +505,7 @@ export default function TidbCloudFilesystemPage() {
                 behind — dirty tree, new objects, test output, artifacts.
               </p>
               <div className="flex flex-wrap items-center gap-6">
-                <PrimaryButton href="https://ai.pingcap-docsite-preview.pages.dev/ai/ti-agent-sandbox-example/">
-                  Quickstart
-                </PrimaryButton>
+                <PrimaryButton href={DOCS_QUICKSTART}>Quickstart</PrimaryButton>
                 <SecondaryButton href="https://www.pingcap.com/contact-us/">
                   Talk to us
                 </SecondaryButton>
@@ -466,7 +514,7 @@ export default function TidbCloudFilesystemPage() {
             <div data-shade-block>
               <HeroCodePanel />
               <a
-                href="https://ai.pingcap-docsite-preview.pages.dev/ai/ti-overview/"
+                href={DOCS_CLI_OVERVIEW}
                 className="mt-4 inline-flex items-center gap-2 font-mono text-[13px] text-carbon-400 transition-colors duration-150 hover:text-carbon-200"
               >
                 Read the TiDB Cloud CLI overview
@@ -482,11 +530,17 @@ export default function TidbCloudFilesystemPage() {
             <p className="mb-8 font-mono text-[15px] text-carbon-400">What makes it different</p>
             {/* title-case-ignore */}
             <h2 className="mb-5 max-w-[880px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
-              Three things the disk in your sandbox can&apos;t do.
+              Three things TiDB Cloud Filesystem does that your sandbox disk can&apos;t.
             </h2>
             <p className="mb-14 max-w-[660px] text-body-lg text-carbon-400">
-              All three exist for one reason: a distributed database sits under this filesystem, so
-              it can promise things a disk can&apos;t.
+              All three exist for one reason: a{' '}
+              <a
+                href="https://www.pingcap.com/tidb/cloud/"
+                className="text-carbon-200 underline underline-offset-4 transition-colors duration-150 hover:text-white"
+              >
+                distributed database
+              </a>{' '}
+              sits under this filesystem, so it can promise things a disk can&apos;t.
             </p>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -541,7 +595,9 @@ export default function TidbCloudFilesystemPage() {
                     Rebuildable vs persistent
                   </p>
                   {/* title-case-ignore */}
-                  <h3 className="text-h3-lg font-bold">Keep the outcome. Drop the noise.</h3>
+                  <h3 className="text-h3-lg font-bold">
+                    Keep what your agent needs. Drop the noise.
+                  </h3>
                   <p className="flex-1 text-body-md text-carbon-400 [&_code]:font-mono">
                     <code>node_modules</code> and <code>dist</code> can be rebuilt anywhere, so they
                     stay local. What can&apos;t be rebuilt — test results, failure logs, patches —
@@ -638,7 +694,7 @@ export default function TidbCloudFilesystemPage() {
             <KimiLogo className="mb-6 h-7 w-auto text-white" />
             {/* title-case-ignore */}
             <h2 className="mb-12 max-w-[820px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] text-carbon-400 md:text-h2-sm">
-              Workspace continuity, running in production.
+              Agent workspace continuity, running in production.
             </h2>
             <div className="grid grid-cols-1 items-end gap-12 lg:grid-cols-2">
               <div>
@@ -657,9 +713,13 @@ export default function TidbCloudFilesystemPage() {
                   AI&apos;s desktop AI agent for knowledge workers — which is why the runtimes that
                   execute those agents stay disposable.
                 </p>
-                <div className="mt-5">
-                  <SecondaryButton href="#">Read the Kimi Work story</SecondaryButton>
-                </div>
+                {KIMI_STORY_URL && (
+                  <div className="mt-5">
+                    <SecondaryButton href={KIMI_STORY_URL}>
+                      Read the Kimi Work story
+                    </SecondaryButton>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -682,7 +742,7 @@ export default function TidbCloudFilesystemPage() {
 
             {/* title-case-ignore */}
             <h3 className="mb-3 text-h3-lg font-bold">
-              One task, eight steps — each one leaves state the next one needs.
+              One coding agent task, eight steps — each leaves state the next one needs.
             </h3>
             <p className="mb-8 max-w-[660px] text-body-md text-carbon-400">
               A coding agent doesn&apos;t touch a filesystem once. It touches it at every step, and
@@ -718,7 +778,7 @@ export default function TidbCloudFilesystemPage() {
                 <p className="border-b border-border-primary px-6 py-3 font-mono text-[10px] tracking-[0.05em] text-carbon-700">
                   USE
                 </p>
-                {fitRows.map(([need, use], index) => {
+                {fitRows.map(({ need, use, href }, index) => {
                   const divider = index < fitRows.length - 1 ? 'border-b border-border-primary' : ''
                   return (
                     <div key={use} className="contents">
@@ -726,7 +786,16 @@ export default function TidbCloudFilesystemPage() {
                         {need}
                       </p>
                       <p className={`px-6 py-4 text-[15px] font-regular text-white ${divider}`}>
-                        {use}
+                        {href ? (
+                          <a
+                            href={href}
+                            className="underline underline-offset-4 transition-colors duration-150 hover:text-carbon-200"
+                          >
+                            {use}
+                          </a>
+                        ) : (
+                          use
+                        )}
                       </p>
                     </div>
                   )
@@ -781,7 +850,7 @@ export default function TidbCloudFilesystemPage() {
             <p className="mb-8 font-mono text-[15px] text-carbon-400">Straight answers</p>
             {/* title-case-ignore */}
             <h2 className="mb-12 max-w-[820px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
-              What it is, and what it isn&apos;t yet.
+              What TiDB Cloud Filesystem is, and what it isn&apos;t yet.
             </h2>
             <div className="mx-auto max-w-[860px]">
               <Accordion type="single" defaultValue="what-is-it" collapsible>
@@ -808,8 +877,8 @@ export default function TidbCloudFilesystemPage() {
               title="Nothing to rebuild. Everything to build on."
               subtitle="Write from one runtime. Let it end. Reopen the workspace from another and check that the second run continues from the first. That's the whole test."
               primaryCta={{
-                text: 'Read the quickstart',
-                href: 'https://ai.pingcap-docsite-preview.pages.dev/ai/ti-agent-sandbox-example/',
+                text: 'Run the sandbox handoff example',
+                href: DOCS_SANDBOX_HANDOFF,
               }}
               secondaryCta={{
                 text: 'Open the E2B demo repo',
