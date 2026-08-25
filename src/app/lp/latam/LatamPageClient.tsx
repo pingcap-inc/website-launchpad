@@ -421,15 +421,10 @@ const partnerLogos = [
 
 // ─── Language switcher ───────────────────────────────────────────────────────
 
-// Flags stand for the market each translation is written for, not the language
-// in the abstract: Portuguese here is Brazilian Portuguese, so it carries the
-// Brazilian flag rather than Portugal's.
-const LOCALE_FLAG: Record<Locale, string> = {
-  en: '🇺🇸',
-  es: '🇪🇸',
-  pt: '🇧🇷',
-}
-
+// Deliberately no flags. A flag names a country, not a language, and the
+// mismatch is worst exactly here: Spanish has no one flag across the region,
+// and picking any single country's would speak past most of the audience.
+// The globe carries the meaning instead.
 function LanguageSwitcher({
   locale,
   onChange,
@@ -477,9 +472,6 @@ function LanguageSwitcher({
             {/* White, not an accent colour: red reads as error/destructive on a
               control whose job is entirely routine. */}
             <Globe className="h-4 w-4 text-text-inverse" strokeWidth={1.5} />
-            <span aria-hidden="true" className="text-base leading-none">
-              {LOCALE_FLAG[active.code]}
-            </span>
             <span className="font-mono uppercase">{active.label}</span>
             <ChevronDown
               className={`h-4 w-4 text-carbon-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
@@ -511,9 +503,6 @@ function LanguageSwitcher({
                           : 'text-carbon-300 hover:bg-text-inverse/5 hover:text-text-inverse'
                       }`}
                     >
-                      <span aria-hidden="true" className="text-lg leading-none">
-                        {LOCALE_FLAG[code]}
-                      </span>
                       <span className="flex-1">{label}</span>
                       {isActive && (
                         <Check className="h-4 w-4 shrink-0 text-text-inverse" strokeWidth={2} />
