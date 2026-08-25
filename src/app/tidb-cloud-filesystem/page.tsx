@@ -208,14 +208,15 @@ const faqItems: {
     plain: {
       question: 'Does TiDB Cloud Filesystem support semantic or vector search over my files?',
       answer:
-        'Full-text content search and filename matching are what to rely on today — fs search-file-content and fs find-files. Semantic retrieval is in the product design and is not part of what the technical preview guarantees.',
+        "Full-text content search and filename matching are what to rely on today — fs search-file-content and fs find-files. Semantic retrieval is designed in, but it isn't something we can promise during the preview.",
     },
     answer: (
       <>
         Full-text content search and filename matching are what to rely on today —{' '}
-        <code>fs search-file-content</code> and <code>fs find-files</code>. Semantic retrieval is in
-        the product design and is <strong className="font-medium text-white">not</strong> part of
-        what the technical preview guarantees.
+        <code>fs search-file-content</code> and <code>fs find-files</code>. Semantic retrieval is
+        designed in, but it{' '}
+        <strong className="font-medium text-white">isn&apos;t something we can promise</strong>{' '}
+        during the preview.
       </>
     ),
   },
@@ -225,12 +226,13 @@ const faqItems: {
     plain: {
       question: 'Does the TiDB Cloud Filesystem preview include checkpoint and rollback?',
       answer:
-        "Layer checkpoints and rollback are part of the product design, and the commands are visible in the CLI, but they are not part of what the technical preview guarantees yet. What's ready today is cross-runtime continuity — write from one runtime, read from another.",
+        "Layer checkpoints and rollback are designed in, and the create-layer-checkpoint and rollback-layer commands are already in the CLI — but they aren't something we can promise during the preview yet. What's ready today is cross-runtime continuity — write from one runtime, read from another.",
     },
     answer: (
       <>
-        Layer checkpoints and rollback are part of the product design, and the commands are visible
-        in the CLI, but they are not part of what the technical preview guarantees yet. What&apos;s
+        Layer checkpoints and rollback are designed in, and the{' '}
+        <code>create-layer-checkpoint</code> and <code>rollback-layer</code> commands are already in
+        the CLI — but they aren&apos;t something we can promise during the preview yet. What&apos;s
         ready today is cross-runtime continuity — write from one runtime, read from another.
       </>
     ),
@@ -256,13 +258,12 @@ const faqItems: {
     plain: {
       question: 'What happens to my workspace after the TiDB Cloud Filesystem preview ends?',
       answer:
-        "The retention and deletion policy after the technical preview is still an open product decision. Until it's settled, keep an independently recoverable copy of anything you can't afford to lose.",
+        "We haven't settled the retention and deletion policy for after the preview yet. Until we do, keep an independently recoverable copy of anything you can't afford to lose.",
     },
     answer: (
       <>
-        The retention and deletion policy after the technical preview is still an open product
-        decision. Until it&apos;s settled, keep an independently recoverable copy of anything you
-        can&apos;t afford to lose.
+        We haven&apos;t settled the retention and deletion policy for after the preview yet. Until we
+        do, keep an independently recoverable copy of anything you can&apos;t afford to lose.
       </>
     ),
   },
