@@ -9,7 +9,6 @@ interface PrimaryButtonProps {
   className?: string
   onClick?: () => void
   href?: string
-  openInNewTab?: boolean
 }
 
 export function ArrowUpRightIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -32,13 +31,7 @@ export function ArrowUpRightIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-export function PrimaryButton({
-  children,
-  className,
-  onClick,
-  href,
-  openInNewTab,
-}: PrimaryButtonProps) {
+export function PrimaryButton({ children, className, onClick, href }: PrimaryButtonProps) {
   const classes = cn(
     'group relative overflow-hidden',
     'rounded-none h-10 bg-bg-inverse px-4',
@@ -75,12 +68,7 @@ export function PrimaryButton({
   )
 
   if (href) {
-    const tabProps =
-      openInNewTab === false
-        ? {}
-        : openInNewTab === true
-          ? { target: '_blank', rel: 'noopener noreferrer' }
-          : externalLinkProps(href)
+    const tabProps = externalLinkProps(href)
 
     return (
       <a

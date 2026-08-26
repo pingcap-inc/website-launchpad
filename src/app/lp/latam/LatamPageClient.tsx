@@ -584,12 +584,10 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
             primaryCta={{
               text: t.hero.primaryCta,
               href: 'https://tidbcloud.com/free-trial/',
-              openInNewTab: false,
             }}
             secondaryCta={{
               text: t.hero.secondaryCta,
               href: 'https://www.pingcap.com/contact-us/',
-              openInNewTab: false,
             }}
             rightSlot={<HeroVisual />}
           />
@@ -637,7 +635,6 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
             viewMore={{
               text: t.architecture.viewMoreText,
               href: 'https://www.pingcap.com/ai/',
-              openInNewTab: false,
               className: 'whitespace-normal text-left',
             }}
           />
@@ -694,7 +691,6 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                   <SecondaryButton
                     href={card.href}
                     dark={false}
-                    openInNewTab={false}
                     className="whitespace-normal text-left"
                   >
                     {card.ctaText}
@@ -722,7 +718,6 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                   <SecondaryButton
                     href={modernizationSecondaryHrefs[i]}
                     dark={false}
-                    openInNewTab={false}
                     className="whitespace-normal text-left"
                     key={text}
                   >
@@ -773,7 +768,6 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                 <SecondaryButton
                   href="https://www.pingcap.com/partners/"
                   dark={true}
-                  openInNewTab={false}
                   className="whitespace-normal text-left"
                 >
                   {t.ecosystem.viewMoreText}
@@ -860,7 +854,7 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                 {t.cta.modernize.title}
               </h2>
               <div className="mt-auto pt-8">
-                <PrimaryButton href="https://www.pingcap.com/tidb-cloud/" openInNewTab={false}>
+                <PrimaryButton href="https://www.pingcap.com/tidb-cloud/">
                   {t.cta.modernize.button}
                 </PrimaryButton>
               </div>
@@ -878,7 +872,6 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                 <SecondaryButton
                   href="https://www.pingcap.com/contact-us/"
                   dark={true}
-                  openInNewTab={false}
                   className="whitespace-normal text-left"
                 >
                   {t.cta.coDesign.button}

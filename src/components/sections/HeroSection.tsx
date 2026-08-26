@@ -48,8 +48,8 @@ interface HeroSectionProps {
    */
   headlineClassName?: string
   subheadline?: string | React.ReactNode
-  primaryCta?: { text: string; href: string; openInNewTab?: boolean }
-  secondaryCta?: { text: string; href: string; openInNewTab?: boolean }
+  primaryCta?: { text: string; href: string }
+  secondaryCta?: { text: string; href: string }
   /** Right column content. Used in `split` layout. */
   rightSlot?: React.ReactNode
   /**
@@ -112,15 +112,9 @@ function HeroTextBlock({
             centered && 'justify-center'
           )}
         >
-          {primaryCta && (
-            <PrimaryButton href={primaryCta.href} openInNewTab={primaryCta.openInNewTab}>
-              {primaryCta.text}
-            </PrimaryButton>
-          )}
+          {primaryCta && <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>}
           {secondaryCta && (
-            <SecondaryButton href={secondaryCta.href} openInNewTab={secondaryCta.openInNewTab}>
-              {secondaryCta.text}
-            </SecondaryButton>
+            <SecondaryButton href={secondaryCta.href}>{secondaryCta.text}</SecondaryButton>
           )}
         </div>
       )}

@@ -12,7 +12,6 @@ interface SecondaryButtonProps {
   href?: string
   dark?: boolean
   as?: 'a' | 'button' | 'span'
-  openInNewTab?: boolean
 }
 
 type SecondaryButtonRef = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement
@@ -51,7 +50,7 @@ export function ArrowUpRight(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryButtonProps>(
-  ({ children, className, onClick, href, dark = true, as, openInNewTab }, ref) => {
+  ({ children, className, onClick, href, dark = true, as }, ref) => {
     const classes = cn(
       'group inline-flex items-center gap-2',
       'text-base font-medium',
@@ -92,12 +91,7 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
     }
 
     if (as === 'a' || href) {
-      const tabProps =
-        openInNewTab === false
-          ? {}
-          : openInNewTab === true
-            ? { target: '_blank', rel: 'noopener noreferrer' }
-            : externalLinkProps(href)
+      const tabProps = externalLinkProps(href)
 
       return (
         <a
