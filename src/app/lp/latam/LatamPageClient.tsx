@@ -354,6 +354,9 @@ const whyTidbMeta = [
   { illustration: <CardVideo src="/videos/target-pulse.mp4" /> },
 ]
 
+// Each logo links to that customer's story. `linkLabel` describes the
+// destination for screen readers, since the logo image alone doesn't say where
+// the link goes — and Square's is a video rather than a written case study.
 const customerLogos = [
   {
     name: 'Databricks',
@@ -361,6 +364,8 @@ const customerLogos = [
     width: 576,
     height: 204,
     className: 'h-12 sm:h-16 lg:h-20',
+    href: 'https://www.pingcap.com/blog/analytics-on-tidb-cloud-with-databricks/',
+    linkLabel: 'Read the Databricks case study',
   },
   {
     name: 'Square',
@@ -368,6 +373,8 @@ const customerLogos = [
     width: 138,
     height: 42,
     className: 'h-7 sm:h-8 lg:h-9',
+    href: 'https://www.youtube.com/watch?v=6RtJl6XWB_4',
+    linkLabel: 'Watch the Square case study video on YouTube',
   },
   {
     name: 'Manus',
@@ -375,6 +382,8 @@ const customerLogos = [
     width: 207,
     height: 60,
     className: 'h-9 sm:h-10 lg:h-12',
+    href: 'https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/',
+    linkLabel: 'Read the Manus case study',
   },
   {
     name: 'Pinterest',
@@ -382,6 +391,8 @@ const customerLogos = [
     width: 181,
     height: 50,
     className: 'h-9 sm:h-10 lg:h-12',
+    href: 'https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/',
+    linkLabel: 'Read the Pinterest case study',
   },
   {
     name: 'Kimi',
@@ -389,6 +400,8 @@ const customerLogos = [
     width: 118,
     height: 40,
     className: 'h-8 sm:h-9 lg:h-10',
+    href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
+    linkLabel: 'Read the Kimi case study',
   },
 ]
 
@@ -589,9 +602,15 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
             {customerLogos.map((logo) => (
-              <div
+              // External destinations, so a plain <a>, not next/link. Opened in a
+              // new tab to keep this campaign page open behind the story.
+              <a
                 key={logo.name}
-                className="flex items-center justify-center h-16 sm:h-20 lg:h-24"
+                href={logo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={logo.linkLabel}
+                className="flex items-center justify-center h-16 sm:h-20 lg:h-24 transition-transform duration-200 ease-in-out hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-text-inverse"
               >
                 <Image
                   src={logo.src}
@@ -600,7 +619,7 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
                   height={logo.height}
                   className={`${logo.className} w-auto max-w-full object-contain`}
                 />
-              </div>
+              </a>
             ))}
           </div>
         </SectionWrapper>
