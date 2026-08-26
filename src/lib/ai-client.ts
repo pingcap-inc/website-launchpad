@@ -1,4 +1,9 @@
 import OpenAI from 'openai'
+import {
+  BedrockRuntimeClient,
+  ConverseCommand,
+  type Message as BedrockMessage,
+} from '@aws-sdk/client-bedrock-runtime'
 
 /** Strip markdown code fences (e.g. ```json ... ```) that some models wrap around JSON output. */
 function stripMarkdownCodeFence(text: string): string {
@@ -124,9 +129,49 @@ export const AI_MODEL =
 
 type Message = { role: 'system' | 'user' | 'assistant'; content: string }
 
+let _bedrockClient: BedrockRuntimeClient | null = null
+function getBedrockClient(): BedrockRuntimeClient {
+  if (_bedrockClient) return _bedrockClient
+  const accessKeyId = process.env.BEDROCK_AWS_ACCESS_KEY_ID
+  const secretAccessKey = process.env.BEDROCK_AWS_SECRET_ACCESS_KEY
+  if (!accessKeyId || !secretAccessKey) {
+    throw new Error(
+      'Bedrock IAM credentials missing: set BEDROCK_AWS_ACCESS_KEY_ID and BEDROCK_AWS_SECRET_ACCESS_KEY'
+    )
+  }
+  _bedrockClient = new BedrockRuntimeClient({
+    region: process.env.BEDROCK_AWS_REGION ?? 'ap-southeast-1',
+    credentials: { accessKeyId, secretAccessKey },
+  })
+  return _bedrockClient
+}
+
+async function invokeBedrockConverse(messages: Message[], maxTokens: number): Promise<string> {
+  const modelId = process.env.ANTHROPIC_MODEL
+  if (!modelId) throw new Error('ANTHROPIC_MODEL env var is required for Bedrock')
+
+  const systemMessages = messages.filter((m) => m.role === 'system')
+  const chatMessages = messages.filter((m) => m.role !== 'system')
+
+  const command = new ConverseCommand({
+    modelId,
+    system: systemMessages.map((m) => ({ text: m.content })),
+    messages: chatMessages.map<BedrockMessage>((m) => ({
+      role: m.role as 'user' | 'assistant',
+      content: [{ text: m.content }],
+    })),
+    inferenceConfig: { maxTokens },
+  })
+
+  const response = await getBedrockClient().send(command)
+  const text = response.output?.message?.content?.[0]?.text
+  if (!text) throw new Error('Bedrock returned empty response')
+  return stripMarkdownCodeFence(text)
+}
+
 /**
  * 统一文本生成接口，返回 AI 响应的文本内容（JSON 字符串）。
- * Bedrock: 使用 Bedrock API Key 直接调用 Converse REST API，无需 AWS 凭证。
+ * Bedrock: 使用 IAM 凭证 + SigV4 签名调用 Converse API。
  * NVIDIA: 使用 OpenAI SDK 调用 NVIDIA 兼容 API。
  */
 export async function generateJSON(
@@ -136,38 +181,7 @@ export async function generateJSON(
   const maxTokens = options.maxTokens ?? 2500
 
   if (AI_PROVIDER === 'bedrock') {
-    const region = process.env.AWS_REGION ?? 'us-east-1'
-    const modelId = process.env.ANTHROPIC_MODEL!
-    const endpoint = `https://bedrock-runtime.${region}.amazonaws.com/model/${encodeURIComponent(modelId)}/converse`
-
-    const systemMessages = messages.filter((m) => m.role === 'system')
-    const chatMessages = messages.filter((m) => m.role !== 'system')
-
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.AWS_BEARER_TOKEN_BEDROCK}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        system: systemMessages.map((m) => ({ text: m.content })),
-        messages: chatMessages.map((m) => ({
-          role: m.role as 'user' | 'assistant',
-          content: [{ text: m.content }],
-        })),
-        inferenceConfig: { maxTokens },
-      }),
-    })
-
-    if (!res.ok) {
-      const err = await res.text()
-      throw new Error(`Bedrock API error ${res.status}: ${err}`)
-    }
-
-    const data = await res.json()
-    const text = data.output?.message?.content?.[0]?.text
-    if (!text) throw new Error('Bedrock returned empty response')
-    return stripMarkdownCodeFence(text)
+    return invokeBedrockConverse(messages, maxTokens)
   }
 
   // NVIDIA (OpenAI-compatible)
@@ -195,38 +209,7 @@ export async function generateText(
   const maxTokens = options.maxTokens ?? 2500
 
   if (AI_PROVIDER === 'bedrock') {
-    const region = process.env.AWS_REGION ?? 'us-east-1'
-    const modelId = process.env.ANTHROPIC_MODEL!
-    const endpoint = `https://bedrock-runtime.${region}.amazonaws.com/model/${encodeURIComponent(modelId)}/converse`
-
-    const systemMessages = messages.filter((m) => m.role === 'system')
-    const chatMessages = messages.filter((m) => m.role !== 'system')
-
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.AWS_BEARER_TOKEN_BEDROCK}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        system: systemMessages.map((m) => ({ text: m.content })),
-        messages: chatMessages.map((m) => ({
-          role: m.role as 'user' | 'assistant',
-          content: [{ text: m.content }],
-        })),
-        inferenceConfig: { maxTokens },
-      }),
-    })
-
-    if (!res.ok) {
-      const err = await res.text()
-      throw new Error(`Bedrock API error ${res.status}: ${err}`)
-    }
-
-    const data = await res.json()
-    const text = data.output?.message?.content?.[0]?.text
-    if (!text) throw new Error('Bedrock returned empty response')
-    return stripMarkdownCodeFence(text)
+    return invokeBedrockConverse(messages, maxTokens)
   }
 
   // NVIDIA (OpenAI-compatible)
