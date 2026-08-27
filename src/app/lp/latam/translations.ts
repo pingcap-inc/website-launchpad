@@ -79,8 +79,7 @@ export const translations: Record<Locale, LatamCopy> = {
   en: {
     hero: {
       eyebrow: 'One database. Infinite possibilities.',
-      headline:
-        'Distributed SQL for Teams Building in <span class="text-gradient-red">Latin America</span>',
+      headline: 'Scale Your <span class="text-gradient-red">AI Agents</span> on One Data Platform',
       subheadline:
         'Build scalable, AI-ready applications on a distributed SQL platform designed for always-on transactions, real-time intelligence, and cloud-native growth.',
       primaryCta: 'Get started with TiDB Cloud',
@@ -265,7 +264,7 @@ export const translations: Record<Locale, LatamCopy> = {
     hero: {
       eyebrow: 'Una base de datos. Posibilidades infinitas.',
       headline:
-        'SQL Distribuido para Equipos que Construyen en <span class="text-gradient-red">América Latina</span>',
+        'Escala tus <span class="text-gradient-red">Agentes de IA</span> en una Sola Plataforma de Datos',
       subheadline:
         'Crea aplicaciones escalables y listas para IA sobre una plataforma SQL distribuida diseñada para transacciones siempre activas, inteligencia en tiempo real y crecimiento nativo en la nube.',
       primaryCta: 'Comienza con TiDB Cloud',
@@ -451,7 +450,7 @@ export const translations: Record<Locale, LatamCopy> = {
     hero: {
       eyebrow: 'Um banco de dados. Possibilidades infinitas.',
       headline:
-        'SQL Distribuído para Equipes que Constroem na <span class="text-gradient-red">América Latina</span>',
+        'Escale seus <span class="text-gradient-red">Agentes de IA</span> em uma Única Plataforma de Dados',
       subheadline:
         'Crie aplicações escaláveis e prontas para IA em uma plataforma SQL distribuída projetada para transações sempre ativas, inteligência em tempo real e crescimento nativo em nuvem.',
       primaryCta: 'Comece com o TiDB Cloud',
