@@ -726,3 +726,275 @@
     animation: none;
   }
 }
+
+/* ── TiDB Cloud Filesystem landing page (/tidb/tidb-cloud-filesystems/) ─────────────
+   Looping mechanism diagrams on the three value cards. Timings are phased so
+   the three consistency-mode dots arrive at 18% / 46% / 76% of one shared 6s
+   cycle (fastest guarantee arrives first). */
+
+/* Bands enter in sequence but exit together — only the entrance carries the
+   order, so the direction reads unambiguously at any point in the loop. */
+/* Whole-card progress fill for the loop strip's active card. */
+@keyframes ti-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.ti-fill {
+  animation-name: ti-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  transform-origin: left;
+}
+
+@keyframes ti-band-a {
+  0%,
+  2% {
+    opacity: 0;
+    transform: translateY(9px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  8%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes ti-band-b {
+  0%,
+  11% {
+    opacity: 0;
+    transform: translateY(9px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  17%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes ti-band-c {
+  0%,
+  20% {
+    opacity: 0;
+    transform: translateY(9px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  26%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes ti-drop {
+  0%,
+  18% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  44%,
+  82% {
+    opacity: 0.16;
+    transform: translateX(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes ti-keep {
+  0%,
+  18% {
+    opacity: 0.7;
+  }
+  44%,
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+/* Working-set chips gather one by one and exit together — same grammar as
+   the git bands: only the entrance carries meaning. */
+@keyframes ti-gather-1 {
+  0%,
+  2% {
+    opacity: 0;
+    transform: translateY(6px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  8%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes ti-gather-2 {
+  0%,
+  9% {
+    opacity: 0;
+    transform: translateY(6px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  15%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes ti-gather-3 {
+  0%,
+  16% {
+    opacity: 0;
+    transform: translateY(6px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  22%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes ti-gather-4 {
+  0%,
+  23% {
+    opacity: 0;
+    transform: translateY(6px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  29%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes ti-gather-5 {
+  0%,
+  30% {
+    opacity: 0;
+    transform: translateY(6px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  36%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes ti-gather-6 {
+  0%,
+  37% {
+    opacity: 0;
+    transform: translateY(6px);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  43%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+.ti-gather-1 {
+  animation: ti-gather-1 6s infinite;
+}
+.ti-gather-2 {
+  animation: ti-gather-2 6s infinite;
+}
+.ti-gather-3 {
+  animation: ti-gather-3 6s infinite;
+}
+.ti-gather-4 {
+  animation: ti-gather-4 6s infinite;
+}
+.ti-gather-5 {
+  animation: ti-gather-5 6s infinite;
+}
+.ti-gather-6 {
+  animation: ti-gather-6 6s infinite;
+}
+
+.ti-band-a {
+  animation: ti-band-a 6s infinite;
+}
+.ti-band-b {
+  animation: ti-band-b 6s infinite;
+}
+.ti-band-c {
+  animation: ti-band-c 6s infinite;
+}
+.ti-drop {
+  animation: ti-drop 6s ease-in-out infinite;
+}
+.ti-keep {
+  animation: ti-keep 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ti-band-a,
+  .ti-band-b,
+  .ti-band-c,
+  .ti-gather-1,
+  .ti-gather-2,
+  .ti-gather-3,
+  .ti-gather-4,
+  .ti-gather-5,
+  .ti-gather-6,
+  .ti-drop,
+  .ti-keep {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

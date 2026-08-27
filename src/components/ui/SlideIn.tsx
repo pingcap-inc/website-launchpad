@@ -37,14 +37,16 @@ export function SlideIn({
     return () => observer.disconnect()
   }, [])
 
+  // Under prefers-reduced-motion the slide collapses to a plain fade —
+  // gentler, not zero.
   const isFade = variant === 'fade'
   const initial = isFade
     ? 'opacity-0'
     : direction === 'left'
-      ? 'opacity-0 -translate-x-16'
+      ? 'opacity-0 -translate-x-16 motion-reduce:translate-x-0'
       : direction === 'right'
-        ? 'opacity-0 translate-x-16'
-        : 'opacity-0 translate-y-8'
+        ? 'opacity-0 translate-x-16 motion-reduce:translate-x-0'
+        : 'opacity-0 translate-y-8 motion-reduce:translate-y-0'
 
   return (
     <div

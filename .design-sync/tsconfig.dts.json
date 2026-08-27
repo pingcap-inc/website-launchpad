@@ -1,0 +1,26 @@
+// Emits .d.ts declarations for the component surface.
+//
+// The app itself builds with noEmit (Next handles types), so nothing in the
+// repo ever produces declarations. The design-sync converter reads component
+// prop contracts from a .d.ts tree — without this, every <Name>Props comes out
+// as `[key: string]: unknown` and the design agent has no API to code against.
+//
+// Output goes to dist/types, which findTypesRoot() discovers automatically and
+// .gitignore already covers.
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "../dist/types",
+    "incremental": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./shims/css-modules.d.ts",
+    "../src/components/**/*.ts",
+    "../src/components/**/*.tsx",
+    "../src/lib/**/*.ts"
+  ]
+}

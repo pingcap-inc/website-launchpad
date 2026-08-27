@@ -1,0 +1,20 @@
+// tsconfig for the design-sync bundle build.
+//
+// The converter reads compilerOptions.paths from THIS file only — it does not
+// follow "extends" — so every alias the bundle needs is declared here in full.
+// Path targets resolve relative to this file's own directory.
+//
+// The next/* entries swap Next.js runtime modules for static shims; see
+// .design-sync/shims/ for why each one exists.
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["../src/*"],
+      "next/image": ["./shims/next-image.tsx"],
+      "next/link": ["./shims/next-link.tsx"],
+      "next/navigation": ["./shims/next-navigation.ts"],
+      "next/dynamic": ["./shims/next-dynamic.tsx"]
+    }
+  }
+}
