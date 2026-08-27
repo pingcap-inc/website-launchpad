@@ -182,7 +182,7 @@ export const translations: Record<Locale, LatamCopy> = {
     },
     ecosystem: {
       eyebrow: 'Ecosystem',
-      title: 'Grounded Partner Ecosystem',
+      title: 'Partners Across the Region',
       paragraphs: [
         'Run TiDB Cloud on AWS, Google Cloud and Alibaba Cloud.',
         'Work with regional partners who understand local regulations.',
@@ -368,7 +368,7 @@ export const translations: Record<Locale, LatamCopy> = {
     },
     ecosystem: {
       eyebrow: 'Ecosistema',
-      title: 'Ecosistema de Socios con Presencia Local',
+      title: 'Socios en Toda la Región',
       paragraphs: [
         'Ejecuta TiDB Cloud en AWS, Google Cloud y Alibaba Cloud.',
         'Trabaja con socios regionales que comprenden las regulaciones locales.',
@@ -554,7 +554,7 @@ export const translations: Record<Locale, LatamCopy> = {
     },
     ecosystem: {
       eyebrow: 'Ecossistema',
-      title: 'Ecossistema de Parceiros com Presença Local',
+      title: 'Parceiros em Toda a Região',
       paragraphs: [
         'Execute o TiDB Cloud na AWS, no Google Cloud e na Alibaba Cloud.',
         'Trabalhe com parceiros regionais que entendem as regulamentações locais.',
