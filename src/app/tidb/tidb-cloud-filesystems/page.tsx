@@ -28,10 +28,11 @@ import { PrismBackground } from './PrismBackground'
 // "preview, not guaranteed" note on step 07 is a useful honest disclosure.
 const SHOW_MECHANISMS = true
 
-// LAUNCH GATE — the ti CLI docs are still unpublished; every /ai/ti-* path
-// below 404s on docs.pingcap.com today, so these links still point at the
-// Cloudflare preview build. Swap this one constant to
-// 'https://docs.pingcap.com' once Docs publishes, and re-run the link check.
+// The ti CLI docs are not published yet — every /ai/ti-* path below 404s on
+// docs.pingcap.com today. Decision (Heidi, 2026-08-25): ship with the
+// Cloudflare preview build rather than hold the page. Swap this one constant
+// to 'https://docs.pingcap.com' once Docs publishes, then re-run the link
+// check; it is the only place these hosts appear.
 const DOCS_BASE = 'https://ai.pingcap-docsite-preview.pages.dev'
 // "Get Started with TiDB Cloud CLI" — install, configure, pick a first
 // workflow. The Quickstart CTAs used to land on the agent-sandbox tutorial,
