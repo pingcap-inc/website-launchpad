@@ -45,9 +45,11 @@ import { cn } from '@/lib/utils'
  * headline copy or the hero split ratio changes.
  */
 const HERO_TITLE_SIZE: Record<Locale, string> = {
-  en: 'lg:text-[44px] xl:text-[58px] 2xl:text-[68px]',
-  es: 'lg:text-[36px] xl:text-[42px] 2xl:text-[52px]',
-  pt: 'lg:text-[34px] xl:text-[39px] 2xl:text-[48px]',
+  en: 'lg:text-[38px] xl:text-[50px] 2xl:text-[60px]',
+  // Spanish and Portuguese measure within 0.1px of each other for this
+  // headline, so they deliberately share one set of sizes.
+  es: 'lg:text-[30px] xl:text-[39px] 2xl:text-[47px]',
+  pt: 'lg:text-[30px] xl:text-[39px] 2xl:text-[47px]',
 }
 
 // Starts false so the server render and the first client render agree (motion

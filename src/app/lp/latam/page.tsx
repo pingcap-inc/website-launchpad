@@ -11,7 +11,7 @@ import { LOCALE_COOKIE, countryFromHeaders, detectLocale } from './detect-locale
 // representation is the English one these strings describe.
 const PAGE_PATH = '/lp/latam/'
 const PAGE_URL = 'https://www.pingcap.com/lp/latam/'
-const PAGE_TITLE = 'Scale Your AI Agents on One Data Platform | TiDB Cloud'
+const PAGE_TITLE = 'Distributed SQL for Teams Building in Latin America | TiDB'
 const PAGE_DESCRIPTION =
   "Build scalable, AI-ready apps on TiDB's data platform for always-on transactions, real-time intelligence, and cloud-native growth."
 const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
