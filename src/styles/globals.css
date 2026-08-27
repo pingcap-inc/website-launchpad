@@ -727,7 +727,7 @@
   }
 }
 
-/* ── TiDB Cloud Filesystem landing page (/tidb-cloud-filesystem/) ─────────────
+/* ── TiDB Cloud Filesystem landing page (/tidb/tidb-cloud-filesystems/) ─────────────
    Looping mechanism diagrams on the three value cards. Timings are phased so
    the three consistency-mode dots arrive at 18% / 46% / 76% of one shared 6s
    cycle (fastest guarantee arrives first). */

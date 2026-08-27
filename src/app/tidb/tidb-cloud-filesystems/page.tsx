@@ -55,7 +55,11 @@ const KIMI_STORY_URL: string | null = null
 const TITLE = 'TiDB Cloud Filesystem: The Workspace Your Agents Share'
 const DESCRIPTION =
   'TiDB Cloud Filesystem is a durable shared workspace for coding agents — one filesystem held by several runtimes at once. Now in technical preview.'
-const PATH = '/tidb-cloud-filesystem/'
+// Nested under /tidb/ per PMM (2026-08-25). NOTE for deploy: /tidb/ itself is
+// WordPress-served — every route this app serves in production is top-level
+// (/tidb-cloud-lake/, /what-is-tidb/). Reaching this path needs an Nginx
+// carve-out for /tidb/tidb-cloud-filesystems/ inside the WordPress prefix.
+const PATH = '/tidb/tidb-cloud-filesystems/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
 
@@ -290,6 +294,7 @@ const schema = buildPageSchema({
   description: DESCRIPTION,
   breadcrumbs: [
     { name: 'Home', path: '/' },
+    { name: 'TiDB', path: '/tidb/' },
     { name: 'TiDB Cloud Filesystem', path: PATH },
   ],
   extraSchemas: [
