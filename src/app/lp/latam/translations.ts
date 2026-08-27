@@ -81,7 +81,7 @@ export const translations: Record<Locale, LatamCopy> = {
       eyebrow: 'One database. Infinite possibilities.',
       headline: 'Scale Your <span class="text-gradient-red">AI Agents</span> on One Data Platform',
       subheadline:
-        'Build scalable, AI-ready applications on a distributed SQL platform designed for always-on transactions, real-time intelligence, and cloud-native growth.',
+        'Build scalable, AI-ready applications on TiDB, a MySQL-compatible distributed database, designed for always-on transactions, real-time intelligence, and cloud-native growth.',
       primaryCta: 'Get started with TiDB Cloud',
       secondaryCta: 'Talk to our solutions team',
     },
@@ -266,7 +266,7 @@ export const translations: Record<Locale, LatamCopy> = {
       headline:
         'Escala tus <span class="text-gradient-red">Agentes de IA</span> en una Sola Plataforma de Datos',
       subheadline:
-        'Crea aplicaciones escalables y listas para IA sobre una plataforma SQL distribuida diseñada para transacciones siempre activas, inteligencia en tiempo real y crecimiento nativo en la nube.',
+        'Crea aplicaciones escalables y listas para IA sobre TiDB, una base de datos distribuida compatible con MySQL, diseñada para transacciones siempre activas, inteligencia en tiempo real y crecimiento nativo en la nube.',
       primaryCta: 'Comienza con TiDB Cloud',
       secondaryCta: 'Habla con nuestro equipo de soluciones',
     },
@@ -452,7 +452,7 @@ export const translations: Record<Locale, LatamCopy> = {
       headline:
         'Escale seus <span class="text-gradient-red">Agentes de IA</span> em uma Única Plataforma de Dados',
       subheadline:
-        'Crie aplicações escaláveis e prontas para IA em uma plataforma SQL distribuída projetada para transações sempre ativas, inteligência em tempo real e crescimento nativo em nuvem.',
+        'Crie aplicações escaláveis e prontas para IA no TiDB, um banco de dados distribuído compatível com MySQL, projetado para transações sempre ativas, inteligência em tempo real e crescimento nativo em nuvem.',
       primaryCta: 'Comece com o TiDB Cloud',
       secondaryCta: 'Fale com nossa equipe de soluções',
     },
