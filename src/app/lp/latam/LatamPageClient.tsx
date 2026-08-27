@@ -446,7 +446,7 @@ const customerLogos = [
 // black, so its asset was knocked out to transparent and flattened to white.
 const partnerLogos = [
   {
-    name: 'AIR — Agentic AI Engineering',
+    name: 'AI/R — Agentic AI Engineering',
     src: '/images/logos/latam-air-logo-white.png',
     width: 1044,
     height: 220,
