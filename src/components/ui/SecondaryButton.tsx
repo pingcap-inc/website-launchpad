@@ -91,8 +91,6 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
     }
 
     if (as === 'a' || href) {
-      const tabProps = externalLinkProps(href)
-
       return (
         <a
           ref={ref as React.Ref<HTMLAnchorElement>}
@@ -102,7 +100,7 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
             handleInPageScroll(event, href)
             onClick?.()
           }}
-          {...tabProps}
+          {...externalLinkProps(href)}
         >
           {content}
         </a>

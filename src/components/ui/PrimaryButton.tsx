@@ -68,8 +68,6 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
   )
 
   if (href) {
-    const tabProps = externalLinkProps(href)
-
     return (
       <a
         href={href}
@@ -78,7 +76,7 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
           handleInPageScroll(event, href)
           onClick?.()
         }}
-        {...tabProps}
+        {...externalLinkProps(href)}
       >
         {content}
       </a>

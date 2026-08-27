@@ -50,9 +50,36 @@ const HERO_TITLE_SIZE: Record<Locale, string> = {
   pt: 'lg:text-[34px] xl:text-[39px] 2xl:text-[48px]',
 }
 
+// Starts false so the server render and the first client render agree (motion
+// variant); the effect flips it after mount if the user opts out of motion.
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduced(media.matches)
+    update()
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
+  return reduced
+}
+
 function CardVideo({ src }: { src: string }) {
+  const reducedMotion = usePrefersReducedMotion()
+  // Reduced motion: never autoplay/loop. Remount (via key) so the element is
+  // recreated without autoPlay rather than starting and being paused mid-play,
+  // and expose controls so the clip stays available on demand.
   return (
-    <video autoPlay loop muted playsInline className="w-full h-auto border border-carbon-200">
+    <video
+      key={reducedMotion ? 'static' : 'motion'}
+      autoPlay={!reducedMotion}
+      loop={!reducedMotion}
+      muted
+      playsInline
+      controls={reducedMotion}
+      preload={reducedMotion ? 'metadata' : 'auto'}
+      className="w-full h-auto border border-carbon-200"
+    >
       <source src={src} type="video/mp4" />
     </video>
   )
@@ -558,7 +585,6 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
     icon: architectureIcons[i],
     title: feature.title,
     description: feature.description,
-    layout: 'vertical' as const,
   }))
 
   const highScaleCards = t.highScale.cards.map((card, i) => ({

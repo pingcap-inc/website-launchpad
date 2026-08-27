@@ -97,6 +97,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
     },
     // Campaign / program pages
+    // NOTE: /lp/* campaign pages are noindex by convention and normally stay out
+    // of the sitemap; /lp/latam/ is an intentional exception — it is indexable.
+    { url: '/lp/latam/', priority: 0.7, changeFrequency: 'monthly' },
     // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
     // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
   ]
