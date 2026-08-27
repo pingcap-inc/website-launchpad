@@ -403,6 +403,15 @@ const customerLogos = [
     href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
     linkLabel: 'Read the Kimi case study',
   },
+  {
+    name: 'Bling',
+    src: '/images/logos/latam-bling-logo-white.svg',
+    width: 103,
+    height: 50,
+    className: 'h-9 sm:h-10 lg:h-12',
+    href: 'https://www.pingcap.com/blog/mysql-to-tidb-migration-how-bling-scaled-25tb-database/',
+    linkLabel: 'Read the Bling case study',
+  },
 ]
 
 // Regional implementation partners. Rendered white on the deep-red section
@@ -598,7 +607,9 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
           <p className="font-mono text-eyebrow text-carbon-500 mb-6 text-center">
             {t.logos.trustedBy}
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+          {/* Six logos: 2 / 3 / 6 all divide evenly, so no row is left with a
+            single orphaned logo at any breakpoint. */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
             {customerLogos.map((logo) => (
               // External destinations, so a plain <a>, not next/link. Opened in a
               // new tab to keep this campaign page open behind the story.
