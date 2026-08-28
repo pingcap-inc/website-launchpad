@@ -1,0 +1,360 @@
+{
+  "pageName": "TiDB vs YugabyteDB: MySQL-First Distributed SQL Comparison",
+  "meta": {
+    "title": "TiDB vs YugabyteDB: MySQL-First Distributed SQL Comparison",
+    "description": "YugabyteDB is Postgres-first; TiDB is MySQL-compatible with native HTAP. Compare distributed SQL databases for MySQL modernization with analytics on live data.",
+    "canonical": "/lp-tidb-vs-yugabytedb/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Database Comparison",
+        "headline": "TiDB vs YugabyteDB: The <span class=\"text-gradient-violet\">MySQL-First</span> Distributed SQL",
+        "subheadline": "YugabyteDB is Postgres-first; TiDB is MySQL-compatible with native HTAP. If you are modernizing MySQL and want analytics on live data, TiDB is the pragmatic fit.",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        },
+        "heroForm": {
+          "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+          "portalId": "4466002",
+          "region": "na1"
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "decision-brief",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "The Decision in Brief",
+        "title": "Choose Based on Your Compatibility Needs",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "MySQL-First Teams → TiDB",
+            "description": "Direct MySQL 8.0 compatibility, leverage existing expertise, minimize application changes, native HTAP for analytics on live data.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "GitBranch",
+            "title": "Postgres-First Teams → YugabyteDB",
+            "description": "PostgreSQL wire protocol compatibility may fit better if your stack is already Postgres-based.",
+            "borderColor": "blue"
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "compatibility-comparison",
+      "type": "comparisonTable",
+      "props": {
+        "eyebrow": "Compatibility Comparison",
+        "title": "For MySQL Teams, TiDB Minimizes Changes",
+        "subtitle": "Direct comparison of key compatibility and operational factors for MySQL modernization.",
+        "ourProduct": "TiDB",
+        "competitor": "YugabyteDB",
+        "rows": [
+          {
+            "feature": "Wire Protocol",
+            "ours": "MySQL 8.0",
+            "theirs": "PostgreSQL"
+          },
+          {
+            "feature": "Migration Path",
+            "ours": "Direct from MySQL",
+            "theirs": "Requires PostgreSQL migration"
+          },
+          {
+            "feature": "Team Knowledge",
+            "ours": "Leverage existing MySQL expertise",
+            "theirs": "Requires PostgreSQL training"
+          },
+          {
+            "feature": "HTAP / Analytics",
+            "ours": "Native columnar HTAP (TiFlash), no ETL",
+            "theirs": "External / separate OLAP"
+          },
+          {
+            "feature": "Kubernetes",
+            "ours": "Mature operator, cloud-native",
+            "theirs": "Operator available"
+          }
+        ],
+        "cta": {
+          "text": "Book Architecture Call",
+          "href": "#book"
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "htap-architecture",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "Native HTAP",
+        "title": "OLTP + OLAP On the Same Data",
+        "items": [
+          {
+            "title": "No Separate OLAP Stack",
+            "description": "TiFlash provides analytical (columnar) replicas so you run transactional and analytical workloads in one system — no separate OLAP stack, no ETL. Query live operational data for real-time analytics without impacting OLTP performance.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          },
+          {
+            "title": "Cloud-Native Architecture",
+            "description": "Stateless TiDB SQL layer + Placement Driver + TiKV storage + optional TiFlash. Mature Kubernetes operator for cloud-native operations. Distributed ACID transactions across the cluster with strong consistency guarantees.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ],
+        "startPosition": "left",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "stats",
+      "type": "stats",
+      "props": {
+        "eyebrow": "Proven at Scale",
+        "title": "Mission-Critical Workloads on TiDB",
+        "subtitle": "Leading fintech, social, data, and SaaS platforms run MySQL-compatible workloads on TiDB.",
+        "items": [
+          {
+            "icon": "TrendingUp",
+            "value": "96%",
+            "label": "Maintenance Reduction",
+            "description": "Plaid migrated off Amazon Aurora for mission-critical fintech"
+          },
+          {
+            "icon": "DollarSign",
+            "value": "80%+",
+            "label": "Infrastructure Savings",
+            "description": "Pinterest consolidated bolt-on systems onto one engine"
+          },
+          {
+            "icon": "Zap",
+            "value": "60x",
+            "label": "Query Speed Improvement",
+            "description": "Catalyst runs multi-tenant SaaS with MySQL compatibility"
+          },
+          {
+            "icon": "Database",
+            "value": "3M+",
+            "label": "Tables at Scale",
+            "description": "Atlassian collapsed 750 Postgres clusters into 16 TiDB clusters"
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "case-studies",
+      "type": "caseStudyCards",
+      "props": {
+        "eyebrow": "Customer Success",
+        "title": "How Companies Choose TiDB Over Alternatives",
+        "items": [
+          {
+            "badge": "Fintech",
+            "title": "Plaid: From Aurora to Distributed SQL",
+            "description": "Migrated off Amazon Aurora to distributed SQL for mission-critical fintech workloads with MySQL compatibility.",
+            "stats": [
+              {
+                "value": "96%",
+                "label": "Reduction in maintenance effort"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-studies/plaid/"
+          },
+          {
+            "badge": "Social Media",
+            "title": "Pinterest: Infrastructure Consolidation",
+            "description": "Consolidated bolt-on systems onto one MySQL-compatible engine for billions of user interactions.",
+            "stats": [
+              {
+                "value": "80%+",
+                "label": "Savings on infrastructure costs"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-studies/pinterest/"
+          },
+          {
+            "badge": "SaaS",
+            "title": "Atlassian: Multi-Tenant at Scale",
+            "description": "Collapsed ~750 Postgres clusters into 16 TiDB clusters for multi-tenant SaaS at massive scale.",
+            "stats": [
+              {
+                "value": "3M+",
+                "label": "Tables across 16 clusters"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-studies/atlassian/"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "recognition",
+      "type": "logoCloud",
+      "props": {
+        "eyebrow": "Industry Recognition",
+        "title": "Recognized by Third Parties",
+        "logos": [
+          {
+            "name": "G2 Leader Winter 2026",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            },
+            "width": 120,
+            "height": 60
+          },
+          {
+            "name": "Gartner Peer Insights Customers' Choice 2025",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            },
+            "width": 120,
+            "height": 60
+          }
+        ],
+        "variant": "minimal",
+        "align": "center"
+      },
+      "style": {
+        "spacing": "md"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "Is TiDB a drop-in replacement for MySQL?",
+            "a": "TiDB provides MySQL 8.0 binary protocol compatibility, meaning most applications can connect without changes. Edge cases should be validated in a proof-of-concept to ensure full compatibility with your specific workload and features."
+          },
+          {
+            "q": "Is YugabyteDB PostgreSQL-compatible enough for my app?",
+            "a": "It depends on which PostgreSQL features your application relies on. However, if your stack is MySQL-based, TiDB offers a lower-friction migration path with direct MySQL 8.0 compatibility."
+          },
+          {
+            "q": "How do distributed transactions work in TiDB vs YugabyteDB?",
+            "a": "Both databases provide distributed ACID transactions with strong consistency. The specific isolation semantics and performance characteristics should be verified for your workload during a proof-of-concept."
+          },
+          {
+            "q": "What is the easiest way to run TiDB on Kubernetes?",
+            "a": "Use the TiDB Kubernetes Operator, a mature cloud-native solution for deploying and managing TiDB clusters. It handles scaling, upgrades, and operational tasks with declarative configuration."
+          },
+          {
+            "q": "What should I test in a TiDB vs YugabyteDB POC?",
+            "a": "Focus on: MySQL/Postgres compatibility with your application, distributed transaction behavior under realistic load, HTAP query performance for analytics workloads, and Kubernetes operations including scaling and failover."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "resources",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Additional Resources",
+        "title": "Prefer to Read First?",
+        "items": [
+          {
+            "icon": "FileCode",
+            "title": "Full Comparison Guide",
+            "description": "Read the complete, ungated TiDB vs YugabyteDB comparison guide with technical deep-dives.",
+            "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
+          },
+          {
+            "icon": "Zap",
+            "title": "O'Reilly Report",
+            "description": "Get the O'Reilly report on distributed SQL databases and modernization strategies.",
+            "href": "https://www.pingcap.com/resources/"
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "final-cta",
+      "type": "cta",
+      "props": {
+        "title": "Compare on Your Own Schema",
+        "subtitle": "Book a 30-minute architecture call with our engineering team. We'll walk through your MySQL data model, scaling needs, and migration path.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Book Architecture Call",
+          "href": "#book"
+        },
+        "secondaryCta": {
+          "text": "Read Full Comparison",
+          "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "form-1787954537630",
+      "type": "form",
+      "props": {
+        "title": "",
+        "portalId": "4466002",
+        "formId": ""
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    }
+  ]
+}
