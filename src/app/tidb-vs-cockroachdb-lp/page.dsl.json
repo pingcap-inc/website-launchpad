@@ -10,7 +10,7 @@
       "id": "hero",
       "type": "hero",
       "props": {
-        "layout": "centered",
+        "layout": "split",
         "eyebrow": "North America",
         "headline": "TiDB vs CockroachDB: <span class=\"text-gradient-violet\">MySQL-Compatible</span>, Native HTAP",
         "subheadline": "If your stack is MySQL and you need real analytics on live data, TiDB gives you MySQL compatibility, native columnar HTAP, and independent compute/storage scaling — without a Postgres-wire migration.",
@@ -300,12 +300,24 @@
           {
             "name": "G2 Leader Winter 2026",
             "width": 200,
-            "height": 168
+            "height": 168,
+            "image": {
+              "url": "https://static.pingcap.com/images/053856a3-20260506-160923.png",
+              "alt": "20260506 160923",
+              "width": 968,
+              "height": 598
+            }
           },
           {
             "name": "Gartner Peer Insights Customers' Choice 2025",
             "width": 200,
-            "height": 168
+            "height": 168,
+            "image": {
+              "url": "https://static.pingcap.com/images/e54e2db0-20260506-160445.png",
+              "alt": "20260506 160445",
+              "width": 972,
+              "height": 594
+            }
           }
         ],
         "variant": "minimal",
