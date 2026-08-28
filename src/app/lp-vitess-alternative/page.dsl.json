@@ -342,20 +342,6 @@
       }
     },
     {
-      "id": "form-section",
-      "type": "form",
-      "props": {
-        "title": "Book Your Architecture Call",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your MySQL data model, scaling needs, and migration path.",
-        "portalId": "4466002",
-        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
-        "region": "na1"
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
       "id": "cta",
       "type": "cta",
       "props": {
@@ -380,6 +366,20 @@
       },
       "style": {
         "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "form-section",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your MySQL data model, scaling needs, and migration path.",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+        "region": "na1"
+      },
+      "style": {
         "spacing": "section"
       }
     }
