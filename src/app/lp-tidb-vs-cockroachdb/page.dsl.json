@@ -134,13 +134,24 @@
       "id": "tiflash-htap",
       "type": "featureMedia",
       "props": {
-        "eyebrow": "Native HTAP",
+        "eyebrow": "Architectural Advantages",
         "title": "TiFlash vs External Analytics: One System, No ETL",
-        "subtitle": "TiFlash columnar replicas plus optimizer pushdown run OLTP and OLAP on the same fresh data, in one system. No separate warehouse, no ETL pipelines, no data lag. CockroachDB is row-store only; for analytics you export to an external warehouse, adding latency, ETL complexity, and cost.",
+        "subtitle": "",
         "items": [
           {
             "title": "Real-Time Analytics Without Compromise",
-            "description": "TiFlash maintains columnar replicas of your row data automatically. Query fresh transactional data with analytical workloads—no waiting for batch ETL jobs or dealing with stale data snapshots."
+            "description": "TiFlash columnar replicas plus optimizer pushdown run OLTP and OLAP on the same fresh data, in one system. No separate warehouse, no ETL pipelines, no data lag. CockroachDB is row-store only; for analytics you export to an external warehouse, adding latency, ETL complexity, and cost.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/1d4c74b6-tidb-architecture-v6.png",
+                "alt": "tidb architecture v6",
+                "width": 3000,
+                "height": 1600
+              },
+              "alt": "tidb architecture v6",
+              "width": 3000,
+              "height": 1600
+            }
           }
         ],
         "startPosition": "left",
@@ -200,67 +211,95 @@
         "items": [
           {
             "badge": "Fintech",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/23ea2f33-plaid-logo.png",
+                "alt": "plaid logo",
+                "width": 351,
+                "height": 132
+              },
+              "alt": "plaid logo",
+              "width": 351,
+              "height": 132
+            },
             "title": "Plaid migrated off Amazon Aurora to TiDB",
             "description": "Distributed SQL for mission-critical fintech workloads with MySQL compatibility and HTAP analytics.",
             "stats": [
               {
                 "value": "96%",
                 "label": "Reduction in maintenance effort"
-              },
-              {
-                "value": "100%",
-                "label": "MySQL compatibility"
               }
             ],
-            "href": "https://www.pingcap.com/case-studies/"
+            "href": "https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/"
           },
           {
             "badge": "Social",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/51545d7d-pinterest-logo.svg",
+                "alt": "pinterest logo",
+                "width": 181,
+                "height": 50
+              },
+              "alt": "pinterest logo",
+              "width": 181,
+              "height": 50
+            },
             "title": "Pinterest consolidated onto TiDB",
             "description": "Replaced bolt-on analytics systems with one MySQL-compatible distributed database engine.",
             "stats": [
               {
                 "value": "80%+",
                 "label": "Infrastructure cost savings"
-              },
-              {
-                "value": "1",
-                "label": "Unified platform"
               }
             ],
-            "href": "https://www.pingcap.com/case-studies/"
+            "href": "https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/"
           },
           {
             "badge": "SaaS",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/4043e4af-catalyst.svg",
+                "alt": "catalyst",
+                "width": 252,
+                "height": 72
+              },
+              "alt": "catalyst",
+              "width": 252,
+              "height": 72
+            },
             "title": "Catalyst runs multi-tenant SaaS on TiDB",
             "description": "MySQL compatibility and native HTAP enable real-time analytics for thousands of tenants.",
             "stats": [
               {
                 "value": "60x",
                 "label": "Query speed improvement"
-              },
-              {
-                "value": "Native",
-                "label": "HTAP analytics"
               }
             ],
-            "href": "https://www.pingcap.com/case-studies/"
+            "href": "https://www.pingcap.com/case-study/catalyst-rearchitects-core-saas-platform-tidb-60x-faster-performance/"
           },
           {
             "badge": "SaaS",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/239173a5-apps-m.svg",
+                "alt": "apps m",
+                "width": 24,
+                "height": 24
+              },
+              "alt": "apps m",
+              "width": 24,
+              "height": 24
+            },
             "title": "Atlassian consolidated 750 clusters",
             "description": "Collapsed ~750 Postgres clusters into 16 TiDB clusters for multi-tenant SaaS at scale.",
             "stats": [
               {
                 "value": "3M+",
                 "label": "Tables across 16 clusters"
-              },
-              {
-                "value": "16",
-                "label": "Clusters from 750"
               }
             ],
-            "href": "https://www.pingcap.com/case-studies/"
+            "href": "https://www.pingcap.com/blog/how-atlassian-scaled-three-million-tables-multi-tenancy-tidb/"
           }
         ]
       },
@@ -278,14 +317,20 @@
           {
             "name": "G2 Leader Winter 2026",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "url": "https://static.pingcap.com/images/053856a3-20260506-160923.png",
+              "alt": "20260506 160923",
+              "width": 968,
+              "height": 598
             },
             "href": "https://www.g2.com/"
           },
           {
             "name": "Gartner Peer Insights Customers' Choice 2025",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "url": "https://static.pingcap.com/images/e54e2db0-20260506-160445.png",
+              "alt": "20260506 160445",
+              "width": 972,
+              "height": 594
             },
             "href": "https://www.gartner.com/reviews/home"
           }
@@ -366,7 +411,7 @@
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your MySQL data model, scaling needs, and migration path.",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your data model, scaling needs, and migration path.",
         "portalId": "4466002",
         "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
         "region": "na1"
