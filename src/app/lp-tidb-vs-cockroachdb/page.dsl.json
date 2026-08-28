@@ -48,8 +48,8 @@
             "title": "MySQL Wire Protocol",
             "description": "TiDB speaks MySQL 8.0 natively — use existing drivers, ORMs, and team knowledge without retraining.",
             "cta": {
-              "text": "Learn More",
-              "href": "https://docs.pingcap.com/"
+              "text": "",
+              "href": ""
             },
             "icon": "Database"
           },
@@ -58,8 +58,8 @@
             "title": "Native Columnar HTAP",
             "description": "TiFlash columnar replicas enable real-time analytics on live data — no ETL, no separate warehouse.",
             "cta": {
-              "text": "Explore TiFlash",
-              "href": "https://docs.pingcap.com/"
+              "text": "",
+              "href": ""
             },
             "icon": "BarChart2"
           },
@@ -68,8 +68,8 @@
             "title": "Disaggregated Architecture",
             "description": "Scale compute and storage independently — pay for what you actually need, not bundled overhead.",
             "cta": {
-              "text": "View Architecture",
-              "href": "https://docs.pingcap.com/"
+              "text": "",
+              "href": ""
             },
             "icon": "Layers"
           }
@@ -139,31 +139,8 @@
         "subtitle": "TiFlash columnar replicas plus optimizer pushdown run OLTP and OLAP on the same fresh data, in one system. No separate warehouse, no ETL pipelines, no data lag. CockroachDB is row-store only; for analytics you export to an external warehouse, adding latency, ETL complexity, and cost.",
         "items": [
           {
-            "title": "Real-Time Analytics on Live Data",
-            "description": "Run complex analytical queries on fresh transactional data without ETL pipelines. TiFlash automatically maintains columnar replicas synchronized with TiKV row storage, enabling sub-second analytics on up-to-date operational data.",
-            "image": {
-              "image": {
-                "url": ""
-              }
-            }
-          },
-          {
-            "title": "Intelligent Query Routing",
-            "description": "The TiDB optimizer automatically routes queries to row or columnar storage based on workload characteristics. OLTP queries hit TiKV for fast point lookups; OLAP scans leverage TiFlash columnar compression and vectorized execution — all transparent to your application.",
-            "image": {
-              "image": {
-                "url": ""
-              }
-            }
-          },
-          {
-            "title": "No Data Duplication or Export",
-            "description": "Unlike external analytics patterns that require exporting to a separate warehouse, TiFlash replicas are first-class citizens in the same distributed cluster. Eliminate ETL complexity, data staleness, and duplicate storage costs while maintaining strong consistency guarantees.",
-            "image": {
-              "image": {
-                "url": ""
-              }
-            }
+            "title": "Real-Time Analytics Without Compromise",
+            "description": "TiFlash maintains columnar replicas of your row data automatically. Query fresh transactional data with analytical workloads—no waiting for batch ETL jobs or dealing with stale data snapshots."
           }
         ],
         "startPosition": "left",
