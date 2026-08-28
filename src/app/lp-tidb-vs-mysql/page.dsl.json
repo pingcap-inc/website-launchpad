@@ -1,0 +1,348 @@
+{
+  "pageName": "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
+  "meta": {
+    "title": "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
+    "description": "Compare TiDB and MySQL for horizontal scale, distributed ACID, and HTAP. Drop-in MySQL compatibility with automatic sharding and zero-downtime DDL.",
+    "canonical": "/lp-tidb-vs-mysql/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Battle Card",
+        "headline": "TiDB vs. <span class=\"text-gradient-violet\">MySQL</span>",
+        "subheadline": "Scale MySQL reads and writes past a single primary without manual sharding, and keep strong ACID consistency.",
+        "primaryCta": {
+          "text": "Book a 30-minute Architecture Call",
+          "href": "#book"
+        },
+        "secondaryCta": {
+          "text": "Read the Full Comparison Guide",
+          "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        },
+        "heroForm": {
+          "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+          "portalId": "4466002",
+          "region": "na1"
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "decision-brief",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "The Decision in Brief",
+        "title": "Why Teams Choose TiDB Over MySQL",
+        "subtitle": "Technical complexity rises as scaling and high-availability needs grow. Manual sharding, clustering, and replication add maintenance overhead. TiDB provides one MySQL-compatible engine for transactions and real-time analytics — scaling out without app-side sharding.",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "Scale Writes Without Sharding",
+            "description": "Transparent horizontal scale for reads and writes — no app-level sharding logic required.",
+            "cta": {
+              "text": "See how it works",
+              "href": "https://docs.pingcap.com/"
+            },
+            "icon": "Layers"
+          },
+          {
+            "variant": "blue",
+            "title": "Distributed ACID Transactions",
+            "description": "Cluster-wide strong consistency with ACID guarantees across all nodes.",
+            "cta": {
+              "text": "Learn about consistency",
+              "href": "https://docs.pingcap.com/"
+            },
+            "icon": "Shield"
+          },
+          {
+            "variant": "teal",
+            "title": "Native HTAP Capability",
+            "description": "Run real-time analytics on live transactional data with TiFlash columnar storage.",
+            "cta": {
+              "text": "Explore HTAP",
+              "href": "https://docs.pingcap.com/"
+            },
+            "icon": "BarChart2"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "comparison-table",
+      "type": "comparisonTable",
+      "props": {
+        "eyebrow": "Head-to-Head",
+        "title": "TiDB vs MySQL: Feature Comparison",
+        "subtitle": "See how TiDB and MySQL stack up across scalability, ACID guarantees, analytics, and operational complexity.",
+        "ourProduct": "TiDB",
+        "competitor": "MySQL",
+        "rows": [
+          {
+            "feature": "Horizontal scale (writes + reads)",
+            "ours": "Transparent, automatic",
+            "theirs": "Manual sharding required"
+          },
+          {
+            "feature": "Distributed ACID",
+            "ours": true,
+            "theirs": "Single-node ACID only"
+          },
+          {
+            "feature": "Native HTAP",
+            "ours": "Yes (TiFlash columnar replicas)",
+            "theirs": false
+          },
+          {
+            "feature": "Auto-sharding / rebalancing",
+            "ours": "Transparent cluster-wide",
+            "theirs": "App-level implementation"
+          },
+          {
+            "feature": "MySQL compatibility",
+            "ours": "Full wire protocol",
+            "theirs": "Native"
+          },
+          {
+            "feature": "Online schema change",
+            "ours": "Zero-downtime DDL",
+            "theirs": "Locking or tooling required"
+          },
+          {
+            "feature": "High availability",
+            "ours": "Distributed, automatic failover",
+            "theirs": "Clustering setup required"
+          }
+        ],
+        "cta": {
+          "text": "Book an architecture call",
+          "href": "#book"
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "key-benefits",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "Key Benefits",
+        "title": "Why TiDB Is the MySQL Alternative for Scale",
+        "items": [
+          {
+            "title": "Drop-in MySQL Compatibility",
+            "description": "TiDB speaks the MySQL protocol, so your drivers, ORMs, and SQL keep working. Migrate without a rewrite, then add Spark, Kafka, and Kubernetes connectors as you grow. [Read the migration guide](https://docs.pingcap.com/)",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          },
+          {
+            "title": "Scale Writes Without Sharding",
+            "description": "TiDB transparently shards and rebalances across nodes, so you scale writes and reads without building or maintaining application-level sharding. Add nodes as your workload grows — zero downtime, zero manual rebalancing.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          },
+          {
+            "title": "Consolidated Data Platform",
+            "description": "One endpoint for transactional and analytical workloads with strong ACID consistency at scale — no separate OLAP system, no ETL. TiFlash columnar replicas run real-time analytics on live data in the same engine.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ],
+        "startPosition": "left",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "customer-proof",
+      "type": "caseStudyCards",
+      "props": {
+        "eyebrow": "Proven at Scale",
+        "title": "Leading Fintech, Social, and SaaS Platforms Choose TiDB",
+        "items": [
+          {
+            "badge": "Fintech",
+            "title": "Plaid migrated off Amazon Aurora to TiDB",
+            "description": "Mission-critical fintech workloads with MySQL compatibility and distributed SQL.",
+            "stats": [
+              {
+                "value": "96%",
+                "label": "reduction in maintenance effort"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-studies/"
+          },
+          {
+            "badge": "Social",
+            "title": "Pinterest consolidated bolt-on systems onto one engine",
+            "description": "MySQL-compatible distributed SQL for social graph and recommendation workloads.",
+            "stats": [
+              {
+                "value": "80%+",
+                "label": "savings on infrastructure costs"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-studies/"
+          },
+          {
+            "badge": "SaaS",
+            "title": "Catalyst runs multi-tenant SaaS on TiDB",
+            "description": "MySQL compatibility and HTAP for real-time analytics across tenant data.",
+            "stats": [
+              {
+                "value": "60x",
+                "label": "query-speed improvement"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-studies/"
+          },
+          {
+            "badge": "SaaS",
+            "title": "Atlassian collapsed ~750 Postgres clusters into 16 TiDB clusters",
+            "description": "Multi-tenant SaaS at scale with MySQL compatibility and horizontal scale.",
+            "stats": [
+              {
+                "value": "3M+",
+                "label": "tables across 16 clusters"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-studies/"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "third-party-recognition",
+      "type": "logoCloud",
+      "props": {
+        "eyebrow": "Third-Party Recognition",
+        "title": "Recognized by Industry Analysts and Customers",
+        "logos": [
+          {
+            "name": "G2 Leader Winter 2026",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            }
+          },
+          {
+            "name": "Gartner Peer Insights Customers' Choice 2025",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            }
+          }
+        ],
+        "variant": "minimal",
+        "align": "center"
+      },
+      "style": {
+        "spacing": "md"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "Is TiDB a drop-in replacement for MySQL?",
+            "a": "TiDB is MySQL wire protocol compatible, so most apps connect without code changes. Your existing MySQL drivers, ORMs (like Sequelize, ActiveRecord, Django ORM), and SQL queries work as-is. Edge cases (stored procedures, specific engine behaviors) should be validated in a POC."
+          },
+          {
+            "q": "How does TiDB scale writes without sharding?",
+            "a": "TiDB auto-splits data into ranges (regions) and rebalances them across TiKV nodes transparently. Your app never manages shard keys, routing logic, or cross-shard transactions — TiDB handles it cluster-wide with distributed ACID guarantees."
+          },
+          {
+            "q": "Does TiDB support real-time analytics?",
+            "a": "Yes. TiFlash columnar replicas run OLAP queries on live transactional data in the same engine, with no ETL. You query the same SQL endpoint for OLTP and OLAP, and TiDB routes analytical queries to TiFlash automatically."
+          },
+          {
+            "q": "What about high availability?",
+            "a": "TiDB uses a distributed, Raft-replicated architecture with automatic failover and no single points of failure. Nodes can fail without data loss or downtime — the cluster self-heals and rebalances."
+          },
+          {
+            "q": "How does online schema change work in TiDB?",
+            "a": "TiDB performs DDL operations (ALTER TABLE, ADD INDEX) online with zero downtime. Unlike MySQL, which can lock tables or require third-party tools like pt-online-schema-change, TiDB's distributed architecture allows schema changes to apply incrementally across the cluster."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "book",
+      "type": "cta",
+      "props": {
+        "title": "Compare TiDB on Your Own Schema",
+        "subtitle": "Book a 30-minute architecture call with our engineering team. We'll walk through your MySQL data model, scaling needs, and migration path — no sales pitch, just technical guidance.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Book a 30-minute Architecture Call",
+          "href": "#form"
+        },
+        "secondaryCta": {
+          "text": "Read the Full Comparison Guide",
+          "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "form",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team.",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+        "region": "na1"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    }
+  ]
+}
