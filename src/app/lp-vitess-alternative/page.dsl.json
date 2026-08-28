@@ -1,0 +1,387 @@
+{
+  "pageName": "Vitess & PlanetScale Alternative: TiDB Distributed SQL Database",
+  "meta": {
+    "title": "Vitess & PlanetScale Alternative: TiDB Distributed SQL Database",
+    "description": "Replace Vitess and PlanetScale's application-side sharding with TiDB's native distributed SQL: transparent auto-sharding, cross-shard ACID transactions, and HTAP in one MySQL-compatible system.",
+    "canonical": "/lp-vitess-alternative/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Vitess & PlanetScale Alternative",
+        "headline": "Distributed SQL, <span class=\"text-gradient-violet\">No App-Side Sharding</span>",
+        "subheadline": "Vitess and PlanetScale shard MySQL at the middleware layer, so your application owns shard routing. TiDB is a native distributed SQL database: transparent sharding, cross-shard transactions, and HTAP in one system.",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "decision-brief",
+      "type": "featureHighlights",
+      "props": {
+        "title": "The Decision in Brief",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "Transparent Auto-Sharding",
+            "description": "TiDB auto-splits data into ranges and rebalances transparently — no shard keys or resharding logic in your app.",
+            "cta": {
+              "text": "View architecture",
+              "href": "https://docs.pingcap.com/"
+            },
+            "icon": "GitBranch"
+          },
+          {
+            "variant": "blue",
+            "title": "Cross-Shard ACID",
+            "description": "Distributed transactions and cross-shard queries in one system — no application-level routing or migration.",
+            "cta": {
+              "text": "Learn more",
+              "href": "https://docs.pingcap.com/"
+            },
+            "icon": "Database"
+          },
+          {
+            "variant": "teal",
+            "title": "HTAP in One Engine",
+            "description": "Run analytics on live data with TiFlash — no separate analytics stack for SaaS, fintech, or AI workloads.",
+            "cta": {
+              "text": "Explore HTAP",
+              "href": "https://docs.pingcap.com/"
+            },
+            "icon": "BarChart2"
+          }
+        ],
+        "columns": 3
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "comparison-table",
+      "type": "comparisonTable",
+      "props": {
+        "eyebrow": "Native Distributed SQL vs Sharding Middleware",
+        "title": "TiDB vs Vitess / PlanetScale",
+        "ourProduct": "TiDB",
+        "competitor": "Vitess / PlanetScale",
+        "rows": [
+          {
+            "feature": "Sharding model",
+            "ours": "Transparent, automatic",
+            "theirs": "Application-side, manual routing"
+          },
+          {
+            "feature": "Rebalancing",
+            "ours": "Automatic, online",
+            "theirs": "App-level migration"
+          },
+          {
+            "feature": "Cross-shard transactions",
+            "ours": "Distributed ACID",
+            "theirs": "Limited"
+          },
+          {
+            "feature": "Cross-shard queries / joins",
+            "ours": true,
+            "theirs": "Constrained"
+          },
+          {
+            "feature": "HTAP / analytics",
+            "ours": "Native (TiFlash), no ETL",
+            "theirs": "Separate stack"
+          },
+          {
+            "feature": "MySQL compatibility",
+            "ours": "Full protocol & syntax",
+            "theirs": "MySQL (sharded)"
+          }
+        ],
+        "cta": {
+          "text": "Read full comparison guide",
+          "href": "https://www.pingcap.com/compare/vitess-vs-tidb/"
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "consistency-queries",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "Distributed Transactions & Cross-Shard Queries",
+        "title": "Consistency & Cross-Shard Queries",
+        "items": [
+          {
+            "title": "Distributed ACID Transactions",
+            "description": "TiDB provides distributed ACID transactions across the entire cluster. Cross-shard transactions and queries are a known constraint of MySQL-sharding approaches like Vitess and PlanetScale.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ],
+        "startPosition": "left",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "operations-kubernetes",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Operations on Kubernetes",
+        "title": "Escape the Resharding Treadmill",
+        "items": [
+          {
+            "icon": "Settings",
+            "title": "Transparent Rebalancing",
+            "description": "TiDB's operator and transparent rebalancing remove much of the recurring resharding toil that grows with a Vitess topology.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Layers",
+            "title": "Kubernetes-Native",
+            "description": "Full lifecycle management via TiDB Operator — no manual shard topology changes or routing updates.",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Gauge",
+            "title": "Auto-Scaling",
+            "description": "Scale compute and storage independently without application downtime or shard key redesign.",
+            "borderColor": "teal"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "htap-analytics",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "HTAP & Real-Time Analytics",
+        "title": "Analytics on Live Data, No Separate Stack",
+        "items": [
+          {
+            "title": "TiFlash: Columnar Analytics in One Engine",
+            "description": "TiFlash runs analytics on live data in the same engine — no separate analytics stack for growing SaaS, fintech, ecommerce, and AI-heavy workloads. Eliminate ETL pipelines and data staleness.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ],
+        "startPosition": "right",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "honest-choice",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "When to Choose Vitess",
+        "title": "Who Should Choose Vitess (Honest)",
+        "items": [
+          {
+            "icon": "Target",
+            "title": "Pure Partitioning Workloads",
+            "description": "If your scaling need is primarily partitioning a workload across shards, and you explicitly do not need cross-shard distributed transactions, strong cross-shard consistency, or HTAP, Vitess may be the simpler local choice.",
+            "borderColor": "violet"
+          }
+        ],
+        "columns": 1,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "proven-scale",
+      "type": "caseStudyCards",
+      "props": {
+        "eyebrow": "Proven at Scale",
+        "title": "Mission-Critical MySQL-Compatible Workloads",
+        "items": [
+          {
+            "badge": "Fintech",
+            "title": "Plaid",
+            "description": "Migrated off Amazon Aurora to distributed SQL for mission-critical fintech workloads.",
+            "stats": [
+              {
+                "value": "96%",
+                "label": "reduction in maintenance effort"
+              }
+            ]
+          },
+          {
+            "badge": "Social",
+            "title": "Pinterest",
+            "description": "Consolidated bolt-on systems onto one MySQL-compatible engine.",
+            "stats": [
+              {
+                "value": "80%+",
+                "label": "savings on infrastructure costs"
+              }
+            ]
+          },
+          {
+            "badge": "SaaS",
+            "title": "Catalyst",
+            "description": "Runs multi-tenant SaaS workloads on TiDB with MySQL compatibility and HTAP.",
+            "stats": [
+              {
+                "value": "60x",
+                "label": "query-speed improvement"
+              }
+            ]
+          },
+          {
+            "badge": "SaaS",
+            "title": "Atlassian",
+            "description": "Collapsed ~750 Postgres clusters into 16 TiDB clusters for multi-tenant SaaS at scale.",
+            "stats": [
+              {
+                "value": "3M+",
+                "label": "tables across 16 clusters"
+              }
+            ]
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "third-party-recognition",
+      "type": "logoCloud",
+      "props": {
+        "eyebrow": "Recognized by Third Parties",
+        "title": "Industry Recognition",
+        "logos": [
+          {
+            "name": "G2 Leader Winter 2026",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            }
+          },
+          {
+            "name": "Gartner Peer Insights Customers' Choice 2025",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            }
+          }
+        ],
+        "variant": "minimal",
+        "align": "center"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "Is Vitess or TiDB better for scaling MySQL?",
+            "a": "For teams that need cross-shard consistency, cross-shard queries, or HTAP, TiDB is the better choice. For pure partitioning without those needs, Vitess can suffice."
+          },
+          {
+            "q": "Is TiDB a good PlanetScale alternative?",
+            "a": "Yes. PlanetScale is managed Vitess, so it inherits the same application-side sharding model. TiDB replaces that with native, transparent distributed SQL: no shard keys in your app, cross-shard ACID transactions, and HTAP in one engine."
+          },
+          {
+            "q": "Does Vitess support cross-shard transactions?",
+            "a": "Cross-shard transactions and queries are limited in MySQL-sharding approaches. TiDB provides distributed ACID across the cluster."
+          },
+          {
+            "q": "Is TiDB fully MySQL compatible?",
+            "a": "Yes — TiDB provides full MySQL protocol and syntax compatibility."
+          },
+          {
+            "q": "Which is easier to operate on Kubernetes?",
+            "a": "TiDB's transparent auto-sharding and Kubernetes operator reduce the resharding and routing work that Vitess pushes to the application team."
+          },
+          {
+            "q": "When should a team replace MySQL sharding with distributed SQL?",
+            "a": "When resharding pain, cross-shard query complexity, rising operational burden, or stronger consistency needs outweigh the flexibility of middleware sharding."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "form-section",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your MySQL data model, scaling needs, and migration path.",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+        "region": "na1"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta",
+      "type": "cta",
+      "props": {
+        "title": "Compare on Your Own Schema",
+        "subtitle": "Escape the resharding treadmill. Book a 30-minute architecture call or read the full, ungated TiDB vs Vitess comparison guide.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Read comparison guide",
+          "href": "https://www.pingcap.com/compare/vitess-vs-tidb/"
+        },
+        "secondaryCta": {
+          "text": "View demo",
+          "href": "https://www.pingcap.com/demo/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
