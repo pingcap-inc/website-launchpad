@@ -159,7 +159,6 @@ const dsl: PageDSL = {
               width: 500,
               height: 150,
             },
-            imagePosition: 'right',
           },
           {
             title: '2. Query Your Data in Place',
@@ -175,7 +174,6 @@ const dsl: PageDSL = {
               width: 500,
               height: 150,
             },
-            imagePosition: 'left',
           },
           {
             title: '3. Connect Your Stack',
@@ -191,7 +189,6 @@ const dsl: PageDSL = {
               width: 500,
               height: 150,
             },
-            imagePosition: 'right',
           },
         ],
         startPosition: 'right',

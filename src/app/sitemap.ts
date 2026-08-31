@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/what-is-tidb/', priority: 0.8, changeFrequency: 'monthly' },
     { url: '/integrations/', priority: 0.8, changeFrequency: 'weekly' },
     { url: '/tidb-cloud-lake/', priority: 0.8, changeFrequency: 'weekly' },
+    { url: '/tidb/tidb-cloud-filesystems/', priority: 0.8, changeFrequency: 'weekly' },
     // AI pages
     { url: '/ai/', priority: 0.8, changeFrequency: 'weekly' },
     { url: '/ai/vector-search/', priority: 0.7, changeFrequency: 'monthly' },
@@ -65,7 +66,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     // Playbook pages
     { url: '/playbook/', priority: 0.8, changeFrequency: 'weekly' },
+    { url: '/playbook/ai-agent-memory/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/playbook/aurora-mysql-migration/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/playbook/build-mcp-server/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/playbook/embed-vector-db-build-rag/', priority: 0.7, changeFrequency: 'monthly' },
     { url: '/playbook/escape-mysql-sharding-pain/', priority: 0.7, changeFrequency: 'monthly' },
     {
@@ -93,6 +96,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Solutions pages
     {
       url: '/solutions/logistics-supply-chain/',
+      priority: 0.8,
+      changeFrequency: 'monthly',
+    },
+    {
+      url: '/solutions/ai-agent-context/',
       priority: 0.8,
       changeFrequency: 'monthly',
     },

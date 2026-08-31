@@ -40,6 +40,7 @@ The admin publish flow also validates required section-level fields. Examples:
 - `hero`: `headline`
 - `stats`: each item needs `value` and `label`
 - `featureGrid` / `featureCard` / `featureHighlights`: section `title`, and each item needs `title` and `description`
+- `caseStudyCards`: section `title`, and each item needs `logo`, `title`, `description`, and at least one stat
 - `featureTabs`: section `title`, and each tab needs `label` and `image`
 - `logoCloud`: each logo needs `name` and `image`
 - `testimonials`: section `title`, and each item needs `quote` and `author`

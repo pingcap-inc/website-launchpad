@@ -89,9 +89,11 @@ export type SectionType =
   | 'stats'
   | 'featureGrid'
   | 'featureCard'
+  | 'caseStudyCards'
   | 'featureTabs'
   | 'featureHighlights'
   | 'featureMedia'
+  | 'columns'
   | 'logoCloud'
   | 'testimonials'
   | 'faq'
@@ -101,6 +103,7 @@ export type SectionType =
   | 'speakers'
   | 'comparisonTable'
   | 'richTextBlock'
+  | 'shortcode'
   | 'tableOfContents'
   | 'codeBlock'
 
@@ -124,6 +127,8 @@ export interface SectionStyle {
   /** Remove bottom padding on this section. */
   removePaddingBottom?: boolean
   className?: string
+  /** Optional full-bleed animated background effect rendered behind the section content. */
+  backgroundEffect?: 'agent-memory'
   /** Tailwind opacity class for section background image, e.g. "opacity-60". */
   backgroundImageOpacityClassName?: string
   /** Optional overlay class (e.g. "bg-black/40"). No overlay unless provided. */
@@ -249,6 +254,33 @@ export interface FeatureCardItem {
   borderColor?: string
   href?: string
   className?: string
+}
+
+export interface CaseStudyCardsProps {
+  eyebrow?: string
+  title: string
+  items: CaseStudyCardItem[]
+  className?: string
+}
+
+export interface CaseStudyCardItem {
+  badge?: string
+  logo?: {
+    image: ImageRef
+    alt?: string
+    width?: number
+    height?: number
+  }
+  title: string
+  description: string
+  stats: CaseStudyCardStat[]
+  href?: string
+  cta?: string
+}
+
+export interface CaseStudyCardStat {
+  value: string
+  label: string
 }
 
 // ─── Feature Tabs ────────────────────────────────────────────────────────────
@@ -385,6 +417,8 @@ export interface FeatureMediaProps {
   subtitle?: string
   items: FeatureMediaItemDSL[]
   startPosition?: 'left' | 'right'
+  /** Vertical gap between feature rows. Default: 'lg' */
+  spacing?: 'sm' | 'md' | 'lg' | 'xl'
   className?: string
 }
 
@@ -397,7 +431,59 @@ export interface FeatureMediaItemDSL {
     width?: number
     height?: number
   }
-  imagePosition?: 'left' | 'right'
+  /** When present, a video is rendered on the media side instead of the image. */
+  video?: {
+    src?: string
+    sources?: { src: string; type?: string }[]
+    poster?: string
+    width?: number
+    height?: number
+    autoPlay?: boolean
+    loop?: boolean
+    muted?: boolean
+    controls?: boolean
+  }
+}
+
+// ─── Columns ───────────────────────────────────────────────────────────────
+
+export interface ColumnsProps {
+  eyebrow?: string
+  title?: string
+  subtitle?: string
+  titleFullWidth?: boolean
+  layout?: 'single' | 'split'
+  mediaType?: 'image' | 'video' | 'shortcode'
+  image?: {
+    image: ImageRef
+    alt?: string
+    width?: number
+    height?: number
+  }
+  /**
+   * When present (or when the image field holds a video URL), a video is
+   * rendered as the column media instead of the image.
+   */
+  video?: {
+    src?: string
+    sources?: { src: string; type?: string }[]
+    poster?: string
+    width?: number
+    height?: number
+    autoPlay?: boolean
+    loop?: boolean
+    muted?: boolean
+    controls?: boolean
+  }
+  shortCode?: string
+  className?: string
+}
+
+// ─── Shortcode ──────────────────────────────────────────────────────────────
+
+export interface ShortcodeProps {
+  shortCode: string
+  className?: string
 }
 
 // ─── HubSpot Form ────────────────────────────────────────────────────────────
@@ -504,9 +590,11 @@ export type SectionPropsMap = {
   stats: StatsProps
   featureGrid: FeatureGridProps
   featureCard: FeatureCardProps
+  caseStudyCards: CaseStudyCardsProps
   featureTabs: FeatureTabsProps
   featureHighlights: FeatureHighlightsProps
   featureMedia: FeatureMediaProps
+  columns: ColumnsProps
   logoCloud: LogoCloudProps
   testimonials: TestimonialsProps
   faq: FaqProps
@@ -516,6 +604,7 @@ export type SectionPropsMap = {
   speakers: SpeakersProps
   comparisonTable: ComparisonTableProps
   richTextBlock: RichTextBlockProps
+  shortcode: ShortcodeProps
   tableOfContents: TableOfContentsProps
   codeBlock: CodeBlockProps
 }
@@ -664,9 +753,10 @@ Available section types (choose appropriate mix):
 - { type: "stats", props: { eyebrow?, title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4, className? } }
 - { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, viewMore?: {text, href}, itemLayout?: "horizontal"|"vertical", iconSize?: 32|48, className? } }
 - { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
+- { type: "caseStudyCards", props: { eyebrow?, title, items: [{badge?, logo?: { image: {assetId?, url}, alt?, width?, height? }, title, description, stats: [{value, label}], href?, cta?}], className? } }
 - { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, content?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval?, className? } }
 - { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href}, iconSize?: 32|48, className? } }
-- { type: "featureMedia", props: { eyebrow?, title?, subtitle?, items: [{title, description, image: {image: {assetId?, url}, alt?, width?, height?}, imagePosition?: "left"|"right"}], startPosition?: "left"|"right", className? } }
+- { type: "featureMedia", props: { eyebrow?, title?, subtitle?, items: [{title, description (supports inline links via [label](url)), image: {image: {assetId?, url}, alt?, width?, height?}, video?: {src?, sources?: [{src, type?}], poster?, width?, height?, autoPlay?, loop?, muted?, controls?} (when present, renders a video instead of the image; use sources for multiple formats)}], startPosition?: "left"|"right", spacing?: "sm"|"md"|"lg"|"xl", className? } }
 - { type: "faq", props: { title?, items: [{q, a}], className? } }
 - { type: "cta", props: { title, subtitle?, primaryCta: {text,href}, secondaryCta?: {text,href}, image?: { image: {assetId?, url}, alt?, width?, height? }, className? } }
 - { type: "testimonials", props: { eyebrow?, title, items: [{quote, author, href?, cta?, logo?: { image: {assetId?, url}, alt?, size? }}], className? } }

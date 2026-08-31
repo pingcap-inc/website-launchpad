@@ -5,6 +5,7 @@ import {
   CtaSection,
   FeatureHighlightsSection,
   FaqSection,
+  CaseStudyCardsSection,
   FeatureCardSection,
   FeatureTabsSection,
   FeatureGridSection,
@@ -278,6 +279,74 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
             href: '/customers/',
             cta: 'Explore Customer Stories',
             logo: { image: { url: '/images/tidb-cloud-startup-program/Manus.png' }, alt: 'Manus' },
+          },
+        ]}
+      />
+    </SectionWrapper>
+  ),
+  CaseStudyCardsSection: () => (
+    <SectionWrapper style={{ background: 'gradient-dark-bottom', spacing: 'section' }}>
+      <CaseStudyCardsSection
+        eyebrow="Customer Results"
+        title="Proof From Production AI Workloads"
+        items={[
+          {
+            badge: 'Agentic AI',
+            logo: {
+              image: {
+                url: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='40' viewBox='0 0 180 40'%3E%3Crect width='180' height='40' fill='black'/%3E%3Ctext x='0' y='28' fill='white' font-family='Arial,sans-serif' font-size='28' font-weight='700'%3EKIMI%3C/text%3E%3C/svg%3E",
+              },
+              alt: 'KIMI logo',
+              width: 180,
+              height: 40,
+            },
+            title: 'Millions of Agent-Created Databases, Provisioned in Under a Second',
+            description:
+              'An AI product team provisions isolated databases instantly while serving millions of generated sites.',
+            stats: [
+              { value: '<1s', label: 'Provisioning time' },
+              { value: '10M+', label: 'Tenants supported' },
+            ],
+            cta: 'Read the story',
+          },
+          {
+            badge: 'Agentic AI',
+            logo: {
+              image: {
+                url: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='40' viewBox='0 0 180 40'%3E%3Crect width='180' height='40' fill='black'/%3E%3Ctext x='0' y='28' fill='white' font-family='Arial,sans-serif' font-size='28' font-weight='700'%3EPLAUD%3C/text%3E%3C/svg%3E",
+              },
+              alt: 'PLAUD logo',
+              width: 180,
+              height: 40,
+            },
+            title: 'From Two Data Stores to One Unified Database',
+            description:
+              'A single operational database replaced fragmented storage and improved throughput for global workloads.',
+            stats: [
+              { value: '10x', label: 'Peak QPS' },
+              { value: '13', label: 'Prod clusters' },
+            ],
+            cta: 'Read the story',
+          },
+          {
+            badge: 'Agentic AI',
+            logo: {
+              image: {
+                url: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='40' viewBox='0 0 180 40'%3E%3Crect width='180' height='40' fill='black'/%3E%3Ctext x='0' y='28' fill='white' font-family='Arial,sans-serif' font-size='28' font-weight='700'%3EManus%3C/text%3E%3C/svg%3E",
+              },
+              alt: 'Manus logo',
+              width: 180,
+              height: 40,
+            },
+            title: 'From Viral Launch to 1M+ Database Tenants',
+            description:
+              'A fast migration gave the team durable context storage and room to scale autonomous workflows.',
+            stats: [
+              { value: '2 wks', label: 'Migration time' },
+              { value: '1M+', label: 'DB tenants' },
+            ],
+            href: 'https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/',
+            cta: 'Read the story',
           },
         ]}
       />

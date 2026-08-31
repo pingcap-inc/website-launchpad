@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import type { SectionStyle } from '@/lib/dsl-schema'
 import { resolveCdnUrl } from '@/lib/cdn-url'
 import { cn } from '@/lib/utils'
+import { ExactHeroBackground } from './ExactHeroBackground'
 
 const BACKGROUND_CLASS: Record<string, string> = {
   primary: 'bg-bg-primary',
@@ -32,6 +33,7 @@ export function resolveSectionStyle(style?: SectionStyle, defaults?: SectionStyl
     removePaddingTop: style?.removePaddingTop ?? defaults?.removePaddingTop,
     removePaddingBottom: style?.removePaddingBottom ?? defaults?.removePaddingBottom,
     className: style?.className ?? defaults?.className,
+    backgroundEffect: style?.backgroundEffect ?? defaults?.backgroundEffect,
     backgroundImageOpacityClassName:
       style?.backgroundImageOpacityClassName ?? defaults?.backgroundImageOpacityClassName,
     backgroundImageOverlayClassName:
@@ -76,6 +78,7 @@ export function SectionWrapper({
   const backgroundImage = resolved.backgroundImage?.image?.url
     ? resolved.backgroundImage
     : undefined
+  const backgroundEffect = resolved.backgroundEffect
   const backgroundImageOpacityClassName = resolved.backgroundImageOpacityClassName ?? 'opacity-80'
   const backgroundImageOverlayClassName = resolved.backgroundImageOverlayClassName
   const removePaddingTop = resolved.removePaddingTop
@@ -94,10 +97,15 @@ export function SectionWrapper({
         SPACING_CLASS[resolved.spacing ?? 'section'] ?? '',
         removePaddingTop && 'pt-0 lg:pt-0',
         removePaddingBottom && 'pb-0 lg:pb-0',
-        backgroundImage && 'relative overflow-hidden',
+        (backgroundImage || backgroundEffect) && 'relative overflow-hidden',
         resolved.className
       )}
     >
+      {backgroundEffect === 'agent-memory' && (
+        <>
+          <ExactHeroBackground className="absolute inset-0" />
+        </>
+      )}
       {backgroundImage && (
         <>
           <div

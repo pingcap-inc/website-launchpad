@@ -57,7 +57,7 @@ export function FeatureCardSection({
             borderColor={
               borderStyle === 'color'
                 ? borderColorOrder[index % borderColorOrder.length]
-                : item.borderColor
+                : 'border-carbon-800'
             }
             href={item.href}
             ctaText={item.ctaText}

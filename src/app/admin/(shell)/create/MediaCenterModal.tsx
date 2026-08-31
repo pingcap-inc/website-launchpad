@@ -3,6 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Upload, X, Check, Loader2, Tag, Image as ImageIcon, Plus, AlertCircle } from 'lucide-react'
 import type { ImageRef } from '@/lib/dsl-schema'
+import { isVideoUrl } from '@/lib/utils'
+
+/** Accepted upload types, shared by the file picker, drag-drop, and help text. */
+const ACCEPT_TYPES = 'image/png,image/jpeg,image/svg+xml,image/webp,video/mp4'
+const IMAGE_MAX_SIZE = 5 * 1024 * 1024
+const VIDEO_MAX_SIZE = 50 * 1024 * 1024
+
+const isVideoFile = (file: File) => file.type.startsWith('video/')
 
 interface MediaImage {
   url: string
@@ -162,14 +170,20 @@ export function MediaCenterModal({
     // Pre-validate sizes synchronously, then commit a pure state update.
     // (Side effects inside a setState reducer don't run in time for the
     // following `Promise.all`, and may also run twice under React strict mode.)
-    const MAX_SIZE = 5 * 1024 * 1024
-    const ready = queued.filter((it) => it.file.size <= MAX_SIZE)
-    const oversizedIds = new Set(queued.filter((it) => it.file.size > MAX_SIZE).map((it) => it.id))
+    const maxFor = (file: File) => (isVideoFile(file) ? VIDEO_MAX_SIZE : IMAGE_MAX_SIZE)
+    const ready = queued.filter((it) => it.file.size <= maxFor(it.file))
+    const oversizedIds = new Set(
+      queued.filter((it) => it.file.size > maxFor(it.file)).map((it) => it.id)
+    )
     const readyIds = new Set(ready.map((it) => it.id))
     setPendingItems((prev) =>
       prev.map((it) => {
         if (oversizedIds.has(it.id)) {
-          return { ...it, status: 'error', error: 'File must be under 5 MB' }
+          return {
+            ...it,
+            status: 'error',
+            error: `File must be under ${isVideoFile(it.file) ? 50 : 5} MB`,
+          }
         }
         if (readyIds.has(it.id)) {
           return { ...it, status: 'uploading', error: undefined }
@@ -253,7 +267,9 @@ export function MediaCenterModal({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragging(false)
-    const files = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith('image/'))
+    const files = Array.from(e.dataTransfer.files).filter(
+      (f) => f.type.startsWith('image/') || f.type.startsWith('video/')
+    )
     if (files.length > 0) addFiles(files)
   }
 
@@ -280,12 +296,21 @@ export function MediaCenterModal({
     } else {
       setMetaWidth('')
       setMetaHeight('')
-      const el = new window.Image()
-      el.onload = () => {
-        setMetaWidth(String(el.naturalWidth))
-        setMetaHeight(String(el.naturalHeight))
+      if (isVideoUrl(img.url)) {
+        const el = document.createElement('video')
+        el.onloadedmetadata = () => {
+          setMetaWidth(String(el.videoWidth))
+          setMetaHeight(String(el.videoHeight))
+        }
+        el.src = img.url
+      } else {
+        const el = new window.Image()
+        el.onload = () => {
+          setMetaWidth(String(el.naturalWidth))
+          setMetaHeight(String(el.naturalHeight))
+        }
+        el.src = img.url
       }
-      el.src = img.url
     }
   }
 
@@ -325,16 +350,29 @@ export function MediaCenterModal({
     const normalizedAlt = (img?.alt ?? '').trim() || (img ? deriveAltFromImageName(img.name) : '')
 
     if (!width || !height) {
-      await new Promise<void>((resolve) => {
-        const el = new window.Image()
-        el.onload = () => {
-          width = el.naturalWidth || width
-          height = el.naturalHeight || height
-          resolve()
-        }
-        el.onerror = () => resolve()
-        el.src = selectedUrl
-      })
+      if (isVideoUrl(selectedUrl)) {
+        await new Promise<void>((resolve) => {
+          const el = document.createElement('video')
+          el.onloadedmetadata = () => {
+            width = el.videoWidth || width
+            height = el.videoHeight || height
+            resolve()
+          }
+          el.onerror = () => resolve()
+          el.src = selectedUrl
+        })
+      } else {
+        await new Promise<void>((resolve) => {
+          const el = new window.Image()
+          el.onload = () => {
+            width = el.naturalWidth || width
+            height = el.naturalHeight || height
+            resolve()
+          }
+          el.onerror = () => resolve()
+          el.src = selectedUrl
+        })
+      }
     }
 
     const result: ImageRef = {
@@ -426,14 +464,24 @@ export function MediaCenterModal({
                       }}
                     >
                       <div className="aspect-square bg-gray-50">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={img.url}
-                          alt={img.alt || img.name}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-contain p-2"
-                        />
+                        {isVideoUrl(img.url) ? (
+                          <video
+                            src={img.url}
+                            muted
+                            playsInline
+                            preload="metadata"
+                            className="w-full h-full object-contain p-2"
+                          />
+                        ) : (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={img.url}
+                            alt={img.alt || img.name}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-contain p-2"
+                          />
+                        )}
                       </div>
 
                       {/* Selected overlay */}
@@ -615,12 +663,22 @@ export function MediaCenterModal({
                         className="flex items-center gap-3 border border-gray-200 rounded-lg p-2 bg-white"
                       >
                         <div className="w-14 h-14 shrink-0 bg-gray-50 rounded flex items-center justify-center overflow-hidden">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={item.preview}
-                            alt=""
-                            className="max-w-full max-h-full object-contain"
-                          />
+                          {isVideoFile(item.file) ? (
+                            <video
+                              src={item.preview}
+                              muted
+                              playsInline
+                              preload="metadata"
+                              className="max-w-full max-h-full object-contain"
+                            />
+                          ) : (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={item.preview}
+                              alt=""
+                              className="max-w-full max-h-full object-contain"
+                            />
+                          )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p
@@ -686,7 +744,7 @@ export function MediaCenterModal({
                   <input
                     ref={fileInputRef}
                     type="file"
-                    accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                    accept={ACCEPT_TYPES}
                     multiple
                     className="hidden"
                     onChange={(e) => {
@@ -708,16 +766,16 @@ export function MediaCenterModal({
                   <div className="flex flex-col items-center gap-2 text-gray-400">
                     <Upload size={28} />
                     <span className="text-body-sm font-bold text-gray-600">
-                      Drop images here or click to browse
+                      Drop images or videos here or click to browse
                     </span>
                     <span className="text-label">
-                      PNG, JPG, SVG, WebP · max 5 MB each · multiple allowed
+                      PNG, JPG, SVG, WebP · MP4 · max 5 MB image / 50 MB video · multiple allowed
                     </span>
                   </div>
                   <input
                     ref={fileInputRef}
                     type="file"
-                    accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                    accept={ACCEPT_TYPES}
                     multiple
                     className="hidden"
                     onChange={(e) => {

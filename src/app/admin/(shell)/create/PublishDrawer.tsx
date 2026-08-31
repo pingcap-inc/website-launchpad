@@ -269,15 +269,6 @@ export function PublishDrawer({
         case 'featureGrid':
         case 'featureCard':
         case 'featureHighlights':
-          if (!props.title?.trim()) {
-            nextLint.push({
-              label: 'Section',
-              status: 'fail',
-              detail: `${prefix} · Title is required.`,
-            })
-          } else {
-            nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Title` })
-          }
           if (!props.items?.length) {
             nextLint.push({
               label: 'Section',
@@ -295,15 +286,6 @@ export function PublishDrawer({
           }
           break
         case 'featureTabs':
-          if (!props.title?.trim()) {
-            nextLint.push({
-              label: 'Section',
-              status: 'fail',
-              detail: `${prefix} · Title is required.`,
-            })
-          } else {
-            nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Title` })
-          }
           if (!props.tabs?.length) {
             nextLint.push({
               label: 'Section',
@@ -361,6 +343,45 @@ export function PublishDrawer({
             })
           } else {
             nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Testimonials` })
+          }
+          break
+        case 'caseStudyCards':
+          if (!props.title?.trim()) {
+            nextLint.push({
+              label: 'Section',
+              status: 'fail',
+              detail: `${prefix} · Title is required.`,
+            })
+          } else {
+            nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Title` })
+          }
+          if (!props.items?.length) {
+            nextLint.push({
+              label: 'Section',
+              status: 'fail',
+              detail: `${prefix} · Add case study cards.`,
+            })
+          } else if (
+            props.items.some(
+              (item: any) =>
+                !item.logo?.image?.url ||
+                !item.title ||
+                !item.description ||
+                !item.stats?.length ||
+                item.stats.some((stat: any) => !stat.value || !stat.label)
+            )
+          ) {
+            nextLint.push({
+              label: 'Section',
+              status: 'fail',
+              detail: `${prefix} · Each card needs logo, title, description, and stats.`,
+            })
+          } else {
+            nextLint.push({
+              label: 'Section',
+              status: 'pass',
+              detail: `${prefix} · Case study cards`,
+            })
           }
           break
         case 'faq':

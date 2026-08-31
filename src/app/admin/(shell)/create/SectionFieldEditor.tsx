@@ -27,6 +27,10 @@ function FieldRow({ label, children }: { label: string; children: ReactNode }) {
 const input =
   'w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300'
 const textarea = `${input} resize-none`
+const BACKGROUND_EFFECT_OPTIONS = [
+  { label: 'No Animated Background', value: '' },
+  { label: 'Agent Memory Hero', value: 'agent-memory' },
+] as const
 
 function TextInput({
   value,
@@ -856,6 +860,29 @@ export function SectionFieldEditor({
                 ))}
               </select>
             </div>
+          </FieldRow>
+
+          <FieldRow label="Animated Background">
+            <select
+              value={node.style?.backgroundEffect ?? ''}
+              onChange={(e) =>
+                onChange({
+                  ...node,
+                  style: {
+                    ...node.style,
+                    backgroundEffect:
+                      e.target.value === 'agent-memory' ? 'agent-memory' : undefined,
+                  },
+                })
+              }
+              className={input}
+            >
+              {BACKGROUND_EFFECT_OPTIONS.map((option) => (
+                <option key={option.value || option.label} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </FieldRow>
 
           <FieldRow label="Extra Class Name">

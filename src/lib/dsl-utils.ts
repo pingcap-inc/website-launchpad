@@ -1,5 +1,9 @@
 import type {
   AgendaProps,
+  ColumnsProps,
+  CaseStudyCardItem,
+  CaseStudyCardStat,
+  CaseStudyCardsProps,
   ComparisonTableProps,
   CtaProps,
   FeatureCardItem,
@@ -26,6 +30,7 @@ import type {
   SectionPropsMap,
   SectionStyle,
   SectionType,
+  ShortcodeProps,
   SpeakersProps,
   StatsItem,
   StatsProps,
@@ -189,6 +194,7 @@ function normalizeSectionStyle(style?: SectionStyle): SectionStyle | undefined {
   const anchorId =
     typeof v.anchorId === 'string' && v.anchorId.trim() ? v.anchorId.trim() : undefined
   const className = v.className || undefined
+  const backgroundEffect = v.backgroundEffect === 'agent-memory' ? v.backgroundEffect : undefined
   const backgroundImageOpacityClassName =
     typeof v.backgroundImageOpacityClassName === 'string'
       ? v.backgroundImageOpacityClassName
@@ -209,6 +215,7 @@ function normalizeSectionStyle(style?: SectionStyle): SectionStyle | undefined {
     removePaddingTop,
     removePaddingBottom,
     className,
+    backgroundEffect,
     backgroundImageOpacityClassName,
     backgroundImageOverlayClassName,
     backgroundImage,
@@ -316,6 +323,40 @@ function normalizeTestimonial(value: unknown): Testimonial | null {
   }
 }
 
+function normalizeCaseStudyCardStat(value: unknown): CaseStudyCardStat | null {
+  if (!value || typeof value !== 'object') return null
+  const v = value as CaseStudyCardStat
+  return {
+    value: v.value ?? '',
+    label: v.label ?? '',
+  }
+}
+
+function normalizeCaseStudyCardItem(value: unknown): CaseStudyCardItem | null {
+  if (!value || typeof value !== 'object') return null
+  const v = value as CaseStudyCardItem & { logo?: { src?: unknown; image?: unknown } }
+  const stats = Array.isArray(v.stats)
+    ? v.stats.map(normalizeCaseStudyCardStat).filter(Boolean)
+    : []
+  const logoImage = normalizeImageRef(v.logo?.image ?? v.logo?.src)
+  return {
+    badge: v.badge ?? '',
+    logo: logoImage
+      ? {
+          image: logoImage,
+          alt: v.logo?.alt,
+          width: v.logo?.width,
+          height: v.logo?.height,
+        }
+      : undefined,
+    title: v.title ?? '',
+    description: v.description ?? '',
+    stats: stats as CaseStudyCardStat[],
+    href: v.href,
+    cta: v.cta,
+  }
+}
+
 function normalizeHeroProps(value: unknown): HeroProps {
   const v = (value ?? {}) as HeroProps & {
     heroImage?: unknown
@@ -419,8 +460,36 @@ function normalizeFeatureMediaItem(raw: unknown): FeatureMediaItemDSL | null {
       width: v.image?.width ?? (v as any).width,
       height: v.image?.height ?? (v as any).height,
     },
-    imagePosition:
-      v.imagePosition === 'left' || v.imagePosition === 'right' ? v.imagePosition : undefined,
+    video: normalizeFeatureMediaVideo((v as any).video),
+  }
+}
+
+function normalizeFeatureMediaVideo(raw: unknown): FeatureMediaItemDSL['video'] {
+  if (!raw || typeof raw !== 'object') return undefined
+  const v = raw as Record<string, unknown>
+  const src = typeof v.src === 'string' && v.src ? v.src : undefined
+  const sources = Array.isArray(v.sources)
+    ? v.sources
+        .filter((s): s is Record<string, unknown> => Boolean(s) && typeof s === 'object')
+        .map((s) => ({
+          src: typeof s.src === 'string' ? s.src : '',
+          type: typeof s.type === 'string' ? s.type : undefined,
+        }))
+        .filter((s) => s.src)
+    : undefined
+  if (!src && (!sources || sources.length === 0)) return undefined
+  const bool = (x: unknown) => (typeof x === 'boolean' ? x : undefined)
+  const num = (x: unknown) => (typeof x === 'number' ? x : undefined)
+  return {
+    src,
+    sources: sources && sources.length > 0 ? sources : undefined,
+    poster: typeof v.poster === 'string' ? v.poster : undefined,
+    width: num(v.width),
+    height: num(v.height),
+    autoPlay: bool(v.autoPlay),
+    loop: bool(v.loop),
+    muted: bool(v.muted),
+    controls: bool(v.controls),
   }
 }
 
@@ -434,7 +503,68 @@ function normalizeFeatureMediaProps(value: unknown): FeatureMediaProps {
     items: items as FeatureMediaItemDSL[],
     startPosition:
       v.startPosition === 'left' || v.startPosition === 'right' ? v.startPosition : undefined,
+    spacing:
+      v.spacing === 'sm' || v.spacing === 'md' || v.spacing === 'lg' || v.spacing === 'xl'
+        ? v.spacing
+        : undefined,
     className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeColumnsProps(value: unknown): ColumnsProps {
+  const v = (value ?? {}) as ColumnsProps
+  const imageValue =
+    (v.image as { image?: unknown; src?: unknown } | undefined)?.image ??
+    (v.image as { image?: unknown; src?: unknown } | undefined)?.src ??
+    v.image
+  const image = normalizeImageRef(imageValue)
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title,
+    subtitle: v.subtitle,
+    titleFullWidth: v.titleFullWidth !== false,
+    layout: v.layout === 'single' || v.layout === 'split' ? v.layout : 'split',
+    mediaType: v.mediaType === 'shortcode' || v.mediaType === 'video' ? v.mediaType : 'image',
+    image: image
+      ? {
+          image,
+          alt: (v.image as { alt?: unknown } | undefined)?.alt as string | undefined,
+          width: (v.image as { width?: unknown } | undefined)?.width as number | undefined,
+          height: (v.image as { height?: unknown } | undefined)?.height as number | undefined,
+        }
+      : undefined,
+    video: normalizeColumnsVideo((v as { video?: unknown }).video),
+    shortCode: typeof v.shortCode === 'string' ? v.shortCode : undefined,
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeColumnsVideo(raw: unknown): ColumnsProps['video'] {
+  if (!raw || typeof raw !== 'object') return undefined
+  const v = raw as Record<string, unknown>
+  const src = typeof v.src === 'string' && v.src ? v.src : undefined
+  const sources = Array.isArray(v.sources)
+    ? v.sources
+        .filter((s): s is Record<string, unknown> => Boolean(s) && typeof s === 'object')
+        .map((s) => ({
+          src: typeof s.src === 'string' ? s.src : '',
+          type: typeof s.type === 'string' ? s.type : undefined,
+        }))
+        .filter((s) => s.src)
+    : undefined
+  if (!src && (!sources || sources.length === 0)) return undefined
+  const bool = (x: unknown) => (typeof x === 'boolean' ? x : undefined)
+  const num = (x: unknown) => (typeof x === 'number' ? x : undefined)
+  return {
+    src,
+    sources: sources && sources.length > 0 ? sources : undefined,
+    poster: typeof v.poster === 'string' ? v.poster : undefined,
+    width: num(v.width),
+    height: num(v.height),
+    autoPlay: bool(v.autoPlay),
+    loop: bool(v.loop),
+    muted: bool(v.muted),
+    controls: bool(v.controls),
   }
 }
 
@@ -463,6 +593,19 @@ function normalizeTestimonialsProps(value: unknown): TestimonialsProps {
     eyebrow: v.eyebrow,
     title: v.title ?? '',
     items: items as Testimonial[],
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
+function normalizeCaseStudyCardsProps(value: unknown): CaseStudyCardsProps {
+  const v = (value ?? {}) as CaseStudyCardsProps
+  const items = Array.isArray(v.items)
+    ? v.items.map(normalizeCaseStudyCardItem).filter(Boolean)
+    : []
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title ?? '',
+    items: items as CaseStudyCardItem[],
     className: typeof v.className === 'string' ? v.className : undefined,
   }
 }
@@ -551,6 +694,14 @@ function normalizeRichTextBlockProps(value: unknown): SectionPropsMap['richTextB
   }
 }
 
+function normalizeShortcodeProps(value: unknown): SectionPropsMap['shortcode'] {
+  const v = (value && typeof value === 'object' ? value : {}) as ShortcodeProps
+  return {
+    shortCode: typeof v.shortCode === 'string' ? v.shortCode : '',
+    className: typeof v.className === 'string' ? v.className : undefined,
+  }
+}
+
 function normalizeCodeBlockProps(value: unknown): SectionPropsMap['codeBlock'] {
   const v = (value && typeof value === 'object' ? value : {}) as Record<string, unknown>
   return {
@@ -590,12 +741,16 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeFeatureGridProps(value)
     case 'featureCard':
       return normalizeFeatureCardProps(value)
+    case 'caseStudyCards':
+      return normalizeCaseStudyCardsProps(value)
     case 'featureTabs':
       return normalizeFeatureTabsProps(value)
     case 'featureHighlights':
       return normalizeFeatureHighlightsProps(value)
     case 'featureMedia':
       return normalizeFeatureMediaProps(value)
+    case 'columns':
+      return normalizeColumnsProps(value)
     case 'logoCloud':
       return normalizeLogoCloudProps(value)
     case 'testimonials':
@@ -614,6 +769,8 @@ function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMa
       return normalizeComparisonTableProps(value)
     case 'richTextBlock':
       return normalizeRichTextBlockProps(value)
+    case 'shortcode':
+      return normalizeShortcodeProps(value)
     case 'codeBlock':
       return normalizeCodeBlockProps(value)
     case 'tableOfContents':

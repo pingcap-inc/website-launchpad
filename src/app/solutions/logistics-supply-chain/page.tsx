@@ -162,7 +162,7 @@ const dsl: PageDSL = {
           },
           {
             variant: 'teal',
-            title: 'Always-On Availability',
+            title: 'Always-on Availability',
             description: 'Built-in high availability across regions for 24/7 logistics operations',
             cta: {
               text: 'Learn more',
@@ -308,7 +308,6 @@ const dsl: PageDSL = {
               width: 600,
               height: 550,
             },
-            imagePosition: 'right',
           },
           {
             title: 'Unified Store for Supply Chain Analytics',
@@ -325,10 +324,9 @@ const dsl: PageDSL = {
               width: 600,
               height: 489,
             },
-            imagePosition: 'left',
           },
           {
-            title: 'Built-In Monitoring & Alerting',
+            title: 'Built-in Monitoring & Alerting',
             description:
               'Use standard SQL to detect anomalies directly on live data. Power real-time dashboards with Prometheus and Grafana integration. Enable advanced analytics without exporting data.',
             image: {
@@ -342,7 +340,6 @@ const dsl: PageDSL = {
               width: 600,
               height: 480,
             },
-            imagePosition: 'right',
           },
         ],
         startPosition: 'right',
@@ -407,7 +404,7 @@ const dsl: PageDSL = {
       id: 'featureHighlights-1776905896101',
       type: 'featureHighlights',
       props: {
-        title: 'Resources to Fuel your TiDB Journey',
+        title: 'Resources to Fuel Your TiDB Journey',
         items: [
           {
             variant: 'red',

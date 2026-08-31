@@ -5,6 +5,7 @@ import {
   BarChart2,
   Grid3X3,
   CreditCard,
+  PanelsTopLeft,
   Rows3,
   Sparkles,
   Building2,
@@ -13,6 +14,8 @@ import {
   Megaphone,
   FormInput,
   GalleryHorizontalEnd,
+  Columns2,
+  Code2,
   X,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -42,6 +45,10 @@ const SECTION_OPTIONS: SectionTypeOption[] = [
     Icon: CreditCard,
   },
   {
+    type: 'caseStudyCards',
+    Icon: PanelsTopLeft,
+  },
+  {
     type: 'featureTabs',
     Icon: Rows3,
   },
@@ -52,6 +59,14 @@ const SECTION_OPTIONS: SectionTypeOption[] = [
   {
     type: 'featureMedia',
     Icon: GalleryHorizontalEnd,
+  },
+  {
+    type: 'columns',
+    Icon: Columns2,
+  },
+  {
+    type: 'shortcode',
+    Icon: Code2,
   },
   {
     type: 'logoCloud',

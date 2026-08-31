@@ -44,6 +44,8 @@ interface DropdownItem {
   href: string
   icon?: LucideIcon | React.FC<IconProps> | string
   description?: string
+  /** Custom badge label shown next to the item label, e.g. 'New'. */
+  badges?: string
 }
 
 interface DropdownSection {
@@ -92,22 +94,29 @@ const dropdowns: NavDropdown[] = [
             description: 'Purpose-built for agent memory, state, and multi-hop reasoning',
           },
           {
-            label: 'Vector Search & RAG',
-            href: 'https://www.pingcap.com/ai/vector-search/',
-            icon: 'https://static.pingcap.com/files/2026/04/14001530/Vector-Search-RAG.svg',
-            description: 'Native vector indexing and retrieval-augmented generation pipelines',
-          },
-          {
-            label: 'Quick Start: Agentic Memory',
-            href: 'https://zero.tidbcloud.com/',
+            label: 'Persistent Context for AI Agents',
+            href: 'https://www.pingcap.com/solutions/ai-agent-context/',
             icon: 'https://static.pingcap.com/files/2026/04/14001529/Quick-Start.svg',
-            description: 'Spin up persistent agent memory in seconds — zero config',
+            description: 'Persistent, queryable memory for AI agents with per-agent isolation',
           },
           {
             label: 'Build AI Applications',
             href: 'https://www.pingcap.com/developers/build-ai-apps/',
             icon: 'https://static.pingcap.com/files/2026/04/14001528/Build-AI-Applications.svg',
             description: 'SDKs, guides, and templates for shipping AI apps fast',
+          },
+          {
+            label: 'Vector Search & RAG',
+            href: 'https://www.pingcap.com/ai/vector-search/',
+            icon: 'https://static.pingcap.com/files/2026/04/14001530/Vector-Search-RAG.svg',
+            description: 'Native vector indexing and retrieval-augmented generation pipelines',
+          },
+          {
+            label: 'AI Startup Program',
+            href: 'https://www.pingcap.com/tidb-ai-startup-program/',
+            icon: 'https://static.pingcap.com/files/2026/08/13000834/Al-Startup-Program.svg',
+            description: 'Scale faster without letting infrastructure become the bottleneck',
+            badges: 'PROGRAM',
           },
         ],
       },
@@ -169,6 +178,11 @@ const dropdowns: NavDropdown[] = [
             icon: CloudTIcon,
           },
           { label: 'Build GenAI Applications', href: 'https://www.pingcap.com/ai/', icon: AiTIcon },
+          {
+            label: 'Build Persistent Context for AI Agents',
+            href: 'https://www.pingcap.com/solutions/ai-agent-context/',
+            icon: AiTIcon,
+          },
         ],
       },
       {
@@ -478,8 +492,15 @@ function MobileAccordionItem({
                       className="flex items-center gap-2 text-base text-carbon-400 font-medium"
                       {...externalLinkProps(sub.href)}
                     >
-                      {sub.icon && <sub.icon size={14} className="shrink-0" />}
+                      {sub.icon && typeof sub.icon !== 'string' && (
+                        <sub.icon size={14} className="shrink-0" />
+                      )}
                       {sub.label}
+                      {sub.badges && (
+                        <span className="ml-auto rounded-xs bg-brand-red-primary px-2 py-0 text-xs font-bold uppercase tracking-wider text-text-inverse">
+                          {sub.badges}
+                        </span>
+                      )}
                     </a>
                   ))}
                 </div>
@@ -501,32 +522,34 @@ function AiMegaMenu({ item }: { item: NavDropdown }) {
 
   return (
     <div className={cn('absolute top-full left-1/2 pt-6 block z-50', translateX)}>
-      <div
-        className={cn(
-          'bg-bg-primary border border-carbon-800 shadow-card p-5 overflow-hidden',
-          item.panelWidth ?? 'min-w-[460px]'
-        )}
-      >
+      <div className="w-[440px] overflow-hidden border border-carbon-800 bg-bg-primary px-6 pb-3 pt-6 shadow-card">
         {section.title && (
           <p className="text-label font-bold uppercase tracking-wider text-white/30">
             {section.title}
           </p>
         )}
-        <div className="flex flex-col divide-y divide-[#53555e4d]">
+        <div className="mt-2 flex flex-col divide-y divide-[#53555e4d]">
           {section.items.map((sub) => (
             <a
               key={sub.label}
               href={sub.href}
-              className="group/item flex items-center gap-4 py-3"
+              className="group/item flex items-start gap-3 py-3"
               {...externalLinkProps(sub.href)}
             >
-              {sub.icon && typeof sub.icon === 'string' && (
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center">
-                  <Image src={sub.icon} alt="" width={40} height={40} />
-                </span>
-              )}
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center">
+                {typeof sub.icon === 'string' && (
+                  <Image src={sub.icon} alt="" width={36} height={36} />
+                )}
+              </span>
               <span className="flex flex-col">
-                <span className="text-body-md font-medium text-text-inverse">{sub.label}</span>
+                <span className="flex items-center gap-2">
+                  <span className="text-body-md font-medium text-text-inverse">{sub.label}</span>
+                  {sub.badges && (
+                    <span className="rounded-sm bg-brand-red-primary px-1.5 py-0 text-xs font-bold uppercase tracking-wider text-text-inverse">
+                      {sub.badges}
+                    </span>
+                  )}
+                </span>
                 {sub.description && (
                   <span className="mt-0.5 text-sm leading-snug text-text-secondary font-light">
                     {sub.description}

@@ -39,3 +39,10 @@ settings.json
 # Local design scratch — colour/variant explorations kept beside the project,
 # deliberately not part of the repo (large PNGs, not shipped assets).
 map-color-options/
+
+# design-sync (claude.ai/design)
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules

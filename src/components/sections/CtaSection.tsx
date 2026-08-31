@@ -47,7 +47,10 @@ export function CtaSection({
 
   return (
     <div
-      className={cn('grid grid-cols-1 md:grid-cols-12 md:gap-8 items-center lg:px-16', className)}
+      className={cn(
+        'grid grid-cols-1 md:grid-cols-12 md:gap-8 items-center lg:px-16 overflow-hidden',
+        className
+      )}
     >
       {hasImage && (
         <SlideIn direction="left" className="md:col-span-4">

@@ -2,6 +2,7 @@
   "name": "website-launchpad",
   "version": "0.1.0",
   "private": true,
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -48,6 +49,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.0",
+    "gsap": "^3.15.0",
     "lucide-react": "^0.575.0",
     "mammoth": "^1.12.0",
     "next": "^16.1.6",

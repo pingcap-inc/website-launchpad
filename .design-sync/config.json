@@ -1,0 +1,188 @@
+{
+  "projectId": "15a786f8-99ac-4592-8855-395928139b16",
+  "shape": "package",
+  "pkg": "website-launchpad",
+  "globalName": "WebsiteLaunchpad",
+  "srcDir": "src",
+  "tsconfig": ".design-sync/tsconfig.ds.json",
+  "cssEntry": ".design-sync/.cache/globals.compiled.css",
+  "buildCmd": "node .design-sync/build-inputs.mjs && node .design-sync/gen-docs.mjs",
+  "guidelinesGlob": ["docs/*.md", ".ai/skills/design-system/*.md", ".ai/context/brand.md"],
+  "componentSrcMap": {
+    "Accordion": "src/components/ui/accordion.tsx",
+    "Agenda": "src/components/sections/Agenda.tsx",
+    "Badge": "src/components/ui/badge.tsx",
+    "CaseStudyCardsSection": "src/components/sections/CaseStudyCardsSection.tsx",
+    "CodeBlock": "src/components/sections/CodeBlock.tsx",
+    "ColorCard": "src/components/ui/ColorCard.tsx",
+    "ColumnsSection": "src/components/sections/ColumnsSection.tsx",
+    "ComparisonTable": "src/components/sections/ComparisonTable.tsx",
+    "CountUp": "src/components/ui/CountUp.tsx",
+    "CtaSection": "src/components/sections/CtaSection.tsx",
+    "Dialog": "src/components/ui/dialog.tsx",
+    "FaqSection": "src/components/sections/FaqSection.tsx",
+    "FeatureCard": "src/components/ui/FeatureCard.tsx",
+    "FeatureCardSection": "src/components/sections/FeatureCardSection.tsx",
+    "FeatureGridSection": "src/components/sections/FeatureGridSection.tsx",
+    "FeatureHighlightsSection": "src/components/sections/FeatureHighlightsSection.tsx",
+    "FeatureMediaSection": "src/components/sections/FeatureMediaSection.tsx",
+    "FeatureTabsSection": "src/components/sections/FeatureTabsSection.tsx",
+    "Footer": "src/components/ui/Footer.tsx",
+    "FormSection": "src/components/sections/FormSection.tsx",
+    "GhostButton": "src/components/ui/GhostButton.tsx",
+    "Header": "src/components/ui/Header.tsx",
+    "HeaderLp": "src/components/ui/HeaderLp.tsx",
+    "HeroSection": "src/components/sections/HeroSection.tsx",
+    "HubSpotForm": null,
+    "IconFeatureItem": "src/components/ui/IconFeatureItem.tsx",
+    "InlineLink": "src/components/ui/InlineLink.tsx",
+    "JsonLd": null,
+    "LogoCloudSection": "src/components/sections/LogoCloudSection.tsx",
+    "PrimaryButton": "src/components/ui/PrimaryButton.tsx",
+    "RichTextBlock": "src/components/sections/RichTextBlock.tsx",
+    "SecondaryButton": "src/components/ui/SecondaryButton.tsx",
+    "SectionHeader": "src/components/ui/SectionHeader.tsx",
+    "SectionWrapper": "src/components/ui/SectionWrapper.tsx",
+    "Separator": "src/components/ui/separator.tsx",
+    "ShortcodeSection": "src/components/sections/ShortcodeSection.tsx",
+    "SlideIn": "src/components/ui/SlideIn.tsx",
+    "Speakers": "src/components/sections/Speakers.tsx",
+    "StatsSection": "src/components/sections/StatsSection.tsx",
+    "TableOfContents": "src/components/sections/TableOfContents.tsx",
+    "Tabs": "src/components/ui/Tabs.tsx",
+    "TestimonialsSection": "src/components/sections/TestimonialsSection.tsx",
+    "Tooltip": "src/components/ui/tooltip.tsx",
+    "VideoDialog": "src/components/ui/VideoDialog.tsx"
+  },
+  "docsDir": ".design-sync/docs",
+  "provider": {
+    "component": "DsCanvas"
+  },
+  "dtsPropsFor": {
+    "Header": "  /** No props — renders the standard site header. */",
+    "Footer": "  /** No props — renders the standard site footer. */",
+    "FeatureCard": "  icon?: React.ReactNode;\n  title: string;\n  description: string | React.ReactNode;\n  /** Border color Tailwind class, e.g. 'border-brand-red-primary'. Defaults to border-carbon-800 */\n  borderColor?: string;\n  /** When provided, renders as <a> with a hover float animation */\n  href?: string;\n  ctaText?: string;\n  className?: string;",
+    "TableOfContents": "  items: { id: string; label: string; level?: 1 | 2 }[];\n  sticky?: boolean;\n  tone?: 'light' | 'dark';\n  className?: string;",
+    "ColumnsSection": "  eyebrow?: string;\n  title?: string;\n  subtitle?: string;\n  titleFullWidth?: boolean;\n  layout?: 'single' | 'split';\n  mediaType?: 'image' | 'video' | 'shortcode';\n  image?: { image: { url: string; alt?: string; width?: number; height?: number }; alt?: string; width?: number; height?: number };\n  /** Rendered instead of `image` when present, or when `image` holds a video URL. */\n  video?: { src?: string; sources?: { src: string; type?: string }[]; poster?: string; width?: number; height?: number; autoPlay?: boolean; loop?: boolean; muted?: boolean; controls?: boolean };\n  shortCode?: string;\n  className?: string;"
+  },
+  "overrides": {
+    "HeroSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "FeatureGridSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "FeatureCardSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "FeatureHighlightsSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "FeatureTabsSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "FeatureMediaSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "StatsSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "LogoCloudSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "TestimonialsSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "CaseStudyCardsSection": {
+      "viewport": "1280x1000",
+      "cardMode": "column"
+    },
+    "FaqSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "CtaSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "ColumnsSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "ComparisonTable": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    },
+    "FeatureCard": {
+      "viewport": "900x420",
+      "cardMode": "column"
+    },
+    "ColorCard": {
+      "viewport": "900x460",
+      "cardMode": "column"
+    },
+    "SectionHeader": {
+      "viewport": "1100x360",
+      "cardMode": "column"
+    },
+    "PrimaryButton": {
+      "viewport": "640x170",
+      "cardMode": "column"
+    },
+    "SecondaryButton": {
+      "viewport": "640x170",
+      "cardMode": "column"
+    },
+    "GhostButton": {
+      "viewport": "640x170",
+      "cardMode": "column"
+    },
+    "Badge": {
+      "viewport": "640x170",
+      "cardMode": "column"
+    },
+    "Accordion": {
+      "viewport": "900x520",
+      "cardMode": "column"
+    },
+    "Tabs": {
+      "viewport": "1100x420",
+      "cardMode": "column"
+    },
+    "CountUp": {
+      "viewport": "640x220",
+      "cardMode": "column"
+    },
+    "Dialog": {
+      "cardMode": "single",
+      "primaryStory": "Open",
+      "viewport": "900x560"
+    },
+    "VideoDialog": {
+      "cardMode": "column",
+      "viewport": "900x400"
+    },
+    "IconFeatureItem": {
+      "cardMode": "column",
+      "viewport": "900x320"
+    },
+    "Separator": {
+      "cardMode": "column",
+      "viewport": "900x340"
+    },
+    "FormSection": {
+      "viewport": "1280x760",
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

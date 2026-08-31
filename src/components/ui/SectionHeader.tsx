@@ -15,6 +15,7 @@ interface SectionHeaderProps {
   subtitle?: string | React.ReactNode
   h2Size?: H2Size
   align?: Align
+  fullWidth?: boolean
   className?: string
 }
 
@@ -24,22 +25,23 @@ export function SectionHeader({
   subtitle,
   h2Size = 'lg',
   align = 'left',
+  fullWidth = false,
   className,
 }: SectionHeaderProps) {
   const titleTone = 'text-text-inverse group-data-[tone=dark]/section:text-text-primary'
   const eyebrowTone = 'text-secondary'
   const subtitleTone = 'text-secondary'
   return (
-    <div className={cn(align === 'center' && 'text-center', className)}>
+    <div className={cn('min-w-0', align === 'center' && 'text-center', className)}>
       {eyebrow && (
         <div className={cn('font-mono text-eyebrow block mb-4', eyebrowTone)}>{eyebrow}</div>
       )}
       <h2
         className={cn(
           h2SizeMap[h2Size],
-          'font-bold leading-tight mb-6',
+          'mb-6 min-w-0 break-words font-bold leading-tight',
           titleTone,
-          align === 'left' && 'max-w-section-title'
+          !fullWidth && align === 'left' && 'max-w-section-title'
         )}
       >
         {title}
@@ -47,7 +49,8 @@ export function SectionHeader({
       {subtitle && (
         <p
           className={cn(
-            'text-body-2xl leading-relaxed max-w-subtitle',
+            'min-w-0 break-words text-body-2xl leading-relaxed',
+            !fullWidth && 'max-w-subtitle',
             subtitleTone,
             align === 'center' && 'mx-auto'
           )}
