@@ -52,8 +52,8 @@
             "title": "MySQL-First? Choose TiDB",
             "description": "MySQL 8.0 wire protocol compatibility minimizes application changes and tooling rework. Leverage existing MySQL expertise.",
             "cta": {
-              "text": "Book Architecture Call",
-              "href": "#book"
+              "text": "",
+              "href": ""
             },
             "icon": "Database"
           },
@@ -62,8 +62,8 @@
             "title": "Postgres-First? Consider YugabyteDB",
             "description": "If your stack is PostgreSQL-native, YugabyteDB's Postgres compatibility may fit better. Requires PostgreSQL migration path.",
             "cta": {
-              "text": "Compare Full Guide",
-              "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
+              "text": "",
+              "href": ""
             },
             "icon": "Server"
           },
@@ -72,8 +72,8 @@
             "title": "HTAP + Analytics? TiDB Wins",
             "description": "Native columnar HTAP with TiFlash. Run transactional and analytical workloads in one system — no separate OLAP stack, no ETL.",
             "cta": {
-              "text": "See HTAP in Action",
-              "href": "https://www.pingcap.com/demo/"
+              "text": "",
+              "href": ""
             },
             "icon": "Zap"
           }
