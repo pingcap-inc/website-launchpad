@@ -29,8 +29,7 @@
           "alt": "hero image",
           "width": 500,
           "height": 400
-        },
-        "heroForm": null
+        }
       },
       "style": {
         "spacing": "hero"
