@@ -233,20 +233,8 @@ export default function MigrationCenterPage() {
               headline="Migrate to TiDB with Confidence"
               subheadline={
                 <>
-                  Try our latest AI-assisted database migration toolkit -{' '}
-                  <a
-                    className="underline"
-                    href="https://partners.pingcap.com/tishift"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    TiShift
-                  </a>
-                  .
-                  <p className="mt-4">
-                    Coming from MySQL? Check compatibility first, then follow the guided path from
-                    staging to cutover. Nothing touches production until you say so.
-                  </p>
+                  Coming from MySQL? Check compatibility first, then follow the guided path from
+                  staging to cutover. Nothing touches production until you say so.
                 </>
               }
               className="pb-8"
