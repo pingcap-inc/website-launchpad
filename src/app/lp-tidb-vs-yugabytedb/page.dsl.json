@@ -11,7 +11,7 @@
       "type": "hero",
       "props": {
         "layout": "centered",
-        "eyebrow": "Battle Card",
+        "eyebrow": "Database Comparison",
         "headline": "TiDB vs YugabyteDB: The <span class=\"text-gradient-violet\">MySQL-First</span> Distributed SQL",
         "subheadline": "YugabyteDB is Postgres-first; TiDB is MySQL-compatible with native HTAP. If you are modernizing MySQL and want analytics on live data, TiDB is the pragmatic fit.",
         "primaryCta": {
