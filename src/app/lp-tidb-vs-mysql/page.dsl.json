@@ -11,7 +11,7 @@
       "type": "hero",
       "props": {
         "layout": "centered",
-        "eyebrow": "Battle Card",
+        "eyebrow": "Database Comparison",
         "headline": "TiDB vs. <span class=\"text-gradient-violet\">MySQL</span>",
         "subheadline": "Scale MySQL reads and writes past a single primary without manual sharding, and keep strong ACID consistency.",
         "primaryCta": {
@@ -53,8 +53,8 @@
             "title": "Scale Writes Without Sharding",
             "description": "Transparent horizontal scale for reads and writes — no app-level sharding logic required.",
             "cta": {
-              "text": "See how it works",
-              "href": "https://docs.pingcap.com/"
+              "text": "",
+              "href": ""
             },
             "icon": "Layers"
           },
@@ -63,8 +63,8 @@
             "title": "Distributed ACID Transactions",
             "description": "Cluster-wide strong consistency with ACID guarantees across all nodes.",
             "cta": {
-              "text": "Learn about consistency",
-              "href": "https://docs.pingcap.com/"
+              "text": "",
+              "href": ""
             },
             "icon": "Shield"
           },
@@ -73,8 +73,8 @@
             "title": "Native HTAP Capability",
             "description": "Run real-time analytics on live transactional data with TiFlash columnar storage.",
             "cta": {
-              "text": "Explore HTAP",
-              "href": "https://docs.pingcap.com/"
+              "text": "",
+              "href": ""
             },
             "icon": "BarChart2"
           }
@@ -132,11 +132,51 @@
           }
         ],
         "cta": {
-          "text": "Book an architecture call",
+          "text": "Book a 30-minute Architecture Call",
           "href": "#book"
         }
       },
       "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "featureGrid-1788212651859",
+      "type": "featureGrid",
+      "props": {
+        "title": "Consolidate Four Systems Into One Distributed SQL Engine",
+        "items": [
+          {
+            "title": "Operational Database",
+            "description": "Replace MySQL, Amazon Aurora, PostgreSQL with one MySQL-compatible distributed SQL engine",
+            "icon": "Database"
+          },
+          {
+            "title": "Analytics Warehouse",
+            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, Redshift — no ETL required",
+            "layout": "vertical",
+            "icon": "BarChart2"
+          },
+          {
+            "title": "Search & Vector Store",
+            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, standalone vector databases",
+            "layout": "vertical",
+            "icon": "Search"
+          },
+          {
+            "title": "Sharding & Caches",
+            "description": "Transparent auto-sharding with strong consistency, no app-side sharding or external caching layers",
+            "layout": "vertical",
+            "icon": "Layers"
+          }
+        ],
+        "columns": 4,
+        "itemLayout": "vertical",
+        "eyebrow": "One Engine, Not a Bolt-On Stack",
+        "subtitle": "Most teams stitch four or more systems together long before they hit true scale. TiDB consolidates them onto a single distributed SQL engine — lower cost, fewer failure modes, no ETL, and AI-ready."
+      },
+      "style": {
+        "background": "primary",
         "spacing": "section"
       }
     },
@@ -149,11 +189,17 @@
         "items": [
           {
             "title": "Drop-in MySQL Compatibility",
-            "description": "TiDB speaks the MySQL protocol, so your drivers, ORMs, and SQL keep working. Migrate without a rewrite, then add Spark, Kafka, and Kubernetes connectors as you grow. [Read the migration guide](https://docs.pingcap.com/)",
+            "description": "TiDB speaks the MySQL protocol, so your drivers, ORMs, and SQL keep working. Migrate without a rewrite, then add Spark, Kafka, and Kubernetes connectors as you grow.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/853056b9-rapid_productivity_illustration-1.svg",
+                "alt": "rapid productivity illustration 1",
+                "width": 500,
+                "height": 448
+              },
+              "alt": "rapid productivity illustration 1",
+              "width": 500,
+              "height": 448
             }
           },
           {
@@ -161,8 +207,14 @@
             "description": "TiDB transparently shards and rebalances across nodes, so you scale writes and reads without building or maintaining application-level sharding. Add nodes as your workload grows — zero downtime, zero manual rebalancing.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/7ccab1c9-rapid_productivity_illustration.svg",
+                "alt": "rapid productivity illustration",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "rapid productivity illustration",
+              "width": 600,
+              "height": 600
             }
           },
           {
@@ -170,8 +222,14 @@
             "description": "One endpoint for transactional and analytical workloads with strong ACID consistency at scale — no separate OLAP system, no ETL. TiFlash columnar replicas run real-time analytics on live data in the same engine.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
+                "alt": "rapid productivity illustration 3",
+                "width": 500,
+                "height": 448
+              },
+              "alt": "rapid productivity illustration 3",
+              "width": 500,
+              "height": 448
             }
           }
         ],
@@ -191,51 +249,111 @@
         "items": [
           {
             "badge": "Fintech",
-            "title": "Plaid migrated off Amazon Aurora to TiDB",
-            "description": "Mission-critical fintech workloads with MySQL compatibility and distributed SQL.",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/23ea2f33-plaid-logo.png",
+                "alt": "plaid logo",
+                "width": 351,
+                "height": 132
+              },
+              "alt": "plaid logo",
+              "width": 351,
+              "height": 132
+            },
+            "title": "Plaid: 100 Services Migrated from Aurora with Zero Downtime",
+            "description": "A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 second per service.",
             "stats": [
               {
                 "value": "96%",
-                "label": "reduction in maintenance effort"
+                "label": "Less maintenance"
+              },
+              {
+                "value": "<60s",
+                "label": "Cutover downtime"
               }
             ],
-            "href": "https://www.pingcap.com/case-studies/"
+            "href": "https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/"
           },
           {
             "badge": "Social",
-            "title": "Pinterest consolidated bolt-on systems onto one engine",
-            "description": "MySQL-compatible distributed SQL for social graph and recommendation workloads.",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/51545d7d-pinterest-logo.svg",
+                "alt": "pinterest logo",
+                "width": 181,
+                "height": 50
+              },
+              "alt": "pinterest logo",
+              "width": 181,
+              "height": 50
+            },
+            "title": "Pinterest: Graph Service Scaled with 10x Latency Reduction",
+            "description": "Modernized its graph service with TiDB eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.",
             "stats": [
               {
-                "value": "80%+",
-                "label": "savings on infrastructure costs"
+                "value": "50%+",
+                "label": "Infra savings"
+              },
+              {
+                "value": "10x",
+                "label": "P99 latency cut"
               }
             ],
-            "href": "https://www.pingcap.com/case-studies/"
+            "href": "https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/"
           },
           {
             "badge": "SaaS",
-            "title": "Catalyst runs multi-tenant SaaS on TiDB",
-            "description": "MySQL compatibility and HTAP for real-time analytics across tenant data.",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/4043e4af-catalyst.svg",
+                "alt": "catalyst",
+                "width": 252,
+                "height": 72
+              },
+              "alt": "catalyst",
+              "width": 252,
+              "height": 72
+            },
+            "title": "Catalyst: SaaS Data Serving Layer Rearchitected for 60x Faster Queries",
+            "description": "Catalyst selected TiDB over Aurora and YugabyteDB to power its customer growth platform, achieving up to 60x faster query response with HTAP capabilities that handle both object and time series data in one stack.",
             "stats": [
               {
                 "value": "60x",
-                "label": "query-speed improvement"
+                "label": "Faster queries"
+              },
+              {
+                "value": "1",
+                "label": "Unified stack"
               }
             ],
-            "href": "https://www.pingcap.com/case-studies/"
+            "href": "https://www.pingcap.com/case-study/catalyst-rearchitects-core-saas-platform-tidb-60x-faster-performance/"
           },
           {
             "badge": "SaaS",
-            "title": "Atlassian collapsed ~750 Postgres clusters into 16 TiDB clusters",
-            "description": "Multi-tenant SaaS at scale with MySQL compatibility and horizontal scale.",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/239173a5-apps-m.svg",
+                "alt": "apps m",
+                "width": 24,
+                "height": 24
+              },
+              "alt": "apps m",
+              "width": 24,
+              "height": 24
+            },
+            "title": "Atlassian: 750+ Postgres clusters consolidated to 16 TiDB clusters",
+            "description": "Atlassian replaced hundreds of sharded PostgreSQL clusters with 16 global TiDB clusters to power its Forge platform, scaling to 3M+ tables and 500k concurrent connections per cluster.",
             "stats": [
               {
                 "value": "3M+",
-                "label": "tables across 16 clusters"
+                "label": "Tables per cluster"
+              },
+              {
+                "value": "750+",
+                "label": "PG clusters replaced"
               }
             ],
-            "href": "https://www.pingcap.com/case-studies/"
+            "href": "https://www.pingcap.com/blog/how-atlassian-scaled-three-million-tables-multi-tenancy-tidb/"
           }
         ]
       },
@@ -253,14 +371,22 @@
           {
             "name": "G2 Leader Winter 2026",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
-            }
+              "url": "https://static.pingcap.com/images/053856a3-20260506-160923.png",
+              "alt": "20260506 160923",
+              "width": 968,
+              "height": 598
+            },
+            "href": "https://www.g2.com/products/tidb/reviews"
           },
           {
             "name": "Gartner Peer Insights Customers' Choice 2025",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
-            }
+              "url": "https://static.pingcap.com/images/e54e2db0-20260506-160445.png",
+              "alt": "20260506 160445",
+              "width": 972,
+              "height": 594
+            },
+            "href": "https://www.gartner.com/reviews/market/cloud-database-management-systems"
           }
         ],
         "variant": "minimal",
