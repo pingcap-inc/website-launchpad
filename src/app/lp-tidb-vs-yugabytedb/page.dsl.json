@@ -240,7 +240,7 @@
               "height": 132
             },
             "title": "Plaid: 100 Services Migrated from Aurora with Zero Downtime",
-            "description": "A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 second per service",
+            "description": "A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 second per service.",
             "stats": [
               {
                 "value": "96%",
@@ -271,7 +271,7 @@
             "stats": [
               {
                 "value": "50%+",
-                "label": "infra savings"
+                "label": "Infra savings"
               },
               {
                 "value": "10x",
@@ -325,7 +325,7 @@
             "stats": [
               {
                 "value": "3M+",
-                "label": "tables per cluster"
+                "label": "Tables per cluster"
               },
               {
                 "value": "750+",
@@ -412,7 +412,7 @@
       "type": "cta",
       "props": {
         "title": "Compare on Your Own Schema",
-        "subtitle": "If you are MySQL-first, see what TiDB looks like for your workload. Book a 30-minute architecture call with our engineering team.",
+        "subtitle": "Compare TiDB and YugabyteDB on your own schema. Book a 30-minute architecture call with our engineering team.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
