@@ -9,8 +9,8 @@ import { LOCALE_COOKIE, countryFromHeaders, detectLocale } from './detect-locale
 // Shared by both the metadata export and the JSON-LD graph so the two can't
 // drift. The page is localised at runtime, but its canonical/indexable
 // representation is the English one these strings describe.
-const PAGE_PATH = '/lp/latam/'
-const PAGE_URL = 'https://www.pingcap.com/lp/latam/'
+const PAGE_PATH = '/latam/'
+const PAGE_URL = 'https://www.pingcap.com/latam/'
 const PAGE_TITLE = 'Scale Your AI Agents on One Data Platform | TiDB Cloud'
 const PAGE_DESCRIPTION =
   "Build scalable, AI-ready apps on TiDB's data platform for always-on transactions, real-time intelligence, and cloud-native growth."

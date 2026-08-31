@@ -1,7 +1,7 @@
 # LATAM animation sources
 
 [Remotion](https://www.remotion.dev/) components used to render the looping
-clips on `/lp/latam/`. Kept here so the animations can be tweaked and
+clips on `/latam/`. Kept here so the animations can be tweaked and
 re-rendered later.
 
 These are **source files only** — they are not imported by the app. Each one is
