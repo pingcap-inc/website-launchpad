@@ -61,6 +61,7 @@ const config: Config = {
           inverse: '#FFFFFF',
           subtle: '#E5E8EB',
           surface: '#06111A',
+          gray: '#efefef',
         },
         text: {
           primary: '#000000',

@@ -104,6 +104,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       changeFrequency: 'monthly',
     },
+    // Regional pages
+    { url: '/latam/', priority: 0.8, changeFrequency: 'monthly' },
     // Campaign / program pages
     // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
     // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
