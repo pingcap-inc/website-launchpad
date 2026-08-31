@@ -34,6 +34,7 @@ import {
 import { type Locale, locales, translations } from './translations'
 import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE } from './detect-locale'
 import { cn } from '@/lib/utils'
+import { cdnAsset } from '@/lib/cdn-asset'
 
 /**
  * Hero headline size, per locale.
@@ -80,7 +81,7 @@ function CardVideo({ src }: { src: string }) {
       preload={reducedMotion ? 'metadata' : 'auto'}
       className="w-full h-auto border border-carbon-200"
     >
-      <source src={src} type="video/mp4" />
+      <source src={cdnAsset(src)} type="video/mp4" />
     </video>
   )
 }
