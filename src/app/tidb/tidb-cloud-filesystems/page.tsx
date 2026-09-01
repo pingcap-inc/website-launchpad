@@ -444,7 +444,26 @@ function HeroCodePanel() {
         </Command>
         <div className="h-[15px]" />
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # in the sandbox: mount it, work in it, let the sandbox end
+          # teach your agent to use it
+        </div>
+        <Command
+          cmd={`curl -fsSL https://www.pingcap.com/tidb/tidb-cloud-filesystems/fs-skill.md \\
+  > .agent/skills/tidb-fs.md`}
+        >
+          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
+            <span className="text-brand-red-light">curl</span>{' '}
+            <span className="text-brand-blue-light">-fsSL</span>{' '}
+            https://www.pingcap.com/tidb/tidb-cloud-filesystems/fs-skill.md{' '}
+            <span className="text-carbon-600">\</span>
+          </div>
+          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
+            {'  '}
+            <span className="text-carbon-600">&gt;</span> .agent/skills/tidb-fs.md
+          </div>
+        </Command>
+        <div className="h-[15px]" />
+        <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
+          # in the sandbox: the agent reads its task, works, hands off
         </div>
         <Command
           cmd={`export TI_FS_TOKEN
@@ -453,7 +472,11 @@ mkdir ~/workspace
 
 ti fs mount --region aws-us-east-1 --mount-path ~/workspace
 
-echo "state that survives the sandbox" >> ~/workspace/notes.md`}
+cat ~/workspace/TASK.md
+
+echo "auth tests failing — see notes" >> ~/workspace/HANDOFF.md
+
+ti fs umount --mount-path ~/workspace`}
         >
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">export</span>{' '}
@@ -467,12 +490,21 @@ echo "state that survives the sandbox" >> ~/workspace/notes.md`}
             <span className="text-brand-blue-light">--region</span> aws-us-east-1{' '}
             <span className="text-brand-blue-light">--mount-path</span> ~/workspace
           </div>
+          <div className="h-[15px]" />
+          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
+            <span className="text-brand-red-light">cat</span> ~/workspace/TASK.md
+          </div>
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">echo</span>{' '}
             <span className="text-brand-teal-light">
-              &quot;state that survives the sandbox&quot;
+              &quot;auth tests failing — see notes&quot;
             </span>{' '}
-            <span className="text-carbon-600">&gt;&gt;</span> ~/workspace/notes.md
+            <span className="text-carbon-600">&gt;&gt;</span> ~/workspace/HANDOFF.md
+          </div>
+          <div className="h-[15px]" />
+          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
+            <span className="text-brand-red-light">ti</span> fs umount{' '}
+            <span className="text-brand-blue-light">--mount-path</span> ~/workspace
           </div>
         </Command>
       </div>
