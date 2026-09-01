@@ -457,13 +457,13 @@ export const translations: Record<Locale, LatamCopy> = {
       secondaryCta: 'Fale com nossa equipe de soluções',
     },
     logos: {
-      trustedBy: 'A confiança de equipes que constroem o futuro',
+      trustedBy: 'Empresas que constroem o futuro confiam no TiDB',
     },
     architecture: {
       eyebrow: 'Arquitetura',
-      title: 'Arquiteturas Nativas Digitais e Focadas em IA',
+      title: 'Arquiteturas Digitais Nativas e Centradas em IA',
       subtitle:
-        'Uma camada operacional unificada para aplicações em tempo real e agentes de IA que precisam de dados em tempo real, recuperação semântica e estado confiável.',
+        'Uma camada operacional unificada para aplicações em tempo real e agentes de IA que precisam de dados atualizados, recuperação semântica e estado confiável.',
       features: [
         {
           title: 'Arquiteturas de Aplicações Modernas',
@@ -473,10 +473,10 @@ export const translations: Record<Locale, LatamCopy> = {
         {
           title: 'Dados Operacionais Nativos de IA',
           description:
-            'Use o TiDB como a camada de dados unificada para o estado das aplicações e a memória dos agentes de IA, combinando dados relacionais e embeddings vetoriais em um único banco de dados—para que aplicações de IA gerenciem o estado em tempo real e realizem buscas semânticas sem bancos de dados vetoriais e analíticos separados.',
+            'Use o TiDB como a camada de dados unificada para o estado das aplicações e a memória dos agentes de IA, combinando dados relacionais e embeddings vetoriais em um único banco de dados — para que aplicações de IA gerenciem o estado em tempo real e realizem buscas semânticas sem bancos de dados vetoriais e analíticos separados.',
         },
         {
-          title: 'Construído para Consistência Sempre Ativa',
+          title: 'Construído para Consistência Contínua',
           description:
             'Ofereça transações fortemente consistentes, alta disponibilidade e desempenho previsível para cargas de trabalho operacionais críticas à medida que as aplicações continuam crescendo.',
         },
@@ -486,7 +486,7 @@ export const translations: Record<Locale, LatamCopy> = {
     },
     highScale: {
       eyebrow: 'ESCALA',
-      title: 'Operações de Alta Escala',
+      title: 'Operações em Grande Escala',
       subtitle:
         'Mantenha os fluxos operacionais críticos responsivos em fintech, e-commerce e cargas de trabalho nativas de IA, à medida que a demanda cresce em nuvens e regiões.',
       cards: [
@@ -523,7 +523,7 @@ export const translations: Record<Locale, LatamCopy> = {
       eyebrow: 'Modernização',
       title: 'Modernização de Banco de Dados com o TiDB',
       subtitle:
-        'Migre de estruturas de nó único para um caminho SQL distribuído compatível com MySQL, com ferramentas de migração guiada.',
+        'Migre de estruturas de nó único para uma solução SQL distribuída compatível com MySQL, com ferramentas de migração guiada.',
       features: [
         {
           title: 'Modernize Bancos de Dados de Nó Único',
@@ -538,7 +538,7 @@ export const translations: Record<Locale, LatamCopy> = {
         {
           title: 'Arquitetura de Banco de Dados Preparada para o Futuro',
           description:
-            'Substitua as limitações de escalabilidade vertical e o sharding complexo por uma arquitetura SQL distribuída e nativa da nuvem.',
+            'Substitua as limitações de escalabilidade vertical e o sharding complexo por uma arquitetura SQL distribuída e nativa em nuvem.',
         },
         {
           title: 'Consolide Cargas de Trabalho Operacionais e Analíticas',
@@ -558,7 +558,7 @@ export const translations: Record<Locale, LatamCopy> = {
       paragraphs: [
         'Execute o TiDB Cloud na AWS, no Google Cloud e na Alibaba Cloud.',
         'Trabalhe com parceiros regionais, como AI/R, Derevo e Overlabs.',
-        'Integre o TiDB à sua pilha existente, sem reconstruí-la.',
+        'Integre o TiDB ao seu stack existente, sem precisar reconstruí-lo.',
       ],
       partners: [
         {
@@ -592,27 +592,27 @@ export const translations: Record<Locale, LatamCopy> = {
         'Razões práticas para consolidar, escalar e construir aplicações conectadas a IA em uma única plataforma SQL distribuída.',
       cards: [
         {
-          title: 'Eficiente em Custos na Escala',
+          title: 'Custo-Eficiente em Escala',
           description:
-            'Reduza o custo total do banco de dados por meio da escalabilidade horizontal, consolidando cargas de trabalho transacionais, analíticas, vetoriais e de IA em uma única plataforma SQL distribuída.',
+            'Reduza o custo total do banco de dados por meio da escalabilidade horizontal, consolidando cargas de trabalho transacionais, analíticas, vetoriais e de inteligência artificial em uma única plataforma SQL distribuída.',
         },
         {
-          title: 'Multi-Nuvem e Consciente da Região',
+          title: 'Multinuvem com Presença Regional',
           description:
             'Implante na AWS e no Google Cloud com dados localizados mais próximos dos usuários em toda a América Latina.',
         },
         {
           title: 'Modernização de Banco de Dados Comprovada',
           description:
-            'Adote um caminho de modernização compatível com MySQL, validado por organizações que executam cargas de trabalho críticas para os negócios em escala.',
+            'Adote um processo de modernização compatível com MySQL, validado por organizações que executam cargas de trabalho críticas para os negócios em escala.',
         },
         {
           title: 'Segurança de Nível Empresarial',
           description:
-            'Opere com controles em conformidade com a SOC 2, práticas de segurança auditadas de forma independente e recursos abrangentes de confiança.',
+            'Opere com controles em conformidade com a SOC 2, práticas de segurança auditadas de forma independente e recursos completos de segurança e conformidade.',
         },
         {
-          title: 'Construído para Aplicações Conectadas a IA',
+          title: 'Construído para Aplicações Integradas com IA',
           description:
             'Impulsione aplicações em tempo real e agentes de IA usando uma plataforma de dados operacional unificada que oferece suporte a dados estruturados e busca vetorial.',
         },
@@ -621,7 +621,7 @@ export const translations: Record<Locale, LatamCopy> = {
     cta: {
       modernize: {
         eyebrow: 'Pronto para o próximo passo?',
-        title: 'Pronto para modernizar seu banco de dados para a América Latina?',
+        title: 'Pronto para modernizar seu banco de dados?',
         button: 'Comece com o TiDB Cloud',
       },
       coDesign: {
