@@ -467,6 +467,21 @@ const partnerLogos = [
     height: 220,
     className: 'h-10 sm:h-12 lg:h-14',
   },
+  {
+    // Very bold, compact wordmark — sized down so it doesn't outweigh the rest.
+    name: 'SoftwareOne',
+    src: '/images/logos/latam-softwareone-logo-white.png',
+    width: 626,
+    height: 220,
+    className: 'h-9 sm:h-10 lg:h-12',
+  },
+  {
+    name: 'CloudContinuity',
+    src: '/images/logos/latam-cloudcontinuity-logo-white.png',
+    width: 1275,
+    height: 220,
+    className: 'h-9 sm:h-11 lg:h-12',
+  },
 ]
 
 // ─── Language switcher ───────────────────────────────────────────────────────
@@ -838,7 +853,7 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
             <p className="font-mono text-eyebrow text-carbon-100 mb-8 text-center">
               {t.ecosystem.partnerLogosTitle}
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-10 sm:gap-8">
               {partnerLogos.map((logo) => (
                 <div key={logo.name} className="flex items-center justify-center h-16 lg:h-20">
                   <Image
