@@ -403,103 +403,38 @@ function HeroCodePanel() {
       </div>
       <div className="px-6 py-[22px] font-mono text-[13px] leading-[1.7] text-carbon-200">
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # install TiDB Cloud CLI
+          # once — give your agent the skill
         </div>
-        <Command
-          cmd={
-            'curl -fsSL https://tidb.link/ti-cli-install | sh\n\nexport PATH="$HOME/.ti/bin:$PATH"'
-          }
-        >
+        <Command cmd={`curl -fsSL https://tidb.link/fs-skill >> AGENTS.md`}>
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">curl</span>{' '}
-            <span className="text-brand-blue-light">-fsSL</span> https://tidb.link/ti-cli-install{' '}
-            <span className="text-carbon-600">|</span>{' '}
-            <span className="text-brand-red-light">sh</span>
-          </div>
-          <div className="h-[15px]" />
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">export</span> PATH=
-            <span className="text-brand-teal-light">&quot;$HOME/.ti/bin:$PATH&quot;</span>
-          </div>
-        </Command>
-        <div className="h-[15px]" />
-        <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # create a workspace — this issues its filesystem token
-        </div>
-        <Command
-          cmd={`TI_FS_TOKEN=$(ti fs create-file-system --display-name agent-workspace --region aws-us-east-1 --wait --query "fs_token" --output text)`}
-        >
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-violet-light">TI_FS_TOKEN</span>=
-            <span className="text-carbon-600">$(</span>
-            <span className="text-brand-red-light">ti</span> fs create-file-system{' '}
-            <span className="text-brand-blue-light">--display-name</span> agent-workspace{' '}
-            <span className="text-brand-blue-light">--region</span> aws-us-east-1{' '}
-            <span className="text-brand-blue-light">--wait</span>{' '}
-            <span className="text-brand-blue-light">--query</span>{' '}
-            <span className="text-brand-teal-light">&quot;fs_token&quot;</span>{' '}
-            <span className="text-brand-blue-light">--output</span> text
-            <span className="text-carbon-600">)</span>
-          </div>
-        </Command>
-        <div className="h-[15px]" />
-        <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # teach your agent to use it
-        </div>
-        <Command
-          cmd={`curl -fsSL https://www.pingcap.com/tidb/tidb-cloud-filesystems/fs-skill.md >> AGENTS.md`}
-        >
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">curl</span>{' '}
-            <span className="text-brand-blue-light">-fsSL</span>{' '}
-            https://www.pingcap.com/tidb/tidb-cloud-filesystems/fs-skill.md{' '}
+            <span className="text-brand-blue-light">-fsSL</span> https://tidb.link/fs-skill{' '}
             <span className="text-carbon-600">&gt;&gt;</span> AGENTS.md
           </div>
         </Command>
         <div className="h-[15px]" />
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # in the sandbox: the agent reads its task, works, hands off
+          # per sandbox — mount, resume, hand off
         </div>
         <Command
-          cmd={`export TI_FS_TOKEN
+          cmd={`ti fs mount --mount-path ~/workspace
 
-mkdir ~/workspace
+cat  ~/workspace/TASK.md
 
-ti fs mount --region aws-us-east-1 --mount-path ~/workspace
-
-cat ~/workspace/TASK.md
-
-echo "auth tests failing — see notes" >> ~/workspace/HANDOFF.md
-
-ti fs umount --mount-path ~/workspace`}
+echo "done: auth fix" >> ~/workspace/HANDOFF.md`}
         >
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">export</span>{' '}
-            <span className="text-brand-violet-light">TI_FS_TOKEN</span>
-          </div>
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">mkdir</span> ~/workspace
-          </div>
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">ti</span> fs mount{' '}
-            <span className="text-brand-blue-light">--region</span> aws-us-east-1{' '}
             <span className="text-brand-blue-light">--mount-path</span> ~/workspace
           </div>
-          <div className="h-[15px]" />
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">cat</span> ~/workspace/TASK.md
+            <span className="text-brand-red-light">cat</span>
+            {'  '}~/workspace/TASK.md
           </div>
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">echo</span>{' '}
-            <span className="text-brand-teal-light">
-              &quot;auth tests failing — see notes&quot;
-            </span>{' '}
+            <span className="text-brand-teal-light">&quot;done: auth fix&quot;</span>{' '}
             <span className="text-carbon-600">&gt;&gt;</span> ~/workspace/HANDOFF.md
-          </div>
-          <div className="h-[15px]" />
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">ti</span> fs umount{' '}
-            <span className="text-brand-blue-light">--mount-path</span> ~/workspace
           </div>
         </Command>
       </div>
