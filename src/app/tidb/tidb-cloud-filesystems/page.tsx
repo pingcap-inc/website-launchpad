@@ -403,12 +403,12 @@ function HeroCodePanel() {
       </div>
       <div className="px-6 py-[22px] font-mono text-[13px] leading-[1.7] text-carbon-200">
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # install TiDB Cloud CLI
+          # once — install the CLI, then teach your agent to use it
         </div>
         <Command
-          cmd={
-            'curl -fsSL https://tidb.link/ti-cli-install | sh\n\nexport PATH="$HOME/.ti/bin:$PATH"'
-          }
+          cmd={`curl -fsSL https://tidb.link/ti-cli-install | sh
+
+curl -fsSL https://tidb.link/fs-skill.md >> AGENTS.md`}
         >
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">curl</span>{' '}
@@ -416,63 +416,35 @@ function HeroCodePanel() {
             <span className="text-carbon-600">|</span>{' '}
             <span className="text-brand-red-light">sh</span>
           </div>
-          <div className="h-[15px]" />
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">export</span> PATH=
-            <span className="text-brand-teal-light">&quot;$HOME/.ti/bin:$PATH&quot;</span>
+            <span className="text-brand-red-light">curl</span>{' '}
+            <span className="text-brand-blue-light">-fsSL</span> https://tidb.link/fs-skill.md{' '}
+            <span className="text-carbon-600">&gt;&gt;</span> AGENTS.md
           </div>
         </Command>
         <div className="h-[15px]" />
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # create a workspace — this issues its filesystem token
+          # per sandbox — mount, resume, hand off
         </div>
         <Command
-          cmd={`TI_FS_TOKEN=$(ti fs create-file-system --display-name agent-workspace --region aws-us-east-1 --wait --query "fs_token" --output text)`}
+          cmd={`ti fs mount --mount-path ~/workspace
+
+cat  ~/workspace/TASK.md
+
+echo "done: auth fix" >> ~/workspace/HANDOFF.md`}
         >
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-violet-light">TI_FS_TOKEN</span>=
-            <span className="text-carbon-600">$(</span>
-            <span className="text-brand-red-light">ti</span> fs create-file-system{' '}
-            <span className="text-brand-blue-light">--display-name</span> agent-workspace{' '}
-            <span className="text-brand-blue-light">--region</span> aws-us-east-1{' '}
-            <span className="text-brand-blue-light">--wait</span>{' '}
-            <span className="text-brand-blue-light">--query</span>{' '}
-            <span className="text-brand-teal-light">&quot;fs_token&quot;</span>{' '}
-            <span className="text-brand-blue-light">--output</span> text
-            <span className="text-carbon-600">)</span>
-          </div>
-        </Command>
-        <div className="h-[15px]" />
-        <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # in the sandbox: mount it, work in it, let the sandbox end
-        </div>
-        <Command
-          cmd={`export TI_FS_TOKEN
-
-mkdir ~/workspace
-
-ti fs mount --region aws-us-east-1 --mount-path ~/workspace
-
-echo "state that survives the sandbox" >> ~/workspace/notes.md`}
-        >
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">export</span>{' '}
-            <span className="text-brand-violet-light">TI_FS_TOKEN</span>
-          </div>
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            <span className="text-brand-red-light">mkdir</span> ~/workspace
-          </div>
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">ti</span> fs mount{' '}
-            <span className="text-brand-blue-light">--region</span> aws-us-east-1{' '}
             <span className="text-brand-blue-light">--mount-path</span> ~/workspace
           </div>
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
+            <span className="text-brand-red-light">cat</span>
+            {'  '}~/workspace/TASK.md
+          </div>
+          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">echo</span>{' '}
-            <span className="text-brand-teal-light">
-              &quot;state that survives the sandbox&quot;
-            </span>{' '}
-            <span className="text-carbon-600">&gt;&gt;</span> ~/workspace/notes.md
+            <span className="text-brand-teal-light">&quot;done: auth fix&quot;</span>{' '}
+            <span className="text-carbon-600">&gt;&gt;</span> ~/workspace/HANDOFF.md
           </div>
         </Command>
       </div>
@@ -518,7 +490,11 @@ export default function TidbCloudFilesystemPage() {
                 </SecondaryButton>
               </div>
             </div>
-            <div data-shade-block>
+            {/* Drop the panel so its top edge lines up with the headline rather
+                than the top of the column. 82px is what sits above the headline
+                on the left: the badge (25) + mb-4 (16) + the product-name line
+                (13) + mb-7 (28). Only applies once the grid is two columns. */}
+            <div data-shade-block className="lg:mt-[82px]">
               <HeroCodePanel />
               <a
                 href={DOCS_CLI_OVERVIEW}
