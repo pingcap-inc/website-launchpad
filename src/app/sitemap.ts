@@ -77,6 +77,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
     },
     {
+      url: '/playbook/idea-to-live-app-weekend-app-development-guide/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    {
       url: '/playbook/noisy-neighbor-multi-tenant-mysql/',
       priority: 0.7,
       changeFrequency: 'monthly',
