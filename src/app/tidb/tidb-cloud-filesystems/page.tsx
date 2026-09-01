@@ -447,18 +447,13 @@ function HeroCodePanel() {
           # teach your agent to use it
         </div>
         <Command
-          cmd={`curl -fsSL https://www.pingcap.com/tidb/tidb-cloud-filesystems/fs-skill.md \\
-  > .agent/skills/tidb-fs.md`}
+          cmd={`curl -fsSL https://www.pingcap.com/tidb/tidb-cloud-filesystems/fs-skill.md >> AGENTS.md`}
         >
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">curl</span>{' '}
             <span className="text-brand-blue-light">-fsSL</span>{' '}
             https://www.pingcap.com/tidb/tidb-cloud-filesystems/fs-skill.md{' '}
-            <span className="text-carbon-600">\</span>
-          </div>
-          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
-            {'  '}
-            <span className="text-carbon-600">&gt;</span> .agent/skills/tidb-fs.md
+            <span className="text-carbon-600">&gt;&gt;</span> AGENTS.md
           </div>
         </Command>
         <div className="h-[15px]" />
