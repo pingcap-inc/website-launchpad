@@ -403,12 +403,22 @@ function HeroCodePanel() {
       </div>
       <div className="px-6 py-[22px] font-mono text-[13px] leading-[1.7] text-carbon-200">
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # once — give your agent the skill
+          # once — install the CLI, give your agent the skill
         </div>
-        <Command cmd={`curl -fsSL https://tidb.link/fs-skill >> AGENTS.md`}>
+        <Command
+          cmd={`curl -fsSL https://tidb.link/ti-cli-install | sh
+
+curl -fsSL https://tidb.link/fs-skill.md >> AGENTS.md`}
+        >
           <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
             <span className="text-brand-red-light">curl</span>{' '}
-            <span className="text-brand-blue-light">-fsSL</span> https://tidb.link/fs-skill{' '}
+            <span className="text-brand-blue-light">-fsSL</span> https://tidb.link/ti-cli-install{' '}
+            <span className="text-carbon-600">|</span>{' '}
+            <span className="text-brand-red-light">sh</span>
+          </div>
+          <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
+            <span className="text-brand-red-light">curl</span>{' '}
+            <span className="text-brand-blue-light">-fsSL</span> https://tidb.link/fs-skill.md{' '}
             <span className="text-carbon-600">&gt;&gt;</span> AGENTS.md
           </div>
         </Command>
