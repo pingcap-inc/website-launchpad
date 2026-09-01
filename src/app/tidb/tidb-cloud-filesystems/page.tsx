@@ -403,7 +403,7 @@ function HeroCodePanel() {
       </div>
       <div className="px-6 py-[22px] font-mono text-[13px] leading-[1.7] text-carbon-200">
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # once — install the CLI, give your agent the skill
+          # once — install the CLI, then teach your agent to use it
         </div>
         <Command
           cmd={`curl -fsSL https://tidb.link/ti-cli-install | sh
