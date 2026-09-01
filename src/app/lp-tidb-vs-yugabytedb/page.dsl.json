@@ -15,11 +15,11 @@
         "headline": "TiDB vs YugabyteDB: The <span class=\"text-gradient-violet\">MySQL-First</span> Distributed SQL",
         "subheadline": "YugabyteDB is Postgres-first; TiDB is MySQL-compatible with native HTAP. If you are modernizing MySQL and want analytics on live data, TiDB is the pragmatic fit.",
         "primaryCta": {
-          "text": "Book 30-minute Architecture Call",
+          "text": "Book a 30-minute Architecture Call",
           "href": "#book"
         },
         "secondaryCta": {
-          "text": "Read Full Comparison Guide",
+          "text": "Read the Full Comparison Guide",
           "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
         },
         "heroImage": {
@@ -126,7 +126,7 @@
           }
         ],
         "cta": {
-          "text": "Book 30-minute Architecture Call",
+          "text": "Book a 30-minute Architecture Call",
           "href": "#book"
         }
       },
@@ -422,11 +422,11 @@
           "height": 256
         },
         "primaryCta": {
-          "text": "Book 30-minute Architecture Call",
+          "text": "Book a 30-minute Architecture Call",
           "href": "#book"
         },
         "secondaryCta": {
-          "text": "Read Full Comparison Guide",
+          "text": "Read the Full Comparison Guide",
           "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
         }
       },
@@ -440,9 +440,9 @@
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your data model, scaling needs, and migration path.",
         "portalId": "4466002",
         "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your data model, scaling needs, and migration path.",
         "region": "na1"
       },
       "style": {
