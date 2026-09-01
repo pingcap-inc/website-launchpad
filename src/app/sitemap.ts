@@ -32,6 +32,82 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // AI pages
     { url: '/ai/', priority: 0.8, changeFrequency: 'weekly' },
     { url: '/ai/vector-search/', priority: 0.7, changeFrequency: 'monthly' },
+    // Compare pages
+    { url: '/compare/', priority: 0.8, changeFrequency: 'weekly' },
+    { url: '/compare/amazon-aurora-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/best-database-building-ai-apps/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/best-database-for-ai-agents/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/compare/best-databases-for-saas-applications-at-scale/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    { url: '/compare/best-distributed-sql-databases/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/best-vector-database/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/cockroachdb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/mysql-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/mysql-compatible-database/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/tidb-vs-oceanbase/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/compare/tidb-vs-postgresql-2026-comparison-guide/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    { url: '/compare/yugabytedb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/vitess-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/compare/htap-database/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/compare/best-databases-for-real-time-analytics/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    // Playbook pages
+    { url: '/playbook/', priority: 0.8, changeFrequency: 'weekly' },
+    { url: '/playbook/ai-agent-memory/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/playbook/aurora-mysql-migration/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/playbook/build-mcp-server/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/playbook/embed-vector-db-build-rag/', priority: 0.7, changeFrequency: 'monthly' },
+    { url: '/playbook/escape-mysql-sharding-pain/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/playbook/how-to-cursor-ai-database-integration/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    {
+      url: '/playbook/idea-to-live-app-weekend-app-development-guide/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    {
+      url: '/playbook/noisy-neighbor-multi-tenant-mysql/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    { url: '/playbook/vibe-coding-tech-stack-guide/', priority: 0.7, changeFrequency: 'monthly' },
+    {
+      url: '/playbook/schema-changes-midnight-maintenance/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    // Programs pages
+    {
+      url: '/programs/agentic-ai-instance-capacity/',
+      priority: 0.7,
+      changeFrequency: 'monthly',
+    },
+    // Solutions pages
+    {
+      url: '/solutions/logistics-supply-chain/',
+      priority: 0.8,
+      changeFrequency: 'monthly',
+    },
+    {
+      url: '/solutions/ai-agent-context/',
+      priority: 0.8,
+      changeFrequency: 'monthly',
+    },
+    // Regional pages
+    { url: '/latam/', priority: 0.8, changeFrequency: 'monthly' },
     // Campaign / program pages
     // { url: '/tidb-cloud-startup-program/', priority: 0.6, changeFrequency: 'monthly' },
     // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },

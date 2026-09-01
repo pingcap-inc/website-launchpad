@@ -6,7 +6,9 @@
  * Title Case Rules (Chicago-style):
  * - Capitalize the first word always
  * - Capitalize nouns, pronouns, verbs, adjectives, adverbs
- * - Do NOT capitalize: a an the and but or for nor on at to from by with of in into up as
+ * - Do NOT capitalize: a an the and but or for nor on at to from by with of in into as
+ *   (NOTE: "up" is intentionally NOT in this list — in headings it is almost always an
+ *    adverb/particle, e.g. "Hold Up", "Scale Up", which Chicago capitalizes.)
  * - Hyphenated compounds: ALWAYS capitalize the first part (e.g., On-Premises, At-a-Glance);
  *   subsequent parts follow normal rules (content words capitalized, articles/prepositions lowercase)
  *
@@ -25,7 +27,7 @@ import { resolve } from 'path';
 const LOWERCASE_WORDS = new Set([
   'a', 'an', 'the',
   'and', 'but', 'or', 'for', 'nor',
-  'on', 'at', 'to', 'from', 'by', 'with', 'of', 'in', 'into', 'up', 'as', 'vs'
+  'on', 'at', 'to', 'from', 'by', 'with', 'of', 'in', 'into', 'as', 'vs'
 ]);
 
 // Brand names / acronyms that are always valid as-is — never flag them.
@@ -120,6 +122,9 @@ function shouldSkip(text) {
   if (!text.trim().includes(' ')) return true;
   // Questions are sentences (sentence case), not titles — skip title case check
   if (text.trim().endsWith('?')) return true;
+  // Multi-sentence prose (an internal sentence break "word. Word") is a sentence-style
+  // string (e.g. a CTA line), not a title — skip title case check
+  if (/\.\s/.test(text)) return true;
   return false;
 }
 

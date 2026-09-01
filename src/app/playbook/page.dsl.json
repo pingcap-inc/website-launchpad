@@ -92,7 +92,7 @@
             "description": "AI coding assistants hallucinate schema. MCP fixes that by giving Cursor live access to your tables, types, and relationships before it generates a query. This covers the full setup path for TiDB, the trust model, and what to review before any generated SQL touches production.",
             "cta": {
               "text": "Read the Playbook",
-              "href": "/playbook/how-to-cursor-ai-database-integration"
+              "href": "/playbook/how-to-cursor-ai-database-integration/"
             },
             "layout": "vertical"
           },
@@ -103,7 +103,7 @@
             "icon": "FileCode",
             "cta": {
               "text": "Read the Playbook",
-              "href": "pingcap.com/playbook/idea-to-live-app-weekend-app-development-guide/"
+              "href": "/playbook/idea-to-live-app-weekend-app-development-guide/"
             }
           }
         ],
