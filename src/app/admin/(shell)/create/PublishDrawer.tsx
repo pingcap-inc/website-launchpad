@@ -248,6 +248,17 @@ export function PublishDrawer({
           } else {
             nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Headline` })
           }
+          if (props.heroForm) {
+            if (!props.heroForm.formId?.trim()) {
+              nextLint.push({
+                label: 'Section',
+                status: 'fail',
+                detail: `${prefix} · Form ID is required when a hero form is enabled.`,
+              })
+            } else {
+              nextLint.push({ label: 'Section', status: 'pass', detail: `${prefix} · Hero form` })
+            }
+          }
           break
         case 'stats':
           if (!props.items?.length) {
