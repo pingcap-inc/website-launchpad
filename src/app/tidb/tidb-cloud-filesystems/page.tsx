@@ -490,7 +490,11 @@ export default function TidbCloudFilesystemPage() {
                 </SecondaryButton>
               </div>
             </div>
-            <div data-shade-block>
+            {/* Drop the panel so its top edge lines up with the headline rather
+                than the top of the column. 82px is what sits above the headline
+                on the left: the badge (25) + mb-4 (16) + the product-name line
+                (13) + mb-7 (28). Only applies once the grid is two columns. */}
+            <div data-shade-block className="lg:mt-[82px]">
               <HeroCodePanel />
               <a
                 href={DOCS_CLI_OVERVIEW}
