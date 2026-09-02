@@ -20,7 +20,7 @@
         },
         "secondaryCta": {
           "text": "Read Full Comparison",
-          "href": "https://www.pingcap.com/compare/oceanbase-vs-tidb/"
+          "href": "https://www.pingcap.com/compare/tidb-vs-oceanbase/"
         },
         "heroImage": {
           "image": {
@@ -47,8 +47,8 @@
             "title": "TiDB: Cloud-Native HTAP",
             "description": "Built for cloud-native HTAP and real-time analytics, with low-friction MySQL migration. Unifies transactions and analytics in one system.",
             "cta": {
-              "text": "Learn More",
-              "href": "https://www.pingcap.com/tidb/cloud/"
+              "text": "",
+              "href": ""
             },
             "icon": "Zap"
           },
@@ -57,8 +57,8 @@
             "title": "OceanBase: Financial-Grade OLTP",
             "description": "Often chosen for financial-grade, high-concurrency OLTP and Oracle-replacement scenarios.",
             "cta": {
-              "text": "Compare Features",
-              "href": "#comparison"
+              "text": "",
+              "href": ""
             },
             "icon": "Shield"
           }
@@ -131,8 +131,14 @@
             "description": "TiDB separates compute (a stateless SQL layer) from storage (TiKV), coordinated by the Placement Driver, with optional TiFlash columnar replicas for analytics. Scale the exact bottleneck—CPU, storage, or analytics—independently.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/1d4c74b6-tidb-architecture-v6.png",
+                "alt": "tidb architecture v6",
+                "width": 3000,
+                "height": 1600
+              },
+              "alt": "tidb architecture v6",
+              "width": 3000,
+              "height": 1600
             }
           },
           {
@@ -140,8 +146,14 @@
             "description": "OceanBase uses an integrated, partition-based architecture that couples compute and storage more tightly. Scaling requires coordinated partition rebalancing.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/986a3b44-screenshot_2026-06-04_at_2.33.17_pm.png",
+                "alt": "screenshot 2026 06 04 at 2.33.17 pm",
+                "width": 611,
+                "height": 364
+              },
+              "alt": "screenshot 2026 06 04 at 2.33.17 pm",
+              "width": 611,
+              "height": 364
             }
           }
         ],
@@ -226,19 +238,39 @@
         "items": [
           {
             "title": "Operational Database",
-            "description": "Replace MySQL, Amazon Aurora, or PostgreSQL with one MySQL-compatible distributed SQL engine."
+            "description": "Replace MySQL, Amazon Aurora, or PostgreSQL with one MySQL-compatible distributed SQL engine.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
           },
           {
             "title": "Analytics Warehouse",
-            "description": "Eliminate Snowflake, BigQuery, or Redshift with native columnar HTAP via TiFlash—no ETL pipelines."
+            "description": "Eliminate Snowflake, BigQuery, or Redshift with native columnar HTAP via TiFlash—no ETL pipelines.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
           },
           {
             "title": "Search & Vector Store",
-            "description": "Built-in full-text and vector search replaces Elasticsearch, OpenSearch, and standalone vector databases."
+            "description": "Built-in full-text and vector search replaces Elasticsearch, OpenSearch, and standalone vector databases.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
           },
           {
             "title": "Sharding & Caching",
-            "description": "Transparent auto-sharding with strong consistency—no app-side sharding middleware or external caches."
+            "description": "Transparent auto-sharding with strong consistency—no app-side sharding middleware or external caches.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
           }
         ],
         "startPosition": "right",
