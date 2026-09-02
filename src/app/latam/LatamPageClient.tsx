@@ -461,11 +461,14 @@ const partnerLogos = [
     className: 'h-12 sm:h-14 lg:h-16',
   },
   {
+    // The asset carried 75px of transparent padding below the artwork, which
+    // made it sit high in a vertically-centred row. Now trimmed tight, so the
+    // height classes drop to keep the mark the same visual size it was.
     name: 'Overlabs',
     src: '/images/logos/latam-overlabs-logo-white.png',
-    width: 983,
+    width: 1088,
     height: 220,
-    className: 'h-10 sm:h-12 lg:h-14',
+    className: 'h-7 sm:h-8 lg:h-9',
   },
   {
     // Very bold, compact wordmark — sized down so it doesn't outweigh the rest.
