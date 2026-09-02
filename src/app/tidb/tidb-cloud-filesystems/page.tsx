@@ -402,6 +402,11 @@ function HeroCodePanel() {
         </div>
       </div>
       <div className="px-6 py-[22px] font-mono text-[13px] leading-[1.7] text-carbon-200">
+        {/* tidb.link/fs-skill.md redirects to the skill the product team owns,
+            skills/mount-tidb-cloud-fs/SKILL.md in pingcap/agent-rules. It used to
+            point at a copy served from this repo's public/ directory; that copy is
+            gone, so the source of truth now sits with the team that owns the CLI.
+            Nothing to change here if the skill moves — repoint the shortlink. */}
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
           # once — install the CLI, then teach your agent to use it
         </div>
