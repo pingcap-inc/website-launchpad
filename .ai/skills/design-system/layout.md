@@ -2,16 +2,30 @@
 
 ## Container
 
+Two container primitives share the same **1374px** cap but differ in how they handle the side gutter:
+
 ```tsx
-// max-w-container = 1502px (outer) · content = 1374px · responsive horizontal padding
+// Standard section container — 1374px cap + responsive INNER padding
 <div className="max-w-container mx-auto px-4 md:px-8 lg:px-16">
+
+// Navbar / flush container — 1374px cap with the gutter baked into max-width, NO padding
+<div className="contain">
 ```
 
-| Breakpoint       | Padding           |
-| ---------------- | ----------------- |
-| Mobile (default) | `px-4` (16px)     |
-| ≥768px (md)      | `md:px-8` (32px)  |
-| ≥1024px (lg)     | `lg:px-16` (64px) |
+| Breakpoint       | `max-w-container` inner padding | `.contain` baked-in gutter |
+| ---------------- | ------------------------------- | -------------------------- |
+| Mobile (default) | `px-4` (16px)                   | 16px                       |
+| ≥768px (md)      | `md:px-8` (32px)                | 32px                       |
+| ≥1024px (lg)     | `lg:px-16` (64px)               | 64px                       |
+
+### Aligning section content with the Navbar
+
+The fixed `<Header />` centers its content with `.contain` (no inner padding), so its content spans the full 1374px. A section wrapper written as `max-w-container mx-auto px-4 md:px-8 lg:px-16` also caps at 1374px but then adds `lg:px-16`, so its content maxes out at ~1246px.
+
+- **≤1374px viewport:** the two are identical (both gutter to 16/32/64px) — no visible difference.
+- **>1374px viewport:** the `max-w-container + px` content sits **64px further in on each side** than the Navbar, so the nav looks wider than the page body.
+
+To keep section content flush with the full `<Header />` at every width, use the `contain` class on section wrappers instead of `max-w-container mx-auto px-4 md:px-8 lg:px-16`. See `src/app/tidb/tidb-cloud-filesystems/page.tsx`. The minimal `<HeaderLp />` (logo-only landing header) already uses `max-w-container + px`, so pages on that header need no change.
 
 ---
 

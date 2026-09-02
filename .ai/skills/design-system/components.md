@@ -9,38 +9,43 @@
 ## Header
 
 ```tsx
-// components/ui/Header.tsx
-<nav className="fixed top-0 left-0 right-0 z-50 bg-bg-primary h-[62px] lg:h-20 px-4 md:px-8 lg:px-16 flex items-center justify-between">
-  {/* Logo: 92×38 mobile / 120×50 desktop, do not replace */}
-  <a href="https://www.pingcap.com/tidb/" className="shrink-0">
-    <Image
-      src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
-      alt="TiDB"
-      width={120}
-      height={50}
-      className="block w-[92px] h-[38px] lg:w-[120px] lg:h-[50px]"
-    />
-  </a>
+// components/ui/Header.tsx — the fixed shell centers its content with the `.contain`
+// class (1374px cap, gutter baked into max-width, NO inner padding).
+<header className="fixed top-0 left-0 right-0 z-50 bg-bg-primary">
+  <div className="h-[62px] lg:h-20">
+    <nav className="contain h-full flex items-center justify-between">
+      {/* Logo: 92×38 mobile / 120×50 desktop, do not replace */}
+      <a href="https://www.pingcap.com/tidb/" className="shrink-0">
+        <Image
+          src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
+          alt="TiDB"
+          width={120}
+          height={50}
+          className="block w-[92px] h-[38px] lg:w-[120px] lg:h-[50px]"
+        />
+      </a>
 
-  {/* Desktop menu: hover-triggered mega-menu dropdowns */}
-  <ul className="hidden lg:flex items-center gap-1 text-base font-medium text-text-inverse">
-    <li>Product</li>
-    <li>Solutions</li>
-    <li>Resources</li>
-    <li>Company</li>
-    <li>
-      <a href="https://docs.pingcap.com/">Docs</a>
-    </li>
-  </ul>
+      {/* Desktop menu: hover-triggered mega-menu dropdowns */}
+      <ul className="hidden lg:flex items-center gap-1 text-base font-medium text-text-inverse">
+        <li>Product</li>
+        <li>Solutions</li>
+        <li>Resources</li>
+        <li>Company</li>
+        <li>
+          <a href="https://docs.pingcap.com/">Docs</a>
+        </li>
+      </ul>
 
-  {/* Desktop CTAs */}
-  <div className="hidden lg:flex items-center gap-4 shrink-0">
-    <GhostButton href="https://tidbcloud.com/signin">Sign In</GhostButton>
-    <PrimaryButton href="https://tidbcloud.com/free-trial/">Start for Free</PrimaryButton>
+      {/* Desktop CTAs */}
+      <div className="hidden lg:flex items-center gap-4 shrink-0">
+        <GhostButton href="https://tidbcloud.com/signin">Sign In</GhostButton>
+        <PrimaryButton href="https://tidbcloud.com/free-trial/">Start for Free</PrimaryButton>
+      </div>
+
+      {/* Mobile: hamburger → accordion menu */}
+    </nav>
   </div>
-
-  {/* Mobile: hamburger → accordion menu */}
-</nav>
+</header>
 ```
 
 **Implementation details (current):**
@@ -58,7 +63,9 @@
 - Resources: `FileTIcon`, `BookTIcon`, `VideoIcon`, `ScaleTIcon`, `CalendarTIcon`, `CommentsTIcon`, `CodeTIcon`, `BookmarkTIcon`, `EducationIcon`, `AppWindowIcon`, `AwardIcon`
 - Company: `NewspaperIcon`, `BuildingsIcon`, `BriefcaseIcon`, `HandshakeIcon`, `AtIcon`
 
-Rules: `h-[62px] lg:h-20` · `px-4 md:px-8 lg:px-16` · pure black background · add `pt-[62px] lg:pt-20` to page content wrapper.
+Rules: `h-[62px] lg:h-20` · content centered via `.contain` (1374px cap, no inner padding) · pure black background · add `pt-[62px] lg:pt-20` to page content wrapper.
+
+> **Navbar ↔ section alignment:** because the Navbar uses `.contain` (no padding) while the standard section container is `max-w-container mx-auto px-4 md:px-8 lg:px-16` (adds `lg:px-16`), the two only line up at ≤1374px viewport — above that, section content sits 64px further in on each side. For a page on the full `<Header />` that must stay flush with the nav at every width, use the `contain` class on section wrappers too (e.g. `src/app/tidb/tidb-cloud-filesystems/page.tsx`). Full detail in `layout.md`.
 
 ---
 
