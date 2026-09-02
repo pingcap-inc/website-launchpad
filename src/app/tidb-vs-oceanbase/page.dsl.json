@@ -226,39 +226,19 @@
         "items": [
           {
             "title": "Operational Database",
-            "description": "Replace MySQL, Amazon Aurora, or PostgreSQL with one MySQL-compatible distributed SQL engine.",
-            "image": {
-              "image": {
-                "url": ""
-              }
-            }
+            "description": "Replace MySQL, Amazon Aurora, or PostgreSQL with one MySQL-compatible distributed SQL engine."
           },
           {
             "title": "Analytics Warehouse",
-            "description": "Eliminate Snowflake, BigQuery, or Redshift with native columnar HTAP via TiFlash—no ETL pipelines.",
-            "image": {
-              "image": {
-                "url": ""
-              }
-            }
+            "description": "Eliminate Snowflake, BigQuery, or Redshift with native columnar HTAP via TiFlash—no ETL pipelines."
           },
           {
             "title": "Search & Vector Store",
-            "description": "Built-in full-text and vector search replaces Elasticsearch, OpenSearch, and standalone vector databases.",
-            "image": {
-              "image": {
-                "url": ""
-              }
-            }
+            "description": "Built-in full-text and vector search replaces Elasticsearch, OpenSearch, and standalone vector databases."
           },
           {
             "title": "Sharding & Caching",
-            "description": "Transparent auto-sharding with strong consistency—no app-side sharding middleware or external caches.",
-            "image": {
-              "image": {
-                "url": ""
-              }
-            }
+            "description": "Transparent auto-sharding with strong consistency—no app-side sharding middleware or external caches."
           }
         ],
         "startPosition": "right",
@@ -330,6 +310,7 @@
         ]
       },
       "style": {
+        "background": "primary",
         "spacing": "section"
       }
     },
