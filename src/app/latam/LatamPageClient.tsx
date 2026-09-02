@@ -462,13 +462,14 @@ const partnerLogos = [
   },
   {
     // The asset carried 75px of transparent padding below the artwork, which
-    // made it sit high in a vertically-centred row. Now trimmed tight, so the
-    // height classes drop to keep the mark the same visual size it was.
+    // made it sit high in a vertically-centred row; it is now trimmed tight.
+    // Sized to match SoftwareOne and CloudContinuity — its 4.9:1 ratio means
+    // anything taller than 48px would hit the column width and be clamped.
     name: 'Overlabs',
     src: '/images/logos/latam-overlabs-logo-white.png',
     width: 1088,
     height: 220,
-    className: 'h-7 sm:h-8 lg:h-9',
+    className: 'h-8 sm:h-10 lg:h-12',
   },
   {
     // Very bold, compact wordmark — sized down so it doesn't outweigh the rest.
