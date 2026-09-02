@@ -461,11 +461,30 @@ const partnerLogos = [
     className: 'h-12 sm:h-14 lg:h-16',
   },
   {
+    // The asset carried 75px of transparent padding below the artwork, which
+    // made it sit high in a vertically-centred row; it is now trimmed tight.
+    // Sits a step under SoftwareOne and CloudContinuity: it is a much wider
+    // mark (4.9:1), so at equal height it reads heavier than they do.
     name: 'Overlabs',
     src: '/images/logos/latam-overlabs-logo-white.png',
-    width: 983,
+    width: 1088,
     height: 220,
-    className: 'h-10 sm:h-12 lg:h-14',
+    className: 'h-7 sm:h-9 lg:h-11',
+  },
+  {
+    // Very bold, compact wordmark — sized down so it doesn't outweigh the rest.
+    name: 'SoftwareOne',
+    src: '/images/logos/latam-softwareone-logo-white.png',
+    width: 626,
+    height: 220,
+    className: 'h-9 sm:h-10 lg:h-12',
+  },
+  {
+    name: 'CloudContinuity',
+    src: '/images/logos/latam-cloudcontinuity-logo-white.png',
+    width: 1275,
+    height: 220,
+    className: 'h-9 sm:h-11 lg:h-12',
   },
 ]
 
@@ -838,7 +857,7 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
             <p className="font-mono text-eyebrow text-carbon-100 mb-8 text-center">
               {t.ecosystem.partnerLogosTitle}
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-10 sm:gap-8">
               {partnerLogos.map((logo) => (
                 <div key={logo.name} className="flex items-center justify-center h-16 lg:h-20">
                   <Image

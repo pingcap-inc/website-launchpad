@@ -185,7 +185,7 @@ export const translations: Record<Locale, LatamCopy> = {
       title: 'Partners Across the Region',
       paragraphs: [
         'Run TiDB Cloud on AWS, Google Cloud and Alibaba Cloud.',
-        'Work with regional partners, such as AI/R, Derevo, and Overlabs.',
+        'Work with regional partners, such as AI/R, Derevo, Overlabs, SoftwareOne, and CloudContinuity.',
         'Integrate with your existing stack instead of rebuilding it.',
       ],
       partners: [
@@ -371,7 +371,7 @@ export const translations: Record<Locale, LatamCopy> = {
       title: 'Socios en Toda la Región',
       paragraphs: [
         'Ejecuta TiDB Cloud en AWS, Google Cloud y Alibaba Cloud.',
-        'Trabaja con socios regionales, como AI/R, Derevo y Overlabs.',
+        'Trabaja con socios regionales, como AI/R, Derevo, Overlabs, SoftwareOne y CloudContinuity.',
         'Integra TiDB con tu stack existente, sin reconstruirlo.',
       ],
       partners: [
@@ -557,7 +557,7 @@ export const translations: Record<Locale, LatamCopy> = {
       title: 'Parceiros em Toda a Região',
       paragraphs: [
         'Execute o TiDB Cloud na AWS, no Google Cloud e na Alibaba Cloud.',
-        'Trabalhe com parceiros regionais, como AI/R, Derevo e Overlabs.',
+        'Trabalhe com parceiros regionais, como AI/R, Derevo, Overlabs, SoftwareOne e CloudContinuity.',
         'Integre o TiDB ao seu stack existente, sem precisar reconstruí-lo.',
       ],
       partners: [
