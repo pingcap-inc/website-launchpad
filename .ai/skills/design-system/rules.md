@@ -31,7 +31,8 @@
 **Layout / Spacing**
 
 - [ ] Spacing uses Token values only (`p-1` through `p-20` — no arbitrary pixel values)
-- [ ] Container: `max-w-container mx-auto px-4 md:px-8 lg:px-16` (max 1502px outer / 1374px content, padding 16/32/64px)
+- [ ] Container: `max-w-container mx-auto px-4 md:px-8 lg:px-16` (1374px cap, inner padding 16/32/64px → content maxes ~1246px)
+- [ ] Navbar alignment: pages on the full `<Header />` that need section content flush with the nav above 1374px viewport use the `contain` class (not `max-w-container + px`, which insets 64px more per side) — see layout.md "Aligning section content with the Navbar"
 - [ ] Section padding: `py-section md:py-section-sm`
 - [ ] Responsive grids: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`
 
@@ -87,7 +88,7 @@ import localFont from 'next/font/local'    // → CDN only
 // ─── Spacing ────────────────────────────────────────────
 py-[96px]                 // → py-section (80px)
 gap-[18px]                // → gap-4 (16px) or gap-6 (24px)
-max-w-[1440px]            // → max-w-container (1502px)
+max-w-[1440px]            // → max-w-container (1374px)
 
 // ─── Icons ────────────────────────────────────────────────
 import { NewspaperIcon } from './header-icons' // non-header usage should not use header-icons

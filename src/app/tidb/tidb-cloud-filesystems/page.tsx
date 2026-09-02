@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
 import { buildPageSchema, faqSchema, softwareApplicationSchema } from '@/lib/schema'
-import { HeaderLp } from '@/components/ui/HeaderLp'
+import { Header } from '@/components/ui/Header'
 import { Footer } from '@/components/ui/Footer'
 import { Badge } from '@/components/ui/badge'
 import { PrimaryButton } from '@/components/ui/PrimaryButton'
@@ -235,10 +235,10 @@ const faqItems: {
     },
     answer: (
       <>
-        Layer checkpoints and rollback are designed in, and the{' '}
-        <code>create-layer-checkpoint</code> and <code>rollback-layer</code> commands are already in
-        the CLI — but they aren&apos;t something we can promise during the preview yet. What&apos;s
-        ready today is cross-runtime continuity — write from one runtime, read from another.
+        Layer checkpoints and rollback are designed in, and the <code>create-layer-checkpoint</code>{' '}
+        and <code>rollback-layer</code> commands are already in the CLI — but they aren&apos;t
+        something we can promise during the preview yet. What&apos;s ready today is cross-runtime
+        continuity — write from one runtime, read from another.
       </>
     ),
   },
@@ -267,8 +267,8 @@ const faqItems: {
     },
     answer: (
       <>
-        We haven&apos;t settled the retention and deletion policy for after the preview yet. Until we
-        do, keep an independently recoverable copy of anything you can&apos;t afford to lose.
+        We haven&apos;t settled the retention and deletion policy for after the preview yet. Until
+        we do, keep an independently recoverable copy of anything you can&apos;t afford to lose.
       </>
     ),
   },
@@ -456,13 +456,13 @@ export default function TidbCloudFilesystemPage() {
   return (
     <>
       <JsonLd data={schema} />
-      <HeaderLp />
+      <Header />
 
-      <main className="bg-bg-primary pt-20">
+      <main className="bg-bg-primary pt-[62px] lg:pt-20">
         {/* 01 Hero */}
         <section className="relative isolate overflow-hidden bg-bg-primary pb-24 pt-[72px]">
           <HeroShade />
-          <div className="relative z-10 mx-auto grid max-w-container grid-cols-1 items-start gap-14 px-4 md:px-8 lg:grid-cols-2 lg:px-16">
+          <div className="relative z-10 contain grid grid-cols-1 items-start gap-14 lg:grid-cols-2">
             <div data-shade-dim>
               {/* Phase label sits on its own line above the H1 — it is page
                   metadata, not part of the heading. */}
@@ -509,7 +509,7 @@ export default function TidbCloudFilesystemPage() {
 
         {/* 02 What makes it different */}
         <section id="different" className="bg-gradient-dark-top py-20">
-          <div className="mx-auto max-w-container px-4 md:px-8 lg:px-16">
+          <div className="contain">
             <p className="mb-8 font-mono text-[15px] text-carbon-400">What makes it different</p>
             {/* title-case-ignore */}
             <h2 className="mb-5 max-w-[880px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
@@ -672,7 +672,7 @@ export default function TidbCloudFilesystemPage() {
         {/* 03 Proof */}
         <section id="proof" className="relative isolate overflow-hidden bg-bg-primary py-20">
           <PrismBackground />
-          <div className="relative z-10 mx-auto max-w-container px-4 md:px-8 lg:px-16">
+          <div className="relative z-10 contain">
             <p className="mb-8 font-mono text-[15px] text-carbon-400">Proof at scale</p>
             <KimiLogo className="mb-6 h-7 w-auto text-white" />
             {/* title-case-ignore */}
@@ -710,7 +710,7 @@ export default function TidbCloudFilesystemPage() {
 
         {/* 04 How it works */}
         <section id="how" className="bg-gradient-dark-bottom py-20">
-          <div className="mx-auto max-w-container px-4 md:px-8 lg:px-16">
+          <div className="contain">
             <p className="mb-8 font-mono text-[15px] text-carbon-400">How it works</p>
             {/* title-case-ignore */}
             <h2 className="mb-5 max-w-[880px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
@@ -738,7 +738,7 @@ export default function TidbCloudFilesystemPage() {
 
         {/* 05 Where it fits */}
         <section id="fit" className="bg-bg-primary py-20">
-          <div className="mx-auto max-w-container px-4 md:px-8 lg:px-16">
+          <div className="contain">
             <p className="mb-8 font-mono text-[15px] text-carbon-400">Where it fits</p>
             {/* title-case-ignore */}
             <h2 className="mb-12 max-w-[820px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
@@ -797,7 +797,7 @@ export default function TidbCloudFilesystemPage() {
 
         {/* 06 Hands-on lab */}
         <section id="hands-on-lab" className="bg-bg-primary pb-20">
-          <div className="mx-auto max-w-container px-4 md:px-8 lg:px-16">
+          <div className="contain">
             <div className="relative grid gap-7 overflow-hidden border-y border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-end md:gap-12">
               <svg
                 aria-hidden="true"
@@ -829,7 +829,7 @@ export default function TidbCloudFilesystemPage() {
 
         {/* 07 FAQ */}
         <section id="faq" className="bg-gradient-dark-top py-20">
-          <div className="mx-auto max-w-container px-4 md:px-8 lg:px-16">
+          <div className="contain">
             <p className="mb-8 font-mono text-[15px] text-carbon-400">Straight answers</p>
             {/* title-case-ignore */}
             <h2 className="mb-12 max-w-[820px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
@@ -854,7 +854,7 @@ export default function TidbCloudFilesystemPage() {
 
         {/* 08 Closing CTA */}
         <section className="bg-brand-red-bg py-16 text-white">
-          <div className="mx-auto max-w-container px-4 md:px-8 lg:px-16">
+          <div className="contain">
             <p className="mb-4 text-center font-mono text-[15px] text-white/70">Get started</p>
             <CtaSection
               title="Nothing to rebuild. Everything to build on"
