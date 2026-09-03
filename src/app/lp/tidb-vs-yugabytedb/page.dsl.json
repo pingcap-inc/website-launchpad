@@ -3,7 +3,7 @@
   "meta": {
     "title": "TiDB vs YugabyteDB: MySQL-First Distributed SQL Database",
     "description": "Compare TiDB and YugabyteDB for MySQL-first teams. TiDB offers MySQL 8.0 compatibility, native HTAP analytics, and distributed SQL at scale with lower migration friction.",
-    "canonical": "/tidb-vs-yugabytedb/"
+    "canonical": "/lp/tidb-vs-yugabytedb/"
   },
   "sections": [
     {
@@ -12,7 +12,7 @@
       "props": {
         "layout": "centered",
         "eyebrow": "Database Comparison",
-        "headline": "TiDB vs YugabyteDB: The <span class=\"text-gradient-violet\">MySQL-First</span> Distributed SQL",
+        "headline": "TiDB vs YugabyteDB: <span class=\"text-gradient-violet\">MySQL-First</span> Distributed SQL",
         "subheadline": "YugabyteDB is Postgres-first; TiDB is MySQL-compatible with native HTAP. If you are modernizing MySQL and want analytics on live data, TiDB is the pragmatic fit.",
         "primaryCta": {
           "text": "Book a 30-minute Architecture Call",
@@ -70,7 +70,7 @@
           {
             "variant": "teal",
             "title": "HTAP + Analytics? TiDB Wins",
-            "description": "Native columnar HTAP with TiFlash. Run transactional and analytical workloads in one system — no separate OLAP stack, no ETL.",
+            "description": "Native columnar HTAP with TiFlash. Run transactional and analytical workloads in one system. No separate OLAP stack, no ETL.",
             "cta": {
               "text": "",
               "href": ""
@@ -145,19 +145,19 @@
           {
             "icon": "Database",
             "title": "Operational Database",
-            "description": "Replace MySQL, Amazon Aurora, PostgreSQL with one MySQL-compatible distributed SQL engine",
+            "description": "Replace MySQL, Amazon Aurora, and PostgreSQL with one MySQL-compatible distributed SQL engine",
             "layout": "vertical"
           },
           {
             "icon": "BarChart2",
             "title": "Analytics Warehouse",
-            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, Redshift — no ETL required",
+            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, and Redshift. No ETL required",
             "layout": "vertical"
           },
           {
             "icon": "Search",
             "title": "Search & Vector Store",
-            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, standalone vector databases",
+            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, and standalone vector databases",
             "layout": "vertical"
           },
           {
@@ -293,7 +293,7 @@
               "width": 252,
               "height": 72
             },
-            "title": "Catalyst: SaaS Data Serving Layer Rearchitected for 60x Faster Queries",
+            "title": "Catalyst: Rearchitected for 60x Faster Queries",
             "description": "Catalyst selected TiDB over Aurora and YugabyteDB to power its customer growth platform, achieving up to 60x faster query response with HTAP capabilities that handle both object and time series data in one stack.",
             "stats": [
               {
@@ -412,7 +412,7 @@
       "type": "cta",
       "props": {
         "title": "Compare on Your Own Schema",
-        "subtitle": "Compare TiDB and YugabyteDB on your own schema. Book a 30-minute architecture call with our engineering team.",
+        "subtitle": "Compare TiDB and YugabyteDB on your own schema. Schedule an architecture call with our engineering team.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -440,7 +440,7 @@
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your data model, scaling needs, and migration path.",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team. We'll walk your data model, scaling needs, and migration path.",
         "portalId": "4466002",
         "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
         "region": "na1"
