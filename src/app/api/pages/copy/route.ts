@@ -159,6 +159,10 @@ export async function POST(req: NextRequest) {
       content,
       `chore: duplicate page /${from}/ -> /${to}/`
     )
+
+    // Invalidate the /api/pages in-memory cache (60s TTL) so the new draft
+    // shows up immediately when the list refetches after this returns.
+    ;(globalThis as { __pagesCache?: Map<string, unknown> }).__pagesCache?.clear()
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Unknown error during copy'
     return NextResponse.json({ error: msg }, { status: 500 })
