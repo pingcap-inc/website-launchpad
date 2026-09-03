@@ -587,7 +587,7 @@ export const translations: Record<Locale, LatamCopy> = {
     },
     whyTidb: {
       eyebrow: 'POR QUE O TIDB',
-      title: 'Por Que as Equipes na América Latina Escolhem o TiDB',
+      title: 'Por que as empresas escolhem o TiDB',
       subtitle:
         'Razões práticas para consolidar, escalar e construir aplicações conectadas a IA em uma única plataforma SQL distribuída.',
       cards: [
