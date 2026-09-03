@@ -3,7 +3,7 @@
   "meta": {
     "title": "TiDB vs CockroachDB: MySQL-Compatible, Native HTAP Database",
     "description": "Compare TiDB and CockroachDB for MySQL workloads. TiDB offers MySQL compatibility, native columnar HTAP with TiFlash, and disaggregated compute/storage scaling.",
-    "canonical": "/tidb-vs-cockroachdb/"
+    "canonical": "/lp/tidb-vs-cockroachdb/"
   },
   "sections": [
     {
@@ -13,7 +13,7 @@
         "layout": "centered",
         "eyebrow": "Database Comparison",
         "headline": "TiDB vs CockroachDB: <span class=\"text-gradient-violet\">MySQL-Compatible</span>, Native HTAP",
-        "subheadline": "If your stack is MySQL and you need real analytics on live data, TiDB gives you MySQL compatibility, native columnar HTAP, and independent compute/storage scaling — without a Postgres-wire migration.",
+        "subheadline": "If your stack is MySQL and you need real analytics on live data, TiDB gives you MySQL compatibility, native columnar HTAP, and independent compute/storage scaling without a Postgres-wire migration.",
         "primaryCta": {
           "text": "Book 30-minute Architecture Call",
           "href": "#book"
@@ -56,7 +56,7 @@
           {
             "variant": "blue",
             "title": "Native Columnar HTAP",
-            "description": "TiFlash columnar replicas enable real-time analytics on live data — no ETL, no separate warehouse.",
+            "description": "TiFlash columnar replicas enable real-time analytics on live data. No ETL, no separate warehouse.",
             "cta": {
               "text": "",
               "href": ""
@@ -66,7 +66,7 @@
           {
             "variant": "teal",
             "title": "Disaggregated Architecture",
-            "description": "Scale compute and storage independently — pay for what you actually need, not bundled overhead.",
+            "description": "Scale compute and storage independently. Pay for what you actually need, not bundled overhead.",
             "cta": {
               "text": "",
               "href": ""
@@ -86,7 +86,7 @@
       "props": {
         "eyebrow": "Feature Comparison",
         "title": "Compatibility Comparison: TiDB vs CockroachDB",
-        "subtitle": "If your application, drivers, ORMs, and team expertise are MySQL-based, TiDB keeps everything productive through migration — without Postgres-wire compatibility-layer costs.",
+        "subtitle": "If your application, drivers, ORMs, and team expertise are MySQL-based, TiDB keeps everything productive through migration without Postgres-wire compatibility-layer costs.",
         "ourProduct": "TiDB",
         "competitor": "CockroachDB",
         "rows": [
@@ -147,13 +147,13 @@
           {
             "icon": "BarChart2",
             "title": "Analytics Warehouse",
-            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, Redshift — no ETL required",
+            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, and Redshift. No ETL required",
             "layout": "vertical"
           },
           {
             "icon": "Search",
             "title": "Search & Vector Store",
-            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, standalone vector databases",
+            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, and standalone vector databases",
             "layout": "vertical"
           },
           {
@@ -213,13 +213,13 @@
           {
             "icon": "LayoutGrid",
             "title": "Transparent Auto-Sharding",
-            "description": "Data auto-splits into Regions and rebalances transparently across nodes. Your application never manages shard keys or partition logic — TiDB handles distribution automatically.",
+            "description": "Data auto-splits into Regions and rebalances transparently across nodes. Your application never manages shard keys or partition logic. TiDB handles distribution automatically.",
             "layout": "vertical"
           },
           {
             "icon": "Layers",
             "title": "Disaggregated Compute and Storage",
-            "description": "Scale compute (TiDB nodes) and storage (TiKV/TiFlash) independently. Address the actual bottleneck without over-provisioning both layers — pay only for what you need.",
+            "description": "Scale compute (TiDB nodes) and storage (TiKV/TiFlash) independently. Address the actual bottleneck without over-provisioning both layers. Pay only for what you need.",
             "layout": "vertical"
           },
           {
@@ -407,11 +407,11 @@
         "items": [
           {
             "q": "Is TiDB a drop-in replacement for MySQL?",
-            "a": "TiDB is binary-compatible with the MySQL 8.0 wire protocol — most applications connect with no code change. Validate specifics in a proof-of-concept with your own schema and queries."
+            "a": "TiDB is binary-compatible with the MySQL 8.0 wire protocol. Most applications connect with no code change. Validate specifics in a proof-of-concept with your own schema and queries."
           },
           {
             "q": "How does TiDB handle distributed transactions and ACID?",
-            "a": "Strict ACID with snapshot-isolation transactions coordinated by the Placement Driver — strong consistency across all nodes."
+            "a": "Strict ACID with snapshot-isolation transactions coordinated by the Placement Driver, strong consistency across all nodes."
           },
           {
             "q": "What does HTAP mean, and how does TiFlash work?",
@@ -427,7 +427,7 @@
           },
           {
             "q": "How should I evaluate performance?",
-            "a": "Run a POC on your own schema and workload — the architectural differences (MySQL wire, native HTAP, disaggregated storage) are structural."
+            "a": "Run a POC on your own schema and workload. The architectural differences (MySQL wire, native HTAP, disaggregated storage) are structural."
           }
         ]
       },
@@ -440,7 +440,7 @@
       "type": "cta",
       "props": {
         "title": "Compare on Your Own Schema",
-        "subtitle": "Compare TiDB and CockroachDB on your own schema. Book a 30-minute architecture call with our engineering team.",
+        "subtitle": "Compare TiDB and CockroachDB on your own schema. Schedule an architecture call with our engineering team.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -468,7 +468,7 @@
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your data model, scaling needs, and migration path.",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team. We'll walk through your data model, scaling needs, and migration path.",
         "portalId": "4466002",
         "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
         "region": "na1"
