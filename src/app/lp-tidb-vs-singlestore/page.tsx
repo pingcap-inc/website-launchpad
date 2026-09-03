@@ -1,0 +1,546 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
+  description: "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/lp-tidb-vs-singlestore/' },
+  openGraph: {
+    title: "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
+    description: "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
+    url: 'https://www.pingcap.com/lp-tidb-vs-singlestore/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: "/lp-tidb-vs-singlestore/",
+  title: "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
+  description: "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    { name: "TiDB vs. <span class=\"text-gradient-violet\">SingleStore</span>", path: "/lp-tidb-vs-singlestore/" },
+  ],
+})
+
+const dsl: PageDSL = {
+  "pageName": "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
+  "meta": {
+    "title": "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
+    "description": "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
+    "canonical": "/lp-tidb-vs-singlestore/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Database Comparison",
+        "headline": "TiDB vs. <span class=\"text-gradient-violet\">SingleStore</span>",
+        "subheadline": "Open-source distributed SQL with true MySQL compatibility, elastic scaling, and strong consistency — no vendor lock-in.",
+        "primaryCta": {
+          "text": "Book a 30-minute Architecture Call",
+          "href": "#book"
+        },
+        "secondaryCta": {
+          "text": "Read the Full Comparison Guide",
+          "href": "https://www.pingcap.com/blog/singlestore-vs-tidb-distributed-sql-database-comparison-guide/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "decision-brief",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "The Decision in Brief",
+        "title": "Open Source vs. Proprietary Lock-In",
+        "subtitle": "Proprietary databases like SingleStore promise simplicity but deliver complexity, from opaque licensing to manual tuning. TiDB is open-source distributed SQL: MySQL-compatible, strongly consistent, and elastically scalable.",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "Apache 2.0 Licensed",
+            "description": "Complete control, no vendor lock-in, no surprise license audits or forced upgrades",
+            "cta": {
+              "text": "Learn More",
+              "href": "#open-source"
+            },
+            "icon": "Shield"
+          },
+          {
+            "variant": "blue",
+            "title": "True MySQL Compatibility",
+            "description": "Wire-protocol compatible — your existing tools, apps, and workflows work immediately",
+            "cta": {
+              "text": "Learn More",
+              "href": "#mysql-compatibility"
+            },
+            "icon": "Database"
+          },
+          {
+            "variant": "teal",
+            "title": "Transparent Auto-Sharding",
+            "description": "Automatic data distribution with no complex partitioning or manual resharding required",
+            "cta": {
+              "text": "Learn More",
+              "href": "#acid-scale"
+            },
+            "icon": "Layers"
+          }
+        ],
+        "columns": 3,
+        "iconSize": 48
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "comparison-table",
+      "type": "comparisonTable",
+      "props": {
+        "eyebrow": "Feature Comparison",
+        "title": "TiDB vs SingleStore at a Glance",
+        "subtitle": "See how TiDB delivers open-source freedom, MySQL compatibility, and distributed ACID without compromise",
+        "ourProduct": "TiDB",
+        "competitor": "SingleStore",
+        "rows": [
+          {
+            "feature": "Open source",
+            "ours": "Apache 2.0",
+            "theirs": "Proprietary"
+          },
+          {
+            "feature": "MySQL compatibility",
+            "ours": "True wire-protocol",
+            "theirs": "Partial"
+          },
+          {
+            "feature": "Distributed ACID",
+            "ours": true,
+            "theirs": "Requires tuning"
+          },
+          {
+            "feature": "Transparent auto-sharding",
+            "ours": true,
+            "theirs": "Manual"
+          },
+          {
+            "feature": "Native HTAP",
+            "ours": "Yes (TiFlash)",
+            "theirs": true
+          },
+          {
+            "feature": "Vendor lock-in",
+            "ours": "None",
+            "theirs": "Licensing dependency"
+          }
+        ],
+        "cta": {
+          "text": "Book a 30-minute Architecture Call",
+          "href": "#book"
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "featureGrid-1788214084527",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "One Engine, Not a Bolt-On Stack",
+        "title": "Consolidate Four Systems Into One Distributed SQL Engine",
+        "subtitle": "Most teams stitch four or more systems together long before they hit true scale. TiDB consolidates them onto a single distributed SQL engine — lower cost, fewer failure modes, no ETL, and AI-ready.",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "Operational Database",
+            "description": "Replace MySQL, Amazon Aurora, PostgreSQL with one MySQL-compatible distributed SQL engine"
+          },
+          {
+            "icon": "BarChart2",
+            "title": "Analytics Warehouse",
+            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, Redshift — no ETL required",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Search",
+            "title": "Search & Vector Store",
+            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, standalone vector databases",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Layers",
+            "title": "Sharding & Caches",
+            "description": "Transparent auto-sharding with strong consistency, no app-side sharding or external caching layers",
+            "layout": "vertical"
+          }
+        ],
+        "columns": 4,
+        "itemLayout": "vertical"
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "open-source",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "Open-Source Freedom",
+        "title": "No Black Box, No Lock-In",
+        "items": [
+          {
+            "title": "True Open-Source Freedom",
+            "description": "TiDB is genuinely open source (Apache 2.0) — complete control, no vendor lock-in, no surprise license audits. SingleStore's proprietary licensing creates dependency and limits deployment flexibility. You control your own roadmap with TiDB, deploy anywhere, and avoid licensing fees while still getting enterprise support when you need it.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/7ccab1c9-rapid_productivity_illustration.svg",
+                "alt": "rapid productivity illustration",
+                "width": 600,
+                "height": 600
+              },
+              "alt": "rapid productivity illustration",
+              "width": 600,
+              "height": 600
+            }
+          }
+        ],
+        "startPosition": "left",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "mysql-compatibility",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "MySQL Compatibility",
+        "title": "Migration Without Rewriting",
+        "items": [
+          {
+            "title": "MySQL Compatibility Without Compromise",
+            "description": "True MySQL wire-protocol compatibility makes migration seamless — your existing tools, applications, and workflows work immediately, no rewriting required. Unlike SingleStore's partial compatibility, TiDB supports MySQL drivers, ORMs, and SQL syntax out of the box, so you keep your investments in tooling and expertise.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
+                "alt": "rapid productivity illustration 3",
+                "width": 500,
+                "height": 448
+              },
+              "alt": "rapid productivity illustration 3",
+              "width": 500,
+              "height": 448
+            }
+          }
+        ],
+        "startPosition": "right",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "acid-scale",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Distributed Architecture",
+        "title": "Strong ACID at Scale + Transparent Auto-Sharding",
+        "subtitle": "Automatic scaling and data distribution with no manual tuning or complex partitioning",
+        "items": [
+          {
+            "icon": "Lock",
+            "title": "Distributed ACID Transactions",
+            "description": "Snapshot isolation across the whole cluster — no tuning required, unlike SingleStore's manual optimization",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Network",
+            "title": "Automatic Data Distribution",
+            "description": "Transparent auto-sharding eliminates complex partitioning and resharding operations",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Layers",
+            "title": "Separated Compute and Storage",
+            "description": "Scale compute and storage independently without downtime or manual intervention",
+            "borderColor": "teal"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "case-studies",
+      "type": "caseStudyCards",
+      "props": {
+        "eyebrow": "Proven at Scale",
+        "title": "Leading Fintech, Social, Data, and SaaS Platforms Run TiDB",
+        "items": [
+          {
+            "badge": "Fintech",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/23ea2f33-plaid-logo.png",
+                "alt": "plaid logo",
+                "width": 351,
+                "height": 132
+              },
+              "alt": "plaid logo",
+              "width": 351,
+              "height": 132
+            },
+            "title": "Plaid: 100 Services Migrated from Aurora with Zero Downtime",
+            "description": "A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 second per service.",
+            "stats": [
+              {
+                "value": "96%",
+                "label": "Less maintenance"
+              },
+              {
+                "value": "<60s",
+                "label": "Cutover downtime"
+              }
+            ],
+            "href": "https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/"
+          },
+          {
+            "badge": "Social",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/51545d7d-pinterest-logo.svg",
+                "alt": "pinterest logo",
+                "width": 181,
+                "height": 50
+              },
+              "alt": "pinterest logo",
+              "width": 181,
+              "height": 50
+            },
+            "title": "Pinterest: Graph Service Scaled with 10x Latency Reduction",
+            "description": "Modernized its graph service with TiDB eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.",
+            "stats": [
+              {
+                "value": "50%+",
+                "label": "Infra savings"
+              },
+              {
+                "value": "10x",
+                "label": "P99 latency cut"
+              }
+            ],
+            "href": "https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/"
+          },
+          {
+            "badge": "SaaS",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/4043e4af-catalyst.svg",
+                "alt": "catalyst",
+                "width": 252,
+                "height": 72
+              },
+              "alt": "catalyst",
+              "width": 252,
+              "height": 72
+            },
+            "title": "Catalyst: SaaS Data Serving Layer Rearchitected for 60x Faster Queries",
+            "description": "Catalyst selected TiDB over Aurora and YugabyteDB to power its customer growth platform, achieving up to 60x faster query response with HTAP capabilities that handle both object and time series data in one stack.",
+            "stats": [
+              {
+                "value": "60x",
+                "label": "Faster queries"
+              },
+              {
+                "value": "1",
+                "label": "Unified stack"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/catalyst-rearchitects-core-saas-platform-tidb-60x-faster-performance/"
+          },
+          {
+            "badge": "SaaS",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/239173a5-apps-m.svg",
+                "alt": "apps m",
+                "width": 24,
+                "height": 24
+              },
+              "alt": "apps m",
+              "width": 24,
+              "height": 24
+            },
+            "title": "Atlassian: 750+ Postgres clusters consolidated to 16 TiDB clusters",
+            "description": "Atlassian replaced hundreds of sharded PostgreSQL clusters with 16 global TiDB clusters to power its Forge platform, scaling to 3M+ tables and 500k concurrent connections per cluster.",
+            "stats": [
+              {
+                "value": "3M+",
+                "label": "Tables per cluster"
+              },
+              {
+                "value": "750+",
+                "label": "PG clusters replaced"
+              }
+            ],
+            "href": "https://www.pingcap.com/blog/how-atlassian-scaled-three-million-tables-multi-tenancy-tidb/"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "recognition",
+      "type": "logoCloud",
+      "props": {
+        "eyebrow": "Industry Recognition",
+        "title": "Recognized by Third Parties",
+        "logos": [
+          {
+            "name": "G2",
+            "image": {
+              "url": "https://static.pingcap.com/images/053856a3-20260506-160923.png",
+              "alt": "20260506 160923",
+              "width": 968,
+              "height": 598
+            },
+            "href": "https://www.g2.com/products/tidb/reviews"
+          },
+          {
+            "name": "Gartner Peer Insights",
+            "image": {
+              "url": "https://static.pingcap.com/images/e54e2db0-20260506-160445.png",
+              "alt": "20260506 160445",
+              "width": 972,
+              "height": 594
+            },
+            "href": "https://www.gartner.com/reviews/market/cloud-database-management-systems"
+          }
+        ],
+        "variant": "minimal",
+        "align": "center"
+      },
+      "style": {
+        "spacing": "md"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "Is TiDB really open source?",
+            "a": "Yes — TiDB is Apache 2.0 licensed. You control your own roadmap with no black box and no forced upgrades. Unlike proprietary databases, there are no surprise license audits or vendor lock-in."
+          },
+          {
+            "q": "How compatible is TiDB with MySQL?",
+            "a": "TiDB offers true MySQL wire-protocol compatibility, so drivers, ORMs, and SQL keep working through migration. SingleStore only offers partial MySQL compatibility, requiring rewrites and custom tooling."
+          },
+          {
+            "q": "Does TiDB match SingleStore on analytics?",
+            "a": "Yes — TiFlash provides native columnar HTAP so OLTP and OLAP run on the same data with no ETL. You get real-time analytics without maintaining separate data pipelines."
+          },
+          {
+            "q": "What does switching cost?",
+            "a": "Migration is low-friction thanks to MySQL compatibility. You avoid SingleStore's licensing fees with an open-source model plus enterprise support when you need it. Our team will walk you through your specific migration path."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "demo-cta",
+      "type": "cta",
+      "props": {
+        "title": "Compare on Your Own Schema",
+        "subtitle": "See how TiDB compares to SingleStore for your workload. Book a 30-minute architecture call with our engineering team.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Book a 30-minute Architecture Call",
+          "href": "#book"
+        },
+        "secondaryCta": {
+          "text": "Read the Full Comparison Guide",
+          "href": "https://www.pingcap.com/blog/singlestore-vs-tidb-distributed-sql-database-comparison-guide/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "book",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk through your MySQL data model, scaling needs, and migration path.",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+        "region": "na1"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    }
+  ]
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}
