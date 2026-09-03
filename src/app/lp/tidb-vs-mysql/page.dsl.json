@@ -1,51 +1,9 @@
-import type { Metadata } from 'next'
-import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema } from '@/lib/schema'
-import { PageRenderer } from '@/lib/page-renderer'
-import type { PageDSL } from '@/lib/dsl-schema'
-
-export const metadata: Metadata = {
-  title: "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
-  description: "Compare TiDB and MySQL for horizontal scale, distributed ACID, and HTAP. Drop-in MySQL compatibility with automatic sharding and zero-downtime DDL.",
-  robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/lp-tidb-vs-mysql/' },
-  openGraph: {
-    title: "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
-    description: "Compare TiDB and MySQL for horizontal scale, distributed ACID, and HTAP. Drop-in MySQL compatibility with automatic sharding and zero-downtime DDL.",
-    url: 'https://www.pingcap.com/lp-tidb-vs-mysql/',
-    siteName: 'TiDB',
-    images: [
-      {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
-        width: 1200,
-        height: 630,
-      },
-    ],
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
-  },
-}
-
-const schema = buildPageSchema({
-  path: "/lp-tidb-vs-mysql/",
-  title: "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
-  description: "Compare TiDB and MySQL for horizontal scale, distributed ACID, and HTAP. Drop-in MySQL compatibility with automatic sharding and zero-downtime DDL.",
-  breadcrumbs: [
-    { name: 'Home', path: '/' },
-    { name: "TiDB vs. <span class=\"text-gradient-violet\">MySQL</span>", path: "/lp-tidb-vs-mysql/" },
-  ],
-})
-
-const dsl: PageDSL = {
+{
   "pageName": "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
   "meta": {
     "title": "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
     "description": "Compare TiDB and MySQL for horizontal scale, distributed ACID, and HTAP. Drop-in MySQL compatibility with automatic sharding and zero-downtime DDL.",
-    "canonical": "/lp-tidb-vs-mysql/"
+    "canonical": "/tidb-vs-mysql/"
   },
   "sections": [
     {
@@ -513,13 +471,4 @@ const dsl: PageDSL = {
       }
     }
   ]
-}
-
-export default function GeneratedPage() {
-  return (
-    <>
-      <JsonLd data={schema} />
-      <PageRenderer dsl={dsl} withChrome />
-    </>
-  )
 }

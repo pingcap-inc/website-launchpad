@@ -1,9 +1,9 @@
 {
-  "pageName": "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
+  "pageName": "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
   "meta": {
-    "title": "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
-    "description": "Compare TiDB and MySQL for horizontal scale, distributed ACID, and HTAP. Drop-in MySQL compatibility with automatic sharding and zero-downtime DDL.",
-    "canonical": "/lp-tidb-vs-mysql/"
+    "title": "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
+    "description": "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
+    "canonical": "/tidb-vs-singlestore/"
   },
   "sections": [
     {
@@ -12,15 +12,15 @@
       "props": {
         "layout": "centered",
         "eyebrow": "Database Comparison",
-        "headline": "TiDB vs. <span class=\"text-gradient-violet\">MySQL</span>",
-        "subheadline": "Scale MySQL reads and writes past a single primary without manual sharding, and keep strong ACID consistency.",
+        "headline": "TiDB vs. <span class=\"text-gradient-violet\">SingleStore</span>",
+        "subheadline": "Open-source distributed SQL with true MySQL compatibility, elastic scaling, and strong consistency — no vendor lock-in.",
         "primaryCta": {
           "text": "Book a 30-minute Architecture Call",
           "href": "#book"
         },
         "secondaryCta": {
           "text": "Read the Full Comparison Guide",
-          "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
+          "href": "https://www.pingcap.com/blog/singlestore-vs-tidb-distributed-sql-database-comparison-guide/"
         },
         "heroImage": {
           "image": {
@@ -29,11 +29,6 @@
           "alt": "hero image",
           "width": 500,
           "height": 400
-        },
-        "heroForm": {
-          "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
-          "portalId": "4466002",
-          "region": "na1"
         }
       },
       "style": {
@@ -45,41 +40,42 @@
       "type": "featureHighlights",
       "props": {
         "eyebrow": "The Decision in Brief",
-        "title": "Why Teams Choose TiDB Over MySQL",
-        "subtitle": "Technical complexity rises as scaling and high-availability needs grow. Manual sharding, clustering, and replication add maintenance overhead. TiDB provides one MySQL-compatible engine for transactions and real-time analytics — scaling out without app-side sharding.",
+        "title": "Open Source vs. Proprietary Lock-In",
+        "subtitle": "Proprietary databases like SingleStore promise simplicity but deliver complexity, from opaque licensing to manual tuning. TiDB is open-source distributed SQL: MySQL-compatible, strongly consistent, and elastically scalable.",
         "items": [
           {
             "variant": "violet",
-            "title": "Scale Writes Without Sharding",
-            "description": "Transparent horizontal scale for reads and writes — no app-level sharding logic required.",
+            "title": "Apache 2.0 Licensed",
+            "description": "Complete control, no vendor lock-in, no surprise license audits or forced upgrades",
             "cta": {
-              "text": "",
-              "href": ""
-            },
-            "icon": "Layers"
-          },
-          {
-            "variant": "blue",
-            "title": "Distributed ACID Transactions",
-            "description": "Cluster-wide strong consistency with ACID guarantees across all nodes.",
-            "cta": {
-              "text": "",
-              "href": ""
+              "text": "Learn More",
+              "href": "#open-source"
             },
             "icon": "Shield"
           },
           {
-            "variant": "teal",
-            "title": "Native HTAP Capability",
-            "description": "Run real-time analytics on live transactional data with TiFlash columnar storage.",
+            "variant": "blue",
+            "title": "True MySQL Compatibility",
+            "description": "Wire-protocol compatible — your existing tools, apps, and workflows work immediately",
             "cta": {
-              "text": "",
-              "href": ""
+              "text": "Learn More",
+              "href": "#mysql-compatibility"
             },
-            "icon": "BarChart2"
+            "icon": "Database"
+          },
+          {
+            "variant": "teal",
+            "title": "Transparent Auto-Sharding",
+            "description": "Automatic data distribution with no complex partitioning or manual resharding required",
+            "cta": {
+              "text": "Learn More",
+              "href": "#acid-scale"
+            },
+            "icon": "Layers"
           }
         ],
-        "columns": 3
+        "columns": 3,
+        "iconSize": 48
       },
       "style": {
         "spacing": "section"
@@ -89,46 +85,41 @@
       "id": "comparison-table",
       "type": "comparisonTable",
       "props": {
-        "eyebrow": "Head-to-Head",
-        "title": "TiDB vs MySQL: Feature Comparison",
-        "subtitle": "See how TiDB and MySQL stack up across scalability, ACID guarantees, analytics, and operational complexity.",
+        "eyebrow": "Feature Comparison",
+        "title": "TiDB vs SingleStore at a Glance",
+        "subtitle": "See how TiDB delivers open-source freedom, MySQL compatibility, and distributed ACID without compromise",
         "ourProduct": "TiDB",
-        "competitor": "MySQL",
+        "competitor": "SingleStore",
         "rows": [
           {
-            "feature": "Horizontal scale (writes + reads)",
-            "ours": "Transparent, automatic",
-            "theirs": "Manual sharding required"
+            "feature": "Open source",
+            "ours": "Apache 2.0",
+            "theirs": "Proprietary"
+          },
+          {
+            "feature": "MySQL compatibility",
+            "ours": "True wire-protocol",
+            "theirs": "Partial"
           },
           {
             "feature": "Distributed ACID",
             "ours": true,
-            "theirs": "Single-node ACID only"
+            "theirs": "Requires tuning"
+          },
+          {
+            "feature": "Transparent auto-sharding",
+            "ours": true,
+            "theirs": "Manual"
           },
           {
             "feature": "Native HTAP",
-            "ours": "Yes (TiFlash columnar replicas)",
-            "theirs": false
+            "ours": "Yes (TiFlash)",
+            "theirs": true
           },
           {
-            "feature": "Auto-sharding / rebalancing",
-            "ours": "Transparent cluster-wide",
-            "theirs": "App-level implementation"
-          },
-          {
-            "feature": "MySQL compatibility",
-            "ours": "Full wire protocol",
-            "theirs": "Native"
-          },
-          {
-            "feature": "Online schema change",
-            "ours": "Zero-downtime DDL",
-            "theirs": "Locking or tooling required"
-          },
-          {
-            "feature": "High availability",
-            "ours": "Distributed, automatic failover",
-            "theirs": "Clustering setup required"
+            "feature": "Vendor lock-in",
+            "ours": "None",
+            "theirs": "Licensing dependency"
           }
         ],
         "cta": {
@@ -141,7 +132,7 @@
       }
     },
     {
-      "id": "featureGrid-1788212651859",
+      "id": "featureGrid-1788214084527",
       "type": "featureGrid",
       "props": {
         "eyebrow": "One Engine, Not a Bolt-On Stack",
@@ -181,30 +172,15 @@
       }
     },
     {
-      "id": "key-benefits",
+      "id": "open-source",
       "type": "featureMedia",
       "props": {
-        "eyebrow": "Key Benefits",
-        "title": "Why TiDB Is the MySQL Alternative for Scale",
+        "eyebrow": "Open-Source Freedom",
+        "title": "No Black Box, No Lock-In",
         "items": [
           {
-            "title": "Drop-in MySQL Compatibility",
-            "description": "TiDB speaks the MySQL protocol, so your drivers, ORMs, and SQL keep working. Migrate without a rewrite, then add Spark, Kafka, and Kubernetes connectors as you grow.",
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/853056b9-rapid_productivity_illustration-1.svg",
-                "alt": "rapid productivity illustration 1",
-                "width": 500,
-                "height": 448
-              },
-              "alt": "rapid productivity illustration 1",
-              "width": 500,
-              "height": 448
-            }
-          },
-          {
-            "title": "Scale Writes Without Sharding",
-            "description": "TiDB transparently shards and rebalances across nodes, so you scale writes and reads without building or maintaining application-level sharding. Add nodes as your workload grows — zero downtime, zero manual rebalancing.",
+            "title": "True Open-Source Freedom",
+            "description": "TiDB is genuinely open source (Apache 2.0) — complete control, no vendor lock-in, no surprise license audits. SingleStore's proprietary licensing creates dependency and limits deployment flexibility. You control your own roadmap with TiDB, deploy anywhere, and avoid licensing fees while still getting enterprise support when you need it.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/7ccab1c9-rapid_productivity_illustration.svg",
@@ -216,10 +192,25 @@
               "width": 600,
               "height": 600
             }
-          },
+          }
+        ],
+        "startPosition": "left",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "mysql-compatibility",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "MySQL Compatibility",
+        "title": "Migration Without Rewriting",
+        "items": [
           {
-            "title": "Consolidated Data Platform",
-            "description": "One endpoint for transactional and analytical workloads with strong ACID consistency at scale — no separate OLAP system, no ETL. TiFlash columnar replicas run real-time analytics on live data in the same engine.",
+            "title": "MySQL Compatibility Without Compromise",
+            "description": "True MySQL wire-protocol compatibility makes migration seamless — your existing tools, applications, and workflows work immediately, no rewriting required. Unlike SingleStore's partial compatibility, TiDB supports MySQL drivers, ORMs, and SQL syntax out of the box, so you keep your investments in tooling and expertise.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
@@ -233,7 +224,7 @@
             }
           }
         ],
-        "startPosition": "left",
+        "startPosition": "right",
         "spacing": "lg"
       },
       "style": {
@@ -241,11 +232,45 @@
       }
     },
     {
-      "id": "customer-proof",
+      "id": "acid-scale",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Distributed Architecture",
+        "title": "Strong ACID at Scale + Transparent Auto-Sharding",
+        "subtitle": "Automatic scaling and data distribution with no manual tuning or complex partitioning",
+        "items": [
+          {
+            "icon": "Lock",
+            "title": "Distributed ACID Transactions",
+            "description": "Snapshot isolation across the whole cluster — no tuning required, unlike SingleStore's manual optimization",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "Network",
+            "title": "Automatic Data Distribution",
+            "description": "Transparent auto-sharding eliminates complex partitioning and resharding operations",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Layers",
+            "title": "Separated Compute and Storage",
+            "description": "Scale compute and storage independently without downtime or manual intervention",
+            "borderColor": "teal"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "case-studies",
       "type": "caseStudyCards",
       "props": {
         "eyebrow": "Proven at Scale",
-        "title": "Leading Fintech, Social, and SaaS Platforms Choose TiDB",
+        "title": "Leading Fintech, Social, Data, and SaaS Platforms Run TiDB",
         "items": [
           {
             "badge": "Fintech",
@@ -362,14 +387,14 @@
       }
     },
     {
-      "id": "third-party-recognition",
+      "id": "recognition",
       "type": "logoCloud",
       "props": {
-        "eyebrow": "Third-Party Recognition",
-        "title": "Recognized by Industry Analysts and Customers",
+        "eyebrow": "Industry Recognition",
+        "title": "Recognized by Third Parties",
         "logos": [
           {
-            "name": "G2 Leader Winter 2026",
+            "name": "G2",
             "image": {
               "url": "https://static.pingcap.com/images/053856a3-20260506-160923.png",
               "alt": "20260506 160923",
@@ -379,7 +404,7 @@
             "href": "https://www.g2.com/products/tidb/reviews"
           },
           {
-            "name": "Gartner Peer Insights Customers' Choice 2025",
+            "name": "Gartner Peer Insights",
             "image": {
               "url": "https://static.pingcap.com/images/e54e2db0-20260506-160445.png",
               "alt": "20260506 160445",
@@ -403,24 +428,20 @@
         "title": "Frequently Asked Questions",
         "items": [
           {
-            "q": "Is TiDB a drop-in replacement for MySQL?",
-            "a": "TiDB is MySQL wire protocol compatible, so most apps connect without code changes. Your existing MySQL drivers, ORMs (like Sequelize, ActiveRecord, Django ORM), and SQL queries work as-is. Edge cases (stored procedures, specific engine behaviors) should be validated in a POC."
+            "q": "Is TiDB really open source?",
+            "a": "Yes — TiDB is Apache 2.0 licensed. You control your own roadmap with no black box and no forced upgrades. Unlike proprietary databases, there are no surprise license audits or vendor lock-in."
           },
           {
-            "q": "How does TiDB scale writes without sharding?",
-            "a": "TiDB auto-splits data into ranges (regions) and rebalances them across TiKV nodes transparently. Your app never manages shard keys, routing logic, or cross-shard transactions — TiDB handles it cluster-wide with distributed ACID guarantees."
+            "q": "How compatible is TiDB with MySQL?",
+            "a": "TiDB offers true MySQL wire-protocol compatibility, so drivers, ORMs, and SQL keep working through migration. SingleStore only offers partial MySQL compatibility, requiring rewrites and custom tooling."
           },
           {
-            "q": "Does TiDB support real-time analytics?",
-            "a": "Yes. TiFlash columnar replicas run OLAP queries on live transactional data in the same engine, with no ETL. You query the same SQL endpoint for OLTP and OLAP, and TiDB routes analytical queries to TiFlash automatically."
+            "q": "Does TiDB match SingleStore on analytics?",
+            "a": "Yes — TiFlash provides native columnar HTAP so OLTP and OLAP run on the same data with no ETL. You get real-time analytics without maintaining separate data pipelines."
           },
           {
-            "q": "What about high availability?",
-            "a": "TiDB uses a distributed, Raft-replicated architecture with automatic failover and no single points of failure. Nodes can fail without data loss or downtime — the cluster self-heals and rebalances."
-          },
-          {
-            "q": "How does online schema change work in TiDB?",
-            "a": "TiDB performs DDL operations (ALTER TABLE, ADD INDEX) online with zero downtime. Unlike MySQL, which can lock tables or require third-party tools like pt-online-schema-change, TiDB's distributed architecture allows schema changes to apply incrementally across the cluster."
+            "q": "What does switching cost?",
+            "a": "Migration is low-friction thanks to MySQL compatibility. You avoid SingleStore's licensing fees with an open-source model plus enterprise support when you need it. Our team will walk you through your specific migration path."
           }
         ]
       },
@@ -429,11 +450,11 @@
       }
     },
     {
-      "id": "book",
+      "id": "demo-cta",
       "type": "cta",
       "props": {
-        "title": "Compare TiDB on Your Own Schema",
-        "subtitle": "Book a 30-minute architecture call with our engineering team. We'll walk through your MySQL data model, scaling needs, and migration path — no sales pitch, just technical guidance.",
+        "title": "Compare on Your Own Schema",
+        "subtitle": "See how TiDB compares to SingleStore for your workload. Book a 30-minute architecture call with our engineering team.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -444,11 +465,11 @@
         },
         "primaryCta": {
           "text": "Book a 30-minute Architecture Call",
-          "href": "#form"
+          "href": "#book"
         },
         "secondaryCta": {
           "text": "Read the Full Comparison Guide",
-          "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
+          "href": "https://www.pingcap.com/blog/singlestore-vs-tidb-distributed-sql-database-comparison-guide/"
         }
       },
       "style": {
@@ -457,11 +478,11 @@
       }
     },
     {
-      "id": "form",
+      "id": "book",
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team.",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk through your MySQL data model, scaling needs, and migration path.",
         "portalId": "4466002",
         "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
         "region": "na1"

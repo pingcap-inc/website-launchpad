@@ -1,51 +1,9 @@
-import type { Metadata } from 'next'
-import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema } from '@/lib/schema'
-import { PageRenderer } from '@/lib/page-renderer'
-import type { PageDSL } from '@/lib/dsl-schema'
-
-export const metadata: Metadata = {
-  title: "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
-  description: "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
-  robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/lp-tidb-vs-singlestore/' },
-  openGraph: {
-    title: "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
-    description: "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
-    url: 'https://www.pingcap.com/lp-tidb-vs-singlestore/',
-    siteName: 'TiDB',
-    images: [
-      {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
-        width: 1200,
-        height: 630,
-      },
-    ],
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
-  },
-}
-
-const schema = buildPageSchema({
-  path: "/lp-tidb-vs-singlestore/",
-  title: "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
-  description: "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
-  breadcrumbs: [
-    { name: 'Home', path: '/' },
-    { name: "TiDB vs. <span class=\"text-gradient-violet\">SingleStore</span>", path: "/lp-tidb-vs-singlestore/" },
-  ],
-})
-
-const dsl: PageDSL = {
-  "pageName": "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
+{
+  "pageName": "TiDB vs YugabyteDB: MySQL-First Distributed SQL Database",
   "meta": {
-    "title": "TiDB vs SingleStore: Open-Source Distributed SQL Comparison",
-    "description": "Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.",
-    "canonical": "/lp-tidb-vs-singlestore/"
+    "title": "TiDB vs YugabyteDB: MySQL-First Distributed SQL Database",
+    "description": "Compare TiDB and YugabyteDB for MySQL-first teams. TiDB offers MySQL 8.0 compatibility, native HTAP analytics, and distributed SQL at scale with lower migration friction.",
+    "canonical": "/tidb-vs-yugabytedb/"
   },
   "sections": [
     {
@@ -54,15 +12,15 @@ const dsl: PageDSL = {
       "props": {
         "layout": "centered",
         "eyebrow": "Database Comparison",
-        "headline": "TiDB vs. <span class=\"text-gradient-violet\">SingleStore</span>",
-        "subheadline": "Open-source distributed SQL with true MySQL compatibility, elastic scaling, and strong consistency — no vendor lock-in.",
+        "headline": "TiDB vs YugabyteDB: The <span class=\"text-gradient-violet\">MySQL-First</span> Distributed SQL",
+        "subheadline": "YugabyteDB is Postgres-first; TiDB is MySQL-compatible with native HTAP. If you are modernizing MySQL and want analytics on live data, TiDB is the pragmatic fit.",
         "primaryCta": {
           "text": "Book a 30-minute Architecture Call",
           "href": "#book"
         },
         "secondaryCta": {
           "text": "Read the Full Comparison Guide",
-          "href": "https://www.pingcap.com/blog/singlestore-vs-tidb-distributed-sql-database-comparison-guide/"
+          "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
         },
         "heroImage": {
           "image": {
@@ -71,6 +29,11 @@ const dsl: PageDSL = {
           "alt": "hero image",
           "width": 500,
           "height": 400
+        },
+        "heroForm": {
+          "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+          "portalId": "4466002",
+          "region": "na1"
         }
       },
       "style": {
@@ -82,42 +45,40 @@ const dsl: PageDSL = {
       "type": "featureHighlights",
       "props": {
         "eyebrow": "The Decision in Brief",
-        "title": "Open Source vs. Proprietary Lock-In",
-        "subtitle": "Proprietary databases like SingleStore promise simplicity but deliver complexity, from opaque licensing to manual tuning. TiDB is open-source distributed SQL: MySQL-compatible, strongly consistent, and elastically scalable.",
+        "title": "MySQL Compatibility vs Postgres Wire Protocol",
         "items": [
           {
             "variant": "violet",
-            "title": "Apache 2.0 Licensed",
-            "description": "Complete control, no vendor lock-in, no surprise license audits or forced upgrades",
+            "title": "MySQL-First? Choose TiDB",
+            "description": "MySQL 8.0 wire protocol compatibility minimizes application changes and tooling rework. Leverage existing MySQL expertise.",
             "cta": {
-              "text": "Learn More",
-              "href": "#open-source"
-            },
-            "icon": "Shield"
-          },
-          {
-            "variant": "blue",
-            "title": "True MySQL Compatibility",
-            "description": "Wire-protocol compatible — your existing tools, apps, and workflows work immediately",
-            "cta": {
-              "text": "Learn More",
-              "href": "#mysql-compatibility"
+              "text": "",
+              "href": ""
             },
             "icon": "Database"
           },
           {
-            "variant": "teal",
-            "title": "Transparent Auto-Sharding",
-            "description": "Automatic data distribution with no complex partitioning or manual resharding required",
+            "variant": "blue",
+            "title": "Postgres-First? Consider YugabyteDB",
+            "description": "If your stack is PostgreSQL-native, YugabyteDB's Postgres compatibility may fit better. Requires PostgreSQL migration path.",
             "cta": {
-              "text": "Learn More",
-              "href": "#acid-scale"
+              "text": "",
+              "href": ""
             },
-            "icon": "Layers"
+            "icon": "Server"
+          },
+          {
+            "variant": "teal",
+            "title": "HTAP + Analytics? TiDB Wins",
+            "description": "Native columnar HTAP with TiFlash. Run transactional and analytical workloads in one system — no separate OLAP stack, no ETL.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Zap"
           }
         ],
-        "columns": 3,
-        "iconSize": 48
+        "columns": 3
       },
       "style": {
         "spacing": "section"
@@ -127,41 +88,41 @@ const dsl: PageDSL = {
       "id": "comparison-table",
       "type": "comparisonTable",
       "props": {
-        "eyebrow": "Feature Comparison",
-        "title": "TiDB vs SingleStore at a Glance",
-        "subtitle": "See how TiDB delivers open-source freedom, MySQL compatibility, and distributed ACID without compromise",
+        "eyebrow": "Head-to-Head",
+        "title": "Compatibility Comparison: TiDB vs YugabyteDB",
+        "subtitle": "For MySQL teams, TiDB minimizes application changes and tooling rework",
         "ourProduct": "TiDB",
-        "competitor": "SingleStore",
+        "competitor": "YugabyteDB",
         "rows": [
           {
-            "feature": "Open source",
-            "ours": "Apache 2.0",
-            "theirs": "Proprietary"
+            "feature": "Wire Protocol",
+            "ours": "MySQL 8.0",
+            "theirs": "PostgreSQL"
           },
           {
-            "feature": "MySQL compatibility",
-            "ours": "True wire-protocol",
-            "theirs": "Partial"
+            "feature": "Migration Path",
+            "ours": "Direct from MySQL",
+            "theirs": "Requires PostgreSQL migration"
           },
           {
-            "feature": "Distributed ACID",
+            "feature": "Team Knowledge",
+            "ours": "Leverage existing MySQL expertise",
+            "theirs": "Requires PostgreSQL training"
+          },
+          {
+            "feature": "HTAP / Analytics",
+            "ours": "Native columnar HTAP (TiFlash), no ETL",
+            "theirs": "External / separate OLAP"
+          },
+          {
+            "feature": "Kubernetes",
+            "ours": "Mature operator, cloud-native",
+            "theirs": "Operator available"
+          },
+          {
+            "feature": "Distributed Transactions",
             "ours": true,
-            "theirs": "Requires tuning"
-          },
-          {
-            "feature": "Transparent auto-sharding",
-            "ours": true,
-            "theirs": "Manual"
-          },
-          {
-            "feature": "Native HTAP",
-            "ours": "Yes (TiFlash)",
             "theirs": true
-          },
-          {
-            "feature": "Vendor lock-in",
-            "ours": "None",
-            "theirs": "Licensing dependency"
           }
         ],
         "cta": {
@@ -174,7 +135,7 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "featureGrid-1788214084527",
+      "id": "consolidation",
       "type": "featureGrid",
       "props": {
         "eyebrow": "One Engine, Not a Bolt-On Stack",
@@ -184,7 +145,8 @@ const dsl: PageDSL = {
           {
             "icon": "Database",
             "title": "Operational Database",
-            "description": "Replace MySQL, Amazon Aurora, PostgreSQL with one MySQL-compatible distributed SQL engine"
+            "description": "Replace MySQL, Amazon Aurora, PostgreSQL with one MySQL-compatible distributed SQL engine",
+            "layout": "vertical"
           },
           {
             "icon": "BarChart2",
@@ -209,99 +171,49 @@ const dsl: PageDSL = {
         "itemLayout": "vertical"
       },
       "style": {
-        "background": "primary",
         "spacing": "section"
       }
     },
     {
-      "id": "open-source",
+      "id": "htap-architecture",
       "type": "featureMedia",
       "props": {
-        "eyebrow": "Open-Source Freedom",
-        "title": "No Black Box, No Lock-In",
+        "eyebrow": "Native HTAP",
+        "title": "OLTP + OLAP On the Same Data",
         "items": [
           {
-            "title": "True Open-Source Freedom",
-            "description": "TiDB is genuinely open source (Apache 2.0) — complete control, no vendor lock-in, no surprise license audits. SingleStore's proprietary licensing creates dependency and limits deployment flexibility. You control your own roadmap with TiDB, deploy anywhere, and avoid licensing fees while still getting enterprise support when you need it.",
+            "title": "No ETL, No Separate OLAP Stack",
+            "description": "TiFlash provides analytical (columnar) replicas so you run transactional and analytical workloads in one system. YugabyteDB requires external analytics tools. ",
             "image": {
               "image": {
-                "url": "https://static.pingcap.com/images/7ccab1c9-rapid_productivity_illustration.svg",
-                "alt": "rapid productivity illustration",
-                "width": 600,
-                "height": 600
+                "url": "https://static.pingcap.com/images/1d4c74b6-tidb-architecture-v6.png",
+                "alt": "tidb architecture v6",
+                "width": 3000,
+                "height": 1600
               },
-              "alt": "rapid productivity illustration",
-              "width": 600,
-              "height": 600
+              "alt": "tidb architecture v6",
+              "width": 3000,
+              "height": 1600
+            }
+          },
+          {
+            "title": "Architecture & Kubernetes",
+            "description": "Stateless TiDB SQL layer + Placement Driver + TiKV storage + optional TiFlash. Mature Kubernetes operator for cloud-native operations. Distributed ACID transactions across the cluster.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/b5e970e8-kubernetes-database-operator-workflow.png",
+                "alt": "kubernetes database operator workflow",
+                "width": 1024,
+                "height": 482
+              },
+              "alt": "kubernetes database operator workflow",
+              "width": 1024,
+              "height": 482
             }
           }
         ],
         "startPosition": "left",
         "spacing": "lg"
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
-      "id": "mysql-compatibility",
-      "type": "featureMedia",
-      "props": {
-        "eyebrow": "MySQL Compatibility",
-        "title": "Migration Without Rewriting",
-        "items": [
-          {
-            "title": "MySQL Compatibility Without Compromise",
-            "description": "True MySQL wire-protocol compatibility makes migration seamless — your existing tools, applications, and workflows work immediately, no rewriting required. Unlike SingleStore's partial compatibility, TiDB supports MySQL drivers, ORMs, and SQL syntax out of the box, so you keep your investments in tooling and expertise.",
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
-                "alt": "rapid productivity illustration 3",
-                "width": 500,
-                "height": 448
-              },
-              "alt": "rapid productivity illustration 3",
-              "width": 500,
-              "height": 448
-            }
-          }
-        ],
-        "startPosition": "right",
-        "spacing": "lg"
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
-      "id": "acid-scale",
-      "type": "featureCard",
-      "props": {
-        "eyebrow": "Distributed Architecture",
-        "title": "Strong ACID at Scale + Transparent Auto-Sharding",
-        "subtitle": "Automatic scaling and data distribution with no manual tuning or complex partitioning",
-        "items": [
-          {
-            "icon": "Lock",
-            "title": "Distributed ACID Transactions",
-            "description": "Snapshot isolation across the whole cluster — no tuning required, unlike SingleStore's manual optimization",
-            "borderColor": "violet"
-          },
-          {
-            "icon": "Network",
-            "title": "Automatic Data Distribution",
-            "description": "Transparent auto-sharding eliminates complex partitioning and resharding operations",
-            "borderColor": "blue"
-          },
-          {
-            "icon": "Layers",
-            "title": "Separated Compute and Storage",
-            "description": "Scale compute and storage independently without downtime or manual intervention",
-            "borderColor": "teal"
-          }
-        ],
-        "columns": 3,
-        "borderStyle": "color"
       },
       "style": {
         "spacing": "section"
@@ -436,7 +348,7 @@ const dsl: PageDSL = {
         "title": "Recognized by Third Parties",
         "logos": [
           {
-            "name": "G2",
+            "name": "G2 Leader Winter 2026",
             "image": {
               "url": "https://static.pingcap.com/images/053856a3-20260506-160923.png",
               "alt": "20260506 160923",
@@ -446,7 +358,7 @@ const dsl: PageDSL = {
             "href": "https://www.g2.com/products/tidb/reviews"
           },
           {
-            "name": "Gartner Peer Insights",
+            "name": "Gartner Peer Insights Customers' Choice 2025",
             "image": {
               "url": "https://static.pingcap.com/images/e54e2db0-20260506-160445.png",
               "alt": "20260506 160445",
@@ -470,20 +382,24 @@ const dsl: PageDSL = {
         "title": "Frequently Asked Questions",
         "items": [
           {
-            "q": "Is TiDB really open source?",
-            "a": "Yes — TiDB is Apache 2.0 licensed. You control your own roadmap with no black box and no forced upgrades. Unlike proprietary databases, there are no surprise license audits or vendor lock-in."
+            "q": "Is TiDB a drop-in replacement for MySQL?",
+            "a": "TiDB provides MySQL 8.0 binary compatibility, so most applications connect unchanged. Confirm edge cases in a proof-of-concept to validate your specific workload and MySQL feature usage."
           },
           {
-            "q": "How compatible is TiDB with MySQL?",
-            "a": "TiDB offers true MySQL wire-protocol compatibility, so drivers, ORMs, and SQL keep working through migration. SingleStore only offers partial MySQL compatibility, requiring rewrites and custom tooling."
+            "q": "Is YugabyteDB PostgreSQL-compatible enough for my app?",
+            "a": "It depends on your Postgres feature use. If your stack is MySQL, TiDB is the lower-friction path with direct MySQL 8.0 wire protocol compatibility."
           },
           {
-            "q": "Does TiDB match SingleStore on analytics?",
-            "a": "Yes — TiFlash provides native columnar HTAP so OLTP and OLAP run on the same data with no ETL. You get real-time analytics without maintaining separate data pipelines."
+            "q": "How do distributed transactions work in TiDB vs YugabyteDB?",
+            "a": "Both provide distributed ACID transactions. Verify isolation semantics for your workload in a proof-of-concept to ensure they meet your consistency and performance requirements."
           },
           {
-            "q": "What does switching cost?",
-            "a": "Migration is low-friction thanks to MySQL compatibility. You avoid SingleStore's licensing fees with an open-source model plus enterprise support when you need it. Our team will walk you through your specific migration path."
+            "q": "What is the easiest way to run TiDB on Kubernetes?",
+            "a": "The TiDB Kubernetes operator provides mature, cloud-native operations for running TiDB clusters on Kubernetes with automated scaling, backup, and recovery."
+          },
+          {
+            "q": "What should I test in a TiDB vs YugabyteDB POC?",
+            "a": "Test compatibility with your app, distributed-transaction behavior under load, HTAP query performance, and Kubernetes operations. We recommend a 30-minute architecture call to scope your POC requirements."
           }
         ]
       },
@@ -492,11 +408,11 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "demo-cta",
+      "id": "cta",
       "type": "cta",
       "props": {
         "title": "Compare on Your Own Schema",
-        "subtitle": "See how TiDB compares to SingleStore for your workload. Book a 30-minute architecture call with our engineering team.",
+        "subtitle": "Compare TiDB and YugabyteDB on your own schema. Book a 30-minute architecture call with our engineering team.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -511,7 +427,7 @@ const dsl: PageDSL = {
         },
         "secondaryCta": {
           "text": "Read the Full Comparison Guide",
-          "href": "https://www.pingcap.com/blog/singlestore-vs-tidb-distributed-sql-database-comparison-guide/"
+          "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
         }
       },
       "style": {
@@ -520,27 +436,19 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "book",
+      "id": "form-1788204289705",
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk through your MySQL data model, scaling needs, and migration path.",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team — we'll walk your data model, scaling needs, and migration path.",
         "portalId": "4466002",
         "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
         "region": "na1"
       },
       "style": {
+        "background": "primary",
         "spacing": "section"
       }
     }
   ]
-}
-
-export default function GeneratedPage() {
-  return (
-    <>
-      <JsonLd data={schema} />
-      <PageRenderer dsl={dsl} withChrome />
-    </>
-  )
 }

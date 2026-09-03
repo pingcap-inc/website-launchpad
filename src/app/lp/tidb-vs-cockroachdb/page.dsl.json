@@ -1,51 +1,9 @@
-import type { Metadata } from 'next'
-import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema } from '@/lib/schema'
-import { PageRenderer } from '@/lib/page-renderer'
-import type { PageDSL } from '@/lib/dsl-schema'
-
-export const metadata: Metadata = {
-  title: "TiDB vs YugabyteDB: MySQL-First Distributed SQL Database",
-  description: "Compare TiDB and YugabyteDB for MySQL-first teams. TiDB offers MySQL 8.0 compatibility, native HTAP analytics, and distributed SQL at scale with lower migration friction.",
-  robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/lp-tidb-vs-yugabytedb/' },
-  openGraph: {
-    title: "TiDB vs YugabyteDB: MySQL-First Distributed SQL Database",
-    description: "Compare TiDB and YugabyteDB for MySQL-first teams. TiDB offers MySQL 8.0 compatibility, native HTAP analytics, and distributed SQL at scale with lower migration friction.",
-    url: 'https://www.pingcap.com/lp-tidb-vs-yugabytedb/',
-    siteName: 'TiDB',
-    images: [
-      {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
-        width: 1200,
-        height: 630,
-      },
-    ],
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
-  },
-}
-
-const schema = buildPageSchema({
-  path: "/lp-tidb-vs-yugabytedb/",
-  title: "TiDB vs YugabyteDB: MySQL-First Distributed SQL Database",
-  description: "Compare TiDB and YugabyteDB for MySQL-first teams. TiDB offers MySQL 8.0 compatibility, native HTAP analytics, and distributed SQL at scale with lower migration friction.",
-  breadcrumbs: [
-    { name: 'Home', path: '/' },
-    { name: "TiDB vs YugabyteDB: The <span class=\"text-gradient-violet\">MySQL-First</span> Distributed SQL", path: "/lp-tidb-vs-yugabytedb/" },
-  ],
-})
-
-const dsl: PageDSL = {
-  "pageName": "TiDB vs YugabyteDB: MySQL-First Distributed SQL Database",
+{
+  "pageName": "TiDB vs CockroachDB: MySQL-Compatible, Native HTAP Database",
   "meta": {
-    "title": "TiDB vs YugabyteDB: MySQL-First Distributed SQL Database",
-    "description": "Compare TiDB and YugabyteDB for MySQL-first teams. TiDB offers MySQL 8.0 compatibility, native HTAP analytics, and distributed SQL at scale with lower migration friction.",
-    "canonical": "/lp-tidb-vs-yugabytedb/"
+    "title": "TiDB vs CockroachDB: MySQL-Compatible, Native HTAP Database",
+    "description": "Compare TiDB and CockroachDB for MySQL workloads. TiDB offers MySQL compatibility, native columnar HTAP with TiFlash, and disaggregated compute/storage scaling.",
+    "canonical": "/tidb-vs-cockroachdb/"
   },
   "sections": [
     {
@@ -54,15 +12,15 @@ const dsl: PageDSL = {
       "props": {
         "layout": "centered",
         "eyebrow": "Database Comparison",
-        "headline": "TiDB vs YugabyteDB: The <span class=\"text-gradient-violet\">MySQL-First</span> Distributed SQL",
-        "subheadline": "YugabyteDB is Postgres-first; TiDB is MySQL-compatible with native HTAP. If you are modernizing MySQL and want analytics on live data, TiDB is the pragmatic fit.",
+        "headline": "TiDB vs CockroachDB: <span class=\"text-gradient-violet\">MySQL-Compatible</span>, Native HTAP",
+        "subheadline": "If your stack is MySQL and you need real analytics on live data, TiDB gives you MySQL compatibility, native columnar HTAP, and independent compute/storage scaling — without a Postgres-wire migration.",
         "primaryCta": {
-          "text": "Book a 30-minute Architecture Call",
+          "text": "Book 30-minute Architecture Call",
           "href": "#book"
         },
         "secondaryCta": {
-          "text": "Read the Full Comparison Guide",
-          "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
+          "text": "Read Full Comparison Guide",
+          "href": "https://www.pingcap.com/compare/cockroachdb-vs-tidb/"
         },
         "heroImage": {
           "image": {
@@ -71,11 +29,6 @@ const dsl: PageDSL = {
           "alt": "hero image",
           "width": 500,
           "height": 400
-        },
-        "heroForm": {
-          "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
-          "portalId": "4466002",
-          "region": "na1"
         }
       },
       "style": {
@@ -88,11 +41,12 @@ const dsl: PageDSL = {
       "props": {
         "eyebrow": "The Decision in Brief",
         "title": "MySQL Compatibility vs Postgres Wire Protocol",
+        "subtitle": "CockroachDB is Postgres-wire compatible; TiDB is MySQL-compatible. For MySQL shops, TiDB avoids the migration cost of moving to a Postgres-compatible engine.",
         "items": [
           {
             "variant": "violet",
-            "title": "MySQL-First? Choose TiDB",
-            "description": "MySQL 8.0 wire protocol compatibility minimizes application changes and tooling rework. Leverage existing MySQL expertise.",
+            "title": "MySQL Wire Protocol",
+            "description": "TiDB speaks MySQL 8.0 natively — use existing drivers, ORMs, and team knowledge without retraining.",
             "cta": {
               "text": "",
               "href": ""
@@ -101,23 +55,23 @@ const dsl: PageDSL = {
           },
           {
             "variant": "blue",
-            "title": "Postgres-First? Consider YugabyteDB",
-            "description": "If your stack is PostgreSQL-native, YugabyteDB's Postgres compatibility may fit better. Requires PostgreSQL migration path.",
+            "title": "Native Columnar HTAP",
+            "description": "TiFlash columnar replicas enable real-time analytics on live data — no ETL, no separate warehouse.",
             "cta": {
               "text": "",
               "href": ""
             },
-            "icon": "Server"
+            "icon": "BarChart2"
           },
           {
             "variant": "teal",
-            "title": "HTAP + Analytics? TiDB Wins",
-            "description": "Native columnar HTAP with TiFlash. Run transactional and analytical workloads in one system — no separate OLAP stack, no ETL.",
+            "title": "Disaggregated Architecture",
+            "description": "Scale compute and storage independently — pay for what you actually need, not bundled overhead.",
             "cta": {
               "text": "",
               "href": ""
             },
-            "icon": "Zap"
+            "icon": "Layers"
           }
         ],
         "columns": 3
@@ -127,19 +81,29 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "comparison-table",
+      "id": "compatibility-comparison",
       "type": "comparisonTable",
       "props": {
-        "eyebrow": "Head-to-Head",
-        "title": "Compatibility Comparison: TiDB vs YugabyteDB",
-        "subtitle": "For MySQL teams, TiDB minimizes application changes and tooling rework",
+        "eyebrow": "Feature Comparison",
+        "title": "Compatibility Comparison: TiDB vs CockroachDB",
+        "subtitle": "If your application, drivers, ORMs, and team expertise are MySQL-based, TiDB keeps everything productive through migration — without Postgres-wire compatibility-layer costs.",
         "ourProduct": "TiDB",
-        "competitor": "YugabyteDB",
+        "competitor": "CockroachDB",
         "rows": [
           {
             "feature": "Wire Protocol",
             "ours": "MySQL 8.0",
             "theirs": "PostgreSQL"
+          },
+          {
+            "feature": "Driver Compatibility",
+            "ours": "MySQL drivers (JDBC, Go, Python, etc.)",
+            "theirs": "PostgreSQL drivers"
+          },
+          {
+            "feature": "ORM Support",
+            "ours": "Native MySQL ORM support",
+            "theirs": "PostgreSQL ORM support"
           },
           {
             "feature": "Migration Path",
@@ -154,21 +118,11 @@ const dsl: PageDSL = {
           {
             "feature": "HTAP / Analytics",
             "ours": "Native columnar HTAP (TiFlash), no ETL",
-            "theirs": "External / separate OLAP"
-          },
-          {
-            "feature": "Kubernetes",
-            "ours": "Mature operator, cloud-native",
-            "theirs": "Operator available"
-          },
-          {
-            "feature": "Distributed Transactions",
-            "ours": true,
-            "theirs": true
+            "theirs": "External analytics patterns"
           }
         ],
         "cta": {
-          "text": "Book a 30-minute Architecture Call",
+          "text": "Book 30-minute Architecture Call",
           "href": "#book"
         }
       },
@@ -177,7 +131,7 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "consolidation",
+      "id": "featureGrid-1788201132533",
       "type": "featureGrid",
       "props": {
         "eyebrow": "One Engine, Not a Bolt-On Stack",
@@ -213,19 +167,21 @@ const dsl: PageDSL = {
         "itemLayout": "vertical"
       },
       "style": {
+        "background": "primary",
         "spacing": "section"
       }
     },
     {
-      "id": "htap-architecture",
+      "id": "tiflash-htap",
       "type": "featureMedia",
       "props": {
-        "eyebrow": "Native HTAP",
-        "title": "OLTP + OLAP On the Same Data",
+        "eyebrow": "Architectural Advantages",
+        "title": "TiFlash vs External Analytics: One System, No ETL",
+        "subtitle": "",
         "items": [
           {
-            "title": "No ETL, No Separate OLAP Stack",
-            "description": "TiFlash provides analytical (columnar) replicas so you run transactional and analytical workloads in one system. YugabyteDB requires external analytics tools. ",
+            "title": "Real-Time Analytics Without Compromise",
+            "description": "TiFlash columnar replicas plus optimizer pushdown run OLTP and OLAP on the same fresh data, in one system. No separate warehouse, no ETL pipelines, no data lag. CockroachDB is row-store only; for analytics you export to an external warehouse, adding latency, ETL complexity, and cost.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/1d4c74b6-tidb-architecture-v6.png",
@@ -237,25 +193,51 @@ const dsl: PageDSL = {
               "width": 3000,
               "height": 1600
             }
-          },
-          {
-            "title": "Architecture & Kubernetes",
-            "description": "Stateless TiDB SQL layer + Placement Driver + TiKV storage + optional TiFlash. Mature Kubernetes operator for cloud-native operations. Distributed ACID transactions across the cluster.",
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/b5e970e8-kubernetes-database-operator-workflow.png",
-                "alt": "kubernetes database operator workflow",
-                "width": 1024,
-                "height": 482
-              },
-              "alt": "kubernetes database operator workflow",
-              "width": 1024,
-              "height": 482
-            }
           }
         ],
         "startPosition": "left",
         "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "architecture-features",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Minimized Complexity",
+        "title": "Auto-Sharding, Disaggregated Compute, Online DDL",
+        "subtitle": "TiDB handles distributed database complexity so your team can focus on building features, not managing sharding logic.",
+        "items": [
+          {
+            "icon": "LayoutGrid",
+            "title": "Transparent Auto-Sharding",
+            "description": "Data auto-splits into Regions and rebalances transparently across nodes. Your application never manages shard keys or partition logic — TiDB handles distribution automatically.",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Layers",
+            "title": "Disaggregated Compute and Storage",
+            "description": "Scale compute (TiDB nodes) and storage (TiKV/TiFlash) independently. Address the actual bottleneck without over-provisioning both layers — pay only for what you need.",
+            "layout": "vertical"
+          },
+          {
+            "icon": "RefreshCw",
+            "title": "Non-Blocking Online DDL",
+            "description": "Schema changes run in parallel across the cluster on isolated resources. Add columns, create indexes, or modify tables without locking production traffic or scheduling downtime.",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Shield",
+            "title": "Strict ACID Transactions",
+            "description": "Snapshot-isolation transactions coordinated by the Placement Driver provide strong consistency across all nodes. Maintain data integrity at scale without compromising on distributed guarantees.",
+            "layout": "vertical"
+          }
+        ],
+        "columns": 4,
+        "itemLayout": "vertical",
+        "iconSize": 48
       },
       "style": {
         "spacing": "section"
@@ -425,23 +407,27 @@ const dsl: PageDSL = {
         "items": [
           {
             "q": "Is TiDB a drop-in replacement for MySQL?",
-            "a": "TiDB provides MySQL 8.0 binary compatibility, so most applications connect unchanged. Confirm edge cases in a proof-of-concept to validate your specific workload and MySQL feature usage."
+            "a": "TiDB is binary-compatible with the MySQL 8.0 wire protocol — most applications connect with no code change. Validate specifics in a proof-of-concept with your own schema and queries."
           },
           {
-            "q": "Is YugabyteDB PostgreSQL-compatible enough for my app?",
-            "a": "It depends on your Postgres feature use. If your stack is MySQL, TiDB is the lower-friction path with direct MySQL 8.0 wire protocol compatibility."
+            "q": "How does TiDB handle distributed transactions and ACID?",
+            "a": "Strict ACID with snapshot-isolation transactions coordinated by the Placement Driver — strong consistency across all nodes."
           },
           {
-            "q": "How do distributed transactions work in TiDB vs YugabyteDB?",
-            "a": "Both provide distributed ACID transactions. Verify isolation semantics for your workload in a proof-of-concept to ensure they meet your consistency and performance requirements."
+            "q": "What does HTAP mean, and how does TiFlash work?",
+            "a": "Hybrid transactional/analytical processing. TiFlash keeps columnar replicas so one query can span row and column stores on fresh data, with no ETL."
           },
           {
-            "q": "What is the easiest way to run TiDB on Kubernetes?",
-            "a": "The TiDB Kubernetes operator provides mature, cloud-native operations for running TiDB clusters on Kubernetes with automated scaling, backup, and recovery."
+            "q": "Do I need sharding or partitioning with TiDB?",
+            "a": "No manual sharding. Data auto-splits and rebalances; the app never needs to know where data lives."
           },
           {
-            "q": "What should I test in a TiDB vs YugabyteDB POC?",
-            "a": "Test compatibility with your app, distributed-transaction behavior under load, HTAP query performance, and Kubernetes operations. We recommend a 30-minute architecture call to scope your POC requirements."
+            "q": "How do online schema changes work?",
+            "a": "DDL parallelizes across the cluster on isolated resources, so it does not block production."
+          },
+          {
+            "q": "How should I evaluate performance?",
+            "a": "Run a POC on your own schema and workload — the architectural differences (MySQL wire, native HTAP, disaggregated storage) are structural."
           }
         ]
       },
@@ -450,11 +436,11 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "cta",
+      "id": "pre-form-cta",
       "type": "cta",
       "props": {
         "title": "Compare on Your Own Schema",
-        "subtitle": "Compare TiDB and YugabyteDB on your own schema. Book a 30-minute architecture call with our engineering team.",
+        "subtitle": "Compare TiDB and CockroachDB on your own schema. Book a 30-minute architecture call with our engineering team.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -464,12 +450,12 @@ const dsl: PageDSL = {
           "height": 256
         },
         "primaryCta": {
-          "text": "Book a 30-minute Architecture Call",
+          "text": "Book 30-minute Architecture Call",
           "href": "#book"
         },
         "secondaryCta": {
-          "text": "Read the Full Comparison Guide",
-          "href": "https://www.pingcap.com/compare/yugabytedb-vs-tidb/"
+          "text": "Read Full Comparison Guide",
+          "href": "https://www.pingcap.com/compare/cockroachdb-vs-tidb/"
         }
       },
       "style": {
@@ -478,7 +464,7 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "form-1788204289705",
+      "id": "book",
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
@@ -488,18 +474,8 @@ const dsl: PageDSL = {
         "region": "na1"
       },
       "style": {
-        "background": "primary",
         "spacing": "section"
       }
     }
   ]
-}
-
-export default function GeneratedPage() {
-  return (
-    <>
-      <JsonLd data={schema} />
-      <PageRenderer dsl={dsl} withChrome />
-    </>
-  )
 }
