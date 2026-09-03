@@ -12,6 +12,9 @@ export interface PageMeta {
   description: string // 120-160 chars
   canonical: string // /slug/  (leading and trailing slash)
   noindex?: boolean
+  // Unlisted: page stays live at its URL but is kept out of discovery —
+  // robots noindex + excluded from the sitemap. Direct-URL-only.
+  unlisted?: boolean
 }
 
 export interface Cta {

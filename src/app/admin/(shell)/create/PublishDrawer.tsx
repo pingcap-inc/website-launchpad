@@ -579,6 +579,25 @@ export function PublishDrawer({
             </p>
           </div>
 
+          {/* Unlisted */}
+          <div className="space-y-2">
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={dsl.meta.unlisted ?? false}
+                onChange={(e) => onMetaChange({ unlisted: e.target.checked })}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-gray-900 cursor-pointer"
+              />
+              <span>
+                <span className="text-body-sm font-bold text-gray-700">Unlisted page</span>
+                <span className="block text-label text-gray-400">
+                  Stays live at its URL, but is set to <code>noindex</code> and kept out of the
+                  sitemap. Use for pages you don&rsquo;t want discovered via search.
+                </span>
+              </span>
+            </label>
+          </div>
+
           {/* Branch — main publish disabled */}
           <div className="space-y-2">
             <p className="text-body-sm font-bold text-gray-700">Publish Branch</p>

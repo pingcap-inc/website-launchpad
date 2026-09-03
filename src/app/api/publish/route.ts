@@ -59,8 +59,10 @@ export async function POST(request: NextRequest) {
     changeFrequency = 'monthly',
   } = (await request.json()) as PublishRequest
 
-  // Auto-add to sitemap when publishing to main; skip for feature/staging branches
-  const addToSitemap = branch === 'main'
+  // Auto-add to sitemap when publishing to main; skip for feature/staging branches.
+  // Unlisted / noindex pages are kept out of the sitemap — they stay live at their
+  // URL but must not be surfaced for discovery.
+  const addToSitemap = branch === 'main' && !dsl?.meta?.unlisted && !dsl?.meta?.noindex
 
   if (branch === 'main') {
     const providedToken = request.headers.get('x-publish-main-token')
