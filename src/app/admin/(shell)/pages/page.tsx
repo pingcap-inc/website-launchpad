@@ -13,6 +13,7 @@ import {
   ChevronDown,
   Trash2,
   CheckSquare,
+  Copy,
 } from 'lucide-react'
 import { SITE_BASE_URL } from '@/lib/env'
 
@@ -168,6 +169,9 @@ export default function PagesPage() {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set())
   const [deletingSlug, setDeletingSlug] = useState('')
   const [pendingDeleteSlug, setPendingDeleteSlug] = useState('')
+  const [copySourceSlug, setCopySourceSlug] = useState('')
+  const [copyToSlug, setCopyToSlug] = useState('')
+  const [copying, setCopying] = useState(false)
   const fetchPages = async (options?: { includeTitle?: boolean; includeUpdated?: boolean }) => {
     setLoading(true)
     setError('')
@@ -215,6 +219,40 @@ export default function PagesPage() {
       setPendingDeleteSlug('')
     }
   }
+
+  const openCopy = (slug: string) => {
+    setError('')
+    setCopySourceSlug(slug)
+    setCopyToSlug(`${slug}-copy`)
+  }
+
+  const handleCopy = async () => {
+    const from = copySourceSlug
+    const to = copyToSlug.trim().replace(/^\/|\/$/g, '')
+    if (!from || !to) return
+    setCopying(true)
+    setError('')
+    try {
+      const res = await fetch('/api/pages/copy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ from, to }),
+      })
+      const data = (await res.json()) as { error?: string }
+      if (!res.ok) throw new Error(data.error ?? 'Copy failed')
+      setCopySourceSlug('')
+      setCopyToSlug('')
+      await fetchPages()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Copy failed')
+    } finally {
+      setCopying(false)
+    }
+  }
+
+  const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)*$/
+  const copyToNormalized = copyToSlug.trim().replace(/^\/|\/$/g, '')
+  const copyToValid = slugPattern.test(copyToNormalized) && copyToNormalized !== copySourceSlug
 
   const normalizedQuery = query.trim().toLowerCase()
   const matchSet = normalizedQuery
@@ -453,6 +491,16 @@ export default function PagesPage() {
                             </span>
                           )}
 
+                          {!page.isCode && (
+                            <button
+                              type="button"
+                              onClick={() => openCopy(page.slug)}
+                              className="border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 p-1.5 rounded transition-colors"
+                              title="Duplicate page"
+                            >
+                              <Copy size={14} />
+                            </button>
+                          )}
                           {process.env.NODE_ENV === 'development' && !page.isCode && (
                             <button
                               type="button"
@@ -471,6 +519,61 @@ export default function PagesPage() {
               </div>
             )
           })}
+        </div>
+      )}
+
+      {copySourceSlug && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => (copying ? null : setCopySourceSlug(''))}
+          />
+          <div className="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+            <h3 className="text-body-md font-bold text-gray-900 mb-2">Duplicate Page</h3>
+            <p className="text-body-sm text-gray-600">
+              Copy <span className="font-mono text-gray-900">/{copySourceSlug}/</span> into a new
+              page slug. The duplicate is created as an editable draft.
+            </p>
+            <label className="mt-4 block text-label font-bold text-gray-500 uppercase tracking-wide">
+              New slug
+            </label>
+            <div className="mt-1.5 flex items-center rounded border border-gray-200 focus-within:border-gray-400 transition-colors">
+              <span className="pl-3 text-body-sm text-gray-400 font-mono">/</span>
+              <input
+                type="text"
+                autoFocus
+                value={copyToSlug}
+                onChange={(e) => setCopyToSlug(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && copyToValid && !copying) handleCopy()
+                }}
+                placeholder="my-new-page"
+                className="w-full bg-transparent px-1 py-2 text-body-sm text-gray-800 font-mono focus:outline-none placeholder:text-gray-300"
+              />
+              <span className="pr-3 text-body-sm text-gray-400 font-mono">/</span>
+            </div>
+            <p className="mt-2 text-label text-gray-400">
+              Lowercase letters, numbers, and hyphens. Use <code>/</code> for nested paths.
+            </p>
+            <div className="mt-6 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setCopySourceSlug('')}
+                disabled={copying}
+                className="border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-400 px-4 py-2 text-body-sm font-bold rounded transition-colors disabled:opacity-40"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleCopy}
+                disabled={copying || !copyToValid}
+                className="bg-gray-900 text-white hover:bg-gray-700 px-4 py-2 text-body-sm font-bold rounded transition-colors disabled:opacity-40"
+              >
+                {copying ? 'Duplicating…' : 'Duplicate'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
