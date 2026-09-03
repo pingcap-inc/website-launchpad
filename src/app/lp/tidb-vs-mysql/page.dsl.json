@@ -3,7 +3,7 @@
   "meta": {
     "title": "TiDB vs MySQL: Scale Without Sharding | MySQL Alternative",
     "description": "Compare TiDB and MySQL for horizontal scale, distributed ACID, and HTAP. Drop-in MySQL compatibility with automatic sharding and zero-downtime DDL.",
-    "canonical": "/tidb-vs-mysql/"
+    "canonical": "/lp/tidb-vs-mysql/"
   },
   "sections": [
     {
@@ -46,12 +46,12 @@
       "props": {
         "eyebrow": "The Decision in Brief",
         "title": "Why Teams Choose TiDB Over MySQL",
-        "subtitle": "Technical complexity rises as scaling and high-availability needs grow. Manual sharding, clustering, and replication add maintenance overhead. TiDB provides one MySQL-compatible engine for transactions and real-time analytics — scaling out without app-side sharding.",
+        "subtitle": "Technical complexity rises as scaling and high-availability needs grow. Manual sharding, clustering, and replication add maintenance overhead. TiDB provides one MySQL-compatible engine for transactions and real-time analytics, scaling out without app-side sharding.",
         "items": [
           {
             "variant": "violet",
             "title": "Scale Writes Without Sharding",
-            "description": "Transparent horizontal scale for reads and writes — no app-level sharding logic required.",
+            "description": "Transparent horizontal scale for reads and writes. No app-level sharding logic required.",
             "cta": {
               "text": "",
               "href": ""
@@ -156,13 +156,13 @@
           {
             "icon": "BarChart2",
             "title": "Analytics Warehouse",
-            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, Redshift — no ETL required",
+            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, Redshift. No ETL required",
             "layout": "vertical"
           },
           {
             "icon": "Search",
             "title": "Search & Vector Store",
-            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, standalone vector databases",
+            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, and standalone vector databases",
             "layout": "vertical"
           },
           {
@@ -204,7 +204,7 @@
           },
           {
             "title": "Scale Writes Without Sharding",
-            "description": "TiDB transparently shards and rebalances across nodes, so you scale writes and reads without building or maintaining application-level sharding. Add nodes as your workload grows — zero downtime, zero manual rebalancing.",
+            "description": "TiDB transparently shards and rebalances across nodes, so you scale writes and reads without building or maintaining application-level sharding. Add nodes as your workload grows. Zero downtime, zero manual rebalancing.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/7ccab1c9-rapid_productivity_illustration.svg",
@@ -219,7 +219,7 @@
           },
           {
             "title": "Consolidated Data Platform",
-            "description": "One endpoint for transactional and analytical workloads with strong ACID consistency at scale — no separate OLAP system, no ETL. TiFlash columnar replicas run real-time analytics on live data in the same engine.",
+            "description": "One endpoint for transactional and analytical workloads with strong ACID consistency at scale. No separate OLAP system, no ETL. TiFlash columnar replicas run real-time analytics on live data in the same engine.",
             "image": {
               "image": {
                 "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
@@ -408,7 +408,7 @@
           },
           {
             "q": "How does TiDB scale writes without sharding?",
-            "a": "TiDB auto-splits data into ranges (regions) and rebalances them across TiKV nodes transparently. Your app never manages shard keys, routing logic, or cross-shard transactions — TiDB handles it cluster-wide with distributed ACID guarantees."
+            "a": "TiDB auto-splits data into ranges (regions) and rebalances them across TiKV nodes transparently. Your app never manages shard keys, routing logic, or cross-shard transactions. TiDB handles it cluster-wide with distributed ACID guarantees."
           },
           {
             "q": "Does TiDB support real-time analytics?",
@@ -416,7 +416,7 @@
           },
           {
             "q": "What about high availability?",
-            "a": "TiDB uses a distributed, Raft-replicated architecture with automatic failover and no single points of failure. Nodes can fail without data loss or downtime — the cluster self-heals and rebalances."
+            "a": "TiDB uses a distributed, Raft-replicated architecture with automatic failover and no single points of failure. Nodes can fail without data loss or downtime, so the cluster self-heals and rebalances."
           },
           {
             "q": "How does online schema change work in TiDB?",
@@ -433,7 +433,7 @@
       "type": "cta",
       "props": {
         "title": "Compare TiDB on Your Own Schema",
-        "subtitle": "Book a 30-minute architecture call with our engineering team. We'll walk through your MySQL data model, scaling needs, and migration path — no sales pitch, just technical guidance.",
+        "subtitle": "Schedule an architecture call with our engineering team. We'll walk through your MySQL data model, scaling needs, and migration path.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
