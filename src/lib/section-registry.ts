@@ -709,12 +709,14 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         options: [
           { label: 'Single', value: 'single' },
           { label: 'Split', value: 'split' },
+          { label: 'Columns (repeatable)', value: 'columns' },
         ],
       },
       {
         type: 'select',
         key: 'mediaType',
         label: 'Media type',
+        showWhen: (props) => props.layout !== 'columns',
         options: [
           { label: 'Image / Video', value: 'image' },
           { label: 'Short code', value: 'shortcode' },
@@ -724,7 +726,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         type: 'object',
         key: 'image',
         label: 'Image / Video',
-        showWhen: (props) => props.mediaType !== 'shortcode',
+        showWhen: (props) => props.layout !== 'columns' && props.mediaType !== 'shortcode',
         fields: [
           { type: 'image', key: 'image', label: 'Image / Video' },
           { type: 'number', key: 'width', label: 'Width' },
@@ -737,7 +739,59 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         label: 'Short code',
         placeholder: '输入 [agent-memory-timeline]、Agent Memory Timeline.html，或可信 HTML 片段',
         rows: 6,
-        showWhen: (props) => props.mediaType === 'shortcode',
+        showWhen: (props) => props.layout !== 'columns' && props.mediaType === 'shortcode',
+      },
+      {
+        type: 'select',
+        key: 'itemColumns',
+        label: 'Columns per row',
+        noEmptyOption: true,
+        valueType: 'number',
+        showWhen: (props) => props.layout === 'columns',
+        options: [
+          { label: '2', value: '2' },
+          { label: '3', value: '3' },
+        ],
+      },
+      {
+        type: 'array',
+        key: 'items',
+        label: 'Columns',
+        itemLabel: 'Column',
+        showWhen: (props) => props.layout === 'columns',
+        newItem: () => ({ type: 'media' }),
+        fields: [
+          {
+            type: 'select',
+            key: 'type',
+            label: 'Content type',
+            noEmptyOption: true,
+            options: [
+              { label: 'Media (image / video)', value: 'media' },
+              { label: 'Markdown / Short code', value: 'content' },
+            ],
+          },
+          {
+            type: 'object',
+            key: 'image',
+            label: 'Image / Video',
+            showWhen: (item) => item.type !== 'content',
+            fields: [
+              { type: 'image', key: 'image', label: 'Image / Video' },
+              { type: 'number', key: 'width', label: 'Width' },
+              { type: 'number', key: 'height', label: 'Height' },
+            ],
+          },
+          {
+            type: 'textarea',
+            key: 'content',
+            label: 'Markdown / Short code',
+            placeholder:
+              'Markdown text, a short code like [agent-memory-timeline], or a trusted HTML snippet',
+            rows: 6,
+            showWhen: (item) => item.type === 'content',
+          },
+        ],
       },
     ],
   },

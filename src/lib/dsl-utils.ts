@@ -1,9 +1,11 @@
 import type {
   AgendaProps,
+  ColumnItem,
+  ColumnMedia,
+  ColumnsProps,
   CaseStudyCardItem,
   CaseStudyCardStat,
   CaseStudyCardsProps,
-  ColumnsProps,
   ComparisonTableProps,
   CtaProps,
   FeatureCardItem,
@@ -513,19 +515,14 @@ function normalizeFeatureMediaProps(value: unknown): FeatureMediaProps {
   }
 }
 
-function normalizeColumnsProps(value: unknown): ColumnsProps {
-  const v = (value ?? {}) as ColumnsProps
+function normalizeColumnMedia(value: unknown): ColumnMedia {
+  const v = (value ?? {}) as ColumnMedia
   const imageValue =
     (v.image as { image?: unknown; src?: unknown } | undefined)?.image ??
     (v.image as { image?: unknown; src?: unknown } | undefined)?.src ??
     v.image
   const image = normalizeImageRef(imageValue)
   return {
-    eyebrow: v.eyebrow,
-    title: v.title,
-    subtitle: v.subtitle,
-    titleFullWidth: v.titleFullWidth !== false,
-    layout: v.layout === 'single' || v.layout === 'split' ? v.layout : 'split',
     mediaType: v.mediaType === 'shortcode' || v.mediaType === 'video' ? v.mediaType : 'image',
     image: image
       ? {
@@ -537,6 +534,34 @@ function normalizeColumnsProps(value: unknown): ColumnsProps {
       : undefined,
     video: normalizeColumnsVideo((v as { video?: unknown }).video),
     shortCode: typeof v.shortCode === 'string' ? v.shortCode : undefined,
+  }
+}
+
+function normalizeColumnItem(value: unknown): ColumnItem {
+  const v = (value ?? {}) as ColumnItem
+  const media = normalizeColumnMedia(v)
+  const content = typeof v.content === 'string' ? v.content : undefined
+  const type = v.type === 'media' || v.type === 'content' ? v.type : content ? 'content' : 'media'
+  return {
+    type,
+    image: media.image,
+    video: media.video,
+    content,
+  }
+}
+
+function normalizeColumnsProps(value: unknown): ColumnsProps {
+  const v = (value ?? {}) as ColumnsProps
+  return {
+    eyebrow: v.eyebrow,
+    title: v.title,
+    subtitle: v.subtitle,
+    titleFullWidth: v.titleFullWidth !== false,
+    layout:
+      v.layout === 'single' || v.layout === 'split' || v.layout === 'columns' ? v.layout : 'split',
+    ...normalizeColumnMedia(v),
+    items: Array.isArray(v.items) ? v.items.map(normalizeColumnItem) : undefined,
+    itemColumns: v.itemColumns === 3 ? 3 : 2,
     className: typeof v.className === 'string' ? v.className : undefined,
   }
 }

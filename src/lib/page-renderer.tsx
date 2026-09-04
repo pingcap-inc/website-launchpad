@@ -325,6 +325,8 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
       image: props.image,
       video: props.video,
       shortCode: props.shortCode,
+      items: props.items,
+      itemColumns: props.itemColumns,
       className: props.className,
     }),
     defaultStyle: { background: 'primary', spacing: 'section' },
