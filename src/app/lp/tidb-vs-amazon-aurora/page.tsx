@@ -384,41 +384,6 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "recognition",
-      "type": "logoCloud",
-      "props": {
-        "eyebrow": "Industry Recognition",
-        "title": "Recognized by Third Parties",
-        "logos": [
-          {
-            "name": "G2 Leader Winter 2026",
-            "image": {
-              "url": "https://static.pingcap.com/images/053856a3-20260506-160923.png",
-              "alt": "20260506 160923",
-              "width": 968,
-              "height": 598
-            },
-            "href": "https://www.g2.com/products/tidb/reviews"
-          },
-          {
-            "name": "Gartner Peer Insights Customers' Choice 2025",
-            "image": {
-              "url": "https://static.pingcap.com/images/e54e2db0-20260506-160445.png",
-              "alt": "20260506 160445",
-              "width": 972,
-              "height": 594
-            },
-            "href": "https://www.gartner.com/reviews/market/cloud-database-management-systems"
-          }
-        ],
-        "variant": "default",
-        "align": "center"
-      },
-      "style": {
-        "spacing": "md"
-      }
-    },
-    {
       "id": "columns-1788502664823",
       "type": "columns",
       "props": {
