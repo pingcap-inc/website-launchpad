@@ -7,7 +7,7 @@ import type { PageDSL } from '@/lib/dsl-schema'
 export const metadata: Metadata = {
   title: "TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB",
   description: "Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.",
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-amazon-aurora/' },
   openGraph: {
     title: "TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB",
@@ -45,7 +45,9 @@ const dsl: PageDSL = {
   "meta": {
     "title": "TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB",
     "description": "Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.",
-    "canonical": "/lp/tidb-vs-amazon-aurora/"
+    "canonical": "/lp/tidb-vs-amazon-aurora/",
+    "unlisted": true,
+    "header": "lp"
   },
   "sections": [
     {
@@ -414,6 +416,23 @@ const dsl: PageDSL = {
       },
       "style": {
         "spacing": "md"
+      }
+    },
+    {
+      "id": "columns-1788502664823",
+      "type": "columns",
+      "props": {
+        "eyebrow": "Industry Recognition",
+        "title": "Recognized by Third Parties",
+        "titleFullWidth": true,
+        "layout": "single",
+        "mediaType": "shortcode",
+        "shortCode": "[review-badges]",
+        "itemColumns": 2
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
       }
     },
     {
