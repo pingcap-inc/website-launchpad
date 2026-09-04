@@ -737,7 +737,8 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         type: 'textarea',
         key: 'shortCode',
         label: 'Short code',
-        placeholder: '输入 [agent-memory-timeline]、Agent Memory Timeline.html，或可信 HTML 片段',
+        placeholder:
+          '输入 [agent-memory-timeline]、[review-badges]（Gartner + G2 徽章），或可信 HTML 片段',
         rows: 6,
         showWhen: (props) => props.layout !== 'columns' && props.mediaType === 'shortcode',
       },
@@ -1023,7 +1024,8 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         type: 'textarea',
         key: 'shortCode',
         label: 'Shortcode / embed',
-        placeholder: '输入 [agent-memory-timeline]、Agent Memory Timeline.html，或可信 HTML 片段',
+        placeholder:
+          '输入 [agent-memory-timeline]、[review-badges]（Gartner + G2 徽章），或可信 HTML 片段',
         rows: 6,
       },
     ],
