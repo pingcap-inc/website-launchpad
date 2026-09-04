@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { AgentMemoryTimeline } from './AgentMemoryTimeline'
 import { TiDBPersistentLayer } from './TiDBPersistentLayer'
+import { ReviewBadges } from './ReviewBadges'
 import { isHtmlShortcode, resolveRegisteredShortcode } from '@/lib/shortcodes'
 
 interface ShortcodeRendererProps {
@@ -59,6 +60,10 @@ export function ShortcodeRenderer({ shortCode, className }: ShortcodeRendererPro
 
   if (resolvedShortcode === 'tidb-persistent-layer-animation') {
     return <TiDBPersistentLayer className={className} />
+  }
+
+  if (resolvedShortcode === 'review-badges') {
+    return <ReviewBadges className={className} />
   }
 
   if (isHtmlShortcode(shortCode)) {
