@@ -1,3 +1,7 @@
+'use client'
+
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
 import { externalLinkProps } from '@/lib/links'
 import { cn } from '@/lib/utils'
@@ -28,6 +32,9 @@ export interface CaseStudyCardsProps {
   items: CaseStudyCardItem[]
   className?: string
 }
+
+/** More than this many cards flips the section into carousel mode. */
+const CAROUSEL_THRESHOLD = 3
 
 function Card({ badge, logo, title, description, stats, href, cta }: CaseStudyCardItem) {
   const Wrapper = href ? 'a' : 'article'
@@ -81,7 +88,147 @@ function Card({ badge, logo, title, description, stats, href, cta }: CaseStudyCa
   )
 }
 
+/** Responsive card width — one card per "slide", 3 across on desktop. */
+const SLIDE_WIDTH = 'w-[85%] shrink-0 snap-start sm:w-[360px] lg:w-[calc((100%-2rem)/3)]'
+
+/** Auto-advance interval in ms. */
+const AUTOPLAY_MS = 4000
+
+function CaseStudyCarousel({ items }: { items: CaseStudyCardItem[] }) {
+  const scrollerRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
+  const [atStart, setAtStart] = useState(true)
+  const [atEnd, setAtEnd] = useState(false)
+  const [paused, setPaused] = useState(false)
+  // Mirror `active` into a ref so the autoplay interval reads the latest index
+  // without needing to reset the timer on every scroll.
+  const activeRef = useRef(0)
+  useEffect(() => {
+    activeRef.current = active
+  }, [active])
+
+  const sync = useCallback(() => {
+    const el = scrollerRef.current
+    if (!el) return
+    const children = Array.from(el.children) as HTMLElement[]
+    let idx = 0
+    let min = Infinity
+    children.forEach((child, i) => {
+      const distance = Math.abs(child.offsetLeft - el.scrollLeft)
+      if (distance < min) {
+        min = distance
+        idx = i
+      }
+    })
+    setActive(idx)
+    setAtStart(el.scrollLeft <= 2)
+    setAtEnd(el.scrollLeft >= el.scrollWidth - el.clientWidth - 2)
+  }, [])
+
+  useEffect(() => {
+    const el = scrollerRef.current
+    if (!el) return
+    sync()
+    el.addEventListener('scroll', sync, { passive: true })
+    window.addEventListener('resize', sync)
+    return () => {
+      el.removeEventListener('scroll', sync)
+      window.removeEventListener('resize', sync)
+    }
+  }, [sync])
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const el = scrollerRef.current
+      if (!el) return
+      const clamped = Math.max(0, Math.min(index, items.length - 1))
+      const child = el.children[clamped] as HTMLElement | undefined
+      if (child) el.scrollTo({ left: child.offsetLeft, behavior: 'smooth' })
+    },
+    [items.length]
+  )
+
+  // Auto-advance every AUTOPLAY_MS, looping back to the start. Paused on hover /
+  // focus and when the tab is backgrounded; skipped entirely for users who
+  // prefer reduced motion.
+  useEffect(() => {
+    if (paused) return
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return
+    }
+    const id = window.setInterval(() => {
+      if (document.hidden) return
+      scrollToIndex((activeRef.current + 1) % items.length)
+    }, AUTOPLAY_MS)
+    return () => window.clearInterval(id)
+  }, [paused, scrollToIndex, items.length])
+
+  return (
+    <div
+      className="space-y-6"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
+      <div
+        ref={scrollerRef}
+        className="relative flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {items.map((item, index) => (
+          <div key={`${item.title}-${index}`} className={SLIDE_WIDTH}>
+            <Card {...item} />
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-center gap-4">
+        <button
+          type="button"
+          onClick={() => scrollToIndex(active - 1)}
+          disabled={atStart}
+          aria-label="Previous case studies"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 text-white/70 transition-colors hover:border-white/40 hover:text-white disabled:cursor-default disabled:opacity-30 disabled:hover:border-white/20 disabled:hover:text-white/70"
+        >
+          <ChevronLeft size={18} strokeWidth={1.5} />
+        </button>
+
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {items.map((item, index) => (
+            <button
+              key={`dot-${item.title}-${index}`}
+              type="button"
+              onClick={() => scrollToIndex(index)}
+              aria-label={`Go to case study ${index + 1}`}
+              aria-current={index === active}
+              className={cn(
+                'h-2.5 w-2.5 rounded-full transition-colors',
+                index === active ? 'bg-white' : 'bg-white/30 hover:bg-white/50'
+              )}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => scrollToIndex(active + 1)}
+          disabled={atEnd}
+          aria-label="Next case studies"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 text-white/70 transition-colors hover:border-white/40 hover:text-white disabled:cursor-default disabled:opacity-30 disabled:hover:border-white/20 disabled:hover:text-white/70"
+        >
+          <ChevronRight size={18} strokeWidth={1.5} />
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export function CaseStudyCardsSection({ eyebrow, title, items, className }: CaseStudyCardsProps) {
+  const isCarousel = items.length > CAROUSEL_THRESHOLD
+
   return (
     <div className={cn('space-y-10', className)}>
       <div className="max-w-3xl">
@@ -90,11 +237,15 @@ export function CaseStudyCardsSection({ eyebrow, title, items, className }: Case
         ) : null}
         <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-white">{title}</h2>
       </div>
-      <div className="grid gap-4 lg:grid-cols-3">
-        {items.map((item, index) => (
-          <Card key={`${item.title}-${index}`} {...item} />
-        ))}
-      </div>
+      {isCarousel ? (
+        <CaseStudyCarousel items={items} />
+      ) : (
+        <div className="grid gap-4 lg:grid-cols-3">
+          {items.map((item, index) => (
+            <Card key={`${item.title}-${index}`} {...item} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
