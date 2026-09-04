@@ -230,7 +230,7 @@ function CaseStudyCarousel({ items }: { items: CaseStudyCardItem[] }) {
 
   return (
     <div
-      className="space-y-6"
+      className="space-y-16 overflow-hidden"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}

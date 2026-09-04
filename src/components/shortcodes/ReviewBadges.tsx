@@ -73,15 +73,22 @@ function GartnerRatingWidget({ className }: { className?: string }) {
     }
   }, [])
 
-  return <div ref={containerRef} className={className} />
+  // The Gartner "line" widget renders at its own fixed width, wider than the
+  // card. Center it and keep any overflow inside a scroll region so it never
+  // pushes the card/page wider on small screens.
+  return (
+    <div className={cn('w-full overflow-x-auto', className)}>
+      <div ref={containerRef} className="mx-auto w-max" />
+    </div>
+  )
 }
 
 const cardClass = 'flex flex-col items-center justify-center gap-6 bg-brand-violet-bg px-6 py-10'
 
 export function ReviewBadges({ className }: { className?: string }) {
   return (
-    <div className={cn('mx-auto w-full max-w-container', className)}>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    <div className={cn('mx-auto w-full', className)}>
+      <div className="grid grid-cols-1 gap-4 lg:gap-8 sm:grid-cols-2">
         {/* Gartner Peer Insights — badge + live rating line */}
         <div className={cardClass}>
           <a
@@ -100,7 +107,7 @@ export function ReviewBadges({ className }: { className?: string }) {
               className="h-auto max-w-full"
             />
           </a>
-          <GartnerRatingWidget className="w-full max-w-[320px]" />
+          <GartnerRatingWidget />
         </div>
 
         {/* G2 — linked badge */}
