@@ -12,6 +12,14 @@ export interface PageMeta {
   description: string // 120-160 chars
   canonical: string // /slug/  (leading and trailing slash)
   noindex?: boolean
+  // Unlisted: page stays live at its URL but is kept out of discovery —
+  // robots noindex + excluded from the sitemap. Direct-URL-only.
+  unlisted?: boolean
+  // Page header style. 'full' (default) = the main site <Header /> with full nav.
+  // 'lp' = the minimal landing-page <HeaderLp /> (logo only, optional single CTA).
+  header?: 'full' | 'lp'
+  // Optional CTA shown on the right of the 'lp' header. Ignored for 'full'.
+  headerCta?: Cta
 }
 
 export interface Cta {
@@ -447,12 +455,8 @@ export interface FeatureMediaItemDSL {
 
 // ─── Columns ───────────────────────────────────────────────────────────────
 
-export interface ColumnsProps {
-  eyebrow?: string
-  title?: string
-  subtitle?: string
-  titleFullWidth?: boolean
-  layout?: 'single' | 'split'
+/** Media configuration shared by the Columns section and each ColumnItem. */
+export interface ColumnMedia {
   mediaType?: 'image' | 'video' | 'shortcode'
   image?: {
     image: ImageRef
@@ -476,6 +480,35 @@ export interface ColumnsProps {
     controls?: boolean
   }
   shortCode?: string
+}
+
+/**
+ * One column in the `layout: "columns"` variant. Each column holds a single
+ * content unit — either media (image/video) or a `content` block. The
+ * `content` field merges Markdown and shortcodes: a registered shortcode token
+ * (e.g. `[agent-memory-timeline]`) or a trusted HTML snippet renders via the
+ * shortcode renderer, anything else renders as Markdown.
+ */
+export interface ColumnItem {
+  type?: 'media' | 'content'
+  image?: ColumnMedia['image']
+  video?: ColumnMedia['video']
+  content?: string
+}
+
+export interface ColumnsProps extends ColumnMedia {
+  eyebrow?: string
+  title?: string
+  subtitle?: string
+  titleFullWidth?: boolean
+  layout?: 'single' | 'split' | 'columns'
+  /**
+   * Repeatable columns rendered in an even grid. Used with layout="columns";
+   * each item carries its own title, text, optional media, and CTA.
+   */
+  items?: ColumnItem[]
+  /** Columns per row for layout="columns". Defaults to 2. */
+  itemColumns?: 2 | 3
   className?: string
 }
 

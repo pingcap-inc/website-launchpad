@@ -30,4 +30,10 @@ export const TRUSTED_DOMAINS = new Set([
   'youtube.com',
   'www.youtube.com',
   'pingcap.co.jp',
+  // Third-party review platforms (bot-hostile: return 401/403/429 to crawlers,
+  // load fine in a real browser — see BOT_BLOCK_STATUSES in validate-links.ts)
+  'www.g2.com',
+  'g2.com',
+  'www.gartner.com',
+  'gartner.com',
 ])

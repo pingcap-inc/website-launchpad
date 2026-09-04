@@ -1,6 +1,9 @@
 const SHORTCODE_TOKEN_REGEX = /[\[\{]{1,2}\s*([a-z0-9][a-z0-9-_ ]*[a-z0-9])\s*[\]\}]{1,2}/i
 
-export type RegisteredShortcode = 'agent-memory-timeline' | 'tidb-persistent-layer-animation'
+export type RegisteredShortcode =
+  | 'agent-memory-timeline'
+  | 'tidb-persistent-layer-animation'
+  | 'review-badges'
 
 const SHORTCODE_ALIASES: Record<string, RegisteredShortcode> = {
   'agent-memory-timeline': 'agent-memory-timeline',
@@ -14,6 +17,11 @@ const SHORTCODE_ALIASES: Record<string, RegisteredShortcode> = {
   'tidb-persistent-layer-animation-11s.html': 'tidb-persistent-layer-animation',
   'tidb persistent layer animation-11s.html': 'tidb-persistent-layer-animation',
   'persistent-layer-animation': 'tidb-persistent-layer-animation',
+  'review-badges': 'review-badges',
+  'review badges': 'review-badges',
+  'gartner-g2': 'review-badges',
+  'gartner g2': 'review-badges',
+  'gartner-g2-badges': 'review-badges',
 }
 
 function normalizeShortcodeKey(value: string) {

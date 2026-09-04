@@ -8,7 +8,7 @@ interface HeaderLpProps {
 export function HeaderLp({ rightContent }: HeaderLpProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-bg-primary h-20">
-      <div className="max-w-container mx-auto h-full px-4 md:px-8 lg:px-16 flex items-center justify-between">
+      <div className="contain h-full flex items-center justify-between">
         <a href="/tidb/" className="shrink-0">
           <Image
             src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"

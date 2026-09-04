@@ -579,6 +579,75 @@ export function PublishDrawer({
             </p>
           </div>
 
+          {/* Unlisted */}
+          <div className="space-y-2">
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={dsl.meta.unlisted ?? false}
+                onChange={(e) => onMetaChange({ unlisted: e.target.checked })}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-gray-900 cursor-pointer"
+              />
+              <span>
+                <span className="text-body-sm font-bold text-gray-700">Unlisted page</span>
+                <span className="block text-label text-gray-400">
+                  Stays live at its URL, but is set to <code>noindex</code> and kept out of the
+                  sitemap. Use for pages you don&rsquo;t want discovered via search.
+                </span>
+              </span>
+            </label>
+          </div>
+
+          {/* Page header style */}
+          <div className="space-y-2">
+            <p className="text-body-sm font-bold text-gray-700">Page header</p>
+            <select
+              value={dsl.meta.header ?? 'full'}
+              onChange={(e) => onMetaChange({ header: e.target.value === 'lp' ? 'lp' : 'full' })}
+              className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors"
+            >
+              <option value="full">Full site nav (default)</option>
+              <option value="lp">Landing-page (logo only)</option>
+            </select>
+            <p className="text-label text-gray-400">
+              Landing-page header shows just the TiDB logo with no main navigation — best for
+              focused campaign / LP pages.
+            </p>
+            {dsl.meta.header === 'lp' && (
+              <div className="space-y-2 pl-3 border-l-2 border-gray-100">
+                <p className="text-label text-gray-400">Optional CTA button (right side)</p>
+                <input
+                  type="text"
+                  value={dsl.meta.headerCta?.text ?? ''}
+                  onChange={(e) =>
+                    onMetaChange({
+                      headerCta: {
+                        text: e.target.value,
+                        href: dsl.meta.headerCta?.href ?? '',
+                      },
+                    })
+                  }
+                  placeholder="Button text (e.g. Book a call)"
+                  className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
+                />
+                <input
+                  type="text"
+                  value={dsl.meta.headerCta?.href ?? ''}
+                  onChange={(e) =>
+                    onMetaChange({
+                      headerCta: {
+                        text: dsl.meta.headerCta?.text ?? '',
+                        href: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="Button link (e.g. #form or https://…)"
+                  className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
+                />
+              </div>
+            )}
+          </div>
+
           {/* Branch — main publish disabled */}
           <div className="space-y-2">
             <p className="text-body-sm font-bold text-gray-700">Publish Branch</p>

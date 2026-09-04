@@ -3,16 +3,41 @@
 import Image from 'next/image'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { ShortcodeRenderer } from '@/components/shortcodes/ShortcodeRenderer'
+import { RichTextBlock } from '@/components/sections/RichTextBlock'
 import { cn, isVideoUrl } from '@/lib/utils'
-import type { ColumnsProps } from '@/lib/dsl-schema'
+import { isHtmlShortcode, resolveRegisteredShortcode } from '@/lib/shortcodes'
+import type { ColumnItem, ColumnMedia, ColumnsProps } from '@/lib/dsl-schema'
 
 interface ColumnsSectionProps extends ColumnsProps {
   className?: string
 }
 
-function renderMedia({ mediaType, image, video, shortCode }: ColumnsProps) {
-  if (mediaType === 'shortcode') {
-    return <ShortcodeRenderer shortCode={shortCode} />
+// A column's `content` merges Markdown and shortcodes: a registered shortcode
+// token or a trusted HTML snippet renders through the shortcode renderer;
+// anything else is treated as Markdown.
+function renderColumnContent(content?: string) {
+  if (!content) return null
+  if (resolveRegisteredShortcode(content) || isHtmlShortcode(content)) {
+    return <ShortcodeRenderer shortCode={content} />
+  }
+  return <RichTextBlock content={content} />
+}
+
+function renderColumnItem(item: ColumnItem) {
+  if (item.type === 'content') return renderColumnContent(item.content)
+  if (item.type === 'media') return renderMedia({ mediaType: 'image', ...item })
+  // Fall back to inference when the type is unset.
+  return item.content
+    ? renderColumnContent(item.content)
+    : renderMedia({ mediaType: 'image', ...item })
+}
+
+function renderMedia({ mediaType, image, video, shortCode }: ColumnMedia) {
+  // Per-column items may omit mediaType — infer it from the fields present.
+  const effectiveType = mediaType ?? (shortCode ? 'shortcode' : 'image')
+
+  if (effectiveType === 'shortcode') {
+    return shortCode ? <ShortcodeRenderer shortCode={shortCode} /> : null
   }
 
   // A video URL dropped into the image field (via the media library) renders as
@@ -70,14 +95,48 @@ export function ColumnsSection({
   image,
   video,
   shortCode,
+  items,
+  itemColumns = 2,
   className,
 }: ColumnsSectionProps) {
   const hasHeader = Boolean(eyebrow || title || subtitle)
   const media = renderMedia({ mediaType, image, video, shortCode })
 
+  if (layout === 'columns') {
+    const columns = items ?? []
+    return (
+      <div className={cn('min-w-0 space-y-12', className)}>
+        {hasHeader && (
+          <div className={cn('min-w-0', !titleFullWidth && 'max-w-3xl')}>
+            <SectionHeader
+              eyebrow={eyebrow}
+              title={title}
+              subtitle={subtitle}
+              fullWidth={titleFullWidth}
+            />
+          </div>
+        )}
+        {columns.length > 0 && (
+          <div
+            className={cn(
+              'grid grid-cols-1 gap-8 md:gap-12',
+              itemColumns === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'
+            )}
+          >
+            {columns.map((item, i) => (
+              <div key={i} className="min-w-0">
+                {renderColumnItem(item)}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   if (layout === 'single') {
     return (
-      <div className={cn('min-w-0 space-y-8', className)}>
+      <div className={cn('min-w-0 space-y-16', className)}>
         {hasHeader && (
           <div className={cn('min-w-0', !titleFullWidth && 'max-w-3xl')}>
             <SectionHeader

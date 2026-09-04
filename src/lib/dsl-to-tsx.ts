@@ -36,7 +36,7 @@ import type { PageDSL } from '@/lib/dsl-schema'
 export const metadata: Metadata = {
   title: ${JSON.stringify(pageTitle)},
   description: ${JSON.stringify(pageDesc)},
-  robots: { index: ${meta.noindex ? 'false' : 'true'}, follow: true },
+  robots: { index: ${meta.noindex || meta.unlisted ? 'false' : 'true'}, follow: true },
   alternates: { canonical: 'https://www.pingcap.com${path}' },
   openGraph: {
     title: ${JSON.stringify(pageTitle)},

@@ -109,6 +109,15 @@ export function extractExternalHrefs(dsl: PageDSL): HrefEntry[] {
 
 const TIMEOUT_MS = 5_000
 
+// Statuses that mean "the server answered, it just refuses automated clients."
+// Common on bot-hostile hosts (G2, Gartner, some CDNs). The page is reachable
+// for real users, so we treat these as OK rather than broken links.
+const BOT_BLOCK_STATUSES = new Set([401, 403, 429])
+
+function statusIsOk(status: number, resOk: boolean): boolean {
+  return resOk || BOT_BLOCK_STATUSES.has(status)
+}
+
 async function headCheck(href: string): Promise<{ status: number | 'error'; ok: boolean }> {
   try {
     const controller = new AbortController()
@@ -136,10 +145,10 @@ async function headCheck(href: string): Promise<{ status: number | 'error'; ok: 
         headers: { 'User-Agent': 'PingCAP-LinkChecker/1.0' },
       })
       clearTimeout(timer2)
-      return { status: getRes.status, ok: getRes.ok }
+      return { status: getRes.status, ok: statusIsOk(getRes.status, getRes.ok) }
     }
 
-    return { status: res.status, ok: res.ok }
+    return { status: res.status, ok: statusIsOk(res.status, res.ok) }
   } catch {
     return { status: 'error', ok: false }
   }
