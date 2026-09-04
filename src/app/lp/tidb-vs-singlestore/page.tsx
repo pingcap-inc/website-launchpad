@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'TiDB vs SingleStore: Open-Source Distributed SQL Comparison',
   description:
     'Compare TiDB and SingleStore for distributed SQL. TiDB offers true MySQL compatibility, open-source freedom, and elastic scaling without vendor lock-in.',
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-singlestore/' },
   openGraph: {
     title: 'TiDB vs SingleStore: Open-Source Distributed SQL Comparison',

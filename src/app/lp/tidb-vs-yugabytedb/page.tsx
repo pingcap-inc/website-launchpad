@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'TiDB vs YugabyteDB: MySQL-First Distributed SQL Database',
   description:
     'Compare TiDB and YugabyteDB for MySQL-first teams. TiDB offers MySQL 8.0 compatibility, native HTAP analytics, and distributed SQL at scale with lower migration friction.',
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-yugabytedb/' },
   openGraph: {
     title: 'TiDB vs YugabyteDB: MySQL-First Distributed SQL Database',

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'TiDB vs CockroachDB: MySQL-Compatible, Native HTAP Database',
   description:
     'Compare TiDB and CockroachDB for MySQL workloads. TiDB offers MySQL compatibility, native columnar HTAP with TiFlash, and disaggregated compute/storage scaling.',
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-cockroachdb/' },
   openGraph: {
     title: 'TiDB vs CockroachDB: MySQL-Compatible, Native HTAP Database',

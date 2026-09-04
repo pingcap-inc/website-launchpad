@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'TiDB vs MySQL: Scale Without Sharding | MySQL Alternative',
   description:
     'Compare TiDB and MySQL for horizontal scale, distributed ACID, and HTAP. Drop-in MySQL compatibility with automatic sharding and zero-downtime DDL.',
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-mysql/' },
   openGraph: {
     title: 'TiDB vs MySQL: Scale Without Sharding | MySQL Alternative',
