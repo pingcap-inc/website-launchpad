@@ -3,7 +3,8 @@
   "meta": {
     "title": "Vitess & PlanetScale Alternative: TiDB Distributed SQL Database",
     "description": "Replace Vitess and PlanetScale's application-side sharding with TiDB's native distributed SQL: transparent auto-sharding, cross-shard ACID transactions, and HTAP in one MySQL-compatible system.",
-    "canonical": "/lp/vitess-alternative/"
+    "canonical": "/lp/vitess-alternative/",
+    "unlisted": true
   },
   "sections": [
     {
@@ -491,7 +492,8 @@
         "region": "na1"
       },
       "style": {
-        "spacing": "section"
+        "spacing": "section",
+        "anchorId": "book"
       }
     }
   ]

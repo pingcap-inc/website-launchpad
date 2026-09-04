@@ -7,7 +7,7 @@ import type { PageDSL } from '@/lib/dsl-schema'
 export const metadata: Metadata = {
   title: "Vitess & PlanetScale Alternative: TiDB Distributed SQL Database",
   description: "Replace Vitess and PlanetScale's application-side sharding with TiDB's native distributed SQL: transparent auto-sharding, cross-shard ACID transactions, and HTAP in one MySQL-compatible system.",
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/lp/vitess-alternative/' },
   openGraph: {
     title: "Vitess & PlanetScale Alternative: TiDB Distributed SQL Database",
@@ -45,7 +45,8 @@ const dsl: PageDSL = {
   "meta": {
     "title": "Vitess & PlanetScale Alternative: TiDB Distributed SQL Database",
     "description": "Replace Vitess and PlanetScale's application-side sharding with TiDB's native distributed SQL: transparent auto-sharding, cross-shard ACID transactions, and HTAP in one MySQL-compatible system.",
-    "canonical": "/lp/vitess-alternative/"
+    "canonical": "/lp/vitess-alternative/",
+    "unlisted": true
   },
   "sections": [
     {
@@ -533,7 +534,8 @@ const dsl: PageDSL = {
         "region": "na1"
       },
       "style": {
-        "spacing": "section"
+        "spacing": "section",
+        "anchorId": "book"
       }
     }
   ]
