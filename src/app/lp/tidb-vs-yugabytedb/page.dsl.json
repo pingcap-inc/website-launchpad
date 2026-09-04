@@ -346,12 +346,13 @@
       "id": "recognition",
       "type": "columns",
       "props": {
+        "eyebrow": "Industry Recognition",
         "title": "Recognized by Third Parties",
         "titleFullWidth": true,
         "layout": "single",
         "mediaType": "shortcode",
         "shortCode": "[review-badges]",
-        "eyebrow": "Industry Recognition"
+        "itemColumns": 2
       },
       "style": {
         "background": "primary",
@@ -430,7 +431,8 @@
       },
       "style": {
         "background": "primary",
-        "spacing": "section"
+        "spacing": "section",
+        "anchorId": "book"
       }
     }
   ]
