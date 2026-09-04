@@ -499,6 +499,7 @@ const dsl: PageDSL = {
       style: {
         background: 'primary',
         spacing: 'section',
+        anchorId: 'book',
       },
     },
   ],
