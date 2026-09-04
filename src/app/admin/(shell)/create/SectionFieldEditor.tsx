@@ -484,19 +484,23 @@ function renderField({
             addLabel={`+ Add ${field.itemLabel ?? 'item'}`}
             renderItem={(item, _index, update) => (
               <div className="space-y-2">
-                {field.fields.map((child) => (
-                  <div key={child.key}>
-                    {renderField({
-                      field: child,
-                      value: item,
-                      onChange: (nextItem) => update(nextItem as any),
-                      nodeId,
-                      sectionType,
-                      onRichTextImageInsert,
-                      slug,
-                    })}
-                  </div>
-                ))}
+                {field.fields.map((child) => {
+                  if (child.showWhen && !child.showWhen(item as unknown as Record<string, unknown>))
+                    return null
+                  return (
+                    <div key={child.key}>
+                      {renderField({
+                        field: child,
+                        value: item,
+                        onChange: (nextItem) => update(nextItem as any),
+                        nodeId,
+                        sectionType,
+                        onRichTextImageInsert,
+                        slug,
+                      })}
+                    </div>
+                  )
+                })}
               </div>
             )}
           />
