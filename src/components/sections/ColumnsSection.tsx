@@ -136,7 +136,7 @@ export function ColumnsSection({
 
   if (layout === 'single') {
     return (
-      <div className={cn('min-w-0 space-y-8', className)}>
+      <div className={cn('min-w-0 space-y-16', className)}>
         {hasHeader && (
           <div className={cn('min-w-0', !titleFullWidth && 'max-w-3xl')}>
             <SectionHeader
