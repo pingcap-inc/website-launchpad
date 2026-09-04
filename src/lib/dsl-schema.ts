@@ -15,6 +15,11 @@ export interface PageMeta {
   // Unlisted: page stays live at its URL but is kept out of discovery —
   // robots noindex + excluded from the sitemap. Direct-URL-only.
   unlisted?: boolean
+  // Page header style. 'full' (default) = the main site <Header /> with full nav.
+  // 'lp' = the minimal landing-page <HeaderLp /> (logo only, optional single CTA).
+  header?: 'full' | 'lp'
+  // Optional CTA shown on the right of the 'lp' header. Ignored for 'full'.
+  headerCta?: Cta
 }
 
 export interface Cta {

@@ -76,6 +76,8 @@ import {
 } from '@/components'
 import { HubSpotForm } from '@/components/ui/HubSpotForm'
 import { Header } from '@/components/ui/Header'
+import { HeaderLp } from '@/components/ui/HeaderLp'
+import { PrimaryButton } from '@/components/ui/PrimaryButton'
 import { Footer } from '@/components/ui/Footer'
 import { SectionWrapper, resolveSectionStyle } from '@/components/ui/SectionWrapper'
 import type {
@@ -640,10 +642,23 @@ export function PageRenderer({ dsl, withChrome = false }: PageRendererProps) {
 
   if (!withChrome) return content
 
+  const isLpHeader = normalized.meta?.header === 'lp'
+  const headerCta = normalized.meta?.headerCta
+
   return (
     <>
-      <Header />
-      <main className="pt-[62px] lg:pt-20">{content}</main>
+      {isLpHeader ? (
+        <HeaderLp
+          rightContent={
+            headerCta?.text && headerCta?.href ? (
+              <PrimaryButton href={headerCta.href}>{headerCta.text}</PrimaryButton>
+            ) : undefined
+          }
+        />
+      ) : (
+        <Header />
+      )}
+      <main className={isLpHeader ? 'pt-20' : 'pt-[62px] lg:pt-20'}>{content}</main>
       <Footer />
     </>
   )
