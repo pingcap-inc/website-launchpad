@@ -486,6 +486,15 @@ const partnerLogos = [
     height: 220,
     className: 'h-9 sm:h-11 lg:h-12',
   },
+  {
+    // Supplied as-is, including the yellow accent square of the brand's
+    // dark-background mark — the only colour in an otherwise white row.
+    name: 'BigCheese',
+    src: '/images/logos/latam-bigcheese-logo-white.png',
+    width: 1070,
+    height: 220,
+    className: 'h-9 sm:h-10 lg:h-11',
+  },
 ]
 
 // ─── Language switcher ───────────────────────────────────────────────────────
@@ -852,12 +861,15 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
           </div>
 
           {/* Regional partner logos — same treatment as the customer row in the
-            hero, so the two logo strips read as a matched pair. */}
+            hero, so the two logo strips read as a matched pair.
+            Three across rather than six: these are wide horizontal lockups, and
+            at six columns every one but SoftwareOne hit the column width and got
+            squeezed to between 35px and 63px tall — an uneven, cramped row. */}
           <div className="mt-16 border-t border-text-inverse/15 pt-12">
             <p className="font-mono text-eyebrow text-carbon-100 mb-8 text-center">
               {t.ecosystem.partnerLogosTitle}
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-10 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8">
               {partnerLogos.map((logo) => (
                 <div key={logo.name} className="flex items-center justify-center h-16 lg:h-20">
                   <Image
