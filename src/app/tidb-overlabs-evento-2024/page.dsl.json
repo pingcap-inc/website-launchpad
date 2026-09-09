@@ -1,0 +1,276 @@
+{
+  "pageName": "TiDB + Overlabs: Noite Exclusiva para Líderes de Tecnologia",
+  "meta": {
+    "title": "TiDB + Overlabs: Noite Exclusiva para Líderes de Tecnologia",
+    "description": "Junte-se a um grupo seleto de 20 líderes de tecnologia para uma noite de conteúdo, networking e alta gastronomia no Rincon Escondido, Vila Madalena. Data: 30 de setembro às 18h.",
+    "canonical": "/tidb-overlabs-evento-2024/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "split",
+        "eyebrow": "TiDB + Overlabs Apresentam",
+        "headline": "Uma noite dedicada a quem decide o <span class=\"text-gradient-violet\">futuro da tecnologia</span>",
+        "subheadline": "TiDB e Overlabs recebem, em conjunto, um grupo seleto de líderes de tecnologia para uma noite de conteúdo, conexões e alta gastronomia no Rincon Escondido — combinando conversas sobre dados, arquitetura e transformação digital com uma experiência especial de parrilla.",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        },
+        "heroForm": {
+          "formId": "75496cc4-0230-44f1-b4a2-1608bdcaeab0",
+          "portalId": "4466002",
+          "region": "LATAM"
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "hosts",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Quem está por trás",
+        "title": "Duas expertises que se complementam",
+        "subtitle": "O encontro reúne duas expertises complementares: a TiDB, com uma arquitetura de dados distribuída preparada para escala, e a Overlabs, conectando estratégia, tecnologia e execução.",
+        "items": [
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/058589e8-tidb-logo-full-rev-rgb.png",
+              "alt": "tidb logo full rev rgb",
+              "width": 1481,
+              "height": 768
+            },
+            "title": "Dados prontos para crescer",
+            "description": "A TiDB é um banco de dados SQL distribuído criado para crescer junto com o negócio sem sacrificar consistência ou performance. Sua arquitetura combina transações, análises em tempo real e suporte a aplicações de IA em um único ambiente.\n\n- SQL distribuído com escala horizontal\n- Transações e analytics em tempo real\n- Base preparada para aplicações de IA",
+            "borderColor": "violet"
+          },
+          {
+            "icon": {
+              "url": "https://static.pingcap.com/images/90921a84-logo-hero02.png",
+              "alt": "logo hero02",
+              "width": 424,
+              "height": 80
+            },
+            "title": "Simplificar para amplificar",
+            "description": "A Overlabs transforma desafios complexos de tecnologia em soluções mais simples, conectando estratégia, cloud, dados, plataformas digitais e IA para acelerar iniciativas, modernizar operações e gerar eficiência para o negócio.\n\n- Cloud, dados e plataformas digitais\n- Consultoria, desenvolvimento e integração\n- IA aplicada a desafios reais de negócio\n",
+            "borderColor": "blue"
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "experience",
+      "type": "stats",
+      "props": {
+        "eyebrow": "Sobre a noite",
+        "title": "Uma experiência para poucos",
+        "subtitle": "Uma noite criada para reunir tecnologia, gastronomia e conexões reais em um ambiente intimista e reservado.",
+        "items": [
+          {
+            "icon": "Users",
+            "value": "20",
+            "label": "Convidados",
+            "description": "Vagas limitadas para networking de qualidade"
+          },
+          {
+            "icon": "Award",
+            "value": "Master",
+            "label": "Experiência",
+            "description": "Demonstração completa sobre afiação e cortes especiais"
+          },
+          {
+            "icon": "Star",
+            "value": "Parrilla",
+            "label": "Cortes especiais",
+            "description": "Alta gastronomia com degustação de vinhos"
+          },
+          {
+            "icon": "Network",
+            "value": "Conexões",
+            "label": "Reais",
+            "description": "Conversas autênticas longe da agenda corrida"
+          }
+        ],
+        "columns": 4
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "audience",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "Público",
+        "title": "Para quem é este convite",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "CIOs e líderes de tecnologia",
+            "description": "Você decide o rumo da infraestrutura de dados da empresa e busca conversas fora da agenda comum de fornecedor.",
+            "cta": {
+              "text": "Confirme sua presença",
+              "href": "#presenca"
+            },
+            "icon": "Briefcase"
+          },
+          {
+            "variant": "blue",
+            "title": "Arquitetos e especialistas em dados",
+            "description": "Você lida de perto com os desafios reais de escala, performance e arquitetura de banco de dados.",
+            "cta": {
+              "text": "Confirme sua presença",
+              "href": "#presenca"
+            },
+            "icon": "Database"
+          },
+          {
+            "variant": "teal",
+            "title": "Clientes TiDB e Overlabs",
+            "description": "Você já constrói algo junto com a gente e essa noite é um espaço para aprofundar essa relação.",
+            "cta": {
+              "text": "Confirme sua presença",
+              "href": "#presenca"
+            },
+            "icon": "Users"
+          }
+        ],
+        "columns": 3,
+        "iconSize": 48
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "agenda",
+      "type": "agenda",
+      "props": {
+        "eyebrow": "Programação",
+        "title": "Roteiro da noite",
+        "subtitle": "30 de setembro • 18h • R. Madalena, 69, Vila Madalena",
+        "items": [
+          {
+            "time": "18:00",
+            "title": "Abertura — Recepção e boas-vindas",
+            "description": "Chegada dos convidados e networking inicial"
+          },
+          {
+            "time": "18:30",
+            "title": "Apresentação conjunta TiDB + Overlabs",
+            "description": "Visão sobre arquitetura de dados, modernização e transformação digital"
+          },
+          {
+            "time": "19:00",
+            "title": "Demonstração sobre afiação de facas e cortes especiais",
+            "description": "Experiência Master com o time do Rincon Escondido"
+          },
+          {
+            "time": "19:30",
+            "title": "Jantar — Experiência gastronômica com degustação de vinhos",
+            "description": "Parrilla com cortes especiais e harmonização"
+          },
+          {
+            "time": "22:00",
+            "title": "Encerramento — Brindes e despedida",
+            "description": "Último round de networking e fechamento da noite"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Antes de confirmar — Perguntas frequentes",
+        "items": [
+          {
+            "q": "Preciso confirmar mesmo tendo sido convidado diretamente?",
+            "a": "Sim. As vagas são limitadas a 20 convidados e a confirmação garante seu lugar à mesa."
+          },
+          {
+            "q": "Posso levar um acompanhante?",
+            "a": "As vagas são nominais. Se quiser levar alguém, fale antes com o time organizador."
+          },
+          {
+            "q": "O cardápio tem opções vegetarianas ou veganas?",
+            "a": "Sim, o menu pode ser adaptado. É só avisar no formulário de confirmação."
+          },
+          {
+            "q": "Existe algum custo para participar?",
+            "a": "Não. O jantar é uma cortesia conjunta da TiDB e da Overlabs para os convidados."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta",
+      "type": "cta",
+      "props": {
+        "title": "Confirme seu lugar",
+        "subtitle": "As vagas são limitadas e a confirmação segue por ordem de chegada. Preencha o formulário acima para garantir sua presença nesta noite exclusiva.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Voltar ao formulário",
+          "href": "#hero"
+        },
+        "secondaryCta": {
+          "text": "Entre em contato",
+          "href": "https://www.pingcap.com/contact-us/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "featureMedia-1788930811916",
+      "type": "featureMedia",
+      "props": {
+        "title": "",
+        "startPosition": "right",
+        "items": [
+          {
+            "title": "",
+            "description": "",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ]
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    }
+  ]
+}
