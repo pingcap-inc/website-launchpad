@@ -1,0 +1,309 @@
+{
+  "pageName": "One Distributed SQL Engine. Not a Bolt-On Stack | TiDB",
+  "meta": {
+    "title": "One Distributed SQL Engine. Not a Bolt-On Stack | TiDB",
+    "description": "Consolidate operational databases, warehouses, search, and sharding middleware onto one MySQL-compatible distributed SQL engine. Lower cost, fewer failure modes, no ETL.",
+    "canonical": "/lp/consolidate-data-stack/"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "headline": "One Distributed SQL Engine. <span class=\"text-gradient-violet\">Not a Bolt-On Stack.</span>",
+        "subheadline": "Most teams stitch four or more systems together long before they hit true scale — an operational database, a warehouse, a search/vector store, and sharding middleware. TiDB consolidates them onto a single distributed SQL engine: lower cost, fewer failure modes, no ETL, and AI-ready.",
+        "primaryCta": {
+          "text": "Book a 30-minute architecture call",
+          "href": "#book"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "bolt-on-cost",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "The Cost of the Bolt-On Stack",
+        "items": [
+          {
+            "title": "Every system you add is another failure mode",
+            "description": "Every system you add is another set of licenses, another pipeline to keep in sync, another failure mode, and another migration when it hits its ceiling. ETL between them adds latency and cost, and analytics always lag production. Consolidating onto one engine removes the seams — one system to scale, secure, and operate, on fresh data.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "consolidation-table",
+      "type": "comparisonTable",
+      "props": {
+        "eyebrow": "What TiDB Consolidates",
+        "title": "TiDB replaces the sprawl of point systems",
+        "subtitle": "One MySQL-compatible distributed SQL engine — elastic, strongly consistent, and built for transactional and analytical work on the same live data.",
+        "ourProduct": "TiDB consolidates it into",
+        "competitor": "You run today",
+        "rows": [
+          {
+            "feature": "Operational database",
+            "theirs": "MySQL, Amazon Aurora, PostgreSQL",
+            "ours": "One MySQL-compatible distributed SQL engine"
+          },
+          {
+            "feature": "Analytics warehouse",
+            "theirs": "Snowflake, BigQuery, Redshift",
+            "ours": "Native columnar HTAP with TiFlash — no ETL"
+          },
+          {
+            "feature": "Search & vector store",
+            "theirs": "Elasticsearch, OpenSearch, standalone vector DBs",
+            "ours": "Built-in full-text and vector search"
+          },
+          {
+            "feature": "Sharding middleware & caches",
+            "theirs": "Manual sharding, Redis, Memcached",
+            "ours": "Transparent auto-sharding with strong consistency"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "one-system",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "One System, No ETL",
+        "items": [
+          {
+            "title": "TiFlash columnar replicas plus optimizer pushdown",
+            "description": "Run OLTP and OLAP on the same fresh data, in one system — no separate warehouse, no ETL pipelines, no data lag. Transactions are strict ACID with snapshot isolation, coordinated by the Placement Driver, so consolidation never costs you consistency.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ],
+        "startPosition": "right"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "scale-features",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Scale Without the Seams",
+        "title": "Built for consolidation from the ground up",
+        "items": [
+          {
+            "icon": "Layers",
+            "title": "No manual sharding",
+            "description": "Data auto-splits into Regions and rebalances transparently; your app never manages shard keys."
+          },
+          {
+            "icon": "Server",
+            "title": "Disaggregated compute and storage",
+            "description": "Scale the actual bottleneck instead of over-provisioning both."
+          },
+          {
+            "icon": "RefreshCw",
+            "title": "Online schema changes",
+            "description": "DDL runs across the cluster without stop-the-world blocking."
+          },
+          {
+            "icon": "Brain",
+            "title": "Built-in vector search",
+            "description": "Serve AI and retrieval workloads from the same engine, no separate vector store."
+          }
+        ],
+        "columns": 2,
+        "itemLayout": "horizontal"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "case-studies",
+      "type": "caseStudyCards",
+      "props": {
+        "eyebrow": "Proven at Scale",
+        "title": "Leading platforms have collapsed multi-system stacks onto TiDB",
+        "items": [
+          {
+            "badge": "Fintech",
+            "title": "Plaid",
+            "description": "Migrated off Amazon Aurora to distributed SQL for mission-critical fintech workloads.",
+            "stats": [
+              {
+                "value": "96%",
+                "label": "reduction in maintenance effort"
+              }
+            ]
+          },
+          {
+            "badge": "Social",
+            "title": "Pinterest",
+            "description": "Consolidated bolt-on systems onto one MySQL-compatible engine.",
+            "stats": [
+              {
+                "value": "80%+",
+                "label": "savings on infrastructure costs"
+              }
+            ]
+          },
+          {
+            "badge": "Data",
+            "title": "Catalyst",
+            "description": "Runs multi-tenant SaaS workloads on TiDB with MySQL compatibility and HTAP.",
+            "stats": [
+              {
+                "value": "60x",
+                "label": "query-speed improvement"
+              }
+            ]
+          },
+          {
+            "badge": "SaaS",
+            "title": "Atlassian",
+            "description": "Collapsed ~750 Postgres clusters into 16 TiDB clusters for multi-tenant SaaS at scale.",
+            "stats": [
+              {
+                "value": "3M+",
+                "label": "tables across 16 clusters"
+              }
+            ]
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "recognition",
+      "type": "logoCloud",
+      "props": {
+        "eyebrow": "Recognized by third parties",
+        "logos": [
+          {
+            "name": "G2 Leader Winter 2026",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            }
+          },
+          {
+            "name": "Gartner Peer Insights Customers' Choice 2025",
+            "image": {
+              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+            }
+          }
+        ],
+        "variant": "minimal",
+        "align": "center"
+      },
+      "style": {
+        "spacing": "md"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "Does consolidating onto TiDB mean giving up analytics performance?",
+            "a": "No. TiFlash keeps columnar replicas so a single query can span row and column stores on fresh data, with no ETL — you get warehouse-style analytics on live operational data."
+          },
+          {
+            "q": "Is TiDB a drop-in replacement for MySQL?",
+            "a": "TiDB is binary-compatible with the MySQL 8.0 wire protocol — most applications connect with no code change. Validate specifics in a proof-of-concept with your own schema and queries."
+          },
+          {
+            "q": "How does TiDB replace a separate vector database?",
+            "a": "Vector search is built into the engine, so AI and retrieval workloads run alongside your operational data — no separate store to sync or secure."
+          },
+          {
+            "q": "Do I need sharding middleware or caches in front of TiDB?",
+            "a": "No manual sharding. Data auto-splits and rebalances, and strong consistency removes much of the need for a separate caching tier."
+          },
+          {
+            "q": "How does TiDB handle distributed transactions and ACID?",
+            "a": "Strict ACID with snapshot-isolation transactions coordinated by the Placement Driver — strong consistency across all nodes."
+          },
+          {
+            "q": "How should I evaluate a consolidation move?",
+            "a": "Run a POC on your own schema and workload — the architectural differences (MySQL wire, native HTAP, disaggregated storage, built-in vector) are structural, not benchmark tuning."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta-pre-form",
+      "type": "cta",
+      "props": {
+        "title": "See What You Can Consolidate",
+        "subtitle": "Bring your current stack — operational database, warehouse, search, sharding — and we'll map what TiDB collapses into one engine. Book a 30-minute architecture call with our engineering team.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Book a 30-minute architecture call",
+          "href": "#book"
+        },
+        "secondaryCta": {
+          "text": "Read the ungated guide",
+          "href": "https://www.pingcap.com/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "book",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your stack and we'll set up a 30-minute call with our engineering team — we'll walk your operational, analytics, search, and sharding layers and where they consolidate.",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+        "region": "na1"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    }
+  ]
+}
