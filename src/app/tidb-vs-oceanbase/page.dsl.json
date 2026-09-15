@@ -3,7 +3,9 @@
   "meta": {
     "title": "TiDB vs OceanBase: Cloud-Native Distributed SQL Database Comparison",
     "description": "Compare TiDB and OceanBase for cloud-native HTAP, MySQL compatibility, and real-time analytics. See which distributed SQL database fits your modernization needs.",
-    "canonical": "/tidb-vs-oceanbase/"
+    "canonical": "/tidb-vs-oceanbase/",
+    "unlisted": true,
+    "header": "lp"
   },
   "sections": [
     {
@@ -289,6 +291,17 @@
         "items": [
           {
             "badge": "AI Agent Platform",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/68b65a2a-20260826-203218.png",
+                "alt": "20260826 203218",
+                "width": 1511,
+                "height": 512
+              },
+              "alt": "20260826 203218",
+              "width": 1511,
+              "height": 512
+            },
             "title": "Kimi: <1s Database Provisioning per Agent Task",
             "description": "Runs a production agent-hosting platform on TiDB Cloud with elastic, strongly consistent scale.",
             "stats": [
@@ -300,6 +313,17 @@
           },
           {
             "badge": "Agentic AI Platform",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/0fc78057-manus.svg",
+                "alt": "manus",
+                "width": 165,
+                "height": 48
+              },
+              "alt": "manus",
+              "width": 165,
+              "height": 48
+            },
             "title": "Manus: 2 Weeks to Migrate",
             "description": "Viral agentic AI platform migrated to TiDB Cloud with no application rewrite.",
             "stats": [
@@ -311,6 +335,17 @@
           },
           {
             "badge": "AI Note-Taking",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/a9c1110c-logo-plaud.png",
+                "alt": "logo plaud",
+                "width": 362,
+                "height": 100
+              },
+              "alt": "logo plaud",
+              "width": 362,
+              "height": 100
+            },
             "title": "Plaud: 10x QPS Under Peak Load",
             "description": "Eliminated MySQL write-throughput and DDL bottlenecks for 2M+ users across 170 countries.",
             "stats": [
@@ -326,6 +361,17 @@
           },
           {
             "badge": "AI Workflow Platform",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
+                "alt": "dify logo white",
+                "width": 102,
+                "height": 45
+              },
+              "alt": "dify logo white",
+              "width": 102,
+              "height": 45
+            },
             "title": "Dify: 80% Infrastructure Cost Reduction",
             "description": "Consolidated ~500K isolated database containers into one unified TiDB deployment.",
             "stats": [
