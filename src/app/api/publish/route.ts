@@ -18,8 +18,8 @@ function injectSitemapEntry(
   priority: number,
   changeFrequency: string
 ): string {
-  const newEntry = `    { url: '/${slug}/', priority: ${priority}, changeFrequency: '${changeFrequency}' },`
-  const insertPoint = source.lastIndexOf('\n  ]')
+  const newEntry = `  { url: '/${slug}/', priority: ${priority}, changeFrequency: '${changeFrequency}' },`
+  const insertPoint = source.lastIndexOf('\n]')
   if (insertPoint === -1) throw new Error('Could not find sitemap routes array closing bracket')
   return source.slice(0, insertPoint) + '\n' + newEntry + source.slice(insertPoint)
 }
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
 
   // Read and patch sitemap if requested
   if (addToSitemap) {
-    const sitemapPath = 'src/app/sitemap.ts'
+    const sitemapPath = 'src/app/launchpad-sitemap.xml/route.ts'
     const sitemapRes = await fetch(`${baseUrl}/contents/${sitemapPath}?ref=${branch}`, { headers })
     if (sitemapRes.ok) {
       const sitemapData = (await sitemapRes.json()) as { content: string }
@@ -176,7 +176,7 @@ export async function POST(request: NextRequest) {
   const { sha: newTreeSha } = (await treeRes.json()) as { sha: string }
 
   // 5. Create commit
-  const hasSitemap = files.some((f) => f.path === 'src/app/sitemap.ts')
+  const hasSitemap = files.some((f) => f.path === 'src/app/launchpad-sitemap.xml/route.ts')
   const commitMessage = hasSitemap
     ? `feat: publish /${slug}/ and add to sitemap`
     : `feat: publish /${slug}/`
