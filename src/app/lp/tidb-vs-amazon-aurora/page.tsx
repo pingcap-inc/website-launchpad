@@ -354,14 +354,14 @@ const dsl: PageDSL = {
             "badge": "SaaS",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/239173a5-apps-m.svg",
-                "alt": "apps m",
-                "width": 24,
-                "height": 24
+                "url": "https://static.pingcap.com/images/efcf8f2a-atlassian_logo_inverse_rgb_2x.png",
+                "alt": "atlassian logo inverse rgb 2x",
+                "width": 592,
+                "height": 96
               },
-              "alt": "apps m",
-              "width": 24,
-              "height": 24
+              "alt": "atlassian logo inverse rgb 2x",
+              "width": 592,
+              "height": 96
             },
             "title": "Atlassian: 750+ Postgres clusters consolidated to 16 TiDB clusters",
             "description": "Atlassian replaced hundreds of sharded PostgreSQL clusters with 16 global TiDB clusters to power its Forge platform, scaling to 3M+ tables and 500k concurrent connections per cluster.",
