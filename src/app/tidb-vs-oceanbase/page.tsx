@@ -435,30 +435,50 @@ const dsl: PageDSL = {
       }
     },
     {
-      "id": "recognition",
-      "type": "logoCloud",
+      "id": "columns-1789634792505",
+      "type": "columns",
       "props": {
         "eyebrow": "Industry Recognition",
         "title": "Recognized by Third Parties",
-        "logos": [
+        "titleFullWidth": true,
+        "layout": "columns",
+        "mediaType": "image",
+        "shortCode": "[agent-memory-timeline]",
+        "items": [
           {
-            "name": "G2 Leader Winter 2025",
+            "type": "media",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "image": {
+                "url": "https://static.pingcap.com/images/dcdca859-e54e2db0-20260506-160445.webp",
+                "alt": "e54e2db0 20260506 160445",
+                "width": 384,
+                "height": 235
+              },
+              "alt": "e54e2db0 20260506 160445",
+              "width": 384,
+              "height": 235
             }
           },
           {
-            "name": "Gartner Peer Insights Customers' Choice 2025",
+            "type": "media",
             "image": {
-              "url": "https://static.pingcap.com/images/dfc5d763-catalyst-logo-white.svg"
+              "image": {
+                "url": "https://static.pingcap.com/images/63eb0af3-053856a3-20260506-160923.webp",
+                "alt": "053856a3 20260506 160923",
+                "width": 384,
+                "height": 237
+              },
+              "alt": "053856a3 20260506 160923",
+              "width": 384,
+              "height": 237
             }
           }
         ],
-        "variant": "minimal",
-        "align": "center"
+        "itemColumns": 2
       },
       "style": {
-        "spacing": "md"
+        "background": "primary",
+        "spacing": "section"
       }
     },
     {
