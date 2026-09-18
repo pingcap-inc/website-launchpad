@@ -355,14 +355,14 @@
             "badge": "SaaS",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/239173a5-apps-m.svg",
-                "alt": "apps m",
-                "width": 24,
-                "height": 24
+                "url": "https://static.pingcap.com/images/efcf8f2a-atlassian_logo_inverse_rgb_2x.png",
+                "alt": "atlassian logo inverse rgb 2x",
+                "width": 592,
+                "height": 96
               },
-              "alt": "apps m",
-              "width": 24,
-              "height": 24
+              "alt": "atlassian logo inverse rgb 2x",
+              "width": 592,
+              "height": 96
             },
             "title": "Atlassian",
             "description": "Collapsed ~750 Postgres clusters into 16 TiDB clusters for multi-tenant SaaS at scale.",
@@ -387,12 +387,13 @@
       "id": "third-party-recognition",
       "type": "columns",
       "props": {
+        "eyebrow": "Recognized by Third Parties",
         "title": "Industry Recognition",
         "titleFullWidth": true,
         "layout": "single",
         "mediaType": "shortcode",
         "shortCode": "[review-badges]",
-        "eyebrow": "Recognized by Third Parties"
+        "itemColumns": 2
       },
       "style": {
         "background": "primary",
