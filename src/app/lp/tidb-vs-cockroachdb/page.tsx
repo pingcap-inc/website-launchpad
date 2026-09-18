@@ -193,6 +193,7 @@ const dsl: PageDSL = {
       type: 'featureGrid',
       props: {
         eyebrow: 'One Engine, Not a Bolt-On Stack',
+        // title-case-ignore
         title: 'Consolidate Four Systems Into One Distributed SQL Engine',
         subtitle:
           'Most teams stitch four or more systems together long before they hit true scale. TiDB consolidates them onto a single distributed SQL engine — lower cost, fewer failure modes, no ETL, and AI-ready.',
@@ -360,6 +361,7 @@ const dsl: PageDSL = {
               width: 181,
               height: 50,
             },
+            // title-case-ignore
             title: 'Pinterest: Graph Service Scaled with 10x Latency Reduction',
             description:
               'Modernized its graph service with TiDB eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.',
@@ -388,6 +390,7 @@ const dsl: PageDSL = {
               width: 252,
               height: 72,
             },
+            // title-case-ignore
             title: 'Catalyst: SaaS Data Serving Layer Rearchitected for 60x Faster Queries',
             description:
               'Catalyst selected TiDB over Aurora and YugabyteDB to power its customer growth platform, achieving up to 60x faster query response with HTAP capabilities that handle both object and time series data in one stack.',
@@ -407,15 +410,16 @@ const dsl: PageDSL = {
             badge: 'SaaS',
             logo: {
               image: {
-                url: 'https://static.pingcap.com/images/239173a5-apps-m.svg',
-                alt: 'apps m',
-                width: 24,
-                height: 24,
+                url: 'https://static.pingcap.com/images/efcf8f2a-atlassian_logo_inverse_rgb_2x.png',
+                alt: 'atlassian logo inverse rgb 2x',
+                width: 592,
+                height: 96,
               },
-              alt: 'apps m',
-              width: 24,
-              height: 24,
+              alt: 'atlassian logo inverse rgb 2x',
+              width: 592,
+              height: 96,
             },
+            // title-case-ignore
             title: 'Atlassian: 750+ Postgres clusters consolidated to 16 TiDB clusters',
             description:
               'Atlassian replaced hundreds of sharded PostgreSQL clusters with 16 global TiDB clusters to power its Forge platform, scaling to 3M+ tables and 500k concurrent connections per cluster.',
