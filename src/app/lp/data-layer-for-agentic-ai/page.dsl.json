@@ -268,7 +268,7 @@
       "type": "cta",
       "props": {
         "title": "Bring Us Your Architecture",
-        "subtitle": "Thirty minutes with an engineer who has seen this shape of workload before. Bring your current topology, your tenant count, and the operation you keep deferring to a maintenance window. You will leave with an answer on whether this is worth your time, including if the answer is no. No demos or slides.",
+        "subtitle": "Thirty minutes with an engineer who has seen this shape of workload before. Bring your current topology and tenant count. You will leave with an answer on whether this is worth your time, including if the answer is no. No demos or slides.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
@@ -278,7 +278,7 @@
           "height": 256
         },
         "primaryCta": {
-          "text": "Book a 30-Minute Review",
+          "text": "Book a 30-Minute Architecture Call",
           "href": "https://www.pingcap.com/contact-us/"
         },
         "secondaryCta": {
