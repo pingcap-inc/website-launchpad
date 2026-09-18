@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: "TiDB vs OceanBase: Cloud-Native Distributed SQL Database Comparison",
   description: "Compare TiDB and OceanBase for cloud-native HTAP, MySQL compatibility, and real-time analytics. See which distributed SQL database fits your modernization needs.",
   robots: { index: false, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/tidb-vs-oceanbase/' },
+  alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-oceanbase/' },
   openGraph: {
     title: "TiDB vs OceanBase: Cloud-Native Distributed SQL Database Comparison",
     description: "Compare TiDB and OceanBase for cloud-native HTAP, MySQL compatibility, and real-time analytics. See which distributed SQL database fits your modernization needs.",
-    url: 'https://www.pingcap.com/tidb-vs-oceanbase/',
+    url: 'https://www.pingcap.com/lp/tidb-vs-oceanbase/',
     siteName: 'TiDB',
     images: [
       {
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: "/tidb-vs-oceanbase/",
+  path: "/lp/tidb-vs-oceanbase/",
   title: "TiDB vs OceanBase: Cloud-Native Distributed SQL Database Comparison",
   description: "Compare TiDB and OceanBase for cloud-native HTAP, MySQL compatibility, and real-time analytics. See which distributed SQL database fits your modernization needs.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: "Cloud-Native, Open <span class=\"text-gradient-violet\">Distributed SQL</span>", path: "/tidb-vs-oceanbase/" },
+    { name: "Cloud-Native, Open <span class=\"text-gradient-violet\">Distributed SQL</span>", path: "/lp/tidb-vs-oceanbase/" },
   ],
 })
 
@@ -45,7 +45,7 @@ const dsl: PageDSL = {
   "meta": {
     "title": "TiDB vs OceanBase: Cloud-Native Distributed SQL Database Comparison",
     "description": "Compare TiDB and OceanBase for cloud-native HTAP, MySQL compatibility, and real-time analytics. See which distributed SQL database fits your modernization needs.",
-    "canonical": "/tidb-vs-oceanbase/",
+    "canonical": "/lp/tidb-vs-oceanbase/",
     "unlisted": true,
     "header": "lp"
   },
@@ -441,9 +441,9 @@ const dsl: PageDSL = {
         "eyebrow": "Industry Recognition",
         "title": "Recognized by Third Parties",
         "titleFullWidth": true,
-        "layout": "columns",
-        "mediaType": "image",
-        "shortCode": "[agent-memory-timeline]",
+        "layout": "single",
+        "mediaType": "shortcode",
+        "shortCode": "[review-badges]",
         "items": [
           {
             "type": "media",

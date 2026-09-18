@@ -3,7 +3,7 @@
   "meta": {
     "title": "TiDB vs OceanBase: Cloud-Native Distributed SQL Database Comparison",
     "description": "Compare TiDB and OceanBase for cloud-native HTAP, MySQL compatibility, and real-time analytics. See which distributed SQL database fits your modernization needs.",
-    "canonical": "/tidb-vs-oceanbase/",
+    "canonical": "/lp/tidb-vs-oceanbase/",
     "unlisted": true,
     "header": "lp"
   },
@@ -396,11 +396,12 @@
       "id": "columns-1789634792505",
       "type": "columns",
       "props": {
+        "eyebrow": "Industry Recognition",
         "title": "Recognized by Third Parties",
         "titleFullWidth": true,
-        "layout": "columns",
-        "mediaType": "image",
-        "shortCode": "[agent-memory-timeline]",
+        "layout": "single",
+        "mediaType": "shortcode",
+        "shortCode": "[review-badges]",
         "items": [
           {
             "type": "media",
@@ -431,7 +432,7 @@
             }
           }
         ],
-        "eyebrow": "Industry Recognition"
+        "itemColumns": 2
       },
       "style": {
         "background": "primary",
