@@ -16,11 +16,11 @@
         "subheadline": "Your stack has six databases. It could have one. Transactions, analytics, search, and vector memory in a single distributed SQL engine. MySQL-compatible, strongly consistent, and open source.",
         "primaryCta": {
           "text": "Book a 30-Minute Architecture Review",
-          "href": ""
+          "href": "https://www.pingcap.com/contact-us/"
         },
         "secondaryCta": {
           "text": "Read How Dify Did It",
-          "href": ""
+          "href": "https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/"
         },
         "heroImage": {
           "image": {
