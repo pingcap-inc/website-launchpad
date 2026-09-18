@@ -14,6 +14,14 @@
         "eyebrow": "Database Consolidation",
         "headline": "One Engine. <span class=\"text-gradient-violet animate-glow-sweep\">Not Six.</span>",
         "subheadline": "Your stack has six databases. It could have one. Transactions, analytics, search, and vector memory in a single distributed SQL engine. MySQL-compatible, strongly consistent, and open source.",
+        "primaryCta": {
+          "text": "Book a 30-Minute Architecture Review",
+          "href": ""
+        },
+        "secondaryCta": {
+          "text": "Read How Dify Did It",
+          "href": ""
+        },
         "heroImage": {
           "image": {
             "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
