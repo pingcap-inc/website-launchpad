@@ -148,6 +148,17 @@
         "items": [
           {
             "badge": "Infrastructure Sprawl",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/ea05870e-dify_logo.svg",
+                "alt": "dify logo",
+                "width": 241,
+                "height": 80
+              },
+              "alt": "dify logo",
+              "width": 241,
+              "height": 80
+            },
             "title": "Dify: Six Data Types, One Engine",
             "description": "Replaced nearly half a million database containers with a single TiDB Cloud instance, unifying vectors, documents, and relational data for its open-source LLM platform.",
             "stats": [
@@ -165,6 +176,17 @@
           },
           {
             "badge": "Object Scale",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/efcf8f2a-atlassian_logo_inverse_rgb_2x.png",
+                "alt": "atlassian logo inverse rgb 2x",
+                "width": 592,
+                "height": 96
+              },
+              "alt": "atlassian logo inverse rgb 2x",
+              "width": 592,
+              "height": 96
+            },
             "title": "Atlassian: Three Million Tables, Sixteen Clusters",
             "description": "Replaced hundreds of sharded PostgreSQL clusters with 16 global TiDB clusters to power its Forge platform, scaling to 3M+ tables and 500K concurrent connections per cluster.",
             "stats": [
@@ -182,6 +204,17 @@
           },
           {
             "badge": "Data Scale",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/51545d7d-pinterest-logo.svg",
+                "alt": "pinterest logo",
+                "width": 181,
+                "height": 50
+              },
+              "alt": "pinterest logo",
+              "width": 181,
+              "height": 50
+            },
             "title": "Pinterest: Graph Service Scaled With 10x Latency Reduction",
             "description": "Modernized its graph service with TiDB, eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.",
             "stats": [
@@ -199,6 +232,17 @@
           },
           {
             "badge": "Migration Path",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/23ea2f33-plaid-logo.png",
+                "alt": "plaid logo",
+                "width": 351,
+                "height": 132
+              },
+              "alt": "plaid logo",
+              "width": 351,
+              "height": 132
+            },
             "title": "Plaid: 100 Services Migrated From Aurora With Zero Downtime",
             "description": "A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 seconds per service.",
             "stats": [
