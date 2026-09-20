@@ -150,14 +150,14 @@
             "badge": "Infrastructure Sprawl",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/ea05870e-dify_logo.svg",
-                "alt": "dify logo",
-                "width": 241,
-                "height": 80
+                "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
+                "alt": "dify logo white",
+                "width": 102,
+                "height": 45
               },
-              "alt": "dify logo",
-              "width": 241,
-              "height": 80
+              "alt": "dify logo white",
+              "width": 102,
+              "height": 45
             },
             "title": "Dify: Six Data Types, One Engine",
             "description": "Replaced nearly half a million database containers with a single TiDB Cloud instance, unifying vectors, documents, and relational data for its open-source LLM platform.",
