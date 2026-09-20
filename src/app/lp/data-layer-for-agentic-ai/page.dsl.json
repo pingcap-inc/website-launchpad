@@ -159,6 +159,17 @@
         "items": [
           {
             "badge": "Tenant Scale",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/0fc78057-manus.svg",
+                "alt": "manus",
+                "width": 165,
+                "height": 48
+              },
+              "alt": "manus",
+              "width": 165,
+              "height": 48
+            },
             "title": "Manus",
             "description": "Went from viral launch to more than a million database tenants, and migrated to TiDB Cloud in two weeks to keep up with it. TiDB now holds the context persistence behind Manus's agent swarms and full-stack app generation.",
             "stats": [
@@ -175,6 +186,17 @@
           },
           {
             "badge": "Provisioning Speed",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/68b65a2a-20260826-203218.png",
+                "alt": "20260826 203218",
+                "width": 1511,
+                "height": 512
+              },
+              "alt": "20260826 203218",
+              "width": 1511,
+              "height": 512
+            },
             "title": "Kimi",
             "description": "K2.6 builds and hosts full-stack web applications for millions of users, provisioning an isolated database per site in under a second. More than 10 million tenants supported.",
             "stats": [
@@ -191,6 +213,17 @@
           },
           {
             "badge": "Consolidation",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
+                "alt": "dify logo white",
+                "width": 102,
+                "height": 45
+              },
+              "alt": "dify logo white",
+              "width": 102,
+              "height": 45
+            },
             "title": "Dify",
             "description": "Replaced roughly 500,000 database containers with a single TiDB Cloud instance, unifying vectors, documents, and relational data behind its open-source LLM platform, and cut operational overhead by 90%.",
             "stats": [
@@ -207,6 +240,17 @@
           },
           {
             "badge": "Two-Store Problem",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/a9c1110c-logo-plaud.png",
+                "alt": "logo plaud",
+                "width": 362,
+                "height": 100
+              },
+              "alt": "logo plaud",
+              "width": 362,
+              "height": 100
+            },
             "title": "Plaud",
             "description": "Migrated from MySQL plus Amazon S3 to TiDB Cloud, eliminating S3 retrieval latency and unlocking online DDL for 2M+ users across 170 countries. 10x QPS improvement under peak load, 13 clusters in production.",
             "stats": [
