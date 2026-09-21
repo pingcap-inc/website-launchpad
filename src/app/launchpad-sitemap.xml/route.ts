@@ -32,6 +32,7 @@ const routes: Array<{
   { url: '/integrations/', priority: 0.8, changeFrequency: 'weekly' },
   { url: '/tidb-cloud-lake/', priority: 0.8, changeFrequency: 'weekly' },
   { url: '/tidb/tidb-cloud-filesystems/', priority: 0.8, changeFrequency: 'weekly' },
+  { url: '/tidb-cloud-filesystem-pricing-details/', priority: 0.8, changeFrequency: 'weekly' },
   // AI pages
   { url: '/ai/', priority: 0.8, changeFrequency: 'weekly' },
   { url: '/ai/vector-search/', priority: 0.7, changeFrequency: 'monthly' },
