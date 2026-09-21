@@ -24,9 +24,12 @@
         },
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg",
+            "alt": "1000011158",
+            "width": 522,
+            "height": 563
           },
-          "alt": "hero image",
+          "alt": "1000011158",
           "width": 500,
           "height": 400
         }
@@ -47,8 +50,14 @@
             "description": "You sized the cluster for peak human traffic and a quiet overnight window. Agents run that window at the same rate as noon. Every operation you deferred now has to happen under load, making online schema change an architectural requirement.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/e48feaf0-tidb-break1-maintenance-window-red-black.png",
+                "alt": "tidb break1 maintenance window red black",
+                "width": 1120,
+                "height": 840
+              },
+              "alt": "tidb break1 maintenance window red black",
+              "width": 1120,
+              "height": 840
             }
           },
           {
@@ -56,8 +65,14 @@
             "description": "Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/9bb98f46-tidb-break2-tenant-count-violet-black.png",
+                "alt": "tidb break2 tenant count violet black",
+                "width": 1120,
+                "height": 840
+              },
+              "alt": "tidb break2 tenant count violet black",
+              "width": 1120,
+              "height": 840
             }
           },
           {
@@ -65,8 +80,14 @@
             "description": "If your operational store and retrieval store are kept in step by a pipeline, there is a window where an agent reasons from data that is no longer true. A person notices. An agent acts, then acts again on the result. Closing that window is a consistency problem, not a model problem.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/44462ed7-tidb-break3-write-read-gap-teal-black.png",
+                "alt": "tidb break3 write read gap teal black",
+                "width": 1120,
+                "height": 840
+              },
+              "alt": "tidb break3 write read gap teal black",
+              "width": 1120,
+              "height": 840
             }
           }
         ],
@@ -142,7 +163,7 @@
           },
           {
             "q": "Can We Migrate Without Downtime?",
-            "a": "For MySQL-compatible workloads, usually yes, with replication-based cutover rather than a maintenance window. The work that takes time is not the data move; it is verifying application behaviour against a distributed engine, particularly around transaction scope and anything that assumed a single primary."
+            "a": "For MySQL-compatible workloads, usually yes, with replication-based cutover rather than a maintenance window. The work that takes time is not the data move; it is verifying application behavior against a distributed engine, particularly around transaction scope and anything that assumed a single primary."
           }
         ]
       },
@@ -276,7 +297,7 @@
       "type": "featureCard",
       "props": {
         "eyebrow": "Honest Assessment",
-        "title": "Where This Is the Wrong Choice",
+        "title": "Where This is the Wrong Choice",
         "subtitle": "These are the scenarios where TiDB is not the right fit. If any of these describe your workload, consider alternatives.",
         "items": [
           {
@@ -312,7 +333,7 @@
       "type": "cta",
       "props": {
         "title": "Bring Us Your Architecture",
-        "subtitle": "Thirty minutes with an engineer who has seen this shape of workload before. Bring your current topology and tenant count. You will leave with an answer on whether this is worth your time, including if the answer is no. No demos or slides.",
+        "subtitle": "Spend thirty minutes with an engineer who has seen this shape of workload before. Bring your current topology and tenant count. You will leave with an answer on whether this is worth your time, including if the answer is no.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
