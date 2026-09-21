@@ -92,6 +92,12 @@ const FAQ_ITEMS = [
   },
 ]
 
+// Verified live on docs.pingcap.com 2026-09-21. The Filesystem landing page
+// still routes its doc links through a Cloudflare preview build because these
+// paths used to 404; that workaround now looks removable, but it is that page's
+// call, so this one just uses the canonical host.
+const DOCS_QUICKSTART = 'https://docs.pingcap.com/ai/ti-quick-start/'
+
 const PATH = '/tidb-cloud-filesystem-pricing-details/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const TITLE = 'TiDB Cloud Filesystem Pricing Details'
@@ -383,7 +389,7 @@ export default function FilesystemPricingDetailsPage() {
               subtitle="Create a filesystem, point an agent at it, and see what a real month of your own usage costs before anything is billed."
               primaryCta={{
                 text: 'Read the quickstart',
-                href: 'https://www.pingcap.com/tidb/tidb-cloud-filesystems/',
+                href: DOCS_QUICKSTART,
               }}
               secondaryCta={{
                 text: 'Talk to us',
