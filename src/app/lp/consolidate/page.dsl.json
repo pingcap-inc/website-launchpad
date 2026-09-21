@@ -52,7 +52,7 @@
             "icon": "Gauge",
             "value": "90%",
             "label": "Less Overhead",
-            "description": "Operational cost reduction after consolidation"
+            "description": "Dify's operational cost reduction after consolidation"
           },
           {
             "icon": "Table",
@@ -128,7 +128,7 @@
             "description": "The number that matters is not how many databases you run. It is how many places your data can disagree with itself.",
             "cta": {
               "text": "Read the Architecture Guide",
-              "href": "https://www.pingcap.com/blog/"
+              "href": "https://docs.pingcap.com/tidbcloud/architecture-concepts/"
             },
             "icon": "Repeat"
           }
@@ -276,8 +276,14 @@
             "description": "20+ TB, 300K+ QPS, 10K+ writes per second, and millions of tables in a single cluster. No shard keys in your application, and no rebalance that turns into a migration.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/28e67671-tidb-block1-scale-red-black.png",
+                "alt": "tidb block1 scale red black",
+                "width": 1120,
+                "height": 840
+              },
+              "alt": "tidb block1 scale red black",
+              "width": 1120,
+              "height": 840
             }
           },
           {
@@ -285,8 +291,14 @@
             "description": "Strict ACID transactions and real joins across the cluster, not eventual consistency reconstructed in application code.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/f77c02e6-tidb-block2-consistency-blue-black.png",
+                "alt": "tidb block2 consistency blue black",
+                "width": 1120,
+                "height": 840
+              },
+              "alt": "tidb block2 consistency blue black",
+              "width": 1120,
+              "height": 840
             }
           },
           {
@@ -294,8 +306,14 @@
             "description": "Automatic failover across availability zones, with schema changes and version upgrades that run online. 99.999% availability, including planned maintenance.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/98077f69-tidb-block3-maintenance-violet-black.png",
+                "alt": "tidb block3 maintenance violet black",
+                "width": 1120,
+                "height": 840
+              },
+              "alt": "tidb block3 maintenance violet black",
+              "width": 1120,
+              "height": 840
             }
           },
           {
@@ -303,8 +321,14 @@
             "description": "Full MySQL protocol and syntax, so your apps, drivers, ORMs, and your team's existing knowledge come with you.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/595f49a7-tidb-block4-mysql-teal-black.png",
+                "alt": "tidb block4 mysql teal black",
+                "width": 1120,
+                "height": 840
+              },
+              "alt": "tidb block4 mysql teal black",
+              "width": 1120,
+              "height": 840
             }
           }
         ],
@@ -355,7 +379,7 @@
             "description": "The next bottleneck might be write throughput, tenant density, connections, or metadata, and you can no longer plan for which one it will be.",
             "cta": {
               "text": "Read the Agentic AI Guide",
-              "href": "https://www.pingcap.com/blog/"
+              "href": "https://www.pingcap.com/blog/agentic-ai-architecture/"
             },
             "icon": "Bot"
           },
@@ -365,7 +389,7 @@
             "description": "An agent reading stale context doesn't slow down or ask for clarification. It acts, and chains the next several decisions off that action.",
             "cta": {
               "text": "See How to Architect for Agents",
-              "href": "https://www.pingcap.com/blog/"
+              "href": "https://www.pingcap.com/webinars/architecting-databases-for-agentic-ai-lessons-from-massive-scale-saas/"
             },
             "icon": "Brain"
           }
@@ -383,7 +407,7 @@
         "title": "Frequently Asked Questions",
         "items": [
           {
-            "q": "What Is Database Consolidation?",
+            "q": "What is Database Consolidation?",
             "a": "Database consolidation means moving transactional, analytical, search, and vector workloads off separate specialized systems and onto a single distributed SQL engine, so there are no pipelines to keep in sync between them."
           },
           {
@@ -395,7 +419,7 @@
             "a": "For MySQL-compatible workloads, usually yes, with replication-based cutover rather than a maintenance window. The work that takes time is verifying application behaviour against a distributed engine, particularly around transaction scope and anything that assumed a single primary."
           },
           {
-            "q": "When Is Consolidation the Wrong Choice?",
+            "q": "When is Consolidation the Wrong Choice?",
             "a": "If you run one service with one workload and no multi-tenancy, a single-node database is simpler and you should keep it. Consolidation pays off when you own several workloads, not one."
           }
         ]
@@ -409,7 +433,7 @@
       "type": "cta",
       "props": {
         "title": "Bring Us Your Architecture",
-        "subtitle": "Thirty minutes with an engineer who has migrated this before. We'll map your workloads, tell you which of the three walls you're closest to, and be straight with you about whether consolidating is worth it in your case. No demos or slides.",
+        "subtitle": "Spend thirty minutes with an engineer who has done this migration. We'll map your workloads, tell you which of the three walls you're closest to, and be straight with you about whether consolidating is worth it in your case.",
         "image": {
           "image": {
             "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
