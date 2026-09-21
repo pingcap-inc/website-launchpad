@@ -52,21 +52,36 @@ const RATES = [
 const EXAMPLES = [
   {
     name: 'A light month',
-    lines: ['2,000 writes', '50,000 reads', '1 GB stored', '1 GB egress'],
+    lines: [
+      ['2,000 writes', '$1.00'],
+      ['50,000 reads', '$2.00'],
+      ['1 GB stored', '$0.30'],
+      ['1 GB egress', '$0.09'],
+    ],
     gross: '$3.39',
     credit: '−$3.39',
     net: '$0',
   },
   {
     name: 'A steady month',
-    lines: ['30,000 writes', '300,000 reads', '5 GB stored', '2 GB egress'],
+    lines: [
+      ['30,000 writes', '$15.00'],
+      ['300,000 reads', '$12.00'],
+      ['5 GB stored', '$1.50'],
+      ['2 GB egress', '$0.18'],
+    ],
     gross: '$28.68',
     credit: '−$5.00',
     net: '$23.68',
   },
   {
     name: 'A heavy month',
-    lines: ['150,000 writes', '2,000,000 reads', '25 GB stored', '10 GB egress'],
+    lines: [
+      ['150,000 writes', '$75.00'],
+      ['2,000,000 reads', '$80.00'],
+      ['25 GB stored', '$7.50'],
+      ['10 GB egress', '$0.90'],
+    ],
     gross: '$163.40',
     credit: '−$5.00',
     net: '$158.40',
@@ -276,11 +291,14 @@ export default function FilesystemPricingDetailsPage() {
             {EXAMPLES.map((example) => (
               <div key={example.name} className="rounded-lg border border-carbon-800 p-6">
                 <h3 className="mb-4 text-h3-sm font-bold">{example.name}</h3>
-                <ul className="mb-5 space-y-1 font-mono text-[13px] text-carbon-400">
-                  {example.lines.map((line) => (
-                    <li key={line}>{line}</li>
+                <dl className="mb-5 space-y-1 font-mono text-[13px] text-carbon-400">
+                  {example.lines.map(([usage, cost]) => (
+                    <div key={usage} className="flex justify-between gap-3">
+                      <dt>{usage}</dt>
+                      <dd>{cost}</dd>
+                    </div>
                   ))}
-                </ul>
+                </dl>
                 <dl className="space-y-1 border-t border-carbon-800 pt-4 font-mono text-[13px] text-carbon-400">
                   <div className="flex justify-between">
                     <dt>gross</dt>
