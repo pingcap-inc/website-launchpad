@@ -6,12 +6,12 @@ import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
   title: "One Database Engine, Not Six | TiDB Consolidation",
-  description: "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors—cutting operational overhead by 90%.",
-  robots: { index: true, follow: true },
+  description: "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.",
+  robots: { index: false, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/lp/consolidate/' },
   openGraph: {
     title: "One Database Engine, Not Six | TiDB Consolidation",
-    description: "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors—cutting operational overhead by 90%.",
+    description: "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.",
     url: 'https://www.pingcap.com/lp/consolidate/',
     siteName: 'TiDB',
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 const schema = buildPageSchema({
   path: "/lp/consolidate/",
   title: "One Database Engine, Not Six | TiDB Consolidation",
-  description: "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors—cutting operational overhead by 90%.",
+  description: "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.",
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: "One Engine. <span class=\"text-gradient-violet animate-glow-sweep\">Not Six.</span>", path: "/lp/consolidate/" },
@@ -44,8 +44,9 @@ const dsl: PageDSL = {
   "pageName": "One Database Engine, Not Six | TiDB Consolidation",
   "meta": {
     "title": "One Database Engine, Not Six | TiDB Consolidation",
-    "description": "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors—cutting operational overhead by 90%.",
-    "canonical": "/lp/consolidate/"
+    "description": "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.",
+    "canonical": "/lp/consolidate/",
+    "unlisted": true
   },
   "sections": [
     {
@@ -241,8 +242,8 @@ const dsl: PageDSL = {
                 "label": "PostgreSQL clusters replaced"
               }
             ],
-            "href": "https://www.pingcap.com/blog/",
-            "cta": "Read the Atlassian story"
+            "href": "https://www.pingcap.com/blog/how-atlassian-scaled-three-million-tables-multi-tenancy-tidb/",
+            "cta": "Read the story"
           },
           {
             "badge": "Data Scale",
@@ -269,8 +270,8 @@ const dsl: PageDSL = {
                 "label": "infrastructure savings"
               }
             ],
-            "href": "https://www.pingcap.com/blog/",
-            "cta": "Read the Pinterest story"
+            "href": "https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/",
+            "cta": "Read the story"
           },
           {
             "badge": "Migration Path",
@@ -297,8 +298,8 @@ const dsl: PageDSL = {
                 "label": "cutover downtime"
               }
             ],
-            "href": "https://www.pingcap.com/blog/",
-            "cta": "Read the Plaid story"
+            "href": "https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/",
+            "cta": "Read the story"
           }
         ]
       },
