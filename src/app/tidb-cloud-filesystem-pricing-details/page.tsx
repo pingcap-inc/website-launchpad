@@ -36,10 +36,10 @@ const AT_THE_LIMIT: string | null = null
 // that check. The source doc's `Discountable` column is internal and is not
 // reproduced anywhere on this page.
 const RATES = [
-  { meter: 'Read operations, per 1,000', price: '$0.04' },
-  { meter: 'Write operations, per 1,000', price: '$0.50' },
-  { meter: 'Pooled file read operations, per 1,000', price: '$0.0004' },
-  { meter: 'Pooled file write operations, per 1,000', price: '$0.005' },
+  { meter: 'Read operations, per 1,000 requests', price: '$0.04' },
+  { meter: 'Write operations, per 1,000 requests', price: '$0.50' },
+  { meter: 'Pooled file read operations, per 1,000 requests', price: '$0.0004' },
+  { meter: 'Pooled file write operations, per 1,000 requests', price: '$0.005' },
   { meter: 'Storage — Performance', price: '$0.30 / GB-mo' },
   { meter: 'Storage — Pooled', price: '$0.025 / GB-mo' },
   { meter: 'Internet egress', price: '$0.09 / GB' },
@@ -76,11 +76,11 @@ const EXAMPLES = [
 const FAQ_ITEMS = [
   {
     q: 'Do I need a credit card to start?',
-    a: 'No. Every organization gets $5.00 of service credit each month without one. Organizations without a card on file are limited to one filesystem per region, 2,000 files, 2 GB of storage, and 500 MB for any single file.',
+    a: 'No. Every organization gets $5.00 of service credit each month without one. Organizations without a card on file are limited to one filesystem per region, 2,000 files and 2 GB of storage per filesystem, and 500 MB for any single file.',
   },
   {
     q: 'Is the free credit per filesystem or per organization?',
-    a: 'Per organization, and it renews monthly. It is the same amount in every region, and it is drawn down by whatever you use rather than divided into a separate allowance per meter.',
+    a: 'Per organization, and it renews monthly. The $5.00 amount is the same regardless of region or SKU.',
   },
   {
     q: 'Which regions are priced?',
@@ -102,7 +102,7 @@ const PATH = '/tidb-cloud-filesystem-pricing-details/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const TITLE = 'TiDB Cloud Filesystem Pricing Details'
 const DESCRIPTION =
-  'Pay-as-you-go pricing for TiDB Cloud Filesystem — reads, writes, storage and egress, with $5 of free credit every month. No plans, no seats, no minimum.'
+  'TiDB Cloud Filesystem pricing for reads, writes, storage and egress, with $5 of service credit per organization each month. View rates and limits.'
 const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
 
 export const metadata: Metadata = {
@@ -118,6 +118,11 @@ export const metadata: Metadata = {
     images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
     locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: [OG_IMAGE],
   },
 }
 
@@ -174,10 +179,10 @@ export default function FilesystemPricingDetailsPage() {
             Pricing Details
           </h1>
           <p className="mb-6 max-w-[620px] text-pretty text-body-2xl text-carbon-400">
-            Pay for what your agents actually do — reads, writes, storage. No plans, no seats, no
-            minimum.
+            Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
+            tiered plans.
           </p>
-          <p className="mb-8 font-mono text-[13px] text-carbon-500">
+          <p className="mb-8 text-body-sm text-carbon-500">
             All prices in USD, for <code>aws-us-east-1</code>. Billed monthly, prorated by the hour.
           </p>
 
@@ -186,14 +191,14 @@ export default function FilesystemPricingDetailsPage() {
               <a
                 key={item.href}
                 href={item.href}
-                className="rounded-full border border-carbon-800 px-4 py-2 text-[14px] text-carbon-200 transition-colors hover:border-carbon-400 hover:text-text-inverse"
+                className="rounded-full border border-carbon-800 px-4 py-2 text-body-sm text-carbon-200 transition-colors hover:border-carbon-400 hover:text-text-inverse"
               >
                 {item.label}
               </a>
             ))}
           </nav>
 
-          <div className="max-w-[720px] rounded-lg border border-carbon-800 p-5 text-[15px] text-carbon-300">
+          <div className="max-w-[720px] rounded-lg border border-carbon-800 p-5 text-body-md text-carbon-300">
             <span className="font-bold text-text-inverse">Public preview pricing.</span> These
             prices apply to the public preview and may change at general availability. Figures are
             from the pricing source of record, version 8, re-derived on 21 September 2026.
@@ -205,7 +210,7 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="start-free" style={{ background: 'gray' }}>
           <SectionHeader
             title="Start Free"
-            subtitle="Every organization gets $5.00 of service credit each month. It renews, it is the same in every region, and it is drawn down across whatever you use."
+            subtitle="Every organization gets $5.00 of service credit each month. The amount is the same regardless of region or SKU."
             h2Size="md"
           />
           <div className="grid gap-10 lg:grid-cols-2">
@@ -213,18 +218,18 @@ export default function FilesystemPricingDetailsPage() {
               {/* Each row is the whole credit spent on that one meter. Saying so
                   in body copy is deliberate: as an aside it reads as three
                   allowances a reader can have at once. */}
-              <h3 className="mb-3 text-h3-mb font-bold md:text-h3">
+              <h3 className="mb-3 text-h3-lg font-bold">
                 What That Covers, If You Spent It All on One Thing
               </h3>
               <p className="mb-5 text-body-lg text-text-primary/70">
-                Each row is the whole credit spent on that one meter — one of these, not all three.
-                The credit is a single pot, not an allowance per meter.
+                Each row shows a separate calculation using the full $5 credit on one meter,
+                assuming that credit is available to this usage — one of these, not all three.
               </p>
               <dl className="divide-y divide-carbon-300 border-y border-carbon-300">
                 {[
-                  ['Storing an active workspace', 'about 16 GB for a month'],
-                  ['Reading files', 'about 125,000 reads'],
-                  ['Writing files', 'about 10,000 writes'],
+                  ['Performance storage', 'about 16 GB for a month'],
+                  ['Read operations (non-pooled)', '125,000 requests'],
+                  ['Write operations (non-pooled)', '10,000 requests'],
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between gap-6 py-3 text-body-lg">
                     <dt>{label}</dt>
@@ -234,7 +239,7 @@ export default function FilesystemPricingDetailsPage() {
               </dl>
             </div>
             <div>
-              <h3 className="mb-3 text-h3-mb font-bold md:text-h3">Without a Card on File</h3>
+              <h3 className="mb-3 text-h3-lg font-bold">Without a Card on File</h3>
               <ul className="mb-5 space-y-2 text-body-lg">
                 <li>One free filesystem per region</li>
                 <li>2,000 files and 2 GB per free filesystem</li>
@@ -258,13 +263,19 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="monthly-cost" style={{ background: 'primary' }}>
           <SectionHeader
             title="What a Month Actually Costs"
-            subtitle="A rate card lets you verify a price. It does not let you estimate a bill. These are illustrative monthly usage figures, not measured workloads — the arithmetic is shown so you can check it and disagree with the assumptions rather than the total."
+            subtitle="Illustrative monthly usage at the rates below. Each example shows the cost before credit, credit applied, and the remaining cost. These are not measured workloads."
             h2Size="md"
           />
+          <p className="mb-6 max-w-[760px] text-body-sm text-carbon-400">
+            Assumes non-pooled read and write requests, Performance storage held for a full month,
+            and no Pooled usage, at the listed <code>aws-us-east-1</code> rates. Net amounts assume
+            the organization&rsquo;s full $5 monthly credit is available to these charges. No-card
+            filesystem limits still apply.
+          </p>
           <div className="grid gap-6 md:grid-cols-3">
             {EXAMPLES.map((example) => (
               <div key={example.name} className="rounded-lg border border-carbon-800 p-6">
-                <h3 className="mb-4 text-h4-mb font-bold md:text-h4">{example.name}</h3>
+                <h3 className="mb-4 text-h3-sm font-bold">{example.name}</h3>
                 <ul className="mb-5 space-y-1 font-mono text-[13px] text-carbon-400">
                   {example.lines.map((line) => (
                     <li key={line}>{line}</li>
@@ -280,7 +291,7 @@ export default function FilesystemPricingDetailsPage() {
                     <dd>{example.credit}</dd>
                   </div>
                 </dl>
-                <p className="mt-4 text-h3-mb font-bold md:text-h3">
+                <p className="mt-4 text-h3-lg font-bold">
                   {example.net}
                   <span className="ml-2 font-mono text-[13px] font-normal text-carbon-400">
                     net
@@ -289,10 +300,6 @@ export default function FilesystemPricingDetailsPage() {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-[14px] text-carbon-500">
-            Storage priced as Performance storage. Assumes the organization&rsquo;s whole monthly
-            credit is available to this usage.
-          </p>
         </SectionWrapper>
 
         {/* 03 Rates and how billing works — the definitions and the rate card
@@ -300,13 +307,19 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="rates" style={{ background: 'gray' }}>
           <SectionHeader
             title="Rates and How Billing Works"
-            subtitle="Four things are metered, and three of them need no explanation."
+            subtitle="Rates for read and write requests, storage and internet egress."
             h2Size="md"
           />
           <dl className="mb-12 divide-y divide-carbon-300 border-y border-carbon-300">
             {[
-              ['Writes', 'Each time an agent puts a file into the workspace.'],
-              ['Reads', 'Each time it takes one out.'],
+              [
+                'Writes',
+                'File write requests to TiDB Cloud Filesystem endpoints, priced per 1,000 requests.',
+              ],
+              [
+                'Reads',
+                'File read requests to TiDB Cloud Filesystem endpoints, priced per 1,000 requests.',
+              ],
               ['Storage', 'What the workspace holds, per GB per month.'],
               ['Egress', 'Data leaving to the public internet.'],
             ].map(([term, definition]) => (
@@ -317,33 +330,33 @@ export default function FilesystemPricingDetailsPage() {
             ))}
           </dl>
 
-          <h3 className="mb-5 text-h3-mb font-bold md:text-h3">The Rate Card</h3>
+          <h3 className="mb-5 text-h3-lg font-bold">The Rate Card</h3>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[420px] border-collapse text-body-lg">
+            <table className="w-full table-fixed border-collapse text-body-sm sm:text-body-lg">
               <thead>
                 <tr className="border-b border-carbon-400 text-left">
                   <th className="py-3 font-bold">Meter</th>
-                  <th className="py-3 text-right font-bold">Price</th>
+                  <th className="w-[44%] py-3 text-right font-bold">Price</th>
                 </tr>
               </thead>
               <tbody>
                 {RATES.map((rate) => (
                   <tr key={rate.meter} className="border-b border-carbon-300">
-                    <td className="py-3 pr-6">{rate.meter}</td>
+                    <td className="py-3 pr-3 sm:pr-6">{rate.meter}</td>
                     <td className="py-3 text-right font-mono">{rate.price}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="mt-4 text-[14px] text-text-primary/60">
+          <p className="mt-4 text-body-sm text-text-primary/60">
             Billed monthly, prorated by the hour. Shown for <code>aws-us-east-1</code>; other
             regions are adjusted proportionally.
           </p>
 
           {POOLED_EXPLAINER && (
             <>
-              <h3 className="mb-3 mt-12 text-h3-mb font-bold md:text-h3">Performance and Pooled</h3>
+              <h3 className="mb-3 mt-12 text-h3-lg font-bold">Performance and Pooled</h3>
               <p className="max-w-[720px] text-body-lg text-text-primary/70">{POOLED_EXPLAINER}</p>
             </>
           )}
@@ -365,12 +378,13 @@ export default function FilesystemPricingDetailsPage() {
               One region is priced today. Others are adjusted proportionally and added gradually.
             </li>
             <li>
-              The monthly credit is applied per organization and renews each month. It is not
-              divided into a separate allowance per meter.
+              The $5 monthly service credit is applied per organization. The amount is the same
+              regardless of region or SKU.
             </li>
             <li>
-              Free-filesystem limits apply until a card is on file: one filesystem per region, 2,000
-              files, 2 GB, and 500 MB for any single file.
+              No-card accounts are limited to one filesystem per region, 2,000 files and 2 GB per
+              filesystem, and 500 MB for any single file. Credit-card accounts are exempt from these
+              limits.
             </li>
           </ul>
         </SectionWrapper>
@@ -386,7 +400,7 @@ export default function FilesystemPricingDetailsPage() {
           <div className="contain">
             <CtaSection
               title="Start with the Credit, Not with a Card"
-              subtitle="Create a filesystem, point an agent at it, and see what a real month of your own usage costs before anything is billed."
+              subtitle="Create a filesystem and try it with your organization’s $5 monthly service credit. Review the rates and no-card limits above, then follow the quickstart."
               primaryCta={{
                 text: 'Read the quickstart',
                 href: DOCS_QUICKSTART,
