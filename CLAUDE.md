@@ -279,6 +279,7 @@ For `/tidb-cloud-filesystem-pricing-details/`:
 
 - Optimize for readers understanding and applying pricing, with no word-count or brevity target. Preserve useful definitions, credit-to-usage illustrations, worked bills and boundary explanations. Every section must answer a user question; do not explain vendor costs, margins or architecture to justify charging.
 - Filesystem does not support a configurable spending limit. Do not imply the monthly credit caps spending, or infer that spending alerts are available without a confirmed product description.
+- The no-card limits bound capacity, not spending: nothing caps request volume or egress, so a single-region account can pass the credit on requests alone. Do not attribute the charge risk to using multiple regions — that reads as safety to anyone staying in one region. Multi-region is an additional case, not the mechanism.
 
 - Match the Lake pricing page's square pale-blue preview notice, with a separate bold title, preview-price statement, and Contact us link. Do not add a Price Protection Plan promise.
 - Keep the current pricing region in the hero: `Prices shown are for aws-us-east-1. Additional regions will be added over time.` Do not add a rollout date or infer that the priced region is the only available region.

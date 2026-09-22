@@ -162,7 +162,7 @@ const FAQ_ITEMS = [
     q: 'If the credit covers 16 GB, can I store 16 GB without a card?',
     a: 'No. The credit is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per filesystem. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
   },
-  { q: 'Can I set a monthly spending limit?', a: `No. ${SPENDING_LIMIT_ANSWER}` },
+  { q: 'Can I set a monthly spending limit?', a: SPENDING_LIMIT_ANSWER },
 ]
 
 const schema = buildPageSchema({
@@ -290,9 +290,17 @@ export default function FilesystemPricingDetailsPage() {
                 Performance storage for a full month costs $4.80, but a filesystem without a card
                 can only hold 2 GB.
               </p>
+              {/* The caps bound capacity, not spending: nothing limits request
+                  count or egress, so a single-region no-card account can pass
+                  the credit on requests alone. Naming multiple regions first
+                  taught the wrong rule — a reader staying in one region read it
+                  as safety. The $100 figure is derived from the published write
+                  rate, not from any product statement. */}
               <p className="mb-5 text-body-lg text-text-primary/70">
-                Using filesystems in multiple regions can still incur charges beyond the shared
-                credit, even without a card. There is no configurable spending limit. See{' '}
+                Nothing limits how many requests you make. The caps above limit how much you can
+                store, not what you can spend — at the listed write rate, 200,000 write requests
+                come to $100.00. Using filesystems in more than one region can also produce charges.
+                There is no configurable spending limit. See{' '}
                 <a href="#limitations" className="underline underline-offset-2 hover:no-underline">
                   Cost and Limitations
                 </a>{' '}
@@ -315,23 +323,39 @@ export default function FilesystemPricingDetailsPage() {
             className="mb-8"
             h2Size="md"
           />
-          <dl className="grid gap-x-10 gap-y-8 md:grid-cols-2">
+          {/* Section headings, not a definition list: these four introduce
+              definitions but are headings themselves, and as <dt> they left the
+              page's densest section with no sub-structure in the outline. */}
+          <div className="grid gap-x-10 gap-y-8 md:grid-cols-2">
             <div>
-              <dt className="mb-3 text-h3-lg font-bold">Read and Write Requests</dt>
-              <dd className="space-y-3 text-body-lg text-text-primary/70">
+              <h3 className="mb-3 text-h3-lg font-bold">Read and Write Requests</h3>
+              <div className="space-y-3 text-body-lg text-text-primary/70">
                 <p>
-                  Reads retrieve file data; writes write file data. The prices use request counts,
-                  not the number of files stored or the number of agent runs.
+                  A read retrieves file data; a write stores it. The prices use request counts, not
+                  the number of files you keep and not the number of agent runs.
                 </p>
                 <p>
                   A price per 1,000 requests means you divide the request count by 1,000, then
                   multiply by the rate. At the non-pooled read rate, 50,000 ÷ 1,000 × $0.04 = $2.00.
                 </p>
-              </dd>
+                {/* Having refused the one-to-one mapping between a file action and
+                    a billable request, the page owes the reader somewhere to get
+                    the count. What exactly produces a request is a metering
+                    question for Product; until it is documented, say so and route
+                    it rather than leaving a formula with no obtainable input. */}
+                <p>
+                  How many requests a given workload produces is not something you can read off your
+                  file count. Take it from your account&rsquo;s usage reporting, or{' '}
+                  <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
+                    contact us
+                  </a>{' '}
+                  to work through an estimate.
+                </p>
+              </div>
             </div>
             <div>
-              <dt className="mb-3 text-h3-lg font-bold">Storage: GB per Month</dt>
-              <dd className="space-y-3 text-body-lg text-text-primary/70">
+              <h3 className="mb-3 text-h3-lg font-bold">Storage: GB Per Month</h3>
+              <div className="space-y-3 text-body-lg text-text-primary/70">
                 <p>
                   Storage measures how much data you keep and for how long. GB-mo means gigabytes
                   per month; it is a storage unit, not a request count.
@@ -340,11 +364,11 @@ export default function FilesystemPricingDetailsPage() {
                   At the Performance rate, keeping 2 GB for a full month costs 2 × $0.30 = $0.60.
                   Billing is monthly and prorated by the hour.
                 </p>
-              </dd>
+              </div>
             </div>
             <div>
-              <dt className="mb-3 text-h3-lg font-bold">Internet Egress</dt>
-              <dd className="space-y-3 text-body-lg text-text-primary/70">
+              <h3 className="mb-3 text-h3-lg font-bold">Internet Egress</h3>
+              <div className="space-y-3 text-body-lg text-text-primary/70">
                 <p>
                   Egress means data transferred out to the public internet, measured in GB. It is a
                   separate billing item from storage and requests.
@@ -353,11 +377,11 @@ export default function FilesystemPricingDetailsPage() {
                   At $0.09 per GB, 2 GB of internet egress costs $0.18. Use the amount transferred
                   out in this calculation, not the total amount you have stored.
                 </p>
-              </dd>
+              </div>
             </div>
             <div>
-              <dt className="mb-3 text-h3-lg font-bold">Performance and Pooled</dt>
-              <dd className="space-y-3 text-body-lg text-text-primary/70">
+              <h3 className="mb-3 text-h3-lg font-bold">Performance and Pooled</h3>
+              <div className="space-y-3 text-body-lg text-text-primary/70">
                 <p>
                   The rate card lists two storage categories, Performance and Pooled. It also lists
                   ordinary read/write requests and separate Pooled file requests. These have
@@ -378,9 +402,9 @@ export default function FilesystemPricingDetailsPage() {
                     requests and Performance storage only.
                   </p>
                 )}
-              </dd>
+              </div>
             </div>
-          </dl>
+          </div>
         </SectionWrapper>
 
         {/* Show complete arithmetic and then explain how shared credit changes it. */}
@@ -400,7 +424,13 @@ export default function FilesystemPricingDetailsPage() {
             {EXAMPLES.map((example) => (
               <div key={example.name} className="rounded-lg border border-carbon-800 p-6">
                 <h3 className="mb-1 text-h3-sm font-bold">{example.name}</h3>
-                <p className="mb-4 text-body-sm text-carbon-400">{example.outcome}</p>
+                <p className="text-body-sm text-carbon-400">{example.outcome}</p>
+                {/* The shared premise above is ~600px away from this card on a
+                    phone. Repeat the rate category here so the numbers never
+                    travel without the condition that produced them. */}
+                <p className="mb-4 text-body-sm text-carbon-400">
+                  Non-pooled requests, Performance storage, full $5 credit available
+                </p>
                 <dl className="mb-5 space-y-3 text-body-md text-carbon-200">
                   {example.lines.map(([usage, cost]) => (
                     <div key={usage} className="flex justify-between gap-3">
@@ -500,9 +530,11 @@ export default function FilesystemPricingDetailsPage() {
               <h3 className="mb-3 text-h3-lg font-bold">Your Credit and Spending</h3>
               <p className="text-body-lg text-carbon-300">{SPENDING_LIMIT_ANSWER}</p>
               <p className="mt-4 text-body-lg text-carbon-300">
-                Using filesystems in multiple regions can produce charges beyond the shared credit
-                even without a card. The file and storage limits above do not mean your bill is
-                capped at $5.
+                The limits above cap capacity, not spending. Request volume and egress are not
+                capped, so usage in a single filesystem can pass the credit on requests alone — at
+                the listed write rate, 200,000 write requests come to $100.00. Using filesystems in
+                more than one region can also produce charges, including on an account without a
+                card.
               </p>
               {AT_THE_LIMIT && <p className="mt-4 text-body-lg text-carbon-300">{AT_THE_LIMIT}</p>}
               <p className="mt-4 text-body-lg text-carbon-300">
