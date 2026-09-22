@@ -220,12 +220,12 @@ export default function FilesystemPricingDetailsPage() {
           <div className="mb-4">
             <Badge variant="secondary">Public Preview</Badge>
           </div>
-          {/* title-case-ignore */}
-          <h1 className="mb-6 max-w-[760px] text-pretty text-h1-mb font-bold leading-tight tracking-[-0.025em] md:text-h1">
-            <span className="mb-7 block font-mono text-[13px] font-normal leading-none tracking-normal text-carbon-400">
-              TiDB Cloud Filesystem
-            </span>
-            Pricing Details
+          {/* The product name belongs at headline scale, not shrunk to an eyebrow
+              above it. The three sibling pricing pages are titled
+              "TiDB Cloud <Product> Pricing Details" outright, and a reader
+              arriving from one of them should see the same shape. */}
+          <h1 className="mb-6 max-w-[900px] text-pretty text-h1-mb font-bold leading-tight tracking-[-0.025em] md:text-h1">
+            TiDB Cloud Filesystem Pricing Details
           </h1>
           <p className="mb-6 max-w-[620px] text-pretty text-body-2xl text-carbon-400">
             Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
