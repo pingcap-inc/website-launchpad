@@ -126,6 +126,11 @@ const dsl: PageDSL = {
         subheadline:
           'Two or three founders will present on stage. This page explains how to take part and the terms that apply.',
       },
+      // Dark hero echoes the invitation email's banner; the rest of the page stays
+      // plain so the terms below remain the easiest thing to read.
+      style: {
+        background: 'inverse',
+      },
     },
     {
       id: 'overview',
@@ -159,7 +164,7 @@ const dsl: PageDSL = {
         },
       },
       style: {
-        background: 'brand-violet',
+        background: 'brand-red',
         spacing: 'md',
       },
     },
