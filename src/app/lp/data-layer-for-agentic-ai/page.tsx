@@ -1,0 +1,438 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: 'The Data Layer for Agentic AI | TiDB',
+  description:
+    'Agent workloads break the assumptions your database was sized against. Learn how TiDB handles no idle windows, per-agent tenancy, and real-time consistency for AI systems.',
+  robots: { index: false, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/lp/data-layer-for-agentic-ai/' },
+  openGraph: {
+    title: 'The Data Layer for Agentic AI | TiDB',
+    description:
+      'Agent workloads break the assumptions your database was sized against. Learn how TiDB handles no idle windows, per-agent tenancy, and real-time consistency for AI systems.',
+    url: 'https://www.pingcap.com/lp/data-layer-for-agentic-ai/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: '/lp/data-layer-for-agentic-ai/',
+  title: 'The Data Layer for Agentic AI | TiDB',
+  description:
+    'Agent workloads break the assumptions your database was sized against. Learn how TiDB handles no idle windows, per-agent tenancy, and real-time consistency for AI systems.',
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    {
+      name: 'The Data Layer for <span class="text-gradient-violet">Agentic AI</span>',
+      path: '/lp/data-layer-for-agentic-ai/',
+    },
+  ],
+})
+
+const dsl: PageDSL = {
+  pageName: 'The Data Layer for Agentic AI | TiDB',
+  meta: {
+    title: 'The Data Layer for Agentic AI | TiDB',
+    description:
+      'Agent workloads break the assumptions your database was sized against. Learn how TiDB handles no idle windows, per-agent tenancy, and real-time consistency for AI systems.',
+    canonical: '/lp/data-layer-for-agentic-ai/',
+    unlisted: true,
+  },
+  sections: [
+    {
+      id: 'hero',
+      type: 'hero',
+      props: {
+        layout: 'image-right',
+        eyebrow: 'For Teams Running Agents in Production',
+        headline: 'The Data Layer for <span class="text-gradient-violet">Agentic AI</span>',
+        subheadline:
+          'Agent workloads break the assumptions your database was sized against. No idle window. A tenant per agent, not per customer. And context that has to be true at the moment it is read.',
+        primaryCta: {
+          text: 'Book a 30-Minute Architecture Review',
+          href: 'https://www.pingcap.com/contact-us/',
+        },
+        secondaryCta: {
+          text: 'Read Architecture Guide',
+          href: 'https://www.pingcap.com/blog/agentic-ai-systems-architecture-4-decisions-that-scale/',
+        },
+        heroImage: {
+          image: {
+            url: 'https://static.pingcap.com/images/f54533cc-1000011158.svg',
+            alt: '1000011158',
+            width: 522,
+            height: 563,
+          },
+          alt: '1000011158',
+          width: 500,
+          height: 400,
+        },
+      },
+      style: {
+        spacing: 'hero',
+      },
+    },
+    {
+      id: 'what-breaks',
+      type: 'featureMedia',
+      props: {
+        eyebrow: 'The Real Constraints',
+        title: 'Three Things That Break First',
+        items: [
+          {
+            title: 'The Maintenance Window You Planned Around',
+            description:
+              'You sized the cluster for peak human traffic and a quiet overnight window. Agents run that window at the same rate as noon. Every operation you deferred now has to happen under load, making online schema change an architectural requirement.',
+            image: {
+              image: {
+                url: 'https://static.pingcap.com/images/e48feaf0-tidb-break1-maintenance-window-red-black.png',
+                alt: 'tidb break1 maintenance window red black',
+                width: 1120,
+                height: 840,
+              },
+              alt: 'tidb break1 maintenance window red black',
+              width: 1120,
+              height: 840,
+            },
+          },
+          {
+            title: 'The Tenant Count You Did Not Plan For',
+            description:
+              'Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.',
+            image: {
+              image: {
+                url: 'https://static.pingcap.com/images/9bb98f46-tidb-break2-tenant-count-violet-black.png',
+                alt: 'tidb break2 tenant count violet black',
+                width: 1120,
+                height: 840,
+              },
+              alt: 'tidb break2 tenant count violet black',
+              width: 1120,
+              height: 840,
+            },
+          },
+          {
+            title: 'The Gap Between Writing and Reading',
+            description:
+              'If your operational store and retrieval store are kept in step by a pipeline, there is a window where an agent reasons from data that is no longer true. A person notices. An agent acts, then acts again on the result. Closing that window is a consistency problem, not a model problem.',
+            image: {
+              image: {
+                url: 'https://static.pingcap.com/images/44462ed7-tidb-break3-write-read-gap-teal-black.png',
+                alt: 'tidb break3 write read gap teal black',
+                width: 1120,
+                height: 840,
+              },
+              alt: 'tidb break3 write read gap teal black',
+              width: 1120,
+              height: 840,
+            },
+          },
+        ],
+        startPosition: 'left',
+        spacing: 'lg',
+      },
+      style: {
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'requirements',
+      type: 'featureGrid',
+      props: {
+        eyebrow: 'What Agent Workloads Actually Require',
+        title: 'Four Requirements, In Order',
+        subtitle:
+          'These are the capabilities teams need as agent workloads scale, in the order they hit them.',
+        items: [
+          {
+            icon: 'Wrench',
+            title: 'Schema Changes Without a Window',
+            description:
+              'Because there is no longer a window to use. Online DDL becomes a requirement, not a convenience.',
+          },
+          {
+            icon: 'Layers',
+            title: 'Tenant Isolation at Massive Scale',
+            description:
+              'Holds at hundreds of thousands of tenants, without a cluster per customer. The catalog must handle it.',
+          },
+          {
+            icon: 'RefreshCw',
+            title: 'One Consistent View of State',
+            description:
+              'Retrieval and transaction read the same thing at the same moment. No stale reads, no pipeline lag.',
+          },
+          {
+            icon: 'TrendingUp',
+            title: 'Capacity That Moves Without Migration',
+            description:
+              'Agent load arrives faster than a re-platform can be planned. Scale must be elastic and horizontal.',
+          },
+        ],
+        columns: 2,
+        itemLayout: 'vertical',
+        iconSize: 48,
+      },
+      style: {
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'faq',
+      type: 'faq',
+      props: {
+        title: 'The Questions That Decide This',
+        items: [
+          {
+            q: 'Why Do AI Agent Workloads Need a Different Database?',
+            a: 'Because three assumptions stop holding at once: that traffic has a quiet period, that tenant count tracks customer count, and that a few seconds of replication lag is invisible. Agent workloads violate all three, and each one lands on a different part of the system — maintenance scheduling, catalog size, and read consistency.',
+          },
+          {
+            q: 'What Breaks First When an Agent Platform Scales?',
+            a: 'Usually the catalog, not the query path. Tables, schemas, and metadata grow with the tenant list, and systems that are comfortable with thousands of tables often degrade sharply in the hundreds of thousands. Teams tend to look at query latency first and find the real constraint is in schema and metadata operations.',
+          },
+          {
+            q: 'Do I Need a Separate Vector Database for Agent Memory?',
+            a: 'Not necessarily. A dedicated vector database will beat a converged engine at pure vector search. What changes the calculation is the cost of keeping a separate store in step with your operational data: another pipeline, another failure domain, and a window where the two disagree.',
+          },
+          {
+            q: 'How Many Tenants Can a Single Cluster Hold?',
+            a: 'Enough that tenant count stops being the design constraint, though the real limit depends on your schema and access pattern. The more useful question is whether adding tenants requires adding clusters. If per-tenant isolation is achieved by giving each tenant infrastructure, the operational cost grows linearly with the tenant list.',
+          },
+          {
+            q: 'Does Strong Consistency Slow Agent Workloads Down?',
+            a: 'It costs something, and the trade is usually worth it when something is acting on what it reads. Eventual consistency is fine for a human reading a dashboard and expensive when an agent chains tool calls off a stale value, because the error compounds rather than being noticed. The cost is coordination latency on writes.',
+          },
+          {
+            q: 'Can We Migrate Without Downtime?',
+            a: 'For MySQL-compatible workloads, usually yes, with replication-based cutover rather than a maintenance window. The work that takes time is not the data move; it is verifying application behavior against a distributed engine, particularly around transaction scope and anything that assumed a single primary.',
+          },
+        ],
+      },
+      style: {
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'case-studies',
+      type: 'caseStudyCards',
+      props: {
+        eyebrow: 'Proof Points',
+        title: 'These Teams Hit the Same Three Walls',
+        items: [
+          {
+            badge: 'Tenant Scale',
+            logo: {
+              image: {
+                url: 'https://static.pingcap.com/images/0fc78057-manus.svg',
+                alt: 'manus',
+                width: 165,
+                height: 48,
+              },
+              alt: 'manus',
+              width: 165,
+              height: 48,
+            },
+            title: 'Manus',
+            description:
+              "Went from viral launch to more than a million database tenants, and migrated to TiDB Cloud in two weeks to keep up with it. TiDB now holds the context persistence behind Manus's agent swarms and full-stack app generation.",
+            stats: [
+              {
+                value: '1M+',
+                label: 'Database Tenants',
+              },
+              {
+                value: '2 Weeks',
+                label: 'Migration Time',
+              },
+            ],
+            href: 'https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/',
+          },
+          {
+            badge: 'Provisioning Speed',
+            logo: {
+              image: {
+                url: 'https://static.pingcap.com/images/68b65a2a-20260826-203218.png',
+                alt: '20260826 203218',
+                width: 1511,
+                height: 512,
+              },
+              alt: '20260826 203218',
+              width: 1511,
+              height: 512,
+            },
+            title: 'Kimi',
+            description:
+              'K2.6 builds and hosts full-stack web applications for millions of users, provisioning an isolated database per site in under a second. More than 10 million tenants supported.',
+            stats: [
+              {
+                value: '10M+',
+                label: 'Tenants',
+              },
+              {
+                value: '<1s',
+                label: 'Provisioning Time',
+              },
+            ],
+            href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
+          },
+          {
+            badge: 'Consolidation',
+            logo: {
+              image: {
+                url: 'https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg',
+                alt: 'dify logo white',
+                width: 102,
+                height: 45,
+              },
+              alt: 'dify logo white',
+              width: 102,
+              height: 45,
+            },
+            title: 'Dify',
+            description:
+              'Replaced roughly 500,000 database containers with a single TiDB Cloud instance, unifying vectors, documents, and relational data behind its open-source LLM platform, and cut operational overhead by 90%.',
+            stats: [
+              {
+                value: '500K',
+                label: 'Containers Replaced',
+              },
+              {
+                value: '90%',
+                label: 'Overhead Cut',
+              },
+            ],
+            href: 'https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/',
+          },
+          {
+            badge: 'Two-Store Problem',
+            logo: {
+              image: {
+                url: 'https://static.pingcap.com/images/a9c1110c-logo-plaud.png',
+                alt: 'logo plaud',
+                width: 362,
+                height: 100,
+              },
+              alt: 'logo plaud',
+              width: 362,
+              height: 100,
+            },
+            title: 'Plaud',
+            description:
+              'Migrated from MySQL plus Amazon S3 to TiDB Cloud, eliminating S3 retrieval latency and unlocking online DDL for 2M+ users across 170 countries. 10x QPS improvement under peak load, 13 clusters in production.',
+            stats: [
+              {
+                value: '10x',
+                label: 'QPS Improvement',
+              },
+              {
+                value: '2M+',
+                label: 'Users',
+              },
+            ],
+            href: 'https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/',
+          },
+        ],
+      },
+      style: {
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'wrong-choice',
+      type: 'featureCard',
+      props: {
+        eyebrow: 'Honest Assessment',
+        title: 'Where This is the Wrong Choice',
+        subtitle:
+          'These are the scenarios where TiDB is not the right fit. If any of these describe your workload, consider alternatives.',
+        items: [
+          {
+            icon: 'Server',
+            title: 'Single-Node Workload',
+            description:
+              'If you run one service with one workload and no multi-tenancy, a single-node database is simpler and you should keep it.',
+          },
+          {
+            icon: 'Search',
+            title: 'Pure Vector Search',
+            description:
+              'If your only requirement is vector similarity search at the lowest possible latency, a dedicated vector store will be faster.',
+          },
+          {
+            icon: 'Code2',
+            title: 'MySQL Edge Cases',
+            description:
+              'If your application depends on MySQL behaviour outside the supported surface, that needs checking before a migration, not after.',
+          },
+          {
+            icon: 'Gauge',
+            title: 'Single-Row High Volume',
+            description:
+              'Distributed transactions cost coordination latency. If your workload is single-row reads at very high volume and consistency does not matter, you are paying for something you do not need.',
+          },
+        ],
+        columns: 2,
+        borderStyle: 'gray',
+      },
+      style: {
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'cta',
+      type: 'cta',
+      props: {
+        title: 'Bring Us Your Architecture',
+        subtitle:
+          'Spend thirty minutes with an engineer who has seen this shape of workload before. Bring your current topology and tenant count. You will leave with an answer on whether this is worth your time, including if the answer is no.',
+        image: {
+          image: {
+            url: 'https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg',
+          },
+          alt: '',
+          width: 278,
+          height: 256,
+        },
+        primaryCta: {
+          text: 'Book a 30-Minute Architecture Call',
+          href: 'https://www.pingcap.com/contact-us/',
+        },
+        secondaryCta: {
+          text: 'Read Architecture Guide',
+          href: 'https://www.pingcap.com/blog/agentic-ai-systems-architecture-4-decisions-that-scale/',
+        },
+      },
+      style: {
+        background: 'brand-violet',
+        spacing: 'section',
+      },
+    },
+  ],
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}
