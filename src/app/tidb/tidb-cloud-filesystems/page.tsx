@@ -62,6 +62,7 @@ const DESCRIPTION =
 // carve-out for /tidb/tidb-cloud-filesystems/ inside the WordPress prefix.
 const PATH = '/tidb/tidb-cloud-filesystems/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
+const PRODUCT_ID = `${CANONICAL}#software`
 const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
 
 export const metadata: Metadata = {
@@ -278,12 +279,18 @@ const faqItems: {
     plain: {
       question: 'What does TiDB Cloud Filesystem cost?',
       answer:
-        "There is no published price during the technical preview. Usage limits apply per account, and we'll show the ones that apply to yours before you start.",
+        'Pay as you go for reads, writes, storage and egress, with $5.00 of service credit per organization each month. Public preview prices are published for aws-us-east-1 and may change at general availability. Full rates, free-tier details and no-card limits are on the pricing details page.',
     },
     answer: (
       <>
-        There is no published price during the technical preview. Usage limits apply per account,
-        and we&apos;ll show the ones that apply to yours before you start.
+        Pay as you go for reads, writes, storage and egress, with $5.00 of service credit per
+        organization each month. Public preview prices are published for <code>aws-us-east-1</code>{' '}
+        and may change at general availability. Full rates, free-tier details and no-card limits are
+        on the{' '}
+        <a href="https://www.pingcap.com/tidb-cloud-filesystem-pricing-details/">
+          pricing details page
+        </a>
+        .
       </>
     ),
   },
@@ -293,22 +300,29 @@ const schema = buildPageSchema({
   path: PATH,
   title: TITLE,
   description: DESCRIPTION,
+  aboutId: PRODUCT_ID,
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: 'TiDB', path: '/tidb/' },
     { name: 'TiDB Cloud Filesystem', path: PATH },
   ],
   extraSchemas: [
-    softwareApplicationSchema({
-      name: 'TiDB Cloud Filesystem',
-      description: DESCRIPTION,
-      url: CANONICAL,
-      // No published price during the technical preview — see the "What does
-      // TiDB Cloud Filesystem cost?" answer below. null omits the Offer node
-      // entirely rather than asserting price "0", which would read as "free"
-      // in rich results and contradict the copy.
-      price: null,
-    }),
+    {
+      ...softwareApplicationSchema({
+        name: 'TiDB Cloud Filesystem',
+        description: DESCRIPTION,
+        url: CANONICAL,
+        // No published price during the technical preview — see the "What does
+        // TiDB Cloud Filesystem cost?" answer below. null omits the Offer node
+        // entirely rather than asserting price "0", which would read as "free"
+        // in rich results and contradict the copy.
+        price: null,
+      }),
+      // Stable identifier for the product. The pricing details page describes
+      // the same product, and without a shared @id the two pages assert two
+      // different entities with one name.
+      '@id': PRODUCT_ID,
+    },
     faqSchema(faqItems.map((item) => item.plain)),
   ],
 })

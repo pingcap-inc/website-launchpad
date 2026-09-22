@@ -175,6 +175,7 @@ const schema = buildPageSchema({
   path: PATH,
   title: TITLE,
   description: DESCRIPTION,
+  aboutId: `${PRODUCT_URL}#software`,
   breadcrumbs: [
     { name: 'Home', path: '/' },
     { name: 'TiDB Cloud Filesystem', path: '/tidb/tidb-cloud-filesystems/' },
