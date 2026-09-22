@@ -223,6 +223,10 @@ export default function FilesystemPricingDetailsPage() {
             Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
             tiered plans.
           </p>
+          <p className="mb-6 max-w-[620px] text-body-md text-carbon-400">
+            Prices shown are for <code className="font-mono">aws-us-east-1</code>. Additional
+            regions will be added over time.
+          </p>
           <a
             href="#rates"
             className="mb-8 inline-flex items-center gap-2 rounded-full border border-carbon-800 px-4 py-2 text-body-sm text-carbon-200 transition-colors hover:border-carbon-400 hover:text-text-inverse"
@@ -231,16 +235,28 @@ export default function FilesystemPricingDetailsPage() {
           </a>
         </SectionWrapper>
 
-        {/* The public-preview notice sits on a light band in a pale blue box,
-            which is how the Starter, Essential and Premium pricing pages carry
-            theirs. Deliberately not inheriting the rest of their notice: the
-            Essential one promises a Price Protection Plan through the GA
-            transition, which is an Essential-only commitment. */}
+        {/* Match the Lake pricing page's preview notice. Its Price Protection
+            Plan is not established for Filesystem in the pricing source yet.
+            Lake's Contact us href has no query parameters. */}
         <SectionWrapper style={{ background: 'inverse', spacing: 'sm' }}>
-          <div className="rounded-lg bg-brand-blue-pale p-6 text-body-md text-text-primary">
-            <span className="font-bold">Public preview pricing.</span> These prices apply to the
-            public preview and may change at general availability.
-          </div>
+          <aside
+            aria-labelledby="preview-pricing-notice"
+            className="mx-auto max-w-[760px] bg-brand-blue-pale px-4 py-3 text-body-md leading-6 text-text-primary"
+          >
+            <p id="preview-pricing-notice" className="mb-3 text-h3-sm font-bold">
+              Public preview pricing
+            </p>
+            <p>
+              The prices on this page apply to the public preview and may change at GA.{' '}
+              <a
+                href="https://www.pingcap.com/contact-us/"
+                className="underline underline-offset-2 hover:no-underline"
+              >
+                Contact us
+              </a>{' '}
+              for details.
+            </p>
+          </aside>
         </SectionWrapper>
 
         {/* 01 Start free — leads because an evaluator is deciding whether to
