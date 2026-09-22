@@ -11,6 +11,13 @@
 
 This Next.js app coexists with the main PingCAP WordPress site. Nginx proxies specific paths to this app. The homepage (`/`) is managed by WordPress — do NOT create `src/app/page.tsx`.
 
+> [!IMPORTANT]
+> **A new top-level path is not live just because its PR merged.** The nginx forwarding list is configured per path and **is not in this repo**, so nothing here will tell you a path is missing — the URL simply returns a WordPress 404 while the page builds and deploys fine on its preview. Merging does not ship it.
+>
+> So for any page at a path not already forwarded: get the forwarding rule landed **before** merging, and before anything else links to that path. A shortlink repointed after its PR had already merged is how `tidb.link/fs-skill.md` broke in Sep 2026, and `/tidb-cloud-filesystem-pricing-details/` hit the same wall. Adding a page under an already-forwarded prefix (e.g. `/tidb/...`) does not have this problem.
+>
+> Note also that `main` has **no branch protection** on this repo: nothing requires a review, so leaving a PR in draft is the only mechanical block on a premature merge.
+
 ---
 
 ## 📄 Generating Pages from Raw Material
