@@ -36,13 +36,29 @@ const AT_THE_LIMIT: string | null = null
 // that check. The source doc's `Discountable` column is internal and is not
 // reproduced anywhere on this page.
 const RATES = [
-  { meter: 'Read operations, per 1,000 requests', price: '$0.04' },
-  { meter: 'Write operations, per 1,000 requests', price: '$0.50' },
-  { meter: 'Pooled file read operations, per 1,000 requests', price: '$0.0004' },
-  { meter: 'Pooled file write operations, per 1,000 requests', price: '$0.005' },
-  { meter: 'Storage — Performance', price: '$0.30 / GB-mo' },
-  { meter: 'Storage — Pooled', price: '$0.025 / GB-mo' },
-  { meter: 'Internet egress', price: '$0.09 / GB' },
+  {
+    meter: 'Read operations, per 1,000 requests',
+    note: 'Against TiDB Cloud Filesystem endpoints',
+    price: '$0.04',
+  },
+  {
+    meter: 'Write operations, per 1,000 requests',
+    note: 'Against TiDB Cloud Filesystem endpoints',
+    price: '$0.50',
+  },
+  {
+    meter: 'Pooled file read operations, per 1,000 requests',
+    note: 'Against object storage',
+    price: '$0.0004',
+  },
+  {
+    meter: 'Pooled file write operations, per 1,000 requests',
+    note: 'Against object storage',
+    price: '$0.005',
+  },
+  { meter: 'Storage — Performance', note: 'Underlying database storage', price: '$0.30 / GB-mo' },
+  { meter: 'Storage — Pooled', note: 'Underlying object storage', price: '$0.025 / GB-mo' },
+  { meter: 'Internet egress', note: 'Data transfer out to the internet', price: '$0.09 / GB' },
 ]
 
 // Illustrative usage, deliberately not expressed as "one agent, N runs a day":
@@ -113,6 +129,20 @@ const FAQ_ITEMS = [
 // call, so this one just uses the canonical host.
 const DOCS_QUICKSTART = 'https://docs.pingcap.com/ai/ti-quick-start/'
 
+// The product entity lives on the Filesystem product page. This page describes
+// its pricing, so its SoftwareApplication node points back at that URL instead
+// of at this one — otherwise the two pages assert two different entities with
+// the same name, and an answer engine has to guess which record to cite.
+const PRODUCT_URL = 'https://www.pingcap.com/tidb/tidb-cloud-filesystems/'
+
+// Schema.org acceptedAnswer.text is plain text. The visible FAQ renders these
+// through the rich-text pipeline, where <code> is wanted; the structured data
+// must not carry the markup, or the tag itself gets quoted back by anything
+// reading the answer.
+function plainText(value: string): string {
+  return value.replace(/<[^>]+>/g, '')
+}
+
 const PATH = '/tidb-cloud-filesystem-pricing-details/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const TITLE = 'TiDB Cloud Filesystem Pricing Details'
@@ -151,16 +181,19 @@ const schema = buildPageSchema({
     { name: 'Pricing Details', path: PATH },
   ],
   extraSchemas: [
-    softwareApplicationSchema({
-      name: 'TiDB Cloud Filesystem',
-      description: DESCRIPTION,
-      url: CANONICAL,
-      // Explicitly null. The helper otherwise defaults the Offer price to '0',
-      // which would assert in structured data that the product is free. It is
-      // pay-as-you-go with a free credit, which is not the same claim.
-      price: null,
-    }),
-    faqSchema(FAQ_ITEMS.map((item) => ({ question: item.q, answer: item.a }))),
+    {
+      ...softwareApplicationSchema({
+        name: 'TiDB Cloud Filesystem',
+        description: DESCRIPTION,
+        url: PRODUCT_URL,
+        // Explicitly null. The helper otherwise defaults the Offer price to '0',
+        // which would assert in structured data that the product is free. It is
+        // pay-as-you-go with a free credit, which is not the same claim.
+        price: null,
+      }),
+      '@id': `${PRODUCT_URL}#software`,
+    },
+    faqSchema(FAQ_ITEMS.map((item) => ({ question: item.q, answer: plainText(item.a) }))),
   ],
 })
 
@@ -360,8 +393,11 @@ export default function FilesystemPricingDetailsPage() {
               <tbody>
                 {RATES.map((rate) => (
                   <tr key={rate.meter} className="border-b border-carbon-300">
-                    <td className="py-3 pr-3 sm:pr-6">{rate.meter}</td>
-                    <td className="py-3 text-right font-mono">{rate.price}</td>
+                    <td className="py-3 pr-3 sm:pr-6">
+                      {rate.meter}
+                      <span className="block text-body-sm text-text-primary/60">{rate.note}</span>
+                    </td>
+                    <td className="py-3 align-top text-right font-mono">{rate.price}</td>
                   </tr>
                 ))}
               </tbody>
@@ -378,6 +414,11 @@ export default function FilesystemPricingDetailsPage() {
               <p className="max-w-[720px] text-body-lg text-text-primary/70">{POOLED_EXPLAINER}</p>
             </>
           )}
+          {/* Until POOLED_EXPLAINER is answered, the table's own notes are all the
+              page says about Pooled. That is deliberate: a reader — or anything
+              summarising this page — can otherwise read the 100x cheaper Pooled
+              rows as an option to choose, which is a recommendation we cannot
+              stand behind while the assignment rule is unknown. */}
         </SectionWrapper>
 
         {/* 04 Cost and Limitations — the family's own heading, so a reader
