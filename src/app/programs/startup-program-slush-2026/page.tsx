@@ -52,7 +52,7 @@ const schema = buildPageSchema({
 const OVERVIEW = `## What this is
 
 PingCAP is sponsoring a side event at Slush 2026 in Helsinki. We are keeping part of it for
-founders in the TiDB Startup Program: two or three founders will each have about twenty minutes
+founders in the TiDB Startup Program: up to three founders will each have about twenty minutes
 on stage to talk about what they have built.
 
 The event's name, venue and timing are not public yet. We will send them directly to the
@@ -125,7 +125,7 @@ const dsl: PageDSL = {
         eyebrow: 'TiDB Startup Program',
         headline: 'An hour of our Slush 2026 side event, for founders in the program',
         subheadline:
-          'Two or three founders will present on stage. This page explains how to take part and the terms that apply.',
+          'Up to three founders will present on stage. This page explains how to take part and the terms that apply.',
       },
       // Dark hero echoes the invitation email's banner; the rest of the page stays
       // plain so the terms below remain the easiest thing to read.
