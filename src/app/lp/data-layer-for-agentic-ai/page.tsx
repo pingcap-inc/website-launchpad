@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema } from '@/lib/schema'
+import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
 }
 
-const schema = buildPageSchema({
+const baseSchema = buildPageSchema({
   path: '/lp/data-layer-for-agentic-ai/',
   title: 'The Data Layer for Agentic AI | TiDB',
   description:
@@ -113,7 +113,7 @@ const dsl: PageDSL = {
             },
           },
           {
-            title: 'The Tenant Count You Did Not Plan For',
+            title: 'The Tenant Count You Did Not Plan for',
             description:
               'Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.',
             image: {
@@ -157,7 +157,7 @@ const dsl: PageDSL = {
       type: 'featureGrid',
       props: {
         eyebrow: 'What Agent Workloads Actually Require',
-        title: 'Four Requirements, In Order',
+        title: 'Four Requirements, in Order',
         subtitle:
           'These are the capabilities teams need as agent workloads scale, in the order they hit them.',
         items: [
@@ -360,7 +360,7 @@ const dsl: PageDSL = {
       type: 'featureCard',
       props: {
         eyebrow: 'Honest Assessment',
-        title: 'Where This is the Wrong Choice',
+        title: 'Where This Is the Wrong Choice',
         subtitle:
           'These are the scenarios where TiDB is not the right fit. If any of these describe your workload, consider alternatives.',
         items: [
@@ -427,6 +427,8 @@ const dsl: PageDSL = {
     },
   ],
 }
+
+const schema = withFaqFromDSL(baseSchema, dsl)
 
 export default function GeneratedPage() {
   return (

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema } from '@/lib/schema'
+import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
 }
 
-const schema = buildPageSchema({
+const baseSchema = buildPageSchema({
   path: '/lp/consolidate/',
   title: 'One Database Engine, Not Six | TiDB Consolidation',
   description:
@@ -276,7 +276,8 @@ const dsl: PageDSL = {
               width: 181,
               height: 50,
             },
-            title: 'Pinterest: Graph Service Scaled With 10x Latency Reduction',
+            // title-case-ignore — "10x" is the correct brand form, not "10X"
+            title: 'Pinterest: Graph Service Scaled with 10x Latency Reduction',
             description:
               'Modernized its graph service with TiDB, eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.',
             stats: [
@@ -305,7 +306,7 @@ const dsl: PageDSL = {
               width: 351,
               height: 132,
             },
-            title: 'Plaid: 100 Services Migrated From Aurora With Zero Downtime',
+            title: 'Plaid: 100 Services Migrated from Aurora with Zero Downtime',
             description:
               'A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 seconds per service.',
             stats: [
@@ -335,7 +336,7 @@ const dsl: PageDSL = {
         title: "What Changes When It's One Engine",
         items: [
           {
-            title: "Scale You Don't Have to Plan For",
+            title: "Scale You Don't Have to Plan for",
             description:
               '20+ TB, 300K+ QPS, 10K+ writes per second, and millions of tables in a single cluster. No shard keys in your application, and no rebalance that turns into a migration.',
             image: {
@@ -532,6 +533,8 @@ const dsl: PageDSL = {
     },
   ],
 }
+
+const schema = withFaqFromDSL(baseSchema, dsl)
 
 export default function GeneratedPage() {
   return (
