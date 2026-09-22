@@ -1,30 +1,30 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema, faqSchema, softwareApplicationSchema } from '@/lib/schema'
+import { buildPageSchema, softwareApplicationSchema } from '@/lib/schema'
 import { Header } from '@/components/ui/Header'
 import { Footer } from '@/components/ui/Footer'
 import { Badge } from '@/components/ui/badge'
 import { SectionWrapper } from '@/components/ui/SectionWrapper'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { FaqSection } from '@/components/sections/FaqSection'
 import { CtaSection } from '@/components/sections/CtaSection'
 
 // ── Launch gates ─────────────────────────────────────────────────────────────
-// Two answers are missing from the pricing source doc. Rather than guess at
-// them, each is a constant that gates its own block: nothing renders until the
-// answer exists, so no invented commitment can ship by accident. Same pattern
-// as KIMI_STORY_URL on the Filesystem landing page.
+// Answers the pricing source does not contain. Each gates its own block, so
+// nothing renders until the answer exists and no invented commitment can ship
+// by accident. Same pattern as KIMI_STORY_URL on the Filesystem landing page.
+// Do not fill these in from inference — they are product behaviour, not copy.
 
-// What decides whether an operation or a byte is Pooled or Performance — user
-// choice, file size, access pattern, or something else. The two differ by 12x
-// on storage and 100x on operations, and this is the only unfamiliar term on
-// the page. Asked 2026-09-21, unanswered. Until it is set, the rate card still
-// lists both rows (they are published prices) but the page does not pretend to
-// explain them.
+// What decides whether usage is Pooled or Performance: user choice, file size,
+// access pattern, or something else. They differ by 12x on storage and 100x on
+// operations. The rate card still lists both, because those are published
+// prices, but the page does not tell anyone how to choose. Asked 2026-09-21.
 const POOLED_EXPLAINER: string | null = null
 
-// What happens when the monthly credit is exhausted, or a no-card cap is
-// reached: stop, throttle, failed writes, or billing begins. Asked 2026-09-21.
+// What happens when the monthly credit is exhausted or a cap is reached: stop,
+// throttle, failed writes, or billing continues — and whether a spending limit
+// can be set at all. "Not supported" is an acceptable answer; silence is not,
+// because it is what someone decides on before pointing an agent at a metered
+// service. Asked 2026-09-21, followed up 2026-09-22.
 const AT_THE_LIMIT: string | null = null
 
 // ── Source of truth ──────────────────────────────────────────────────────────
@@ -35,43 +35,57 @@ const AT_THE_LIMIT: string | null = null
 // $4.99 against the $5.00 credit. Do not edit these numbers without redoing
 // that check. The source doc's `Discountable` column is internal and is not
 // reproduced anywhere on this page.
+//
+// Each row carries the source doc's own Description. Those descriptions say
+// what a meter is measured against; they do not say what assigns usage to
+// Pooled or Performance, which is POOLED_EXPLAINER above.
 const RATES = [
   {
     meter: 'Read operations, per 1,000 requests',
-    note: 'Against TiDB Cloud Filesystem endpoints',
+    note: 'File read requests against TiDB Cloud Filesystem endpoints',
     price: '$0.04',
   },
   {
     meter: 'Write operations, per 1,000 requests',
-    note: 'Against TiDB Cloud Filesystem endpoints',
+    note: 'File write requests against TiDB Cloud Filesystem endpoints',
     price: '$0.50',
   },
   {
     meter: 'Pooled file read operations, per 1,000 requests',
-    note: 'Against object storage',
+    note: 'File read requests against object storage',
     price: '$0.0004',
   },
   {
     meter: 'Pooled file write operations, per 1,000 requests',
-    note: 'Against object storage',
+    note: 'File write requests against object storage',
     price: '$0.005',
   },
-  { meter: 'Storage — Performance', note: 'Underlying database storage', price: '$0.30 / GB-mo' },
-  { meter: 'Storage — Pooled', note: 'Underlying object storage', price: '$0.025 / GB-mo' },
+  {
+    meter: 'Storage — Performance',
+    note: 'Underlying database storage, per GB per month',
+    price: '$0.30 / GB-mo',
+  },
+  {
+    meter: 'Storage — Pooled',
+    note: 'Underlying object storage, per GB per month',
+    price: '$0.025 / GB-mo',
+  },
   { meter: 'Internet egress', note: 'Data transfer out to the internet', price: '$0.09 / GB' },
 ]
 
-// Illustrative usage, deliberately not expressed as "one agent, N runs a day":
-// we have no measured mapping from agents or runs to reads and writes, and
-// implying one would invite a reader to trust a number we have not earned.
-// Every example shows gross, credit applied, and net.
+// Two examples, not three: one the credit covers and one it does not. A third
+// only repeats the same arithmetic at a larger scale. Labelled by outcome
+// rather than by workload size — "light" and "steady" implied a typicality we
+// have never measured, and a reader cannot tell which bracket their agents are
+// in from a request count.
 const EXAMPLES = [
   {
-    name: 'A light month',
+    name: 'Example 1',
+    outcome: 'within the credit',
     lines: [
-      ['2,000 writes', '$1.00'],
-      ['50,000 reads', '$2.00'],
-      ['1 GB stored', '$0.30'],
+      ['2,000 write requests', '$1.00'],
+      ['50,000 read requests', '$2.00'],
+      ['1 GB Performance storage', '$0.30'],
       ['1 GB egress', '$0.09'],
     ],
     gross: '$3.39',
@@ -79,69 +93,29 @@ const EXAMPLES = [
     net: '$0',
   },
   {
-    name: 'A steady month',
+    name: 'Example 2',
+    outcome: 'above the credit',
     lines: [
-      ['30,000 writes', '$15.00'],
-      ['300,000 reads', '$12.00'],
-      ['5 GB stored', '$1.50'],
+      ['30,000 write requests', '$15.00'],
+      ['300,000 read requests', '$12.00'],
+      ['5 GB Performance storage', '$1.50'],
       ['2 GB egress', '$0.18'],
     ],
     gross: '$28.68',
     credit: '−$5.00',
     net: '$23.68',
   },
-  {
-    name: 'A heavy month',
-    lines: [
-      ['150,000 writes', '$75.00'],
-      ['2,000,000 reads', '$80.00'],
-      ['25 GB stored', '$7.50'],
-      ['10 GB egress', '$0.90'],
-    ],
-    gross: '$163.40',
-    credit: '−$5.00',
-    net: '$158.40',
-  },
 ]
 
-const FAQ_ITEMS = [
-  {
-    q: 'Do I need a credit card to start?',
-    a: 'No. Every organization gets $5.00 of service credit each month without one. Organizations without a card on file are limited to one filesystem per region, 2,000 files and 2 GB of storage per filesystem, and 500 MB for any single file.',
-  },
-  {
-    q: 'Is the free credit per filesystem or per organization?',
-    a: 'Per organization, and it renews monthly. The $5.00 amount is the same regardless of region or SKU.',
-  },
-  {
-    q: 'Which regions are priced?',
-    a: 'Prices on this page are for <code>aws-us-east-1</code>. Other regions are adjusted proportionally and are added gradually.',
-  },
-  {
-    q: 'Will these prices change?',
-    a: 'They apply to the public preview and may change at general availability. This page states the version and date the figures were taken from.',
-  },
-]
-
-// Verified live on docs.pingcap.com 2026-09-21. The Filesystem landing page
-// still routes its doc links through a Cloudflare preview build because these
-// paths used to 404; that workaround now looks removable, but it is that page's
-// call, so this one just uses the canonical host.
+// Verified live on docs.pingcap.com 2026-09-21.
 const DOCS_QUICKSTART = 'https://docs.pingcap.com/ai/ti-quick-start/'
+const CONTACT_US = 'https://www.pingcap.com/contact-us/'
 
 // The product entity lives on the Filesystem product page. This page describes
 // its pricing, so its SoftwareApplication node points back at that URL instead
 // of at this one — otherwise the two pages assert two different entities with
 // the same name, and an answer engine has to guess which record to cite.
 const PRODUCT_URL = 'https://www.pingcap.com/tidb/tidb-cloud-filesystems/'
-
-// Schema.org acceptedAnswer.text is plain text. The visible FAQ renders these
-// through the rich-text pipeline, where <code> is wanted; the structured data
-// must not carry the markup, or the tag itself gets quoted back by anything
-// reading the answer.
-function plainText(value: string): string {
-  return value.replace(/<[^>]+>/g, '')
-}
 
 const PATH = '/tidb-cloud-filesystem-pricing-details/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
@@ -171,6 +145,12 @@ export const metadata: Metadata = {
   },
 }
 
+// No FAQPage node. The four questions this page carried answered what the body
+// already answers, and one of them had gone stale against the copy — a second
+// store of the same facts is a second thing to keep true. The AEO checklist
+// scores FAQ presence, so this trades a little of that score for not shipping
+// duplicated, drift-prone copy. Recorded deliberately rather than padded back
+// up to three questions.
 const schema = buildPageSchema({
   path: PATH,
   title: TITLE,
@@ -194,7 +174,6 @@ const schema = buildPageSchema({
       }),
       '@id': `${PRODUCT_URL}#software`,
     },
-    faqSchema(FAQ_ITEMS.map((item) => ({ question: item.q, answer: plainText(item.a) }))),
   ],
 })
 
@@ -205,17 +184,10 @@ export default function FilesystemPricingDetailsPage() {
       <Header />
 
       <main className="bg-bg-primary pt-[62px] lg:pt-20">
-        {/* 00 Hero, notice, and direct navigation.
-            The sub-nav is not decoration. Putting the rate card third is only
-            defensible if a reader reaches it in one click. */}
         <SectionWrapper style={{ background: 'primary', spacing: 'md' }}>
           <div className="mb-4">
             <Badge variant="secondary">Public Preview</Badge>
           </div>
-          {/* The product name belongs at headline scale, not shrunk to an eyebrow
-              above it. The three sibling pricing pages are titled
-              "TiDB Cloud <Product> Pricing Details" outright, and a reader
-              arriving from one of them should see the same shape. */}
           <h1 className="mb-6 max-w-[900px] text-pretty text-h1-mb font-bold leading-tight tracking-[-0.025em] md:text-h1">
             TiDB Cloud Filesystem Pricing Details
           </h1>
@@ -223,6 +195,9 @@ export default function FilesystemPricingDetailsPage() {
             Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
             tiered plans.
           </p>
+          {/* Regional context here is a deliberate exception to this round's
+              de-duplication: it was asked for directly and the reader needs to
+              know which region the numbers are for before reading any of them. */}
           <p className="mb-6 max-w-[620px] text-body-md text-carbon-400">
             Prices shown are for <code className="font-mono">aws-us-east-1</code>. Additional
             regions will be added over time.
@@ -248,10 +223,7 @@ export default function FilesystemPricingDetailsPage() {
             </p>
             <p>
               The prices on this page apply to the public preview and may change at GA.{' '}
-              <a
-                href="https://www.pingcap.com/contact-us/"
-                className="underline underline-offset-2 hover:no-underline"
-              >
+              <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
                 Contact us
               </a>{' '}
               for details.
@@ -260,76 +232,66 @@ export default function FilesystemPricingDetailsPage() {
         </SectionWrapper>
 
         {/* 01 Start free — leads because an evaluator is deciding whether to
-            start, not whether to buy. */}
+            start, not whether to buy. It carries the cost warning, because the
+            moment someone decides to try is the moment they need it. */}
         <SectionWrapper id="start-free" style={{ background: 'gray' }}>
           <SectionHeader
             title="Start Free"
-            subtitle="Every organization gets $5.00 of service credit each month. The amount is the same regardless of region or SKU."
+            subtitle="Every organization gets $5.00 of service credit each month. It is one credit for the whole organization's Filesystem usage, shared across SKUs and regions, and it renews monthly."
             h2Size="md"
           />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              {/* Each row is the whole credit spent on that one meter. Saying so
-                  in body copy is deliberate: as an aside it reads as three
-                  allowances a reader can have at once. */}
-              <h3 className="mb-3 text-h3-lg font-bold">
-                What That Covers, If You Spent It All on One Thing
-              </h3>
+              <h3 className="mb-3 text-h3-lg font-bold">No Card Required to Start</h3>
               <p className="mb-5 text-body-lg text-text-primary/70">
-                Each row shows a separate calculation using the full $5 credit on one meter,
-                assuming that credit is available to this usage — one of these, not all three.
+                You can create a filesystem and use the credit without a card on file. Accounts
+                without one are capped on filesystems, files and storage — the full list is under{' '}
+                <a href="#limitations" className="underline underline-offset-2 hover:no-underline">
+                  Cost and Limitations
+                </a>
+                .
               </p>
-              <dl className="divide-y divide-carbon-300 border-y border-carbon-300">
-                {[
-                  ['Performance storage', 'about 16 GB for a month'],
-                  ['Read operations (non-pooled)', '125,000 requests'],
-                  ['Write operations (non-pooled)', '10,000 requests'],
-                ].map(([label, value]) => (
-                  <div key={label} className="flex justify-between gap-6 py-3 text-body-lg">
-                    <dt>{label}</dt>
-                    <dd className="text-right font-mono">{value}</dd>
-                  </div>
-                ))}
-              </dl>
+              <a
+                href={DOCS_QUICKSTART}
+                className="inline-flex text-body-lg underline underline-offset-4 hover:no-underline"
+              >
+                Read the quickstart
+              </a>
             </div>
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">Without a Card on File</h3>
-              <ul className="mb-5 space-y-2 text-body-lg">
-                <li>One free filesystem per region</li>
-                <li>2,000 files and 2 GB per free filesystem</li>
-                <li>500 MB maximum for a single file</li>
-              </ul>
-              {/* Cost and eligibility are different tests and the page has to
-                  keep them apart. 16 GB costs less than the credit, and is also
-                  not runnable without a card. Both are true; together, silently,
-                  they mislead. */}
+              {/* Confirmed by the pricing owner, 2026-09-22: a no-card account
+                  can still incur charges, and the source doc says the same of
+                  filesystems in more than one region. The amounts were described
+                  as small, which is not quantified anywhere, so that is not
+                  repeated here as a promise. */}
+              <h3 className="mb-3 text-h3-lg font-bold">Free to Start Is Not Free of Charges</h3>
               <p className="text-body-lg text-text-primary/70">
-                These are separate from cost. Storage that the credit covers can still exceed what a
-                filesystem without a card is allowed to hold, so check both.
+                The caps limit capacity, not spending. Usage beyond the monthly credit is charged,
+                and creating filesystems in more than one region can produce charges even without a
+                card on file.
               </p>
               {AT_THE_LIMIT && <p className="mt-5 text-body-lg">{AT_THE_LIMIT}</p>}
             </div>
           </div>
         </SectionWrapper>
 
-        {/* 02 What a month actually costs — the section no sibling pricing page
-            has, and the largest comprehension gain available. */}
+        {/* 02 Worked examples — the section no sibling pricing page has. Two,
+            not three: one the credit covers and one it does not. */}
         <SectionWrapper id="monthly-cost" style={{ background: 'primary' }}>
           <SectionHeader
-            title="What a Month Actually Costs"
-            subtitle="Illustrative monthly usage at the rates below. Each example shows the cost before credit, credit applied, and the remaining cost. These are not measured workloads."
+            title="Example Monthly Costs"
+            subtitle="Two illustrative calculations at the rates below — one inside the monthly credit and one above it. The usage figures are chosen to show the arithmetic, not to describe a typical workload."
             h2Size="md"
           />
           <p className="mb-6 max-w-[760px] text-body-sm text-carbon-400">
-            Assumes non-pooled read and write requests, Performance storage held for a full month,
-            and no Pooled usage, at the listed <code>aws-us-east-1</code> rates. Net amounts assume
-            the organization&rsquo;s full $5 monthly credit is available to these charges. No-card
-            filesystem limits still apply.
+            Both assume non-pooled requests, <code>aws-us-east-1</code> rates, and that the
+            organization&rsquo;s full $5 credit is available to these charges.
           </p>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2">
             {EXAMPLES.map((example) => (
               <div key={example.name} className="rounded-lg border border-carbon-800 p-6">
-                <h3 className="mb-4 text-h3-sm font-bold">{example.name}</h3>
+                <h3 className="mb-1 text-h3-sm font-bold">{example.name}</h3>
+                <p className="mb-4 text-body-sm text-carbon-400">{example.outcome}</p>
                 <dl className="mb-5 space-y-1 font-mono text-[13px] text-carbon-400">
                   {example.lines.map(([usage, cost]) => (
                     <div key={usage} className="flex justify-between gap-3">
@@ -359,41 +321,17 @@ export default function FilesystemPricingDetailsPage() {
           </div>
         </SectionWrapper>
 
-        {/* 03 Rates and how billing works — the definitions and the rate card
-            merged, so a reader does not bounce between a word and its price. */}
+        {/* 03 Rate card. The separate definitions list is gone: each row carries
+            its own unit and description, so a reader gets the meaning and the
+            price on one line instead of reading a glossary and then a table. */}
         <SectionWrapper id="rates" style={{ background: 'gray' }}>
-          <SectionHeader
-            title="Rates and How Billing Works"
-            subtitle="Rates for read and write requests, storage and internet egress."
-            h2Size="md"
-          />
-          <dl className="mb-12 divide-y divide-carbon-300 border-y border-carbon-300">
-            {[
-              [
-                'Writes',
-                'File write requests to TiDB Cloud Filesystem endpoints, priced per 1,000 requests.',
-              ],
-              [
-                'Reads',
-                'File read requests to TiDB Cloud Filesystem endpoints, priced per 1,000 requests.',
-              ],
-              ['Storage', 'What the workspace holds, per GB per month.'],
-              ['Egress', 'Data leaving to the public internet.'],
-            ].map(([term, definition]) => (
-              <div key={term} className="grid gap-2 py-4 md:grid-cols-[180px_1fr] md:gap-6">
-                <dt className="font-bold">{term}</dt>
-                <dd className="text-text-primary/70">{definition}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <h3 className="mb-5 text-h3-lg font-bold">The Rate Card</h3>
+          <SectionHeader title="Rates" h2Size="md" />
           <div className="overflow-x-auto">
             <table className="w-full table-fixed border-collapse text-body-sm sm:text-body-lg">
               <thead>
                 <tr className="border-b border-carbon-400 text-left">
                   <th className="py-3 font-bold">Meter</th>
-                  <th className="w-[44%] py-3 text-right font-bold">Price</th>
+                  <th className="w-[36%] py-3 text-right font-bold">Price</th>
                 </tr>
               </thead>
               <tbody>
@@ -409,9 +347,13 @@ export default function FilesystemPricingDetailsPage() {
               </tbody>
             </table>
           </div>
-          <p className="mt-4 text-body-sm text-text-primary/60">
+          <p className="mt-4 max-w-[760px] text-body-sm text-text-primary/60">
             All prices in USD. Billed monthly, prorated by the hour. Shown for{' '}
-            <code>aws-us-east-1</code>; other regions are adjusted proportionally.
+            <code>aws-us-east-1</code>; other regions are adjusted proportionally.{' '}
+            <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
+              Contact us
+            </a>{' '}
+            for a quote in another region.
           </p>
 
           {POOLED_EXPLAINER && (
@@ -420,59 +362,61 @@ export default function FilesystemPricingDetailsPage() {
               <p className="max-w-[720px] text-body-lg text-text-primary/70">{POOLED_EXPLAINER}</p>
             </>
           )}
-          {/* Until POOLED_EXPLAINER is answered, the table's own notes are all the
-              page says about Pooled. That is deliberate: a reader — or anything
-              summarising this page — can otherwise read the 100x cheaper Pooled
-              rows as an option to choose, which is a recommendation we cannot
-              stand behind while the assignment rule is unknown. */}
+          {/* Until POOLED_EXPLAINER is answered, the row descriptions are all the
+              page says about Pooled. They answer what each meter is measured
+              against, not which one a given account pays — so nothing here tells
+              a reader, or anything summarising this page, to choose the 100x
+              cheaper rows. */}
         </SectionWrapper>
 
-        {/* 04 Cost and Limitations — the family's own heading, so a reader
-            arriving from a sibling pricing page finds what they expect. The
-            conclusions a starter needs are already answered above; this is
-            where the detail lives, not where it is first disclosed. */}
+        {/* 04 Cost and Limitations — the family's heading. Everything here is
+            the full statement of a limit or a charge boundary; the preview,
+            region and credit facts live where they are first needed instead of
+            being repeated as a list. */}
         <SectionWrapper id="limitations" style={{ background: 'primary' }}>
-          <SectionHeader
-            title="Cost and Limitations"
-            subtitle="What is bounded, and what is still moving."
-            h2Size="md"
-          />
-          <ul className="max-w-[760px] space-y-4 text-body-lg text-carbon-300">
-            <li>Prices apply to the public preview and may change at general availability.</li>
-            <li>
-              One region is priced today. Others are adjusted proportionally and added gradually.
-            </li>
-            <li>
-              The $5 monthly service credit is applied per organization. The amount is the same
-              regardless of region or SKU.
-            </li>
-            <li>
-              No-card accounts are limited to one filesystem per region, 2,000 files and 2 GB per
-              filesystem, and 500 MB for any single file. Credit-card accounts are exempt from these
-              limits.
-            </li>
-          </ul>
-        </SectionWrapper>
-
-        {/* 05 FAQ — sits immediately before the closing CTA, per the section
-            contract. FAQPage structured data is emitted once, from the page
-            schema graph above, not by this component. */}
-        <SectionWrapper id="faq" style={{ background: 'gray' }}>
-          <FaqSection title="Frequently Asked Questions" items={FAQ_ITEMS} />
+          <SectionHeader title="Cost and Limitations" h2Size="md" />
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div>
+              <h3 className="mb-3 text-h3-lg font-bold">Without a Card on File</h3>
+              <ul className="space-y-2 text-body-lg text-carbon-300">
+                <li>One filesystem per region</li>
+                <li>2,000 files per filesystem</li>
+                <li>2 GB of storage per filesystem</li>
+                <li>500 MB maximum for a single file</li>
+              </ul>
+              <p className="mt-4 text-body-lg text-carbon-300">
+                Accounts with a card on file are exempt from these limits.
+              </p>
+            </div>
+            <div>
+              <h3 className="mb-3 text-h3-lg font-bold">What You Can Be Charged for</h3>
+              <p className="text-body-lg text-carbon-300">
+                The limits above bound capacity. They are not a spending cap. Usage beyond the $5.00
+                monthly credit is charged at the rates above, and filesystems in more than one
+                region can produce charges even on an account without a card.
+              </p>
+              {AT_THE_LIMIT && <p className="mt-4 text-body-lg text-carbon-300">{AT_THE_LIMIT}</p>}
+              <p className="mt-4 text-body-lg text-carbon-300">
+                <a href={PRODUCT_URL} className="underline underline-offset-2 hover:no-underline">
+                  What TiDB Cloud Filesystem is
+                </a>
+              </p>
+            </div>
+          </div>
         </SectionWrapper>
 
         <section className="bg-brand-red-bg py-16 text-white">
           <div className="contain">
             <CtaSection
               title="Start with the Credit, Not with a Card"
-              subtitle="Create a filesystem and try it with your organization’s $5 monthly service credit. Review the rates and no-card limits above, then follow the quickstart."
+              subtitle="Create a filesystem and try it with your organization's $5 monthly service credit."
               primaryCta={{
                 text: 'Read the quickstart',
                 href: DOCS_QUICKSTART,
               }}
               secondaryCta={{
                 text: 'Talk to us',
-                href: 'https://www.pingcap.com/contact-us/',
+                href: CONTACT_US,
               }}
             />
           </div>
