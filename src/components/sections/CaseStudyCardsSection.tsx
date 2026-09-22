@@ -295,7 +295,7 @@ export function CaseStudyCardsSection({ eyebrow, title, items, className }: Case
     <div className={cn('space-y-10', className)}>
       <div className="max-w-3xl">
         {eyebrow ? (
-          <p className="mb-4 text-body-sm uppercase tracking-wide text-secondary">{eyebrow}</p>
+          <p className="font-mono text-eyebrow block mb-4 text-secondary">{eyebrow}</p>
         ) : null}
         <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-white">{title}</h2>
       </div>
