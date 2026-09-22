@@ -25,6 +25,10 @@ const config: Config = {
             dark: '#10487B',
             medium: '#2C80CE',
             light: '#509DEA',
+            // Pale tint used by the existing pricing-details pages for their
+            // public-preview callout. Taken from those pages rather than
+            // invented, so this page's notice matches its siblings.
+            pale: '#C0E0EF',
           },
           teal: {
             bg: '#093434',

@@ -198,14 +198,6 @@ const schema = buildPageSchema({
   ],
 })
 
-const NAV = [
-  { href: '#start-free', label: 'Start free' },
-  { href: '#monthly-cost', label: 'What a month costs' },
-  { href: '#rates', label: 'Rates' },
-  { href: '#limitations', label: 'Cost and limitations' },
-  { href: '#faq', label: 'FAQ' },
-]
-
 export default function FilesystemPricingDetailsPage() {
   return (
     <>
@@ -231,26 +223,23 @@ export default function FilesystemPricingDetailsPage() {
             Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
             tiered plans.
           </p>
-          <p className="mb-8 text-body-sm text-carbon-500">
-            All prices in USD, for <code>aws-us-east-1</code>. Billed monthly, prorated by the hour.
-          </p>
+          <a
+            href="#rates"
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-carbon-800 px-4 py-2 text-body-sm text-carbon-200 transition-colors hover:border-carbon-400 hover:text-text-inverse"
+          >
+            Jump to the rate card
+          </a>
+        </SectionWrapper>
 
-          <nav aria-label="On this page" className="mb-8 flex flex-wrap gap-3">
-            {NAV.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="rounded-full border border-carbon-800 px-4 py-2 text-body-sm text-carbon-200 transition-colors hover:border-carbon-400 hover:text-text-inverse"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="max-w-[720px] rounded-lg border border-carbon-800 p-5 text-body-md text-carbon-300">
-            <span className="font-bold text-text-inverse">Public preview pricing.</span> These
-            prices apply to the public preview and may change at general availability. Figures are
-            from the pricing source of record, version 8, re-derived on 21 September 2026.
+        {/* The public-preview notice sits on a light band in a pale blue box,
+            which is how the Starter, Essential and Premium pricing pages carry
+            theirs. Deliberately not inheriting the rest of their notice: the
+            Essential one promises a Price Protection Plan through the GA
+            transition, which is an Essential-only commitment. */}
+        <SectionWrapper style={{ background: 'inverse', spacing: 'sm' }}>
+          <div className="rounded-lg bg-brand-blue-pale p-6 text-body-md text-text-primary">
+            <span className="font-bold">Public preview pricing.</span> These prices apply to the
+            public preview and may change at general availability.
           </div>
         </SectionWrapper>
 
@@ -405,8 +394,8 @@ export default function FilesystemPricingDetailsPage() {
             </table>
           </div>
           <p className="mt-4 text-body-sm text-text-primary/60">
-            Billed monthly, prorated by the hour. Shown for <code>aws-us-east-1</code>; other
-            regions are adjusted proportionally.
+            All prices in USD. Billed monthly, prorated by the hour. Shown for{' '}
+            <code>aws-us-east-1</code>; other regions are adjusted proportionally.
           </p>
 
           {POOLED_EXPLAINER && (
