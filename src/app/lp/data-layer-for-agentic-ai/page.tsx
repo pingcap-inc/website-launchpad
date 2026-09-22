@@ -75,14 +75,14 @@ const dsl: PageDSL = {
         },
         heroImage: {
           image: {
-            url: 'https://static.pingcap.com/images/f54533cc-1000011158.svg',
-            alt: '1000011158',
+            url: 'https://static.pingcap.com/images/4571f08d-vector-violet.svg',
+            alt: 'vector violet',
             width: 522,
             height: 563,
           },
-          alt: '1000011158',
-          width: 500,
-          height: 400,
+          alt: 'vector violet',
+          width: 522,
+          height: 563,
         },
       },
       style: {
@@ -113,7 +113,7 @@ const dsl: PageDSL = {
             },
           },
           {
-            title: 'The Tenant Count You Did Not Plan for',
+            title: 'The Tenant Count You Did Not Plan For',
             description:
               'Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.',
             image: {
@@ -360,7 +360,7 @@ const dsl: PageDSL = {
       type: 'featureCard',
       props: {
         eyebrow: 'Honest Assessment',
-        title: 'Where This Is the Wrong Choice',
+        title: 'Where This is the Wrong Choice',
         subtitle:
           'These are the scenarios where TiDB is not the right fit. If any of these describe your workload, consider alternatives.',
         items: [

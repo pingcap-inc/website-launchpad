@@ -25,14 +25,14 @@
         },
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg",
-            "alt": "1000011158",
+            "url": "https://static.pingcap.com/images/4571f08d-vector-violet.svg",
+            "alt": "vector violet",
             "width": 522,
             "height": 563
           },
-          "alt": "1000011158",
-          "width": 500,
-          "height": 400
+          "alt": "vector violet",
+          "width": 522,
+          "height": 563
         }
       },
       "style": {
@@ -104,7 +104,7 @@
       "type": "featureGrid",
       "props": {
         "eyebrow": "What Agent Workloads Actually Require",
-        "title": "Four Requirements, In Order",
+        "title": "Four Requirements, in Order",
         "subtitle": "These are the capabilities teams need as agent workloads scale, in the order they hit them.",
         "items": [
           {
