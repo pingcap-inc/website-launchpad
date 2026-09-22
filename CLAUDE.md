@@ -273,6 +273,16 @@ When the user asks to submit, commit, or push code to GitHub, **always run this 
 
 ---
 
+## Filesystem Pricing Notice
+
+For `/tidb-cloud-filesystem-pricing-details/`:
+
+- Match the Lake pricing page's square pale-blue preview notice, with a separate bold title, preview-price statement, and Contact us link. Do not add a Price Protection Plan promise.
+- Keep the current pricing region in the hero: `Prices shown are for aws-us-east-1. Additional regions will be added over time.` Do not add a rollout date or infer that the priced region is the only available region.
+- The reference notice links to `https://www.pingcap.com/contact-us/` without query parameters; preserve that destination unless a supported tracking parameter is explicitly requested.
+
+---
+
 ## ⚠️ Do NOT
 
 - Create `src/app/page.tsx` — homepage is WordPress
