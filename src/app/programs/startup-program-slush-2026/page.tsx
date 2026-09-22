@@ -55,7 +55,8 @@ PingCAP is sponsoring a side event at Slush 2026 in Helsinki. We are keeping par
 founders in the TiDB Startup Program: two or three founders will each have about twenty minutes
 on stage to talk about what they have built.
 
-**[TBD — side event name, date, venue and how attendees get in.]**
+The event's name, venue and timing are not public yet. We will send them directly to the
+founders taking part, closer to the date.
 
 ## How to take part
 
