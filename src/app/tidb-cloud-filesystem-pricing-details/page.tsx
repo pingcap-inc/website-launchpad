@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema, softwareApplicationSchema } from '@/lib/schema'
+import { buildPageSchema, faqSchema, softwareApplicationSchema } from '@/lib/schema'
 import { Header } from '@/components/ui/Header'
 import { Footer } from '@/components/ui/Footer'
 import { Badge } from '@/components/ui/badge'
 import { SectionWrapper } from '@/components/ui/SectionWrapper'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import { FaqSection } from '@/components/sections/FaqSection'
 import { CtaSection } from '@/components/sections/CtaSection'
 
 // ── Launch gates ─────────────────────────────────────────────────────────────
@@ -21,15 +22,14 @@ import { CtaSection } from '@/components/sections/CtaSection'
 const POOLED_EXPLAINER: string | null = null
 
 // What happens when the monthly credit is exhausted or a cap is reached: stop,
-// throttle, failed writes, or billing continues — and whether a spending limit
-// can be set at all. "Not supported" is an acceptable answer; silence is not,
-// because it is what someone decides on before pointing an agent at a metered
-// service. Asked 2026-09-21, followed up 2026-09-22.
+// throttle, failed writes, continued reads, and notifications remain unanswered.
+// Spending-limit support was answered separately on 2026-09-22: not supported.
+// Do not infer alert availability or operational behaviour from that answer.
 const AT_THE_LIMIT: string | null = null
 
 // ── Source of truth ──────────────────────────────────────────────────────────
 // "TiDB Cloud Filesystem Pricing Public Preview" v8 (2026-09-19), as it read on
-// 2026-09-21 — the free-tier quantities were corrected that day without a
+// 2026-09-22 (body revision 1489) — the quantities were corrected on Sep 21 without a
 // version bump, so the re-derivation date matters as much as the version. All
 // seven free-tier lines were recomputed against this rate card and reconcile to
 // $4.99 against the $5.00 credit. Do not edit these numbers without redoing
@@ -73,15 +73,16 @@ const RATES = [
   { meter: 'Internet egress', note: 'Data transfer out to the internet', price: '$0.09 / GB' },
 ]
 
-// Two examples, not three: one the credit covers and one it does not. A third
-// only repeats the same arithmetic at a larger scale. Labelled by outcome
-// rather than by workload size — "light" and "steady" implied a typicality we
-// have never measured, and a reader cannot tell which bracket their agents are
-// in from a request count.
+// Illustrative inputs, not measured workloads or recommended workload tiers.
+// Two complete bills plus a shared-credit variation explain different decisions.
 const EXAMPLES = [
   {
     name: 'Example 1',
-    outcome: 'within the credit',
+    outcome: 'The credit covers this usage',
+    explanation:
+      'The usage adds up to $3.39. Applying $3.39 of the available credit leaves $0 to pay for this usage.',
+    eligibility:
+      'The 1 GB stored is below the 2 GB no-card storage cap. File-count and single-file limits still apply.',
     lines: [
       ['2,000 write requests', '$1.00'],
       ['50,000 read requests', '$2.00'],
@@ -94,7 +95,11 @@ const EXAMPLES = [
   },
   {
     name: 'Example 2',
-    outcome: 'above the credit',
+    outcome: 'The usage exceeds the credit',
+    explanation:
+      'The usage adds up to $28.68. Subtract the full $5 credit to get $23.68 to pay for this usage.',
+    eligibility:
+      'Keeping 5 GB in one filesystem exceeds the no-card storage cap and requires a card on file.',
     lines: [
       ['30,000 write requests', '$15.00'],
       ['300,000 read requests', '$12.00'],
@@ -145,12 +150,21 @@ export const metadata: Metadata = {
   },
 }
 
-// No FAQPage node. The four questions this page carried answered what the body
-// already answers, and one of them had gone stale against the copy — a second
-// store of the same facts is a second thing to keep true. The AEO checklist
-// scores FAQ presence, so this trades a little of that score for not shipping
-// duplicated, drift-prone copy. Recorded deliberately rather than padded back
-// up to three questions.
+// Use the same plain-text answers for the visible FAQ and its schema.
+const SPENDING_LIMIT_ANSWER =
+  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly credit reduces your charges; it is not a maximum monthly bill.'
+const FAQ_ITEMS = [
+  {
+    q: 'Does each filesystem get its own $5 credit?',
+    a: 'No. The $5 monthly credit is shared by all Filesystem usage in your organization, across billing items and regions. Creating another filesystem does not add another $5 credit.',
+  },
+  {
+    q: 'If the credit covers 16 GB, can I store 16 GB without a card?',
+    a: 'No. The credit is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per filesystem. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
+  },
+  { q: 'Can I set a monthly spending limit?', a: `No. ${SPENDING_LIMIT_ANSWER}` },
+]
+
 const schema = buildPageSchema({
   path: PATH,
   title: TITLE,
@@ -162,6 +176,7 @@ const schema = buildPageSchema({
     { name: 'Pricing Details', path: PATH },
   ],
   extraSchemas: [
+    faqSchema(FAQ_ITEMS.map(({ q, a }) => ({ question: q, answer: a }))),
     {
       ...softwareApplicationSchema({
         name: 'TiDB Cloud Filesystem',
@@ -195,9 +210,7 @@ export default function FilesystemPricingDetailsPage() {
             Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
             tiered plans.
           </p>
-          {/* Regional context here is a deliberate exception to this round's
-              de-duplication: it was asked for directly and the reader needs to
-              know which region the numbers are for before reading any of them. */}
+          {/* Keep the applicable pricing region visible before any figures. */}
           <p className="mb-6 max-w-[620px] text-body-md text-carbon-400">
             Prices shown are for <code className="font-mono">aws-us-east-1</code>. Additional
             regions will be added over time.
@@ -231,25 +244,59 @@ export default function FilesystemPricingDetailsPage() {
           </aside>
         </SectionWrapper>
 
-        {/* 01 Start free — leads because an evaluator is deciding whether to
-            start, not whether to buy. It carries the cost warning, because the
-            moment someone decides to try is the moment they need it. */}
         <SectionWrapper id="start-free" style={{ background: 'gray' }}>
           <SectionHeader
             title="Start Free"
-            subtitle="Every organization gets $5.00 of service credit each month. It is one credit for the whole organization's Filesystem usage, shared across SKUs and regions, and it renews monthly."
+            subtitle="Every organization gets $5.00 of Filesystem service credit each month. This credit is a dollar amount deducted from your usage charges, shared across all your filesystems, billing items and regions."
+            className="mb-8"
             h2Size="md"
           />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">No Card Required to Start</h3>
+              <h3 className="mb-3 text-h3-lg font-bold">What Can $5 Cover?</h3>
               <p className="mb-5 text-body-lg text-text-primary/70">
-                You can create a filesystem and use the credit without a card on file. Accounts
-                without one are capped on filesystems, files and storage — the full list is under{' '}
+                To put the credit in perspective, here are three separate ways to use it at the
+                listed rates. Each assumes the full credit is available and no other usage:
+              </p>
+              <dl className="divide-y divide-carbon-300 border-y border-carbon-300">
+                {[
+                  ['125,000 read requests', '$5.00', 'At the non-pooled read rate'],
+                  ['10,000 write requests', '$5.00', 'At the non-pooled write rate'],
+                  ['16 GB of Performance storage', '$4.80', 'Stored for a full month'],
+                ].map(([usage, cost, note]) => (
+                  <div key={usage} className="flex items-start justify-between gap-4 py-4">
+                    <dt className="text-body-lg">
+                      {usage}
+                      <span className="mt-1 block text-body-sm text-text-primary/70">{note}</span>
+                    </dt>
+                    <dd className="shrink-0 font-mono text-body-md">{cost}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-4 text-body-md text-text-primary/70">
+                These are alternatives, not three included allowances. If you use reads, writes,
+                storage and egress together, their combined charges draw on the same $5. The monthly
+                examples below show that calculation.
+              </p>
+            </div>
+            <div>
+              <h3 className="mb-3 text-h3-lg font-bold">What Can I Use Without a Card?</h3>
+              <p className="mb-4 text-body-lg text-text-primary/70">
+                You can start without a credit card, with one filesystem per region. Each filesystem
+                can hold up to 2,000 files and 2 GB in total; each file can be up to 500 MB.
+              </p>
+              <p className="mb-4 text-body-lg text-text-primary/70">
+                The credit pays for usage; it does not increase these limits. For example, 16 GB of
+                Performance storage for a full month costs $4.80, but a filesystem without a card
+                can only hold 2 GB.
+              </p>
+              <p className="mb-5 text-body-lg text-text-primary/70">
+                Using filesystems in multiple regions can still incur charges beyond the shared
+                credit, even without a card. There is no configurable spending limit. See{' '}
                 <a href="#limitations" className="underline underline-offset-2 hover:no-underline">
                   Cost and Limitations
-                </a>
-                .
+                </a>{' '}
+                before you start.
               </p>
               <a
                 href={DOCS_QUICKSTART}
@@ -258,74 +305,147 @@ export default function FilesystemPricingDetailsPage() {
                 Read the quickstart
               </a>
             </div>
-            <div>
-              {/* Confirmed by the pricing owner, 2026-09-22: a no-card account
-                  can still incur charges, and the source doc says the same of
-                  filesystems in more than one region. The amounts were described
-                  as small, which is not quantified anywhere, so that is not
-                  repeated here as a promise. */}
-              <h3 className="mb-3 text-h3-lg font-bold">Free to Start Is Not Free of Charges</h3>
-              <p className="text-body-lg text-text-primary/70">
-                The caps limit capacity, not spending. Usage beyond the monthly credit is charged,
-                and creating filesystems in more than one region can produce charges even without a
-                card on file.
-              </p>
-              {AT_THE_LIMIT && <p className="mt-5 text-body-lg">{AT_THE_LIMIT}</p>}
-            </div>
           </div>
         </SectionWrapper>
 
-        {/* 02 Worked examples — the section no sibling pricing page has. Two,
-            not three: one the credit covers and one it does not. */}
+        <SectionWrapper id="understand-usage" style={{ background: 'inverse' }}>
+          <SectionHeader
+            title="Understand Your Usage"
+            subtitle="Your cost depends on requests, the amount of data you store and data transferred out to the internet. Here is how to read those units before applying the rates."
+            className="mb-8"
+            h2Size="md"
+          />
+          <dl className="grid gap-x-10 gap-y-8 md:grid-cols-2">
+            <div>
+              <dt className="mb-3 text-h3-lg font-bold">Read and Write Requests</dt>
+              <dd className="space-y-3 text-body-lg text-text-primary/70">
+                <p>
+                  Reads retrieve file data; writes write file data. The prices use request counts,
+                  not the number of files stored or the number of agent runs.
+                </p>
+                <p>
+                  A price per 1,000 requests means you divide the request count by 1,000, then
+                  multiply by the rate. At the non-pooled read rate, 50,000 ÷ 1,000 × $0.04 = $2.00.
+                </p>
+              </dd>
+            </div>
+            <div>
+              <dt className="mb-3 text-h3-lg font-bold">Storage: GB per Month</dt>
+              <dd className="space-y-3 text-body-lg text-text-primary/70">
+                <p>
+                  Storage measures how much data you keep and for how long. GB-mo means gigabytes
+                  per month; it is a storage unit, not a request count.
+                </p>
+                <p>
+                  At the Performance rate, keeping 2 GB for a full month costs 2 × $0.30 = $0.60.
+                  Billing is monthly and prorated by the hour.
+                </p>
+              </dd>
+            </div>
+            <div>
+              <dt className="mb-3 text-h3-lg font-bold">Internet Egress</dt>
+              <dd className="space-y-3 text-body-lg text-text-primary/70">
+                <p>
+                  Egress means data transferred out to the public internet, measured in GB. It is a
+                  separate billing item from storage and requests.
+                </p>
+                <p>
+                  At $0.09 per GB, 2 GB of internet egress costs $0.18. Use the amount transferred
+                  out in this calculation, not the total amount you have stored.
+                </p>
+              </dd>
+            </div>
+            <div>
+              <dt className="mb-3 text-h3-lg font-bold">Performance and Pooled</dt>
+              <dd className="space-y-3 text-body-lg text-text-primary/70">
+                <p>
+                  The rate card lists two storage categories, Performance and Pooled. It also lists
+                  ordinary read/write requests and separate Pooled file requests. These have
+                  different rates.
+                </p>
+                {POOLED_EXPLAINER ? (
+                  <p>{POOLED_EXPLAINER}</p>
+                ) : (
+                  <p>
+                    Before estimating your own costs, confirm which categories apply to your usage.{' '}
+                    <a
+                      href={CONTACT_US}
+                      className="underline underline-offset-2 hover:no-underline"
+                    >
+                      Contact us
+                    </a>{' '}
+                    for help identifying the applicable rates. The examples below use non-pooled
+                    requests and Performance storage only.
+                  </p>
+                )}
+              </dd>
+            </div>
+          </dl>
+        </SectionWrapper>
+
+        {/* Show complete arithmetic and then explain how shared credit changes it. */}
         <SectionWrapper id="monthly-cost" style={{ background: 'primary' }}>
           <SectionHeader
             title="Example Monthly Costs"
-            subtitle="Two illustrative calculations at the rates below — one inside the monthly credit and one above it. The usage figures are chosen to show the arithmetic, not to describe a typical workload."
+            subtitle="Add the charges for each billing item, then subtract the available monthly credit. These illustrative examples show both the calculation and what remains to pay."
+            className="mb-8"
             h2Size="md"
           />
-          <p className="mb-6 max-w-[760px] text-body-sm text-carbon-400">
-            Both assume non-pooled requests, <code>aws-us-east-1</code> rates, and that the
-            organization&rsquo;s full $5 credit is available to these charges.
+          <p className="mb-8 max-w-[760px] text-body-lg text-carbon-300">
+            Both examples use non-pooled read/write requests, Performance storage held for a full
+            month and no Pooled usage, at <code className="font-mono">aws-us-east-1</code> rates.
+            Each starts with the organization&rsquo;s full $5 monthly credit available.
           </p>
           <div className="grid gap-6 md:grid-cols-2">
             {EXAMPLES.map((example) => (
               <div key={example.name} className="rounded-lg border border-carbon-800 p-6">
                 <h3 className="mb-1 text-h3-sm font-bold">{example.name}</h3>
                 <p className="mb-4 text-body-sm text-carbon-400">{example.outcome}</p>
-                <dl className="mb-5 space-y-1 font-mono text-[13px] text-carbon-400">
+                <dl className="mb-5 space-y-3 text-body-md text-carbon-200">
                   {example.lines.map(([usage, cost]) => (
                     <div key={usage} className="flex justify-between gap-3">
                       <dt>{usage}</dt>
-                      <dd>{cost}</dd>
+                      <dd className="shrink-0 font-mono">{cost}</dd>
                     </div>
                   ))}
                 </dl>
-                <dl className="space-y-1 border-t border-carbon-800 pt-4 font-mono text-[13px] text-carbon-400">
+                <dl className="space-y-2 border-t border-carbon-800 pt-4 text-body-md text-carbon-200">
                   <div className="flex justify-between">
-                    <dt>gross</dt>
-                    <dd>{example.gross}</dd>
+                    <dt>Usage charges</dt>
+                    <dd className="font-mono">{example.gross}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>credit</dt>
-                    <dd>{example.credit}</dd>
+                    <dt>Credit applied</dt>
+                    <dd className="font-mono">{example.credit}</dd>
                   </div>
                 </dl>
                 <p className="mt-4 text-h3-lg font-bold">
-                  {example.net}
-                  <span className="ml-2 font-mono text-[13px] font-normal text-carbon-400">
-                    net
-                  </span>
+                  {example.net}{' '}
+                  <span className="ml-2 text-body-md text-carbon-300">after credit</span>
                 </p>
+                <p className="mt-4 text-body-md text-carbon-200">{example.explanation}</p>
+                <p className="mt-3 text-body-md text-carbon-300">{example.eligibility}</p>
               </div>
             ))}
           </div>
+          <div className="mt-8 max-w-[760px] border-l-2 border-carbon-400 pl-6">
+            <h3 className="mb-3 text-h3-lg font-bold">Already Used Some of Your Credit?</h3>
+            <p className="text-body-lg text-carbon-300">
+              If other Filesystem usage in your organization has already used $3 of this
+              month&rsquo;s credit, only $2 remains. For the same $3.39 of usage in Example 1, the
+              remaining amount to pay would be $3.39 − $2.00 = $1.39. A new filesystem or region
+              does not create a new credit allowance.
+            </p>
+          </div>
         </SectionWrapper>
 
-        {/* 03 Rate card. The separate definitions list is gone: each row carries
-            its own unit and description, so a reader gets the meaning and the
-            price on one line instead of reading a glossary and then a table. */}
         <SectionWrapper id="rates" style={{ background: 'gray' }}>
-          <SectionHeader title="Rates" h2Size="md" />
+          <SectionHeader
+            title="Rates and How Billing Works"
+            subtitle="Use the rate for each category of your usage, then add those charges together. All seven billing items are listed below."
+            className="mb-8"
+            h2Size="md"
+          />
           <div className="overflow-x-auto">
             <table className="w-full table-fixed border-collapse text-body-sm sm:text-body-lg">
               <thead>
@@ -355,18 +475,6 @@ export default function FilesystemPricingDetailsPage() {
             </a>{' '}
             for a quote in another region.
           </p>
-
-          {POOLED_EXPLAINER && (
-            <>
-              <h3 className="mb-3 mt-12 text-h3-lg font-bold">Performance and Pooled</h3>
-              <p className="max-w-[720px] text-body-lg text-text-primary/70">{POOLED_EXPLAINER}</p>
-            </>
-          )}
-          {/* Until POOLED_EXPLAINER is answered, the row descriptions are all the
-              page says about Pooled. They answer what each meter is measured
-              against, not which one a given account pays — so nothing here tells
-              a reader, or anything summarising this page, to choose the 100x
-              cheaper rows. */}
         </SectionWrapper>
 
         {/* 04 Cost and Limitations — the family's heading. Everything here is
@@ -374,7 +482,7 @@ export default function FilesystemPricingDetailsPage() {
             region and credit facts live where they are first needed instead of
             being repeated as a list. */}
         <SectionWrapper id="limitations" style={{ background: 'primary' }}>
-          <SectionHeader title="Cost and Limitations" h2Size="md" />
+          <SectionHeader title="Cost and Limitations" className="mb-8" h2Size="md" />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
               <h3 className="mb-3 text-h3-lg font-bold">Without a Card on File</h3>
@@ -389,11 +497,12 @@ export default function FilesystemPricingDetailsPage() {
               </p>
             </div>
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">What You Can Be Charged for</h3>
-              <p className="text-body-lg text-carbon-300">
-                The limits above bound capacity. They are not a spending cap. Usage beyond the $5.00
-                monthly credit is charged at the rates above, and filesystems in more than one
-                region can produce charges even on an account without a card.
+              <h3 className="mb-3 text-h3-lg font-bold">Your Credit and Spending</h3>
+              <p className="text-body-lg text-carbon-300">{SPENDING_LIMIT_ANSWER}</p>
+              <p className="mt-4 text-body-lg text-carbon-300">
+                Using filesystems in multiple regions can produce charges beyond the shared credit
+                even without a card. The file and storage limits above do not mean your bill is
+                capped at $5.
               </p>
               {AT_THE_LIMIT && <p className="mt-4 text-body-lg text-carbon-300">{AT_THE_LIMIT}</p>}
               <p className="mt-4 text-body-lg text-carbon-300">
@@ -405,10 +514,14 @@ export default function FilesystemPricingDetailsPage() {
           </div>
         </SectionWrapper>
 
+        <SectionWrapper id="faq" style={{ background: 'gray' }}>
+          <FaqSection title="Common Pricing Questions" items={FAQ_ITEMS} />
+        </SectionWrapper>
+
         <section className="bg-brand-red-bg py-16 text-white">
           <div className="contain">
             <CtaSection
-              title="Start with the Credit, Not with a Card"
+              title="Start with Your Monthly Credit"
               subtitle="Create a filesystem and try it with your organization's $5 monthly service credit."
               primaryCta={{
                 text: 'Read the quickstart',
