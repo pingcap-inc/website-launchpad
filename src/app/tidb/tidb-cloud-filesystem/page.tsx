@@ -60,11 +60,13 @@ const KIMI_STORY_URL: string | null = null
 const TITLE = 'TiDB Cloud Filesystem: The Workspace Your Agents Share'
 const DESCRIPTION =
   'TiDB Cloud Filesystem is a durable shared workspace for coding agents — one filesystem held by several runtimes at once. Now in public preview.'
-// Nested under /tidb/ per PMM (2026-08-25). NOTE for deploy: /tidb/ itself is
-// WordPress-served — every route this app serves in production is top-level
-// (/tidb-cloud-lake/, /what-is-tidb/). Reaching this path needs an Nginx
-// carve-out for /tidb/tidb-cloud-filesystems/ inside the WordPress prefix.
-const PATH = '/tidb/tidb-cloud-filesystems/'
+// Nested under /tidb/ per PMM (2026-08-25); singular since 2026-09-23 to match
+// the product name, the docs (/tidbcloud-filesystem/) and the pricing page.
+// DEPLOY: /tidb/ is WordPress-served and Nginx forwards individual paths to
+// this app. It forwards the plural path only, so this rename needs a forward
+// for /tidb/tidb-cloud-filesystem/ plus a 301 from the plural one before it
+// can merge — see the PR description.
+const PATH = '/tidb/tidb-cloud-filesystem/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const PRODUCT_ID = `${CANONICAL}#software`
 const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
