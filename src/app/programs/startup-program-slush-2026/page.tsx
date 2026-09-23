@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ArrowDown, CalendarDays, Globe2, Mail, Mic, TrendingUp } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, CalendarDays, Globe2, Mail, Mic, TrendingUp } from 'lucide-react'
 import { Footer } from '@/components/ui/Footer'
 import { Header } from '@/components/ui/Header'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
@@ -378,9 +378,16 @@ export default function StartupProgramSlush2026Page() {
                 window can enter the invitation pool for this activity.
               </p>
             </div>
-            <SecondaryButton href={PROGRAM_URL} className="w-fit">
+            <a
+              href={PROGRAM_URL}
+              className="group inline-flex h-11 w-fit items-center gap-3 bg-white px-5 text-base font-medium text-black transition-colors duration-200 ease-in-out hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            >
               Apply to the Startup Program
-            </SecondaryButton>
+              <ArrowUpRight
+                className="h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                strokeWidth={1.5}
+              />
+            </a>
           </div>
         </section>
       </main>
