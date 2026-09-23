@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import { ArrowDown, ArrowUpRight, CalendarDays, Globe2, Mail, Mic, TrendingUp } from 'lucide-react'
+import { ArrowDown, CalendarDays, Globe2, Mail, Mic, TrendingUp } from 'lucide-react'
 import { Footer } from '@/components/ui/Footer'
 import { Header } from '@/components/ui/Header'
+import { SecondaryButton } from '@/components/ui/SecondaryButton'
 import { JsonLd } from '@/components/ui/JsonLd'
 import { buildPageSchema } from '@/lib/schema'
 
@@ -211,16 +212,7 @@ export default function StartupProgramSlush2026Page() {
                   Read the invitation details
                   <ArrowDown className="h-4 w-4" strokeWidth={1.5} />
                 </a>
-                <a
-                  href={PROGRAM_URL}
-                  className="group inline-flex items-center gap-2 text-base font-medium text-white underline decoration-carbon-700 underline-offset-4 transition-colors duration-150 ease-in-out hover:decoration-brand-red-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-                >
-                  Apply to the Startup Program
-                  <ArrowUpRight
-                    className="h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    strokeWidth={1.5}
-                  />
-                </a>
+                <SecondaryButton href={PROGRAM_URL}>Apply to the Startup Program</SecondaryButton>
               </div>
             </div>
             <StageGraphic />
@@ -286,16 +278,9 @@ export default function StartupProgramSlush2026Page() {
                   does not reserve a stage slot; it puts an eligible founder in scope for the
                   invitation and selection process.
                 </p>
-                <a
-                  href={PROGRAM_URL}
-                  className="group inline-flex items-center gap-2 font-medium text-text-primary underline decoration-carbon-400 underline-offset-4 transition-colors duration-150 ease-in-out hover:decoration-brand-red-primary"
-                >
+                <SecondaryButton href={PROGRAM_URL} dark={false}>
                   Apply to the TiDB Startup Program
-                  <ArrowUpRight
-                    className="h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    strokeWidth={1.5}
-                  />
-                </a>
+                </SecondaryButton>
               </div>
             </div>
           </div>
@@ -393,16 +378,9 @@ export default function StartupProgramSlush2026Page() {
                 window can enter the invitation pool for this activity.
               </p>
             </div>
-            <a
-              href={PROGRAM_URL}
-              className="group inline-flex h-11 w-fit items-center gap-3 bg-white px-5 text-base font-medium text-black transition-colors duration-200 ease-in-out hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
+            <SecondaryButton href={PROGRAM_URL} className="w-fit">
               Apply to the Startup Program
-              <ArrowUpRight
-                className="h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                strokeWidth={1.5}
-              />
-            </a>
+            </SecondaryButton>
           </div>
         </section>
       </main>
