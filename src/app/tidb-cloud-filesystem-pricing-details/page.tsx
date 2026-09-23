@@ -21,20 +21,31 @@ import { CtaSection } from '@/components/sections/CtaSection'
 // prices, but the page does not tell anyone how to choose. Asked 2026-09-21.
 const POOLED_EXPLAINER: string | null = null
 
-// What happens when the monthly credit is exhausted or a cap is reached: stop,
-// throttle, failed writes, continued reads, and notifications remain unanswered.
-// Spending-limit support was answered separately on 2026-09-22: not supported.
-// Do not infer alert availability or operational behaviour from that answer.
-const AT_THE_LIMIT: string | null = null
+// Answered 2026-09-22: at a cap, writes are blocked and reads keep working; the
+// console shows a warning; with a card, overage is billed monthly; without a
+// card, charges past the credit still accrue and remain payable.
+//
+// NOT answered, and deliberately absent below: what happens to a no-card account
+// that leaves those charges unpaid. The reply described convert-or-suspend as a
+// policy still being designed together, not as current behaviour, so the page
+// does not state an outcome. The reply also called a billing spending *alert*
+// the right instrument in principle — that is a design opinion, not a shipped
+// feature, and must not be read as one.
+const AT_THE_LIMIT: string | null =
+  'When a filesystem reaches one of these limits, it stops accepting writes and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the credit is billed as overage on your monthly invoice; without one, charges past the credit still accrue and remain payable.'
 
 // ── Source of truth ──────────────────────────────────────────────────────────
-// "TiDB Cloud Filesystem Pricing Public Preview" v8 (2026-09-19), as it read on
-// 2026-09-22 (body revision 1489) — the quantities were corrected on Sep 21 without a
-// version bump, so the re-derivation date matters as much as the version. All
-// seven free-tier lines were recomputed against this rate card and reconcile to
-// $4.99 against the $5.00 credit. Do not edit these numbers without redoing
-// that check. The source doc's `Discountable` column is internal and is not
-// reproduced anywhere on this page.
+// "TiDB Cloud Filesystem Pricing Public Preview" v9 (2026-09-22, "Added multiple
+// regions"), as it read on 2026-09-23. Note that the free-tier quantities were
+// corrected on Sep 21 WITHOUT a version bump, so the re-derivation date matters
+// as much as the version string. All seven free-tier lines were recomputed
+// against this rate card and reconcile to $4.99 against the $5.00 credit. Do not
+// edit these numbers without redoing that check. The source doc's `Discountable`
+// column is internal and is not reproduced anywhere on this page.
+//
+// The source now publishes five regions. Read and write operations are $0.04 and
+// $0.50 per 1,000 in ALL five; only pooled operations, both storage types and
+// egress vary. RATES below is aws-us-east-1; REGION_RATES carries the rest.
 //
 // Each row carries the source doc's own Description. Those descriptions say
 // what a meter is measured against; they do not say what assigns usage to
@@ -75,6 +86,29 @@ const RATES = [
 
 // Illustrative inputs, not measured workloads or recommended workload tiers.
 // Two complete bills plus a shared-credit variation explain different decisions.
+// Only the meters that differ by region. Read and write operations are uniform
+// across all five and stay in RATES above rather than being repeated here.
+const RATE_REGION = 'aws-us-east-1'
+const OTHER_REGIONS = [
+  'aws-us-west-2',
+  'aws-ap-southeast-1',
+  'alicloud-ap-southeast-1',
+  'gcp-us-east-1',
+]
+const REGION_RATES = [
+  {
+    meter: 'Pooled file read, per 1,000 requests',
+    prices: ['$0.0004', '$0.0004', '$0.0001', '$0.0004'],
+  },
+  {
+    meter: 'Pooled file write, per 1,000 requests',
+    prices: ['$0.005', '$0.005', '$0.0014', '$0.005'],
+  },
+  { meter: 'Storage — Performance, per GB-mo', prices: ['$0.30', '$0.36', '$0.32', '$0.30'] },
+  { meter: 'Storage — Pooled, per GB-mo', prices: ['$0.025', '$0.027', '$0.019', '$0.022'] },
+  { meter: 'Internet egress, per GB', prices: ['$0.09', '$0.12', '$0.08', '$0.12'] },
+]
+
 const EXAMPLES = [
   {
     name: 'Example 1',
@@ -152,7 +186,7 @@ export const metadata: Metadata = {
 
 // Use the same plain-text answers for the visible FAQ and its schema.
 const SPENDING_LIMIT_ANSWER =
-  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly credit reduces your charges; it is not a maximum monthly bill.'
+  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly credit reduces your charges; it is not a maximum monthly bill. A hard spending cap on an infrastructure service would stop the application depending on it, so filesystems without a card on file are bounded by storage and file limits instead, which block writes when reached.'
 const FAQ_ITEMS = [
   {
     q: 'Does each filesystem get its own $5 credit?',
@@ -163,6 +197,10 @@ const FAQ_ITEMS = [
     a: 'No. The credit is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per filesystem. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
   },
   { q: 'Can I set a monthly spending limit?', a: SPENDING_LIMIT_ANSWER },
+  {
+    q: 'What happens when a filesystem reaches a limit?',
+    a: 'It stops accepting writes, and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the $5 credit is billed as overage on your monthly invoice rather than blocked.',
+  },
 ]
 
 const schema = buildPageSchema({
@@ -210,10 +248,16 @@ export default function FilesystemPricingDetailsPage() {
             Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
             tiered plans.
           </p>
-          {/* Keep the applicable pricing region visible before any figures. */}
+          {/* Keep the applicable pricing region visible before any figures. Five
+              regions are published; every figure on this page uses the one named
+              here, and the rate card carries the others. */}
           <p className="mb-6 max-w-[620px] text-body-md text-carbon-400">
-            Prices shown are for <code className="font-mono">aws-us-east-1</code>. Additional
-            regions will be added over time.
+            Every figure on this page is for <code className="font-mono">{RATE_REGION}</code>. Four
+            more regions are priced on the{' '}
+            <a href="#rates" className="underline underline-offset-2 hover:no-underline">
+              rate card
+            </a>
+            , where read and write operations cost the same in all five.
           </p>
           <a
             href="#rates"
@@ -417,8 +461,10 @@ export default function FilesystemPricingDetailsPage() {
           />
           <p className="mb-8 max-w-[760px] text-body-lg text-carbon-300">
             Both examples use non-pooled read/write requests, Performance storage held for a full
-            month and no Pooled usage, at <code className="font-mono">aws-us-east-1</code> rates.
-            Each starts with the organization&rsquo;s full $5 monthly credit available.
+            month and no Pooled usage, at <code className="font-mono">{RATE_REGION}</code> rates.
+            Because both are dominated by requests, which cost the same everywhere, the same usage
+            in the most expensive listed region comes to under 3% more. Each starts with the
+            organization&rsquo;s full $5 monthly credit available.
           </p>
           <div className="grid gap-6 md:grid-cols-2">
             {EXAMPLES.map((example) => (
@@ -472,7 +518,7 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="rates" style={{ background: 'gray' }}>
           <SectionHeader
             title="Rates and How Billing Works"
-            subtitle="Use the rate for each category of your usage, then add those charges together. All seven billing items are listed below."
+            subtitle="Use the rate for each category of your usage, then add those charges together. All seven billing items are listed below, for aws-us-east-1."
             className="mb-8"
             h2Size="md"
           />
@@ -498,12 +544,54 @@ export default function FilesystemPricingDetailsPage() {
             </table>
           </div>
           <p className="mt-4 max-w-[760px] text-body-sm text-text-primary/60">
-            All prices in USD. Billed monthly, prorated by the hour. Shown for{' '}
-            <code>aws-us-east-1</code>; other regions are adjusted proportionally.{' '}
+            All prices in USD. Billed monthly, prorated by the hour. The rates above are for{' '}
+            <code>{RATE_REGION}</code>.
+          </p>
+
+          {/* The source published four more regions on 2026-09-22. Read and write
+              operations are identical in all five, so only the meters that
+              actually differ are repeated here — a second full seven-row table
+              per region would be four-fifths duplication. */}
+          <h3 className="mt-12 mb-3 text-h3-lg font-bold">Rates in Other Regions</h3>
+          <p className="mb-6 max-w-[760px] text-body-lg text-text-primary/70">
+            Read and write operations cost the same in every region listed — $0.04 and $0.50 per
+            1,000 requests. Pooled operations, storage and egress differ:
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-body-sm sm:text-body-lg">
+              <thead>
+                <tr className="border-b border-carbon-400 text-left">
+                  <th className="min-w-[200px] py-3 font-bold">Meter</th>
+                  {OTHER_REGIONS.map((region) => (
+                    <th key={region} className="min-w-[110px] py-3 pl-3 text-right font-bold">
+                      <code className="text-body-sm">{region}</code>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {REGION_RATES.map((row) => (
+                  <tr key={row.meter} className="border-b border-carbon-300">
+                    <td className="py-3 pr-3 sm:pr-6">{row.meter}</td>
+                    {row.prices.map((price, i) => (
+                      <td
+                        key={OTHER_REGIONS[i]}
+                        className="py-3 pl-3 text-right font-mono align-top"
+                      >
+                        {price}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 max-w-[760px] text-body-sm text-text-primary/60">
+            Regions are added gradually.{' '}
             <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
               Contact us
             </a>{' '}
-            for a quote in another region.
+            for a quote in a region that is not listed.
           </p>
         </SectionWrapper>
 
@@ -522,6 +610,7 @@ export default function FilesystemPricingDetailsPage() {
                 <li>2 GB of storage per filesystem</li>
                 <li>500 MB maximum for a single file</li>
               </ul>
+              {AT_THE_LIMIT && <p className="mt-4 text-body-lg text-carbon-300">{AT_THE_LIMIT}</p>}
               <p className="mt-4 text-body-lg text-carbon-300">
                 Accounts with a card on file are exempt from these limits.
               </p>
@@ -529,14 +618,19 @@ export default function FilesystemPricingDetailsPage() {
             <div>
               <h3 className="mb-3 text-h3-lg font-bold">Your Credit and Spending</h3>
               <p className="text-body-lg text-carbon-300">{SPENDING_LIMIT_ANSWER}</p>
+              {/* The storage and file caps block writes, which bounds how much you
+                  can STORE — not how much you can spend. Repeatedly writing the
+                  same small file never approaches 2 GB or 2,000 files, so nothing
+                  blocks it and every request still bills. Saying only "the caps
+                  keep costs low" would leave an agent writing in a loop — the
+                  product's own use case — unwarned. */}
               <p className="mt-4 text-body-lg text-carbon-300">
-                The limits above cap capacity, not spending. Request volume and egress are not
-                capped, so usage in a single filesystem can pass the credit on requests alone — at
-                the listed write rate, 200,000 write requests come to $100.00. Using filesystems in
-                more than one region can also produce charges, including on an account without a
-                card.
+                The limits above cap capacity, not spending. Nothing limits how many requests you
+                make within them: rewriting the same file never approaches the 2 GB or 2,000-file
+                limits, so writes are never blocked and each one is still billed. At the listed
+                write rate, 200,000 write requests come to $100.00. Using filesystems in more than
+                one region can also produce charges, including on an account without a card.
               </p>
-              {AT_THE_LIMIT && <p className="mt-4 text-body-lg text-carbon-300">{AT_THE_LIMIT}</p>}
               <p className="mt-4 text-body-lg text-carbon-300">
                 <a href={PRODUCT_URL} className="underline underline-offset-2 hover:no-underline">
                   What TiDB Cloud Filesystem is
