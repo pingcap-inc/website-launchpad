@@ -43,70 +43,68 @@ const AT_THE_LIMIT: string | null =
 // edit these numbers without redoing that check. The source doc's `Discountable`
 // column is internal and is not reproduced anywhere on this page.
 //
-// The source now publishes five regions. Read and write operations are $0.04 and
-// $0.50 per 1,000 in ALL five; only pooled operations, both storage types and
-// egress vary. RATES below is aws-us-east-1; REGION_RATES carries the rest.
+// The source publishes five regions, and they go in ONE table rather than a
+// default plus a diff table or a region picker. A pricing-page visitor has not
+// signed up yet, so their region is not something they pick by comparing our
+// prices — it is fixed by constraints they already have (data residency, the
+// cloud their app runs on, existing provider commitments) or they have no region
+// in mind at all. For the second group the real pre-signup question is "do you
+// support my provider at all", which a table answers at a glance and a dropdown
+// hides behind a click.
 //
-// Each row carries the source doc's own Description. Those descriptions say
-// what a meter is measured against; they do not say what assigns usage to
-// Pooled or Performance, which is POOLED_EXPLAINER above.
-const RATES = [
-  {
-    meter: 'Read operations, per 1,000 requests',
-    note: 'File read requests against TiDB Cloud Filesystem endpoints',
-    price: '$0.04',
-  },
-  {
-    meter: 'Write operations, per 1,000 requests',
-    note: 'File write requests against TiDB Cloud Filesystem endpoints',
-    price: '$0.50',
-  },
-  {
-    meter: 'Pooled file read operations, per 1,000 requests',
-    note: 'File read requests against object storage',
-    price: '$0.0004',
-  },
-  {
-    meter: 'Pooled file write operations, per 1,000 requests',
-    note: 'File write requests against object storage',
-    price: '$0.005',
-  },
-  {
-    meter: 'Storage — Performance',
-    note: 'Underlying database storage, per GB per month',
-    price: '$0.30 / GB-mo',
-  },
-  {
-    meter: 'Storage — Pooled',
-    note: 'Underlying object storage, per GB per month',
-    price: '$0.025 / GB-mo',
-  },
-  { meter: 'Internet egress', note: 'Data transfer out to the internet', price: '$0.09 / GB' },
-]
-
-// Illustrative inputs, not measured workloads or recommended workload tiers.
-// Two complete bills plus a shared-credit variation explain different decisions.
-// Only the meters that differ by region. Read and write operations are uniform
-// across all five and stay in RATES above rather than being repeated here.
-const RATE_REGION = 'aws-us-east-1'
-const OTHER_REGIONS = [
+// Read and write operations are identical in all five, and they are 88-94% of a
+// request-dominated bill. Two rows repeating across five columns IS the message;
+// a picker would show one region at a time and conceal it.
+const REGIONS = [
+  'aws-us-east-1',
   'aws-us-west-2',
   'aws-ap-southeast-1',
   'alicloud-ap-southeast-1',
   'gcp-us-east-1',
 ]
-const REGION_RATES = [
+// The region every worked figure on this page uses.
+const RATE_REGION = REGIONS[0]
+
+// Each row carries the source doc's own Description. Those descriptions say
+// what a meter is measured against; they do not say what assigns usage to
+// Pooled or Performance, which is POOLED_EXPLAINER above. Prices are in REGIONS
+// order.
+const RATES = [
   {
-    meter: 'Pooled file read, per 1,000 requests',
-    prices: ['$0.0004', '$0.0004', '$0.0001', '$0.0004'],
+    meter: 'Read operations, per 1,000 requests',
+    note: 'File read requests against TiDB Cloud Filesystem endpoints',
+    prices: ['$0.04', '$0.04', '$0.04', '$0.04', '$0.04'],
   },
   {
-    meter: 'Pooled file write, per 1,000 requests',
-    prices: ['$0.005', '$0.005', '$0.0014', '$0.005'],
+    meter: 'Write operations, per 1,000 requests',
+    note: 'File write requests against TiDB Cloud Filesystem endpoints',
+    prices: ['$0.50', '$0.50', '$0.50', '$0.50', '$0.50'],
   },
-  { meter: 'Storage — Performance, per GB-mo', prices: ['$0.30', '$0.36', '$0.32', '$0.30'] },
-  { meter: 'Storage — Pooled, per GB-mo', prices: ['$0.025', '$0.027', '$0.019', '$0.022'] },
-  { meter: 'Internet egress, per GB', prices: ['$0.09', '$0.12', '$0.08', '$0.12'] },
+  {
+    meter: 'Pooled file read operations, per 1,000 requests',
+    note: 'File read requests against object storage',
+    prices: ['$0.0004', '$0.0004', '$0.0004', '$0.0001', '$0.0004'],
+  },
+  {
+    meter: 'Pooled file write operations, per 1,000 requests',
+    note: 'File write requests against object storage',
+    prices: ['$0.005', '$0.005', '$0.005', '$0.0014', '$0.005'],
+  },
+  {
+    meter: 'Storage — Performance, per GB-mo',
+    note: 'Underlying database storage',
+    prices: ['$0.30', '$0.30', '$0.36', '$0.32', '$0.30'],
+  },
+  {
+    meter: 'Storage — Pooled, per GB-mo',
+    note: 'Underlying object storage',
+    prices: ['$0.025', '$0.025', '$0.027', '$0.019', '$0.022'],
+  },
+  {
+    meter: 'Internet egress, per GB',
+    note: 'Data transfer out to the internet',
+    prices: ['$0.09', '$0.09', '$0.12', '$0.08', '$0.12'],
+  },
 ]
 
 const EXAMPLES = [
@@ -248,23 +246,33 @@ export default function FilesystemPricingDetailsPage() {
             Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
             tiered plans.
           </p>
-          {/* Keep the applicable pricing region visible before any figures. Five
-              regions are published; every figure on this page uses the one named
-              here, and the rate card carries the others. */}
+          {/* A pricing page is a common first landing point, and a reader who does
+              not yet know what the product is had no route to it from here. The
+              product page is the parent of this one in the breadcrumb and shares
+              its schema @id; it belongs in the hero, not only in a footnote
+              eight headings down. */}
           <p className="mb-6 max-w-[620px] text-body-md text-carbon-400">
-            Every figure on this page is for <code className="font-mono">{RATE_REGION}</code>. Four
-            more regions are priced on the{' '}
+            Every figure on this page is for <code className="font-mono">{RATE_REGION}</code>. All
+            five priced regions are on the{' '}
             <a href="#rates" className="underline underline-offset-2 hover:no-underline">
               rate card
             </a>
-            , where read and write operations cost the same in all five.
+            , where read and write operations cost the same in every one.
           </p>
-          <a
-            href="#rates"
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-carbon-800 px-4 py-2 text-body-sm text-carbon-200 transition-colors hover:border-carbon-400 hover:text-text-inverse"
-          >
-            Jump to the rate card
-          </a>
+          <div className="mb-8 flex flex-wrap items-center gap-3">
+            <a
+              href="#rates"
+              className="inline-flex items-center gap-2 rounded-full border border-carbon-800 px-4 py-2 text-body-sm text-carbon-200 transition-colors hover:border-carbon-400 hover:text-text-inverse"
+            >
+              Jump to the rate card
+            </a>
+            <a
+              href={PRODUCT_URL}
+              className="inline-flex items-center gap-2 rounded-full border border-carbon-800 px-4 py-2 text-body-sm text-carbon-200 transition-colors hover:border-carbon-400 hover:text-text-inverse"
+            >
+              Product overview
+            </a>
+          </div>
         </SectionWrapper>
 
         {/* Match the Lake pricing page's preview notice. Its Price Protection
@@ -518,16 +526,27 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="rates" style={{ background: 'gray' }}>
           <SectionHeader
             title="Rates and How Billing Works"
-            subtitle="Use the rate for each category of your usage, then add those charges together. All seven billing items are listed below, for aws-us-east-1."
+            subtitle="Use the rate for each category of your usage, then add those charges together. All seven billing items are listed below, for every region where Filesystem is priced."
             className="mb-8"
             h2Size="md"
           />
+          {/* Lead with the uniformity. A reader scanning five columns of numbers
+              should be told first which ones they do not need to compare. */}
+          <p className="mb-6 max-w-[760px] text-body-lg text-text-primary/70">
+            Read and write operations cost the same in every region — $0.04 and $0.50 per 1,000
+            requests — and they dominate most bills. Pooled operations, storage and egress differ by
+            region.
+          </p>
           <div className="overflow-x-auto">
-            <table className="w-full table-fixed border-collapse text-body-sm sm:text-body-lg">
+            <table className="w-full border-collapse text-body-sm sm:text-body-lg">
               <thead>
                 <tr className="border-b border-carbon-400 text-left">
-                  <th className="py-3 font-bold">Meter</th>
-                  <th className="w-[36%] py-3 text-right font-bold">Price</th>
+                  <th className="min-w-[210px] py-3 font-bold">Meter</th>
+                  {REGIONS.map((region) => (
+                    <th key={region} className="min-w-[112px] py-3 pl-3 text-right font-bold">
+                      <code className="text-body-sm">{region}</code>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -537,47 +556,8 @@ export default function FilesystemPricingDetailsPage() {
                       {rate.meter}
                       <span className="block text-body-sm text-text-primary/60">{rate.note}</span>
                     </td>
-                    <td className="py-3 align-top text-right font-mono">{rate.price}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-4 max-w-[760px] text-body-sm text-text-primary/60">
-            All prices in USD. Billed monthly, prorated by the hour. The rates above are for{' '}
-            <code>{RATE_REGION}</code>.
-          </p>
-
-          {/* The source published four more regions on 2026-09-22. Read and write
-              operations are identical in all five, so only the meters that
-              actually differ are repeated here — a second full seven-row table
-              per region would be four-fifths duplication. */}
-          <h3 className="mt-12 mb-3 text-h3-lg font-bold">Rates in Other Regions</h3>
-          <p className="mb-6 max-w-[760px] text-body-lg text-text-primary/70">
-            Read and write operations cost the same in every region listed — $0.04 and $0.50 per
-            1,000 requests. Pooled operations, storage and egress differ:
-          </p>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-body-sm sm:text-body-lg">
-              <thead>
-                <tr className="border-b border-carbon-400 text-left">
-                  <th className="min-w-[200px] py-3 font-bold">Meter</th>
-                  {OTHER_REGIONS.map((region) => (
-                    <th key={region} className="min-w-[110px] py-3 pl-3 text-right font-bold">
-                      <code className="text-body-sm">{region}</code>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {REGION_RATES.map((row) => (
-                  <tr key={row.meter} className="border-b border-carbon-300">
-                    <td className="py-3 pr-3 sm:pr-6">{row.meter}</td>
-                    {row.prices.map((price, i) => (
-                      <td
-                        key={OTHER_REGIONS[i]}
-                        className="py-3 pl-3 text-right font-mono align-top"
-                      >
+                    {rate.prices.map((price, i) => (
+                      <td key={REGIONS[i]} className="py-3 pl-3 text-right align-top font-mono">
                         {price}
                       </td>
                     ))}
@@ -587,9 +567,10 @@ export default function FilesystemPricingDetailsPage() {
             </table>
           </div>
           <p className="mt-4 max-w-[760px] text-body-sm text-text-primary/60">
-            Regions are added gradually.{' '}
+            All prices in USD. Billed monthly, prorated by the hour. Worked examples on this page
+            use <code>{RATE_REGION}</code>. Regions are added gradually —{' '}
             <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
-              Contact us
+              contact us
             </a>{' '}
             for a quote in a region that is not listed.
           </p>
