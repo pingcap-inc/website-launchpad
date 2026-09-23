@@ -16,7 +16,7 @@ This Next.js app coexists with the main PingCAP WordPress site. Nginx proxies sp
 >
 > So for any page at a path not already forwarded: get the forwarding rule landed **before** merging, and before anything else links to that path. A shortlink repointed after its PR had already merged is how `tidb.link/fs-skill.md` broke in Sep 2026, and `/tidb-cloud-filesystem-pricing-details/` hit the same wall. Adding a page under an already-forwarded prefix (e.g. `/tidb/...`) does not have this problem.
 >
-> Note also that `main` has **no branch protection** on this repo: nothing requires a review, so leaving a PR in draft is the only mechanical block on a premature merge.
+> Note on `main`: the legacy branch-protection API returns 404 here, but a **ruleset** does protect it — direct pushes are blocked and changes must go through a pull request. GitHub also reports `REVIEW_REQUIRED` on an open PR, so expect to need an approval. Do not conclude from a 404 on `/branches/main/protection` that the branch is unprotected; check `/rules/branches/main` too.
 
 ---
 
