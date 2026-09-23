@@ -11,6 +11,13 @@
 
 This Next.js app coexists with the main PingCAP WordPress site. Nginx proxies specific paths to this app. The homepage (`/`) is managed by WordPress — do NOT create `src/app/page.tsx`.
 
+> [!IMPORTANT]
+> **A new top-level path is not live just because its PR merged.** The nginx forwarding list is configured per path and **is not in this repo**, so nothing here will tell you a path is missing — the URL simply returns a WordPress 404 while the page builds and deploys fine on its preview. Merging does not ship it.
+>
+> So for any page at a path not already forwarded: get the forwarding rule landed **before** merging, and before anything else links to that path. A shortlink repointed after its PR had already merged is how `tidb.link/fs-skill.md` broke in Sep 2026, and `/tidb-cloud-filesystem-pricing-details/` hit the same wall. Adding a page under an already-forwarded prefix (e.g. `/tidb/...`) does not have this problem.
+>
+> Note on `main`: the legacy branch-protection API returns 404 here, but a **ruleset** does protect it — direct pushes are blocked and changes must go through a pull request. GitHub also reports `REVIEW_REQUIRED` on an open PR, so expect to need an approval. Do not conclude from a 404 on `/branches/main/protection` that the branch is unprotected; check `/rules/branches/main` too.
+
 ---
 
 ## 📄 Generating Pages from Raw Material
@@ -270,6 +277,20 @@ When the user asks to submit, commit, or push code to GitHub, **always run this 
 6. **Override** — if the user explicitly says "跳过评审直接提交", note the override, then push.
 
 > 🟢 ≥8 · 🟡 7 · 🔴 <7
+
+---
+
+## Filesystem Pricing Notice
+
+For `/tidb-cloud-filesystem-pricing-details/`:
+
+- Optimize for readers understanding and applying pricing, with no word-count or brevity target. Preserve useful definitions, credit-to-usage illustrations, worked bills and boundary explanations. Every section must answer a user question; do not explain vendor costs, margins or architecture to justify charging.
+- Filesystem does not support a configurable spending limit. Do not imply the monthly credit caps spending, or infer that spending alerts are available without a confirmed product description.
+- The no-card limits bound capacity, not spending: nothing caps request volume or egress, so a single-region account can pass the credit on requests alone. Do not attribute the charge risk to using multiple regions — that reads as safety to anyone staying in one region. Multi-region is an additional case, not the mechanism.
+
+- Match the Lake pricing page's square pale-blue preview notice, with a separate bold title, preview-price statement, and Contact us link. Do not add a Price Protection Plan promise.
+- Keep the current pricing region in the hero: `Prices shown are for aws-us-east-1. Additional regions will be added over time.` Do not add a rollout date or infer that the priced region is the only available region.
+- The reference notice links to `https://www.pingcap.com/contact-us/` without query parameters; preserve that destination unless a supported tracking parameter is explicitly requested.
 
 ---
 

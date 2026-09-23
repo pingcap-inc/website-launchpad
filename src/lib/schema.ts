@@ -59,6 +59,14 @@ export interface BuildPageSchemaOptions {
   dateModified?: string
   /** OG image URL */
   image?: string
+  /**
+   * `@id` of the entity this page is about. Defaults to the Organization, which
+   * is right for pages whose subject is PingCAP itself. A page about a specific
+   * product should point at that product's node instead, so an answer engine
+   * reading the graph can tell what the page describes. Existing callers are
+   * unaffected.
+   */
+  aboutId?: string
 }
 
 // ─── Main builder ─────────────────────────────────────────────────────────────
@@ -73,6 +81,7 @@ export function buildPageSchema({
   datePublished,
   dateModified,
   image,
+  aboutId,
 }: BuildPageSchemaOptions): Record<string, unknown> {
   const pageUrl = `${SITE_URL}${path}`
   const pageId = `${pageUrl}#webpage`
@@ -115,7 +124,7 @@ export function buildPageSchema({
       name: title,
       description,
       isPartOf: { '@id': WEBSITE_ID },
-      about: { '@id': ORG_ID },
+      about: { '@id': aboutId ?? ORG_ID },
       ...(image && { image: { '@type': 'ImageObject', url: image } }),
       ...(datePublished && { datePublished }),
       ...(dateModified && { dateModified }),
