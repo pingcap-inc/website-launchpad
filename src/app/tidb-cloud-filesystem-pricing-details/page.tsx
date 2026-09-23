@@ -152,7 +152,7 @@ const CONTACT_US = 'https://www.pingcap.com/contact-us/'
 // its pricing, so its SoftwareApplication node points back at that URL instead
 // of at this one — otherwise the two pages assert two different entities with
 // the same name, and an answer engine has to guess which record to cite.
-const PRODUCT_URL = 'https://www.pingcap.com/tidb/tidb-cloud-filesystems/'
+const PRODUCT_URL = 'https://www.pingcap.com/tidb/tidb-cloud-filesystem/'
 
 const PATH = '/tidb-cloud-filesystem-pricing-details/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
@@ -208,7 +208,7 @@ const schema = buildPageSchema({
   aboutId: `${PRODUCT_URL}#software`,
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: 'TiDB Cloud Filesystem', path: '/tidb/tidb-cloud-filesystems/' },
+    { name: 'TiDB Cloud Filesystem', path: '/tidb/tidb-cloud-filesystem/' },
     { name: 'Pricing Details', path: PATH },
   ],
   extraSchemas: [
