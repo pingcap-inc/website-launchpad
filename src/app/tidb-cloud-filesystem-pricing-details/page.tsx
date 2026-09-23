@@ -32,7 +32,7 @@ const POOLED_EXPLAINER: string | null = null
 // the right instrument in principle — that is a design opinion, not a shipped
 // feature, and must not be read as one.
 const AT_THE_LIMIT: string | null =
-  'When a filesystem reaches one of these limits, it stops accepting writes and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the credit is billed as overage on your monthly invoice; without one, charges past the credit still accrue and remain payable.'
+  'At a limit, your existing files stay readable and the filesystem stops accepting new writes. The TiDB Cloud console shows a warning. With a card on file, usage beyond the credit is billed as overage on your monthly invoice.'
 
 // ── Source of truth ──────────────────────────────────────────────────────────
 // "TiDB Cloud Filesystem Pricing Public Preview" v9 (2026-09-22, "Added multiple
@@ -184,7 +184,7 @@ export const metadata: Metadata = {
 
 // Use the same plain-text answers for the visible FAQ and its schema.
 const SPENDING_LIMIT_ANSWER =
-  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly credit reduces your charges; it is not a maximum monthly bill. A hard spending cap on an infrastructure service would stop the application depending on it, so filesystems without a card on file are bounded by storage and file limits instead, which block writes when reached.'
+  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly credit reduces your charges; it is not a maximum monthly bill.'
 const FAQ_ITEMS = [
   {
     q: 'Does each filesystem get its own $5 credit?',
@@ -342,19 +342,19 @@ export default function FilesystemPricingDetailsPage() {
                 Performance storage for a full month costs $4.80, but a filesystem without a card
                 can only hold 2 GB.
               </p>
-              {/* The caps bound capacity, not spending: nothing limits request
-                  count or egress, so a single-region no-card account can pass
-                  the credit on requests alone. Naming multiple regions first
-                  taught the wrong rule — a reader staying in one region read it
-                  as safety. The $100 figure is derived from the published write
-                  rate, not from any product statement. */}
+              {/* Removed 2026-09-23 at the owner's direction: an illustration of
+                  how far request volume can run past the credit ("200,000 write
+                  requests come to $100.00"). It was derived from the published
+                  write rate, but Product could not confirm the underlying
+                  behaviour, and an unresolved claim does not belong on a public
+                  page. The two confirmed facts stay: the credit is not a cap, and
+                  there is no configurable spending limit. Restore the fuller
+                  explanation only once Product answers. */}
               <p className="mb-5 text-body-lg text-text-primary/70">
-                Nothing limits how many requests you make. The caps above limit how much you can
-                store, not what you can spend — at the listed write rate, 200,000 write requests
-                come to $100.00. Using filesystems in more than one region can also produce charges.
-                There is no configurable spending limit. See{' '}
+                The $5 credit reduces your charges; it is not a maximum monthly bill, and there is
+                no configurable spending limit. See{' '}
                 <a href="#limitations" className="underline underline-offset-2 hover:no-underline">
-                  Cost and Limitations
+                  Billing and Limits
                 </a>{' '}
                 before you start.
               </p>
@@ -431,38 +431,32 @@ export default function FilesystemPricingDetailsPage() {
                 </p>
               </div>
             </div>
-            <div>
-              <h3 className="mb-3 text-h3-lg font-bold">Performance and Pooled</h3>
-              <div className="space-y-3 text-body-lg text-text-primary/70">
-                <p>
-                  The rate card lists two storage categories, Performance and Pooled. It also lists
-                  ordinary read/write requests and separate Pooled file requests. These have
-                  different rates.
-                </p>
-                {POOLED_EXPLAINER ? (
-                  <p>{POOLED_EXPLAINER}</p>
-                ) : (
+            {/* Silent until answered, 2026-09-23. This block used to tell the
+                reader we could not say which category applied and to contact us,
+                which advertised the gap without closing it. The rate card still
+                lists every published meter, so nothing is hidden from a reader
+                who is billed for one. Setting POOLED_EXPLAINER makes the whole
+                block reappear — that is the one-line patch when Product answers. */}
+            {POOLED_EXPLAINER && (
+              <div>
+                <h3 className="mb-3 text-h3-lg font-bold">Performance and Pooled</h3>
+                <div className="space-y-3 text-body-lg text-text-primary/70">
                   <p>
-                    Before estimating your own costs, confirm which categories apply to your usage.{' '}
-                    <a
-                      href={CONTACT_US}
-                      className="underline underline-offset-2 hover:no-underline"
-                    >
-                      Contact us
-                    </a>{' '}
-                    for help identifying the applicable rates. The examples below use non-pooled
-                    requests and Performance storage only.
+                    The rate card lists two storage categories, Performance and Pooled. It also
+                    lists ordinary read/write requests and separate Pooled file requests. These have
+                    different rates.
                   </p>
-                )}
+                  <p>{POOLED_EXPLAINER}</p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </SectionWrapper>
 
         {/* Show complete arithmetic and then explain how shared credit changes it. */}
         <SectionWrapper id="monthly-cost" style={{ background: 'primary' }}>
           <SectionHeader
-            title="Example Monthly Costs"
+            title="Example Monthly Bills"
             subtitle="Add the charges for each billing item, then subtract the available monthly credit. These illustrative examples show both the calculation and what remains to pay."
             className="mb-8"
             h2Size="md"
@@ -576,12 +570,15 @@ export default function FilesystemPricingDetailsPage() {
           </p>
         </SectionWrapper>
 
-        {/* 04 Cost and Limitations — the family's heading. Everything here is
+        {/* 04 Billing and Limits. The sibling pricing pages call this "Cost and
+            Limitations"; renamed 2026-09-23 because that stacks two constraint
+            nouns, and "Limitations" reads as shortcomings where "Limits" is a
+            neutral quantity. Everything here is
             the full statement of a limit or a charge boundary; the preview,
             region and credit facts live where they are first needed instead of
             being repeated as a list. */}
         <SectionWrapper id="limitations" style={{ background: 'primary' }}>
-          <SectionHeader title="Cost and Limitations" className="mb-8" h2Size="md" />
+          <SectionHeader title="Billing and Limits" className="mb-8" h2Size="md" />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
               <h3 className="mb-3 text-h3-lg font-bold">Without a Card on File</h3>
@@ -599,18 +596,11 @@ export default function FilesystemPricingDetailsPage() {
             <div>
               <h3 className="mb-3 text-h3-lg font-bold">Your Credit and Spending</h3>
               <p className="text-body-lg text-carbon-300">{SPENDING_LIMIT_ANSWER}</p>
-              {/* The storage and file caps block writes, which bounds how much you
-                  can STORE — not how much you can spend. Repeatedly writing the
-                  same small file never approaches 2 GB or 2,000 files, so nothing
-                  blocks it and every request still bills. Saying only "the caps
-                  keep costs low" would leave an agent writing in a loop — the
-                  product's own use case — unwarned. */}
+              {/* See the note in Start Free. The request-volume illustration was
+                  removed here too; what remains is only what Product confirmed. */}
               <p className="mt-4 text-body-lg text-carbon-300">
-                The limits above cap capacity, not spending. Nothing limits how many requests you
-                make within them: rewriting the same file never approaches the 2 GB or 2,000-file
-                limits, so writes are never blocked and each one is still billed. At the listed
-                write rate, 200,000 write requests come to $100.00. Using filesystems in more than
-                one region can also produce charges, including on an account without a card.
+                Using filesystems in more than one region can also produce charges, including on an
+                account without a card.
               </p>
               <p className="mt-4 text-body-lg text-carbon-300">
                 <a href={PRODUCT_URL} className="underline underline-offset-2 hover:no-underline">
