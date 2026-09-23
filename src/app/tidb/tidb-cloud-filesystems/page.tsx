@@ -28,19 +28,25 @@ import { PrismBackground } from './PrismBackground'
 // "preview, not guaranteed" note on step 07 is a useful honest disclosure.
 const SHOW_MECHANISMS = true
 
-// The ti CLI docs are not published yet — every /ai/ti-* path below 404s on
-// docs.pingcap.com today. Decision (Heidi, 2026-08-25): ship with the
-// Cloudflare preview build rather than hold the page. Swap this one constant
-// to 'https://docs.pingcap.com' once Docs publishes, then re-run the link
-// check; it is the only place these hosts appear.
-const DOCS_BASE = 'https://ai.pingcap-docsite-preview.pages.dev'
-// "Get Started with TiDB Cloud CLI" — install, configure, pick a first
-// workflow. The Quickstart CTAs used to land on the agent-sandbox tutorial,
-// which opens by re-explaining the agent problem this page has already spent
-// three sections making; not what someone clicking "Quickstart" wants.
-const DOCS_QUICKSTART = `${DOCS_BASE}/ai/ti-quick-start/`
+const DOCS_BASE = 'https://docs.pingcap.com'
+
+// Filesystem now has its own documentation set, so anything that is a question
+// about the product goes there. The CLI docs keep exactly one slot below — the
+// place where "what is this ti binary" is the actual question.
+const DOCS_FS = `${DOCS_BASE}/tidbcloud-filesystem`
+// "Get Started with TiDB Cloud Filesystem": install the CLI, configure it,
+// create a Filesystem, write and read a file. Its step 1 installs the CLI, so
+// nothing about the CLI entry point is lost by pointing here. The CLI's own
+// quick start ends by asking you to choose between Filesystem and a Starter
+// database — a fork someone arriving from this page should not have to take.
+const DOCS_QUICKSTART = `${DOCS_FS}/filesystem-quick-start/`
+const DOCS_FS_INTRO = `${DOCS_FS}/filesystem-intro/`
+const DOCS_REGIONS = `${DOCS_FS}/filesystem-regions-and-limitations/`
+const DOCS_AI_PROVIDERS = `${DOCS_FS}/configure-filesystem-ai-providers/`
+const DOCS_LAYERS = `${DOCS_FS}/filesystem-layers-checkpoints/`
+// The one CLI slot: the hero's code panel asks you to install `ti`, and this is
+// the only page that answers what that binary is.
 const DOCS_CLI_OVERVIEW = `${DOCS_BASE}/ai/ti-overview/`
-const DOCS_REGIONS = `${DOCS_BASE}/ai/ti-regions-security-and-limitations/`
 // "Persist Agent State Across Disposable Sandboxes" — its three steps
 // (provision, start the first sandbox, resume in a replacement) are what the
 // closing section's copy describes, so the closing CTA lands there rather than
@@ -55,7 +61,7 @@ const KIMI_STORY_URL: string | null = null
 
 const TITLE = 'TiDB Cloud Filesystem: The Workspace Your Agents Share'
 const DESCRIPTION =
-  'TiDB Cloud Filesystem is a durable shared workspace for coding agents — one filesystem held by several runtimes at once. Now in technical preview.'
+  'TiDB Cloud Filesystem is a durable shared workspace for coding agents — one filesystem held by several runtimes at once. Now in public preview.'
 // Nested under /tidb/ per PMM (2026-08-25). NOTE for deploy: /tidb/ itself is
 // WordPress-served — every route this app serves in production is top-level
 // (/tidb-cloud-lake/, /what-is-tidb/). Reaching this path needs an Nginx
@@ -99,13 +105,20 @@ const faqItems: {
     plain: {
       question: 'What is TiDB Cloud Filesystem?',
       answer:
-        "A durable working directory for coding agents. A runtime uses normal file operations, while the workspace stays available beyond that runtime's lifecycle — so the next session, sandbox, agent or reviewer opens the same workspace instead of rebuilding it.",
+        "A durable working directory for coding agents. A runtime uses normal file operations, while the workspace stays available beyond that runtime's lifecycle — so the next session, sandbox, agent or reviewer opens the same workspace instead of rebuilding it. See the TiDB Cloud Filesystem documentation for the full picture.",
     },
     answer: (
       <>
         A durable working directory for coding agents. A runtime uses normal file operations, while
         the workspace stays available beyond that runtime&apos;s lifecycle — so the next session,
-        sandbox, agent or reviewer opens the same workspace instead of rebuilding it.
+        sandbox, agent or reviewer opens the same workspace instead of rebuilding it.{' '}
+        <a
+          href={DOCS_FS_INTRO}
+          className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
+        >
+          See the TiDB Cloud Filesystem documentation
+        </a>{' '}
+        for the full picture.
       </>
     ),
   },
@@ -199,11 +212,11 @@ const faqItems: {
     plain: {
       question: 'Is there a TiDB Cloud Filesystem SDK?',
       answer:
-        'Not yet. The CLI is the full surface during the technical preview. TypeScript and Python SDKs are coming soon.',
+        'Not yet. The CLI is the full surface during the public preview. TypeScript and Python SDKs are coming soon.',
     },
     answer: (
       <>
-        Not yet. The CLI is the full surface during the technical preview. TypeScript and Python
+        Not yet. The CLI is the full surface during the public preview. TypeScript and Python
         SDKs are coming soon.
       </>
     ),
@@ -214,15 +227,22 @@ const faqItems: {
     plain: {
       question: 'Does TiDB Cloud Filesystem support semantic or vector search over my files?',
       answer:
-        "Full-text content search and filename matching are what to rely on today — fs search-file-content and fs find-files. Semantic retrieval is designed in, but it isn't something we can promise during the preview.",
+        'Yes, once you configure it. Point the filesystem at an embedding provider and your text — along with descriptions extracted from images, audio and video — is represented as vectors you can search semantically. Without that configuration, fs search-file-content matches literal text (the pattern is a text query, not a regex or glob) and fs find-files matches on name, tag, size and time. See Configure AI providers for the setup.',
     },
     answer: (
       <>
-        Full-text content search and filename matching are what to rely on today —{' '}
-        <code>fs search-file-content</code> and <code>fs find-files</code>. Semantic retrieval is
-        designed in, but it{' '}
-        <strong className="font-medium text-white">isn&apos;t something we can promise</strong>{' '}
-        during the preview.
+        Yes, once you configure it. Point the filesystem at an embedding provider and your text —
+        along with descriptions extracted from images, audio and video — is represented as vectors
+        you can search semantically. Without that configuration, <code>fs search-file-content</code>{' '}
+        matches literal text (the pattern is a text query, not a regex or glob) and{' '}
+        <code>fs find-files</code> matches on name, tag, size and time. See{' '}
+        <a
+          href={DOCS_AI_PROVIDERS}
+          className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
+        >
+          Configure AI providers
+        </a>{' '}
+        for the setup.
       </>
     ),
   },
@@ -232,14 +252,22 @@ const faqItems: {
     plain: {
       question: 'Does the TiDB Cloud Filesystem preview include checkpoint and rollback?',
       answer:
-        "Layer checkpoints and rollback are designed in, and the create-layer-checkpoint and rollback-layer commands are already in the CLI — but they aren't something we can promise during the preview yet. What's ready today is cross-runtime continuity — write from one runtime, read from another.",
+        'Yes. Layers give you an isolated change set over a base path, which you can checkpoint, fork, diff, roll back or commit — create-layer-checkpoint and rollback-layer are documented commands. One caveat carried over from the docs: complex histories involving repeated changes to layer-created files, or inherited metadata, might have limitations during public preview. See Layers and checkpoints.',
     },
     answer: (
       <>
-        Layer checkpoints and rollback are designed in, and the <code>create-layer-checkpoint</code>{' '}
-        and <code>rollback-layer</code> commands are already in the CLI — but they aren&apos;t
-        something we can promise during the preview yet. What&apos;s ready today is cross-runtime
-        continuity — write from one runtime, read from another.
+        Yes. Layers give you an isolated change set over a base path, which you can checkpoint,
+        fork, diff, roll back or commit — <code>create-layer-checkpoint</code> and{' '}
+        <code>rollback-layer</code> are documented commands. One caveat carried over from the docs:
+        complex histories involving repeated changes to layer-created files, or inherited metadata,
+        might have limitations during public preview. See{' '}
+        <a
+          href={DOCS_LAYERS}
+          className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
+        >
+          Layers and checkpoints
+        </a>
+        .
       </>
     ),
   },
@@ -312,7 +340,7 @@ const schema = buildPageSchema({
         name: 'TiDB Cloud Filesystem',
         description: DESCRIPTION,
         url: CANONICAL,
-        // No published price during the technical preview — see the "What does
+        // No published price during the public preview — see the "What does
         // TiDB Cloud Filesystem cost?" answer below. null omits the Offer node
         // entirely rather than asserting price "0", which would read as "free"
         // in rich results and contradict the copy.
@@ -486,7 +514,7 @@ export default function TidbCloudFilesystemPage() {
               {/* Phase label sits on its own line above the H1 — it is page
                   metadata, not part of the heading. */}
               <div className="mb-4">
-                <Badge variant="secondary">Technical Preview</Badge>
+                <Badge variant="secondary">Public Preview</Badge>
               </div>
               {/* title-case-ignore */}
               <h1 className="mb-6 max-w-[640px] text-pretty text-h1-mb font-bold leading-tight tracking-[-0.025em] md:text-h1">
