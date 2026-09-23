@@ -42,6 +42,8 @@ const DOCS_FS = `${DOCS_BASE}/tidbcloud-filesystem`
 const DOCS_QUICKSTART = `${DOCS_FS}/filesystem-quick-start/`
 const DOCS_FS_INTRO = `${DOCS_FS}/filesystem-intro/`
 const DOCS_REGIONS = `${DOCS_FS}/filesystem-regions-and-limitations/`
+const DOCS_AI_PROVIDERS = `${DOCS_FS}/configure-filesystem-ai-providers/`
+const DOCS_LAYERS = `${DOCS_FS}/filesystem-layers-checkpoints/`
 // The one CLI slot: the hero's code panel asks you to install `ti`, and this is
 // the only page that answers what that binary is.
 const DOCS_CLI_OVERVIEW = `${DOCS_BASE}/ai/ti-overview/`
@@ -225,15 +227,22 @@ const faqItems: {
     plain: {
       question: 'Does TiDB Cloud Filesystem support semantic or vector search over my files?',
       answer:
-        "Full-text content search and filename matching are what to rely on today — fs search-file-content and fs find-files. Semantic retrieval is designed in, but it isn't something we can promise during the preview.",
+        'Yes, once you configure it. Point the filesystem at an embedding provider and your text — along with descriptions extracted from images, audio and video — is represented as vectors you can search semantically. Without that configuration, fs search-file-content matches literal text (the pattern is a text query, not a regex or glob) and fs find-files matches on name, tag, size and time. See Configure AI providers for the setup.',
     },
     answer: (
       <>
-        Full-text content search and filename matching are what to rely on today —{' '}
-        <code>fs search-file-content</code> and <code>fs find-files</code>. Semantic retrieval is
-        designed in, but it{' '}
-        <strong className="font-medium text-white">isn&apos;t something we can promise</strong>{' '}
-        during the preview.
+        Yes, once you configure it. Point the filesystem at an embedding provider and your text —
+        along with descriptions extracted from images, audio and video — is represented as vectors
+        you can search semantically. Without that configuration, <code>fs search-file-content</code>{' '}
+        matches literal text (the pattern is a text query, not a regex or glob) and{' '}
+        <code>fs find-files</code> matches on name, tag, size and time. See{' '}
+        <a
+          href={DOCS_AI_PROVIDERS}
+          className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
+        >
+          Configure AI providers
+        </a>{' '}
+        for the setup.
       </>
     ),
   },
@@ -243,14 +252,22 @@ const faqItems: {
     plain: {
       question: 'Does the TiDB Cloud Filesystem preview include checkpoint and rollback?',
       answer:
-        "Layer checkpoints and rollback are designed in, and the create-layer-checkpoint and rollback-layer commands are already in the CLI — but they aren't something we can promise during the preview yet. What's ready today is cross-runtime continuity — write from one runtime, read from another.",
+        'Yes. Layers give you an isolated change set over a base path, which you can checkpoint, fork, diff, roll back or commit — create-layer-checkpoint and rollback-layer are documented commands. One caveat carried over from the docs: complex histories involving repeated changes to layer-created files, or inherited metadata, might have limitations during public preview. See Layers and checkpoints.',
     },
     answer: (
       <>
-        Layer checkpoints and rollback are designed in, and the <code>create-layer-checkpoint</code>{' '}
-        and <code>rollback-layer</code> commands are already in the CLI — but they aren&apos;t
-        something we can promise during the preview yet. What&apos;s ready today is cross-runtime
-        continuity — write from one runtime, read from another.
+        Yes. Layers give you an isolated change set over a base path, which you can checkpoint,
+        fork, diff, roll back or commit — <code>create-layer-checkpoint</code> and{' '}
+        <code>rollback-layer</code> are documented commands. One caveat carried over from the docs:
+        complex histories involving repeated changes to layer-created files, or inherited metadata,
+        might have limitations during public preview. See{' '}
+        <a
+          href={DOCS_LAYERS}
+          className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
+        >
+          Layers and checkpoints
+        </a>
+        .
       </>
     ),
   },
