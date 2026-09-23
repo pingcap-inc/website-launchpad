@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ArrowDown, ArrowUpRight, CalendarDays, Globe2, Mail, TrendingUp } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, CalendarDays, Globe2, Mail, Mic, TrendingUp } from 'lucide-react'
 import { Footer } from '@/components/ui/Footer'
 import { Header } from '@/components/ui/Header'
 import { JsonLd } from '@/components/ui/JsonLd'
@@ -139,14 +139,15 @@ function StageGraphic() {
       <div className="absolute inset-x-6 top-6 h-px bg-brand-red-primary sm:inset-x-8 sm:top-8" />
       <div className="relative flex h-full flex-col justify-between">
         <div className="flex items-start justify-between gap-6 pt-5">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-carbon-400">
+          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-carbon-400">
             Founder stage
+            <Mic className="h-4 w-4 text-brand-red-primary" strokeWidth={1.5} aria-hidden="true" />
           </p>
           <p className="font-mono text-xs text-carbon-400">Helsinki · 2026</p>
         </div>
         <div>
           <p className="font-mono text-[72px] font-bold leading-none tracking-[-0.08em] text-white sm:text-[96px]">
-            03
+            3
           </p>
           <div className="mt-4 flex items-center gap-3">
             <span className="h-2 w-2 bg-brand-red-primary" />
@@ -342,7 +343,7 @@ export default function StartupProgramSlush2026Page() {
                   Formal terms
                 </p>
                 <h2 className="text-h2-mb font-bold leading-[1.08] tracking-[-0.025em]">
-                  Promotion Terms
+                  Founder Stage Participation Terms
                 </h2>
                 <p className="mt-5 text-body-md leading-7 text-carbon-700">
                   These terms govern participation in the Slush 2026 founder stage selection.
