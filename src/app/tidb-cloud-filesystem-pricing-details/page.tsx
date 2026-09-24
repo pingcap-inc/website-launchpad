@@ -151,7 +151,7 @@ const EXAMPLES = [
 ]
 
 // Verified live on docs.pingcap.com 2026-09-21.
-const DOCS_QUICKSTART = 'https://docs.pingcap.com/ai/ti-quick-start/'
+const DOCS_QUICKSTART = 'https://docs.pingcap.com/tidbcloud-filesystem/filesystem-quick-start/'
 const CONTACT_US = 'https://www.pingcap.com/contact-us/'
 
 // The product entity lives on the Filesystem product page. This page describes
