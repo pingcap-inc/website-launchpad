@@ -145,7 +145,9 @@ const EXAMPLES = [
 ]
 
 // Verified live on docs.pingcap.com 2026-09-21.
-const DOCS_QUICKSTART = 'https://docs.pingcap.com/ai/ti-quick-start/'
+// Agreed 2026-09-24 as the single Filesystem quickstart entrance, so this page
+// and the product page send readers to the same place.
+const DOCS_QUICKSTART = 'https://docs.pingcap.com/tidbcloud-filesystem/filesystem-quick-start/'
 const CONTACT_US = 'https://www.pingcap.com/contact-us/'
 
 // The product entity lives on the Filesystem product page. This page describes
@@ -596,12 +598,10 @@ export default function FilesystemPricingDetailsPage() {
             <div>
               <h3 className="mb-3 text-h3-lg font-bold">Your Credit and Spending</h3>
               <p className="text-body-lg text-carbon-300">{SPENDING_LIMIT_ANSWER}</p>
-              {/* See the note in Start Free. The request-volume illustration was
-                  removed here too; what remains is only what Product confirmed. */}
-              <p className="mt-4 text-body-lg text-carbon-300">
-                Using filesystems in more than one region can also produce charges, including on an
-                account without a card.
-              </p>
+              {/* Removed 2026-09-24 at the owner's direction: a sentence saying
+                  multi-region use "can also produce charges" without saying what
+                  the charge is. SEO review flagged it as unclear, and nothing
+                  published explains it further. See also the note in Start Free. */}
               <p className="mt-4 text-body-lg text-carbon-300">
                 <a href={PRODUCT_URL} className="underline underline-offset-2 hover:no-underline">
                   What TiDB Cloud Filesystem is

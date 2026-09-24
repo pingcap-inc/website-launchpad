@@ -25,7 +25,7 @@ The fixed `<Header />` centers its content with `.contain` (no inner padding), s
 - **≤1374px viewport:** the two are identical (both gutter to 16/32/64px) — no visible difference.
 - **>1374px viewport:** the `max-w-container + px` content sits **64px further in on each side** than the Navbar, so the nav looks wider than the page body.
 
-To keep section content flush with the full `<Header />` at every width, use the `contain` class on section wrappers instead of `max-w-container mx-auto px-4 md:px-8 lg:px-16`. See `src/app/tidb/tidb-cloud-filesystems/page.tsx`. The minimal `<HeaderLp />` (logo-only landing header) already uses `max-w-container + px`, so pages on that header need no change.
+To keep section content flush with the full `<Header />` at every width, use the `contain` class on section wrappers instead of `max-w-container mx-auto px-4 md:px-8 lg:px-16`. See `src/app/tidb/tidb-cloud-filesystem/page.tsx`. The minimal `<HeaderLp />` (logo-only landing header) already uses `max-w-container + px`, so pages on that header need no change.
 
 ---
 
