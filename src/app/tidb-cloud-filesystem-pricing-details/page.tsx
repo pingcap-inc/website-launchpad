@@ -32,7 +32,7 @@ const POOLED_EXPLAINER: string | null = null
 // the right instrument in principle — that is a design opinion, not a shipped
 // feature, and must not be read as one.
 const AT_THE_LIMIT: string | null =
-  'At a limit, your existing files stay readable and the filesystem stops accepting new writes. The TiDB Cloud console shows a warning. With a card on file, usage beyond the free-tier allowance is billed as overage on your monthly invoice.'
+  'At a limit, your existing files stay readable and the file system stops accepting new writes. The TiDB Cloud console shows a warning. With a card on file, usage beyond the free-tier allowance is billed as overage on your monthly invoice.'
 
 // ── Source of truth ──────────────────────────────────────────────────────────
 // "TiDB Cloud Filesystem Pricing Public Preview" v9 (2026-09-22, "Added multiple
@@ -132,9 +132,9 @@ const EXAMPLES = [
     name: 'Example 2: Medium Usage - mount from inside the TiDB Cloud provider region',
     outcome: 'The usage exceeds the free-tier allowance',
     explanation:
-      'The usage adds up to $7.90. Subtract the full $5 free-tier allowance to get $4.90 to pay for this usage.',
+      'The usage adds up to $7.90. Subtract the full $5 free-tier allowance to get $2.90 to pay for this usage.',
     eligibility:
-      'Keeping 13 GB in one filesystem exceeds the no-card storage cap and requires a card on file.',
+      'Keeping 13 GB in one file system exceeds the no-card storage cap and requires a card on file.',
     lines: [
       ['90,000 pooled file write requests', '$0.45'],
       ['4,500,000 pooled file read requests', '$1.80'],
@@ -146,7 +146,7 @@ const EXAMPLES = [
     ],
     gross: '$7.90',
     credit: '-$5.00',
-    net: '$4.90',
+    net: '$2.90',
   },
 ]
 
@@ -193,16 +193,16 @@ const SPENDING_LIMIT_ANSWER =
   'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly free-tier allowance reduces your charges; it is not a maximum monthly bill.'
 const FAQ_ITEMS = [
   {
-    q: 'Does each filesystem get its own $5 free-tier allowance?',
-    a: 'No. The $5 monthly free-tier allowance is shared by all Filesystem usage in your organization, across billing items and regions. Creating another filesystem does not add another $5 allowance.',
+    q: 'Does each file system get its own $5 free-tier allowance?',
+    a: 'No. The $5 monthly free-tier allowance is shared by all file systems usage in your organization, across billing items and regions. Creating another file system does not add another $5 allowance.',
   },
   {
     q: 'If the free-tier allowance covers 16 GB, can I store 16 GB without a card?',
-    a: 'No. The allowance is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per filesystem. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
+    a: 'No. The allowance is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per file system. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
   },
   { q: 'Can I set a monthly spending limit?', a: SPENDING_LIMIT_ANSWER },
   {
-    q: 'What happens when a filesystem reaches a limit?',
+    q: 'What happens when a file system reaches a limit?',
     a: 'It stops accepting writes, and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the $5 allowance is billed as overage on your monthly invoice rather than blocked.',
   },
 ]
@@ -305,47 +305,20 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="start-free" style={{ background: 'gray' }}>
           <SectionHeader
             title="Start Free"
-            subtitle="Every organization gets $5.00 of Filesystem service free-tier allowance each month. This allowance is a dollar amount deducted from your usage charges, shared across all your filesystems, billing items and regions."
+            subtitle="Every organization gets $5.00 of Filesystem service free-tier allowance each month. This allowance is a dollar amount deducted from your usage charges, shared across all your file systems, billing items and regions."
             className="mb-8"
             h2Size="md"
           />
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div>
-              <h3 className="mb-3 text-h3-lg font-bold">What Can $5 Cover?</h3>
-              <p className="mb-5 text-body-lg text-text-primary/70">
-                To put the free-tier allowance in perspective, here are three separate ways to use it at the
-                listed rates. Each assumes the full allowance is available and no other usage:
-              </p>
-              <dl className="divide-y divide-carbon-300 border-y border-carbon-300">
-                {[
-                  ['125,000 read requests', '$5.00', 'At the non-pooled read rate'],
-                  ['10,000 write requests', '$5.00', 'At the non-pooled write rate'],
-                  ['16 GB of Performance storage', '$4.80', 'Stored for a full month'],
-                ].map(([usage, cost, note]) => (
-                  <div key={usage} className="flex items-start justify-between gap-4 py-4">
-                    <dt className="text-body-lg">
-                      {usage}
-                      <span className="mt-1 block text-body-sm text-text-primary/70">{note}</span>
-                    </dt>
-                    <dd className="shrink-0 font-mono text-body-md">{cost}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-4 text-body-md text-text-primary/70">
-                These are alternatives, not three included allowances. If you use reads, writes,
-                storage and egress together, their combined charges draw on the same $5. The monthly
-                examples below show that calculation.
-              </p>
-            </div>
+          <div className="grid gap-10 lg:grid-cols-1">
             <div>
               <h3 className="mb-3 text-h3-lg font-bold">What Can I Use Without a Card?</h3>
               <p className="mb-4 text-body-lg text-text-primary/70">
-                You can start without a credit card, with one filesystem per region. Each filesystem
+                You can start without a credit card, with one file system per region. Each filesystem
                 can hold up to 2,000 files and 2 GB in total; each file can be up to 500 MB.
               </p>
               <p className="mb-4 text-body-lg text-text-primary/70">
                 The free-tier allowance covers usage charges; it does not increase these limits. For example, 16 GB of
-                Performance storage for a full month costs $4.80, but a filesystem without a credit card
+                Performance storage for a full month costs $4.80, but a file system without a credit card
                 can only hold 2 GB.
               </p>
               {/* Removed 2026-09-23 at the owner's direction: an illustration of
@@ -515,7 +488,7 @@ export default function FilesystemPricingDetailsPage() {
           <div className="mt-8 max-w-[760px] border-l-2 border-carbon-400 pl-6">
             <h3 className="mb-3 text-h3-lg font-bold">Already Used Some of Your Free-tier Allowance?</h3>
             <p className="text-body-lg text-carbon-300">
-              If other Filesystem usage in your organization has already used $3 of this
+              If other file system usage in your organization has already used $3 of this
               month&rsquo;s allowance, only $2 remains. For the same $4.80 of usage in Example 1, the
               remaining amount to pay would be $4.80 − $2.00 = $1.39. A new filesystem or region
               does not create a new free-tier allowance.
@@ -587,11 +560,11 @@ export default function FilesystemPricingDetailsPage() {
           <SectionHeader title="Billing and Limits" className="mb-8" h2Size="md" />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">Without a Card on File</h3>
+              <h3 className="mb-3 text-h3-lg font-bold">Without a Credit Card on Organization</h3>
               <ul className="space-y-2 text-body-lg text-carbon-300">
-                <li>One filesystem per region</li>
-                <li>2,000 files per filesystem</li>
-                <li>2 GB of storage per filesystem</li>
+                <li>One file system per region</li>
+                <li>2,000 files per file system</li>
+                <li>2 GB of storage per file system</li>
                 <li>500 MB maximum for a single file</li>
               </ul>
               {AT_THE_LIMIT && <p className="mt-4 text-body-lg text-carbon-300">{AT_THE_LIMIT}</p>}
@@ -605,8 +578,8 @@ export default function FilesystemPricingDetailsPage() {
               {/* See the note in Start Free. The request-volume illustration was
                   removed here too; what remains is only what Product confirmed. */}
               <p className="mt-4 text-body-lg text-carbon-300">
-                Using filesystems in more than one region can also produce charges, including on an
-                account without a card.
+                Using file systems in more than one region can also produce charges, including on an
+                account without a credit card on organization.
               </p>
               <p className="mt-4 text-body-lg text-carbon-300">
                 <a href={PRODUCT_URL} className="underline underline-offset-2 hover:no-underline">
@@ -625,7 +598,7 @@ export default function FilesystemPricingDetailsPage() {
           <div className="contain">
             <CtaSection
               title="Start with Your Monthly Free-tier Allowance"
-              subtitle="Create a filesystem and try it with your organization's $5 monthly service allowance."
+              subtitle="Create a file system and try it with your organization's $5 monthly service allowance."
               primaryCta={{
                 text: 'Read the quickstart',
                 href: DOCS_QUICKSTART,
