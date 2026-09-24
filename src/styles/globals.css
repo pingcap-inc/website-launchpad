@@ -1111,3 +1111,51 @@
     transform: none;
   }
 }
+
+/* ── Accordion panel ──────────────────────────────────────────────────────────
+   Panels stay mounted (see src/components/ui/accordion.tsx) so their text is in
+   the server-rendered HTML for crawlers. That rules out Radix's own height
+   animation: it measures the panel in a layout effect and relies on a
+   `setIsPresent` re-render to publish the measurement, which `forceMount` turns
+   into a no-op — the height custom property stays empty and the panel snaps open.
+
+   `grid-template-rows: 0fr -> 1fr` animates the same shape with no measurement.
+   `visibility` is what actually hides a closed panel: it keeps the content out
+   of the tab order and the a11y tree while leaving it in the DOM. Its transition
+   is delayed by the full duration on close so the panel stays visible while it
+   collapses, and fires immediately on open.
+
+   The `!important` is load-bearing. That same Radix layout effect inlines
+   `transition-duration: 0s`, force-reflows via getBoundingClientRect() — which
+   commits the row change instantly — and only then restores the duration, so an
+   un-forced transition never starts. We don't use its measurement, so overriding
+   it is safe. */
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 200ms ease-out,
+    visibility 0s linear 200ms !important;
+}
+
+.accordion-panel[data-state='open'] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 200ms ease-out,
+    visibility 0s linear 0s !important;
+}
+
+/* The grid row must be allowed to shrink below its content height. */
+.accordion-panel > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-panel,
+  .accordion-panel[data-state='open'] {
+    transition-duration: 0s, 0s !important;
+  }
+}

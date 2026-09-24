@@ -19,6 +19,7 @@ import {
 } from '@/components'
 import type { ColorCardItem } from '@/components/sections/FeatureHighlightsSection'
 import { articleSchema, buildPageSchema, faqSchema, softwareApplicationSchema } from '@/lib/schema'
+import { reactNodeToPlainText } from '@/lib/react-text'
 import { VideoDialog } from '@/components/ui/VideoDialog'
 import { HeroVideo } from './_components/HeroVideo'
 
@@ -56,6 +57,88 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.pingcap.com/what-is-tidb/' },
 }
 
+// Declared before `schema` so the FAQPage node can be derived from these exact
+// answers rather than a hand-maintained copy of them.
+const faqs = [
+  {
+    q: 'What is TiDB?',
+    a: (
+      <>
+        TiDB is an open-source, distributed SQL database built by{' '}
+        <InlineLink href="https://www.pingcap.com/about-us/">PingCAP</InlineLink>. It supports
+        Hybrid Transactional and Analytical Processing (HTAP) workloads, is compatible with the
+        MySQL protocol, and scales horizontally across commodity hardware. TiDB is licensed under
+        Apache 2.0, and its storage layer{' '}
+        <InlineLink href="https://www.cncf.io/projects/tikv/">TiKV</InlineLink> is a CNCF Graduated
+        project.
+      </>
+    ),
+  },
+  {
+    q: 'Is TiDB compatible with MySQL?',
+    a: (
+      <>
+        Yes. TiDB implements the MySQL wire protocol and is compatible with MySQL syntax, drivers,
+        and ORM frameworks. Most applications running on MySQL can connect to TiDB with zero code
+        changes. TiDB also provides{' '}
+        <InlineLink href="https://docs.pingcap.com/tidb/stable/migration-overview/">
+          data migration tools
+        </InlineLink>{' '}
+        to simplify the transition from existing MySQL or MariaDB instances.
+      </>
+    ),
+  },
+  {
+    q: 'Is TiDB open source?',
+    a: (
+      <>
+        Yes. TiDB is fully open source under the Apache 2.0 license, including enterprise-grade
+        features. The full source code is available on{' '}
+        <InlineLink href="https://github.com/pingcap/tidb">GitHub</InlineLink>, where TiDB has over
+        39,900 stars and more than 1,200 contributors. TiKV, TiDB&rsquo;s distributed storage
+        engine, is a{' '}
+        <InlineLink href="https://www.cncf.io/projects/tikv/">
+          graduated project of the Cloud Native Computing Foundation
+        </InlineLink>
+        .
+      </>
+    ),
+  },
+  {
+    q: 'What does HTAP mean?',
+    a: 'HTAP stands for Hybrid Transactional and Analytical Processing. It describes a database architecture that can handle both transactional (OLTP) and analytical (OLAP) workloads on the same dataset simultaneously. In TiDB, TiKV serves transactional queries while TiFlash handles analytical queries in real time, eliminating the need for separate ETL pipelines or dedicated analytics databases.',
+  },
+  {
+    q: 'How does TiDB scale?',
+    a: (
+      <>
+        TiDB scales horizontally by adding nodes to the cluster. Because compute (TiDB Server) and
+        storage (TiKV/TiFlash) are decoupled, each layer scales independently. Need more query
+        throughput? Add TiDB Server nodes. Need more storage capacity? Add TiKV nodes. Scaling
+        happens online with no downtime and no manual data redistribution.{' '}
+        <SecondaryButton href="https://docs.pingcap.com/tidb/stable/overview/">
+          Learn more about TiDB&rsquo;s architecture
+        </SecondaryButton>
+      </>
+    ),
+  },
+  {
+    q: 'How is TiDB different from TiDB Cloud?',
+    a: (
+      <>
+        TiDB is the open-source distributed SQL database engine, available to anyone under the
+        Apache 2.0 license. You can download it, deploy it on your own infrastructure, and manage it
+        yourself. <InlineLink href="https://www.pingcap.com/tidb-cloud/">TiDB Cloud</InlineLink> is
+        PingCAP&rsquo;s fully managed Database-as-a-Service built on top of TiDB. It handles
+        provisioning, scaling, backups, and upgrades so your team can focus on building applications
+        instead of operating database infrastructure. TiDB Cloud is available on AWS, Google Cloud,
+        and Azure, with options ranging from a free-tier starter plan to dedicated clusters for
+        mission-critical workloads.
+      </>
+    ),
+  },
+]
+
 const schema = buildPageSchema({
   path: '/what-is-tidb/',
   title: 'What is TiDB? | TiDB',
@@ -82,38 +165,8 @@ const schema = buildPageSchema({
         'TiDB is an open-source, distributed SQL database with MySQL compatibility, horizontal scalability, and built-in HTAP for real-time transactional and analytical workloads.',
       url: 'https://www.pingcap.com/tidb/',
     }),
-    faqSchema([
-      {
-        question: 'What is TiDB?',
-        answer:
-          'TiDB is an open-source, distributed SQL database built by PingCAP. It supports Hybrid Transactional and Analytical Processing (HTAP) workloads, is compatible with the MySQL protocol, and scales horizontally across commodity hardware. TiDB is licensed under Apache 2.0, and its storage layer TiKV is a CNCF Graduated project.',
-      },
-      {
-        question: 'Is TiDB compatible with MySQL?',
-        answer:
-          'Yes. TiDB implements the MySQL wire protocol and is compatible with MySQL syntax, drivers, and ORM frameworks. Most applications running on MySQL can connect to TiDB with zero code changes. TiDB also provides data migration tools to simplify the transition from existing MySQL or MariaDB instances.',
-      },
-      {
-        question: 'Is TiDB open source?',
-        answer:
-          'Yes. TiDB is fully open source under the Apache 2.0 license, including enterprise-grade features. The full source code is available on GitHub, where TiDB has over 39,900 stars and more than 1,200 contributors. TiKV, TiDB’s distributed storage engine, is a graduated project of the Cloud Native Computing Foundation.',
-      },
-      {
-        question: 'What does HTAP mean?',
-        answer:
-          'HTAP stands for Hybrid Transactional and Analytical Processing. It describes a database architecture that can handle both transactional (OLTP) and analytical (OLAP) workloads on the same dataset simultaneously. In TiDB, TiKV serves transactional queries while TiFlash handles analytical queries in real time, eliminating the need for separate ETL pipelines or dedicated analytics databases.',
-      },
-      {
-        question: 'How does TiDB scale?',
-        answer:
-          'TiDB scales horizontally by adding nodes to the cluster. Because compute (TiDB Server) and storage (TiKV/TiFlash) are decoupled, each layer scales independently. Need more query throughput? Add TiDB Server nodes. Need more storage capacity? Add TiKV nodes. Scaling happens online with no downtime and no manual data redistribution. Learn more about TiDB architecture.',
-      },
-      {
-        question: 'How is TiDB different from TiDB Cloud?',
-        answer:
-          'TiDB is the open-source distributed SQL database engine, available to anyone under the Apache 2.0 license. You can download it, deploy it on your own infrastructure, and manage it yourself. TiDB Cloud is PingCAP’s fully managed Database-as-a-Service built on top of TiDB. It handles provisioning, scaling, backups, and upgrades so your team can focus on building applications instead of operating database infrastructure. TiDB Cloud is available on AWS, Google Cloud, and Azure, with options ranging from a free-tier starter plan to dedicated clusters for mission-critical workloads.',
-      },
-    ]),
+    // Derived from `faqs` so the schema can never drift from the rendered copy.
+    faqSchema(faqs.map((faq) => ({ question: faq.q, answer: reactNodeToPlainText(faq.a) }))),
   ],
 })
 
@@ -560,86 +613,6 @@ const recognitionCards = [
         label: 'Contributors',
       },
     ],
-  },
-]
-
-const faqs = [
-  {
-    q: 'What is TiDB?',
-    a: (
-      <>
-        TiDB is an open-source, distributed SQL database built by{' '}
-        <InlineLink href="https://www.pingcap.com/about-us/">PingCAP</InlineLink>. It supports
-        Hybrid Transactional and Analytical Processing (HTAP) workloads, is compatible with the
-        MySQL protocol, and scales horizontally across commodity hardware. TiDB is licensed under
-        Apache 2.0, and its storage layer{' '}
-        <InlineLink href="https://www.cncf.io/projects/tikv/">TiKV</InlineLink> is a CNCF Graduated
-        project.
-      </>
-    ),
-  },
-  {
-    q: 'Is TiDB compatible with MySQL?',
-    a: (
-      <>
-        Yes. TiDB implements the MySQL wire protocol and is compatible with MySQL syntax, drivers,
-        and ORM frameworks. Most applications running on MySQL can connect to TiDB with zero code
-        changes. TiDB also provides{' '}
-        <InlineLink href="https://docs.pingcap.com/tidb/stable/migration-overview/">
-          data migration tools
-        </InlineLink>{' '}
-        to simplify the transition from existing MySQL or MariaDB instances.
-      </>
-    ),
-  },
-  {
-    q: 'Is TiDB open source?',
-    a: (
-      <>
-        Yes. TiDB is fully open source under the Apache 2.0 license, including enterprise-grade
-        features. The full source code is available on{' '}
-        <InlineLink href="https://github.com/pingcap/tidb">GitHub</InlineLink>, where TiDB has over
-        39,900 stars and more than 1,200 contributors. TiKV, TiDB&rsquo;s distributed storage
-        engine, is a{' '}
-        <InlineLink href="https://www.cncf.io/projects/tikv/">
-          graduated project of the Cloud Native Computing Foundation
-        </InlineLink>
-        .
-      </>
-    ),
-  },
-  {
-    q: 'What does HTAP mean?',
-    a: 'HTAP stands for Hybrid Transactional and Analytical Processing. It describes a database architecture that can handle both transactional (OLTP) and analytical (OLAP) workloads on the same dataset simultaneously. In TiDB, TiKV serves transactional queries while TiFlash handles analytical queries in real time, eliminating the need for separate ETL pipelines or dedicated analytics databases.',
-  },
-  {
-    q: 'How does TiDB scale?',
-    a: (
-      <>
-        TiDB scales horizontally by adding nodes to the cluster. Because compute (TiDB Server) and
-        storage (TiKV/TiFlash) are decoupled, each layer scales independently. Need more query
-        throughput? Add TiDB Server nodes. Need more storage capacity? Add TiKV nodes. Scaling
-        happens online with no downtime and no manual data redistribution.{' '}
-        <SecondaryButton href="https://docs.pingcap.com/tidb/stable/overview/">
-          Learn more about TiDB&rsquo;s architecture
-        </SecondaryButton>
-      </>
-    ),
-  },
-  {
-    q: 'How is TiDB different from TiDB Cloud?',
-    a: (
-      <>
-        TiDB is the open-source distributed SQL database engine, available to anyone under the
-        Apache 2.0 license. You can download it, deploy it on your own infrastructure, and manage it
-        yourself. <InlineLink href="https://www.pingcap.com/tidb-cloud/">TiDB Cloud</InlineLink> is
-        PingCAP&rsquo;s fully managed Database-as-a-Service built on top of TiDB. It handles
-        provisioning, scaling, backups, and upgrades so your team can focus on building applications
-        instead of operating database infrastructure. TiDB Cloud is available on AWS, Google Cloud,
-        and Azure, with options ranging from a free-tier starter plan to dedicated clusters for
-        mission-critical workloads.
-      </>
-    ),
   },
 ]
 

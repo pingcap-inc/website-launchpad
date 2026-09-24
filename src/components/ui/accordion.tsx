@@ -47,13 +47,20 @@ const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-    {...props}
-  >
-    <div className={cn('pb-6 pl-10 text-body-md text-secondary leading-relaxed', className)}>
-      {children}
+  // `forceMount` keeps collapsed panels in the server-rendered HTML. Without it
+  // Radix renders `isOpen && children`, so closed answers never reach the markup
+  // and crawlers that don't execute JS (and can't click) only ever see the one
+  // panel opened by `defaultValue`.
+  //
+  // The open/close animation lives in `.accordion-panel` (globals.css) rather
+  // than Radix's height keyframes, which `forceMount` breaks — see the comment
+  // there. The inner wrapper is the grid row; padding stays on the child so it
+  // collapses with the row instead of holding the panel open.
+  <AccordionPrimitive.Content ref={ref} forceMount className="accordion-panel" {...props}>
+    <div>
+      <div className={cn('pb-6 pl-10 text-body-md text-secondary leading-relaxed', className)}>
+        {children}
+      </div>
     </div>
   </AccordionPrimitive.Content>
 ))

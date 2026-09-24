@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
 import { buildPageSchema, faqSchema, softwareApplicationSchema } from '@/lib/schema'
+import { reactNodeToPlainText } from '@/lib/react-text'
 import { Header } from '@/components/ui/Header'
 import { Footer } from '@/components/ui/Footer'
 import { Badge } from '@/components/ui/badge'
@@ -97,18 +98,11 @@ export const metadata: Metadata = {
 const faqItems: {
   value: string
   q: React.ReactNode
-  /** Plain-text Q/A for the FAQPage schema node */
-  plain: { question: string; answer: string }
   answer: React.ReactNode
 }[] = [
   {
     value: 'what-is-it',
     q: 'What is TiDB Cloud Filesystem?',
-    plain: {
-      question: 'What is TiDB Cloud Filesystem?',
-      answer:
-        "A durable working directory for coding agents. A runtime uses normal file operations, while the workspace stays available beyond that runtime's lifecycle — so the next session, sandbox, agent or reviewer opens the same workspace instead of rebuilding it. See the TiDB Cloud Filesystem documentation for the full picture.",
-    },
     answer: (
       <>
         A durable working directory for coding agents. A runtime uses normal file operations, while
@@ -127,11 +121,6 @@ const faqItems: {
   {
     value: 'sandbox-persistence',
     q: 'My sandbox already has persistence — do I need TiDB Cloud Filesystem too?',
-    plain: {
-      question: 'My sandbox already has persistence — do I need TiDB Cloud Filesystem too?',
-      answer:
-        "Native snapshots, pause/resume or volumes cover a workflow that stays inside one platform. A separate workspace layer matters once the active directory has to cross a boundary that platform doesn't cover — another runtime, another agent, a human reviewer, a CI job.",
-    },
     answer: (
       <>
         Native snapshots, pause/resume or volumes cover a workflow that stays inside one platform. A
@@ -143,11 +132,6 @@ const faqItems: {
   {
     value: 'consistency',
     q: 'What does a second runtime see while one is writing?',
-    plain: {
-      question: 'What does a second runtime see while one is writing?',
-      answer:
-        'You choose, per workspace: writeback favors write speed, write-sync makes every write immediately visible to every reader, and close-sync syncs when a file closes.',
-    },
     answer: (
       <>
         You choose, per workspace: writeback favors write speed, write-sync makes every write
@@ -158,11 +142,6 @@ const faqItems: {
   {
     value: 'regions',
     q: 'Which regions can I create a filesystem in?',
-    plain: {
-      question: 'Which regions can I create a filesystem in?',
-      answer:
-        'Region is a required flag when you create a filesystem. See the list of available regions for the current set.',
-    },
     answer: (
       <>
         Region is a required flag when you create a filesystem.{' '}
@@ -179,11 +158,6 @@ const faqItems: {
   {
     value: 'laptop-mount',
     q: 'Can I mount TiDB Cloud Filesystem on my laptop?',
-    plain: {
-      question: 'Can I mount TiDB Cloud Filesystem on my laptop?',
-      answer:
-        "Supported, but not what we recommend for evaluation. Run it from a cloud VM in the same region as the filesystem. If you only need to read a file from your own machine, ti fs read-file doesn't require a mount at all.",
-    },
     answer: (
       <>
         Supported, but not what we recommend for evaluation. Run it from a cloud VM in the same
@@ -195,11 +169,6 @@ const faqItems: {
   {
     value: 'posix-support',
     q: 'Does TiDB Cloud Filesystem support POSIX?',
-    plain: {
-      question: 'Does TiDB Cloud Filesystem support POSIX?',
-      answer:
-        'Yes. When mounted, TiDB Cloud Filesystem is POSIX-compatible, so agents can use ordinary paths, shell commands, filesystem APIs, and development tools. It is designed for AI coding agent workloads.',
-    },
     answer: (
       <>
         Yes. When mounted, TiDB Cloud Filesystem is POSIX-compatible, so agents can use ordinary
@@ -211,11 +180,6 @@ const faqItems: {
   {
     value: 'sdk',
     q: 'Is there a TiDB Cloud Filesystem SDK?',
-    plain: {
-      question: 'Is there a TiDB Cloud Filesystem SDK?',
-      answer:
-        'Not yet. The CLI is the full surface during the public preview. TypeScript and Python SDKs are coming soon.',
-    },
     answer: (
       <>
         Not yet. The CLI is the full surface during the public preview. TypeScript and Python
@@ -226,11 +190,6 @@ const faqItems: {
   {
     value: 'semantic-search',
     q: 'Does TiDB Cloud Filesystem support semantic or vector search over my files?',
-    plain: {
-      question: 'Does TiDB Cloud Filesystem support semantic or vector search over my files?',
-      answer:
-        'Yes, once you configure it. Point the filesystem at an embedding provider and your text — along with descriptions extracted from images, audio and video — is represented as vectors you can search semantically. Without that configuration, fs search-file-content matches literal text (the pattern is a text query, not a regex or glob) and fs find-files matches on name, tag, size and time. See Configure AI providers for the setup.',
-    },
     answer: (
       <>
         Yes, once you configure it. Point the filesystem at an embedding provider and your text —
@@ -251,11 +210,6 @@ const faqItems: {
   {
     value: 'checkpoint',
     q: 'Does the TiDB Cloud Filesystem preview include checkpoint and rollback?',
-    plain: {
-      question: 'Does the TiDB Cloud Filesystem preview include checkpoint and rollback?',
-      answer:
-        'Yes. Layers give you an isolated change set over a base path, which you can checkpoint, fork, diff, roll back or commit — create-layer-checkpoint and rollback-layer are documented commands. One caveat carried over from the docs: complex histories involving repeated changes to layer-created files, or inherited metadata, might have limitations during public preview. See Layers and checkpoints.',
-    },
     answer: (
       <>
         Yes. Layers give you an isolated change set over a base path, which you can checkpoint,
@@ -276,11 +230,6 @@ const faqItems: {
   {
     value: 'sla',
     q: 'Is there an SLA for TiDB Cloud Filesystem?',
-    plain: {
-      question: 'Is there an SLA for TiDB Cloud Filesystem?',
-      answer:
-        "No. Keep evaluation data recoverable elsewhere, and report anything that doesn't behave as expected.",
-    },
     answer: (
       <>
         No. Keep evaluation data recoverable elsewhere, and report anything that doesn&apos;t behave
@@ -291,11 +240,6 @@ const faqItems: {
   {
     value: 'retention',
     q: 'What happens to my workspace after the TiDB Cloud Filesystem preview ends?',
-    plain: {
-      question: 'What happens to my workspace after the TiDB Cloud Filesystem preview ends?',
-      answer:
-        "We haven't settled the retention and deletion policy for after the preview yet. Until we do, keep an independently recoverable copy of anything you can't afford to lose.",
-    },
     answer: (
       <>
         We haven&apos;t settled the retention and deletion policy for after the preview yet. Until
@@ -306,11 +250,6 @@ const faqItems: {
   {
     value: 'cost',
     q: 'What does TiDB Cloud Filesystem cost?',
-    plain: {
-      question: 'What does TiDB Cloud Filesystem cost?',
-      answer:
-        'Pay as you go for reads, writes, storage and egress, with $5.00 of service credit per organization each month. Public preview prices are published for aws-us-east-1 and may change at general availability. Full rates, free-tier details and no-card limits are on the pricing details page.',
-    },
     answer: (
       <>
         Pay as you go for reads, writes, storage and egress, with $5.00 of service credit per
@@ -353,7 +292,13 @@ const schema = buildPageSchema({
       // different entities with one name.
       '@id': PRODUCT_ID,
     },
-    faqSchema(faqItems.map((item) => item.plain)),
+    faqSchema(
+      // Derived from the rendered items so the schema cannot drift from the copy.
+      faqItems.map((item) => ({
+        question: reactNodeToPlainText(item.q),
+        answer: reactNodeToPlainText(item.answer),
+      }))
+    ),
   ],
 })
 
