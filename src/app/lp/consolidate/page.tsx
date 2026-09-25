@@ -46,7 +46,8 @@ const dsl: PageDSL = {
     "title": "One Database Engine, Not Six | TiDB Consolidation",
     "description": "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.",
     "canonical": "/lp/consolidate/",
-    "unlisted": true
+    "unlisted": true,
+    "header": "lp"
   },
   "sections": [
     {
@@ -497,6 +498,20 @@ const dsl: PageDSL = {
       "style": {
         "background": "brand-violet",
         "spacing": "lg"
+      }
+    },
+    {
+      "id": "form-1790350509815",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team.",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731"
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
       }
     }
   ]
