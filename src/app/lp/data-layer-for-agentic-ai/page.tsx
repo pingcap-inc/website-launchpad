@@ -46,7 +46,8 @@ const dsl: PageDSL = {
     "title": "The Data Layer for Agentic AI | TiDB",
     "description": "Agent workloads break the assumptions your database was sized against. Learn how TiDB handles no idle windows, per-agent tenancy, and real-time consistency for AI systems.",
     "canonical": "/lp/data-layer-for-agentic-ai/",
-    "unlisted": true
+    "unlisted": true,
+    "header": "lp"
   },
   "sections": [
     {
@@ -396,6 +397,20 @@ const dsl: PageDSL = {
       },
       "style": {
         "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "form-1790350832900",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team.",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731"
+      },
+      "style": {
+        "background": "primary",
         "spacing": "section"
       }
     }
