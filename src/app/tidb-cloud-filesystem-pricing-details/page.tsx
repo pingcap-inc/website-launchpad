@@ -60,7 +60,7 @@ const REGIONS = [
   'aws-us-west-2',
   'aws-ap-southeast-1',
   'alicloud-ap-southeast-1',
-  'gcp-us-east-1',
+  'gcp-us-east1',
 ]
 // The region every worked figure on this page uses.
 const RATE_REGION = REGIONS[0]
@@ -72,22 +72,22 @@ const RATE_REGION = REGIONS[0]
 const RATES = [
   {
     meter: 'Read operations, per 1,000 requests',
-    note: 'File read requests against TiDB Cloud Filesystem endpoints',
+    note: 'File (size < 32KB) read requests against TiDB Cloud Filesystem endpoints',
     prices: ['$0.04', '$0.04', '$0.04', '$0.04', '$0.04'],
   },
   {
     meter: 'Write operations, per 1,000 requests',
-    note: 'File write requests against TiDB Cloud Filesystem endpoints',
+    note: 'File (size < 32KB) write requests against TiDB Cloud Filesystem endpoints',
     prices: ['$0.50', '$0.50', '$0.50', '$0.50', '$0.50'],
   },
   {
     meter: 'Pooled file read operations, per 1,000 requests',
-    note: 'File read requests against object storage',
+    note: 'File (size >= 32KB) read requests against object storage',
     prices: ['$0.0004', '$0.0004', '$0.0004', '$0.0001', '$0.0004'],
   },
   {
     meter: 'Pooled file write operations, per 1,000 requests',
-    note: 'File write requests against object storage',
+    note: 'File (size >= 32KB) write requests against object storage',
     prices: ['$0.005', '$0.005', '$0.005', '$0.0014', '$0.005'],
   },
   {
