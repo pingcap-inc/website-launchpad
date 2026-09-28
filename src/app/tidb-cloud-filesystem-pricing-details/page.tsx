@@ -23,7 +23,7 @@ const POOLED_EXPLAINER: string | null = null
 
 // Answered 2026-09-22: at a cap, writes are blocked and reads keep working; the
 // console shows a warning; with a card, overage is billed monthly; without a
-// card, charges past the credit still accrue and remain payable.
+// card, charges past the free-tier still accrue and remain payable.
 //
 // NOT answered, and deliberately absent below: what happens to a no-card account
 // that leaves those charges unpaid. The reply described convert-or-suspend as a
@@ -32,14 +32,14 @@ const POOLED_EXPLAINER: string | null = null
 // the right instrument in principle — that is a design opinion, not a shipped
 // feature, and must not be read as one.
 const AT_THE_LIMIT: string | null =
-  'At a limit, your existing files stay readable and the filesystem stops accepting new writes. The TiDB Cloud console shows a warning. With a card on file, usage beyond the credit is billed as overage on your monthly invoice.'
+  'At a limit, your existing files stay readable and the file system stops accepting new writes. The TiDB Cloud console shows a warning. With a card on file, usage beyond the free-tier allowance is billed as overage on your monthly invoice.'
 
 // ── Source of truth ──────────────────────────────────────────────────────────
 // "TiDB Cloud Filesystem Pricing Public Preview" v9 (2026-09-22, "Added multiple
 // regions"), as it read on 2026-09-23. Note that the free-tier quantities were
 // corrected on Sep 21 WITHOUT a version bump, so the re-derivation date matters
 // as much as the version string. All seven free-tier lines were recomputed
-// against this rate card and reconcile to $4.99 against the $5.00 credit. Do not
+// against this rate card and reconcile to $4.99 against the $5.00 allowance. Do not
 // edit these numbers without redoing that check. The source doc's `Discountable`
 // column is internal and is not reproduced anywhere on this page.
 //
@@ -60,7 +60,7 @@ const REGIONS = [
   'aws-us-west-2',
   'aws-ap-southeast-1',
   'alicloud-ap-southeast-1',
-  'gcp-us-east-1',
+  'gcp-us-east1',
 ]
 // The region every worked figure on this page uses.
 const RATE_REGION = REGIONS[0]
@@ -72,22 +72,22 @@ const RATE_REGION = REGIONS[0]
 const RATES = [
   {
     meter: 'Read operations, per 1,000 requests',
-    note: 'File read requests against TiDB Cloud Filesystem endpoints',
+    note: 'File (size < 32KB) read requests against TiDB Cloud Filesystem endpoints',
     prices: ['$0.04', '$0.04', '$0.04', '$0.04', '$0.04'],
   },
   {
     meter: 'Write operations, per 1,000 requests',
-    note: 'File write requests against TiDB Cloud Filesystem endpoints',
+    note: 'File (size < 32KB) write requests against TiDB Cloud Filesystem endpoints',
     prices: ['$0.50', '$0.50', '$0.50', '$0.50', '$0.50'],
   },
   {
     meter: 'Pooled file read operations, per 1,000 requests',
-    note: 'File read requests against object storage',
+    note: 'File (size >= 32KB) read requests against object storage',
     prices: ['$0.0004', '$0.0004', '$0.0004', '$0.0001', '$0.0004'],
   },
   {
     meter: 'Pooled file write operations, per 1,000 requests',
-    note: 'File write requests against object storage',
+    note: 'File (size >= 32KB) write requests against object storage',
     prices: ['$0.005', '$0.005', '$0.005', '$0.0014', '$0.005'],
   },
   {
@@ -109,38 +109,44 @@ const RATES = [
 
 const EXAMPLES = [
   {
-    name: 'Example 1',
-    outcome: 'The credit covers this usage',
+    name: 'Example 1: Infrequent Usage — mount from outside the TiDB Cloud provider region',
+    outcome: 'The free-tier covers this usage',
     explanation:
-      'The usage adds up to $3.39. Applying $3.39 of the available credit leaves $0 to pay for this usage.',
+      'The usage adds up to $4.80. Applying the free-tier allowance leaves $0 to pay for this usage.',
     eligibility:
-      'The 1 GB stored is below the 2 GB no-card storage cap. File-count and single-file limits still apply.',
+      'The 1 GB stored is below the 2 GB no-card storage cap. File-count and single file system under one region limits still apply.',
     lines: [
+      ['54,400 pooled file write requests', '$0.27'],
+      ['2,720,000 pooled file read requests', '$1.09'],
       ['2,000 write requests', '$1.00'],
       ['50,000 read requests', '$2.00'],
       ['1 GB Performance storage', '$0.30'],
+      ['2 GB Pooled storage', '$0.05'],
       ['1 GB egress', '$0.09'],
     ],
-    gross: '$3.39',
-    credit: '−$3.39',
+    gross: '$4.80',
+    credit: '-$4.80',
     net: '$0',
   },
   {
-    name: 'Example 2',
-    outcome: 'The usage exceeds the credit',
+    name: 'Example 2: Medium Usage - mount from inside the TiDB Cloud provider region',
+    outcome: 'The usage exceeds the free-tier allowance',
     explanation:
-      'The usage adds up to $28.68. Subtract the full $5 credit to get $23.68 to pay for this usage.',
+      'The usage adds up to $7.90. Subtract the full $5 free-tier allowance to get $2.90 to pay for this usage.',
     eligibility:
-      'Keeping 5 GB in one filesystem exceeds the no-card storage cap and requires a card on file.',
+      'Keeping 13 GB in one file system exceeds the no-card storage cap and requires a card on file.',
     lines: [
-      ['30,000 write requests', '$15.00'],
-      ['300,000 read requests', '$12.00'],
-      ['5 GB Performance storage', '$1.50'],
-      ['2 GB egress', '$0.18'],
+      ['90,000 pooled file write requests', '$0.45'],
+      ['4,500,000 pooled file read requests', '$1.80'],
+      ['3,000 write requests', '$1.50'],
+      ['75,000 read requests', '$3.00'],
+      ['3 GB Performance storage', '$0.90'],
+      ['10 GB Pooled storage', '$0.25'],
+      ['0 GB egress', '$0.0'],
     ],
-    gross: '$28.68',
-    credit: '−$5.00',
-    net: '$23.68',
+    gross: '$7.90',
+    credit: '-$5.00',
+    net: '$2.90',
   },
 ]
 
@@ -160,7 +166,7 @@ const PATH = '/tidb-cloud-filesystem-pricing-details/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const TITLE = 'TiDB Cloud Filesystem Pricing Details'
 const DESCRIPTION =
-  'TiDB Cloud Filesystem pricing for reads, writes, storage and egress, with $5 of service credit per organization each month. View rates and limits.'
+  'TiDB Cloud Filesystem pricing for reads, writes, storage and egress, with $5 of service free-tier allowance per organization each month. View rates and limits.'
 const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
 
 export const metadata: Metadata = {
@@ -186,20 +192,20 @@ export const metadata: Metadata = {
 
 // Use the same plain-text answers for the visible FAQ and its schema.
 const SPENDING_LIMIT_ANSWER =
-  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly credit reduces your charges; it is not a maximum monthly bill.'
+  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly free-tier allowance reduces your charges; it is not a maximum monthly bill.'
 const FAQ_ITEMS = [
   {
-    q: 'Does each filesystem get its own $5 credit?',
-    a: 'No. The $5 monthly credit is shared by all Filesystem usage in your organization, across billing items and regions. Creating another filesystem does not add another $5 credit.',
+    q: 'Does each file system get its own $5 free-tier allowance?',
+    a: 'No. The $5 monthly free-tier allowance is shared by all file systems usage in your organization, across billing items and regions. Creating another file system does not add another $5 allowance.',
   },
   {
-    q: 'If the credit covers 16 GB, can I store 16 GB without a card?',
-    a: 'No. The credit is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per filesystem. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
+    q: 'If the free-tier allowance covers 16 GB, can I store 16 GB without a card?',
+    a: 'No. The allowance is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per file system. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
   },
   { q: 'Can I set a monthly spending limit?', a: SPENDING_LIMIT_ANSWER },
   {
-    q: 'What happens when a filesystem reaches a limit?',
-    a: 'It stops accepting writes, and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the $5 credit is billed as overage on your monthly invoice rather than blocked.',
+    q: 'What happens when a file system reaches a limit?',
+    a: 'It stops accepting writes, and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the $5 allowance is billed as overage on your monthly invoice rather than blocked.',
   },
 ]
 
@@ -222,7 +228,7 @@ const schema = buildPageSchema({
         url: PRODUCT_URL,
         // Explicitly null. The helper otherwise defaults the Offer price to '0',
         // which would assert in structured data that the product is free. It is
-        // pay-as-you-go with a free credit, which is not the same claim.
+        // pay-as-you-go with a free-tier allowance, which is not the same claim.
         price: null,
       }),
       '@id': `${PRODUCT_URL}#software`,
@@ -245,7 +251,7 @@ export default function FilesystemPricingDetailsPage() {
             TiDB Cloud Filesystem Pricing Details
           </h1>
           <p className="mb-6 max-w-[620px] text-pretty text-body-2xl text-carbon-400">
-            Pay as you go for reads, writes, storage and egress, with a monthly free credit. No
+            Pay as you go for reads, writes, storage and egress, with a monthly free-tier allowance. No
             tiered plans.
           </p>
           {/* A pricing page is a common first landing point, and a reader who does
@@ -301,59 +307,32 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="start-free" style={{ background: 'gray' }}>
           <SectionHeader
             title="Start Free"
-            subtitle="Every organization gets $5.00 of Filesystem service credit each month. This credit is a dollar amount deducted from your usage charges, shared across all your filesystems, billing items and regions."
+            subtitle="Every organization gets $5.00 of Filesystem service free-tier allowance each month. This allowance is a dollar amount deducted from your usage charges, shared across all your file systems, billing items and regions."
             className="mb-8"
             h2Size="md"
           />
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div>
-              <h3 className="mb-3 text-h3-lg font-bold">What Can $5 Cover?</h3>
-              <p className="mb-5 text-body-lg text-text-primary/70">
-                To put the credit in perspective, here are three separate ways to use it at the
-                listed rates. Each assumes the full credit is available and no other usage:
-              </p>
-              <dl className="divide-y divide-carbon-300 border-y border-carbon-300">
-                {[
-                  ['125,000 read requests', '$5.00', 'At the non-pooled read rate'],
-                  ['10,000 write requests', '$5.00', 'At the non-pooled write rate'],
-                  ['16 GB of Performance storage', '$4.80', 'Stored for a full month'],
-                ].map(([usage, cost, note]) => (
-                  <div key={usage} className="flex items-start justify-between gap-4 py-4">
-                    <dt className="text-body-lg">
-                      {usage}
-                      <span className="mt-1 block text-body-sm text-text-primary/70">{note}</span>
-                    </dt>
-                    <dd className="shrink-0 font-mono text-body-md">{cost}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-4 text-body-md text-text-primary/70">
-                These are alternatives, not three included allowances. If you use reads, writes,
-                storage and egress together, their combined charges draw on the same $5. The monthly
-                examples below show that calculation.
-              </p>
-            </div>
+          <div className="grid gap-10 lg:grid-cols-1">
             <div>
               <h3 className="mb-3 text-h3-lg font-bold">What Can I Use Without a Card?</h3>
               <p className="mb-4 text-body-lg text-text-primary/70">
-                You can start without a credit card, with one filesystem per region. Each filesystem
+                You can start without a credit card, with one file system per region. Each filesystem
                 can hold up to 2,000 files and 2 GB in total; each file can be up to 500 MB.
               </p>
               <p className="mb-4 text-body-lg text-text-primary/70">
-                The credit pays for usage; it does not increase these limits. For example, 16 GB of
-                Performance storage for a full month costs $4.80, but a filesystem without a card
+                The free-tier allowance covers usage charges; it does not increase these limits. For example, 16 GB of
+                Performance storage for a full month costs $4.80, but a file system without a credit card
                 can only hold 2 GB.
               </p>
               {/* Removed 2026-09-23 at the owner's direction: an illustration of
-                  how far request volume can run past the credit ("200,000 write
+                  how far request volume can run past the free-tier allowance ("200,000 write
                   requests come to $100.00"). It was derived from the published
                   write rate, but Product could not confirm the underlying
                   behaviour, and an unresolved claim does not belong on a public
-                  page. The two confirmed facts stay: the credit is not a cap, and
+                  page. The two confirmed facts stay: the free-tier allowance is not a cap, and
                   there is no configurable spending limit. Restore the fuller
                   explanation only once Product answers. */}
               <p className="mb-5 text-body-lg text-text-primary/70">
-                The $5 credit reduces your charges; it is not a maximum monthly bill, and there is
+                The $5 allowance reduces your charges; it is not a maximum monthly bill, and there is
                 no configurable spending limit. See{' '}
                 <a href="#limitations" className="underline underline-offset-2 hover:no-underline">
                   Billing and Limits
@@ -459,7 +438,7 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="monthly-cost" style={{ background: 'primary' }}>
           <SectionHeader
             title="Example Monthly Bills"
-            subtitle="Add the charges for each billing item, then subtract the available monthly credit. These illustrative examples show both the calculation and what remains to pay."
+            subtitle="Add the charges for each billing item, then subtract the available monthly free-tier allowance. These illustrative examples show both the calculation and what remains to pay."
             className="mb-8"
             h2Size="md"
           />
@@ -468,7 +447,7 @@ export default function FilesystemPricingDetailsPage() {
             month and no Pooled usage, at <code className="font-mono">{RATE_REGION}</code> rates.
             Because both are dominated by requests, which cost the same everywhere, the same usage
             in the most expensive listed region comes to under 3% more. Each starts with the
-            organization&rsquo;s full $5 monthly credit available.
+            organization&rsquo;s full $5 monthly free-tier allowance available.
           </p>
           <div className="grid gap-6 md:grid-cols-2">
             {EXAMPLES.map((example) => (
@@ -479,7 +458,7 @@ export default function FilesystemPricingDetailsPage() {
                     phone. Repeat the rate category here so the numbers never
                     travel without the condition that produced them. */}
                 <p className="mb-4 text-body-sm text-carbon-400">
-                  Non-pooled requests, Performance storage, full $5 credit available
+                  Non-pooled requests, Performance storage, full $5 free-tier allowance available
                 </p>
                 <dl className="mb-5 space-y-3 text-body-md text-carbon-200">
                   {example.lines.map(([usage, cost]) => (
@@ -495,13 +474,13 @@ export default function FilesystemPricingDetailsPage() {
                     <dd className="font-mono">{example.gross}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>Credit applied</dt>
+                    <dt>Free-tier allowance applied</dt>
                     <dd className="font-mono">{example.credit}</dd>
                   </div>
                 </dl>
                 <p className="mt-4 text-h3-lg font-bold">
                   {example.net}{' '}
-                  <span className="ml-2 text-body-md text-carbon-300">after credit</span>
+                  <span className="ml-2 text-body-md text-carbon-300">after allowance</span>
                 </p>
                 <p className="mt-4 text-body-md text-carbon-200">{example.explanation}</p>
                 <p className="mt-3 text-body-md text-carbon-300">{example.eligibility}</p>
@@ -509,12 +488,12 @@ export default function FilesystemPricingDetailsPage() {
             ))}
           </div>
           <div className="mt-8 max-w-[760px] border-l-2 border-carbon-400 pl-6">
-            <h3 className="mb-3 text-h3-lg font-bold">Already Used Some of Your Credit?</h3>
+            <h3 className="mb-3 text-h3-lg font-bold">Already Used Some of Your Free-tier Allowance?</h3>
             <p className="text-body-lg text-carbon-300">
-              If other Filesystem usage in your organization has already used $3 of this
-              month&rsquo;s credit, only $2 remains. For the same $3.39 of usage in Example 1, the
-              remaining amount to pay would be $3.39 − $2.00 = $1.39. A new filesystem or region
-              does not create a new credit allowance.
+              If other file system usage in your organization has already used $3 of this
+              month&rsquo;s allowance, only $2 remains. For the same $4.80 of usage in Example 1, the
+              remaining amount to pay would be $4.80 − $2.00 = $1.39. A new filesystem or region
+              does not create a new free-tier allowance.
             </p>
           </div>
         </SectionWrapper>
@@ -583,11 +562,11 @@ export default function FilesystemPricingDetailsPage() {
           <SectionHeader title="Billing and Limits" className="mb-8" h2Size="md" />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">Without a Card on File</h3>
+              <h3 className="mb-3 text-h3-lg font-bold">Without a Credit Card on Organization</h3>
               <ul className="space-y-2 text-body-lg text-carbon-300">
-                <li>One filesystem per region</li>
-                <li>2,000 files per filesystem</li>
-                <li>2 GB of storage per filesystem</li>
+                <li>One file system per region</li>
+                <li>2,000 files per file system</li>
+                <li>2 GB of storage per file system</li>
                 <li>500 MB maximum for a single file</li>
               </ul>
               {AT_THE_LIMIT && <p className="mt-4 text-body-lg text-carbon-300">{AT_THE_LIMIT}</p>}
@@ -596,7 +575,7 @@ export default function FilesystemPricingDetailsPage() {
               </p>
             </div>
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">Your Credit and Spending</h3>
+              <h3 className="mb-3 text-h3-lg font-bold">Your Free-tier Allowance and Spending</h3>
               <p className="text-body-lg text-carbon-300">{SPENDING_LIMIT_ANSWER}</p>
               {/* Removed 2026-09-24 at the owner's direction: a sentence saying
                   multi-region use "can also produce charges" without saying what
@@ -618,8 +597,8 @@ export default function FilesystemPricingDetailsPage() {
         <section className="bg-brand-red-bg py-16 text-white">
           <div className="contain">
             <CtaSection
-              title="Start with Your Monthly Credit"
-              subtitle="Create a filesystem and try it with your organization's $5 monthly service credit."
+              title="Start with Your Monthly Free-tier Allowance"
+              subtitle="Create a file system and try it with your organization's $5 monthly service allowance."
               primaryCta={{
                 text: 'Read the quickstart',
                 href: DOCS_QUICKSTART,
