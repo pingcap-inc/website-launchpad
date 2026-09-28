@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
+import { buildPageSchema } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
 }
 
-const baseSchema = buildPageSchema({
+const schema = buildPageSchema({
   path: '/lp/data-layer-for-agentic-ai/',
   title: 'The Data Layer for Agentic AI | TiDB',
   description:
@@ -54,6 +54,7 @@ const dsl: PageDSL = {
       'Agent workloads break the assumptions your database was sized against. Learn how TiDB handles no idle windows, per-agent tenancy, and real-time consistency for AI systems.',
     canonical: '/lp/data-layer-for-agentic-ai/',
     unlisted: true,
+    header: 'lp',
   },
   sections: [
     {
@@ -113,7 +114,7 @@ const dsl: PageDSL = {
             },
           },
           {
-            title: 'The Tenant Count You Did Not Plan For',
+            title: 'The Tenant Count You Did Not Plan for',
             description:
               'Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.',
             image: {
@@ -360,7 +361,7 @@ const dsl: PageDSL = {
       type: 'featureCard',
       props: {
         eyebrow: 'Honest Assessment',
-        title: 'Where This is the Wrong Choice',
+        title: 'Where This Is the Wrong Choice',
         subtitle:
           'These are the scenarios where TiDB is not the right fit. If any of these describe your workload, consider alternatives.',
         items: [
@@ -425,10 +426,23 @@ const dsl: PageDSL = {
         spacing: 'section',
       },
     },
+    {
+      id: 'form-1790350832900',
+      type: 'form',
+      props: {
+        title: 'Book Your Architecture Call',
+        subtitle:
+          "Tell us about your workload and we'll set up a 30-minute call with our engineering team.",
+        portalId: '4466002',
+        formId: '69c1c0c2-c4d5-4977-ba73-106e608fe731',
+      },
+      style: {
+        background: 'primary',
+        spacing: 'section',
+      },
+    },
   ],
 }
-
-const schema = withFaqFromDSL(baseSchema, dsl)
 
 export default function GeneratedPage() {
   return (

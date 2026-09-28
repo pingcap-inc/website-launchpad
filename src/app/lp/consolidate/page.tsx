@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
+import { buildPageSchema } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
 }
 
-const baseSchema = buildPageSchema({
+const schema = buildPageSchema({
   path: '/lp/consolidate/',
   title: 'One Database Engine, Not Six | TiDB Consolidation',
   description:
@@ -54,6 +54,7 @@ const dsl: PageDSL = {
       'Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.',
     canonical: '/lp/consolidate/',
     unlisted: true,
+    header: 'lp',
   },
   sections: [
     {
@@ -531,10 +532,23 @@ const dsl: PageDSL = {
         spacing: 'lg',
       },
     },
+    {
+      id: 'form-1790350509815',
+      type: 'form',
+      props: {
+        title: 'Book Your Architecture Call',
+        subtitle:
+          "Tell us about your workload and we'll set up a 30-minute call with our engineering team.",
+        portalId: '4466002',
+        formId: '69c1c0c2-c4d5-4977-ba73-106e608fe731',
+      },
+      style: {
+        background: 'primary',
+        spacing: 'section',
+      },
+    },
   ],
 }
-
-const schema = withFaqFromDSL(baseSchema, dsl)
 
 export default function GeneratedPage() {
   return (

@@ -4,7 +4,8 @@
     "title": "One Database Engine, Not Six | TiDB Consolidation",
     "description": "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.",
     "canonical": "/lp/consolidate/",
-    "unlisted": true
+    "unlisted": true,
+    "header": "lp"
   },
   "sections": [
     {
@@ -216,7 +217,7 @@
               "width": 181,
               "height": 50
             },
-            "title": "Pinterest: Graph Service Scaled With 10x Latency Reduction",
+            "title": "Pinterest: Graph Service Scaled with 10x Latency Reduction",
             "description": "Modernized its graph service with TiDB, eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.",
             "stats": [
               {
@@ -244,7 +245,7 @@
               "width": 351,
               "height": 132
             },
-            "title": "Plaid: 100 Services Migrated From Aurora With Zero Downtime",
+            "title": "Plaid: 100 Services Migrated from Aurora with Zero Downtime",
             "description": "A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 seconds per service.",
             "stats": [
               {
@@ -273,7 +274,7 @@
         "title": "What Changes When It's One Engine",
         "items": [
           {
-            "title": "Scale You Don't Have to Plan For",
+            "title": "Scale You Don't Have to Plan for",
             "description": "20+ TB, 300K+ QPS, 10K+ writes per second, and millions of tables in a single cluster. No shard keys in your application, and no rebalance that turns into a migration.",
             "image": {
               "image": {
@@ -455,6 +456,20 @@
       "style": {
         "background": "brand-violet",
         "spacing": "lg"
+      }
+    },
+    {
+      "id": "form-1790350509815",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team."
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
       }
     }
   ]
