@@ -490,10 +490,10 @@ export default function FilesystemPricingDetailsPage() {
           <div className="mt-8 max-w-[760px] border-l-2 border-carbon-400 pl-6">
             <h3 className="mb-3 text-h3-lg font-bold">Already Used Some of Your Free-tier Allowance?</h3>
             <p className="text-body-lg text-carbon-300">
-              If other file system usage in your organization has already used $3 of this
-              month&rsquo;s allowance, only $2 remains. For the same $4.80 of usage in Example 1, the
-              remaining amount to pay would be $4.80 − $2.00 = $1.39. A new filesystem or region
-              does not create a new free-tier allowance.
+              If other file system usage in your organization has already consumed $3 of this 
+              month&rsquo;s allowance, only $2 remains. For the same $4.80 of usage in Example 1, 
+              the amount to pay would be $4.80 + $3.00 − $5.00 = $2.80. Creating a new file system 
+              or using another region does not provide an additional free-tier allowance.
             </p>
           </div>
         </SectionWrapper>
