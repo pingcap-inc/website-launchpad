@@ -27,6 +27,7 @@
  */
 
 import type { FaqProps, PageDSL } from './dsl-schema'
+import { richTextToPlainText } from './rich-text-render'
 
 const SITE_URL = 'https://www.pingcap.com'
 const SITE_NAME = 'TiDB | SQL at Scale'
@@ -260,8 +261,8 @@ export function faqSchema(items: { question: string; answer: string }[]): Record
 
 /**
  * Build a FAQPage node from a DSL page's `faq` sections. Returns `null` when the
- * page has no faq section (or no string answers). Only string answers are
- * included — JSON-LD `text` must be plain text.
+ * page has no faq section (or no string answers). Answers are flattened to plain
+ * text — JSON-LD `text` must not carry the DSL's rich-text markup.
  *
  * Single source of truth for FAQ structured data: pages collect their FAQ schema
  * here (via buildPageSchema / withFaqFromDSL) instead of letting <FaqSection>
@@ -275,8 +276,12 @@ export function faqSchemaFromDSL(dsl: PageDSL): Record<string, unknown> | null {
     // type guard above guarantees this is a faq section.
     const faqProps = section.props as FaqProps
     for (const item of faqProps.items ?? []) {
-      if (typeof item.a === 'string' && item.a.length > 0) {
-        items.push({ question: item.q, answer: item.a })
+      if (typeof item.a !== 'string') continue
+      // DSL answers are rich text. JSON-LD has no markdown, so flatten first —
+      // otherwise `[label](url)` lands in acceptedAnswer.text verbatim.
+      const answer = richTextToPlainText(item.a)
+      if (answer.length > 0) {
+        items.push({ question: item.q, answer })
       }
     }
   }

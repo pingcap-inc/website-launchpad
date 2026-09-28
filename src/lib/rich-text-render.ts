@@ -675,3 +675,53 @@ export function renderRichTextChunk(content: string, preserveLeadingHeadings: bo
     (match) => `<div class="rt-table-wrap rt-table-wrap--scroll">${match}</div>`
   )
 }
+
+/**
+ * Flatten a rich-text chunk to plain prose.
+ *
+ * Structured data needs the *text* of an answer, not its markup: JSON-LD has no
+ * markdown, so an unprocessed `[label](url)` reaches `acceptedAnswer.text`
+ * verbatim and search engines render the brackets. This keeps the link label and
+ * drops the URL — the live links stay in the rendered HTML, which is where they
+ * belong. Mirrors the inline syntax handled by `markdownToHtml` above; keep the
+ * two in sync when adding syntax.
+ */
+export function richTextToPlainText(content: string): string {
+  const lines = content
+    .split('\n')
+    .filter((line) => {
+      const t = line.trim()
+      // Directive fences (:::card …), code fences and horizontal rules carry no prose.
+      if (/^:::/.test(t) || /^```/.test(t)) return false
+      if (/^(-{3,}|\*{3,}|_{3,})$/.test(t)) return false
+      // Table delimiter row (| --- | :--: |)
+      if (/^\|[\s|:-]+\|$/.test(t)) return false
+      return true
+    })
+    .map((line) =>
+      line
+        .trim()
+        .replace(/^#{1,6}\s+/, '') // heading
+        .replace(/^>\s?/, '') // blockquote
+        .replace(/^[-*·]\s+/, '') // bullet
+        .replace(/^\d+[.)]\s+/, '') // ordered list
+        .replace(/^\|(.*)\|$/, '$1') // table row -> cells
+        .replace(/\|/g, ' ')
+    )
+
+  return (
+    lines
+      .join('\n')
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1') // image -> alt text
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // link -> label
+      .replace(/\*\*\*(.+?)\*\*\*/g, '$1')
+      .replace(/\*\*(.+?)\*\*/g, '$1')
+      .replace(/\*(.+?)\*/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      // Stray HTML. Deliberately requires a tag-like name so prose such as
+      // "latency <100ms" survives untouched.
+      .replace(/<\/?[a-zA-Z][^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+  )
+}
