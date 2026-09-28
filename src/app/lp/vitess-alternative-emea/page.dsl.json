@@ -325,31 +325,31 @@
             "href": "https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/"
           },
           {
-            "badge": "SaaS",
+            "badge": "Mobility",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/4043e4af-catalyst.svg",
-                "alt": "catalyst",
-                "width": 252,
-                "height": 72
+                "url": "https://static.pingcap.com/images/7e978b4d-bolt.svg",
+                "alt": "bolt",
+                "width": 69,
+                "height": 40
               },
-              "alt": "catalyst",
-              "width": 252,
-              "height": 72
+              "alt": "bolt",
+              "width": 69,
+              "height": 40
             },
-            "title": "Catalyst: Rearchitected for 60x Faster Queries",
-            "description": "Catalyst selected TiDB over Aurora and YugabyteDB to power its customer growth platform, achieving up to 60x faster query response with HTAP capabilities that handle both object and time series data in one stack.",
+            "title": "Bolt: Legacy MySQL Modernized to Scale 1000s of Microservices",
+            "description": "Bolt replaced fragile, hard-to-scale MySQL — and passed on Vitess — choosing TiDB to run order, commerce, and payment microservices on AWS with horizontal scale, strong consistency, and zero-downtime maintenance.",
             "stats": [
               {
-                "value": "60x",
-                "label": "Faster queries"
+                "value": "35k",
+                "label": "QPS on critical apps"
               },
               {
-                "value": "1",
-                "label": "Unified stack"
+                "value": "3x",
+                "label": "Storage compression"
               }
             ],
-            "href": "https://www.pingcap.com/case-study/catalyst-rearchitects-core-saas-platform-tidb-60x-faster-performance/"
+            "href": "https://www.pingcap.com/case-study/bolt-modernizing-mysql-tidb-scale-thousands-microservices-aws/"
           },
           {
             "badge": "SaaS",
