@@ -167,7 +167,11 @@ const CANONICAL = `https://www.pingcap.com${PATH}`
 const TITLE = 'TiDB Cloud Filesystem Pricing Details'
 const DESCRIPTION =
   'TiDB Cloud Filesystem pricing for reads, writes, storage and egress, with $5 of service free-tier allowance per organization each month. View rates and limits.'
-const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
+// Shares the product page's social card. Lives in `public/` and is mirrored to
+// the CDN by the deploy workflow (`public/` -> s3://uploads-pingcap-com/launchpad/),
+// so the absolute URL is the CDN one — crawlers fetch it directly, and it only
+// resolves once this branch is deployed.
+const OG_IMAGE = 'https://static.pingcap.com/launchpad/images/tidb-cloud-filesystem/FS.png'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -251,8 +255,8 @@ export default function FilesystemPricingDetailsPage() {
             TiDB Cloud Filesystem Pricing Details
           </h1>
           <p className="mb-6 max-w-[620px] text-pretty text-body-2xl text-carbon-400">
-            Pay as you go for reads, writes, storage and egress, with a monthly free-tier allowance. No
-            tiered plans.
+            Pay as you go for reads, writes, storage and egress, with a monthly free-tier allowance.
+            No tiered plans.
           </p>
           {/* A pricing page is a common first landing point, and a reader who does
               not yet know what the product is had no route to it from here. The
@@ -315,13 +319,14 @@ export default function FilesystemPricingDetailsPage() {
             <div>
               <h3 className="mb-3 text-h3-lg font-bold">What Can I Use Without a Card?</h3>
               <p className="mb-4 text-body-lg text-text-primary/70">
-                You can start without a credit card, with one file system per region. Each filesystem
-                can hold up to 2,000 files and 2 GB in total; each file can be up to 500 MB.
+                You can start without a credit card, with one file system per region. Each
+                filesystem can hold up to 2,000 files and 2 GB in total; each file can be up to 500
+                MB.
               </p>
               <p className="mb-4 text-body-lg text-text-primary/70">
-                The free-tier allowance covers usage charges; it does not increase these limits. For example, 16 GB of
-                Performance storage for a full month costs $4.80, but a file system without a credit card
-                can only hold 2 GB.
+                The free-tier allowance covers usage charges; it does not increase these limits. For
+                example, 16 GB of Performance storage for a full month costs $4.80, but a file
+                system without a credit card can only hold 2 GB.
               </p>
               {/* Removed 2026-09-23 at the owner's direction: an illustration of
                   how far request volume can run past the free-tier allowance ("200,000 write
@@ -332,8 +337,8 @@ export default function FilesystemPricingDetailsPage() {
                   there is no configurable spending limit. Restore the fuller
                   explanation only once Product answers. */}
               <p className="mb-5 text-body-lg text-text-primary/70">
-                The $5 allowance reduces your charges; it is not a maximum monthly bill, and there is
-                no configurable spending limit. See{' '}
+                The $5 allowance reduces your charges; it is not a maximum monthly bill, and there
+                is no configurable spending limit. See{' '}
                 <a href="#limitations" className="underline underline-offset-2 hover:no-underline">
                   Billing and Limits
                 </a>{' '}
@@ -488,11 +493,13 @@ export default function FilesystemPricingDetailsPage() {
             ))}
           </div>
           <div className="mt-8 max-w-[760px] border-l-2 border-carbon-400 pl-6">
-            <h3 className="mb-3 text-h3-lg font-bold">Already Used Some of Your Free-tier Allowance?</h3>
+            <h3 className="mb-3 text-h3-lg font-bold">
+              Already Used Some of Your Free-tier Allowance?
+            </h3>
             <p className="text-body-lg text-carbon-300">
-              If other file system usage in your organization has already consumed $3 of this 
-              month&rsquo;s allowance, only $2 remains. For the same $4.80 of usage in Example 1, 
-              the amount to pay would be $4.80 + $3.00 − $5.00 = $2.80. Creating a new file system 
+              If other file system usage in your organization has already consumed $3 of this
+              month&rsquo;s allowance, only $2 remains. For the same $4.80 of usage in Example 1,
+              the amount to pay would be $4.80 + $3.00 − $5.00 = $2.80. Creating a new file system
               or using another region does not provide an additional free-tier allowance.
             </p>
           </div>
@@ -575,7 +582,7 @@ export default function FilesystemPricingDetailsPage() {
               </p>
             </div>
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">Your Free-tier Allowance and Spending</h3>
+              <h3 className="mb-3 text-h3-lg font-bold">Your Free-Tier Allowance and Spending</h3>
               <p className="text-body-lg text-carbon-300">{SPENDING_LIMIT_ANSWER}</p>
               {/* Removed 2026-09-24 at the owner's direction: a sentence saying
                   multi-region use "can also produce charges" without saying what
@@ -597,7 +604,7 @@ export default function FilesystemPricingDetailsPage() {
         <section className="bg-brand-red-bg py-16 text-white">
           <div className="contain">
             <CtaSection
-              title="Start with Your Monthly Free-tier Allowance"
+              title="Start with Your Monthly Free-Tier Allowance"
               subtitle="Create a file system and try it with your organization's $5 monthly service allowance."
               primaryCta={{
                 text: 'Read the quickstart',
