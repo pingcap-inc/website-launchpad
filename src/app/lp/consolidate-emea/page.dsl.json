@@ -236,28 +236,28 @@
             "badge": "Migration Path",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/23ea2f33-plaid-logo.png",
-                "alt": "plaid logo",
-                "width": 351,
-                "height": 132
+                "url": "https://static.pingcap.com/images/7e978b4d-bolt.svg",
+                "alt": "bolt",
+                "width": 69,
+                "height": 40
               },
-              "alt": "plaid logo",
-              "width": 351,
-              "height": 132
+              "alt": "bolt",
+              "width": 69,
+              "height": 40
             },
-            "title": "Plaid: 100 Services Migrated From Aurora With Zero Downtime",
-            "description": "A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 seconds per service.",
+            "title": "Bolt: Legacy MySQL Modernized to Scale 1000s of Microservices",
+            "description": "Bolt replaced fragile, hard-to-scale MySQL — and passed on Vitess — choosing TiDB to run order, commerce, and payment microservices on AWS with horizontal scale, strong consistency, and zero-downtime maintenance.",
             "stats": [
               {
-                "value": "96%",
-                "label": "less maintenance"
+                "value": "35k",
+                "label": "QPS on critical apps"
               },
               {
-                "value": "<60s",
-                "label": "cutover downtime"
+                "value": "3x",
+                "label": "storage compression"
               }
             ],
-            "href": "https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/",
+            "href": "https://www.pingcap.com/case-study/bolt-modernizing-mysql-tidb-scale-thousands-microservices-aws/",
             "cta": "Read the story"
           }
         ]
@@ -463,9 +463,9 @@
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team.",
         "portalId": "4466002",
-        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team."
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731"
       },
       "style": {
         "background": "primary",
