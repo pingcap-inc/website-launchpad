@@ -72,7 +72,11 @@ const DESCRIPTION =
 const PATH = '/tidb/tidb-cloud-filesystem/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const PRODUCT_ID = `${CANONICAL}#software`
-const OG_IMAGE = 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'
+// Social card art for this page. Lives in `public/` and is mirrored to the CDN
+// by the deploy workflow (`public/` -> s3://uploads-pingcap-com/launchpad/), so
+// the absolute URL is the CDN one — crawlers fetch it directly, and it only
+// resolves once this branch is deployed.
+const OG_IMAGE = 'https://static.pingcap.com/launchpad/images/tidb-cloud-filesystem/FS.png'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -182,8 +186,8 @@ const faqItems: {
     q: 'Is there a TiDB Cloud Filesystem SDK?',
     answer: (
       <>
-        Not yet. The CLI is the full surface during the public preview. TypeScript and Python
-        SDKs are coming soon.
+        Not yet. The CLI is the full surface during the public preview. TypeScript and Python SDKs
+        are coming soon.
       </>
     ),
   },
