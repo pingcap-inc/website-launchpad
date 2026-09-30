@@ -243,8 +243,14 @@
             "description": "Replace MySQL, Amazon Aurora, or PostgreSQL with one MySQL-compatible distributed SQL engine.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/dd0669e1-clip_path_group.png",
+                "alt": "clip path group",
+                "width": 720,
+                "height": 664
+              },
+              "alt": "clip path group",
+              "width": 720,
+              "height": 664
             }
           },
           {
@@ -252,8 +258,14 @@
             "description": "Eliminate Snowflake, BigQuery, or Redshift with native columnar HTAP via TiFlash—no ETL pipelines.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/8596fd96-___2__1_.png",
+                "alt": "2 1",
+                "width": 1051,
+                "height": 664
+              },
+              "alt": "2 1",
+              "width": 1051,
+              "height": 664
             }
           },
           {
@@ -261,8 +273,14 @@
             "description": "Built-in full-text and vector search replaces Elasticsearch, OpenSearch, and standalone vector databases.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/4571f08d-vector-violet.svg",
+                "alt": "vector violet",
+                "width": 522,
+                "height": 563
+              },
+              "alt": "vector violet",
+              "width": 522,
+              "height": 563
             }
           },
           {
@@ -270,8 +288,13 @@
             "description": "Transparent auto-sharding with strong consistency—no app-side sharding middleware or external caches.",
             "image": {
               "image": {
-                "url": ""
-              }
+                "url": "https://static.pingcap.com/images/83d200e7-_____.png",
+                "width": 934,
+                "height": 664
+              },
+              "alt": "",
+              "width": 934,
+              "height": 664
             }
           }
         ],
