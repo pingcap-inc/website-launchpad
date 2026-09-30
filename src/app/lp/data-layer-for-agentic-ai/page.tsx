@@ -114,7 +114,7 @@ const dsl: PageDSL = {
             },
           },
           {
-            // title-case-ignore
+            // title-case-ignore — Chicago capitalizes a sentence-final preposition
             title: 'The Tenant Count You Did Not Plan For',
             description:
               'Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.',
@@ -159,8 +159,7 @@ const dsl: PageDSL = {
       type: 'featureGrid',
       props: {
         eyebrow: 'What Agent Workloads Actually Require',
-        // title-case-ignore
-        title: 'Four Requirements, In Order',
+        title: 'Four Requirements, in Order',
         subtitle:
           'These are the capabilities teams need as agent workloads scale, in the order they hit them.',
         items: [
@@ -363,8 +362,7 @@ const dsl: PageDSL = {
       type: 'featureCard',
       props: {
         eyebrow: 'Honest Assessment',
-        // title-case-ignore
-        title: 'Where This is the Wrong Choice',
+        title: 'Where This Is the Wrong Choice',
         subtitle:
           'These are the scenarios where TiDB is not the right fit. If any of these describe your workload, consider alternatives.',
         items: [

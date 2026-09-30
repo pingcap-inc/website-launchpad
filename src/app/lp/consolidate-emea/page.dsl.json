@@ -217,7 +217,7 @@
               "width": 181,
               "height": 50
             },
-            "title": "Pinterest: Graph Service Scaled With 10x Latency Reduction",
+            "title": "Pinterest: Graph Service Scaled with 10x Latency Reduction",
             "description": "Modernized its graph service with TiDB, eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.",
             "stats": [
               {

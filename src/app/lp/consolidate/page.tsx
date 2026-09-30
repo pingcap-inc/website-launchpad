@@ -277,8 +277,8 @@ const dsl: PageDSL = {
               width: 181,
               height: 50,
             },
-            // title-case-ignore
-            title: 'Pinterest: Graph Service Scaled With 10x Latency Reduction',
+            // title-case-ignore — "10x" is the correct brand form, not "10X"
+            title: 'Pinterest: Graph Service Scaled with 10x Latency Reduction',
             description:
               'Modernized its graph service with TiDB, eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.',
             stats: [
@@ -307,8 +307,7 @@ const dsl: PageDSL = {
               width: 351,
               height: 132,
             },
-            // title-case-ignore
-            title: 'Plaid: 100 Services Migrated From Aurora With Zero Downtime',
+            title: 'Plaid: 100 Services Migrated from Aurora with Zero Downtime',
             description:
               'A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 seconds per service.',
             stats: [
@@ -338,7 +337,7 @@ const dsl: PageDSL = {
         title: "What Changes When It's One Engine",
         items: [
           {
-            // title-case-ignore
+            // title-case-ignore — Chicago capitalizes a sentence-final preposition
             title: "Scale You Don't Have to Plan For",
             description:
               '20+ TB, 300K+ QPS, 10K+ writes per second, and millions of tables in a single cluster. No shard keys in your application, and no rebalance that turns into a migration.',
