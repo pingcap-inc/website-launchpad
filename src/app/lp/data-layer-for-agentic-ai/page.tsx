@@ -60,7 +60,7 @@ const dsl: PageDSL = {
         "subheadline": "Agent workloads break the assumptions your database was sized against. No idle window. A tenant per agent, not per customer. And context that has to be true at the moment it is read.",
         "primaryCta": {
           "text": "Book a 30-Minute Architecture Review",
-          "href": "https://www.pingcap.com/contact-us/"
+          "href": "#book"
         },
         "secondaryCta": {
           "text": "Read Architecture Guide",
@@ -411,7 +411,8 @@ const dsl: PageDSL = {
       },
       "style": {
         "background": "primary",
-        "spacing": "section"
+        "spacing": "section",
+        "anchorId": "book"
       }
     }
   ]
