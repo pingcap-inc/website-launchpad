@@ -60,7 +60,7 @@ const dsl: PageDSL = {
         "subheadline": "Your stack has six databases. It could have one. Transactions, analytics, search, and vector memory in a single distributed SQL engine. MySQL-compatible, strongly consistent, and open source.",
         "primaryCta": {
           "text": "Book a 30-Minute Architecture Review",
-          "href": "https://www.pingcap.com/contact-us/"
+          "href": "#book"
         },
         "secondaryCta": {
           "text": "Read How Dify Did It",
@@ -511,7 +511,8 @@ const dsl: PageDSL = {
       },
       "style": {
         "background": "primary",
-        "spacing": "section"
+        "spacing": "section",
+        "anchorId": "book"
       }
     }
   ]
