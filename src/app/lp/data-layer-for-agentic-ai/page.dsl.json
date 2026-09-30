@@ -18,7 +18,7 @@
         "subheadline": "Agent workloads break the assumptions your database was sized against. No idle window. A tenant per agent, not per customer. And context that has to be true at the moment it is read.",
         "primaryCta": {
           "text": "Book a 30-Minute Architecture Review",
-          "href": "https://www.pingcap.com/contact-us/"
+          "href": "#book"
         },
         "secondaryCta": {
           "text": "Read Architecture Guide",
@@ -63,7 +63,7 @@
             }
           },
           {
-            "title": "The Tenant Count You Did Not Plan for",
+            "title": "The Tenant Count You Did Not Plan For",
             "description": "Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.",
             "image": {
               "image": {
@@ -105,7 +105,7 @@
       "type": "featureGrid",
       "props": {
         "eyebrow": "What Agent Workloads Actually Require",
-        "title": "Four Requirements, in Order",
+        "title": "Four Requirements, In Order",
         "subtitle": "These are the capabilities teams need as agent workloads scale, in the order they hit them.",
         "items": [
           {
@@ -299,7 +299,7 @@
       "type": "featureCard",
       "props": {
         "eyebrow": "Honest Assessment",
-        "title": "Where This Is the Wrong Choice",
+        "title": "Where This is the Wrong Choice",
         "subtitle": "These are the scenarios where TiDB is not the right fit. If any of these describe your workload, consider alternatives.",
         "items": [
           {
@@ -363,13 +363,14 @@
       "type": "form",
       "props": {
         "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team.",
         "portalId": "4466002",
-        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
-        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team."
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731"
       },
       "style": {
         "background": "primary",
-        "spacing": "section"
+        "spacing": "section",
+        "anchorId": "book"
       }
     }
   ]

@@ -68,7 +68,7 @@ const dsl: PageDSL = {
           'Agent workloads break the assumptions your database was sized against. No idle window. A tenant per agent, not per customer. And context that has to be true at the moment it is read.',
         primaryCta: {
           text: 'Book a 30-Minute Architecture Review',
-          href: 'https://www.pingcap.com/contact-us/',
+          href: '#book',
         },
         secondaryCta: {
           text: 'Read Architecture Guide',
@@ -114,7 +114,8 @@ const dsl: PageDSL = {
             },
           },
           {
-            title: 'The Tenant Count You Did Not Plan for',
+            // title-case-ignore
+            title: 'The Tenant Count You Did Not Plan For',
             description:
               'Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.',
             image: {
@@ -158,7 +159,8 @@ const dsl: PageDSL = {
       type: 'featureGrid',
       props: {
         eyebrow: 'What Agent Workloads Actually Require',
-        title: 'Four Requirements, in Order',
+        // title-case-ignore
+        title: 'Four Requirements, In Order',
         subtitle:
           'These are the capabilities teams need as agent workloads scale, in the order they hit them.',
         items: [
@@ -361,7 +363,8 @@ const dsl: PageDSL = {
       type: 'featureCard',
       props: {
         eyebrow: 'Honest Assessment',
-        title: 'Where This Is the Wrong Choice',
+        // title-case-ignore
+        title: 'Where This is the Wrong Choice',
         subtitle:
           'These are the scenarios where TiDB is not the right fit. If any of these describe your workload, consider alternatives.',
         items: [
@@ -439,6 +442,7 @@ const dsl: PageDSL = {
       style: {
         background: 'primary',
         spacing: 'section',
+        anchorId: 'book',
       },
     },
   ],

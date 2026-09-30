@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   description:
     'Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.',
   robots: { index: false, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/lp/consolidate/' },
+  alternates: { canonical: 'https://www.pingcap.com/lp/consolidate-emea/' },
   openGraph: {
     title: 'One Database Engine, Not Six | TiDB Consolidation',
     description:
       'Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.',
-    url: 'https://www.pingcap.com/lp/consolidate/',
+    url: 'https://www.pingcap.com/lp/consolidate-emea/',
     siteName: 'TiDB',
     images: [
       {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: '/lp/consolidate/',
+  path: '/lp/consolidate-emea/',
   title: 'One Database Engine, Not Six | TiDB Consolidation',
   description:
     'Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.',
@@ -41,7 +41,7 @@ const schema = buildPageSchema({
     { name: 'Home', path: '/' },
     {
       name: 'One Engine. <span class="text-gradient-violet animate-glow-sweep">Not Six.</span>',
-      path: '/lp/consolidate/',
+      path: '/lp/consolidate-emea/',
     },
   ],
 })
@@ -52,7 +52,7 @@ const dsl: PageDSL = {
     title: 'One Database Engine, Not Six | TiDB Consolidation',
     description:
       'Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.',
-    canonical: '/lp/consolidate/',
+    canonical: '/lp/consolidate-emea/',
     unlisted: true,
     header: 'lp',
   },
@@ -298,30 +298,30 @@ const dsl: PageDSL = {
             badge: 'Migration Path',
             logo: {
               image: {
-                url: 'https://static.pingcap.com/images/23ea2f33-plaid-logo.png',
-                alt: 'plaid logo',
-                width: 351,
-                height: 132,
+                url: 'https://static.pingcap.com/images/7e978b4d-bolt.svg',
+                alt: 'bolt',
+                width: 69,
+                height: 40,
               },
-              alt: 'plaid logo',
-              width: 351,
-              height: 132,
+              alt: 'bolt',
+              width: 69,
+              height: 40,
             },
             // title-case-ignore
-            title: 'Plaid: 100 Services Migrated From Aurora With Zero Downtime',
+            title: 'Bolt: Legacy MySQL Modernized to Scale 1000s of Microservices',
             description:
-              'A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 seconds per service.',
+              'Bolt replaced fragile, hard-to-scale MySQL — and passed on Vitess — choosing TiDB to run order, commerce, and payment microservices on AWS with horizontal scale, strong consistency, and zero-downtime maintenance.',
             stats: [
               {
-                value: '96%',
-                label: 'less maintenance',
+                value: '35k',
+                label: 'QPS on critical apps',
               },
               {
-                value: '<60s',
-                label: 'cutover downtime',
+                value: '3x',
+                label: 'storage compression',
               },
             ],
-            href: 'https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/',
+            href: 'https://www.pingcap.com/case-study/bolt-modernizing-mysql-tidb-scale-thousands-microservices-aws/',
             cta: 'Read the story',
           },
         ],
