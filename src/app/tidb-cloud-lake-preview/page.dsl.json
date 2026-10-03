@@ -134,9 +134,14 @@
             "badge": "Production log analytics",
             "logo": {
               "image": {
-                "url": ""
+                "url": "https://static.pingcap.com/images/7e978b4d-bolt.svg",
+                "alt": "bolt",
+                "width": 69,
+                "height": 40
               },
-              "alt": ""
+              "alt": "bolt",
+              "width": 69,
+              "height": 40
             },
             "title": "Global Digital-Asset Exchange Serving Millions of Users",
             "description": "A global digital-asset exchange migrated production log analytics to TiDB Cloud Lake. Queries that previously timed out after a minute now return within five seconds, while estimated monthly costs decreased by 67%.",
@@ -156,16 +161,21 @@
             "badge": "Vector search",
             "logo": {
               "image": {
-                "url": ""
+                "url": "https://static.pingcap.com/images/4571f08d-vector-violet.svg",
+                "alt": "vector violet",
+                "width": 522,
+                "height": 563
               },
-              "alt": ""
+              "alt": "vector violet",
+              "width": 522,
+              "height": 563
             },
             "title": "Production iGaming Platform Running Live Vector Search",
             "description": "A production iGaming platform continuously synchronizes vector data from TiDB Essential into TiDB Cloud Lake and runs live vector search across its application data.",
             "stats": [
               {
-                "value": "",
-                "label": ""
+                "value": "Live",
+                "label": "Production vector search"
               }
             ],
             "cta": ""
