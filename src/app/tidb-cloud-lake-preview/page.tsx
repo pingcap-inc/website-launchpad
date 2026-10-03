@@ -176,14 +176,14 @@ const dsl: PageDSL = {
             "badge": "Production log analytics",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/7e978b4d-bolt.svg",
-                "alt": "bolt",
-                "width": 69,
-                "height": 40
+                "url": "https://static.pingcap.com/images/132da603-cloud-lake-production-analytics.svg",
+                "alt": "cloud lake production analytics",
+                "width": 160,
+                "height": 64
               },
-              "alt": "bolt",
-              "width": 69,
-              "height": 40
+              "alt": "cloud lake production analytics",
+              "width": 160,
+              "height": 64
             },
             "title": "Global Digital-Asset Exchange Serving Millions of Users",
             "description": "A global digital-asset exchange migrated production log analytics to TiDB Cloud Lake. Queries that previously timed out after a minute now return within five seconds, while estimated monthly costs decreased by 67%.",
