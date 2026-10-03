@@ -101,36 +101,6 @@
       }
     },
     {
-      "id": "how-it-works",
-      "type": "featureMedia",
-      "props": {
-        "eyebrow": "How It Works",
-        "title": "Connect your data. Build analytics and search.",
-        "subtitle": "TiDB Cloud runs your transactional applications. Cloud Lake brings a copy of that data together with other sources for analytics and search, using separate analytical compute.",
-        "items": [
-          {
-            "title": "",
-            "description": "",
-            "image": {
-              "image": {
-                "url": "https://static.pingcap.com/images/dd0669e1-clip_path_group.png",
-                "alt": "clip path group",
-                "width": 720,
-                "height": 664
-              },
-              "alt": "clip path group",
-              "width": 720,
-              "height": 664
-            }
-          }
-        ],
-        "startPosition": "right"
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
       "id": "featureCard-1790893237169",
       "type": "featureCard",
       "props": {
