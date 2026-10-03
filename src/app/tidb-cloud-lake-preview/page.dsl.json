@@ -89,7 +89,7 @@
       "props": {
         "eyebrow": "How It Works",
         "title": "Connect your data. Build analytics and search.",
-        "subtitle": "TiDB Cloud runs your transactional applications. Cloud Lake brings a copy of that data together with other sources for analytics and search, using separate analytical compute.",
+        "subtitle": "TiDB Cloud runs your transactional applications. TiDB Cloud Lake brings a copy of that data together with other sources for analytics and search, using separate analytical compute.",
         "titleFullWidth": true,
         "layout": "single",
         "mediaType": "shortcode",
@@ -136,7 +136,7 @@
         "items": [
           {
             "q": "How Does TiDB Cloud Lake Work with TiDB Cloud?",
-            "a": "TiDB Cloud runs transactional applications; Cloud Lake runs analytics and search on a separate copy of your data. An initial snapshot and ongoing TiCDC changes move through S3 staging into Lake. You can also use Lake with data from other sources."
+            "a": "TiDB Cloud runs transactional applications; TiDB Cloud Lake runs analytics and search on a separate copy of your data. An initial snapshot and ongoing TiCDC changes move through S3 staging into TiDB Cloud Lake. You can also use TiDB Cloud Lake with data from other sources."
           },
           {
             "q": "What Data Can I Bring Into TiDB Cloud Lake?",
