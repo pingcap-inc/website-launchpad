@@ -161,14 +161,14 @@
             "badge": "Vector search",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/4571f08d-vector-violet.svg",
-                "alt": "vector violet",
-                "width": 522,
-                "height": 563
+                "url": "https://static.pingcap.com/images/2a26638d-cloud-lake-vector-search.svg",
+                "alt": "cloud lake vector search",
+                "width": 160,
+                "height": 64
               },
-              "alt": "vector violet",
-              "width": 522,
-              "height": 563
+              "alt": "cloud lake vector search",
+              "width": 160,
+              "height": 64
             },
             "title": "Production iGaming Platform Running Live Vector Search",
             "description": "A production iGaming platform continuously synchronizes vector data from TiDB Essential into TiDB Cloud Lake and runs live vector search across its application data.",
