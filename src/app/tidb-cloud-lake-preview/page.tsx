@@ -162,7 +162,7 @@ const dsl: PageDSL = {
             "description": "Vector search\n\nA production iGaming platform continuously synchronizes vector data from TiDB Essential into TiDB Cloud Lake and runs live vector search across its application data."
           }
         ],
-        "columns": 2,
+        "columns": 3,
         "borderStyle": "gray"
       },
       "style": {
