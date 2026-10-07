@@ -375,7 +375,9 @@ const dsl: PageDSL = {
                 "value": "<1s",
                 "label": "DB provisioning per task"
               }
-            ]
+            ],
+            "href": "https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/",
+            "cta": "Read the story"
           },
           {
             "badge": "Agentic AI Platform",
@@ -397,7 +399,9 @@ const dsl: PageDSL = {
                 "value": "2 weeks",
                 "label": "Migration time"
               }
-            ]
+            ],
+            "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
+            "cta": "Read the story"
           },
           {
             "badge": "AI Note-Taking",
@@ -423,10 +427,12 @@ const dsl: PageDSL = {
                 "value": "2M+",
                 "label": "Users"
               }
-            ]
+            ],
+            "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/",
+            "cta": "Read the story"
           },
           {
-            "badge": "AI Workflow Platform",
+            "badge": "Infrastructure Sprawl",
             "logo": {
               "image": {
                 "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
@@ -449,7 +455,9 @@ const dsl: PageDSL = {
                 "value": "500K",
                 "label": "Containers consolidated"
               }
-            ]
+            ],
+            "href": "https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/",
+            "cta": "Read the Dify story"
           }
         ]
       },
