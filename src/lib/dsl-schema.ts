@@ -96,6 +96,7 @@ export type IconValue = IconName | ImageRef
 
 export type SectionType =
   | 'hero'
+  | 'pricingPlans'
   | 'stats'
   | 'featureGrid'
   | 'featureCard'
@@ -353,6 +354,8 @@ export interface FeatureHighlightItem {
 // ─── Logo Cloud ──────────────────────────────────────────────────────────────
 
 export interface LogoCloudProps {
+  cta?: { text: string; href: string }
+  logoClassName?: string
   eyebrow?: string
   title?: string
   subtitle?: string
@@ -638,7 +641,56 @@ export interface TableOfContentsProps {
 
 // ─── Numbered List ──────────────────────────────────────────────────────────
 
+export interface PricingRate {
+  label: string
+  value: string
+  unit?: string
+}
+
+export interface PricingPlan {
+  name: string
+  accent?: 'violet' | 'blue' | 'teal'
+  statusBadge?: string
+  heading?: string
+  description: string
+  priceLabel: string
+  price: string
+  unit?: string
+  priceNote?: string
+  primaryCta: { text: string; href: string }
+  secondaryCta?: { text: string; href: string }
+  detailsLabel?: string
+  features: string[]
+  detailNote?: string
+  rates?: PricingRate[]
+  overage?: { summary: string; rates: PricingRate[]; note?: string }
+}
+
+export interface PricingPlansProps {
+  title: string
+  subtitle?: string
+  currency?: string
+  columns?: 3 | 4
+  plans: PricingPlan[]
+  notes?: Array<{ id?: string; label: string; text: string }>
+  deployment?: {
+    id?: string
+    label: string
+    statusBadge?: string
+    title: string
+    description: string
+    detailsTitle: string
+    features: string[]
+    primaryCta: { text: string; href: string }
+    secondaryCta?: { text: string; href: string }
+  }
+  deploymentLink?: { text: string; href: string }
+  footer?: string
+  className?: string
+}
+
 export type SectionPropsMap = {
+  pricingPlans: PricingPlansProps
   hero: HeroProps
   stats: StatsProps
   featureGrid: FeatureGridProps
@@ -805,6 +857,7 @@ Available section types (choose appropriate mix):
     Add animate-glow-sweep to the class for an animated glow sweep effect, e.g.
     <span class="text-gradient-violet animate-glow-sweep">word</span>
   )
+- { type: "pricingPlans", props: { title, subtitle?, currency?, columns?: 3|4, plans: [{name, accent?: "violet"|"blue"|"teal", statusBadge?, heading?, description, priceLabel, price, unit?, priceNote?, primaryCta: {text, href}, secondaryCta?: {text, href}, detailsLabel?, features: string[], detailNote?, rates?: [{label, value, unit?}], overage?: {summary, rates: [{label, value, unit?}], note?}}], notes?: [{id?, label, text}], deployment?: {id?, label, statusBadge?, title, description, detailsTitle, features: string[], primaryCta: {text, href}, secondaryCta?: {text, href}}, deploymentLink?: {text, href}, footer?, className? } }
 - { type: "stats", props: { eyebrow?, title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4, className? } }
 - { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, viewMore?: {text, href}, itemLayout?: "horizontal"|"vertical", iconSize?: 32|48, className? } }
 - { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, label?, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }

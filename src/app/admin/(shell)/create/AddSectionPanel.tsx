@@ -28,6 +28,7 @@ interface SectionTypeOption {
 }
 
 const SECTION_OPTIONS: SectionTypeOption[] = [
+  { type: 'pricingPlans', Icon: CreditCard },
   {
     type: 'hero',
     Icon: LayoutTemplate,

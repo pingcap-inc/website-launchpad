@@ -617,6 +617,8 @@ function normalizeLogoCloudProps(value: unknown): LogoCloudProps {
   const v = (value ?? {}) as LogoCloudProps
   const logos = Array.isArray(v.logos) ? v.logos.map(normalizeLogo).filter(Boolean) : []
   return {
+    cta: v.cta,
+    logoClassName: typeof v.logoClassName === 'string' ? v.logoClassName : undefined,
     eyebrow: v.eyebrow,
     title: v.title,
     subtitle: v.subtitle,
@@ -776,8 +778,86 @@ function normalizeTableOfContentsProps(value: unknown): SectionPropsMap['tableOf
   }
 }
 
+// Normalize editor input without discarding nested pricing fields on republish.
+function normalizePricingPlansProps(value: unknown): SectionPropsMap['pricingPlans'] {
+  const object = (input: unknown): Record<string, unknown> =>
+    input && typeof input === 'object' ? (input as Record<string, unknown>) : {}
+  const str = (input: unknown) => (typeof input === 'string' ? input : '')
+  const optional = (input: unknown) => (typeof input === 'string' ? input : undefined)
+  const list = (input: unknown): unknown[] => (Array.isArray(input) ? input : [])
+  const strings = (input: unknown) =>
+    list(input).filter((item): item is string => typeof item === 'string')
+  const cta = (input: unknown) => {
+    const v = object(input)
+    return { text: str(v.text), href: str(v.href) }
+  }
+  const rates = (input: unknown) =>
+    list(input).map((item) => {
+      const v = object(item)
+      return { label: str(v.label), value: str(v.value), unit: optional(v.unit) }
+    })
+  const v = object(value),
+    deployment = object(v.deployment)
+  return {
+    title: str(v.title),
+    subtitle: optional(v.subtitle),
+    currency: optional(v.currency),
+    columns: v.columns === 3 ? 3 : 4,
+    className: optional(v.className),
+    footer: optional(v.footer),
+    deploymentLink: v.deploymentLink ? cta(v.deploymentLink) : undefined,
+    plans: list(v.plans).map((item) => {
+      const p = object(item),
+        overage = object(p.overage)
+      return {
+        name: str(p.name),
+        accent: p.accent === 'blue' || p.accent === 'teal' ? p.accent : 'violet',
+        statusBadge: optional(p.statusBadge),
+        heading: optional(p.heading),
+        description: str(p.description),
+        priceLabel: str(p.priceLabel),
+        price: str(p.price),
+        unit: optional(p.unit),
+        priceNote: optional(p.priceNote),
+        primaryCta: cta(p.primaryCta),
+        secondaryCta: p.secondaryCta ? cta(p.secondaryCta) : undefined,
+        detailsLabel: optional(p.detailsLabel),
+        features: strings(p.features),
+        detailNote: optional(p.detailNote),
+        rates: rates(p.rates),
+        overage: str(overage.summary).trim()
+          ? {
+              summary: str(overage.summary),
+              rates: rates(overage.rates),
+              note: optional(overage.note),
+            }
+          : undefined,
+      }
+    }),
+    notes: list(v.notes).map((item) => {
+      const n = object(item)
+      return { id: optional(n.id), label: str(n.label), text: str(n.text) }
+    }),
+    deployment: str(deployment.title).trim()
+      ? {
+          id: optional(deployment.id),
+          label: str(deployment.label),
+          statusBadge: optional(deployment.statusBadge),
+          title: str(deployment.title),
+          description: str(deployment.description),
+          detailsTitle: str(deployment.detailsTitle),
+          features: strings(deployment.features),
+          primaryCta: cta(deployment.primaryCta),
+          secondaryCta: deployment.secondaryCta ? cta(deployment.secondaryCta) : undefined,
+        }
+      : undefined,
+  }
+}
+
 function normalizePropsByType(type: SectionType, value: unknown): SectionPropsMap[SectionType] {
   switch (type) {
+    case 'pricingPlans':
+      return normalizePricingPlansProps(value)
     case 'hero':
       return normalizeHeroProps(value)
     case 'stats':

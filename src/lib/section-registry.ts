@@ -263,7 +263,124 @@ const defaultShortcodeProps: ShortcodeProps = {
   shortCode: '[agent-memory-timeline]',
 }
 
+const pricingRateFields: FieldSchema[] = [
+  { type: 'text', key: 'label', label: 'Rate Label' },
+  { type: 'text', key: 'value', label: 'Rate' },
+  { type: 'text', key: 'unit', label: 'Unit' },
+]
+const pricingRatesField = (key: string, label: string): FieldSchema => ({
+  type: 'array',
+  key,
+  label,
+  itemLabel: 'Rate',
+  newItem: () => ({ label: '', value: '', unit: '' }),
+  fields: pricingRateFields,
+})
+const pricingFields: FieldSchema[] = [
+  { type: 'text', key: 'title', label: 'Title' },
+  { type: 'textarea', key: 'subtitle', label: 'Subtitle' },
+  { type: 'text', key: 'currency', label: 'Currency Note' },
+  {
+    type: 'select',
+    key: 'columns',
+    label: 'Desktop Columns',
+    valueType: 'number',
+    options: [
+      { label: '3', value: 3 },
+      { label: '4', value: 4 },
+    ],
+  },
+  { type: 'cta', key: 'deploymentLink', label: 'Deployment Jump Link' },
+  {
+    type: 'array',
+    key: 'plans',
+    label: 'Plans',
+    itemLabel: 'Plan',
+    newItem: () => ({
+      name: 'Plan',
+      description: '',
+      priceLabel: '',
+      price: '',
+      primaryCta: { text: 'Get Started', href: '' },
+      features: [],
+    }),
+    fields: [
+      { type: 'text', key: 'name', label: 'Name' },
+      {
+        type: 'select',
+        key: 'accent',
+        label: 'Accent',
+        options: [
+          { label: 'Violet', value: 'violet' },
+          { label: 'Blue', value: 'blue' },
+          { label: 'Teal', value: 'teal' },
+        ],
+      },
+      { type: 'text', key: 'statusBadge', label: 'Status Badge' },
+      { type: 'text', key: 'heading', label: 'Heading' },
+      { type: 'textarea', key: 'description', label: 'Description' },
+      { type: 'text', key: 'priceLabel', label: 'Price Label' },
+      { type: 'text', key: 'price', label: 'Price' },
+      { type: 'text', key: 'unit', label: 'Unit' },
+      { type: 'textarea', key: 'priceNote', label: 'Price Note' },
+      { type: 'cta', key: 'primaryCta', label: 'Primary CTA' },
+      { type: 'cta', key: 'secondaryCta', label: 'Secondary CTA' },
+      { type: 'text', key: 'detailsLabel', label: 'Details Label' },
+      { type: 'stringList', key: 'features', label: 'Features', itemLabel: 'Feature' },
+      { type: 'textarea', key: 'detailNote', label: 'Details Note' },
+      pricingRatesField('rates', 'Billing Rates'),
+      {
+        type: 'object',
+        key: 'overage',
+        label: 'Overage Disclosure',
+        fields: [
+          { type: 'text', key: 'summary', label: 'Summary' },
+          pricingRatesField('rates', 'Overage Rates'),
+          { type: 'textarea', key: 'note', label: 'Note' },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'array',
+    key: 'notes',
+    label: 'Footnotes',
+    itemLabel: 'Footnote',
+    newItem: () => ({ id: '', label: '', text: '' }),
+    fields: [
+      { type: 'text', key: 'id', label: 'Anchor ID' },
+      { type: 'text', key: 'label', label: 'Label' },
+      { type: 'textarea', key: 'text', label: 'Text' },
+    ],
+  },
+  {
+    type: 'object',
+    key: 'deployment',
+    label: 'Deployment Option',
+    fields: [
+      { type: 'text', key: 'id', label: 'Anchor ID' },
+      { type: 'text', key: 'label', label: 'Label' },
+      { type: 'text', key: 'statusBadge', label: 'Status Badge' },
+      { type: 'text', key: 'title', label: 'Title' },
+      { type: 'textarea', key: 'description', label: 'Description' },
+      { type: 'text', key: 'detailsTitle', label: 'Details Title' },
+      { type: 'stringList', key: 'features', label: 'Features', itemLabel: 'Feature' },
+      { type: 'cta', key: 'primaryCta', label: 'Primary CTA' },
+      { type: 'cta', key: 'secondaryCta', label: 'Secondary CTA' },
+    ],
+  },
+  { type: 'textarea', key: 'footer', label: 'Billing Note (Markdown)', rows: 5 },
+]
+
 export const schemaMap: Record<SectionType, SectionSchema<any>> = {
+  pricingPlans: {
+    type: 'pricingPlans',
+    label: 'Pricing Plans',
+    description: 'Editable plans, prices, billing rates and deployment options',
+    defaultProps: { title: 'Pricing Plans', columns: 4, plans: [] },
+    defaultStyle: { background: 'primary', spacing: 'section' },
+    fields: pricingFields,
+  },
   hero: {
     type: 'hero',
     label: 'Hero',
@@ -839,6 +956,8 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
     defaultProps: defaultLogoCloudProps,
     defaultStyle: { background: 'primary', spacing: 'section' },
     fields: [
+      { type: 'cta', key: 'cta', label: 'CTA' },
+      { type: 'text', key: 'logoClassName', label: 'Logo Classes' },
       { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },
