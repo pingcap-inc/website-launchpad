@@ -66,7 +66,7 @@ const KEY_FACTS = [
   {
     icon: CalendarDays,
     label: 'Reply by',
-    value: '10 October 2026',
+    value: 'Monday 12 October 2026',
     note: 'Your measurement window begins on the day you confirm.',
   },
   {
@@ -86,7 +86,7 @@ const STEPS = [
   {
     number: '02',
     title: 'Reply “I’m In”',
-    body: 'Reply to the invitation email by 10 October. That reply records your confirmation date and starts your measurement window.',
+    body: 'Reply to the invitation email by Monday 12 October. That reply records your confirmation date and starts your measurement window.',
   },
   {
     number: '03',
@@ -107,7 +107,7 @@ const TERMS = [
   },
   {
     title: 'Eligibility',
-    body: 'Open to active participants of the TiDB Startup Program (and anyone who joins the TiDB Startup Program by invitation during the confirmation window) who reply to confirm participation before 10 October 2026. PingCAP may verify eligibility at its discretion.',
+    body: 'Open to active participants of the TiDB Startup Program (and anyone who joins the TiDB Startup Program by invitation during the confirmation window) who reply to confirm participation before the end of Monday 12 October 2026. PingCAP may verify eligibility at its discretion.',
   },
   {
     title: 'How It Works',
