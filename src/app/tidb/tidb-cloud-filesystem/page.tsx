@@ -45,6 +45,9 @@ const DOCS_FS_INTRO = `${DOCS_FS}/filesystem-intro/`
 const DOCS_REGIONS = `${DOCS_FS}/filesystem-regions-and-limitations/`
 const DOCS_AI_PROVIDERS = `${DOCS_FS}/configure-filesystem-ai-providers/`
 const DOCS_LAYERS = `${DOCS_FS}/filesystem-layers-checkpoints/`
+// Handoff between runtimes: drain or unmount, then verify with a direct read.
+const DOCS_SHARING = `${DOCS_FS}/filesystem-sharing/`
+const DOCS_MOUNT_WRITES = `${DOCS_FS}/filesystem-mount/#fuse-write-behavior`
 // The one CLI slot: the hero's code panel asks you to install `ti`, and this is
 // the only page that answers what that binary is.
 const DOCS_CLI_OVERVIEW = `${DOCS_BASE}/ai/ti-overview/`
@@ -138,8 +141,24 @@ const faqItems: {
     q: 'What does a second runtime see while one is writing?',
     answer: (
       <>
-        You choose, per workspace: writeback favors write speed, write-sync makes every write
-        immediately visible to every reader, and close-sync syncs when a file closes.
+        <a
+          href={DOCS_MOUNT_WRITES}
+          className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
+        >
+          FUSE mounts buffer writes locally
+        </a>{' '}
+        before sending them to the service, so another runtime may not see a change until the
+        writer drains or unmounts. Before you hand a workspace over, run{' '}
+        <code>ti fs drain-file-system</code> (the mount stays up) or unmount normally, which
+        drains automatically, then confirm with <code>ti fs read-file</code>. Avoid concurrent
+        writes to the same file: changes are not merged. See{' '}
+        <a
+          href={DOCS_SHARING}
+          className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
+        >
+          Share a File System Across Machines
+        </a>
+        .
       </>
     ),
   },
@@ -218,7 +237,10 @@ const faqItems: {
       <>
         Yes. Layers give you an isolated change set over a base path, which you can checkpoint,
         fork, diff, roll back or commit — <code>create-layer-checkpoint</code> and{' '}
-        <code>rollback-layer</code> are documented commands. One caveat carried over from the docs:
+        <code>rollback-layer</code> are documented commands. Drain a mounted layer before you
+        checkpoint it. Rollback discards a layer&apos;s uncommitted changes; it does not return to
+        a checkpoint, so to continue from one, fork a new layer. One caveat carried over from the
+        docs:
         complex histories involving repeated changes to layer-created files, or inherited metadata,
         might have limitations during public preview. See{' '}
         <a
@@ -535,13 +557,15 @@ export default function TidbCloudFilesystemPage() {
                   <h3 className="text-h3-lg font-bold">
                     A resumed workspace still has its git state
                   </h3>
-                  <p className="flex-1 text-body-md text-carbon-400">
-                    The branch, the uncommitted changes, the objects the agent created — all of it
-                    comes back on resume. Not a fresh clone; the actual working state.
+                  <p className="flex-1 text-body-md text-carbon-400 [&_code]:font-mono">
+                    Before the sandbox ends, push your commits or pack the Git metadata with{' '}
+                    <code>pack-file-system</code>. The next sandbox restores the branch and working
+                    files from the saved workspace — not a fresh clone. Untracked files come back
+                    only if you list them.
                   </p>
                   <div className="flex min-h-[320px] flex-col gap-2.5 border-t border-white/10 pt-[22px]">
                     <p className="mb-1 font-mono text-[11px] tracking-[0.05em] text-carbon-700">
-                      WHAT COMES BACK, IN ORDER
+                      WHAT IS SAVED, IN ORDER
                     </p>
                     {gitBands.map((band, index) => (
                       <div
@@ -580,9 +604,10 @@ export default function TidbCloudFilesystemPage() {
                     Keep what your agent needs. Drop the noise
                   </h3>
                   <p className="flex-1 text-body-md text-carbon-400 [&_code]:font-mono">
-                    <code>node_modules</code> and <code>dist</code> can be rebuilt anywhere, so they
-                    stay local. What can&apos;t be rebuilt — test results, failure logs, patches —
-                    is what persists.
+                    Mount with <code>--mount-profile coding-agent</code> and{' '}
+                    <code>node_modules</code>, <code>dist</code> and caches stay local, because they
+                    can be rebuilt anywhere. What can&apos;t be rebuilt — test results, failure logs,
+                    patches — is what persists.
                   </p>
                   <div className="flex min-h-[320px] flex-col gap-2.5 border-t border-white/10 pt-[22px]">
                     <p className="mb-1 font-mono text-[11px] tracking-[0.05em] text-carbon-700">
@@ -619,8 +644,7 @@ export default function TidbCloudFilesystemPage() {
                       </div>
                     </div>
                     <p className="mt-auto pt-2 font-mono text-xs leading-[1.6] text-carbon-700">
-                      The split follows the project&apos;s own shape, not a config file you
-                      maintain.
+                      Chosen when you mount. With this profile, Git metadata stays local too.
                     </p>
                   </div>
                 </div>
@@ -856,7 +880,7 @@ export default function TidbCloudFilesystemPage() {
             <p className="mb-4 text-center font-mono text-[15px] text-white/70">Get started</p>
             <CtaSection
               title="Nothing to rebuild. Everything to build on"
-              subtitle="Write from one runtime. Let it end. Reopen the workspace from another and check that the second run continues from the first. That's the whole test."
+              subtitle="Write from one runtime. Sync your changes. Let it end. Reopen the workspace from another and check that the second run continues from the first. That's the whole test."
               primaryCta={{
                 text: 'Run the sandbox handoff example',
                 href: DOCS_SANDBOX_HANDOFF,

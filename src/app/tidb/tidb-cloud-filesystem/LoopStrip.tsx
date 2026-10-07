@@ -41,8 +41,8 @@ const STEPS: LoopStep[] = [
   {
     n: '02',
     title: 'Search',
-    line: 'Content grep and filename find, with build noise kept out.',
-    mech: 'fs search-file-content · fs find-files · ignore policy',
+    line: 'Find files by name or content. Configure an embedding provider to search by meaning.',
+    mech: 'fs search-file-content · fs find-files',
     icon: Search,
   },
   {
@@ -80,8 +80,8 @@ const STEPS: LoopStep[] = [
   {
     n: '07',
     title: 'Checkpoint',
-    line: 'Layer commands are in the CLI — not yet a preview guarantee.',
-    mech: 'fs create-layer · create-layer-checkpoint · rollback-layer — preview, not guaranteed',
+    line: 'Save a layer checkpoint before an experiment. Fork from it to continue from the saved state.',
+    mech: 'fs create-layer · create-layer-checkpoint · fork-layer · rollback-layer',
     icon: Layers,
   },
   {
