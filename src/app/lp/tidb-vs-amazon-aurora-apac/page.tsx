@@ -1,0 +1,479 @@
+import type { Metadata } from 'next'
+import { JsonLd } from '@/components/ui/JsonLd'
+import { buildPageSchema } from '@/lib/schema'
+import { PageRenderer } from '@/lib/page-renderer'
+import type { PageDSL } from '@/lib/dsl-schema'
+
+export const metadata: Metadata = {
+  title: "TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB",
+  description: "Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-amazon-aurora-apac/' },
+  openGraph: {
+    title: "TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB",
+    description: "Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.",
+    url: 'https://www.pingcap.com/lp/tidb-vs-amazon-aurora-apac/',
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@PingCAP',
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+  },
+}
+
+const schema = buildPageSchema({
+  path: "/lp/tidb-vs-amazon-aurora-apac/",
+  title: "TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB",
+  description: "Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.",
+  breadcrumbs: [
+    { name: 'Home', path: '/' },
+    { name: "TiDB vs. Amazon Aurora", path: "/lp/tidb-vs-amazon-aurora-apac/" },
+  ],
+})
+
+const dsl: PageDSL = {
+  "pageName": "TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB",
+  "meta": {
+    "title": "TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB",
+    "description": "Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.",
+    "canonical": "/lp/tidb-vs-amazon-aurora-apac/",
+    "unlisted": true,
+    "header": "lp"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "Database Comparison",
+        "headline": "TiDB vs. Amazon Aurora",
+        "subheadline": "Scale reads and writes past Aurora's instance ceiling with strong consistency and consistent latency at any scale.",
+        "primaryCta": {
+          "text": "Book a 30-Minute Architecture Call",
+          "href": "#book"
+        },
+        "secondaryCta": {
+          "text": "Read the Full Comparison",
+          "href": "https://www.pingcap.com/compare/amazon-aurora-vs-tidb/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "decision-brief",
+      "type": "featureHighlights",
+      "props": {
+        "eyebrow": "The Decision in Brief",
+        "title": "Choose the Right Database for Your Workload",
+        "items": [
+          {
+            "variant": "violet",
+            "title": "Amazon Aurora",
+            "description": "Well-suited for apps with high reads up to a limit. Instance-bound writes with AWS-only deployment.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Database"
+          },
+          {
+            "variant": "blue",
+            "title": "TiDB",
+            "description": "Handles complex, data-intensive workloads in real time. Scales reads and writes horizontally without an instance ceiling.",
+            "cta": {
+              "text": "",
+              "href": ""
+            },
+            "icon": "Layers"
+          }
+        ],
+        "columns": 2
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "comparison-table",
+      "type": "comparisonTable",
+      "props": {
+        "eyebrow": "Head-to-Head",
+        "title": "TiDB vs Amazon Aurora Comparison",
+        "subtitle": "See how TiDB compares across key capabilities",
+        "ourProduct": "TiDB",
+        "competitor": "Amazon Aurora",
+        "rows": [
+          {
+            "feature": "Horizontal read + write scaling",
+            "ours": "Yes, no instance ceiling",
+            "theirs": "Instance-bound writes"
+          },
+          {
+            "feature": "Real-time HTAP without ETL",
+            "ours": true,
+            "theirs": false
+          },
+          {
+            "feature": "Online schema change (online DDL)",
+            "ours": "Yes, zero-downtime",
+            "theirs": "Limited / maintenance windows"
+          },
+          {
+            "feature": "Multi-cloud & hybrid deployment",
+            "ours": "AWS, GCP, Azure, on-prem",
+            "theirs": "AWS only"
+          },
+          {
+            "feature": "MySQL compatibility",
+            "ours": "Full protocol & syntax",
+            "theirs": "Aurora MySQL"
+          },
+          {
+            "feature": "Total cost at scale",
+            "ours": "Consolidate; scale compute/storage independently",
+            "theirs": "Instance + I/O + separate analytics"
+          }
+        ],
+        "cta": {
+          "text": "Book a 30-minute Architecture Call",
+          "href": "#book"
+        }
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "featureGrid-1788210295035",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "One Engine, Not a Bolt-On Stack",
+        "title": "Consolidate Four Systems Into One Distributed SQL Engine",
+        "subtitle": "Most teams stitch four or more systems together long before they hit true scale. TiDB consolidates them onto a single distributed SQL engine — lower cost, fewer failure modes, no ETL, and AI-ready.",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "Operational Database",
+            "description": "Replace MySQL, Amazon Aurora, and PostgreSQL with one MySQL-compatible distributed SQL engine"
+          },
+          {
+            "icon": "BarChart2",
+            "title": "Analytics Warehouse",
+            "description": "Native columnar HTAP with TiFlash replaces Snowflake, BigQuery, Redshift, no ETL required",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Search",
+            "title": "Search & Vector Store",
+            "description": "Built-in full-text and vector search eliminates Elasticsearch, OpenSearch, and standalone vector databases",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Layers",
+            "title": "Sharding & Caches",
+            "description": "Transparent auto-sharding with strong consistency, no app-side sharding or external caching layers",
+            "layout": "vertical"
+          }
+        ],
+        "columns": 4,
+        "itemLayout": "vertical"
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "key-differentiators",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "Key Differentiators",
+        "items": [
+          {
+            "title": "Online Schema Change, Zero Downtime",
+            "description": "Alter tables and add indexes in production with online DDL—no maintenance windows, no blocking migrations. Distributed replication removes single points of failure.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/4bbb32b4-rapid_productivity_illustration_3_.svg",
+                "alt": "rapid productivity illustration 3",
+                "width": 500,
+                "height": 448
+              },
+              "alt": "rapid productivity illustration 3",
+              "width": 500,
+              "height": 448
+            }
+          },
+          {
+            "title": "Lower Total Cost of Ownership",
+            "description": "Consolidate sharded fleets and standalone analytics systems onto one engine that scales storage and compute independently. No more paying for over-provisioned Aurora instances and bolt-on pipelines.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/853056b9-rapid_productivity_illustration-1.svg",
+                "alt": "rapid productivity illustration 1",
+                "width": 500,
+                "height": 448
+              },
+              "alt": "rapid productivity illustration 1",
+              "width": 500,
+              "height": 448
+            }
+          },
+          {
+            "title": "Real-Time Operational Intelligence",
+            "description": "TiFlash columnar replicas run analytics on live operational data in the same system. No ETL, no separate warehouse. Query fresh operational data without impacting transactional workloads.",
+            "image": {
+              "image": {
+                "url": "https://static.pingcap.com/images/2aeed35a-rapid_productivity_illustration_2_.svg",
+                "alt": "rapid productivity illustration 2",
+                "width": 500,
+                "height": 448
+              },
+              "alt": "rapid productivity illustration 2",
+              "width": 500,
+              "height": 448
+            }
+          }
+        ],
+        "startPosition": "left",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "proven-scale",
+      "type": "caseStudyCards",
+      "props": {
+        "eyebrow": "Proven at Scale",
+        "title": "AI-Native Platforms Build on TiDB",
+        "items": [
+          {
+            "badge": "AI Agent Platform",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/68b65a2a-20260826-203218.png",
+                "alt": "20260826 203218",
+                "width": 1511,
+                "height": 512
+              },
+              "alt": "20260826 203218",
+              "width": 1511,
+              "height": 512
+            },
+            "title": "Kimi: <1s Database Provisioning per Agent Task",
+            "description": "Runs a production agent-hosting platform on TiDB Cloud with elastic, strongly consistent scale.",
+            "stats": [
+              {
+                "value": "<1s",
+                "label": "DB provisioning per task"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/",
+            "cta": "Read the story"
+          },
+          {
+            "badge": "Agentic AI Platform",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/0fc78057-manus.svg",
+                "alt": "manus",
+                "width": 165,
+                "height": 48
+              },
+              "alt": "manus",
+              "width": 165,
+              "height": 48
+            },
+            "title": "Manus: 2 Weeks to Migrate",
+            "description": "Viral agentic AI platform migrated to TiDB Cloud with no application rewrite.",
+            "stats": [
+              {
+                "value": "2 weeks",
+                "label": "Migration time"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
+            "cta": "Read the story"
+          },
+          {
+            "badge": "AI Note-Taking",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/a9c1110c-logo-plaud.png",
+                "alt": "logo plaud",
+                "width": 362,
+                "height": 100
+              },
+              "alt": "logo plaud",
+              "width": 362,
+              "height": 100
+            },
+            "title": "Plaud: 10x QPS Under Peak Load",
+            "description": "Eliminated MySQL write-throughput and DDL bottlenecks for 2M+ users across 170 countries.",
+            "stats": [
+              {
+                "value": "10x",
+                "label": "QPS improvement"
+              },
+              {
+                "value": "2M+",
+                "label": "Users"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/",
+            "cta": "Read the story"
+          },
+          {
+            "badge": "Infrastructure Sprawl",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/ea05870e-dify_logo.svg",
+                "alt": "dify logo",
+                "width": 241,
+                "height": 80
+              },
+              "alt": "dify logo",
+              "width": 241,
+              "height": 80
+            },
+            "title": "Dify: 80% Infrastructure Cost Reduction",
+            "description": "Consolidated ~500K isolated database containers into one unified TiDB deployment.",
+            "stats": [
+              {
+                "value": "80%",
+                "label": "Cost reduction"
+              },
+              {
+                "value": "500K",
+                "label": "Containers consolidated"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/",
+            "cta": "Read the Dify story"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "columns-1788502664823",
+      "type": "columns",
+      "props": {
+        "eyebrow": "Industry Recognition",
+        "title": "Recognized by Third Parties",
+        "titleFullWidth": true,
+        "layout": "single",
+        "mediaType": "shortcode",
+        "shortCode": "[review-badges]",
+        "itemColumns": 2
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "Is TiDB a drop-in replacement for MySQL / Aurora MySQL?",
+            "a": "TiDB is MySQL-compatible, which means most applications connect with no code change. We recommend validating specifics in a proof-of-concept on your own schema to ensure compatibility with your workload."
+          },
+          {
+            "q": "How does TiDB scale past Aurora's limits?",
+            "a": "TiDB scales reads and writes horizontally across nodes with no single-writer instance ceiling while maintaining strong consistency. Add nodes to increase capacity without downtime or architectural changes."
+          },
+          {
+            "q": "Can one system really do OLTP and analytics?",
+            "a": "Yes. TiFlash keeps columnar replicas synchronized with row-based storage, and the optimizer routes analytical queries to them on fresh data with no ETL. This hybrid architecture (HTAP) eliminates the need for separate analytics systems."
+          },
+          {
+            "q": "How do online schema changes work?",
+            "a": "Online DDL runs in production without maintenance windows or blocking migrations. Schema changes are applied incrementally across the distributed system, allowing your application to continue serving traffic throughout the process."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "compare-cta",
+      "type": "cta",
+      "props": {
+        "title": "Compare on Your Own Schema",
+        "subtitle": "Want to see how TiDB compares to Amazon Aurora for your workload? Schedule an architecture call and our team will walk through your migration path.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Book a 30-Minute Architecture Call",
+          "href": "#book"
+        },
+        "secondaryCta": {
+          "text": "Read the Full Comparison Guide",
+          "href": "https://www.pingcap.com/compare/amazon-aurora-vs-tidb/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "book",
+      "type": "form",
+      "props": {
+        "title": "Book Your Architecture Call",
+        "subtitle": "Tell us about your workload and we'll set up a 30-minute call with our engineering team. We'll walk through your MySQL data model, scaling needs, and migration path.",
+        "portalId": "4466002",
+        "formId": "69c1c0c2-c4d5-4977-ba73-106e608fe731",
+        "region": "na1"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    }
+  ]
+}
+
+export default function GeneratedPage() {
+  return (
+    <>
+      <JsonLd data={schema} />
+      <PageRenderer dsl={dsl} withChrome />
+    </>
+  )
+}
