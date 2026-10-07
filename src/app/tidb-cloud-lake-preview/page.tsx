@@ -60,7 +60,7 @@ const dsl: PageDSL = {
       props: {
         layout: 'image-right',
         eyebrow: 'TiDB Cloud Lake',
-        headline: 'Analytics and search.<br><span class="text-gradient-violet">One engine.</span>',
+        headline: 'Analytics and Search.<br><span class="text-gradient-violet">One Engine.</span>',
         subheadline:
           'TiDB Cloud Lake is a managed analytics warehouse for data and platform teams. Prepare business data, analyze logs and explore agent traces with SQL, full-text search and vector search.',
         primaryCta: {
@@ -146,7 +146,7 @@ const dsl: PageDSL = {
       type: 'columns',
       props: {
         eyebrow: 'How It Works',
-        title: 'Connect your data. Build analytics and search.',
+        title: 'Connect Your Data. Build Analytics and Search.',
         subtitle:
           'TiDB Cloud runs your transactional applications. TiDB Cloud Lake brings a copy of that data together with other sources for analytics and search, using separate analytical compute.',
         titleFullWidth: true,
@@ -170,19 +170,20 @@ const dsl: PageDSL = {
             title: 'ClinkPay',
             description:
               'ClinkPay uses TiDB Cloud Lake for continuous payment-data processing and analytics models. Its core analytics system went live in about one week.',
-            label: 'Payment analytics',
+            label: 'Payment Analytics',
           },
           {
-            title: 'Global digital-asset exchange serving millions of users',
+            title: 'Global Digital-Asset Exchange Serving Millions of Users',
             description:
               'A global digital-asset exchange migrated production log analytics to TiDB Cloud Lake. Queries that previously timed out after a minute now return within five seconds, while estimated monthly costs decreased by 67%.',
-            label: 'Production log analytics',
+            label: 'Production Log Analytics',
           },
           {
-            title: 'Production iGaming platform running live vector search',
+            // title-case-ignore: preserve the conventional iGaming spelling.
+            title: 'Production iGaming Platform Running Live Vector Search',
             description:
               'A production iGaming platform continuously synchronizes vector data from TiDB Essential into TiDB Cloud Lake and runs live vector search across its application data.',
-            label: 'Vector search',
+            label: 'Vector Search',
           },
         ],
         columns: 3,
@@ -204,7 +205,7 @@ const dsl: PageDSL = {
             a: 'TiDB Cloud runs transactional applications; TiDB Cloud Lake runs analytics and search on a separate copy of your data. An initial snapshot and ongoing TiCDC changes move through S3 staging into TiDB Cloud Lake. You can also use TiDB Cloud Lake with data from other sources.',
           },
           {
-            q: 'What Data Can I Bring Into TiDB Cloud Lake?',
+            q: 'What Data Can I Bring into TiDB Cloud Lake?',
             a: 'Synchronize MySQL or PostgreSQL data with snapshot and change data capture (CDC) tasks. Load CSV, Parquet or NDJSON files from Amazon S3 through one-time or continuous ingestion.  Explore integration options - https://docs.pingcap.com/tidbcloudlake/data-integration-overview/',
           },
           {
@@ -225,7 +226,7 @@ const dsl: PageDSL = {
       id: 'cta-final',
       type: 'cta',
       props: {
-        title: 'Start building with TiDB Cloud Lake',
+        title: 'Start Building with TiDB Cloud Lake',
         subtitle: 'Explore the Quick Start, or talk with us about your workload.',
         image: {
           image: {
