@@ -799,6 +799,8 @@ function normalizePricingPlansProps(value: unknown): SectionPropsMap['pricingPla
   const v = object(value),
     deployment = object(v.deployment)
   return {
+    intro: optional(v.intro),
+    navigation: list(v.navigation).map(cta),
     title: str(v.title),
     subtitle: optional(v.subtitle),
     currency: optional(v.currency),

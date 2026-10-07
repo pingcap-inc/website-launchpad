@@ -73,23 +73,20 @@ const dsl: PageDSL = {
       },
     },
     {
-      id: 'pricing-overview',
-      type: 'richTextBlock',
-      props: {
-        content:
-          'Find the right fit for your workload.\n\n[TiDB Cloud](#tidb-cloud) · [TiDB Cloud Lake](#cloud-lake)',
-        className: 'text-center',
-      },
-      style: {
-        background: 'primary',
-        spacing: 'sm',
-        removePaddingTop: true,
-      },
-    },
-    {
       id: 'tidb-cloud',
       type: 'pricingPlans',
       props: {
+        intro: 'Find the right fit for your workload.',
+        navigation: [
+          {
+            text: 'TiDB Cloud',
+            href: '#tidb-cloud',
+          },
+          {
+            text: 'TiDB Cloud Lake',
+            href: '#cloud-lake',
+          },
+        ],
         title: 'TiDB Cloud',
         subtitle:
           'Build and scale your applications with a fully managed distributed SQL database.',
@@ -268,12 +265,14 @@ const dsl: PageDSL = {
         background: 'primary',
         spacing: 'sm',
         anchorId: 'tidb-cloud',
+        removePaddingTop: true,
       },
     },
     {
       id: 'cloud-lake',
       type: 'pricingPlans',
       props: {
+        navigation: [],
         title: 'TiDB Cloud Lake',
         subtitle:
           'Run analytics and search in a managed warehouse, with compute that scales independently of storage.',

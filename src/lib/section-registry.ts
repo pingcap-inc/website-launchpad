@@ -277,6 +277,18 @@ const pricingRatesField = (key: string, label: string): FieldSchema => ({
   fields: pricingRateFields,
 })
 const pricingFields: FieldSchema[] = [
+  { type: 'text', key: 'intro', label: 'Overview' },
+  {
+    type: 'array',
+    key: 'navigation',
+    label: 'Section Links',
+    itemLabel: 'Link',
+    newItem: () => ({ text: '', href: '' }),
+    fields: [
+      { type: 'text', key: 'text', label: 'Text' },
+      { type: 'text', key: 'href', label: 'Destination' },
+    ],
+  },
   { type: 'text', key: 'title', label: 'Title' },
   { type: 'textarea', key: 'subtitle', label: 'Subtitle' },
   { type: 'text', key: 'currency', label: 'Currency Note' },

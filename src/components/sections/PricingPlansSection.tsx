@@ -47,6 +47,8 @@ function Features({ features }: { features: string[] }) {
 }
 
 export function PricingPlansSection({
+  intro,
+  navigation,
   title,
   subtitle,
   currency,
@@ -60,6 +62,25 @@ export function PricingPlansSection({
 }: PricingPlansProps) {
   return (
     <div className={cn('min-w-0', className)}>
+      {(intro || !!navigation?.length) && (
+        <div className="mb-12 text-center">
+          {intro && <p className="text-body-2xl text-carbon-400">{intro}</p>}
+          {!!navigation?.length && (
+            <nav aria-label="Pricing sections" className="mt-5 flex flex-wrap justify-center gap-8">
+              {navigation.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  className="text-body-md text-white underline underline-offset-8 focus-visible:outline focus-visible:outline-2"
+                >
+                  {link.text}
+                </a>
+              ))}
+            </nav>
+          )}
+        </div>
+      )}
+
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <SectionHeader title={title} subtitle={subtitle} h2Size="sm" fullWidth />
@@ -122,9 +143,7 @@ export function PricingPlansSection({
                 href={plan.primaryCta.href}
                 className="h-auto min-h-11 w-full justify-between whitespace-normal"
               >
-                <span className="sr-only">
-                  {title} {plan.name}:{' '}
-                </span>
+                <span className="sr-only">{`${title} ${plan.name}: `} </span>
                 {plan.primaryCta.text}
               </PrimaryButton>
             </div>
@@ -161,9 +180,7 @@ export function PricingPlansSection({
                   href={plan.secondaryCta.href}
                   className="whitespace-normal text-body-sm"
                 >
-                  <span className="sr-only">
-                    {title} {plan.name}:{' '}
-                  </span>
+                  <span className="sr-only">{`${title} ${plan.name}: `} </span>
                   {plan.secondaryCta.text}
                 </SecondaryButton>
               )}

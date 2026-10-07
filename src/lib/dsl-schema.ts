@@ -667,6 +667,8 @@ export interface PricingPlan {
 }
 
 export interface PricingPlansProps {
+  intro?: string
+  navigation?: Array<{ text: string; href: string }>
   title: string
   subtitle?: string
   currency?: string
@@ -857,7 +859,7 @@ Available section types (choose appropriate mix):
     Add animate-glow-sweep to the class for an animated glow sweep effect, e.g.
     <span class="text-gradient-violet animate-glow-sweep">word</span>
   )
-- { type: "pricingPlans", props: { title, subtitle?, currency?, columns?: 3|4, plans: [{name, accent?: "violet"|"blue"|"teal", statusBadge?, heading?, description, priceLabel, price, unit?, priceNote?, primaryCta: {text, href}, secondaryCta?: {text, href}, detailsLabel?, features: string[], detailNote?, rates?: [{label, value, unit?}], overage?: {summary, rates: [{label, value, unit?}], note?}}], notes?: [{id?, label, text}], deployment?: {id?, label, statusBadge?, title, description, detailsTitle, features: string[], primaryCta: {text, href}, secondaryCta?: {text, href}}, deploymentLink?: {text, href}, footer?, className? } }
+- { type: "pricingPlans", props: { intro?, navigation?: [{text, href}], title, subtitle?, currency?, columns?: 3|4, plans: [{name, accent?: "violet"|"blue"|"teal", statusBadge?, heading?, description, priceLabel, price, unit?, priceNote?, primaryCta: {text, href}, secondaryCta?: {text, href}, detailsLabel?, features: string[], detailNote?, rates?: [{label, value, unit?}], overage?: {summary, rates: [{label, value, unit?}], note?}}], notes?: [{id?, label, text}], deployment?: {id?, label, statusBadge?, title, description, detailsTitle, features: string[], primaryCta: {text, href}, secondaryCta?: {text, href}}, deploymentLink?: {text, href}, footer?, className? } }
 - { type: "stats", props: { eyebrow?, title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4, className? } }
 - { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, viewMore?: {text, href}, itemLayout?: "horizontal"|"vertical", iconSize?: 32|48, className? } }
 - { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, label?, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
