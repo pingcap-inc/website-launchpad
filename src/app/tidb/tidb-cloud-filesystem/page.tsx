@@ -558,10 +558,10 @@ export default function TidbCloudFilesystemPage() {
                     A resumed workspace still has its git state
                   </h3>
                   <p className="flex-1 text-body-md text-carbon-400 [&_code]:font-mono">
-                    Before the sandbox ends, push your commits or pack the Git metadata with{' '}
-                    <code>pack-file-system</code>. The next sandbox restores the branch and working
-                    files from the saved workspace — not a fresh clone. Untracked files come back
-                    only if you list them.
+                    Save your agent&apos;s Git working state before the sandbox ends: push your
+                    commits, or pack the Git metadata with <code>pack-file-system</code>. The next
+                    sandbox restores the branch and working files from the saved workspace — not a
+                    fresh clone. Untracked files come back only if you list them.
                   </p>
                   <div className="flex min-h-[320px] flex-col gap-2.5 border-t border-white/10 pt-[22px]">
                     <p className="mb-1 font-mono text-[11px] tracking-[0.05em] text-carbon-700">
