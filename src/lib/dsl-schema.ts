@@ -11,6 +11,8 @@ export interface PageMeta {
   title: string // 50-60 chars, must include "TiDB"
   description: string // 120-160 chars
   canonical: string // /slug/  (leading and trailing slash)
+  /** Plain label used in generated BreadcrumbList schema. */
+  breadcrumbName?: string
   noindex?: boolean
   // Unlisted: page stays live at its URL but is kept out of discovery —
   // robots noindex + excluded from the sitemap. Direct-URL-only.
@@ -159,6 +161,8 @@ export type SectionNode = SectionDefinition
 /** Used with layout="image-right" */
 export interface HeroImage {
   image: ImageRef
+  /** Static visual for visitors who request reduced motion. */
+  reducedMotionImage?: ImageRef
   alt?: string
   width?: number
   height?: number
@@ -175,6 +179,8 @@ export interface HeroForm {
 
 export interface HeroProps {
   layout?: 'split' | 'centered' | 'image-right'
+  statusBadge?: { text: string; variant?: 'default' | 'secondary' | 'outline' | 'violet' }
+  imagePresentation?: 'standard' | 'decorative'
   eyebrow?: string
   /**
    * Plain text OR an HTML string. When HTML tags are detected,
@@ -254,6 +260,7 @@ export interface FeatureCardProps {
 }
 
 export interface FeatureCardItem {
+  label?: string
   /** Lucide icon name OR an image path string (e.g. "/images/..." or "https://...") */
   icon?: IconValue
   title: string
@@ -782,7 +789,9 @@ Available section types (choose appropriate mix):
       subheadline?,
       primaryCta?: {text,href},
       secondaryCta?: {text,href},
-      heroImage?: { image: {assetId?, url}, alt?, width?, height?, align?:"right"|"center", priority? },
+      statusBadge?: { text, variant?:"default"|"secondary"|"outline"|"violet" },
+      imagePresentation?: "standard"|"decorative",
+      heroImage?: { image: {assetId?, url}, reducedMotionImage?: {assetId?, url}, alt?, width?, height?, align?:"right"|"center", priority? },
       heroForm?: {formId, portalId?, region?},
       className?
     }
@@ -798,7 +807,7 @@ Available section types (choose appropriate mix):
   )
 - { type: "stats", props: { eyebrow?, title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4, className? } }
 - { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, viewMore?: {text, href}, itemLayout?: "horizontal"|"vertical", iconSize?: 32|48, className? } }
-- { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
+- { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, label?, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
 - { type: "caseStudyCards", props: { eyebrow?, title, items: [{badge?, logo?: { image: {assetId?, url}, alt?, width?, height? }, title, description, stats: [{value, label}], href?, cta?}], className? } }
 - { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, content?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval?, className? } }
 - { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href}, iconSize?: 32|48, className? } }

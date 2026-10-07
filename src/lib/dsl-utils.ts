@@ -162,6 +162,7 @@ function normalizeHeroImage(value: unknown): HeroImage | undefined {
   if (!value || typeof value !== 'object') return undefined
   const v = value as {
     image?: unknown
+    reducedMotionImage?: unknown
     src?: unknown
     alt?: unknown
     width?: unknown
@@ -173,6 +174,7 @@ function normalizeHeroImage(value: unknown): HeroImage | undefined {
   if (!image) return undefined
   return {
     image,
+    reducedMotionImage: normalizeImageRef(v.reducedMotionImage),
     alt: typeof v.alt === 'string' ? v.alt : undefined,
     width: typeof v.width === 'number' ? v.width : undefined,
     height: typeof v.height === 'number' ? v.height : undefined,
@@ -252,6 +254,7 @@ function normalizeFeatureCardItem(value: unknown): FeatureCardItem | null {
   const v = value as FeatureCardItem
   return {
     icon: normalizeIconValue(v.icon),
+    label: typeof v.label === 'string' ? v.label : undefined,
     title: v.title ?? '',
     description: v.description ?? '',
     borderColor: typeof v.borderColor === 'string' ? v.borderColor : undefined,
@@ -365,6 +368,21 @@ function normalizeHeroProps(value: unknown): HeroProps {
   }
   return {
     layout: v.layout,
+    statusBadge:
+      v.statusBadge && typeof v.statusBadge.text === 'string'
+        ? {
+            text: v.statusBadge.text,
+            variant: ['default', 'secondary', 'outline', 'violet'].includes(
+              v.statusBadge.variant ?? ''
+            )
+              ? v.statusBadge.variant
+              : undefined,
+          }
+        : undefined,
+    imagePresentation:
+      v.imagePresentation === 'decorative' || v.imagePresentation === 'standard'
+        ? v.imagePresentation
+        : undefined,
     eyebrow: v.eyebrow,
     headline: v.headline ?? '',
     subheadline: v.subheadline,

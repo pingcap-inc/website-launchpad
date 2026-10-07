@@ -2,7 +2,9 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { PrimaryButton } from '@/components/ui/PrimaryButton'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
-import type { ImageRef } from '@/lib/dsl-schema'
+import type { ImageRef, HeroProps } from '@/lib/dsl-schema'
+import { resolveCdnUrl } from '@/lib/cdn-url'
+import { Badge } from '@/components/ui/badge'
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -17,6 +19,8 @@ export type HeroLayout = 'centered' | 'split' | 'image-right'
 /** Used with `layout="image-right"` */
 export interface HeroImageSlot {
   image: ImageRef
+  /** Static visual for visitors who request reduced motion. */
+  reducedMotionImage?: ImageRef
   alt?: string
   width?: number
   height?: number
@@ -34,6 +38,9 @@ interface HeroSectionProps {
    */
   layout?: HeroLayout
   eyebrow?: string
+  statusBadge?: HeroProps['statusBadge']
+  /** Opt-in decorative visual; omitted preserves the standard layout. */
+  imagePresentation?: HeroProps['imagePresentation']
   /**
    * Plain text, a React node, or an HTML string.
    * HTML strings (detected by `<` tag) are rendered via `dangerouslySetInnerHTML`.
@@ -52,29 +59,69 @@ interface HeroSectionProps {
   className?: string
 }
 
+function HeroVisual({ heroImage, decorative }: { heroImage: HeroImageSlot; decorative: boolean }) {
+  const image = (
+    <Image
+      src={heroImage.image.url}
+      alt={heroImage.alt ?? ''}
+      width={heroImage.width || 800}
+      height={heroImage.height || 500}
+      className={cn(
+        'max-w-full h-auto',
+        decorative &&
+          'w-[88vw] max-w-[360px] md:w-[54vw] md:max-w-[430px] lg:w-[36vw] lg:max-w-[520px]'
+      )}
+      sizes={decorative ? '(min-width: 1024px) 36vw, (min-width: 768px) 54vw, 88vw' : undefined}
+      priority={heroImage.priority ?? true}
+    />
+  )
+  if (!heroImage.reducedMotionImage?.url) return image
+  return (
+    <picture>
+      <source
+        media="(prefers-reduced-motion: reduce)"
+        srcSet={resolveCdnUrl(heroImage.reducedMotionImage.url)}
+      />
+      {image}
+    </picture>
+  )
+}
+
 // ─── Shared text block ─────────────────────────────────────────────────────────
 
 function HeroTextBlock({
   eyebrow,
+  statusBadge,
   headline,
   subheadline,
   primaryCta,
   secondaryCta,
   centered,
   className,
+  decorative,
 }: Pick<
   HeroSectionProps,
-  'eyebrow' | 'headline' | 'subheadline' | 'primaryCta' | 'secondaryCta'
-> & { centered?: boolean; className?: string }) {
+  'eyebrow' | 'statusBadge' | 'headline' | 'subheadline' | 'primaryCta' | 'secondaryCta'
+> & { centered?: boolean; decorative?: boolean; className?: string }) {
   // Detect HTML strings so we can use dangerouslySetInnerHTML
   const isHtmlHeadline = typeof headline === 'string' && /<[a-z][\s\S]*>/i.test(headline)
 
   return (
     <div className={className}>
-      {eyebrow && <p className="font-mono text-eyebrow text-secondary mb-8">{eyebrow}</p>}
+      {statusBadge?.text ? (
+        <div className={cn('flex items-center gap-5 flex-wrap mb-8', centered && 'justify-center')}>
+          {eyebrow && <p className="font-mono text-eyebrow text-secondary">{eyebrow}</p>}
+          <Badge variant={statusBadge.variant} className="font-mono font-medium">
+            {statusBadge.text}
+          </Badge>
+        </div>
+      ) : (
+        eyebrow && <p className="font-mono text-eyebrow text-secondary mb-8">{eyebrow}</p>
+      )}
       <h1
         className={cn(
           'text-h1-mb md:text-h1 font-bold leading-tight max-w-hero-title',
+          decorative && 'md:text-[52px] lg:text-[56px] xl:text-h1',
           !isHtmlHeadline && 'whitespace-pre-line',
           centered && 'mx-auto'
         )}
@@ -116,16 +163,19 @@ function HeroTextBlock({
 export function HeroSection({
   layout,
   eyebrow,
+  statusBadge,
   headline,
   subheadline,
   primaryCta,
   secondaryCta,
   rightSlot,
   heroImage,
+  imagePresentation,
   className,
 }: HeroSectionProps) {
   const resolvedLayout: HeroLayout = layout ?? 'image-right'
   const isCentered = resolvedLayout === 'centered'
+  const decorative = imagePresentation === 'decorative'
 
   // Right slot for split layout
   const resolvedRightSlot = resolvedLayout === 'split' ? (rightSlot ?? null) : null
@@ -138,6 +188,7 @@ export function HeroSection({
         {resolvedLayout === 'centered' && (
           <HeroTextBlock
             eyebrow={eyebrow}
+            statusBadge={statusBadge}
             headline={headline}
             subheadline={subheadline}
             primaryCta={primaryCta}
@@ -152,6 +203,7 @@ export function HeroSection({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <HeroTextBlock
               eyebrow={eyebrow}
+              statusBadge={statusBadge}
               headline={headline}
               subheadline={subheadline}
               primaryCta={primaryCta}
@@ -164,33 +216,43 @@ export function HeroSection({
 
         {/* Layout 3: image-right — left text (max 780px) + right heroImage */}
         {resolvedLayout === 'image-right' && (
-          <div className="flex flex-col lg:flex-row lg:items-center gap-8 md:gap-12">
+          <div
+            className={cn(
+              'flex flex-col lg:flex-row lg:items-center gap-8 md:gap-12',
+              decorative && 'relative md:min-h-[720px] lg:min-h-0'
+            )}
+          >
             <HeroTextBlock
               eyebrow={eyebrow}
+              statusBadge={statusBadge}
               headline={headline}
               subheadline={subheadline}
               primaryCta={primaryCta}
               secondaryCta={secondaryCta}
-              className="pt-10 md:pt-20 lg:py-20 w-full lg:max-w-[780px] xlg:shrink-0"
+              decorative={decorative}
+              className={cn(
+                'pt-10 md:pt-20 lg:py-20 w-full lg:max-w-[780px] xlg:shrink-0',
+                decorative &&
+                  'relative z-10 md:w-3/4 md:max-w-[570px] lg:w-3/5 lg:max-w-none lg:shrink-0'
+              )}
             />
             <div
               className={cn(
                 'pt-4 lg:py-4 flex-1 flex items-center justify-center',
                 heroImage?.align === 'center'
                   ? 'lg:justify-center'
-                  : 'pb-10 lg:py-0 lg:justify-end lg:min-w-[300px]'
+                  : 'pb-10 lg:py-0 lg:justify-end lg:min-w-[300px]',
+                decorative &&
+                  'relative z-0 md:absolute md:right-0 md:bottom-5 md:w-[58%] md:p-0 lg:relative lg:right-auto lg:bottom-auto lg:w-2/5 lg:min-w-0'
               )}
             >
-              {heroImage && (
-                <Image
-                  src={heroImage.image.url}
-                  alt={heroImage.alt ?? ''}
-                  width={heroImage.width || 800}
-                  height={heroImage.height || 500}
-                  className="max-w-full h-auto"
-                  priority={heroImage.priority ?? true}
+              {decorative && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -inset-y-1/4 -left-1/4 right-0 z-10 hidden md:block lg:hidden bg-gradient-to-r from-bg-primary via-bg-primary/90 to-transparent"
                 />
               )}
+              {heroImage && <HeroVisual heroImage={heroImage} decorative={decorative} />}
             </div>
           </div>
         )}

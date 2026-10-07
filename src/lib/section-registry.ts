@@ -282,6 +282,35 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         ],
       },
       { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
+      {
+        type: 'object',
+        key: 'statusBadge',
+        label: 'Status Badge',
+        fields: [
+          { type: 'text', key: 'text', label: 'Text' },
+          {
+            type: 'select',
+            key: 'variant',
+            label: 'Variant',
+            options: [
+              { label: 'Outline', value: 'outline' },
+              { label: 'Primary', value: 'default' },
+              { label: 'Secondary', value: 'secondary' },
+              { label: 'Violet', value: 'violet' },
+            ],
+          },
+        ],
+      },
+      {
+        type: 'select',
+        key: 'imagePresentation',
+        label: 'Image Presentation',
+        showWhen: (props) => props.layout === 'image-right',
+        options: [
+          { label: 'Standard', value: 'standard' },
+          { label: 'Decorative', value: 'decorative' },
+        ],
+      },
       { type: 'textarea', key: 'headline', label: 'Headline', rows: 2 },
       { type: 'textarea', key: 'subheadline', label: 'Subheadline', rows: 2 },
       { type: 'cta', key: 'primaryCta', label: 'Primary CTA' },
@@ -293,6 +322,12 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         showWhen: (props) => props.layout === 'image-right',
         fields: [
           { type: 'image', key: 'image', label: 'Image', defaultTag: 'hero' },
+          {
+            type: 'image',
+            key: 'reducedMotionImage',
+            label: 'Reduced Motion Image',
+            defaultTag: 'hero',
+          },
           { type: 'number', key: 'width', label: 'Width' },
           { type: 'number', key: 'height', label: 'Height' },
           {
@@ -453,6 +488,7 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
         fields: [
           { type: 'icon', key: 'icon', label: 'Icon' },
           { type: 'text', key: 'title', label: 'Title' },
+          { type: 'text', key: 'label', label: 'Label' },
           { type: 'textarea', key: 'description', label: 'Description', rows: 2 },
           { type: 'text', key: 'href', label: 'Link' },
         ],
