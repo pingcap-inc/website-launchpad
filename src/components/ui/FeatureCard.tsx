@@ -5,6 +5,7 @@ import { SecondaryButton } from './SecondaryButton'
 interface FeatureCardProps {
   icon?: React.ReactNode
   title: string
+  label?: string
   description: string | React.ReactNode
   /** Border color Tailwind class, e.g. 'border-brand-red-primary'. Defaults to border-carbon-800 */
   borderColor?: string
@@ -17,6 +18,7 @@ interface FeatureCardProps {
 export function FeatureCard({
   icon,
   title,
+  label,
   description,
   borderColor = 'border-carbon-800',
   href,
@@ -38,6 +40,7 @@ export function FeatureCard({
     <>
       {icon && <div className="relative text-current">{icon}</div>}
       <h3 className="text-h3-lg font-bold leading-normal m-0 text-current">{title}</h3>
+      {label && <p className="font-mono text-label text-brand-violet-light m-0">{label}</p>}
       <p className="text-body-md leading-relaxed m-0 text-secondary">{description}</p>
       {ctaText && href && (
         <div className="mt-4">

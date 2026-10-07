@@ -3,9 +3,12 @@ const SHORTCODE_TOKEN_REGEX = /[\[\{]{1,2}\s*([a-z0-9][a-z0-9-_ ]*[a-z0-9])\s*[\
 export type RegisteredShortcode =
   | 'agent-memory-timeline'
   | 'tidb-persistent-layer-animation'
+  | 'cloud-lake-architecture'
   | 'review-badges'
 
 const SHORTCODE_ALIASES: Record<string, RegisteredShortcode> = {
+  'cloud-lake-architecture': 'cloud-lake-architecture',
+  'cloud-lake-architecture.html': 'cloud-lake-architecture',
   'agent-memory-timeline': 'agent-memory-timeline',
   'agent memory timeline': 'agent-memory-timeline',
   'agent-memory-timeline.html': 'agent-memory-timeline',
