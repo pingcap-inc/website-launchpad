@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
         width: 1200,
         height: 630,
       },
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: 'Migration Center | TiDB Developer Hub',
     description:
       'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
     site: '@PingCAP',
   },
   robots: { index: true, follow: true },
@@ -70,14 +70,14 @@ const schema = buildPageSchema({
     { name: 'Developer Hub', path: '/developers/' },
     { name: 'Migration Center', path: '/developers/migration-center/' },
   ],
-  image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+  image: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
   extraSchemas: [
     techArticleSchema({
       title: 'Migration Center | TiDB Developer Hub',
       description:
         'Evaluate fit, plan safely, and migrate your data to TiDB with a clear staged approach.',
       url: '/developers/migration-center/',
-      image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+      image: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
       proficiencyLevel: 'Intermediate',
       dateModified: '2026-02-28',
     }),

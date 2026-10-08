@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
         width: 1200,
         height: 630,
         alt: 'TiDB — Open-source distributed SQL database',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
       'Learn what TiDB is, how its HTAP architecture works, and how TiDB Server, TiKV, TiFlash, and PD work together in one distributed SQL system.',
     site: '@PingCAP',
     creator: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/what-is-tidb/' },
@@ -157,7 +157,7 @@ const schema = buildPageSchema({
       url: 'https://www.pingcap.com/what-is-tidb/',
       datePublished: '2026-04-27T13:58:08+08:00',
       dateModified: '2026-04-30T11:21:32+08:00',
-      image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+      image: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
     }),
     softwareApplicationSchema({
       name: 'TiDB',

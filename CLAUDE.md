@@ -117,8 +117,8 @@ Visual & Interaction (see visual-design.md for full guide)
 
 ✅ siteName must be exactly:   'TiDB'
 ✅ twitter.site must be:       '@PingCAP'
-✅ og:image default:           https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png
-✅ twitter:image default:      https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png
+✅ og:image default:           https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png
+✅ twitter:image default:      https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png
 ✅ canonical format:            https://www.pingcap.com/[path]/
 ✅ All paths: lowercase · hyphen-separated · trailing slash
 ✅ Icon stroke width:           strokeWidth={1.5} on all lucide-react icons
@@ -175,7 +175,7 @@ Run this after every page generation:
 Metadata
 - [ ] title: 50–60 chars, includes primary keyword
 - [ ] description: 120–150 chars, full sentence
-- [ ] openGraph: title, description, url, siteName, images (default https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png), locale present
+- [ ] openGraph: title, description, url, siteName, images (default https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png), locale present
 - [ ] twitter: card='summary_large_image', site='@PingCAP', images=[page-specific or default URL]
 - [ ] robots: { index: true, follow: true } (or noindex if paid-ads page)
 - [ ] canonical: https://www.pingcap.com/[path]/
