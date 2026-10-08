@@ -1,0 +1,294 @@
+{
+  "pageName": "Persistent AI Agent Memory Explained: How Agents Remember Across Sessions",
+  "meta": {
+    "title": "Persistent AI Agent Memory Guide | TiDB",
+    "description": "Learn how to build AI agents that remember across sessions with episodic, semantic, and procedural memory. Implement persistent context with TiDB for Claude",
+    "canonical": "/playbook/persistent-ai-agent-memory-guide/"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "Persistent AI Agent Memory Explained: How Agents Remember Across Sessions",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "updated-october-2026-author-m-nivanya-content-marketing-manager-reviewed-by-janarthanan-kuppusamy-technical-account-manager",
+            "label": "Updated October 2026 | Author: M. Nivanya (Content Marketing Manager) | Reviewed by: Janarthanan Kuppusamy (Technical Account Manager)",
+            "level": 2
+          },
+          {
+            "id": "key-takeaways",
+            "label": "Key Takeaways",
+            "level": 1
+          },
+          {
+            "id": "jump-to-a-section",
+            "label": "Jump to a Section",
+            "level": 1
+          },
+          {
+            "id": "what-is-persistent-ai-agent-memory",
+            "label": "What Is Persistent AI Agent Memory?",
+            "level": 1
+          },
+          {
+            "id": "persistent-memory-lives-outside-the-context-window",
+            "label": "Persistent Memory Lives Outside the Context Window",
+            "level": 2
+          },
+          {
+            "id": "session-continuity-is-not-the-same-as-durable-recall",
+            "label": "Session Continuity Is Not the Same as Durable Recall",
+            "level": 2
+          },
+          {
+            "id": "why-agents-keep-forgetting-everything",
+            "label": "Why Agents Keep Forgetting Everything",
+            "level": 1
+          },
+          {
+            "id": "context-windows-are-temporary",
+            "label": "Context Windows Are Temporary",
+            "level": 2
+          },
+          {
+            "id": "file-notes-and-prompt-snippets-do-not-scale",
+            "label": "File Notes and Prompt Snippets Do Not Scale",
+            "level": 2
+          },
+          {
+            "id": "the-three-memory-types-every-persistent-agent-needs",
+            "label": "The Three Memory Types Every Persistent Agent Needs",
+            "level": 1
+          },
+          {
+            "id": "episodic-memory-stores-what-happened",
+            "label": "Episodic Memory Stores What Happened",
+            "level": 2
+          },
+          {
+            "id": "semantic-memory-stores-facts-that-survive-sessions",
+            "label": "Semantic Memory Stores Facts That Survive Sessions",
+            "level": 2
+          },
+          {
+            "id": "procedural-memory-stores-how-the-agent-should-work",
+            "label": "Procedural Memory Stores How the Agent Should Work",
+            "level": 2
+          },
+          {
+            "id": "what-a-real-persistent-memory-system-must-do",
+            "label": "What a Real Persistent Memory System Must Do",
+            "level": 1
+          },
+          {
+            "id": "memory-capture-is-only-the-first-step",
+            "label": "Memory Capture Is Only the First Step",
+            "level": 2
+          },
+          {
+            "id": "retrieval-must-be-selective-and-scoped",
+            "label": "Retrieval Must Be Selective and Scoped",
+            "level": 2
+          },
+          {
+            "id": "good-memory-systems-know-when-to-forget-or-update",
+            "label": "Good Memory Systems Know When to Forget or Update",
+            "level": 2
+          },
+          {
+            "id": "how-claude-code-memory-works-with-a-persistent-backend",
+            "label": "How Claude Code Memory Works with a Persistent Backend",
+            "level": 1
+          },
+          {
+            "id": "claude-code-needs-more-than-local-notes",
+            "label": "Claude Code Needs More than Local Notes",
+            "level": 2
+          },
+          {
+            "id": "shared-memory-beats-machine-bound-memory",
+            "label": "Shared Memory Beats Machine-Bound Memory",
+            "level": 2
+          },
+          {
+            "id": "how-codex-memory-and-dify-agent-memory-fit-the-same-pattern",
+            "label": "How Codex Memory and Dify Agent Memory Fit the Same Pattern",
+            "level": 1
+          },
+          {
+            "id": "codex-memory-needs-cross-machine-continuity",
+            "label": "Codex Memory Needs Cross-Machine Continuity",
+            "level": 2
+          },
+          {
+            "id": "dify-agent-memory-needs-more-than-conversation-buffers",
+            "label": "Dify Agent Memory Needs More than Conversation Buffers",
+            "level": 2
+          },
+          {
+            "id": "one-shared-backend-can-serve-multiple-agent-runtimes",
+            "label": "One Shared Backend Can Serve Multiple Agent Runtimes",
+            "level": 2
+          },
+          {
+            "id": "how-tidb-cloud-acts-as-the-persistent-context-layer",
+            "label": "How TiDB Cloud Acts as the Persistent Context Layer",
+            "level": 1
+          },
+          {
+            "id": "one-store-for-checkpoints-memory-and-vectors",
+            "label": "One Store for Checkpoints, Memory, and Vectors",
+            "level": 2
+          },
+          {
+            "id": "agent-and-tenant-isolation-without-dedicated-infrastructure",
+            "label": "Agent and Tenant Isolation Without Dedicated Infrastructure",
+            "level": 2
+          },
+          {
+            "id": "why-the-memory-layer-still-needs-a-real-database",
+            "label": "Why the Memory Layer Still Needs a Real Database",
+            "level": 1
+          },
+          {
+            "id": "persistent-memory-is-a-data-architecture-problem",
+            "label": "Persistent Memory Is a Data Architecture Problem",
+            "level": 2
+          },
+          {
+            "id": "vector-recall-alone-is-not-enough",
+            "label": "Vector Recall Alone Is Not Enough",
+            "level": 2
+          },
+          {
+            "id": "durable-state-needs-structure-filters-and-consistency",
+            "label": "Durable State Needs Structure, Filters, and Consistency",
+            "level": 2
+          },
+          {
+            "id": "how-tidb-supports-persistent-memory-at-production-scale",
+            "label": "How TiDB Supports Persistent Memory at Production Scale",
+            "level": 1
+          },
+          {
+            "id": "tidb-gives-agent-memory-a-durable-system-of-record",
+            "label": "TiDB Gives Agent Memory a Durable System of Record",
+            "level": 2
+          },
+          {
+            "id": "one-query-layer-for-memory-and-analytics",
+            "label": "One Query Layer for Memory and Analytics",
+            "level": 2
+          },
+          {
+            "id": "how-tidb-helps-teams-build-agents-that-actually-remember",
+            "label": "How TiDB Helps Teams Build Agents That Actually Remember",
+            "level": 1
+          },
+          {
+            "id": "faq",
+            "label": "Persistent AI Agent Memory FAQs",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "#### Updated October 2026 | Author: M. Nivanya (Content Marketing Manager) | Reviewed by: Janarthanan Kuppusamy (Technical Account Manager)\n\n## Key Takeaways\n\n:::card tone=light\n\n- Persistent agent memory is an external storage layer, not a bigger context window.\n- Agents need episodic, semantic, and procedural memory, kept current by a capture-to-update loop.\n- Claude Code, Codex, and Dify can share one durable state layer.\n- Vector search alone is not enough. Production memory needs scope, metadata, and consistency.\n\n:::\n\nA coding agent that forgets your architecture decisions every time you open a new terminal is not broken. It is working as designed. Persistent AI agent memory is the external layer that stores and retrieves useful context across sessions, tools, and machines, so an agent in Claude Code, Codex, or Dify does not relearn your preferences and past fixes every time it starts.\n\n## Jump to a Section\n\n- [What Is Persistent AI Agent Memory?](#what-is-persistent-ai-agent-memory)\n- [Why Agents Keep Forgetting Everything](#why-agents-keep-forgetting-everything)\n- [The Three Memory Types Every Persistent Agent Needs](#the-three-memory-types-every-persistent-agent-needs)\n- [What a Real Persistent Memory System Must Do](#what-a-real-persistent-memory-system-must-do)\n- [How Claude Code Memory Works with a Persistent Backend](#how-claude-code-memory-works-with-a-persistent-backend)\n- [How Codex Memory and Dify Agent Memory Fit the Same Pattern](#how-codex-memory-and-dify-agent-memory-fit-the-same-pattern)\n- [How TiDB Cloud Acts as the Persistent Context Layer](#how-tidb-cloud-acts-as-the-persistent-context-layer)\n- [Why the Memory Layer Still Needs a Real Database](#why-the-memory-layer-still-needs-a-real-database)\n- [How TiDB Supports Persistent Memory at Production Scale](#how-tidb-supports-persistent-memory-at-production-scale)\n- [How TiDB Helps Teams Build Agents That Actually Remember](#how-tidb-helps-teams-build-agents-that-actually-remember)\n- [Persistent AI Agent Memory FAQs](#persistent-ai-agent-memory-faqs)\n\n## What Is Persistent AI Agent Memory?\n\nPersistent memory is a durable context that lives outside the prompt and outside the model's weights. It is a separate store, written to and read from by the agent, that survives after the session ends.\n\nStateless chat history is not the same thing. A long conversation thread feels like memory because the model can see everything typed so far, but that continuity disappears the moment the context window is truncated or the session closes. Context compaction, where an agent summarizes old messages to save tokens, is a workaround for a limited window, not a form of long-term recall.\n\nClaude Code memory and Dify agent memory both surface this gap in practice. A developer using Claude Code explains a bug fix on Monday, closes the terminal, and reopens it Wednesday to find the agent has no idea the fix happened. A Dify workflow that handled a customer's account details in one session starts from zero in the next. Both are the same failure: no external layer captured what mattered.\n\n### Persistent Memory Lives Outside the Context Window\n\nThe context window is working memory. It holds what the model is actively reasoning over right now, and it is bounded, expensive, and temporary. Persistent memory sits below it, in a database the agent queries when it needs something the window does not currently hold.\n\n### Session Continuity Is Not the Same as Durable Recall\n\nA session that stays coherent for 50 turns is not evidence of long-term memory. It is evidence that the context window has not run out yet. Durable recall means the agent can retrieve something from three weeks and five sessions ago, on a different machine, without that information ever having stayed in the window continuously.\n\n## Why Agents Keep Forgetting Everything\n\nLLMs are stateless between calls. Every request is evaluated fresh against whatever text is in the prompt, with no memory of prior requests unless that history is passed back in. Restart the agent, open a new thread, or switch tools, and the working context resets to zero.\n\nDevelopers feel this as a specific set of failures. The agent asks about the same architectural constraint it was told about last week. It reintroduces a bug it already fixed once. It gives a different answer to the same question depending on which session happens to still have the relevant context loaded. None of these are reasoning failures. They are memory failures.\n\nThe gap matters more for long-running agents than for one-off chat assistants. A chatbot that answers a single question and closes has no real need for persistence. An agent that manages a codebase, a support queue, or a multi-step workflow over weeks needs to accumulate state the way a human teammate would, or it stays junior forever.\n\n### Context Windows Are Temporary\n\nEven a large context window is a cache, not a store. Once a session ends or the window fills and old turns get evicted, anything not written to a persistent layer is gone.\n\n### File Notes and Prompt Snippets Do Not Scale\n\nPasting a running notes file into every prompt is a manual memory system, and it breaks down fast. It does not scope by user or project, it does not deduplicate, and it grows unbounded until someone prunes it by hand. Teams outgrow this pattern the moment more than one agent or more than one person needs to read the same state. That is the point where [scaling agent memory beyond SQLite](https://www.pingcap.com/blog/ai-agent-memory-outgrows-sqlite/) becomes the real conversation, not a nice-to-have.\n\n## The Three Memory Types Every Persistent Agent Needs\n\nMost production memory systems converge on three categories, each with its own write pattern, retrieval pattern, and retention rules.\n\n| Memory Type | What It Stores | Example for Coding or Workflow Agents | Retrieval Pattern |\n|---|---|---|---|\n| **Episodic** | Specific events and interactions | The bug fixed in commit 4a2f, the customer who asked about a refund on Tuesday | Recency and similarity search, often time-scoped |\n| **Semantic** | Facts that hold true across sessions | The team's preferred ORM, a customer's subscription tier | Direct lookup by key or entity |\n| **Procedural** | How the agent should behave | Run tests before committing, always confirm before deleting a resource | Loaded at the start of a task, not searched on demand |\n| **Working (contrast)** | The current session's active context | The file the agent is editing right now | Held in the context window, not persisted |\n*Table 1: The three persistent memory types, with working memory shown for contrast.*\n\n### Episodic Memory Stores What Happened\n\nEpisodic memory logs individual events: what was asked, what was tried, what broke, what fixed it. A coding agent that logged the actual fix for a flaky test, not just that a fix occurred, can reuse that fix directly instead of re-deriving it.\n\n### Semantic Memory Stores Facts That Survive Sessions\n\nSemantic memory holds durable facts about the user, the project, or the domain. A team's naming convention, a customer's account tier, a project's deployment target. These do not change from turn to turn, so they get written once and read many times.\n\n### Procedural Memory Stores How the Agent Should Work\n\nProcedural memory encodes rules and habits rather than facts: always run the linter before a commit, never delete a production table without confirmation. This is the memory type most often missing from early implementations, because it needs to be loaded proactively at task start rather than retrieved reactively.\n\n## What a Real Persistent Memory System Must Do\n\nA memory system is not a vector database with a save button. It is a loop: capture new information, extract what is worth keeping, deduplicate against what is already stored, write it with the right scope, retrieve it when relevant, and update or retire it when it goes stale. Vector similarity search, [covered in detail in TiDB's vector search docs](https://docs.pingcap.com/ai/vector-search-overview), handles the similarity-matching part of retrieval, but the loop is bigger than that.\n\nScoping is not optional. A multi-user or multi-project agent that mixes memories across users leaks information and gives wrong answers. Hybrid retrieval, combining vector similarity with structured filters like user ID, project, or timestamp, is what makes retrieval precise instead of approximately relevant. And write controls matter as much as read controls. An agent that writes every stray detail to permanent memory drowns future retrieval in noise.\n\n### Memory Capture Is Only the First Step\n\nLogging every interaction is easy. Deciding what is worth keeping, and in which memory type, is the actual engineering problem. A capture step that writes everything indiscriminately just moves the clutter from the prompt into the database.\n\n### Retrieval Must Be Selective and Scoped\n\nRetrieval that returns everything loosely related to a query defeats the purpose of memory. Effective systems filter by scope first, then rank by relevance, so the agent gets the handful of memories that actually apply to the current task instead of a wall of tangential context.\n\n### Good Memory Systems Know When to Forget or Update\n\nFacts change. A customer upgrades their plan, a team switches frameworks, a bug gets fixed and the workaround memory becomes obsolete. A system that never updates or expires memories accumulates contradictions, and an agent retrieving conflicting facts is worse off than one with no memory at all. This is the core of what an [AI memory architecture guide](https://www.pingcap.com/blog/how-to-build-an-ai-memory-architecture-that-actually-remembers/) has to get right: write paths that supersede stale entries instead of just appending to them.\n\n## How Claude Code Memory Works with a Persistent Backend\n\nClaude Code memory is meant to preserve project context: coding preferences, past fixes, architectural decisions, and learnings that should carry forward into the next session. Local memory files and session summaries can capture some of this, but they are bound to one machine and one working directory.\n\n### Claude Code Needs More than Local Notes\n\nA markdown file of notes checked into a repo helps a single developer on a single machine. It does not follow the agent to a different laptop, does not sync across a team, and does not get deduplicated or updated automatically as facts change.\n\n### Shared Memory Beats Machine-Bound Memory\n\nA durable state layer like TiDB Cloud gives Claude Code a memory space that exists independent of any one machine. TiDB Cloud connects to MCP-compatible clients, including Claude Code, [directly through its AI tools integration](https://docs.pingcap.com/tidbcloud/use-tidb-cloud-with-ai-tools), so the agent writes checkpoints, memory records, and prior decisions to a persistent store instead of a local file. The same project context is then available whether the developer is on a laptop, a CI runner, or a teammate's machine picking up the same task.\n\n## How Codex Memory and Dify Agent Memory Fit the Same Pattern\n\nCodex and Dify have different runtime shapes. Codex runs as a coding agent across local and cloud environments. Dify runs as a workflow and chatbot platform. Both need the same underlying capability: continuity across sessions, memory scoped to the right user or project, and a structured way to write new facts back to storage.\n\n### Codex Memory Needs Cross-Machine Continuity\n\nA Codex agent invoked from a CI pipeline and one invoked from a developer's terminal are working on the same codebase but do not automatically share context. Cross-machine continuity means both can read the same project memory, so a fix discovered in one environment is available in the other without a human relaying it.\n\n### Dify Agent Memory Needs More than Conversation Buffers\n\nDify's default session memory holds the current conversation buffer. That is enough for a single chat but not for a customer whose case spans three conversations over two weeks. As Dify use cases mature past single-session chatbots into ongoing workflows, teams add a longer-lived memory layer that persists facts about the customer or task independent of any one conversation.\n\n### One Shared Backend Can Serve Multiple Agent Runtimes\n\nThe practical implication is that Claude Code, Codex, and Dify do not need three separate memory systems. A single persistent state layer that exposes checkpoints, memory records, and vectors through one query interface can back all three, so a fact learned in one tool is available in another without a manual sync step.\n\n## How TiDB Cloud Acts as the Persistent Context Layer\n\n[TiDB Cloud gives long-running agents a durable state layer](https://www.pingcap.com/solutions/ai-agent-context/) for checkpoints, memory records, operational data, and vectors, so agents can resume work across sessions and runtime restarts instead of losing progress every time a runtime ends.\n\n### One Store for Checkpoints, Memory, and Vectors\n\nAgents write conversation turns, preferences, facts, and decisions to TiDB Cloud, where that memory stays queryable and accessible to other agents in the same workflow. Checkpoints stay consistent with the application data the agent changed, so an agent resumes from state it can trust instead of guessing where it left off. Kimi's K2.6 agent platform and Manus's agent swarms both [run this pattern in production](https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/), provisioning an isolated database per agent session on top of the same architecture.\n\n### Agent and Tenant Isolation Without Dedicated Infrastructure\n\nTiDB Cloud's [distributed architecture separates logical isolation from physical infrastructure](https://docs.pingcap.com/tidbcloud/architecture-concepts). Each agent or tenant gets its own database with a hard data boundary, while compute and storage are shared across the cluster. Isolation does not require provisioning dedicated infrastructure for every agent, which matters when many are short-lived or mostly idle. [Kimi's agent-hosting platform](https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/) provisions a new isolated database per site in under a second on this same model.\n\n## Why the Memory Layer Still Needs a Real Database\n\nA memory API is only as durable as the storage underneath it. Persistent memory is a data architecture problem before it is a retrieval problem.\n\n### Persistent Memory Is a Data Architecture Problem\n\nStoring memory durably requires tracking user scope, timestamps, metadata, retrieval signals, and operational state, all consistently and all queryable together. A local file or an in-memory cache handles none of this at production scale.\n\n### Vector Recall Alone Is Not Enough\n\nVector search finds semantically similar content, but it does not enforce which user a memory belongs to, does not guarantee a write actually committed, and does not handle the structured filters, like project ID or date range, that scoped retrieval depends on. Vector similarity is one signal in the retrieval pattern, not the whole system.\n\n### Durable State Needs Structure, Filters, and Consistency\n\nProduction memory systems need multi-tenant isolation so one user's memory never leaks into another's, shared access so multiple agents and services can read the same store, and operational reliability so a write that succeeds is actually there the next time it is read. That is a [best database for AI agent state](https://www.pingcap.com/compare/best-database-for-ai-agents/) question, not a vector index question.\n\n## How TiDB Supports Persistent Memory at Production Scale\n\nTiDB is a distributed SQL database that is MySQL-compatible, which makes it a practical system of record for the metadata, search, and operational state a persistent context layer depends on.\n\n### TiDB Gives Agent Memory a Durable System of Record\n\nUser scope, memory timestamps, retrieval metadata, and checkpoint state all need a system of record that does not lose data and does not require a separate consistency layer bolted on top. TiDB provides that record while staying compatible with [the MySQL tooling most engineering teams already know](https://docs.pingcap.com/tidbcloud/mysql-compatibility). That is the case for [building agent memory on TiDB](https://www.pingcap.com/blog/agent-memory-database-tidb/).\n\n### One Query Layer for Memory and Analytics\n\nOn TiDB Cloud, a support agent can query a customer's account tier, open tickets, and semantically similar past conversations in a single SQL statement. [TiFlash handles analytical queries against live data](https://docs.pingcap.com/tidbcloud/tidb-cloud-htap-quickstart) without a separate pipeline, so memory and operational analytics stay on the same system instead of drifting apart.\n\n## How TiDB Helps Teams Build Agents That Actually Remember\n\nAgents that remember across sessions need two things: a persistent context layer that knows what to store and retrieve, and a durable data foundation underneath it. Get either wrong and the result is the same. An agent that repeats itself, contradicts its own past decisions, or loses progress the moment a runtime ends.\n\nTiDB gives long-running agents that layer directly. Checkpoints, memory records, operational data, and vectors live in one durable, queryable store, purpose-built for [agent memory, state, and multi-hop reasoning](https://www.pingcap.com/ai/).",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-1",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Give your agents one durable store for checkpoints, memory records, operational data, and vectors.",
+        "primaryCta": {
+          "text": "Build Persistent Agent Memory on TiDB",
+          "href": "https://www.pingcap.com/ai/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22092103/1000011430.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Persistent AI Agent Memory FAQs",
+        "items": [
+          {
+            "q": "Do AI Agents Have Persistent Memory by Default?",
+            "a": "No. LLMs are stateless between calls, and most agent frameworks ship with session-only memory that resets when a session ends. To recall facts, decisions, and past interactions across sessions and restarts, developers add an external memory layer, typically a database plus a retrieval API."
+          },
+          {
+            "q": "What Is the Difference Between Claude Code Memory and Persistent Memory?",
+            "a": "Claude Code memory, in its default form, refers to local context files and session summaries tied to one machine. Persistent memory is a durable backend the agent reads from and writes to, so the same memory is available across machines, sessions, and team members, not just within one working directory."
+          },
+          {
+            "q": "How Does Dify Agent Memory Differ from Long-Term Memory?",
+            "a": "Dify's built-in memory holds the active conversation buffer for a single session. Long-term memory is a separate layer that persists facts about a user or task across multiple sessions and conversations, and it works independently of any one chat thread."
+          },
+          {
+            "q": "What Should an AI Agent Store in Long-Term Memory?",
+            "a": "An agent should store facts that hold true across sessions (semantic memory), specific past events and their outcomes (episodic memory), and rules for how it should behave (procedural memory). It should not store every detail from every interaction. A capture step should filter for what is actually reusable."
+          },
+          {
+            "q": "What Is the Best Database for Persistent AI Agent Memory?",
+            "a": "It depends on workload shape. Production systems generally need multi-tenant scoping, structured metadata alongside vector search, and operational reliability at scale, not just a vector index. A distributed SQL database like TiDB covers the metadata and consistency requirements that vector-only stores leave out."
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    }
+  ]
+}
