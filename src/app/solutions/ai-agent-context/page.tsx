@@ -4,6 +4,12 @@ import { buildPageSchema } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
+// Social card art for this page. Lives in `public/` and is mirrored to the CDN
+// by the deploy workflow (`public/` -> s3://uploads-pingcap-com/launchpad/), so
+// the absolute URL is the CDN one — crawlers fetch it directly, and it only
+// resolves once this branch is deployed.
+const OG_IMAGE = 'https://static.pingcap.com/launchpad/images/social/ai-agent-context-social.png'
+
 export const metadata: Metadata = {
   title: 'Persistent Context for AI Agents | TiDB',
   description:
@@ -18,7 +24,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
       },
@@ -28,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
+    images: [OG_IMAGE],
   },
 }
 
