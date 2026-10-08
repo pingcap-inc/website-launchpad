@@ -19,8 +19,14 @@ export const metadata: Metadata = {
     description:
       'Definitions of key database, distributed systems, and cloud-native terms used across TiDB products and documentation.',
     url: 'https://www.pingcap.com/glossary/',
-    siteName: 'PingCAP',
-    images: [{ url: 'https://www.pingcap.com/og/glossary.png', width: 1200, height: 630 }],
+    siteName: 'TiDB',
+    images: [
+      {
+        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
     locale: 'en_US',
     type: 'website',
   },
@@ -28,7 +34,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Database & TiDB Glossary',
     description: 'Key database and distributed systems terms explained.',
-    images: ['https://www.pingcap.com/og/glossary.png'],
+    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
+    site: '@PingCAP',
     creator: '@PingCAP',
   },
   robots: { index: true, follow: true },
@@ -555,7 +562,7 @@ const schema = buildPageSchema({
     { name: 'Home', path: '/' },
     { name: 'Glossary', path: '/glossary/' },
   ],
-  image: 'https://www.pingcap.com/og/glossary.png',
+  image: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
   extraSchemas: [
     glossaryIndexSchema({ termCount: terms.reduce((acc, c) => acc + c.items.length, 0) }),
   ],
