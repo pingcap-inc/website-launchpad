@@ -288,7 +288,7 @@ const demoRenderers: Record<string, () => React.ReactNode> = {
     <SectionWrapper style={{ background: 'gradient-dark-bottom', spacing: 'section' }}>
       <CaseStudyCardsSection
         eyebrow="Customer Results"
-        title="Proof From Production AI Workloads"
+        title="Proof from Production AI Workloads"
         items={[
           {
             badge: 'Agentic AI',

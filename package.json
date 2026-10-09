@@ -11,7 +11,9 @@
     "lint": "eslint src/",
     "type-check": "tsc --noEmit",
     "title-case": "node scripts/check-title-case.mjs $(git diff --name-only HEAD -- 'src/app/**/*.tsx' | tr '\\n' ' ')",
-    "title-case:fix": "node scripts/check-title-case.mjs --fix $(find src/app -name 'page.tsx' | tr '\\n' ' ')",
+    "title-case:all": "node scripts/check-title-case.mjs $(find src/app -name '*.tsx' | tr '\\n' ' ')",
+    "title-case:fix": "node scripts/check-title-case.mjs --fix $(find src/app -name '*.tsx' | tr '\\n' ' ')",
+    "title-case:review": "node scripts/check-title-case.mjs --review $(find src/app -name '*.tsx' | tr '\\n' ' ')",
     "score:pages": "node scripts/score-pages.mjs",
     "prepare": "husky"
   },
