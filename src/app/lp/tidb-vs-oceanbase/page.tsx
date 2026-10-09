@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
         width: 1200,
         height: 630,
       },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
   },
 }
 
@@ -297,7 +297,6 @@ const dsl: PageDSL = {
       type: 'featureMedia',
       props: {
         eyebrow: 'Simplify Your Stack',
-        // title-case-ignore
         title: 'One Engine, Not a Bolt-On Stack',
         subtitle:
           'Most teams stitch four or more systems together long before they hit true scale. TiDB consolidates them onto a single distributed SQL engine—lower cost, fewer failure modes, no ETL, and AI-ready.',
@@ -308,8 +307,14 @@ const dsl: PageDSL = {
               'Replace MySQL, Amazon Aurora, or PostgreSQL with one MySQL-compatible distributed SQL engine.',
             image: {
               image: {
-                url: '',
+                url: 'https://static.pingcap.com/images/f77c02e6-tidb-block2-consistency-blue-black.png',
+                alt: 'tidb block2 consistency blue black',
+                width: 1120,
+                height: 840,
               },
+              alt: 'tidb block2 consistency blue black',
+              width: 1120,
+              height: 840,
             },
           },
           {
@@ -318,8 +323,14 @@ const dsl: PageDSL = {
               'Eliminate Snowflake, BigQuery, or Redshift with native columnar HTAP via TiFlash—no ETL pipelines.',
             image: {
               image: {
-                url: '',
+                url: 'https://static.pingcap.com/images/9bb98f46-tidb-break2-tenant-count-violet-black.png',
+                alt: 'tidb break2 tenant count violet black',
+                width: 1120,
+                height: 840,
               },
+              alt: 'tidb break2 tenant count violet black',
+              width: 1120,
+              height: 840,
             },
           },
           {
@@ -328,8 +339,14 @@ const dsl: PageDSL = {
               'Built-in full-text and vector search replaces Elasticsearch, OpenSearch, and standalone vector databases.',
             image: {
               image: {
-                url: '',
+                url: 'https://static.pingcap.com/images/595f49a7-tidb-block4-mysql-teal-black.png',
+                alt: 'tidb block4 mysql teal black',
+                width: 1120,
+                height: 840,
               },
+              alt: 'tidb block4 mysql teal black',
+              width: 1120,
+              height: 840,
             },
           },
           {
@@ -338,8 +355,14 @@ const dsl: PageDSL = {
               'Transparent auto-sharding with strong consistency—no app-side sharding middleware or external caches.',
             image: {
               image: {
-                url: '',
+                url: 'https://static.pingcap.com/images/98077f69-tidb-block3-maintenance-violet-black.png',
+                alt: 'tidb block3 maintenance violet black',
+                width: 1120,
+                height: 840,
               },
+              alt: 'tidb block3 maintenance violet black',
+              width: 1120,
+              height: 840,
             },
           },
         ],
@@ -370,8 +393,7 @@ const dsl: PageDSL = {
               width: 1511,
               height: 512,
             },
-            // title-case-ignore
-            title: 'Kimi: <1s Database Provisioning per Agent Task',
+            title: 'Kimi: <1s Database Provisioning Per Agent Task',
             description:
               'Runs a production agent-hosting platform on TiDB Cloud with elastic, strongly consistent scale.',
             stats: [
@@ -380,6 +402,8 @@ const dsl: PageDSL = {
                 label: 'DB provisioning per task',
               },
             ],
+            href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
+            cta: 'Read the story',
           },
           {
             badge: 'Agentic AI Platform',
@@ -403,6 +427,8 @@ const dsl: PageDSL = {
                 label: 'Migration time',
               },
             ],
+            href: 'https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/',
+            cta: 'Read the story',
           },
           {
             badge: 'AI Note-Taking',
@@ -417,7 +443,6 @@ const dsl: PageDSL = {
               width: 362,
               height: 100,
             },
-            // title-case-ignore
             title: 'Plaud: 10x QPS Under Peak Load',
             description:
               'Eliminated MySQL write-throughput and DDL bottlenecks for 2M+ users across 170 countries.',
@@ -431,9 +456,11 @@ const dsl: PageDSL = {
                 label: 'Users',
               },
             ],
+            href: 'https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/',
+            cta: 'Read the story',
           },
           {
-            badge: 'AI Workflow Platform',
+            badge: 'Infrastructure Sprawl',
             logo: {
               image: {
                 url: 'https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg',
@@ -458,6 +485,8 @@ const dsl: PageDSL = {
                 label: 'Containers consolidated',
               },
             ],
+            href: 'https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/',
+            cta: 'Read the Dify story',
           },
         ],
       },

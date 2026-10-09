@@ -1,1 +1,9 @@
-["Nothing to Rebuild. Everything to Build On"]
+[
+  "Nothing to Rebuild. Everything to Build On",
+  "Pinterest: Graph Service Scaled with 10x Latency Reduction",
+  "Catalyst: SaaS Data Serving Layer Rearchitected for 60x Faster Queries",
+  "Catalyst: Rearchitected for 60x Faster Queries",
+  "Bolt: Legacy MySQL Modernized to Scale 1000s of Microservices",
+  "Plaud: 10x QPS Under Peak Load",
+  "Kimi: <1s Database Provisioning Per Agent Task"
+]

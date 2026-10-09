@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import prettier from 'prettier'
 import { dslToTsx } from '@/lib/dsl-to-tsx'
 import { SITE_BASE_URL } from '@/lib/env'
 import type { PageDSL } from '@/lib/dsl-schema'
@@ -94,15 +95,26 @@ export async function POST(request: NextRequest) {
   }
   const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`
 
-  // Generate page.tsx from DSL
-  const pageCode = dslToTsx(dsl, slug)
+  // Generate page.tsx from DSL, then format with the repo's Prettier config so the
+  // committed output is byte-identical to what local `prettier --write` produces.
+  // Without this, admin-published pages land unformatted and diverge from local code.
+  const prettierOptions = (await prettier.resolveConfig(process.cwd())) ?? {}
   const pagePath = `src/app/${slug}/page.tsx`
   const dslPath = `src/app/${slug}/page.dsl.json`
+
+  const pageCode = await prettier.format(dslToTsx(dsl, slug), {
+    ...prettierOptions,
+    parser: 'typescript',
+  })
+  const dslJson = await prettier.format(JSON.stringify(dsl), {
+    ...prettierOptions,
+    parser: 'json',
+  })
 
   // Collect all files to commit
   const files: { path: string; content: string }[] = [
     { path: pagePath, content: pageCode },
-    { path: dslPath, content: JSON.stringify(dsl, null, 2) },
+    { path: dslPath, content: dslJson },
   ]
 
   // Read and patch sitemap if requested
@@ -114,7 +126,11 @@ export async function POST(request: NextRequest) {
       const sitemapSource = Buffer.from(sitemapData.content, 'base64').toString('utf-8')
       try {
         const patched = injectSitemapEntry(sitemapSource, slug, priority, changeFrequency)
-        files.push({ path: sitemapPath, content: patched })
+        const formatted = await prettier.format(patched, {
+          ...prettierOptions,
+          parser: 'typescript',
+        })
+        files.push({ path: sitemapPath, content: formatted })
       } catch {
         // Sitemap patch failure is non-fatal — proceed without it
       }

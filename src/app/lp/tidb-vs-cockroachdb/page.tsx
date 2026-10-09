@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
         width: 1200,
         height: 630,
       },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
   },
 }
 
@@ -193,8 +193,7 @@ const dsl: PageDSL = {
       type: 'featureGrid',
       props: {
         eyebrow: 'One Engine, Not a Bolt-On Stack',
-        // title-case-ignore
-        title: 'Consolidate Four Systems Into One Distributed SQL Engine',
+        title: 'Consolidate Four Systems into One Distributed SQL Engine',
         subtitle:
           'Most teams stitch four or more systems together long before they hit true scale. TiDB consolidates them onto a single distributed SQL engine — lower cost, fewer failure modes, no ETL, and AI-ready.',
         items: [
@@ -361,7 +360,6 @@ const dsl: PageDSL = {
               width: 181,
               height: 50,
             },
-            // title-case-ignore
             title: 'Pinterest: Graph Service Scaled with 10x Latency Reduction',
             description:
               'Modernized its graph service with TiDB eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.',
@@ -390,7 +388,6 @@ const dsl: PageDSL = {
               width: 252,
               height: 72,
             },
-            // title-case-ignore
             title: 'Catalyst: SaaS Data Serving Layer Rearchitected for 60x Faster Queries',
             description:
               'Catalyst selected TiDB over Aurora and YugabyteDB to power its customer growth platform, achieving up to 60x faster query response with HTAP capabilities that handle both object and time series data in one stack.',
@@ -419,8 +416,7 @@ const dsl: PageDSL = {
               width: 592,
               height: 96,
             },
-            // title-case-ignore
-            title: 'Atlassian: 750+ Postgres clusters consolidated to 16 TiDB clusters',
+            title: 'Atlassian: 750+ Postgres Clusters Consolidated to 16 TiDB Clusters',
             description:
               'Atlassian replaced hundreds of sharded PostgreSQL clusters with 16 global TiDB clusters to power its Forge platform, scaling to 3M+ tables and 500k concurrent connections per cluster.',
             stats: [

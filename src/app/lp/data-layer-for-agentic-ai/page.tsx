@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
         width: 1200,
         height: 630,
       },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
   },
 }
 
@@ -114,8 +114,7 @@ const dsl: PageDSL = {
             },
           },
           {
-            // title-case-ignore — Chicago capitalizes a sentence-final preposition
-            title: 'The Tenant Count You Did Not Plan For',
+            title: 'The Tenant Count You Did Not Plan for',
             description:
               'Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.',
             image: {
