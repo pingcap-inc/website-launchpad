@@ -326,7 +326,7 @@
               "width": 1511,
               "height": 512
             },
-            "title": "Kimi: <1s Database Provisioning per Agent Task",
+            "title": "Kimi: <1s Database Provisioning Per Agent Task",
             "description": "Runs a production agent-hosting platform on TiDB Cloud with elastic, strongly consistent scale.",
             "stats": [
               {
