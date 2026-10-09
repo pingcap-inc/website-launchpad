@@ -3,7 +3,7 @@
   "meta": {
     "title": "Vitess & PlanetScale Alternative: TiDB Distributed SQL Database",
     "description": "Replace Vitess and PlanetScale's application-side sharding with TiDB's native distributed SQL: transparent auto-sharding, cross-shard ACID transactions, and HTAP in one MySQL-compatible system.",
-    "canonical": "/lp/vitess-alternative-emea/",
+    "canonical": "/lp/vitess-alternative-apac/",
     "unlisted": true,
     "header": "lp"
   },
@@ -268,114 +268,111 @@
       "type": "caseStudyCards",
       "props": {
         "eyebrow": "Proven at Scale",
-        "title": "Leading Fintech, Social, Data, and SaaS Platforms Run TiDB",
+        "title": "AI-Native Platforms Build on TiDB",
         "items": [
           {
-            "badge": "Fintech",
+            "badge": "AI Agent Platform",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/23ea2f33-plaid-logo.png",
-                "alt": "plaid logo",
-                "width": 351,
-                "height": 132
+                "url": "https://static.pingcap.com/images/68b65a2a-20260826-203218.png",
+                "alt": "20260826 203218",
+                "width": 1511,
+                "height": 512
               },
-              "alt": "plaid logo",
-              "width": 351,
-              "height": 132
+              "alt": "20260826 203218",
+              "width": 1511,
+              "height": 512
             },
-            "title": "Plaid: 100 Services Migrated from Aurora with Zero Downtime",
-            "description": "A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 second per service.",
+            "title": "Kimi: <1s Database Provisioning Per Agent Task",
+            "description": "Runs a production agent-hosting platform on TiDB Cloud with elastic, strongly consistent scale.",
             "stats": [
               {
-                "value": "96%",
-                "label": "Less maintenance"
-              },
-              {
-                "value": "<60s",
-                "label": "Cutover downtime"
+                "value": "<1s",
+                "label": "DB provisioning per task"
               }
             ],
-            "href": "https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/"
+            "href": "https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/",
+            "cta": "Read the story"
           },
           {
-            "badge": "Social",
+            "badge": "Agentic AI Platform",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/51545d7d-pinterest-logo.svg",
-                "alt": "pinterest logo",
-                "width": 181,
-                "height": 50
+                "url": "https://static.pingcap.com/images/0fc78057-manus.svg",
+                "alt": "manus",
+                "width": 165,
+                "height": 48
               },
-              "alt": "pinterest logo",
-              "width": 181,
-              "height": 50
+              "alt": "manus",
+              "width": 165,
+              "height": 48
             },
-            "title": "Pinterest: Graph Service Scaled with 10x Latency Reduction",
-            "description": "Modernized its graph service with TiDB eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.",
+            "title": "Manus: 2 Weeks to Migrate",
+            "description": "Viral agentic AI platform migrated to TiDB Cloud with no application rewrite.",
             "stats": [
               {
-                "value": "50%+",
-                "label": "Infra savings"
+                "value": "2 weeks",
+                "label": "Migration time"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
+            "cta": "Read the story"
+          },
+          {
+            "badge": "AI Note-Taking",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/a9c1110c-logo-plaud.png",
+                "alt": "logo plaud",
+                "width": 362,
+                "height": 100
               },
+              "alt": "logo plaud",
+              "width": 362,
+              "height": 100
+            },
+            "title": "Plaud: 10x QPS Under Peak Load",
+            "description": "Eliminated MySQL write-throughput and DDL bottlenecks for 2M+ users across 170 countries.",
+            "stats": [
               {
                 "value": "10x",
-                "label": "P99 latency cut"
+                "label": "QPS improvement"
+              },
+              {
+                "value": "2M+",
+                "label": "Users"
               }
             ],
-            "href": "https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/"
+            "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/",
+            "cta": "Read the story"
           },
           {
-            "badge": "Mobility",
+            "badge": "Infrastructure Sprawl",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/7e978b4d-bolt.svg",
-                "alt": "bolt",
-                "width": 69,
-                "height": 40
+                "url": "https://static.pingcap.com/images/ee6420d5-dify-logo-white.svg",
+                "alt": "dify logo white",
+                "width": 102,
+                "height": 45
               },
-              "alt": "bolt",
-              "width": 69,
-              "height": 40
+              "alt": "dify logo white",
+              "width": 102,
+              "height": 45
             },
-            "title": "Bolt: Legacy MySQL Modernized to Scale 1000s of Microservices",
-            "description": "Bolt replaced fragile, hard-to-scale MySQL — and passed on Vitess — choosing TiDB to run order, commerce, and payment microservices on AWS with horizontal scale, strong consistency, and zero-downtime maintenance.",
+            "title": "Dify: 80% Infrastructure Cost Reduction",
+            "description": "Consolidated ~500K isolated database containers into one unified TiDB deployment.",
             "stats": [
               {
-                "value": "35k",
-                "label": "QPS on critical apps"
+                "value": "80%",
+                "label": "Cost reduction"
               },
               {
-                "value": "3x",
-                "label": "Storage compression"
+                "value": "500K",
+                "label": "Containers consolidated"
               }
             ],
-            "href": "https://www.pingcap.com/case-study/bolt-modernizing-mysql-tidb-scale-thousands-microservices-aws/"
-          },
-          {
-            "badge": "SaaS",
-            "logo": {
-              "image": {
-                "url": "https://static.pingcap.com/images/efcf8f2a-atlassian_logo_inverse_rgb_2x.png",
-                "alt": "atlassian logo inverse rgb 2x",
-                "width": 592,
-                "height": 96
-              },
-              "alt": "atlassian logo inverse rgb 2x",
-              "width": 592,
-              "height": 96
-            },
-            "title": "Atlassian",
-            "description": "Collapsed ~750 Postgres clusters into 16 TiDB clusters for multi-tenant SaaS at scale.",
-            "stats": [
-              {
-                "value": "3M+",
-                "label": "Tables per cluster"
-              },
-              {
-                "value": "750+",
-                "label": "PG clusters replaced"
-              }
-            ]
+            "href": "https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/",
+            "cta": "Read the Dify story"
           }
         ]
       },

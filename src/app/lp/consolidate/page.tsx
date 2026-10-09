@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
+        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
         width: 1200,
         height: 630,
       },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
+    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
   },
 }
 
@@ -277,7 +277,6 @@ const dsl: PageDSL = {
               width: 181,
               height: 50,
             },
-            // title-case-ignore — "10x" is the correct brand form, not "10X"
             title: 'Pinterest: Graph Service Scaled with 10x Latency Reduction',
             description:
               'Modernized its graph service with TiDB, eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.',
@@ -337,8 +336,7 @@ const dsl: PageDSL = {
         title: "What Changes When It's One Engine",
         items: [
           {
-            // title-case-ignore — Chicago capitalizes a sentence-final preposition
-            title: "Scale You Don't Have to Plan For",
+            title: "Scale You Don't Have to Plan for",
             description:
               '20+ TB, 300K+ QPS, 10K+ writes per second, and millions of tables in a single cluster. No shard keys in your application, and no rebalance that turns into a migration.',
             image: {

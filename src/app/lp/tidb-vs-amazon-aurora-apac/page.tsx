@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   description:
     'Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.',
   robots: { index: false, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-amazon-aurora/' },
+  alternates: { canonical: 'https://www.pingcap.com/lp/tidb-vs-amazon-aurora-apac/' },
   openGraph: {
     title: 'TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB',
     description:
       'Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.',
-    url: 'https://www.pingcap.com/lp/tidb-vs-amazon-aurora/',
+    url: 'https://www.pingcap.com/lp/tidb-vs-amazon-aurora-apac/',
     siteName: 'TiDB',
     images: [
       {
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: '/lp/tidb-vs-amazon-aurora/',
+  path: '/lp/tidb-vs-amazon-aurora-apac/',
   title: 'TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB',
   description:
     'Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.',
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: 'TiDB vs. Amazon Aurora', path: '/lp/tidb-vs-amazon-aurora/' },
+    { name: 'TiDB vs. Amazon Aurora', path: '/lp/tidb-vs-amazon-aurora-apac/' },
   ],
 })
 
@@ -49,7 +49,7 @@ const dsl: PageDSL = {
     title: 'TiDB vs Amazon Aurora: Scale Past Instance Limits | TiDB',
     description:
       'Compare TiDB and Amazon Aurora. Scale reads and writes horizontally with strong consistency, real-time HTAP, and online schema changes—no instance ceiling.',
-    canonical: '/lp/tidb-vs-amazon-aurora/',
+    canonical: '/lp/tidb-vs-amazon-aurora-apac/',
     unlisted: true,
     header: 'lp',
   },
@@ -282,119 +282,115 @@ const dsl: PageDSL = {
       type: 'caseStudyCards',
       props: {
         eyebrow: 'Proven at Scale',
-        title: 'Leading Fintech, Social, Data, and SaaS Platforms Run TiDB',
+        title: 'AI-Native Platforms Build on TiDB',
         items: [
           {
-            badge: 'Fintech',
+            badge: 'AI Agent Platform',
             logo: {
               image: {
-                url: 'https://static.pingcap.com/images/23ea2f33-plaid-logo.png',
-                alt: 'plaid logo',
-                width: 351,
-                height: 132,
+                url: 'https://static.pingcap.com/images/68b65a2a-20260826-203218.png',
+                alt: '20260826 203218',
+                width: 1511,
+                height: 512,
               },
-              alt: 'plaid logo',
-              width: 351,
-              height: 132,
+              alt: '20260826 203218',
+              width: 1511,
+              height: 512,
             },
-            title: 'Plaid: 100 Services Migrated from Aurora with Zero Downtime',
+            title: 'Kimi: <1s Database Provisioning Per Agent Task',
             description:
-              'A team of six engineers migrated nearly 100 services from Amazon Aurora to TiDB in under 2.5 years, reducing cutover downtime from five minutes to under 60 second per service.',
+              'Runs a production agent-hosting platform on TiDB Cloud with elastic, strongly consistent scale.',
             stats: [
               {
-                value: '96%',
-                label: 'Less maintenance',
-              },
-              {
-                value: '<60s',
-                label: 'Cutover downtime',
+                value: '<1s',
+                label: 'DB provisioning per task',
               },
             ],
-            href: 'https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/',
+            href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
+            cta: 'Read the story',
           },
           {
-            badge: 'Social',
+            badge: 'Agentic AI Platform',
             logo: {
               image: {
-                url: 'https://static.pingcap.com/images/51545d7d-pinterest-logo.svg',
-                alt: 'pinterest logo',
-                width: 181,
-                height: 50,
+                url: 'https://static.pingcap.com/images/0fc78057-manus.svg',
+                alt: 'manus',
+                width: 165,
+                height: 48,
               },
-              alt: 'pinterest logo',
-              width: 181,
-              height: 50,
+              alt: 'manus',
+              width: 165,
+              height: 48,
             },
-            title: 'Pinterest: Graph Service Scaled with 10x Latency Reduction',
+            title: 'Manus: 2 Weeks to Migrate',
             description:
-              'Modernized its graph service with TiDB eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.',
+              'Viral agentic AI platform migrated to TiDB Cloud with no application rewrite.',
             stats: [
               {
-                value: '50%+',
-                label: 'Infra savings',
+                value: '2 weeks',
+                label: 'Migration time',
               },
+            ],
+            href: 'https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/',
+            cta: 'Read the story',
+          },
+          {
+            badge: 'AI Note-Taking',
+            logo: {
+              image: {
+                url: 'https://static.pingcap.com/images/a9c1110c-logo-plaud.png',
+                alt: 'logo plaud',
+                width: 362,
+                height: 100,
+              },
+              alt: 'logo plaud',
+              width: 362,
+              height: 100,
+            },
+            title: 'Plaud: 10x QPS Under Peak Load',
+            description:
+              'Eliminated MySQL write-throughput and DDL bottlenecks for 2M+ users across 170 countries.',
+            stats: [
               {
                 value: '10x',
-                label: 'P99 latency cut',
+                label: 'QPS improvement',
+              },
+              {
+                value: '2M+',
+                label: 'Users',
               },
             ],
-            href: 'https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/',
+            href: 'https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/',
+            cta: 'Read the story',
           },
           {
-            badge: 'SaaS',
+            badge: 'Infrastructure Sprawl',
             logo: {
               image: {
-                url: 'https://static.pingcap.com/images/4043e4af-catalyst.svg',
-                alt: 'catalyst',
-                width: 252,
-                height: 72,
+                url: 'https://static.pingcap.com/images/ea05870e-dify_logo.svg',
+                alt: 'dify logo',
+                width: 241,
+                height: 80,
               },
-              alt: 'catalyst',
-              width: 252,
-              height: 72,
+              alt: 'dify logo',
+              width: 241,
+              height: 80,
             },
-            title: 'Catalyst: SaaS Data Serving Layer Rearchitected for 60x Faster Queries',
+            title: 'Dify: 80% Infrastructure Cost Reduction',
             description:
-              'Catalyst selected TiDB over Aurora and YugabyteDB to power its customer growth platform, achieving up to 60x faster query response with HTAP capabilities that handle both object and time series data in one stack.',
+              'Consolidated ~500K isolated database containers into one unified TiDB deployment.',
             stats: [
               {
-                value: '60x',
-                label: 'Faster queries',
+                value: '80%',
+                label: 'Cost reduction',
               },
               {
-                value: '1',
-                label: 'Unified stack',
+                value: '500K',
+                label: 'Containers consolidated',
               },
             ],
-            href: 'https://www.pingcap.com/case-study/catalyst-rearchitects-core-saas-platform-tidb-60x-faster-performance/',
-          },
-          {
-            badge: 'SaaS',
-            logo: {
-              image: {
-                url: 'https://static.pingcap.com/images/efcf8f2a-atlassian_logo_inverse_rgb_2x.png',
-                alt: 'atlassian logo inverse rgb 2x',
-                width: 592,
-                height: 96,
-              },
-              alt: 'atlassian logo inverse rgb 2x',
-              width: 592,
-              height: 96,
-            },
-            title: 'Atlassian: 750+ Postgres Clusters Consolidated to 16 TiDB Clusters',
-            description:
-              'Atlassian replaced hundreds of sharded PostgreSQL clusters with 16 global TiDB clusters to power its Forge platform, scaling to 3M+ tables and 500k concurrent connections per cluster.',
-            stats: [
-              {
-                value: '3M+',
-                label: 'Tables per cluster',
-              },
-              {
-                value: '750+',
-                label: 'PG clusters replaced',
-              },
-            ],
-            href: 'https://www.pingcap.com/blog/how-atlassian-scaled-three-million-tables-multi-tenancy-tidb/',
+            href: 'https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/',
+            cta: 'Read the Dify story',
           },
         ],
       },

@@ -3,7 +3,7 @@
   "meta": {
     "title": "One Database Engine, Not Six | TiDB Consolidation",
     "description": "Replace six specialized databases with one distributed SQL engine. TiDB unifies transactions, analytics, search, and vectors, cutting overhead by 90%.",
-    "canonical": "/lp/consolidate-emea/",
+    "canonical": "/lp/consolidate-apac/",
     "unlisted": true,
     "header": "lp"
   },
@@ -177,87 +177,79 @@
             "cta": "Read the Dify story"
           },
           {
-            "badge": "Object Scale",
+            "badge": "AI Agent Platform",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/efcf8f2a-atlassian_logo_inverse_rgb_2x.png",
-                "alt": "atlassian logo inverse rgb 2x",
-                "width": 592,
-                "height": 96
+                "url": "https://static.pingcap.com/images/68b65a2a-20260826-203218.png",
+                "alt": "20260826 203218",
+                "width": 1511,
+                "height": 512
               },
-              "alt": "atlassian logo inverse rgb 2x",
-              "width": 592,
-              "height": 96
+              "alt": "20260826 203218",
+              "width": 1511,
+              "height": 512
             },
-            "title": "Atlassian: Three Million Tables, Sixteen Clusters",
-            "description": "Replaced hundreds of sharded PostgreSQL clusters with 16 global TiDB clusters to power its Forge platform, scaling to 3M+ tables and 500K concurrent connections per cluster.",
+            "title": "Kimi: <1s Database Provisioning Per Agent Task",
+            "description": "Runs a production agent-hosting platform on TiDB Cloud with elastic, strongly consistent scale.",
             "stats": [
               {
-                "value": "3M+",
-                "label": "tables per cluster"
-              },
-              {
-                "value": "750+",
-                "label": "PostgreSQL clusters replaced"
+                "value": "<1s",
+                "label": "DB provisioning per task"
               }
             ],
-            "href": "https://www.pingcap.com/blog/how-atlassian-scaled-three-million-tables-multi-tenancy-tidb/",
+            "href": "https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/",
             "cta": "Read the story"
           },
           {
-            "badge": "Data Scale",
+            "badge": "Agentic AI Platform",
             "logo": {
               "image": {
-                "url": "https://static.pingcap.com/images/51545d7d-pinterest-logo.svg",
-                "alt": "pinterest logo",
-                "width": 181,
-                "height": 50
+                "url": "https://static.pingcap.com/images/0fc78057-manus.svg",
+                "alt": "manus",
+                "width": 165,
+                "height": 48
               },
-              "alt": "pinterest logo",
-              "width": 181,
-              "height": 50
+              "alt": "manus",
+              "width": 165,
+              "height": 48
             },
-            "title": "Pinterest: Graph Service Scaled with 10x Latency Reduction",
-            "description": "Modernized its graph service with TiDB, eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.",
+            "title": "Manus: 2 Weeks to Migrate",
+            "description": "Viral agentic AI platform migrated to TiDB Cloud with no application rewrite.",
+            "stats": [
+              {
+                "value": "2 weeks",
+                "label": "Migration time"
+              }
+            ],
+            "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
+            "cta": "Read the story"
+          },
+          {
+            "badge": "AI Note-Taking",
+            "logo": {
+              "image": {
+                "url": "https://static.pingcap.com/images/a9c1110c-logo-plaud.png",
+                "alt": "logo plaud",
+                "width": 362,
+                "height": 100
+              },
+              "alt": "logo plaud",
+              "width": 362,
+              "height": 100
+            },
+            "title": "Plaud: 10x QPS Under Peak Load",
+            "description": "Eliminated MySQL write-throughput and DDL bottlenecks for 2M+ users across 170 countries.",
             "stats": [
               {
                 "value": "10x",
-                "label": "P99 latency cut"
+                "label": "QPS improvement"
               },
               {
-                "value": "50%+",
-                "label": "infrastructure savings"
+                "value": "2M+",
+                "label": "Users"
               }
             ],
-            "href": "https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/",
-            "cta": "Read the story"
-          },
-          {
-            "badge": "Migration Path",
-            "logo": {
-              "image": {
-                "url": "https://static.pingcap.com/images/7e978b4d-bolt.svg",
-                "alt": "bolt",
-                "width": 69,
-                "height": 40
-              },
-              "alt": "bolt",
-              "width": 69,
-              "height": 40
-            },
-            "title": "Bolt: Legacy MySQL Modernized to Scale 1000s of Microservices",
-            "description": "Bolt replaced fragile, hard-to-scale MySQL — and passed on Vitess — choosing TiDB to run order, commerce, and payment microservices on AWS with horizontal scale, strong consistency, and zero-downtime maintenance.",
-            "stats": [
-              {
-                "value": "35k",
-                "label": "QPS on critical apps"
-              },
-              {
-                "value": "3x",
-                "label": "storage compression"
-              }
-            ],
-            "href": "https://www.pingcap.com/case-study/bolt-modernizing-mysql-tidb-scale-thousands-microservices-aws/",
+            "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/",
             "cta": "Read the story"
           }
         ]

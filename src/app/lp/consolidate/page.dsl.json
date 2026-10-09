@@ -274,7 +274,7 @@
         "title": "What Changes When It's One Engine",
         "items": [
           {
-            "title": "Scale You Don't Have to Plan For",
+            "title": "Scale You Don't Have to Plan for",
             "description": "20+ TB, 300K+ QPS, 10K+ writes per second, and millions of tables in a single cluster. No shard keys in your application, and no rebalance that turns into a migration.",
             "image": {
               "image": {
