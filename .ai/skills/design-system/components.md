@@ -857,3 +857,11 @@ interface CtaSectionProps {
 - Product/technical pages → `red` or `violet`
 - Cloud/infrastructure pages → `blue`
 - Data/analytics pages → `teal`
+
+### PricingPlansSection
+
+Structured pricing cards with shared buttons, status badges, billing rates, an optional overage disclosure, footnotes, and an optional deployment callout. Use the `pricingPlans` DSL section to edit these fields in the builder. Prices are display strings, so currency, precision, and units remain explicit.
+
+Import from `@/components/sections/PricingPlansSection`. Props are defined by `PricingPlansProps` in `src/lib/dsl-schema.ts`. Set `columns` to 4 for four desktop plans or 3 for three. Four-plan sections use two columns on tablets; three-plan sections stack below the desktop breakpoint. Mobile always uses one column. Subgrid aligns card prices and actions without fixed content heights.
+
+`LogoCloudSection` also accepts an optional `cta: { text, href }` above its logos and an optional `logoClassName` in the DSL/editor. Both are optional and leave existing layouts unchanged when omitted.

@@ -1,3 +1,4 @@
+import { PricingPlansSection } from '@/components/sections/PricingPlansSection'
 import { createElement, type ComponentType } from 'react'
 import type { LucideProps } from 'lucide-react'
 import {
@@ -211,6 +212,10 @@ type ComponentEntry<T extends SectionType> = {
 }
 
 export const componentMap: Record<SectionType, ComponentEntry<any>> = {
+  pricingPlans: {
+    Component: PricingPlansSection,
+    defaultStyle: { background: 'primary', spacing: 'section' },
+  },
   hero: {
     Component: HeroSection,
     mapProps: (props: SectionPropsMap['hero']) => ({
@@ -336,6 +341,8 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
   logoCloud: {
     Component: LogoCloudSection,
     mapProps: (props: SectionPropsMap['logoCloud']) => ({
+      cta: props.cta,
+      logoClassName: props.logoClassName,
       eyebrow: props.eyebrow,
       title: props.title,
       subtitle: props.subtitle,

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { SecondaryButton } from '@/components/ui/SecondaryButton'
 import { cn } from '@/lib/utils'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { externalLinkProps } from '@/lib/links'
@@ -13,6 +14,7 @@ export interface LogoCloudItem {
 }
 
 interface LogoCloudSectionProps {
+  cta?: { text: string; href: string }
   eyebrow?: string
   title?: string
   subtitle?: string
@@ -27,6 +29,7 @@ interface LogoCloudSectionProps {
 }
 
 export function LogoCloudSection({
+  cta,
   eyebrow,
   title,
   subtitle,
@@ -95,6 +98,11 @@ export function LogoCloudSection({
           title={title ?? ''}
           subtitle={subtitle}
         />
+      )}
+      {cta && (
+        <div className={cn('flex', contentAlign)}>
+          <SecondaryButton href={cta.href}>{cta.text}</SecondaryButton>
+        </div>
       )}
       {shouldScroll ? (
         <div
