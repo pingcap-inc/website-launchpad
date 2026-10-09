@@ -42,7 +42,7 @@ const schema = buildPageSchema({
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
-      name: 'How to Connect TiDB to Cursor for AI-assisted App Development',
+      name: 'How to Connect TiDB to Cursor for AI-Assisted App Development',
       path: '/playbook/how-to-cursor-ai-database-integration/',
     },
   ],
@@ -62,7 +62,7 @@ const dsl: PageDSL = {
       type: 'hero',
       props: {
         layout: 'image-right',
-        headline: 'How to Connect TiDB to Cursor for AI-assisted App Development',
+        headline: 'How to Connect TiDB to Cursor for AI-Assisted App Development',
         heroImage: {
           image: {
             url: 'https://static.pingcap.com/images/8596fd96-___2.png',

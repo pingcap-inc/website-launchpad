@@ -106,7 +106,7 @@ const faqItems: {
 }[] = [
   {
     value: 'what-is-it',
-    q: 'What is TiDB Cloud Filesystem?',
+    q: 'What Is TiDB Cloud Filesystem?',
     answer: (
       <>
         A durable working directory for coding agents. A runtime uses normal file operations, while
@@ -124,7 +124,7 @@ const faqItems: {
   },
   {
     value: 'sandbox-persistence',
-    q: 'My sandbox already has persistence — do I need TiDB Cloud Filesystem too?',
+    q: 'My Sandbox Already Has Persistence — Do I Need TiDB Cloud Filesystem Too?',
     answer: (
       <>
         Native snapshots, pause/resume or volumes cover a workflow that stays inside one platform. A
@@ -135,7 +135,7 @@ const faqItems: {
   },
   {
     value: 'consistency',
-    q: 'What does a second runtime see while one is writing?',
+    q: 'What Does a Second Runtime See While One Is Writing?',
     answer: (
       <>
         You choose, per workspace: writeback favors write speed, write-sync makes every write
@@ -145,7 +145,7 @@ const faqItems: {
   },
   {
     value: 'regions',
-    q: 'Which regions can I create a filesystem in?',
+    q: 'Which Regions Can I Create a Filesystem In?',
     answer: (
       <>
         Region is a required flag when you create a filesystem.{' '}
@@ -161,7 +161,7 @@ const faqItems: {
   },
   {
     value: 'laptop-mount',
-    q: 'Can I mount TiDB Cloud Filesystem on my laptop?',
+    q: 'Can I Mount TiDB Cloud Filesystem on My Laptop?',
     answer: (
       <>
         Supported, but not what we recommend for evaluation. Run it from a cloud VM in the same
@@ -172,7 +172,7 @@ const faqItems: {
   },
   {
     value: 'posix-support',
-    q: 'Does TiDB Cloud Filesystem support POSIX?',
+    q: 'Does TiDB Cloud Filesystem Support POSIX?',
     answer: (
       <>
         Yes. When mounted, TiDB Cloud Filesystem is POSIX-compatible, so agents can use ordinary
@@ -183,7 +183,7 @@ const faqItems: {
   },
   {
     value: 'sdk',
-    q: 'Is there a TiDB Cloud Filesystem SDK?',
+    q: 'Is There a TiDB Cloud Filesystem SDK?',
     answer: (
       <>
         Not yet. The CLI is the full surface during the public preview. TypeScript and Python SDKs
@@ -193,7 +193,7 @@ const faqItems: {
   },
   {
     value: 'semantic-search',
-    q: 'Does TiDB Cloud Filesystem support semantic or vector search over my files?',
+    q: 'Does TiDB Cloud Filesystem Support Semantic or Vector Search over My Files?',
     answer: (
       <>
         Yes, once you configure it. Point the filesystem at an embedding provider and your text —
@@ -213,7 +213,7 @@ const faqItems: {
   },
   {
     value: 'checkpoint',
-    q: 'Does the TiDB Cloud Filesystem preview include checkpoint and rollback?',
+    q: 'Does the TiDB Cloud Filesystem Preview Include Checkpoint and Rollback?',
     answer: (
       <>
         Yes. Layers give you an isolated change set over a base path, which you can checkpoint,
@@ -233,7 +233,7 @@ const faqItems: {
   },
   {
     value: 'sla',
-    q: 'Is there an SLA for TiDB Cloud Filesystem?',
+    q: 'Is There an SLA for TiDB Cloud Filesystem?',
     answer: (
       <>
         No. Keep evaluation data recoverable elsewhere, and report anything that doesn&apos;t behave
@@ -243,7 +243,7 @@ const faqItems: {
   },
   {
     value: 'retention',
-    q: 'What happens to my workspace after the TiDB Cloud Filesystem preview ends?',
+    q: 'What Happens to My Workspace After the TiDB Cloud Filesystem Preview Ends?',
     answer: (
       <>
         We haven&apos;t settled the retention and deletion policy for after the preview yet. Until
@@ -253,7 +253,7 @@ const faqItems: {
   },
   {
     value: 'cost',
-    q: 'What does TiDB Cloud Filesystem cost?',
+    q: 'What Does TiDB Cloud Filesystem Cost?',
     answer: (
       <>
         Pay as you go for reads, writes, storage and egress, with $5.00 of service credit per
@@ -467,7 +467,6 @@ export default function TidbCloudFilesystemPage() {
               <div className="mb-4">
                 <Badge variant="secondary">Public Preview</Badge>
               </div>
-              {/* title-case-ignore */}
               <h1 className="mb-6 max-w-[640px] text-pretty text-h1-mb font-bold leading-tight tracking-[-0.025em] md:text-h1">
                 {/* The product name sits inside the H1 so it carries heading
                     weight instead of being an unranked span above it, but stays
@@ -475,7 +474,7 @@ export default function TidbCloudFilesystemPage() {
                 <span className="mb-7 block font-mono text-[13px] font-normal leading-none tracking-normal text-carbon-400">
                   TiDB Cloud Filesystem
                 </span>
-                The workspace your agents share
+                The Workspace Your Agents Share
               </h1>
               <p className="mb-9 max-w-[580px] text-pretty text-body-2xl text-carbon-400">
                 One filesystem, held by several runtimes at once, that knows what an agent leaves
@@ -508,10 +507,9 @@ export default function TidbCloudFilesystemPage() {
         {/* 02 What makes it different */}
         <section id="different" className="bg-gradient-dark-top py-20">
           <div className="contain">
-            <p className="mb-8 font-mono text-[15px] text-carbon-400">What makes it different</p>
-            {/* title-case-ignore */}
+            <p className="mb-8 font-mono text-[15px] text-carbon-400">What Makes It Different</p>
             <h2 className="mb-5 max-w-[880px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
-              Three things TiDB Cloud Filesystem does that your sandbox disk can&apos;t
+              Three Things TiDB Cloud Filesystem Does That Your Sandbox Disk Can&apos;t
             </h2>
             <p className="mb-14 max-w-[660px] text-body-lg text-carbon-400">
               All three exist for one reason: a{' '}
@@ -529,11 +527,10 @@ export default function TidbCloudFilesystemPage() {
               <SlideIn direction="up">
                 <div className="flex h-full flex-col gap-5 rounded-xl border border-white/10 bg-white/[0.04] px-[26px] pb-[26px] pt-7">
                   <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-brand-red-primary">
-                    Git-aware workspace
+                    Git-Aware Workspace
                   </p>
-                  {/* title-case-ignore */}
                   <h3 className="text-h3-lg font-bold">
-                    A resumed workspace still has its git state
+                    A Resumed Workspace Still Has Its Git State
                   </h3>
                   <p className="flex-1 text-body-md text-carbon-400">
                     The branch, the uncommitted changes, the objects the agent created — all of it
@@ -573,11 +570,10 @@ export default function TidbCloudFilesystemPage() {
               <SlideIn direction="up" delay={70}>
                 <div className="flex h-full flex-col gap-5 rounded-xl border border-white/10 bg-white/[0.04] px-[26px] pb-[26px] pt-7">
                   <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-brand-red-primary">
-                    Rebuildable vs persistent
+                    Rebuildable vs. Persistent
                   </p>
-                  {/* title-case-ignore */}
                   <h3 className="text-h3-lg font-bold">
-                    Keep what your agent needs. Drop the noise
+                    Keep What Your Agent Needs. Drop the Noise
                   </h3>
                   <p className="flex-1 text-body-md text-carbon-400 [&_code]:font-mono">
                     <code>node_modules</code> and <code>dist</code> can be rebuilt anywhere, so they
@@ -630,11 +626,10 @@ export default function TidbCloudFilesystemPage() {
               <SlideIn direction="up" delay={140}>
                 <div className="flex h-full flex-col gap-5 rounded-xl border border-white/10 bg-white/[0.04] px-[26px] pb-[26px] pt-7">
                   <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-brand-red-primary">
-                    Any file, any format
+                    Any File, Any Format
                   </p>
-                  {/* title-case-ignore */}
                   <h3 className="text-h3-lg font-bold">
-                    One place for everything the agent touches
+                    One Place for Everything the Agent Touches
                   </h3>
                   <p className="flex-1 text-body-md text-carbon-400">
                     An agent&apos;s working set is never just code — it&apos;s source, uploads,
@@ -671,11 +666,10 @@ export default function TidbCloudFilesystemPage() {
         <section id="proof" className="relative isolate overflow-hidden bg-bg-primary py-20">
           <PrismBackground />
           <div className="relative z-10 contain">
-            <p className="mb-8 font-mono text-[15px] text-carbon-400">Proof at scale</p>
+            <p className="mb-8 font-mono text-[15px] text-carbon-400">Proof at Scale</p>
             <KimiLogo className="mb-6 h-7 w-auto text-white" />
-            {/* title-case-ignore */}
             <h2 className="mb-12 max-w-[820px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] text-carbon-400 md:text-h2-sm">
-              Agent workspace continuity, running in production
+              Agent Workspace Continuity, Running in Production
             </h2>
             <div className="grid grid-cols-1 items-end gap-12 lg:grid-cols-2">
               <div>
@@ -709,10 +703,9 @@ export default function TidbCloudFilesystemPage() {
         {/* 04 How it works */}
         <section id="how" className="bg-gradient-dark-bottom py-20">
           <div className="contain">
-            <p className="mb-8 font-mono text-[15px] text-carbon-400">How it works</p>
-            {/* title-case-ignore */}
+            <p className="mb-8 font-mono text-[15px] text-carbon-400">How It Works</p>
             <h2 className="mb-5 max-w-[880px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
-              Execution is disposable. State is not
+              Execution Is Disposable. State Is Not
             </h2>
             <p className="mb-12 max-w-[680px] text-body-lg text-carbon-400">
               Two planes, one namespace. Runtimes come and go above; the workspace below is
@@ -721,9 +714,8 @@ export default function TidbCloudFilesystemPage() {
 
             <DataPlaneDiagram />
 
-            {/* title-case-ignore */}
             <h3 className="mb-3 text-h3-lg font-bold">
-              One coding agent task, eight steps — each leaves state the next one needs
+              One Coding Agent Task, Eight Steps — Each Leaves State the Next One Needs
             </h3>
             <p className="mb-8 max-w-[660px] text-body-md text-carbon-400">
               A coding agent doesn&apos;t touch a filesystem once. It touches it at every step, and
@@ -737,10 +729,9 @@ export default function TidbCloudFilesystemPage() {
         {/* 05 Where it fits */}
         <section id="fit" className="bg-bg-primary py-20">
           <div className="contain">
-            <p className="mb-8 font-mono text-[15px] text-carbon-400">Where it fits</p>
-            {/* title-case-ignore */}
+            <p className="mb-8 font-mono text-[15px] text-carbon-400">Where It Fits</p>
             <h2 className="mb-12 max-w-[820px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
-              Start with the boundary your state has to cross
+              Start with the Boundary Your State Has to Cross
             </h2>
             <div className="mb-9 border-l-2 border-brand-red-primary pl-[18px]">
               <p className="text-h3-sm font-bold">You&apos;re in the right place if —</p>
@@ -808,10 +799,9 @@ export default function TidbCloudFilesystemPage() {
               </svg>
               <div className="relative z-10">
                 <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.06em] text-brand-red-primary">
-                  Hands-on lab
+                  Hands-On Lab
                 </p>
-                {/* title-case-ignore */}
-                <h2 className="mb-3 text-h3-lg font-bold">Try it in a real sandbox</h2>
+                <h2 className="mb-3 text-h3-lg font-bold">Try It in a Real Sandbox</h2>
                 <p className="max-w-[560px] text-body-md text-carbon-400">
                   A guided, 120-minute lab using a virtual machine.
                 </p>
@@ -828,10 +818,9 @@ export default function TidbCloudFilesystemPage() {
         {/* 07 FAQ */}
         <section id="faq" className="bg-gradient-dark-top py-20">
           <div className="contain">
-            <p className="mb-8 font-mono text-[15px] text-carbon-400">Straight answers</p>
-            {/* title-case-ignore */}
+            <p className="mb-8 font-mono text-[15px] text-carbon-400">Straight Answers</p>
             <h2 className="mb-12 max-w-[820px] text-pretty text-h2-mb font-bold leading-tight tracking-[-0.02em] md:text-h2-sm">
-              What TiDB Cloud Filesystem is, and what it isn&apos;t yet
+              What TiDB Cloud Filesystem Is, and What It Isn&apos;t Yet
             </h2>
             <div className="mx-auto max-w-[860px]">
               <Accordion type="single" defaultValue="what-is-it" collapsible>
@@ -853,9 +842,9 @@ export default function TidbCloudFilesystemPage() {
         {/* 08 Closing CTA */}
         <section className="bg-brand-red-bg py-16 text-white">
           <div className="contain">
-            <p className="mb-4 text-center font-mono text-[15px] text-white/70">Get started</p>
+            <p className="mb-4 text-center font-mono text-[15px] text-white/70">Get Started</p>
             <CtaSection
-              title="Nothing to rebuild. Everything to build on"
+              title="Nothing to Rebuild. Everything to Build On"
               subtitle="Write from one runtime. Let it end. Reopen the workspace from another and check that the second run continues from the first. That's the whole test."
               primaryCta={{
                 text: 'Run the sandbox handoff example',

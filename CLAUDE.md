@@ -115,6 +115,14 @@ Visual & Interaction (see visual-design.md for full guide)
 ❌ Tabs without autoSwitch     → add autoSwitch={true} autoSwitchInterval={6000}
 ❌ Stats section built inline  → use <StatsSection> component
 
+Headings — Title Case (scripts/check-title-case.mjs — pre-commit blocks; CI warns)
+❌ Sentence case heading       "Built for teams at scale"  → "Built for Teams at Scale"
+❌ Capitalized preposition     "Agents With History"       → "Agents with History"
+❌ Hyphen part lowercased      "Hands-on" / "Built-in"     → "Hands-On" / "Built-In"
+❌ Hyphen first part lowercase "Multi-tenant"              → "Multi-Tenant"
+❌ Sentence as a heading       "Try it on your data. Free tier available."
+                              → title="Try It on Your Own Data" + subtitle for the rest
+
 ✅ siteName must be exactly:   'TiDB'
 ✅ twitter.site must be:       '@PingCAP'
 ✅ og:image default:           https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png
@@ -124,6 +132,93 @@ Visual & Interaction (see visual-design.md for full guide)
 ✅ Icon stroke width:           strokeWidth={1.5} on all lucide-react icons
 ✅ Icon in card container:      className="w-full h-full" (fills the w-12 h-12 wrapper)
 ```
+
+---
+
+## 🔠 Heading Case Rule
+
+**All headings use Title Case (Chicago style).** This keeps the Next.js pages consistent
+with the rest of the WordPress site. Enforced automatically — see below.
+
+**What counts as a heading (checked):**
+
+| Surface                              | Renders as | Example                                    |
+| ------------------------------------ | ---------- | ------------------------------------------ |
+| `headline=` on `<HeroSection>`       | H1         | `headline="Scale MySQL without Sharding"`  |
+| `headline:` in a DSL page object     | H1         | `headline: 'Scale MySQL without Sharding'` |
+| `title=` on any section component    | H2         | `title="Built for Teams at Scale"`         |
+| Literal `<h1>`–`<h6>` tags           | H1–H6      | `<h2>Get Hands-On with Vector Search</h2>` |
+| `title:` in page data arrays/objects | H3         | `{ title: 'Multi-Tenant SaaS Platforms' }` |
+
+**What is NOT a heading (leave in sentence case):**
+`subheadline`, `subtitle`, `description`, `eyebrow`, body copy, button/CTA labels,
+and `metadata` fields (`title`, `openGraph`, `twitter`). Questions ending in `?` are
+sentences, so FAQ questions are skipped too.
+
+**Out of scope (deliberate):** Markdown `##`/`###` headings _inside_ long-form
+`richTextBlock` content on playbook/blog pages. Those are editorial, SEO-targeted
+long-tail headings and currently follow sentence case. The checker does not read
+inside content strings, so they neither fail CI nor get auto-fixed. Changing that
+convention is a content decision — raise it with PMM first, don't flip it silently.
+
+**The rules:**
+
+```
+Capitalize       first word · nouns · pronouns · verbs · adjectives · adverbs
+Lowercase        a an the · and but or for nor · on at to from by with of in into as vs
+Hyphenated       EVERY part capitalized — both halves, no exceptions (APA style)
+                 Multi-Tenant · Built-In · Hands-On · On-Premises · Drop-In · At-A-Glance
+Keep as written  brands, acronyms and package names (TiDB, MySQL, API, mysql-connector-python)
+'up'             capitalized — in headings it is a phrasal-verb particle ("Holds Up")
+```
+
+> [!IMPORTANT]
+> **A sentence is not a heading.** Do not title-case a full sentence — split it.
+> `title: 'Try it on your own data. MySQL-compatible, no shard config.'`
+> becomes `title: 'Try It on Your Own Data'` + `subtitle: 'MySQL-compatible, no shard config.'`
+
+**Commands:**
+
+```bash
+pnpm title-case:all     # check every page (what CI runs) — reports each violation + a suggestion
+pnpm title-case:review  # step through each: [a]ccept the suggestion · [k]eep the original · [s]kip
+pnpm title-case:fix     # accept every suggestion at once — always review the diff afterward
+```
+
+The checker never changes content on its own in a check run. It **detects** a
+violation, **shows** the suggested heading, and lets you **accept** it or **keep**
+the original — so a rule misjudgment can't silently rewrite a heading you meant.
+
+**Keeping a heading as-is (the durable override):** choosing `[k]eep` in review adds
+the exact heading text to `scripts/title-case-allow.json`. An allowlisted heading is
+never flagged again, anywhere. Unlike a `// title-case-ignore` comment, this file is
+**not** touched by `/admin` DSL regeneration, so the waiver survives. (A `// title-case-ignore`
+comment on the line above still works too, but only for hand-written pages.)
+
+**Enforcement (two layers, by design):**
+
+- **pre-commit hook — blocks locally.** Runs on staged `src/app/**/*.tsx`; a violation
+  stops the commit (bypassable with `--no-verify`, and only if husky is installed).
+- **CI — advisory, changed pages only.** On each PR it checks just the pages that PR
+  changed and annotates any non-Title-Case heading, but **does not block the merge**
+  (`continue-on-error`). It's the PR-visible reminder, not a gate.
+
+So the strong gate is local; CI nudges. A violation that slips past the hook (e.g.
+`--no-verify`, a web edit) will show as a warning on the PR but won't stop it — fix it
+with `title-case:review`, or `[k]eep` it. False positives are waivable via the allowlist
+without changing a word.
+
+> [!WARNING]
+> **DSL pages: fix `page.dsl.json`, not just `page.tsx`.** For pages with a
+> `page.dsl.json`, the `.tsx` is generated — editing only the `.tsx` is reverted on the
+> next republish from `/admin`. Change both, keeping them identical. (`review` and `fix`
+> edit whichever files you pass them; for a DSL page, run them over — or hand-edit —
+> both, or just fix the `.dsl.json` and republish.)
+>
+> To keep a word's casing: prefer `[k]eep` (allowlist) for a one-off heading, or add a
+> reusable token (a package name like `mysql-connector-python`) to `BRAND_SAFE` in
+> `scripts/check-title-case.mjs`. Both survive regeneration; a `// title-case-ignore`
+> comment on a DSL page does not.
 
 ---
 
@@ -197,6 +292,8 @@ Code Quality
 - [ ] No font-semibold (use font-bold)
 - [ ] All <Link> used only for internal Next.js navigation; external = <a>
 - [ ] Images use next/image <Image> component
+- [ ] All headings in Title Case — run `pnpm title-case:all` (see Heading Case Rule)
+- [ ] DSL page? page.dsl.json and page.tsx headings match
 
 Visual Quality
 - [ ] Every FeatureCard item has icon prop (Lucide component, strokeWidth={1.5})
@@ -254,7 +351,7 @@ When the user asks to submit, commit, or push code to GitHub, **always run this 
 2. **Evaluate each file** across 5 dimensions (score 0–10 each):
    - **Code** — No hardcoded hex colors (use Tailwind tokens), no `font-semibold` (use `font-bold`), `<Image>` from `next/image` used for all images, `<Link>` only for internal Next.js routes (external = `<a>`), no `window.dataLayer.push()` (use `@/lib/gtm`), `buildPageSchema()` used (no raw `<script>` JSON-LD)
    - **Design** — Design tokens used correctly, proper component reuse from `@/components`, correct spacing utilities, visual hierarchy present, no inline styles
-   - **UX** — Single unique `<h1>`, logical heading hierarchy (H1→H2→H3), CTA visible above fold, responsive layout, all images have descriptive `alt` text
+   - **UX** — Single unique `<h1>`, logical heading hierarchy (H1→H2→H3), all headings in Title Case (`pnpm title-case:all` passes), CTA visible above fold, responsive layout, all images have descriptive `alt` text
    - **SEO** — Complete `metadata` export (title 50–60 chars, description 120–160 chars, openGraph, twitter, robots, canonical), `siteName='TiDB'`, `twitter.site='@PingCAP'`, canonical points to `www.pingcap.com` (not `vercel.app`), URL added to `src/app/sitemap.ts`
    - **AEO** — Structured data quality and completeness, content is AI-citable, entity relationships marked up, `faqSchema` used where a FAQ section is present
 
