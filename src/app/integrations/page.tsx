@@ -95,7 +95,7 @@ const dsl: PageDSL = {
       type: 'featureGrid',
       props: {
         eyebrow: 'Integration Categories',
-        title: 'TiDB Integration Categories (At-a-Glance)',
+        title: 'TiDB Integration Categories (At-A-Glance)',
         subtitle: 'TiDB compatibility spans the modern data and application ecosystem.',
         items: [
           {

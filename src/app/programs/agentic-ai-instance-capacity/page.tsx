@@ -101,7 +101,7 @@ const dsl: PageDSL = {
       type: 'featureGrid',
       props: {
         eyebrow: 'Who this is for',
-        title: 'Built for teams creating databases at platform scale',
+        title: 'Built for Teams Creating Databases at Platform Scale',
         subtitle:
           'The Instance Capacity Plan is designed for products that provision and manage large numbers of databases on behalf of their users. It is a strong fit for agent platforms, app builders, and multi-tenant products that need to create and operate many isolated environments at scale.',
         items: [
@@ -112,7 +112,7 @@ const dsl: PageDSL = {
           },
           {
             icon: 'Building',
-            title: 'Multi-tenant SaaS Platforms',
+            title: 'Multi-Tenant SaaS Platforms',
             description: 'Create isolated environments per customer or workspace.',
           },
           {
@@ -133,7 +133,7 @@ const dsl: PageDSL = {
       type: 'featureHighlights',
       props: {
         eyebrow: 'What the plan supports',
-        title: 'Designed for high-scale TiDB Cloud usage',
+        title: 'Designed for High-Scale TiDB Cloud Usage',
         items: [
           {
             variant: 'red',

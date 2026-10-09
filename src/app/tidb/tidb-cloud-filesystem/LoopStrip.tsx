@@ -32,8 +32,7 @@ interface LoopStep {
 const STEPS: LoopStep[] = [
   {
     n: '01',
-    // title-case-ignore
-    title: 'Enter the repository',
+    title: 'Enter the Repository',
     line: 'Tree and metadata arrive first; content loads on access.',
     mech: 'metadata-first · lazy hydration',
     icon: FolderTree,
@@ -47,32 +46,28 @@ const STEPS: LoopStep[] = [
   },
   {
     n: '03',
-    // title-case-ignore
-    title: 'Read context',
+    title: 'Read Context',
     line: 'Handler, config, test and failing log arrive as one batch.',
     mech: 'inline small files · batch read',
     icon: Files,
   },
   {
     n: '04',
-    // title-case-ignore
-    title: 'Edit files',
+    title: 'Edit Files',
     line: 'Writes land locally first; a journal keeps them recoverable.',
     mech: 'local-first write · journal · async writeback',
     icon: Pencil,
   },
   {
     n: '05',
-    // title-case-ignore
-    title: 'Build and test',
+    title: 'Build and Test',
     line: 'Rebuildables stay local. Results, logs and patches persist.',
     mech: 'build profile · local-only overlay',
     icon: FlaskConical,
   },
   {
     n: '06',
-    // title-case-ignore
-    title: 'Save Git state',
+    title: 'Save Git State',
     line: 'Baseline, dirty overlay and new objects — modelled separately.',
     mech: 'ti fs-git · clean tree · dirty overlay · object pack',
     icon: GitBranch,
@@ -86,8 +81,7 @@ const STEPS: LoopStep[] = [
   },
   {
     n: '08',
-    // title-case-ignore
-    title: 'Hand off',
+    title: 'Hand Off',
     line: 'The next runtime opens the same workspace. Same token, no mount required.',
     mech: 'filesystem token · one namespace · fs read-file, mountless',
     icon: ArrowRightLeft,

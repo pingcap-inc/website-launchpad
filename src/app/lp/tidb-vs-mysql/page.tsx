@@ -250,7 +250,7 @@ const dsl: PageDSL = {
         title: 'Why TiDB Is the MySQL Alternative for Scale',
         items: [
           {
-            title: 'Drop-in MySQL Compatibility',
+            title: 'Drop-In MySQL Compatibility',
             description:
               'TiDB speaks the MySQL protocol, so your drivers, ORMs, and SQL keep working. Migrate without a rewrite, then add Spark, Kafka, and Kubernetes connectors as you grow.',
             image: {

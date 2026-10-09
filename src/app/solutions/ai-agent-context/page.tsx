@@ -46,7 +46,7 @@ const schema = buildPageSchema({
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
-      name: "Agents are Ephemeral. Their State Shouldn't Be.",
+      name: "Agents Are Ephemeral. Their State Shouldn't Be.",
       path: '/solutions/ai-agent-context/',
     },
   ],
@@ -67,7 +67,7 @@ const dsl: PageDSL = {
       props: {
         layout: 'centered',
         eyebrow: 'Persistent Context for AI Agents',
-        headline: "Agents are Ephemeral. Their State Shouldn't Be.",
+        headline: "Agents Are Ephemeral. Their State Shouldn't Be.",
         subheadline:
           'TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors. Agents can resume work across sessions and runtime restarts',
         primaryCta: {
@@ -256,7 +256,7 @@ const dsl: PageDSL = {
       id: 'caseStudyCards-1782472692660',
       type: 'caseStudyCards',
       props: {
-        title: 'Leading AI companies Rely on TiDB',
+        title: 'Leading AI Companies Rely on TiDB',
         items: [
           {
             badge: 'Provisioning at Scale',
@@ -361,21 +361,21 @@ const dsl: PageDSL = {
         items: [
           {
             icon: 'MessageSquare',
-            title: 'Customer Support Agents With Conversation History',
+            title: 'Customer Support Agents with Conversation History',
             description:
               'Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB Cloud while keeping their data boundaries intact.',
             borderColor: 'border-blue-500',
           },
           {
             icon: 'Code2',
-            title: 'Code Generation Agents With Project Context',
+            title: 'Code Generation Agents with Project Context',
             description:
               'Coding agents need memory for repository structure, dependencies, and prior decisions. Persistent project context lets agents continue earlier work instead of starting from a blank prompt. In multi-agent coding workflows, a planning agent and an implementation agent can share repository context without sharing write access.',
             borderColor: 'border-violet-500',
           },
           {
             icon: 'Building',
-            title: 'Enterprise AI Platforms With Tenant Isolation',
+            title: 'Enterprise AI Platforms with Tenant Isolation',
             description:
               'Enterprise AI products need context persistence, security boundaries, and predictable scaling. TiDB Cloud supports per-agent isolation and agent memory scaling for platforms serving many customers, teams, and workloads from a shared foundation.',
             borderColor: 'border-teal-500',
@@ -393,7 +393,7 @@ const dsl: PageDSL = {
       id: 'cta-01',
       type: 'cta',
       props: {
-        title: 'Get Started With TiDB for AI Agent Memory',
+        title: 'Get Started with TiDB for AI Agent Memory',
         subtitle: 'From prototypes to production, build agents that remember.',
         image: {
           image: {
