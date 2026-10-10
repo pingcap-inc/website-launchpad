@@ -76,7 +76,8 @@ const PRODUCT_ID = `${CANONICAL}#software`
 // by the deploy workflow (`public/` -> s3://uploads-pingcap-com/launchpad/), so
 // the absolute URL is the CDN one — crawlers fetch it directly, and it only
 // resolves once this branch is deployed.
-const OG_IMAGE = 'https://static.pingcap.com/launchpad/images/tidb-cloud-filesystem/FS.png'
+const OG_IMAGE =
+  'https://static.pingcap.com/launchpad/images/social/tidb-cloud-filesystem-social.png'
 
 export const metadata: Metadata = {
   title: TITLE,
