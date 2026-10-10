@@ -13,6 +13,8 @@
       "type": "hero",
       "props": {
         "layout": "image-right",
+        "statusBadge": { "text": "Public Preview", "variant": "violet" },
+        "imagePresentation": "decorative",
         "eyebrow": "TiDB Cloud Lake",
         "headline": "Analytics and Search.<br><span class=\"text-gradient-violet\">One Engine.</span>",
         "subheadline": "TiDB Cloud Lake is a managed analytics warehouse for data and platform teams. Prepare business data, analyze logs and explore agent traces with SQL, full-text search and vector search.",
@@ -26,27 +28,23 @@
         },
         "heroImage": {
           "image": {
-            "url": "https://static.pingcap.com/images/c714e3b8-cloud-lake-hero-animated.webp",
-            "alt": "Animated TiDB Cloud Lake analytics, search, and compute illustration",
-            "width": 752,
-            "height": 722
+            "url": "https://static.pingcap.com/images/4e779190-02-cloud-lake-hero-flat-motion-10s.mp4",
+            "alt": "02 cloud lake hero flat motion 10s",
+            "width": 1036,
+            "height": 992
           },
-          "alt": "Animated TiDB Cloud Lake analytics, search, and compute illustration",
-          "width": 386,
-          "height": 370,
           "reducedMotionImage": {
-            "url": "/animations/cloud-lake-hero-static.webp"
-          }
-        },
-        "statusBadge": {
-          "text": "Public Preview",
-          "variant": "violet"
-        },
-        "imagePresentation": "decorative"
+            "url": "https://static.pingcap.com/images/4e779190-02-cloud-lake-hero-flat-motion-10s.mp4",
+            "alt": "02 cloud lake hero flat motion 10s",
+            "width": 1036,
+            "height": 992
+          },
+          "alt": "02 cloud lake hero flat motion 10s",
+          "width": 1036,
+          "height": 992
+        }
       },
-      "style": {
-        "spacing": "hero"
-      }
+      "style": { "spacing": "hero" }
     },
     {
       "id": "why-tidb-cloud-lake",
@@ -60,38 +58,27 @@
             "variant": "violet",
             "title": "Prepare Data with SQL",
             "description": "Join operational data with historical records using SQL. Use tasks and streams to automate transformations and build analytical tables for metrics, reporting and ad hoc analysis.",
-            "cta": {
-              "text": "",
-              "href": ""
-            },
+            "cta": { "text": "", "href": "" },
             "icon": "Layers"
           },
           {
             "variant": "blue",
             "title": "Search Across Your Data",
             "description": "Combine SQL, full-text search and vector search over logs, events and nested JSON. Explore application behavior and retrieve context from business records and agent traces.",
-            "cta": {
-              "text": "",
-              "href": ""
-            },
+            "cta": { "text": "", "href": "" },
             "icon": "Search"
           },
           {
             "variant": "teal",
             "title": "Scale Compute on Demand",
             "description": "Keep data in object storage and scale compute independently. Resize warehouses as demand changes, and use auto-suspend to stop idle warehouse compute charges.",
-            "cta": {
-              "text": "",
-              "href": ""
-            },
+            "cta": { "text": "", "href": "" },
             "icon": "Gauge"
           }
         ],
         "columns": 3
       },
-      "style": {
-        "spacing": "section"
-      }
+      "style": { "spacing": "section" }
     },
     {
       "id": "columns-1791040156339",
@@ -106,10 +93,7 @@
         "shortCode": "[cloud-lake-architecture]",
         "itemColumns": 2
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "featureCard-1791047852824",
@@ -118,28 +102,25 @@
         "title": "How Customers Use Cloud Lake",
         "items": [
           {
+            "label": "Payment Analytics",
             "title": "ClinkPay",
-            "description": "ClinkPay uses TiDB Cloud Lake for continuous payment-data processing and analytics models. Its core analytics system went live in about one week.",
-            "label": "Payment Analytics"
+            "description": "ClinkPay uses TiDB Cloud Lake for continuous payment-data processing and analytics models. Its core analytics system went live in about one week."
           },
           {
+            "label": "Production Log Analytics",
             "title": "Global Digital-Asset Exchange Serving Millions of Users",
-            "description": "A global digital-asset exchange migrated production log analytics to TiDB Cloud Lake. Queries that previously timed out after a minute now return within five seconds, while estimated monthly costs decreased by 67%.",
-            "label": "Production Log Analytics"
+            "description": "A global digital-asset exchange migrated production log analytics to TiDB Cloud Lake. Queries that previously timed out after a minute now return within five seconds, while estimated monthly costs decreased by 67%."
           },
           {
+            "label": "Vector Search",
             "title": "Production iGaming Platform Running Live Vector Search",
-            "description": "A production iGaming platform continuously synchronizes vector data from TiDB Essential into TiDB Cloud Lake and runs live vector search across its application data.",
-            "label": "Vector Search"
+            "description": "A production iGaming platform continuously synchronizes vector data from TiDB Essential into TiDB Cloud Lake and runs live vector search across its application data."
           }
         ],
         "columns": 3,
         "borderStyle": "gray"
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "faq-section",
@@ -165,9 +146,7 @@
           }
         ]
       },
-      "style": {
-        "spacing": "section"
-      }
+      "style": { "spacing": "section" }
     },
     {
       "id": "cta-final",
@@ -192,10 +171,7 @@
           "href": "https://www.pingcap.com/contact-us/"
         }
       },
-      "style": {
-        "background": "brand-violet",
-        "spacing": "section"
-      }
+      "style": { "background": "brand-violet", "spacing": "section" }
     }
   ]
 }
