@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { resolveCdnUrl } from '@/lib/cdn-url'
 
 /** The animation reports its responsive height from an opaque sandbox origin. */
 export function CloudLakeArchitecture({ className }: { className?: string }) {
@@ -39,7 +40,7 @@ export function CloudLakeArchitecture({ className }: { className?: string }) {
     <div className={cn('w-full overflow-hidden', className)}>
       <iframe
         ref={frameRef}
-        src="/animations/cloud-lake-architecture.html"
+        src={resolveCdnUrl('/animations/cloud-lake-architecture.html')}
         title="Animated TiDB Cloud Lake architecture and data flow"
         sandbox="allow-scripts"
         loading="lazy"
