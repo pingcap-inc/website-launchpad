@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { AgentMemoryTimeline } from './AgentMemoryTimeline'
+import { CloudLakeArchitecture } from './CloudLakeArchitecture'
 import { TiDBPersistentLayer } from './TiDBPersistentLayer'
 import { ReviewBadges } from './ReviewBadges'
 import { isHtmlShortcode, resolveRegisteredShortcode } from '@/lib/shortcodes'
@@ -60,6 +61,10 @@ export function ShortcodeRenderer({ shortCode, className }: ShortcodeRendererPro
 
   if (resolvedShortcode === 'tidb-persistent-layer-animation') {
     return <TiDBPersistentLayer className={className} />
+  }
+
+  if (resolvedShortcode === 'cloud-lake-architecture') {
+    return <CloudLakeArchitecture className={className} />
   }
 
   if (resolvedShortcode === 'review-badges') {

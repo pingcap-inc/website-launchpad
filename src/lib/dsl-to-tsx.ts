@@ -25,11 +25,16 @@ export function dslToTsx(dsl: PageDSL, slug: string): string {
   const pageDesc = meta.description
 
   const hero = sections.find((s) => s.type === 'hero')
-  const pageHeadline = hero ? ((hero.props as HeroProps).headline ?? slug) : slug
+  const pageHeadline =
+    meta.breadcrumbName ?? (hero ? ((hero.props as HeroProps).headline ?? slug) : slug)
+
+  // A faq section only emits FAQPage structured data when the page wraps its
+  // schema with withFaqFromDSL — so import and apply it only when one exists.
+  const hasFaq = sections.some((s) => s.type === 'faq')
 
   return `import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema } from '@/lib/schema'
+import { buildPageSchema${hasFaq ? ', withFaqFromDSL' : ''} } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -74,7 +79,7 @@ const dsl: PageDSL = ${JSON.stringify(normalized, null, 2)}
 export default function GeneratedPage() {
   return (
     <>
-      <JsonLd data={schema} />
+      <JsonLd data={${hasFaq ? 'withFaqFromDSL(schema, dsl)' : 'schema'}} />
       <PageRenderer dsl={dsl} withChrome />
     </>
   )

@@ -13,13 +13,13 @@ const OG_IMAGE = 'https://static.pingcap.com/launchpad/images/social/tidb-cloud-
 export const metadata: Metadata = {
   title: 'TiDB Cloud Lake: Cloud-Native Analytics Warehouse',
   description:
-    'TiDB Cloud Lake is a cloud-native analytics warehouse with elastic warehouses, ANSI SQL, vector search, and object storage for modern analytics and AI workloads.',
+    'TiDB Cloud Lake is a cloud-native analytics warehouse with elastic warehouses, ANSI SQL, vector search, and object storage for modern analytics and AI.',
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/tidb-cloud-lake/' },
   openGraph: {
     title: 'TiDB Cloud Lake: Cloud-Native Analytics Warehouse',
     description:
-      'TiDB Cloud Lake is a cloud-native analytics warehouse with elastic warehouses, ANSI SQL, vector search, and object storage for modern analytics and AI workloads.',
+      'TiDB Cloud Lake is a cloud-native analytics warehouse with elastic warehouses, ANSI SQL, vector search, and object storage for modern analytics and AI.',
     url: 'https://www.pingcap.com/tidb-cloud-lake/',
     siteName: 'TiDB',
     images: [
@@ -42,13 +42,10 @@ const schema = buildPageSchema({
   path: '/tidb-cloud-lake/',
   title: 'TiDB Cloud Lake: Cloud-Native Analytics Warehouse',
   description:
-    'TiDB Cloud Lake is a cloud-native analytics warehouse with elastic warehouses, ANSI SQL, vector search, and object storage for modern analytics and AI workloads.',
+    'TiDB Cloud Lake is a cloud-native analytics warehouse with elastic warehouses, ANSI SQL, vector search, and object storage for modern analytics and AI.',
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    {
-      name: 'Cloud-Native Analytics Warehouse for AI and Modern <span class="text-gradient-violet">Analytics</span>',
-      path: '/tidb-cloud-lake/',
-    },
+    { name: 'TiDB Cloud Lake', path: '/tidb-cloud-lake/' },
   ],
 })
 
@@ -57,8 +54,9 @@ const dsl: PageDSL = {
   meta: {
     title: 'TiDB Cloud Lake: Cloud-Native Analytics Warehouse',
     description:
-      'TiDB Cloud Lake is a cloud-native analytics warehouse with elastic warehouses, ANSI SQL, vector search, and object storage for modern analytics and AI workloads.',
+      'TiDB Cloud Lake is a cloud-native analytics warehouse with elastic warehouses, ANSI SQL, vector search, and object storage for modern analytics and AI.',
     canonical: '/tidb-cloud-lake/',
+    breadcrumbName: 'TiDB Cloud Lake',
   },
   sections: [
     {
@@ -66,29 +64,33 @@ const dsl: PageDSL = {
       type: 'hero',
       props: {
         layout: 'image-right',
-        eyebrow: 'Now in Public Review',
-        headline:
-          'Cloud-Native Analytics Warehouse for AI and Modern <span class="text-gradient-violet">Analytics</span>',
+        statusBadge: {
+          text: 'Public Preview',
+          variant: 'violet',
+        },
+        imagePresentation: 'decorative',
+        eyebrow: 'TiDB Cloud Lake',
+        headline: 'Analytics and Search.<br><span class="text-gradient-violet">One Engine.</span>',
         subheadline:
-          'TiDB Cloud Lake is a cloud-native analytics warehouse built for modern analytics and AI-oriented data workflows, combining elastic warehouses, ANSI SQL analytics, vector search, full-text search, and object storage in one managed service.',
+          'TiDB Cloud Lake is a managed analytics warehouse for data and platform teams. Prepare business data, analyze logs and explore agent traces with SQL, full-text search and vector search.',
         primaryCta: {
-          text: 'Start free in TiDB Cloud',
+          text: 'Get Started',
           href: 'https://tidbcloud.com/signup/?signup_source=pingcap-en-lake',
         },
         secondaryCta: {
-          text: 'Contact Sales',
-          href: 'https://www.pingcap.com/contact-us/',
+          text: 'View Pricing',
+          href: 'https://www.pingcap.com/pricing/',
         },
         heroImage: {
           image: {
-            url: 'https://static.pingcap.com/images/e0454c7c-group_1000011598__1_.png',
-            alt: 'Cloud lake illustration',
-            width: 386,
-            height: 370,
+            url: 'https://static.pingcap.com/images/4e779190-02-cloud-lake-hero-flat-motion-10s.mp4',
+            alt: '02 cloud lake hero flat motion 10s',
+            width: 1036,
+            height: 992,
           },
-          alt: 'Cloud lake illustration',
-          width: 386,
-          height: 370,
+          alt: '02 cloud lake hero flat motion 10s',
+          width: 1036,
+          height: 992,
         },
       },
       style: {
@@ -99,15 +101,15 @@ const dsl: PageDSL = {
       id: 'why-tidb-cloud-lake',
       type: 'featureHighlights',
       props: {
-        eyebrow: 'One Engine for Analytics, Search, and AI',
+        eyebrow: 'Prepare. Search. Scale.',
         title: 'Why TiDB Cloud Lake',
         subtitle: '',
         items: [
           {
             variant: 'violet',
-            title: 'One Engine for Analytics, Search, and AI',
+            title: 'Prepare Data with SQL',
             description:
-              'TiDB Cloud Lake combines ANSI SQL analytics, full-text search, vector search, and geospatial analysis in one cloud-native engine. Analyze structured and semi-structured data, run semantic retrieval, and support AI-oriented workflows without splitting every workload into separate specialized systems',
+              'Join operational data with historical records using SQL. Use tasks and streams to automate transformations and build analytical tables for metrics, reporting and ad hoc analysis.',
             cta: {
               text: '',
               href: '',
@@ -116,25 +118,25 @@ const dsl: PageDSL = {
           },
           {
             variant: 'blue',
-            title: 'Elastic Warehouses for Dynamic Workloads',
+            title: 'Search Across Your Data',
             description:
-              'Create, pause, resize, and scale warehouses based on workload demand. Separate storage and compute so teams can scale analytics performance independently while keeping infrastructure simple - pay as you go',
+              'Combine SQL, full-text search and vector search over logs, events and nested JSON. Explore application behavior and retrieve context from business records and agent traces.',
+            cta: {
+              text: '',
+              href: '',
+            },
+            icon: 'Search',
+          },
+          {
+            variant: 'teal',
+            title: 'Scale Compute on Demand',
+            description:
+              'Keep data in object storage and scale compute independently. Resize warehouses as demand changes, and use auto-suspend to stop idle warehouse compute charges.',
             cta: {
               text: '',
               href: '',
             },
             icon: 'Gauge',
-          },
-          {
-            variant: 'teal',
-            title: 'Built for Modern Data in Object Storage',
-            description:
-              'Use object storage and semi-structured data processing to support flexible analytics on diverse data types, from operational exports and event data to logs, documents, and AI-ready datasets.',
-            cta: {
-              text: '',
-              href: '',
-            },
-            icon: 'Cloud',
           },
         ],
         columns: 3,
@@ -144,62 +146,54 @@ const dsl: PageDSL = {
       },
     },
     {
-      id: 'how-it-works',
-      type: 'featureMedia',
+      id: 'columns-1791040156339',
+      type: 'columns',
       props: {
         eyebrow: 'How It Works',
-        title: 'From Provision to Query in Three Steps',
-        subtitle: 'Simple setup and seamless integration with your data stack.',
-        items: [
-          {
-            title: '1. Provision a Warehouse',
-            description:
-              'Create a TiDB Cloud Lake warehouse from the console. Choose a size, pause, or resize any time to match workload demand.',
-            image: {
-              image: {
-                url: 'https://static.pingcap.com/images/57aedf28-how-1-provision-warehouse.svg',
-                width: 200,
-                height: 150,
-              },
-              alt: '',
-              width: 500,
-              height: 150,
-            },
-          },
-          {
-            title: '2. Query Your Data in Place',
-            description:
-              'Use ANSI SQL analytics, full-text search, vector search, and geospatial functions to explore, analyze, and retrieve data from object storage.',
-            image: {
-              image: {
-                url: 'https://static.pingcap.com/images/63393d5e-how-2-query-in-place.svg',
-                width: 200,
-                height: 150,
-              },
-              alt: '',
-              width: 500,
-              height: 150,
-            },
-          },
-          {
-            title: '3. Connect Your Stack',
-            description:
-              'Point Tableau, Looker, dbt, or your ML pipeline at the warehouse endpoint. Real-time insights and AI-ready workflows in minutes.',
-            image: {
-              image: {
-                url: 'https://static.pingcap.com/images/f38fda7c-how-3-connect-stack.svg',
-                width: 200,
-                height: 150,
-              },
-              alt: '',
-              width: 500,
-              height: 150,
-            },
-          },
-        ],
-        startPosition: 'right',
+        title: 'Connect Your Data. Build Analytics and Search.',
+        subtitle:
+          'TiDB Cloud runs your transactional applications. TiDB Cloud Lake brings a copy of that data together with other sources for analytics and search, using separate analytical compute.',
+        titleFullWidth: true,
+        layout: 'single',
+        mediaType: 'shortcode',
+        shortCode: '[cloud-lake-architecture]',
+        itemColumns: 2,
       },
       style: {
+        background: 'primary',
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'featureCard-1791047852824',
+      type: 'featureCard',
+      props: {
+        title: 'How Customers Use Cloud Lake',
+        items: [
+          {
+            label: 'Payment Analytics',
+            title: 'ClinkPay',
+            description:
+              'ClinkPay uses TiDB Cloud Lake for continuous payment-data processing and analytics models. Its core analytics system went live in about one week.',
+          },
+          {
+            label: 'Production Log Analytics',
+            title: 'Global Digital-Asset Exchange Serving Millions of Users',
+            description:
+              'A global digital-asset exchange migrated production log analytics to TiDB Cloud Lake. Queries that previously timed out after a minute now return within five seconds, while estimated monthly costs decreased by 67%.',
+          },
+          {
+            label: 'Vector Search',
+            title: 'Production iGaming Platform Running Live Vector Search',
+            description:
+              'A production iGaming platform continuously synchronizes vector data from TiDB Essential into TiDB Cloud Lake and runs live vector search across its application data.',
+          },
+        ],
+        columns: 3,
+        borderStyle: 'gray',
+      },
+      style: {
+        background: 'primary',
         spacing: 'section',
       },
     },
@@ -210,20 +204,20 @@ const dsl: PageDSL = {
         title: 'Frequently Asked Questions',
         items: [
           {
-            q: 'What is TiDB Cloud Lake?',
-            a: 'TiDB Cloud Lake is a cloud-native analytics warehouse built for modern analytics and AI-oriented data workflows.',
+            q: 'How Does TiDB Cloud Lake Work with TiDB Cloud?',
+            a: 'TiDB Cloud runs transactional applications; TiDB Cloud Lake runs analytics and search on a separate copy of your data. An initial snapshot and ongoing TiCDC changes move through S3 staging into TiDB Cloud Lake. You can also use TiDB Cloud Lake with data from other sources.',
           },
           {
-            q: 'How is TiDB Cloud Lake priced?',
-            a: 'Pay-as-you-go for warehouse compute, storage and cluster services, consolidated on your TiDB Cloud invoice. ',
+            q: 'What Data Can I Bring into TiDB Cloud Lake?',
+            a: 'Synchronize MySQL or PostgreSQL data with snapshot and change data capture (CDC) tasks. Load CSV, Parquet or NDJSON files from Amazon S3 through one-time or continuous ingestion.  [Explore integration options](https://docs.pingcap.com/tidbcloudlake/data-integration-overview/)',
           },
           {
-            q: 'Who is TiDB Cloud Lake for?',
-            a: 'TiDB Cloud Lake is designed for analytics workloads such as BI and reporting, log and event analytics, semi-structured data analytics, full-text search, vector search, geospatial analysis, and AI-oriented data workflows.',
+            q: 'How Is TiDB Cloud Lake Priced?',
+            a: 'Pricing covers warehouse compute, storage, cloud service/API usage and applicable Data Integration hosting. Suspending a warehouse stops its compute charges; storage and other applicable charges continue. [View pricing](https://www.pingcap.com/pricing/)',
           },
           {
-            q: 'Is TiDB Cloud Lake available now?',
-            a: 'TiDB Cloud Lake is now in Public Preview',
+            q: 'Is TiDB Cloud Lake Available Now?',
+            a: 'TiDB Cloud Lake is in Public Preview. Sign in to TiDB Cloud, open My Lake and initialize the service. Follow the Quick Start to create a warehouse and run your first query. [Read the Quickstart Guide](https://docs.pingcap.com/tidbcloudlake/lake-quick-start/)',
           },
         ],
       },
@@ -235,9 +229,8 @@ const dsl: PageDSL = {
       id: 'cta-final',
       type: 'cta',
       props: {
-        title: 'Ready to Unify OLTP, Analytics, and AI on One Platform?',
-        subtitle:
-          'Start free in TiDB Cloud and request Private Beta access to TiDB Cloud Lake today.',
+        title: 'Start Building with TiDB Cloud Lake',
+        subtitle: 'Explore the Quick Start, or talk with us about your workload.',
         image: {
           image: {
             url: 'https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg',
@@ -247,7 +240,7 @@ const dsl: PageDSL = {
           height: 256,
         },
         primaryCta: {
-          text: 'Start free in TiDB Cloud',
+          text: 'Get Started',
           href: 'https://tidbcloud.com/free-trial/',
         },
         secondaryCta: {
