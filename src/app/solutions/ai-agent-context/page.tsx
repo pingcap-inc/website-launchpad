@@ -59,6 +59,10 @@ const dsl: PageDSL = {
     description:
       'TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors.',
     canonical: '/solutions/ai-agent-context/',
+    createdBy: 'a.hire@pingcap.com',
+    createdAt: '2026-10-14T03:17:43.178Z',
+    modifiedBy: 'a.hire@pingcap.com',
+    modifiedAt: '2026-10-14T03:17:43.178Z',
   },
   sections: [
     {
@@ -104,6 +108,7 @@ const dsl: PageDSL = {
         layout: 'split',
         mediaType: 'shortcode',
         shortCode: '[agent-memory-timeline]',
+        itemColumns: 2,
       },
       style: {
         background: 'primary',
@@ -198,6 +203,7 @@ const dsl: PageDSL = {
           height: 1720,
         },
         shortCode: '[tidb-persistent-layer-animation]',
+        itemColumns: 2,
       },
       style: {
         background: 'primary',
@@ -229,8 +235,8 @@ const dsl: PageDSL = {
             description:
               "TiDB Cloud's distributed architecture separates logical isolation from physical infrastructure. Each agent gets its own database with hard data boundaries, while the underlying compute and storage are shared across the cluster.",
             cta: {
-              text: 'View Architecture',
-              href: 'https://docs.pingcap.com/',
+              text: 'Explore Tenant Isolation',
+              href: 'https://www.pingcap.com/playbook/noisy-neighbor-multi-tenant-mysql/',
             },
           },
           {
@@ -240,7 +246,7 @@ const dsl: PageDSL = {
               "On TiDB Cloud, a support agent can query a customer's account tier, open tickets, and semantically similar past conversations in one SQL statement. TiFlash handles analytical queries on live data without needing a separate pipeline.",
             cta: {
               text: 'See Vector Search',
-              href: 'https://www.pingcap.com/tidb/cloud/',
+              href: 'https://docs.pingcap.com/ai/vector-search-overview/',
             },
           },
         ],
