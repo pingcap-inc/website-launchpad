@@ -56,7 +56,7 @@ const dsl: PageDSL = {
     createdBy: 'brian.foster@pingcap.com',
     createdAt: '2026-10-14T14:54:53.227Z',
     modifiedBy: 'brian.foster@pingcap.com',
-    modifiedAt: '2026-10-14T15:05:37.872Z',
+    modifiedAt: '2026-10-14T15:41:41.533Z',
   },
   sections: [
     {
@@ -67,11 +67,14 @@ const dsl: PageDSL = {
         headline: 'PlanetScale vs TiDB: Which MySQL-Compatible Platform Fits Best?',
         heroImage: {
           image: {
-            url: 'https://static.pingcap.com/images/f54533cc-1000011158.svg',
+            url: 'https://static.pingcap.com/images/3936d1e9-tidb-vs-planetscale-banner.png',
+            alt: 'tidb vs planetscale banner',
+            width: 2268,
+            height: 1464,
           },
-          alt: 'hero image',
-          width: 400,
-          height: 450,
+          alt: 'tidb vs planetscale banner',
+          width: 1300,
+          height: 600,
         },
       },
       style: {
