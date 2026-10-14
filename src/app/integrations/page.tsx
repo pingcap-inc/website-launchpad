@@ -50,6 +50,10 @@ const dsl: PageDSL = {
     description:
       'Explore TiDB and TiDB Cloud integrations -- Kubernetes Operator, Kafka CDC, Spark (TiSpark), Terraform, and more. Deploy faster with TiDB.',
     canonical: '/integrations/',
+    createdBy: 'a.hire@pingcap.com',
+    createdAt: '2026-10-14T20:41:15.077Z',
+    modifiedBy: 'a.hire@pingcap.com',
+    modifiedAt: '2026-10-14T20:41:15.077Z',
   },
   sections: [
     {
@@ -539,8 +543,7 @@ const dsl: PageDSL = {
               height: 66,
             },
             title: 'Google Cloud Platform',
-            description:
-              'Run TiDB on Google Cloud Bigtable or self-host with native GCP marketplace integrations.',
+            description: 'Deploy TiDB on Google Kubernetes Engine (GKE).',
             href: 'https://docs.pingcap.com/tidb-in-kubernetes/stable/deploy-on-gcp-gke/',
           },
           {
