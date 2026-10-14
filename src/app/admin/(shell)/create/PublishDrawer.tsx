@@ -12,6 +12,8 @@ import {
   Info,
 } from 'lucide-react'
 import type { PageDSL } from '@/lib/dsl-schema'
+import { ImageField } from './ImageField'
+import { isVideoUrl } from '@/lib/utils'
 import type { ContentPageType } from '@/lib/detect-page-type'
 import { SITE_BASE_URL } from '@/lib/env'
 import type { PageScoreResult, TopIssue } from '@/lib/scoring'
@@ -446,6 +448,20 @@ export function PublishDrawer({
   const hasFailedLinks = linkCheckStatus === 'done' && linkCheckResults.length > 0
   const canPublishNow = canPublish && !hasBlockingChecks && !hasFailedLinks
 
+  // Social cards render at 1.91:1 (1200x630). A noticeably different ratio gets
+  // cropped by the networks, so flag it rather than silently shipping a bad card.
+  const ogImageWarning = useMemo(() => {
+    const og = dsl.meta.ogImage
+    if (!og?.url) return ''
+    if (isVideoUrl(og.url)) return 'A social card must be an image — a video will not render.'
+    if (!og.width || !og.height) return ''
+    const ratio = og.width / og.height
+    if (Math.abs(ratio - 1200 / 630) > 0.25) {
+      return `This image is ${og.width}x${og.height} (${ratio.toFixed(2)}:1). Social cards are cropped to about 1.91:1 — 1200x630 is safest.`
+    }
+    return ''
+  }, [dsl.meta.ogImage])
+
   const isScoreStale = useMemo(
     () =>
       aiScoreStatus === 'ready' &&
@@ -581,20 +597,19 @@ export function PublishDrawer({
 
           {/* Social card */}
           <div className="space-y-2">
-            <p className="text-body-sm font-bold text-gray-700">Social Card Image</p>
-            <input
-              type="url"
-              value={dsl.meta.ogImage ?? ''}
-              onChange={(e) => onMetaChange({ ogImage: e.target.value.trim() || undefined })}
-              placeholder="https://static.pingcap.com/launchpad/images/social/<page>-social.png"
-              className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
+            <ImageField
+              label="Social Card Image"
+              value={dsl.meta.ogImage}
+              onChange={(ogImage) => onMetaChange({ ogImage })}
+              slug={slug}
+              defaultTag="social"
             />
             <p className="text-label text-gray-400">
-              Optional absolute URL, 1200&times;630, used for <code>og:image</code> and{' '}
-              <code>twitter:image</code>. Leave empty to use the default TiDB card. Set it here
-              rather than by hand-editing <code>page.tsx</code> &mdash; publishing regenerates that
-              file.
+              Optional. Used for <code>og:image</code> and <code>twitter:image</code>. Leave empty
+              to use the default TiDB card. Set it here rather than by hand-editing{' '}
+              <code>page.tsx</code> &mdash; publishing regenerates that file.
             </p>
+            {ogImageWarning && <p className="text-label text-amber-600">{ogImageWarning}</p>}
           </div>
 
           {/* Unlisted */}

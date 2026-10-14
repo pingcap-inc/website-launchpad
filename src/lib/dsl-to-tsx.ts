@@ -9,6 +9,18 @@ import { normalizeDSL } from './dsl-utils'
 export const DEFAULT_SOCIAL_IMAGE =
   'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'
 
+// `public/` is mirrored here in production (see cdn-asset.ts). A per-page admin
+// upload is committed to `public/` and reported as a site-relative path, so it
+// has to be rewritten to this base: og:image must be absolute for crawlers, and
+// unlike cdn-asset.ts this cannot be env-gated — the string is baked into the
+// page.tsx we are generating, which only ever runs in production.
+const SOCIAL_CDN_BASE = 'https://static.pingcap.com/launchpad'
+
+function absoluteSocialUrl(url: string): string {
+  if (/^https?:\/\//.test(url)) return url
+  return `${SOCIAL_CDN_BASE}${url.startsWith('/') ? '' : '/'}${url}`
+}
+
 // JSON.stringify all user strings — handles quotes, backslashes, newlines
 const normalizeString = (s?: string | null) => (s ?? '').replace(/\\"/g, '"')
 
@@ -38,7 +50,11 @@ export function dslToTsx(dsl: PageDSL, slug: string): string {
 
   // Page-specific social card, falling back to the site default. Read from the
   // DSL so a per-page card is not lost the next time this file is regenerated.
-  const ogImage = meta.ogImage?.trim() || DEFAULT_SOCIAL_IMAGE
+  const ogImageUrl = meta.ogImage?.url?.trim()
+  const ogImage = ogImageUrl ? absoluteSocialUrl(ogImageUrl) : DEFAULT_SOCIAL_IMAGE
+  // The default card is 1200x630; an uploaded one reports its measured size.
+  const ogWidth = (ogImageUrl && meta.ogImage?.width) || 1200
+  const ogHeight = (ogImageUrl && meta.ogImage?.height) || 630
 
   return `import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
@@ -59,8 +75,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: ${JSON.stringify(ogImage)},
-        width: 1200,
-        height: 630,
+        width: ${ogWidth},
+        height: ${ogHeight},
       },
     ],
     type: 'website',
