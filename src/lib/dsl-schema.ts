@@ -22,6 +22,16 @@ export interface PageMeta {
   header?: 'full' | 'lp'
   // Optional CTA shown on the right of the 'lp' header. Ignored for 'full'.
   headerCta?: Cta
+  // Page-specific social card, used for both og:image and twitter:image. Omit
+  // to fall back to DEFAULT_SOCIAL_IMAGE. This lives in the DSL rather than only
+  // in a hand-edited page.tsx so that it survives an admin republish — the
+  // generator regenerates page.tsx from this object.
+  //
+  // An ImageRef (not a bare URL) so an upload can carry its real width/height
+  // into og:image:width / og:image:height. Media-library uploads return an
+  // absolute CDN url; per-page uploads return a `/public`-relative path, which
+  // the generator absolutizes — crawlers reject a relative og:image.
+  ogImage?: ImageRef
   // Authorship — stamped server-side on every write (publish / draft-save / copy).
   // `createdBy`/`createdAt` are set once and preserved; `modifiedBy`/`modifiedAt`
   // update on each write. Values are the signed-in Google email (or `local-dev`).
