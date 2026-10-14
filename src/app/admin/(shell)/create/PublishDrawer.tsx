@@ -574,8 +574,26 @@ export function PublishDrawer({
               className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors resize-none placeholder:text-gray-300"
             />
             <p className="text-label text-gray-400">
-              {(dsl.meta.description ?? '').length}/160 characters · OG/Twitter will be auto
-              generated
+              {(dsl.meta.description ?? '').length}/160 characters · OG/Twitter title and
+              description are taken from these
+            </p>
+          </div>
+
+          {/* Social card */}
+          <div className="space-y-2">
+            <p className="text-body-sm font-bold text-gray-700">Social Card Image</p>
+            <input
+              type="url"
+              value={dsl.meta.ogImage ?? ''}
+              onChange={(e) => onMetaChange({ ogImage: e.target.value.trim() || undefined })}
+              placeholder="https://static.pingcap.com/launchpad/images/social/<page>-social.png"
+              className="w-full bg-white border border-gray-200 rounded px-2.5 py-1.5 text-body-sm text-gray-800 focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
+            />
+            <p className="text-label text-gray-400">
+              Optional absolute URL, 1200&times;630, used for <code>og:image</code> and{' '}
+              <code>twitter:image</code>. Leave empty to use the default TiDB card. Set it here
+              rather than by hand-editing <code>page.tsx</code> &mdash; publishing regenerates that
+              file.
             </p>
           </div>
 

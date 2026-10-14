@@ -5,6 +5,10 @@
 import type { PageDSL, HeroProps } from './dsl-schema'
 import { normalizeDSL } from './dsl-utils'
 
+/** Site-wide fallback social card, used when a page sets no `meta.ogImage`. */
+export const DEFAULT_SOCIAL_IMAGE =
+  'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'
+
 // JSON.stringify all user strings — handles quotes, backslashes, newlines
 const normalizeString = (s?: string | null) => (s ?? '').replace(/\\"/g, '"')
 
@@ -32,6 +36,10 @@ export function dslToTsx(dsl: PageDSL, slug: string): string {
   // schema with withFaqFromDSL — so import and apply it only when one exists.
   const hasFaq = sections.some((s) => s.type === 'faq')
 
+  // Page-specific social card, falling back to the site default. Read from the
+  // DSL so a per-page card is not lost the next time this file is regenerated.
+  const ogImage = meta.ogImage?.trim() || DEFAULT_SOCIAL_IMAGE
+
   return `import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
 import { buildPageSchema${hasFaq ? ', withFaqFromDSL' : ''} } from '@/lib/schema'
@@ -50,7 +58,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
+        url: ${JSON.stringify(ogImage)},
         width: 1200,
         height: 630,
       },
@@ -60,7 +68,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
+    images: [${JSON.stringify(ogImage)}],
   },
 }
 
