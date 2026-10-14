@@ -36,8 +36,12 @@ import {
   CashIcon,
   MenuIcon,
   ArchiveIcon,
+  BoltTIcon,
+  ChartHistogramTIcon,
+  SlidersTIcon,
 } from './header-icons'
 import { PrimaryButton } from './PrimaryButton'
+import { ArrowUpRight } from './SecondaryButton'
 
 interface DropdownItem {
   label: string
@@ -55,14 +59,51 @@ interface DropdownSection {
   items: DropdownItem[]
 }
 
+interface MenuCta {
+  label: string
+  href: string
+}
+
+/** One bordered product panel in the Product mega-menu's top row. */
+interface ProductPanel {
+  title: string
+  subtitle: string
+  description: string
+  cta: MenuCta
+  badge?: string
+  /** Spans two grid columns, gets the red accent rule and the deployment cards. */
+  wide?: boolean
+  cardsLabel?: string
+  cards?: DropdownItem[]
+}
+
+/** Full-width row under the panels, e.g. the Pricing banner. */
+interface ProductBanner {
+  icon: LucideIcon | React.FC<IconProps>
+  title: string
+  description: string
+  cta: MenuCta
+}
+
+/**
+ * Desktop-only layout for the Product menu (panels + links column + banner).
+ * Mobile keeps rendering the plain `sections` list below.
+ */
+interface ProductMenu {
+  panels: ProductPanel[]
+  links: DropdownSection
+  banner: ProductBanner
+}
+
 interface NavDropdown {
   label: string
   translateX?: string
   panelWidth?: string
   featured?: {
     description: string
-    cta: { label: string; href: string }
+    cta: MenuCta
   }
+  product?: ProductMenu
   sections: DropdownSection[]
 }
 
@@ -89,7 +130,7 @@ const dropdowns: NavDropdown[] = [
         items: [
           {
             label: 'Database for Agentic AI',
-            href: 'https://www.pingcap.com/agentic-ai/',
+            href: 'https://www.pingcap.com/ai/agentic-ai/',
             icon: 'https://static.pingcap.com/files/2026/04/14001529/Database-for-Agentic-Al.svg',
             description: 'Purpose-built for agent memory, state, and multi-hop reasoning',
           },
@@ -130,6 +171,63 @@ const dropdowns: NavDropdown[] = [
         'An open-source distributed SQL database trusted by innovators to power transactional, AI, and other modern applications.',
       cta: { label: 'Product Overview', href: '/tidb/' },
     },
+    // Desktop uses the panel layout; `sections` below still drives mobile.
+    product: {
+      panels: [
+        {
+          wide: true,
+          title: 'TiDB',
+          subtitle: 'Distributed SQL database',
+          description:
+            'Power transactional and AI applications with an open-source distributed SQL database.',
+          cta: { label: 'Product Overview', href: '/tidb/' },
+          cardsLabel: 'Deployment Options',
+          cards: [
+            {
+              label: 'TiDB Cloud',
+              href: 'https://www.pingcap.com/tidb/cloud/',
+              description: 'Fully managed service',
+              icon: CloudTIcon,
+            },
+            {
+              label: 'TiDB Self-Managed',
+              href: 'https://www.pingcap.com/tidb/self-managed/',
+              description: 'Deploy on your own infrastructure',
+              icon: StackTIcon,
+            },
+          ],
+        },
+        {
+          title: 'TiDB Cloud Lake',
+          badge: 'Public Preview',
+          subtitle: 'Managed analytics and search',
+          description:
+            'Analyze data with SQL, full-text search, and vector search in a managed warehouse.',
+          cta: { label: 'Explore TiDB Cloud Lake', href: '/tidb-cloud-lake/' },
+        },
+      ],
+      links: {
+        title: 'Ecosystem',
+        items: [
+          { label: 'Integrations', href: 'https://www.pingcap.com/integrations/', icon: GearIcon },
+          { label: 'TiKV', href: 'https://github.com/tikv/tikv', icon: SlidersIcon },
+          { label: 'mem9', href: 'https://mem9.ai/', icon: CashIcon },
+          {
+            label: 'TiDB Cloud Filesystem',
+            href: 'https://www.pingcap.com/tidb/tidb-cloud-filesystem/',
+            icon: WalletTIcon,
+          },
+          { label: 'TiDB Cloud Zero', href: 'https://zero.tidbcloud.com/', icon: BoltTIcon },
+          { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
+        ],
+      },
+      banner: {
+        icon: DollarTIcon,
+        title: 'Pricing',
+        description: 'Compare plans and pricing for TiDB and TiDB Cloud Lake',
+        cta: { label: 'View Pricing', href: 'https://www.pingcap.com/pricing/' },
+      },
+    },
     sections: [
       {
         title: 'Deployment Options',
@@ -140,6 +238,11 @@ const dropdowns: NavDropdown[] = [
             href: 'https://www.pingcap.com/tidb/self-managed/',
             icon: StackTIcon,
           },
+          {
+            label: 'TiDB Cloud Lake',
+            href: '/tidb-cloud-lake/',
+            icon: ChartHistogramTIcon,
+          },
           { label: 'Pricing', href: 'https://www.pingcap.com/pricing/', icon: DollarTIcon },
         ],
       },
@@ -149,7 +252,12 @@ const dropdowns: NavDropdown[] = [
           { label: 'Integrations', href: 'https://www.pingcap.com/integrations/', icon: GearIcon },
           { label: 'TiKV', href: 'https://github.com/tikv/tikv', icon: SlidersIcon },
           { label: 'mem9', href: 'https://mem9.ai/', icon: CashIcon },
-          { label: 'drive9', href: 'https://drive9.ai/', icon: WalletTIcon },
+          {
+            label: 'TiDB Cloud Filesystem',
+            href: 'https://www.pingcap.com/tidb/tidb-cloud-filesystem/',
+            icon: WalletTIcon,
+          },
+          { label: 'TiDB Cloud Zero', href: 'https://zero.tidbcloud.com/', icon: BoltTIcon },
           { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
         ],
       },
@@ -205,6 +313,7 @@ const dropdowns: NavDropdown[] = [
             href: 'https://www.pingcap.com/solutions/logistics-supply-chain/',
             icon: ArchiveIcon,
           },
+          { label: 'Web3', href: 'https://www.pingcap.com/solutions/web3/', icon: SlidersTIcon },
         ],
       },
       {
@@ -227,7 +336,11 @@ const dropdowns: NavDropdown[] = [
             href: 'https://www.pingcap.com/ebook-whitepaper/',
             icon: BookTIcon,
           },
-          { label: 'Videos & Replays', href: 'https://www.pingcap.com/videos/', icon: VideoIcon },
+          {
+            label: 'Webinars and Videos',
+            href: 'https://www.pingcap.com/webinars-videos/',
+            icon: VideoIcon,
+          },
           {
             label: 'Compare Databases',
             href: 'https://www.pingcap.com/compare/',
@@ -239,11 +352,7 @@ const dropdowns: NavDropdown[] = [
       {
         title: 'Engage',
         items: [
-          {
-            label: 'Events & Webinars',
-            href: 'https://www.pingcap.com/event/',
-            icon: CalendarTIcon,
-          },
+          { label: 'Events', href: 'https://www.pingcap.com/event/', icon: CalendarTIcon },
           {
             label: 'Discord Community',
             href: 'https://discord.com/invite/vYU9h56kAX',
@@ -291,7 +400,7 @@ const dropdowns: NavDropdown[] = [
       {
         title: 'Trust Hub',
         titleHref: 'https://www.pingcap.com/trust-hub/',
-        description: 'Explore how TiDB ensures the confidentiality and availability of your data',
+        description: 'Explore how TiDB ensures the confidentiality and availability of your data.',
         items: [],
       },
     ],
@@ -564,10 +673,191 @@ function AiMegaMenu({ item }: { item: NavDropdown }) {
   )
 }
 
+// Shared CTA treatments for the Product menu: a bordered button (panel + banner)
+// and the inline text link used inside the narrow panels.
+function ProductCtaButton({ cta, className }: { cta: MenuCta; className?: string }) {
+  return (
+    <a
+      href={cta.href}
+      className={cn(
+        'group/cta inline-flex shrink-0 items-center gap-2 border border-white/40 px-6 py-4',
+        'text-body-md font-medium text-text-inverse',
+        'transition-colors duration-200 hover:border-white hover:bg-white/[0.16]',
+        className
+      )}
+      {...externalLinkProps(cta.href)}
+    >
+      {cta.label}
+      <ArrowUpRight
+        width={16}
+        height={16}
+        className="shrink-0 transition-transform duration-200 group-hover/cta:rotate-45"
+      />
+    </a>
+  )
+}
+
+function ProductCtaLink({ cta }: { cta: MenuCta }) {
+  return (
+    <a
+      href={cta.href}
+      className="group/cta mt-auto inline-flex items-center gap-2 text-body-md font-medium text-text-inverse"
+      {...externalLinkProps(cta.href)}
+    >
+      {cta.label}
+      <span aria-hidden="true" className="inline-flex items-center">
+        <span className="block h-px w-3 bg-current transition-[width] duration-200 group-hover/cta:w-5" />
+        <span className="-ml-2 inline-block h-2 w-2 rotate-45 border-r border-t border-current" />
+      </span>
+    </a>
+  )
+}
+
+function ProductPanelCard({ card }: { card: DropdownItem }) {
+  return (
+    <a
+      href={card.href}
+      className="flex flex-col gap-1.5 border border-carbon-800/70 p-4 transition-colors duration-200 hover:border-white/50 hover:bg-white/[0.16]"
+      {...externalLinkProps(card.href)}
+    >
+      <span className="flex items-center gap-2.5 text-body-md font-medium leading-snug text-text-inverse">
+        {card.icon && typeof card.icon !== 'string' && <card.icon size={18} className="shrink-0" />}
+        {card.label}
+      </span>
+      {card.description && (
+        <span className="text-[13px] font-light leading-normal text-text-secondary">
+          {card.description}
+        </span>
+      )}
+    </a>
+  )
+}
+
+// The "Product" menu spans the full container width and uses bordered panels
+// instead of the generic columns MegaMenu. It is positioned against the
+// viewport (not the nav item) so it lines up with the page container.
+function ProductMegaMenu({ item }: { item: NavDropdown }) {
+  const product = item.product
+  if (!product) return null
+
+  return (
+    <div className="fixed left-1/2 top-20 z-50 -translate-x-1/2 pt-2">
+      <div className="w-[var(--container-max-width)] max-w-[calc(100vw-var(--container-margin)*2)] border border-carbon-800 bg-bg-primary shadow-card">
+        <div className="flex flex-col gap-4 p-5">
+          <div className="grid grid-cols-4 gap-4">
+            {product.panels.map((panel) => (
+              <div
+                key={panel.title}
+                className={cn(
+                  'relative flex min-w-0 flex-col border border-carbon-800/70 p-6',
+                  panel.wide && 'col-span-2 bg-white/[0.08]'
+                )}
+              >
+                {panel.wide && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute -left-px -right-px -top-px h-0.5 bg-brand-red-primary"
+                  />
+                )}
+                <div className="flex flex-col items-start gap-2">
+                  <span
+                    className={cn(
+                      'font-medium leading-tight text-text-inverse',
+                      panel.wide ? 'text-[40px]' : 'text-[24px]'
+                    )}
+                  >
+                    {panel.title}
+                  </span>
+                  {panel.badge && (
+                    <span className="inline-flex items-center rounded-pill border border-white/40 px-2.5 py-0.5 text-xs font-medium text-text-inverse">
+                      {panel.badge}
+                    </span>
+                  )}
+                  <span className="text-lg font-medium leading-snug text-text-inverse">
+                    {panel.subtitle}
+                  </span>
+                </div>
+
+                <div
+                  className={cn(
+                    'mt-4 flex gap-4',
+                    panel.wide
+                      ? 'flex-row items-center justify-between gap-8'
+                      : 'flex-1 flex-col items-start justify-between'
+                  )}
+                >
+                  <p className="text-sm font-light leading-relaxed text-text-secondary">
+                    {panel.description}
+                  </p>
+                  {panel.wide ? (
+                    <ProductCtaButton cta={panel.cta} />
+                  ) : (
+                    <ProductCtaLink cta={panel.cta} />
+                  )}
+                </div>
+
+                {panel.cards && panel.cards.length > 0 && (
+                  <div className="mt-6 border-t border-carbon-800/70 pt-6">
+                    {panel.cardsLabel && (
+                      <span className="mb-3 block text-sm text-text-secondary">
+                        {panel.cardsLabel}
+                      </span>
+                    )}
+                    <div className="grid grid-cols-2 gap-3">
+                      {panel.cards.map((card) => (
+                        <ProductPanelCard key={card.label} card={card} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            <div className="flex min-w-0 flex-col gap-4 border-l border-carbon-800/70 pl-5">
+              {product.links.title && (
+                <span className="text-body-md text-text-inverse">{product.links.title}</span>
+              )}
+              {product.links.items.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="flex items-center text-body-md font-light leading-snug text-text-secondary transition-colors duration-200 hover:text-text-inverse"
+                  {...externalLinkProps(link.href)}
+                >
+                  {link.icon && typeof link.icon !== 'string' && (
+                    <link.icon size={18} className="mr-3 shrink-0" />
+                  )}
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center border border-carbon-800/70 bg-white/[0.08] px-6 py-5">
+            <span className="mr-5 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-carbon-800/70 text-text-inverse">
+              <product.banner.icon size={20} />
+            </span>
+            <span className="flex flex-col">
+              <span className="text-[22px] font-medium leading-tight text-text-inverse">
+                {product.banner.title}
+              </span>
+              <span className="text-sm font-light leading-normal text-text-secondary">
+                {product.banner.description}
+              </span>
+            </span>
+            <ProductCtaButton cta={product.banner.cta} className="ml-10" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function HeaderMegaMenu({ label }: { label: string }) {
   const item = dropdownMap.get(label)
   if (!item) return null
   if (label === 'AI') return <AiMegaMenu item={item} />
+  if (item.product) return <ProductMegaMenu item={item} />
   return <MegaMenu item={item} />
 }
 
