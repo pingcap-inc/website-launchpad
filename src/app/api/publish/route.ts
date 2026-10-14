@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prettier from 'prettier'
+import prettierConfig from '../../../../prettier.config.mjs'
 import { dslToTsx } from '@/lib/dsl-to-tsx'
 import { SITE_BASE_URL } from '@/lib/env'
 import { logAudit, resolveActor } from '@/lib/audit'
@@ -130,7 +131,15 @@ export async function POST(request: NextRequest) {
   // Generate page.tsx from DSL, then format with the repo's Prettier config so the
   // committed output is byte-identical to what local `prettier --write` produces.
   // Without this, admin-published pages land unformatted and diverge from local code.
-  const prettierOptions = (await prettier.resolveConfig(process.cwd())) ?? {}
+  //
+  // The options are imported, not resolved from disk. `prettier.resolveConfig()`
+  // takes a *file* path and searches upward from its parent directory, so the
+  // previous `resolveConfig(process.cwd())` looked one level above the repo,
+  // found nothing, and silently fell back to Prettier's defaults (double quotes,
+  // semicolons) — which is how admin-published pages picked up a whole-file
+  // reformat on every publish. A deployed serverless bundle has no .prettierrc
+  // on disk either, so importing is the only reliable source here.
+  const prettierOptions = prettierConfig
   const pagePath = `src/app/${slug}/page.tsx`
   const dslPath = `src/app/${slug}/page.dsl.json`
 

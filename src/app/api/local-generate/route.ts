@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { promises as fs } from 'fs'
 import path from 'path'
+import prettier from 'prettier'
+import prettierConfig from '../../../../prettier.config.mjs'
 import { dslToTsx } from '@/lib/dsl-to-tsx'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -36,14 +38,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid DSL structure' }, { status: 400 })
   }
 
-  const pageCode = dslToTsx(dsl, slug)
+  // Format with the same options the publish route and the Prettier CLI use, so
+  // a locally generated page is byte-identical to a published one and does not
+  // show up as a whole-file reformat in the next diff.
+  const pageCode = await prettier.format(dslToTsx(dsl, slug), {
+    ...prettierConfig,
+    parser: 'typescript',
+  })
+  const dslJson = await prettier.format(JSON.stringify(dsl), {
+    ...prettierConfig,
+    parser: 'json',
+  })
   const appDir = path.join(process.cwd(), 'src', 'app', slug)
   const pagePath = path.join(appDir, 'page.tsx')
   const dslPath = path.join(appDir, 'page.dsl.json')
 
   await fs.mkdir(appDir, { recursive: true })
   await fs.writeFile(pagePath, pageCode, 'utf-8')
-  await fs.writeFile(dslPath, JSON.stringify(dsl, null, 2), 'utf-8')
+  await fs.writeFile(dslPath, dslJson, 'utf-8')
 
   return NextResponse.json({ success: true, pagePath, dslPath })
 }
