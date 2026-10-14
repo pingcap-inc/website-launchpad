@@ -37,7 +37,6 @@ import {
   MenuIcon,
   ArchiveIcon,
   BoltTIcon,
-  ChartHistogramTIcon,
   SlidersTIcon,
 } from './header-icons'
 import { PrimaryButton } from './PrimaryButton'
@@ -103,8 +102,9 @@ interface NavDropdown {
     description: string
     cta: MenuCta
   }
+  /** When set, both desktop and mobile render the panel layout instead of `sections`. */
   product?: ProductMenu
-  sections: DropdownSection[]
+  sections?: DropdownSection[]
 }
 
 interface NavLink {
@@ -116,7 +116,7 @@ interface NavLink {
 type NavItem = NavDropdown | NavLink
 
 function isDropdown(item: NavItem): item is NavDropdown {
-  return 'sections' in item
+  return !('href' in item)
 }
 
 const dropdowns: NavDropdown[] = [
@@ -166,12 +166,6 @@ const dropdowns: NavDropdown[] = [
   {
     label: 'Product',
     translateX: '-translate-x-[24%]',
-    featured: {
-      description:
-        'An open-source distributed SQL database trusted by innovators to power transactional, AI, and other modern applications.',
-      cta: { label: 'Product Overview', href: '/tidb/' },
-    },
-    // Desktop uses the panel layout; `sections` below still drives mobile.
     product: {
       panels: [
         {
@@ -228,40 +222,6 @@ const dropdowns: NavDropdown[] = [
         cta: { label: 'View Pricing', href: 'https://www.pingcap.com/pricing/' },
       },
     },
-    sections: [
-      {
-        title: 'Deployment Options',
-        items: [
-          { label: 'TiDB Cloud', href: 'https://www.pingcap.com/tidb/cloud/', icon: CloudTIcon },
-          {
-            label: 'TiDB Self-Managed',
-            href: 'https://www.pingcap.com/tidb/self-managed/',
-            icon: StackTIcon,
-          },
-          {
-            label: 'TiDB Cloud Lake',
-            href: '/tidb-cloud-lake/',
-            icon: ChartHistogramTIcon,
-          },
-          { label: 'Pricing', href: 'https://www.pingcap.com/pricing/', icon: DollarTIcon },
-        ],
-      },
-      {
-        title: 'Ecosystem',
-        items: [
-          { label: 'Integrations', href: 'https://www.pingcap.com/integrations/', icon: GearIcon },
-          { label: 'TiKV', href: 'https://github.com/tikv/tikv', icon: SlidersIcon },
-          { label: 'mem9', href: 'https://mem9.ai/', icon: CashIcon },
-          {
-            label: 'TiDB Cloud Filesystem',
-            href: 'https://www.pingcap.com/tidb/tidb-cloud-filesystem/',
-            icon: WalletTIcon,
-          },
-          { label: 'TiDB Cloud Zero', href: 'https://zero.tidbcloud.com/', icon: BoltTIcon },
-          { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
-        ],
-      },
-    ],
   },
   {
     label: 'Solutions',
@@ -415,7 +375,8 @@ const mobileNavItems: NavItem[] = [
 ]
 
 function MegaMenu({ item }: { item: NavDropdown }) {
-  const sectionCount = item.sections.length
+  const sections = item.sections ?? []
+  const sectionCount = sections.length
   const hasFeatured = !!item.featured
   const translateX = item.translateX ?? '-translate-x-1/2'
 
@@ -462,7 +423,7 @@ function MegaMenu({ item }: { item: NavDropdown }) {
           )}
 
           <div className="flex space-x-12">
-            {item.sections.map((section, i) => (
+            {sections.map((section, i) => (
               <div
                 key={section.title ?? i}
                 className={cn(
@@ -547,76 +508,80 @@ function MobileAccordionItem({
       <div
         className={cn(
           'overflow-hidden transition-[max-height] duration-300 ease-in-out',
-          isOpen ? 'max-h-[800px]' : 'max-h-0'
+          isOpen ? (item.product ? 'max-h-[2400px]' : 'max-h-[800px]') : 'max-h-0'
         )}
       >
-        <div className="divide-y divide-carbon-800">
-          {item.featured && (
-            <div className="pb-4 space-y-3">
-              <Image
-                src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
-                alt="TiDB"
-                width={60}
-                height={25}
-                className="block"
-              />
-              <p className="text-base text-carbon-400 leading-relaxed">
-                {item.featured.description}
-              </p>
-              <a
-                href={item.featured.cta.href}
-                className="inline-flex items-center gap-1 text-base font-medium text-text-inverse"
-                {...externalLinkProps(item.featured.cta.href)}
-              >
-                {item.featured.cta.label} →
-              </a>
-            </div>
-          )}
-
-          {item.sections.map((section, i) => (
-            <div key={section.title ?? i} className="py-4 space-y-3">
-              {section.title &&
-                (section.titleHref ? (
-                  <a
-                    href={section.titleHref}
-                    className="block text-base font-medium text-text-inverse"
-                    {...externalLinkProps(section.titleHref)}
-                  >
-                    {section.title} →
-                  </a>
-                ) : (
-                  <p className="text-base font-medium text-text-inverse">{section.title}</p>
-                ))}
-              {section.description && section.items.length === 0 && (
-                <p className="text-base text-carbon-400 leading-relaxed font-light">
-                  {section.description}
+        {item.product ? (
+          <ProductPanels product={item.product} />
+        ) : (
+          <div className="divide-y divide-carbon-800">
+            {item.featured && (
+              <div className="pb-4 space-y-3">
+                <Image
+                  src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
+                  alt="TiDB"
+                  width={60}
+                  height={25}
+                  className="block"
+                />
+                <p className="text-base text-carbon-400 leading-relaxed">
+                  {item.featured.description}
                 </p>
-              )}
-              {section.items.length > 0 && (
-                <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-                  {section.items.map((sub) => (
+                <a
+                  href={item.featured.cta.href}
+                  className="inline-flex items-center gap-1 text-base font-medium text-text-inverse"
+                  {...externalLinkProps(item.featured.cta.href)}
+                >
+                  {item.featured.cta.label} →
+                </a>
+              </div>
+            )}
+
+            {(item.sections ?? []).map((section, i) => (
+              <div key={section.title ?? i} className="py-4 space-y-3">
+                {section.title &&
+                  (section.titleHref ? (
                     <a
-                      key={sub.label}
-                      href={sub.href}
-                      className="flex items-center gap-2 text-base text-carbon-400 font-medium"
-                      {...externalLinkProps(sub.href)}
+                      href={section.titleHref}
+                      className="block text-base font-medium text-text-inverse"
+                      {...externalLinkProps(section.titleHref)}
                     >
-                      {sub.icon && typeof sub.icon !== 'string' && (
-                        <sub.icon size={14} className="shrink-0" />
-                      )}
-                      {sub.label}
-                      {sub.badges && (
-                        <span className="ml-auto rounded-xs bg-brand-red-primary px-2 py-0 text-xs font-bold uppercase tracking-wider text-text-inverse">
-                          {sub.badges}
-                        </span>
-                      )}
+                      {section.title} →
                     </a>
+                  ) : (
+                    <p className="text-base font-medium text-text-inverse">{section.title}</p>
                   ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+                {section.description && section.items.length === 0 && (
+                  <p className="text-base text-carbon-400 leading-relaxed font-light">
+                    {section.description}
+                  </p>
+                )}
+                {section.items.length > 0 && (
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+                    {section.items.map((sub) => (
+                      <a
+                        key={sub.label}
+                        href={sub.href}
+                        className="flex items-center gap-2 text-base text-carbon-400 font-medium"
+                        {...externalLinkProps(sub.href)}
+                      >
+                        {sub.icon && typeof sub.icon !== 'string' && (
+                          <sub.icon size={14} className="shrink-0" />
+                        )}
+                        {sub.label}
+                        {sub.badges && (
+                          <span className="ml-auto rounded-xs bg-brand-red-primary px-2 py-0 text-xs font-bold uppercase tracking-wider text-text-inverse">
+                            {sub.badges}
+                          </span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </li>
   )
@@ -626,7 +591,7 @@ function MobileAccordionItem({
 // description per row), distinct from the generic columns MegaMenu.
 function AiMegaMenu({ item }: { item: NavDropdown }) {
   const translateX = '-translate-x-1/2'
-  const section = item.sections[0]
+  const section = item.sections?.[0]
   if (!section) return null
 
   return (
@@ -680,7 +645,8 @@ function ProductCtaButton({ cta, className }: { cta: MenuCta; className?: string
     <a
       href={cta.href}
       className={cn(
-        'group/cta inline-flex shrink-0 items-center gap-2 border border-white/40 px-6 py-4',
+        'group/cta inline-flex w-full shrink-0 items-center justify-center gap-2 border border-white/40 px-6 py-4',
+        'sm:w-auto sm:justify-start',
         'text-body-md font-medium text-text-inverse',
         'transition-colors duration-200 hover:border-white hover:bg-white/[0.16]',
         className
@@ -733,121 +699,134 @@ function ProductPanelCard({ card }: { card: DropdownItem }) {
   )
 }
 
-// The "Product" menu spans the full container width and uses bordered panels
-// instead of the generic columns MegaMenu. It is positioned against the
-// viewport (not the nav item) so it lines up with the page container.
+/**
+ * The Product menu's panel layout, shared by the desktop dropdown and the
+ * mobile accordion (the main site renders it in both).
+ *
+ * Breakpoints follow the main site's: phone (<640) stacks everything and puts
+ * the Ecosystem column last, tablet (640-1023) is a two-column grid, desktop
+ * (1024+) is the four-column row, and 1280+ restores the full spacing.
+ */
+function ProductPanels({ product }: { product: ProductMenu }) {
+  return (
+    <div className="flex flex-col gap-4 px-0 pb-6 pt-0 lg:p-5">
+      <div className="contents sm:grid sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+        {product.panels.map((panel) => (
+          <div
+            key={panel.title}
+            className={cn(
+              'relative flex min-w-0 flex-col border border-carbon-800/70 p-4 sm:p-5 xl:p-6',
+              panel.wide && 'sm:col-span-2 bg-white/[0.08]'
+            )}
+          >
+            {panel.wide && (
+              <span
+                aria-hidden="true"
+                className="absolute -left-px -right-px -top-px h-0.5 bg-brand-red-primary"
+              />
+            )}
+            <div className="flex flex-row flex-wrap items-center gap-x-3 gap-y-2 lg:flex-col lg:items-start lg:gap-2">
+              <span
+                className={cn(
+                  'font-medium leading-tight text-text-inverse',
+                  panel.wide ? 'text-[32px] xl:text-[40px]' : 'text-[24px]'
+                )}
+              >
+                {panel.title}
+              </span>
+              {panel.badge && (
+                <span className="inline-flex items-center rounded-pill border border-white/40 px-2.5 py-0.5 text-xs font-medium text-text-inverse">
+                  {panel.badge}
+                </span>
+              )}
+              <span className="basis-full text-lg font-medium leading-snug text-text-inverse lg:basis-auto">
+                {panel.subtitle}
+              </span>
+            </div>
+
+            <div
+              className={cn(
+                'mt-4 flex gap-4',
+                panel.wide
+                  ? 'flex-col items-start xl:flex-row xl:items-center xl:justify-between xl:gap-8'
+                  : 'flex-1 flex-col items-start justify-between'
+              )}
+            >
+              <p className="text-sm font-light leading-relaxed text-text-secondary">
+                {panel.description}
+              </p>
+              {panel.wide ? (
+                <ProductCtaButton cta={panel.cta} />
+              ) : (
+                <ProductCtaLink cta={panel.cta} />
+              )}
+            </div>
+
+            {panel.cards && panel.cards.length > 0 && (
+              <div className="mt-6 border-t border-carbon-800/70 pt-6">
+                {panel.cardsLabel && (
+                  <span className="mb-3 block text-sm text-text-secondary">{panel.cardsLabel}</span>
+                )}
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {panel.cards.map((card) => (
+                    <ProductPanelCard key={card.label} card={card} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+
+        <div className="order-1 flex min-w-0 flex-col gap-4 border-l-0 pl-0 sm:order-none sm:border-l sm:border-carbon-800/70 sm:pl-5">
+          {product.links.title && (
+            <span className="text-body-md text-text-inverse">{product.links.title}</span>
+          )}
+          {product.links.items.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="flex items-center text-body-md font-light leading-snug text-text-secondary transition-colors duration-200 hover:text-text-inverse"
+              {...externalLinkProps(link.href)}
+            >
+              {link.icon && typeof link.icon !== 'string' && (
+                <link.icon size={18} className="mr-3 shrink-0" />
+              )}
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-[auto_1fr] items-center gap-y-4 border border-carbon-800/70 bg-white/[0.08] p-4 sm:grid-cols-[auto_1fr_auto] sm:gap-y-1 sm:px-5 sm:py-4 lg:grid-cols-[auto_auto_auto] lg:justify-start xl:px-6 xl:py-5">
+        <span className="col-start-1 row-start-1 mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-carbon-800/70 text-text-inverse sm:row-span-2 sm:mr-5">
+          <product.banner.icon size={20} />
+        </span>
+        <span className="col-start-2 row-start-1 text-[22px] font-medium leading-tight text-text-inverse">
+          {product.banner.title}
+        </span>
+        <span className="col-span-full row-start-2 text-sm font-light leading-normal text-text-secondary sm:col-span-1 sm:col-start-2">
+          {product.banner.description}
+        </span>
+        <ProductCtaButton
+          cta={product.banner.cta}
+          className="col-span-full row-start-3 sm:col-span-1 sm:col-start-3 sm:row-span-2 sm:row-start-1 sm:ml-6 xl:ml-10"
+        />
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Desktop Product dropdown. It spans the full container width, so it is
+ * positioned against the viewport rather than its nav item.
+ */
 function ProductMegaMenu({ item }: { item: NavDropdown }) {
-  const product = item.product
-  if (!product) return null
+  if (!item.product) return null
 
   return (
     <div className="fixed left-1/2 top-20 z-50 -translate-x-1/2 pt-2">
       <div className="w-[var(--container-max-width)] max-w-[calc(100vw-var(--container-margin)*2)] border border-carbon-800 bg-bg-primary shadow-card">
-        <div className="flex flex-col gap-4 p-5">
-          <div className="grid grid-cols-4 gap-4">
-            {product.panels.map((panel) => (
-              <div
-                key={panel.title}
-                className={cn(
-                  'relative flex min-w-0 flex-col border border-carbon-800/70 p-5 xl:p-6',
-                  panel.wide && 'col-span-2 bg-white/[0.08]'
-                )}
-              >
-                {panel.wide && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-px -right-px -top-px h-0.5 bg-brand-red-primary"
-                  />
-                )}
-                <div className="flex flex-col items-start gap-2">
-                  <span
-                    className={cn(
-                      'font-medium leading-tight text-text-inverse',
-                      panel.wide ? 'text-[32px] xl:text-[40px]' : 'text-[24px]'
-                    )}
-                  >
-                    {panel.title}
-                  </span>
-                  {panel.badge && (
-                    <span className="inline-flex items-center rounded-pill border border-white/40 px-2.5 py-0.5 text-xs font-medium text-text-inverse">
-                      {panel.badge}
-                    </span>
-                  )}
-                  <span className="text-lg font-medium leading-snug text-text-inverse">
-                    {panel.subtitle}
-                  </span>
-                </div>
-
-                <div
-                  className={cn(
-                    'mt-4 flex gap-4',
-                    panel.wide
-                      ? 'flex-col items-start xl:flex-row xl:items-center xl:justify-between xl:gap-8'
-                      : 'flex-1 flex-col items-start justify-between'
-                  )}
-                >
-                  <p className="text-sm font-light leading-relaxed text-text-secondary">
-                    {panel.description}
-                  </p>
-                  {panel.wide ? (
-                    <ProductCtaButton cta={panel.cta} />
-                  ) : (
-                    <ProductCtaLink cta={panel.cta} />
-                  )}
-                </div>
-
-                {panel.cards && panel.cards.length > 0 && (
-                  <div className="mt-6 border-t border-carbon-800/70 pt-6">
-                    {panel.cardsLabel && (
-                      <span className="mb-3 block text-sm text-text-secondary">
-                        {panel.cardsLabel}
-                      </span>
-                    )}
-                    <div className="grid grid-cols-2 gap-3">
-                      {panel.cards.map((card) => (
-                        <ProductPanelCard key={card.label} card={card} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-
-            <div className="flex min-w-0 flex-col gap-4 border-l border-carbon-800/70 pl-5">
-              {product.links.title && (
-                <span className="text-body-md text-text-inverse">{product.links.title}</span>
-              )}
-              {product.links.items.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="flex items-center text-body-md font-light leading-snug text-text-secondary transition-colors duration-200 hover:text-text-inverse"
-                  {...externalLinkProps(link.href)}
-                >
-                  {link.icon && typeof link.icon !== 'string' && (
-                    <link.icon size={18} className="mr-3 shrink-0" />
-                  )}
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex items-center border border-carbon-800/70 bg-white/[0.08] px-5 py-4 xl:px-6 xl:py-5">
-            <span className="mr-5 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-carbon-800/70 text-text-inverse">
-              <product.banner.icon size={20} />
-            </span>
-            <span className="flex flex-col">
-              <span className="text-[22px] font-medium leading-tight text-text-inverse">
-                {product.banner.title}
-              </span>
-              <span className="text-sm font-light leading-normal text-text-secondary">
-                {product.banner.description}
-              </span>
-            </span>
-            <ProductCtaButton cta={product.banner.cta} className="ml-6 xl:ml-10" />
-          </div>
-        </div>
+        <ProductPanels product={item.product} />
       </div>
     </div>
   )
