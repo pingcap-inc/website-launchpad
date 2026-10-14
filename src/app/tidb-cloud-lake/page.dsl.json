@@ -8,7 +8,13 @@
     "createdBy": "liwen.xu@pingcap.com",
     "createdAt": "2026-10-13T10:11:55.968Z",
     "modifiedBy": "liwen.xu@pingcap.com",
-    "modifiedAt": "2026-10-13T10:11:55.968Z"
+    "modifiedAt": "2026-10-14T06:53:00.282Z",
+    "ogImage": {
+      "url": "https://static.pingcap.com/images/dedc1b92-tidb-cloud-lake.png",
+      "alt": "tidb cloud lake",
+      "width": 1200,
+      "height": 630
+    }
   },
   "sections": [
     {
@@ -25,10 +31,7 @@
           "text": "Get Started",
           "href": "https://tidbcloud.com/signup/?signup_source=pingcap-en-lake"
         },
-        "secondaryCta": {
-          "text": "View Pricing",
-          "href": "https://www.pingcap.com/pricing/"
-        },
+        "secondaryCta": { "text": "View Pricing", "href": "https://www.pingcap.com/pricing/" },
         "heroImage": {
           "image": {
             "url": "https://static.pingcap.com/images/4e779190-02-cloud-lake-hero-flat-motion-10s.mp4",
@@ -152,21 +155,13 @@
         "title": "Start Building with TiDB Cloud Lake",
         "subtitle": "Explore the Quick Start, or talk with us about your workload.",
         "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg" },
           "alt": "",
           "width": 278,
           "height": 256
         },
-        "primaryCta": {
-          "text": "Get Started",
-          "href": "https://tidbcloud.com/free-trial/"
-        },
-        "secondaryCta": {
-          "text": "Contact Sales",
-          "href": "https://www.pingcap.com/contact-us/"
-        }
+        "primaryCta": { "text": "Get Started", "href": "https://tidbcloud.com/free-trial/" },
+        "secondaryCta": { "text": "Contact Sales", "href": "https://www.pingcap.com/contact-us/" }
       },
       "style": { "background": "brand-violet", "spacing": "section" }
     }

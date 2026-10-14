@@ -4,12 +4,6 @@ import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
-// Social card art for this page. Lives in `public/` and is mirrored to the CDN
-// by the deploy workflow (`public/` -> s3://uploads-pingcap-com/launchpad/), so
-// the absolute URL is the CDN one — crawlers fetch it directly, and it only
-// resolves once this branch is deployed.
-const OG_IMAGE = 'https://static.pingcap.com/launchpad/images/social/tidb-cloud-lake-social.png'
-
 export const metadata: Metadata = {
   title: 'TiDB Cloud Lake: Cloud-Native Analytics Warehouse',
   description:
@@ -24,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: OG_IMAGE,
+        url: 'https://static.pingcap.com/images/dedc1b92-tidb-cloud-lake.png',
         width: 1200,
         height: 630,
       },
@@ -34,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: [OG_IMAGE],
+    images: ['https://static.pingcap.com/images/dedc1b92-tidb-cloud-lake.png'],
   },
 }
 
@@ -60,7 +54,13 @@ const dsl: PageDSL = {
     createdBy: 'liwen.xu@pingcap.com',
     createdAt: '2026-10-13T10:11:55.968Z',
     modifiedBy: 'liwen.xu@pingcap.com',
-    modifiedAt: '2026-10-13T10:11:55.968Z',
+    modifiedAt: '2026-10-14T06:53:00.282Z',
+    ogImage: {
+      url: 'https://static.pingcap.com/images/dedc1b92-tidb-cloud-lake.png',
+      alt: 'tidb cloud lake',
+      width: 1200,
+      height: 630,
+    },
   },
   sections: [
     {
