@@ -39,8 +39,7 @@ import {
   BoltTIcon,
   SlidersTIcon,
 } from './header-icons'
-import { PrimaryButton } from './PrimaryButton'
-import { ArrowUpRight } from './SecondaryButton'
+import { ArrowUpRightIcon, PrimaryButton } from './PrimaryButton'
 
 interface DropdownItem {
   label: string
@@ -645,20 +644,17 @@ function ProductCtaButton({ cta, className }: { cta: MenuCta; className?: string
     <a
       href={cta.href}
       className={cn(
-        'group/cta inline-flex w-full shrink-0 items-center justify-center gap-2 border border-white/40 px-6 py-4',
+        // Metrics match PrimaryButton: h-10, px-4, gap-4, text-base.
+        'group/cta inline-flex h-10 w-full shrink-0 items-center justify-center gap-4 border border-white/40 px-4',
         'sm:w-auto sm:justify-start',
-        'text-body-md font-medium text-text-inverse',
+        'text-base font-medium leading-none text-text-inverse',
         'transition-colors duration-200 hover:border-white hover:bg-white/[0.16]',
         className
       )}
       {...externalLinkProps(cta.href)}
     >
       {cta.label}
-      <ArrowUpRight
-        width={16}
-        height={16}
-        className="shrink-0 transition-transform duration-200 group-hover/cta:rotate-45"
-      />
+      <ArrowUpRightIcon className="shrink-0" />
     </a>
   )
 }
