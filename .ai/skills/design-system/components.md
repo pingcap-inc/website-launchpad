@@ -790,6 +790,8 @@ interface LogoCloudSectionProps {
 }
 ```
 
+Also accepts an optional `cta: { text, href }` rendered above the logos, and an optional `logoClassName` for sizing the logo images. Both are available in the DSL/editor and leave existing layouts unchanged when omitted.
+
 **Variants:**
 
 - `default` — bordered containers, color on hover, `grayscale` at rest

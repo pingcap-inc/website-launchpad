@@ -615,6 +615,10 @@ function normalizeLogoCloudProps(value: unknown): LogoCloudProps {
   const v = (value ?? {}) as LogoCloudProps
   const logos = Array.isArray(v.logos) ? v.logos.map(normalizeLogo).filter(Boolean) : []
   return {
+    // Drop a half-filled CTA: the editor keeps writing {text:'',href:''} once the
+    // field has been touched, and a truthy-but-empty object renders a dead button.
+    cta: v.cta?.text && v.cta?.href ? v.cta : undefined,
+    logoClassName: typeof v.logoClassName === 'string' ? v.logoClassName : undefined,
     eyebrow: v.eyebrow,
     title: v.title,
     subtitle: v.subtitle,

@@ -371,6 +371,8 @@ export interface FeatureHighlightItem {
 // ─── Logo Cloud ──────────────────────────────────────────────────────────────
 
 export interface LogoCloudProps {
+  cta?: { text: string; href: string }
+  logoClassName?: string
   eyebrow?: string
   title?: string
   subtitle?: string

@@ -839,6 +839,8 @@ export const schemaMap: Record<SectionType, SectionSchema<any>> = {
     defaultProps: defaultLogoCloudProps,
     defaultStyle: { background: 'primary', spacing: 'section' },
     fields: [
+      { type: 'cta', key: 'cta', label: 'CTA' },
+      { type: 'text', key: 'logoClassName', label: 'Logo Classes' },
       { type: 'text', key: 'eyebrow', label: 'Eyebrow' },
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'subtitle', label: 'Subtitle', rows: 2 },

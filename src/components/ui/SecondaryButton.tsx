@@ -12,6 +12,9 @@ interface SecondaryButtonProps {
   href?: string
   dark?: boolean
   as?: 'a' | 'button' | 'span'
+  /** Force a new tab. External hrefs already open in one; use this for links to
+   *  our own host that should still leave the current page intact. */
+  newTab?: boolean
 }
 
 type SecondaryButtonRef = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement
@@ -50,7 +53,7 @@ export function ArrowUpRight(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryButtonProps>(
-  ({ children, className, onClick, href, dark = true, as }, ref) => {
+  ({ children, className, onClick, href, dark = true, as, newTab }, ref) => {
     const classes = cn(
       'group inline-flex items-center gap-2',
       'text-base font-medium',
@@ -101,6 +104,7 @@ export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryBut
             onClick?.()
           }}
           {...externalLinkProps(href)}
+          {...(newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
           {content}
         </a>
