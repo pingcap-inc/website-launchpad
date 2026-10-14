@@ -749,7 +749,7 @@ function ProductMegaMenu({ item }: { item: NavDropdown }) {
               <div
                 key={panel.title}
                 className={cn(
-                  'relative flex min-w-0 flex-col border border-carbon-800/70 p-6',
+                  'relative flex min-w-0 flex-col border border-carbon-800/70 p-5 xl:p-6',
                   panel.wide && 'col-span-2 bg-white/[0.08]'
                 )}
               >
@@ -763,7 +763,7 @@ function ProductMegaMenu({ item }: { item: NavDropdown }) {
                   <span
                     className={cn(
                       'font-medium leading-tight text-text-inverse',
-                      panel.wide ? 'text-[40px]' : 'text-[24px]'
+                      panel.wide ? 'text-[32px] xl:text-[40px]' : 'text-[24px]'
                     )}
                   >
                     {panel.title}
@@ -782,7 +782,7 @@ function ProductMegaMenu({ item }: { item: NavDropdown }) {
                   className={cn(
                     'mt-4 flex gap-4',
                     panel.wide
-                      ? 'flex-row items-center justify-between gap-8'
+                      ? 'flex-col items-start xl:flex-row xl:items-center xl:justify-between xl:gap-8'
                       : 'flex-1 flex-col items-start justify-between'
                   )}
                 >
@@ -833,7 +833,7 @@ function ProductMegaMenu({ item }: { item: NavDropdown }) {
             </div>
           </div>
 
-          <div className="flex items-center border border-carbon-800/70 bg-white/[0.08] px-6 py-5">
+          <div className="flex items-center border border-carbon-800/70 bg-white/[0.08] px-5 py-4 xl:px-6 xl:py-5">
             <span className="mr-5 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-carbon-800/70 text-text-inverse">
               <product.banner.icon size={20} />
             </span>
@@ -845,7 +845,7 @@ function ProductMegaMenu({ item }: { item: NavDropdown }) {
                 {product.banner.description}
               </span>
             </span>
-            <ProductCtaButton cta={product.banner.cta} className="ml-10" />
+            <ProductCtaButton cta={product.banner.cta} className="ml-6 xl:ml-10" />
           </div>
         </div>
       </div>
