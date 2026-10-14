@@ -4,12 +4,6 @@ import { buildPageSchema } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
-// Social card art for this page. Lives in `public/` and is mirrored to the CDN
-// by the deploy workflow (`public/` -> s3://uploads-pingcap-com/launchpad/), so
-// the absolute URL is the CDN one — crawlers fetch it directly, and it only
-// resolves once this branch is deployed.
-const OG_IMAGE = 'https://static.pingcap.com/launchpad/images/social/ai-agent-context-social.png'
-
 export const metadata: Metadata = {
   title: 'Persistent Context for AI Agents | TiDB',
   description:
@@ -24,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: OG_IMAGE,
+        url: 'https://static.pingcap.com/images/78891a1c-ai-agent-context-social.png',
         width: 1200,
         height: 630,
       },
@@ -34,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: [OG_IMAGE],
+    images: ['https://static.pingcap.com/images/78891a1c-ai-agent-context-social.png'],
   },
 }
 
@@ -61,8 +55,14 @@ const dsl: PageDSL = {
     canonical: '/solutions/ai-agent-context/',
     createdBy: 'a.hire@pingcap.com',
     createdAt: '2026-10-14T03:17:43.178Z',
-    modifiedBy: 'a.hire@pingcap.com',
-    modifiedAt: '2026-10-14T03:17:43.178Z',
+    modifiedBy: 'liwen.xu@pingcap.com',
+    modifiedAt: '2026-10-14T07:02:42.489Z',
+    ogImage: {
+      url: 'https://static.pingcap.com/images/78891a1c-ai-agent-context-social.png',
+      alt: 'ai agent context social',
+      width: 1200,
+      height: 630,
+    },
   },
   sections: [
     {

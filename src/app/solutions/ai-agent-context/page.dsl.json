@@ -6,8 +6,14 @@
     "canonical": "/solutions/ai-agent-context/",
     "createdBy": "a.hire@pingcap.com",
     "createdAt": "2026-10-14T03:17:43.178Z",
-    "modifiedBy": "a.hire@pingcap.com",
-    "modifiedAt": "2026-10-14T03:17:43.178Z"
+    "modifiedBy": "liwen.xu@pingcap.com",
+    "modifiedAt": "2026-10-14T07:02:42.489Z",
+    "ogImage": {
+      "url": "https://static.pingcap.com/images/78891a1c-ai-agent-context-social.png",
+      "alt": "ai agent context social",
+      "width": 1200,
+      "height": 630
+    }
   },
   "sections": [
     {
@@ -24,9 +30,7 @@
         },
         "secondaryCta": { "text": "", "href": "" },
         "heroImage": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg" },
           "alt": "hero image",
           "width": 500,
           "height": 400
@@ -132,11 +136,7 @@
         "shortCode": "[tidb-persistent-layer-animation]",
         "itemColumns": 2
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section",
-        "removePaddingBottom": true
-      }
+      "style": { "background": "primary", "spacing": "section", "removePaddingBottom": true }
     },
     {
       "id": "solution-01",
@@ -150,10 +150,7 @@
             "icon": "Database",
             "title": "Persistent, Queryable Memory",
             "description": "Agents write conversation turns, preferences, facts, and decisions to TiDB Cloud. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB keeps checkpoints consistent with the application data the agent changed, so the agent can resume from reliable state.",
-            "cta": {
-              "text": "Explore TiDB Cloud",
-              "href": "https://www.pingcap.com/tidb/cloud/"
-            }
+            "cta": { "text": "Explore TiDB Cloud", "href": "https://www.pingcap.com/tidb/cloud/" }
           },
           {
             "icon": "Shield",
@@ -176,11 +173,7 @@
         ],
         "columns": 3
       },
-      "style": {
-        "background": "primary",
-        "spacing": "lg",
-        "removePaddingTop": true
-      }
+      "style": { "background": "primary", "spacing": "lg", "removePaddingTop": true }
     },
     {
       "id": "caseStudyCards-1782472692660",
@@ -297,9 +290,7 @@
         "title": "Get Started with TiDB for AI Agent Memory",
         "subtitle": "From prototypes to production, build agents that remember.",
         "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg" },
           "alt": "",
           "width": 278,
           "height": 256
@@ -308,10 +299,7 @@
           "text": "Start Free on TiDB Cloud",
           "href": "https://tidbcloud.com/free-trial/"
         },
-        "secondaryCta": {
-          "text": "Contact Sales",
-          "href": "https://www.pingcap.com/contact-us/"
-        }
+        "secondaryCta": { "text": "Contact Sales", "href": "https://www.pingcap.com/contact-us/" }
       },
       "style": { "background": "brand-violet", "spacing": "section" }
     }
