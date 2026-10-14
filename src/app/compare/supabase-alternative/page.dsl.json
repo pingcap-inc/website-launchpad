@@ -1,0 +1,275 @@
+{
+  "pageName": "Supabase vs TiDB Cloud Zero for AI Agent Backends",
+  "meta": {
+    "title": "Supabase vs TiDB Cloud Zero for AI Agents | TiDB",
+    "description": "Compare Supabase and TiDB Cloud Zero for AI agent backends. Learn which database fits your agent state, vector search, and multi-tenant needs.",
+    "canonical": "/compare/supabase-alternative/",
+    "createdBy": "nivanya@pingcap.com",
+    "createdAt": "2026-10-14T13:51:20.835Z",
+    "modifiedBy": "nivanya@pingcap.com",
+    "modifiedAt": "2026-10-14T13:51:20.835Z"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "hero",
+      "props": {
+        "layout": "image-right",
+        "headline": "Supabase vs TiDB Cloud Zero for AI Agent Backends",
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/d09490d5-supabase_vs_tidb.svg",
+            "alt": "supabase vs tidb",
+            "width": 590,
+            "height": 450
+          },
+          "alt": "supabase vs tidb",
+          "width": 590,
+          "height": 450
+        }
+      },
+      "style": {
+        "background": "primary",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "tableOfContents-1",
+      "type": "tableOfContents",
+      "props": {
+        "items": [
+          {
+            "id": "intro",
+            "label": "Introduction",
+            "level": 1
+          },
+          {
+            "id": "key-takeaways",
+            "label": "Key Takeaways",
+            "level": 1
+          },
+          {
+            "id": "jump-to-a-section",
+            "label": "Jump to a Section",
+            "level": 1
+          },
+          {
+            "id": "how-do-supabase-and-tidb-cloud-zero-compare-at-a-glance",
+            "label": "How Do Supabase and TiDB Cloud Zero Compare at a Glance?",
+            "level": 1
+          },
+          {
+            "id": "key-differences-between-supabase-and-tidb-cloud-zero",
+            "label": "Key Differences Between Supabase and TiDB Cloud Zero",
+            "level": 2
+          },
+          {
+            "id": "which-supabase-alternative-is-this-comparison-really-for",
+            "label": "Which Supabase Alternative Is This Comparison Really For?",
+            "level": 1
+          },
+          {
+            "id": "when-a-bundled-backend-is-the-better-fit",
+            "label": "When a Bundled Backend Is the Better Fit",
+            "level": 2
+          },
+          {
+            "id": "when-a-database-first-ai-backend-is-the-better-fit",
+            "label": "When a Database-First AI Backend Is the Better Fit",
+            "level": 2
+          },
+          {
+            "id": "how-do-supabase-and-tidb-cloud-zero-compare-on-vector-search-sql-and-agent-state",
+            "label": "How Do Supabase and TiDB Cloud Zero Compare on Vector Search, SQL, and Agent State?",
+            "level": 1
+          },
+          {
+            "id": "key-differences-in-vector-search-and-sql",
+            "label": "Key Differences in Vector Search and SQL",
+            "level": 2
+          },
+          {
+            "id": "how-do-supabase-mcp-and-tidb-cloud-zero-agent-workflows-differ",
+            "label": "How Do Supabase MCP and TiDB Cloud Zero Agent Workflows Differ?",
+            "level": 1
+          },
+          {
+            "id": "key-differences-in-mcp-and-agent-workflows",
+            "label": "Key Differences in MCP and Agent Workflows",
+            "level": 2
+          },
+          {
+            "id": "how-do-supabase-and-tidb-compare-on-deployment-governance-and-multi-tenant-architecture",
+            "label": "How Do Supabase and TiDB Compare on Deployment, Governance, and Multi-Tenant Architecture?",
+            "level": 1
+          },
+          {
+            "id": "key-differences-in-tenancy-and-scaling",
+            "label": "Key Differences in Tenancy and Scaling",
+            "level": 2
+          },
+          {
+            "id": "who-should-choose-which",
+            "label": "Who Should Choose Which",
+            "level": 2
+          },
+          {
+            "id": "how-do-supabase-and-tidb-cloud-zero-compare-on-pricing-and-support",
+            "label": "How Do Supabase and TiDB Cloud Zero Compare on Pricing and Support?",
+            "level": 1
+          },
+          {
+            "id": "key-differences-in-billing-shape",
+            "label": "Key Differences in Billing Shape",
+            "level": 2
+          },
+          {
+            "id": "support-plans-compared",
+            "label": "Support Plans Compared",
+            "level": 2
+          },
+          {
+            "id": "where-does-tidb-fit-in-an-ai-agent-backend",
+            "label": "Where Does TiDB Fit in an AI Agent Backend?",
+            "level": 1
+          },
+          {
+            "id": "when-tidb-cloud-zero-becomes-the-stronger-next-step",
+            "label": "When TiDB Cloud Zero Becomes the Stronger Next Step",
+            "level": 2
+          },
+          {
+            "id": "which-backend-should-you-choose-for-your-next-ai-agent",
+            "label": "Which Backend Should You Choose for Your Next AI Agent?",
+            "level": 1
+          },
+          {
+            "id": "faq",
+            "label": "Supabase Alternative FAQs",
+            "level": 1
+          }
+        ],
+        "sticky": true
+      }
+    },
+    {
+      "id": "intro",
+      "type": "richTextBlock",
+      "props": {
+        "content": "**Updated October 14, 2026 | Author: M. Nivanya | Reviewed by: Ravish Patel**\n\n## Key Takeaways\n\n:::card tone=light\n\n- Pick a Supabase alternative by the layer you want to replace, not by a single ranked winner.\n- Choose Supabase when auth, storage, realtime, and Postgres in one bundle matter more than data architecture.\n- Choose TiDB Cloud when agent state, vectors, and operational data share one SQL store. Start free on TiDB Cloud Zero and claim it within 30 days to keep it.\n- Scope the Supabase MCP server before you connect an agent. Supabase supports production connections only when the task requires them, with project scoping, read-only mode, and restricted feature groups.\n- Compare billing shape, not headline plans. Supabase bills compute per project. TiDB Cloud Starter bills by request units and storage.\n\n:::\n\nAn AI agent that works in a demo needs three things from its backend in production. Durable state, retrieval over its own history, and isolation between tenants. Supabase gets teams to a working demo fast, with a database, auth, and storage in one project. The pressure shows up later, when agent memory, vector search, and per-tenant data outgrow one Postgres instance per project, and the bundle starts deciding your data architecture for you.\n\nA Supabase alternative is not one product category. The right choice depends on whether you want to replace the whole bundled backend or only the data layer beneath your agents. This comparison is for software architects, backend engineers, and ML platform engineers choosing between Supabase and TiDB Cloud Zero as the foundation for AI app state, retrieval, and memory. After reading it, you can decide which one fits the agent workload you are building now, and what each choice costs you a year from now.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-1",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "Give your agent a real SQL and vector database in seconds, with no signup required.",
+        "primaryCta": {
+          "text": "Start Free on TiDB Cloud Zero",
+          "href": "https://zero.tidbcloud.com/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22092103/1000011430.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-1",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## Jump to a Section\n\n- [How Do Supabase and TiDB Cloud Zero Compare at a Glance?](#how-do-supabase-and-tidb-cloud-zero-compare-at-a-glance)\n- [Which Supabase Alternative Is This Comparison Really For?](#which-supabase-alternative-is-this-comparison-really-for)\n- [How Do Supabase and TiDB Cloud Zero Compare on Vector Search, SQL, and Agent State?](#how-do-supabase-and-tidb-cloud-zero-compare-on-vector-search-sql-and-agent-state)\n- [How Do Supabase MCP and TiDB Cloud Zero Agent Workflows Differ?](#how-do-supabase-mcp-and-tidb-cloud-zero-agent-workflows-differ)\n- [How Do Supabase and TiDB Compare on Deployment, Governance, and Multi-Tenant Architecture?](#how-do-supabase-and-tidb-compare-on-deployment-governance-and-multi-tenant-architecture)\n- [How Do Supabase and TiDB Cloud Zero Compare on Pricing and Support?](#how-do-supabase-and-tidb-cloud-zero-compare-on-pricing-and-support)\n- [Where Does TiDB Fit in an AI Agent Backend?](#where-does-tidb-fit-in-an-ai-agent-backend)\n- [Which Backend Should You Choose for Your Next AI Agent?](#which-backend-should-you-choose-for-your-next-ai-agent)\n- [Supabase Alternative FAQs](#supabase-alternative-faqs)\n\n## How Do Supabase and TiDB Cloud Zero Compare at a Glance?\n\nSupabase is a bundled backend platform built on managed Postgres. TiDB Cloud Zero is an instant, MySQL-compatible SQL and vector database, currently in public preview, that agents can provision without a signup. They overlap at the database layer and diverge everywhere above it, so the table below compares what each one actually ships.\n\n| Platform | Database model | Vector search | Full-text search | Auth | File storage | Realtime | MCP workflow | Setup | Multi-tenant scale | Operational tradeoff |\n|---|---|---|---|---|---|---|---|---|---|---|\n| Supabase | Managed Postgres, one compute instance per project | pgvector extension with HNSW and IVFFlat indexes | Postgres full-text search (tsvector) | Supabase Auth included | Supabase Storage included | Realtime channels for database changes, broadcast, and presence | Hosted MCP server with OAuth, read-only mode, and project scoping | Account, organization, and project | Row level security or a project per tenant, each with its own compute | Fewer services to integrate, more coupling to one platform |\n| TiDB Cloud Zero | Distributed SQL, MySQL-compatible, runs on TiDB Cloud Starter | Native VECTOR type and vector index (public preview on Starter) | Built-in full-text search in supported regions | Not included. Bring your own identity provider | Not included. Pair with object storage | No built-in realtime channels | SKILL.md command lets an agent provision its own database; works behind MCP servers | No signup. Instance lasts up to 30 days unless claimed | Many small instances on shared distributed storage | More assembly above the database, fewer data systems below it |\n| Best fit | Supabase for Postgres teams, TiDB for MySQL teams or scale-out needs | Either one for RAG prototypes | Either one for hybrid retrieval, after checking TiDB region availability | Supabase for teams without an auth stack | Supabase for media-heavy apps | Supabase for collaborative UIs | TiDB Cloud Zero for agent-provisioned databases | TiDB Cloud Zero for throwaway agent sessions | TiDB for thousands of tenants or AI-generated apps | Depends on which layer you want to own |\n*Table 1: Supabase vs TiDB Cloud Zero across database, retrieval, platform, and scaling attributes.*\n\n### Key Differences Between Supabase and TiDB Cloud Zero\n\n- **Scope.** Supabase replaces a backend. TiDB Cloud Zero replaces a database, and leaves auth, storage, and realtime to you.\n- **Entry point.** Supabase needs an account and organization first. An agent can create a TiDB Cloud Zero database with no account, and a human claims it later.\n- **Growth path.** Supabase scales each project by resizing its Postgres compute and adding read replicas for read traffic. TiDB scales out on distributed storage without manual sharding.\n\n## Which Supabase Alternative Is This Comparison Really For?\n\nThis comparison is for teams building AI apps and agents, not for teams replacing Supabase as a general backend for a mobile or web app. Most pages ranking for Supabase alternatives compare bundled backend platforms such as Firebase, Appwrite, and Convex. Those are the right lists if you want a different bundle. If the real problem is where your agents keep their memory, retrieval context, and state, the comparison narrows to the data layer.\n\nThe jobs to be done are specific. An agent backend stores persistent memory across sessions, embeddings for retrieval augmented generation, tool call outputs, per-tenant data that must stay isolated, and durable workflow state that survives a crashed sandbox. Supabase covers these with Postgres plus extensions inside a larger platform. TiDB Cloud covers them as one SQL store with vector and full-text search built in, and assumes the rest of your stack lives elsewhere. TiDB Cloud Zero is the starting point. An unclaimed Zero database expires after 30 days, so claim it for agent memory and state to persist.\n\n### When a Bundled Backend Is the Better Fit\n\nA bundled backend wins when the app around the agent is the hard part. If you need user sign-up, file uploads, and a live-updating UI next week, Supabase gives you all three in one project with one client library. Small teams without a platform engineer gain the most, because every service Supabase bundles is a service nobody on the team has to run.\n\n### When a Database-First AI Backend Is the Better Fit\n\nA database-first backend wins when the data is the hard part. Two situations from production make the cost of getting this wrong concrete. An agent platform that spins up a database per user session pays for idle compute on every session that never comes back. A SaaS product with thousands of tenants can hit the ceiling of one Postgres instance, depending on workload and data size, and face a sharding project it did not plan for. In both cases, the database decision outlasts the rest of the stack. Auth and storage can be replaced, but Supabase Auth ties into row level security policies, so even that move can touch the database.\n\n## How Do Supabase and TiDB Cloud Zero Compare on Vector Search, SQL, and Agent State?\n\nBoth platforms can store agent memory, embeddings, and relational state in SQL with ACID transactions. The difference is how that state is packaged and how it grows. Supabase adds vector search to Postgres through the pgvector extension and uses Postgres's built-in full-text search. TiDB builds vector and full-text search into a distributed SQL engine, so an agent's embeddings and its transactional records sit in one query path.\n\n**Supabase.** Supabase runs managed Postgres with pgvector for embeddings, Postgres full-text search for keywords, and row level security for per-user access. [Supabase documents a hybrid search pattern](https://supabase.com/docs/guides/ai/hybrid-search) that combines both in a SQL function. Around the database sit Supabase Auth, Storage, Realtime, and Edge Functions, all tied to the same project and its row level security policies.\n\n**TiDB Cloud Zero.** TiDB Cloud Zero gives you a real TiDB Cloud Starter database over the MySQL protocol, with TLS by default. It supports a native VECTOR column type and [vector search](https://docs.pingcap.com/ai/vector-search-hybrid-search), plus full-text search for exact keywords. In pytidb, the two combine into hybrid retrieval using RRF, the default, or weighted score fusion. In plain SQL, you run the vector and full-text searches directly and apply your own reranking. Starter can also keep a columnar replica for tables where it is enabled, and tables created with a vector index get one automatically. For those tables, analytical queries over fresh agent activity run without a separate warehouse or CDC pipeline.\n\nA few capability gaps matter in practice, and this is where teams get caught:\n- **Row level security.** Supabase leans on Postgres row level security for tenant isolation. TiDB uses MySQL-style privileges, so tenant isolation lives in schema design or in a database per tenant.\n- **Feature maturity.** TiDB vector search is in public preview on Starter. Full-text search is available only in [selected regions](https://docs.pingcap.com/ai/vector-search-hybrid-search), and Zero assigns the region automatically. Check that full-text search is available in the region your Zero instance is assigned to.\n- **SQL dialect.** Supabase speaks Postgres. TiDB speaks MySQL. Moving between them means rewriting dialect-specific queries, functions, and extensions. TiDB also does not support stored procedures, stored functions, or triggers, so that logic needs redesign.\n\n### Key Differences in Vector Search and SQL\n\nSupabase is the stronger fit when your retrieval logic depends on the Postgres extension ecosystem and on row level security. TiDB is the stronger fit when you want vectors, full-text, transactions, and analytics over the same rows without adding a second system. For a wider view across dedicated vector stores, see our [vector database comparison](https://www.pingcap.com/compare/best-vector-database/).\n\n## How Do Supabase MCP and TiDB Cloud Zero Agent Workflows Differ?\n\nSupabase connects agents to a Supabase account through a hosted MCP server, where they can work with existing projects or create new ones. TiDB Cloud Zero lets an agent create its own database from a single instruction. The first model assumes a human holds the account. The second assumes the agent might be the first one to touch the backend.\n\n**Supabase MCP server.** Supabase hosts an [MCP server](https://supabase.com/docs/guides/getting-started/mcp) at mcp.supabase.com with OAuth, and the Supabase CLI exposes a local one for development. URL parameters restrict it to read-only queries, to a single project, or to selected tool groups. Supabase's current docs allow production connections when the task requires them, and recommend project scoping, read-only mode, and restricted feature groups. Its own [security write-up](https://supabase.com/blog/defense-in-depth-mcp) names prompt injection as the primary risk, even in read-only mode.\n\n**TiDB Cloud Zero.** An agent reads the [TiDB Cloud Zero SKILL.md](https://zero.tidbcloud.com/) and provisions a database in seconds, with no account. The connection is standard MySQL, so any MySQL driver, ORM, or SQL client works, and the database can sit behind an MCP server. When a workflow proves itself, a human claims the instance in three clicks and it becomes a persistent TiDB Cloud Starter database.\n\n### Key Differences in MCP and Agent Workflows\n\nThese workflow differences show up in three places. For prototyping, TiDB Cloud Zero removes the setup step entirely, which matters when an agent spins up dozens of scratch databases a day. For team onboarding, Supabase gives every engineer one dashboard for data, auth, and storage. For long-term ownership, TiDB keeps the contract at plain SQL over the MySQL protocol, so the harness, framework, or model can change without rewriting the data layer. A claimed database becomes a [TiDB Cloud Starter](https://www.pingcap.com/tidb/cloud/) instance, and moves up to TiDB Cloud Essential or Dedicated when production load demands it.\n\n## How Do Supabase and TiDB Compare on Deployment, Governance, and Multi-Tenant Architecture?\n\nSupabase scales by giving each project its own Postgres compute and letting you size it up. TiDB scales by spreading many databases and tenants across shared distributed storage, with compute that scales down when a tenant goes idle. That difference decides what happens at 10,000 tenants, not at 10.\n\n**Supabase.** Supabase runs as a managed cloud or as a self-hosted open source stack. On paid plans, [every project runs its own compute instance](https://supabase.com/docs/guides/platform/billing-on-supabase) and paid projects are not paused for inactivity. The Team plan adds SOC 2 reports and SSO for the dashboard. Multi-tenant designs use row level security inside one project, or one project per tenant, where each project carries its own compute bill.\n\n**TiDB.** TiDB separates SQL compute from storage and scales both horizontally without manual sharding. TiDB Cloud Starter scales on request volume and consumes only background request units when idle, and [each Starter organization includes capacity for up to 100 active instances and branches](https://www.pingcap.com/tidb-cloud-starter-pricing-details/) at no additional charge. Workloads that outgrow Starter move to TiDB Cloud Essential, Premium, or Dedicated. Starter, Essential, and Premium run on the TiDB X architecture, Dedicated runs on the classic TiDB architecture, and feature support differs between plans. See [multi-tenant SaaS database solutions](https://www.pingcap.com/solutions/saas/) for tenancy patterns.\n\nOne production example shows the pattern at scale. Kimi.ai, the AI platform from Moonshot AI, uses TiDB Cloud as part of the persistent data infrastructure behind its AI agents, where compute environments stay temporary and application data persists independently. That is a customer deployment, not a general benchmark, and the [AI agent database case study](https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/) covers the details Kimi.ai has made public.\n\n### Key Differences in Tenancy and Scaling\n\n- **Tenancy unit.** Supabase isolates by project or by row level security policy. TiDB isolates by database or schema on shared distributed storage.\n- **Scaling ceiling.** Supabase grows each project's primary Postgres instance, with read replicas for reads. TiDB adds nodes and keeps one logical database.\n\n### Who Should Choose Which\n\nChoose Supabase when you have one app, a moderate tenant count, and a team that wants auth and storage handled for them. Choose TiDB when tenant count, agent sessions, or AI-generated apps grow faster than you can size Postgres instances, or when an idle-compute bill across thousands of small databases is the line item you are trying to remove.",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-intro-2",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "subtitle": "See how TiDB Cloud handles thousands of tenants on shared distributed storage.",
+        "primaryCta": {
+          "text": "Explore Multi-Tenant SaaS Solutions",
+          "href": "https://www.pingcap.com/solutions/saas/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/files/2025/06/22184957/1000011432.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "pre-2",
+      "type": "richTextBlock",
+      "props": {
+        "content": "## How Do Supabase and TiDB Cloud Zero Compare on Pricing and Support?\n\nSupabase charges a plan fee per organization plus compute per project. TiDB Cloud Zero costs nothing to start and caps spend at $1 per temporary database, and a claimed database bills by request units and storage. The headline plan price matters less than the billing shape, because agent workloads create many small, bursty databases.\n\n**Supabase (pricing page, September 2026).** The Free plan starts at $0 per month with two active projects. Pro starts at $25 per organization per month, Team at $599 per month, and Enterprise is custom. [Compute is billed separately for each project](https://supabase.com/docs/guides/platform/billing-on-supabase), and paid plans include a $10 monthly compute credit that covers one Micro instance. Pro ships with a spend cap enabled by default, but the cap does not cover compute, branching compute, or read replica compute. See the [Supabase pricing page](https://supabase.com/pricing) for current rates.\n\n**TiDB Cloud Zero (September 2026).** A TiDB Cloud Zero database needs no account, includes the TiDB Cloud Starter free quota, and carries a hard $1 spending limit. It lasts up to 30 days unless you claim it. A claimed database becomes a TiDB Cloud Starter instance. The [monthly free quota](https://docs.pingcap.com/tidbcloud/select-cluster-tier/) applies to the first five Starter instances in an organization, not to every instance. For each of those five, it covers 5 GiB of row storage, 5 GiB of columnar storage, and 50 million request units. Beyond the quota, usage bills per request unit and per GiB stored, up to the spending limit you set. With no spending limit, Starter throttles the instance once the free quota is used.\n\n### Key Differences in Billing Shape\n\nThe billing shapes diverge on idle workloads. On Supabase's standard paid plans, each running project adds compute cost whether or not anyone queries it. Supabase also offers scale-to-zero Nano pricing to select platform customers, so agent platforms that create many databases should ask about it. On TiDB Cloud Starter, an idle instance can still consume request units from background tasks such as schema syncs and privilege refreshes. For a single production app, the two models land close together. For an agent platform that creates a database per session or per generated app, the per-project compute model multiplies with every database. For a broader cost and capability view, see [best databases for building AI apps](https://www.pingcap.com/compare/best-database-building-ai-apps/).\n\n### Support Plans Compared\n\nBoth vendors tie support to plan tier and route free users to community channels. Supabase attaches support levels to its platform plans. TiDB Cloud sells support as a separate plan through its Connected Care program.\n\n| Vendor | Free tier | Development | Production | Business-critical |\n|---|---|---|---|---|\n| Supabase | Community support | Pro plan email support | Team plan priority support | Enterprise, custom SLA |\n| TiDB Cloud | Basic plan: community, AI assistance, billing and account tickets | Developer plan: technical tickets, business-hours response | Enterprise plan: 7x24 initial response, monitoring and alerts | Premium plan: fastest response, named Technical Account Manager |\n*Table 2: Supabase and TiDB Cloud support plans by tier.*\n\nSources: [Supabase pricing](https://supabase.com/pricing), [TiDB Cloud Connected Care](https://docs.pingcap.com/tidbcloud/connected-care-overview/).\n\n## Where Does TiDB Fit in an AI Agent Backend?\n\nTiDB fits as the persistent context layer beneath the agent. It holds checkpoints, memory records, tool outputs, operational data, and vectors in one MySQL-compatible SQL store. The agent harness, the model, and the auth provider can all change around it without moving the state.\n\nThat placement matters because agent state accumulates whether you plan for it or not. A long-running agent writes memory on every session, retrieves over it on every turn, and needs its task history to survive a crashed sandbox. When those records live in one transactional database with vector and full-text search, a retrieval query can filter by tenant, time range, and semantic similarity in a single statement. Splitting them across a Postgres instance, a vector store, and a cache turns that one statement into three systems to keep consistent.\n\n### When TiDB Cloud Zero Becomes the Stronger Next Step\n\n- **Agents provision their own databases.** TiDB Cloud Zero lets an agent create a real database from a SKILL.md command, with no signup and a $1 spend cap.\n- **Tenant count is the scaling problem.** Thousands of tenant or session databases share one distributed storage layer instead of thousands of separately sized instances.\n- **Retrieval and transactions share rows.** Vector search, full-text search, and ACID writes run against the same tables, with an optional columnar replica for analytics.\n- **The prototype needs a production path.** A claimed Zero database becomes TiDB Cloud Starter, then moves up to Essential, Premium, or Dedicated.\n\nThe fastest way to test the fit is to point one existing agent workflow at a TiDB Cloud Zero database and watch what changes in your retrieval queries and your bill.\n\n## Which Backend Should You Choose for Your Next AI Agent?\n\nChoose Supabase when the product around your agent needs auth, storage, and realtime today, and one Postgres instance per project covers your scale. Choose TiDB Cloud when agent memory, vectors, tool outputs, and tenant data are the core of the system, and you expect the number of databases or tenants to grow faster than you can size instances. Use TiDB Cloud Zero as the free starting point, and claim the database within 30 days to keep it. Neither choice is universal. The right one depends on which layer you want to own.\n\nFour questions settle it for most teams:\n1. **Architecture shape.** Do you need a full backend platform, or a data layer beneath a harness you already run?\n2. **Memory and state.** Will agent state outlive sessions, sandboxes, and the framework you use today?\n3. **Vector plus SQL.** Do retrieval queries need to filter on tenant, time, and transactional fields in the same statement?\n4. **Scaling expectations.** Will you run tens of databases, or tens of thousands?\n\nIf your answers point toward the data layer, TiDB gives you a [distributed SQL database for AI applications](https://www.pingcap.com/ai/) that starts as an instant TiDB Cloud Zero instance for agent memory, retrieval, and tool outputs, with no signup required to start.\n\n*M. Nivanya is a Content Marketing Manager at TiDB, specializing in technical content, customer stories, and thought leadership for distributed database and AI infrastructure audiences. She has prior experience in B2B SaaS content strategy and performance marketing.*\n\n*Ravish Patel is a Solutions Engineer at PingCAP, leading technical evaluations, benchmarks, and migration proofs of concept for enterprise TiDB customers. Previously a MySQL Solutions Engineer at Oracle, Ravish specializes in distributed databases and migrations from MySQL, PostgreSQL, and Aurora.*\n\n*This comparison was developed by reviewing official Supabase and TiDB documentation, vendor pricing pages, and public customer case studies.*",
+        "className": "rich-text-block--raw-source"
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Supabase Alternative FAQs",
+        "items": [
+          {
+            "q": "What Is the Best Supabase Alternative for AI Apps?",
+            "a": "The best Supabase alternative for AI apps depends on which part of Supabase you want to replace. Teams that want a different bundled backend compare platforms such as Firebase, Appwrite, or Convex. Teams that need a stronger data layer for agent memory, vector search, and multi-tenant state compare databases such as TiDB Cloud, which agents can start on for free with TiDB Cloud Zero. Start by naming the workload, whether that is a realtime UI, retrieval, or tenant scale, and choose the platform built for that layer."
+          },
+          {
+            "q": "Is Supabase or TiDB Better for Long-Term Memory AI Agent Workloads?",
+            "a": "Supabase handles long-term agent memory well at moderate scale, using Postgres tables and pgvector inside one project with auth and storage attached. TiDB fits better when memory records, embeddings, tool outputs, and operational data must share one transactional store and grow across many tenants or sessions. TiDB combines vector search, full-text search, and ACID writes on the same rows, and TiDB Cloud Starter scales down idle databases. The deciding factor is how many memory stores you expect to run."
+          },
+          {
+            "q": "Does Supabase Have an MCP Server?",
+            "a": "Yes. Supabase hosts an MCP server at mcp.supabase.com that authenticates with OAuth, and the Supabase CLI runs a local MCP server for development. Configuration parameters restrict the server to read-only queries, to a single project, or to selected tool groups. Supabase's current docs allow production connections when the task requires them, and recommend project scoping, read-only mode, and restricted feature groups. Its security guidance identifies prompt injection as the main risk, so scope access tightly before you connect an agent."
+          },
+          {
+            "q": "Can TiDB Cloud Zero Replace a Full Backend as a Service Platform?",
+            "a": "TiDB Cloud replaces the data layer of a backend as a service platform, not the whole platform. TiDB Cloud Zero is the no-signup way to start. An agent can provision a MySQL-compatible SQL database with vector search, full-text search, and ACID transactions, and a human claims it within 30 days to keep it. Neither includes user authentication, file storage, or realtime channels. Teams that need those pair TiDB with an identity provider, object storage, and an event layer, which adds integration work and removes coupling to one vendor."
+          },
+          {
+            "q": "How Hard Is It to Migrate from Supabase to Another Database Backend?",
+            "a": "Migrating the database is the simpler part of leaving Supabase. You can export data with standard Postgres tools, but the Postgres schema cannot load into TiDB as-is. Postgres-specific DDL, data types, functions, and extensions such as pgvector need conversion, queries need rewriting for the MySQL dialect, and TiDB does not support stored procedures, stored functions, or triggers. The larger effort sits in platform features. Supabase Auth users, Storage buckets, row level security policies, Edge Functions, and Realtime subscriptions all need replacement services and application changes. Plan the migration by platform feature, not by table count.\n\n:::cta bg=\"https://static.pingcap.com/files/2025/06/22211020/1000011435.png\"\nStart your agent's memory layer on a distributed SQL database built for AI applications.\n[Try TiDB Cloud Zero](https://zero.tidbcloud.com/)\n[Explore TiDB for AI](https://www.pingcap.com/ai/)\n:::"
+          }
+        ]
+      },
+      "style": {
+        "background": "none",
+        "spacing": "section",
+        "removePaddingTop": true,
+        "removePaddingBottom": true
+      }
+    }
+  ]
+}
