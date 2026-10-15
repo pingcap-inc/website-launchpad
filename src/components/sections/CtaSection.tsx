@@ -9,8 +9,8 @@ interface CtaSectionProps {
   title: string
   subtitle?: string
   image?: { image: ImageRef; alt?: string; width?: number; height?: number }
-  primaryCta: { text: string; href: string }
-  secondaryCta?: { text: string; href: string }
+  primaryCta: { text: string; href: string; newTab?: boolean }
+  secondaryCta?: { text: string; href: string; newTab?: boolean }
   className?: string
 }
 
@@ -35,10 +35,14 @@ export function CtaSection({
         )}
         <div className="flex items-center gap-4 flex-wrap mt-6">
           {primaryCta.text && (
-            <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>
+            <PrimaryButton href={primaryCta.href} newTab={primaryCta.newTab}>
+              {primaryCta.text}
+            </PrimaryButton>
           )}
           {secondaryCta && (
-            <SecondaryButton href={secondaryCta.href}>{secondaryCta.text}</SecondaryButton>
+            <SecondaryButton href={secondaryCta.href} newTab={secondaryCta.newTab}>
+              {secondaryCta.text}
+            </SecondaryButton>
           )}
         </div>
       </div>
@@ -73,10 +77,14 @@ export function CtaSection({
           {subtitle && <p className="text-2xl text-current leading-relaxed">{subtitle}</p>}
           <div className="flex items-center gap-4 flex-wrap mt-8">
             {primaryCta.text && (
-              <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>
+              <PrimaryButton href={primaryCta.href} newTab={primaryCta.newTab}>
+                {primaryCta.text}
+              </PrimaryButton>
             )}
             {secondaryCta && (
-              <SecondaryButton href={secondaryCta.href}>{secondaryCta.text}</SecondaryButton>
+              <SecondaryButton href={secondaryCta.href} newTab={secondaryCta.newTab}>
+                {secondaryCta.text}
+              </SecondaryButton>
             )}
           </div>
         </SlideIn>
@@ -88,10 +96,14 @@ export function CtaSection({
           {subtitle && <p className="text-2xl text-current leading-relaxed">{subtitle}</p>}
           <div className="flex items-center gap-4 flex-wrap mt-8 justify-center">
             {primaryCta.text && (
-              <PrimaryButton href={primaryCta.href}>{primaryCta.text}</PrimaryButton>
+              <PrimaryButton href={primaryCta.href} newTab={primaryCta.newTab}>
+                {primaryCta.text}
+              </PrimaryButton>
             )}
             {secondaryCta && (
-              <SecondaryButton href={secondaryCta.href}>{secondaryCta.text}</SecondaryButton>
+              <SecondaryButton href={secondaryCta.href} newTab={secondaryCta.newTab}>
+                {secondaryCta.text}
+              </SecondaryButton>
             )}
           </div>
         </div>

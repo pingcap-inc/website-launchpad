@@ -336,6 +336,8 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
   logoCloud: {
     Component: LogoCloudSection,
     mapProps: (props: SectionPropsMap['logoCloud']) => ({
+      cta: props.cta,
+      logoClassName: props.logoClassName,
       eyebrow: props.eyebrow,
       title: props.title,
       subtitle: props.subtitle,

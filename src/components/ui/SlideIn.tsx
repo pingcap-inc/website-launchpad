@@ -53,7 +53,7 @@ export function SlideIn({
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
       className={cn(
-        'transition-all duration-700 ease-out',
+        'transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:opacity-100',
         visible ? (isFade ? 'opacity-100' : 'opacity-100 translate-x-0 translate-y-0') : initial,
         className
       )}

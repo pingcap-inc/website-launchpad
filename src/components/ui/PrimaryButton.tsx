@@ -9,6 +9,9 @@ interface PrimaryButtonProps {
   className?: string
   onClick?: () => void
   href?: string
+  /** Force a new tab. External hrefs already open in one; use this for links to
+   *  our own host that should still leave the current page intact. */
+  newTab?: boolean
 }
 
 export function ArrowUpRightIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -31,7 +34,7 @@ export function ArrowUpRightIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-export function PrimaryButton({ children, className, onClick, href }: PrimaryButtonProps) {
+export function PrimaryButton({ children, className, onClick, href, newTab }: PrimaryButtonProps) {
   const classes = cn(
     'group relative overflow-hidden',
     'rounded-none h-10 bg-bg-inverse px-4',
@@ -77,6 +80,7 @@ export function PrimaryButton({ children, className, onClick, href }: PrimaryBut
           onClick?.()
         }}
         {...externalLinkProps(href)}
+        {...(newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       >
         {content}
       </a>
