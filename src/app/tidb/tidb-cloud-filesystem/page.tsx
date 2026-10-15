@@ -435,7 +435,7 @@ curl -fsSL https://tidb.link/fs-skill.md >> AGENTS.md`}
         </Command>
         <div className="h-[15px]" />
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # after setup: mount your filesystem to read and update files
+          # per sandbox — mount, resume, hand off
         </div>
         <Command
           cmd={`ti fs mount --mount-path ~/workspace
