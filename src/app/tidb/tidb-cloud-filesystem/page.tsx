@@ -396,6 +396,18 @@ function HeroCodePanel() {
         </div>
       </div>
       <div className="px-6 py-[22px] font-mono text-[13px] leading-[1.7] text-carbon-200">
+        {/* The mount block assumes a filesystem already exists and access is
+            configured, so first-time readers get pointed at the quickstart. */}
+        <p className="mb-4 font-mono text-xs leading-[1.6] text-carbon-400">
+          For an existing filesystem. First time?{' '}
+          <a
+            href={DOCS_QUICKSTART}
+            className="text-carbon-200 underline underline-offset-4 transition-colors duration-150 hover:text-white"
+          >
+            Follow the quickstart
+          </a>
+          .
+        </p>
         {/* tidb.link/fs-skill.md redirects to the skill the product team owns,
             skills/mount-tidb-cloud-fs/SKILL.md in pingcap/agent-rules. It used to
             point at a copy served from this repo's public/ directory; that copy is
@@ -423,7 +435,7 @@ curl -fsSL https://tidb.link/fs-skill.md >> AGENTS.md`}
         </Command>
         <div className="h-[15px]" />
         <div className="whitespace-pre-wrap [overflow-wrap:anywhere] text-carbon-700">
-          # per sandbox — mount, resume, hand off
+          # after setup: mount your filesystem to read and update files
         </div>
         <Command
           cmd={`ti fs mount --mount-path ~/workspace
