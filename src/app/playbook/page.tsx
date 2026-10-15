@@ -50,6 +50,10 @@ const dsl: PageDSL = {
     description:
       'This is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.',
     canonical: '/playbook/',
+    createdBy: 'a.hire@pingcap.com',
+    createdAt: '2026-10-15T20:54:13.512Z',
+    modifiedBy: 'a.hire@pingcap.com',
+    modifiedAt: '2026-10-15T20:54:13.512Z',
   },
   sections: [
     {
@@ -156,6 +160,29 @@ const dsl: PageDSL = {
             cta: {
               text: 'Read the Playbook',
               href: '/playbook/idea-to-live-app-weekend-app-development-guide/',
+            },
+            layout: 'vertical',
+          },
+          {
+            icon: 'Table',
+            title: 'MySQL Schema Change at Lunch, Not 2 A.M.',
+            description:
+              "Schema changes shouldn't mean midnight maintenance windows. This playbook covers how TiDB's built-in Online DDL lets you add indexes and modify billion-row tables without blocking reads and writes, eliminating external tools and reducing operational overhead.",
+            cta: {
+              text: 'Read the Playbook',
+              href: 'https://www.pingcap.com/playbook/schema-changes-midnight-maintenance/',
+            },
+            layout: 'vertical',
+          },
+          {
+            icon: 'Puzzle',
+            title:
+              'AI Agent Memory Architecture: How to Store Long-Term Memory, State, and Retrieval Data',
+            description:
+              "AI agents lose context when every session starts from scratch. This playbook covers how to design production-ready agent memory, manage short-term and long-term state, and use TiDB's SQL and vector search capabilities to store and retrieve context at scale.",
+            cta: {
+              text: 'Read the Playbook',
+              href: 'https://www.pingcap.com/playbook/ai-agent-memory/',
             },
             layout: 'vertical',
           },
