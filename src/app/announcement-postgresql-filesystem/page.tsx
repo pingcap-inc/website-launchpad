@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'New in Public Preview: PostgreSQL Support & TiDB Cloud Filesystem',
   description:
     'Announcing two powerful new features in public preview: native PostgreSQL support for flexible database compatibility and TiDB Cloud Filesystem for seamless cloud storage integration with your TiDB cluster.',
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/announcement-postgresql-filesystem/' },
   openGraph: {
     title: 'New in Public Preview: PostgreSQL Support & TiDB Cloud Filesystem',
@@ -53,10 +53,11 @@ const dsl: PageDSL = {
     description:
       'Announcing two powerful new features in public preview: native PostgreSQL support for flexible database compatibility and TiDB Cloud Filesystem for seamless cloud storage integration with your TiDB cluster.',
     canonical: '/announcement-postgresql-filesystem/',
+    unlisted: true,
     createdBy: 'a.hire@pingcap.com',
-    createdAt: '2026-10-15T02:50:32.933Z',
+    createdAt: '2026-10-15T02:59:44.645Z',
     modifiedBy: 'a.hire@pingcap.com',
-    modifiedAt: '2026-10-15T02:50:32.933Z',
+    modifiedAt: '2026-10-15T02:59:44.645Z',
   },
   sections: [
     {
@@ -91,74 +92,40 @@ const dsl: PageDSL = {
       },
     },
     {
-      id: 'getting-started',
-      type: 'featureTabs',
+      id: 'featureHighlights-1792032715656',
+      type: 'featureHighlights',
       props: {
         eyebrow: 'Getting Started',
-        title: 'Unlock New Possiblities',
+        title: 'Unlock New Possibilities',
         subtitle: 'Both features are available now in public preview for all TiDB Cloud users',
-        tabs: [
+        items: [
           {
-            id: 'postgresql',
-            label: 'PostgreSQL Support',
-            description: 'Enable PostgreSQL protocol access to your TiDB cluster in minutes',
-            bullets: [
-              'Navigate to your cluster settings in TiDB Cloud console',
-              'Enable PostgreSQL protocol support with one click',
-              'Connect using any PostgreSQL client with your cluster endpoint',
-              'Run your existing PostgreSQL queries and applications',
-              'Monitor performance and compatibility through the console',
-            ],
-            primaryCta: {
+            variant: 'violet',
+            title: 'PostgreSQL Support',
+            description:
+              'Enable PostgreSQL protocol support in minutes through your TiDB Cloud console and connect using your preferred PostgreSQL client.\nRun existing queries and applications while monitoring performance and compatibility from the console.',
+            cta: {
               text: 'Start Here',
               href: 'https://www.pingcap.com/tidb-cloud-starter/',
             },
-            secondaryCta: {
-              text: '',
-              href: '',
-            },
-            image: {
-              image: {
-                url: 'https://static.pingcap.com/images/fd14d65a-graphic-1.svg',
-              },
-              alt: 'tab image',
-              width: 1200,
-              height: 800,
-            },
+            icon: 'Code2',
           },
           {
-            id: 'filesystem',
-            label: 'TiDB Cloud Filesystem',
-            description: 'Connect your S3-compatible storage and start querying cloud data',
-            bullets: [
-              'Configure S3 bucket credentials in TiDB Cloud console',
-              'Create external tables pointing to your cloud files',
-              'Query Parquet, CSV, and JSON files using standard SQL',
-              'Join cloud data with database tables seamlessly',
-              'Optimize queries with filesystem-specific hints and options',
-            ],
-            primaryCta: {
-              text: 'Learn about Filesystem',
+            variant: 'violet',
+            title: ' TiDB Cloud Filesystem',
+            description:
+              'Connect your S3-compatible storage to TiDB Cloud and query Parquet, CSV, and JSON files using standard SQL.\nSeamlessly join cloud data with database tables and optimize query performance with filesystem-specific options.',
+            cta: {
+              text: 'Learn More',
               href: 'https://www.pingcap.com/tidb/tidb-cloud-filesystem/',
             },
-            secondaryCta: {
-              text: '',
-              href: '',
-            },
-            image: {
-              image: {
-                url: 'https://static.pingcap.com/images/fd14d65a-graphic-1.svg',
-              },
-              alt: 'tab image',
-              width: 1200,
-              height: 800,
-            },
+            icon: 'Layers',
           },
         ],
-        autoSwitch: true,
-        autoSwitchInterval: 6000,
+        columns: 2,
       },
       style: {
+        background: 'primary',
         spacing: 'section',
       },
     },
