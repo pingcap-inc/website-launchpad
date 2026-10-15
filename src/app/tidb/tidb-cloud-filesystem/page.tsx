@@ -148,11 +148,11 @@ const faqItems: {
         >
           FUSE mounts buffer writes locally
         </a>{' '}
-        before sending them to the service, so another runtime may not see a change until the
-        writer drains or unmounts. Before you hand a workspace over, run{' '}
-        <code>ti fs drain-file-system</code> (the mount stays up) or unmount normally, which
-        drains automatically, then confirm with <code>ti fs read-file</code>. Avoid concurrent
-        writes to the same file: changes are not merged. See{' '}
+        before sending them to the service, so another runtime may not see a change until the writer
+        drains or unmounts. Before you hand a workspace over, run{' '}
+        <code>ti fs drain-file-system</code> (the mount stays up) or unmount normally, which drains
+        automatically, then confirm with <code>ti fs read-file</code>. Avoid concurrent writes to
+        the same file: changes are not merged. See{' '}
         <a
           href={DOCS_SHARING}
           className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
@@ -239,11 +239,10 @@ const faqItems: {
         Yes. Layers give you an isolated change set over a base path, which you can checkpoint,
         fork, diff, roll back or commit — <code>create-layer-checkpoint</code> and{' '}
         <code>rollback-layer</code> are documented commands. Drain a mounted layer before you
-        checkpoint it. Rollback discards a layer&apos;s uncommitted changes; it does not return to
-        a checkpoint, so to continue from one, fork a new layer. One caveat carried over from the
-        docs:
-        complex histories involving repeated changes to layer-created files, or inherited metadata,
-        might have limitations during public preview. See{' '}
+        checkpoint it. Rollback discards a layer&apos;s uncommitted changes; it does not return to a
+        checkpoint, so to continue from one, fork a new layer. One caveat carried over from the
+        docs: complex histories involving repeated changes to layer-created files, or inherited
+        metadata, might have limitations during public preview. See{' '}
         <a
           href={DOCS_LAYERS}
           className="text-brand-red-light underline underline-offset-4 hover:text-brand-red-primary"
@@ -603,8 +602,8 @@ export default function TidbCloudFilesystemPage() {
                   <p className="flex-1 text-body-md text-carbon-400 [&_code]:font-mono">
                     Mount with <code>--mount-profile coding-agent</code> and{' '}
                     <code>node_modules</code>, <code>dist</code> and caches stay local, because they
-                    can be rebuilt anywhere. What can&apos;t be rebuilt — test results, failure logs,
-                    patches — is what persists.
+                    can be rebuilt anywhere. What can&apos;t be rebuilt — test results, failure
+                    logs, patches — is what persists.
                   </p>
                   <div className="flex min-h-[320px] flex-col gap-2.5 border-t border-white/10 pt-[22px]">
                     <p className="mb-1 font-mono text-[11px] tracking-[0.05em] text-carbon-700">
