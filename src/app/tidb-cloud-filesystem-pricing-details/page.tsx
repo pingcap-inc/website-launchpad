@@ -107,49 +107,6 @@ const RATES = [
   },
 ]
 
-const EXAMPLES = [
-  {
-    name: 'Example 1: Infrequent Usage — mount from outside the TiDB Cloud provider region',
-    outcome: 'The free-tier covers this usage',
-    explanation:
-      'The usage adds up to $4.80. Applying the free-tier allowance leaves $0 to pay for this usage.',
-    eligibility:
-      'The 1 GB stored is below the 2 GB no-card storage cap. File-count and single file system under one region limits still apply.',
-    lines: [
-      ['54,400 pooled file write requests', '$0.27'],
-      ['2,720,000 pooled file read requests', '$1.09'],
-      ['2,000 write requests', '$1.00'],
-      ['50,000 read requests', '$2.00'],
-      ['1 GB Performance storage', '$0.30'],
-      ['2 GB Pooled storage', '$0.05'],
-      ['1 GB egress', '$0.09'],
-    ],
-    gross: '$4.80',
-    credit: '-$4.80',
-    net: '$0',
-  },
-  {
-    name: 'Example 2: Medium Usage - mount from inside the TiDB Cloud provider region',
-    outcome: 'The usage exceeds the free-tier allowance',
-    explanation:
-      'The usage adds up to $7.90. Subtract the full $5 free-tier allowance to get $2.90 to pay for this usage.',
-    eligibility:
-      'Keeping 13 GB in one file system exceeds the no-card storage cap and requires a card on file.',
-    lines: [
-      ['90,000 pooled file write requests', '$0.45'],
-      ['4,500,000 pooled file read requests', '$1.80'],
-      ['3,000 write requests', '$1.50'],
-      ['75,000 read requests', '$3.00'],
-      ['3 GB Performance storage', '$0.90'],
-      ['10 GB Pooled storage', '$0.25'],
-      ['0 GB egress', '$0.0'],
-    ],
-    gross: '$7.90',
-    credit: '-$5.00',
-    net: '$2.90',
-  },
-]
-
 // Verified live on docs.pingcap.com 2026-09-21.
 // Agreed 2026-09-24 as the single Filesystem quickstart entrance, so this page
 // and the product page send readers to the same place.
@@ -296,11 +253,18 @@ export default function FilesystemPricingDetailsPage() {
             aria-labelledby="preview-pricing-notice"
             className="mx-auto max-w-[760px] bg-brand-blue-pale px-4 py-3 text-body-md leading-6 text-text-primary"
           >
+            {/* 2026-10-15: pricing and the SKU list are being revised (two pooled
+                operation SKUs are expected to be removed). The page stays up with
+                the current rates rather than being taken down, because the product
+                page links here and these are the rates in effect today. No
+                effective date or advance-notice commitment is stated, because
+                neither has been confirmed. */}
             <p id="preview-pricing-notice" className="mb-3 text-h3-sm font-bold">
-              Public preview pricing
+              Public preview pricing is being updated
             </p>
             <p>
-              The prices on this page apply to the public preview and may change at GA.{' '}
+              The rates on this page are the current public preview rates. Updated pricing will be
+              published on this page.{' '}
               <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
                 Contact us
               </a>{' '}
@@ -440,71 +404,11 @@ export default function FilesystemPricingDetailsPage() {
           </div>
         </SectionWrapper>
 
-        {/* Show complete arithmetic and then explain how shared credit changes it. */}
-        <SectionWrapper id="monthly-cost" style={{ background: 'primary' }}>
-          <SectionHeader
-            title="Example Monthly Bills"
-            subtitle="Add the charges for each billing item, then subtract the available monthly free-tier allowance. These illustrative examples show both the calculation and what remains to pay."
-            className="mb-8"
-            h2Size="md"
-          />
-          <p className="mb-8 max-w-[760px] text-body-lg text-carbon-300">
-            Both examples use non-pooled read/write requests, Performance storage held for a full
-            month and no Pooled usage, at <code className="font-mono">{RATE_REGION}</code> rates.
-            Because both are dominated by requests, which cost the same everywhere, the same usage
-            in the most expensive listed region comes to under 3% more. Each starts with the
-            organization&rsquo;s full $5 monthly free-tier allowance available.
-          </p>
-          <div className="grid gap-6 md:grid-cols-2">
-            {EXAMPLES.map((example) => (
-              <div key={example.name} className="rounded-lg border border-carbon-800 p-6">
-                <h3 className="mb-1 text-h3-sm font-bold">{example.name}</h3>
-                <p className="text-body-sm text-carbon-400">{example.outcome}</p>
-                {/* The shared premise above is ~600px away from this card on a
-                    phone. Repeat the rate category here so the numbers never
-                    travel without the condition that produced them. */}
-                <p className="mb-4 text-body-sm text-carbon-400">
-                  Non-pooled requests, Performance storage, full $5 free-tier allowance available
-                </p>
-                <dl className="mb-5 space-y-3 text-body-md text-carbon-200">
-                  {example.lines.map(([usage, cost]) => (
-                    <div key={usage} className="flex justify-between gap-3">
-                      <dt>{usage}</dt>
-                      <dd className="shrink-0 font-mono">{cost}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <dl className="space-y-2 border-t border-carbon-800 pt-4 text-body-md text-carbon-200">
-                  <div className="flex justify-between">
-                    <dt>Usage charges</dt>
-                    <dd className="font-mono">{example.gross}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt>Free-tier allowance applied</dt>
-                    <dd className="font-mono">{example.credit}</dd>
-                  </div>
-                </dl>
-                <p className="mt-4 text-h3-lg font-bold">
-                  {example.net}{' '}
-                  <span className="ml-2 text-body-md text-carbon-300">after allowance</span>
-                </p>
-                <p className="mt-4 text-body-md text-carbon-200">{example.explanation}</p>
-                <p className="mt-3 text-body-md text-carbon-300">{example.eligibility}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 max-w-[760px] border-l-2 border-carbon-400 pl-6">
-            <h3 className="mb-3 text-h3-lg font-bold">
-              Already Used Some of Your Free-tier Allowance?
-            </h3>
-            <p className="text-body-lg text-carbon-300">
-              If other file system usage in your organization has already consumed $3 of this
-              month&rsquo;s allowance, only $2 remains. For the same $4.80 of usage in Example 1,
-              the amount to pay would be $4.80 + $3.00 − $5.00 = $2.80. Creating a new file system
-              or using another region does not provide an additional free-tier allowance.
-            </p>
-          </div>
-        </SectionWrapper>
+        {/* Example Monthly Bills removed 2026-10-15 while pricing is revised. Both
+            examples were built mostly from the two pooled operation SKUs that are
+            expected to be dropped, so they would be the first thing on the page to
+            go stale. Restore from git history once the new rates are final, and
+            re-derive every line. */}
 
         <SectionWrapper id="rates" style={{ background: 'gray' }}>
           <SectionHeader
@@ -550,8 +454,7 @@ export default function FilesystemPricingDetailsPage() {
             </table>
           </div>
           <p className="mt-4 max-w-[760px] text-body-sm text-text-primary/60">
-            All prices in USD. Billed monthly, prorated by the hour. Worked examples on this page
-            use <code>{RATE_REGION}</code>. Regions are added gradually —{' '}
+            All prices in USD. Billed monthly, prorated by the hour. Regions are added gradually —{' '}
             <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
               contact us
             </a>{' '}
