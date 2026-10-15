@@ -3,7 +3,11 @@
   "meta": {
     "title": "TiDB Integrations: Kubernetes, Kafka, Spark and More",
     "description": "Explore TiDB and TiDB Cloud integrations -- Kubernetes Operator, Kafka CDC, Spark (TiSpark), Terraform, and more. Deploy faster with TiDB.",
-    "canonical": "/integrations/"
+    "canonical": "/integrations/",
+    "createdBy": "a.hire@pingcap.com",
+    "createdAt": "2026-10-14T20:41:15.077Z",
+    "modifiedBy": "a.hire@pingcap.com",
+    "modifiedAt": "2026-10-14T20:41:15.077Z"
   },
   "sections": [
     {
@@ -14,18 +18,10 @@
         "eyebrow": "Integrations & Compatibility",
         "headline": "TiDB Integrations: Kubernetes, Kafka, Spark and Cloud",
         "subheadline": "TiDB and TiDB Cloud integrate with the tools modern engineering teams already run. Fully MySQL protocol compatible with standard drivers, JDBC, ODBC, and popular ORMs like Hibernate, Prisma, and SQLAlchemy.",
-        "primaryCta": {
-          "text": "Start for Free",
-          "href": "https://tidbcloud.com/free-trial/"
-        },
-        "secondaryCta": {
-          "text": "View Documentation",
-          "href": "https://docs.pingcap.com/"
-        },
+        "primaryCta": { "text": "Start for Free", "href": "https://tidbcloud.com/free-trial/" },
+        "secondaryCta": { "text": "View Documentation", "href": "https://docs.pingcap.com/" },
         "heroImage": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg" },
           "alt": "hero image",
           "width": 500,
           "height": 400
@@ -94,10 +90,7 @@
         ],
         "columns": 4
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "kubernetes",
@@ -166,10 +159,7 @@
         "columns": 3,
         "borderStyle": "gray"
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "mysql-compatibility",
@@ -178,9 +168,7 @@
         "title": "TiDB Is Fully MySQL Compatible",
         "subtitle": " Most integrations rely on open standards like JDBC and ODBC — reducing friction when migrating or modernizing existing workloads. If you are modernizing legacy systems, see how to Modernize MySQL workloads with TiDB.",
         "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg" },
           "alt": "",
           "width": 278,
           "height": 256
@@ -189,15 +177,9 @@
           "text": "Modernize MySQL Workloads",
           "href": "https://www.pingcap.com/solutions/modernize-mysql-workloads/"
         },
-        "secondaryCta": {
-          "text": "Learn More",
-          "href": "https://docs.pingcap.com/"
-        }
+        "secondaryCta": { "text": "Learn More", "href": "https://docs.pingcap.com/" }
       },
-      "style": {
-        "background": "brand-violet",
-        "spacing": "section"
-      }
+      "style": { "background": "brand-violet", "spacing": "section" }
     },
     {
       "id": "streaming",
@@ -277,10 +259,7 @@
         "columns": 3,
         "borderStyle": "gray"
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "analytics",
@@ -349,10 +328,7 @@
         "columns": 3,
         "borderStyle": "gray"
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "drivers",
@@ -432,10 +408,7 @@
         "columns": 3,
         "borderStyle": "gray"
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "cloud-providers",
@@ -464,7 +437,7 @@
               "height": 66
             },
             "title": "Google Cloud Platform",
-            "description": "Run TiDB on Google Cloud Bigtable or self-host with native GCP marketplace integrations.",
+            "description": "Deploy TiDB on Google Kubernetes Engine (GKE).",
             "href": "https://docs.pingcap.com/tidb-in-kubernetes/stable/deploy-on-gcp-gke/"
           },
           {
@@ -499,10 +472,7 @@
         "columns": 3,
         "borderStyle": "gray"
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "featureCard-1778062110285",
@@ -548,10 +518,7 @@
         "columns": 3,
         "borderStyle": "gray"
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "featureCard-1778062198951",
@@ -630,10 +597,7 @@
         "columns": 3,
         "borderStyle": "gray"
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "final-cta",
@@ -642,26 +606,15 @@
         "title": "Ready to Integrate TiDB into Your Tech Stack?",
         "subtitle": "Explore the full documentation for each integration, or get started with TiDB Cloud free trial today.",
         "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg" },
           "alt": "",
           "width": 278,
           "height": 256
         },
-        "primaryCta": {
-          "text": "Start for Free",
-          "href": "https://tidbcloud.com/free-trial/"
-        },
-        "secondaryCta": {
-          "text": "View All Documentation",
-          "href": "https://docs.pingcap.com/"
-        }
+        "primaryCta": { "text": "Start for Free", "href": "https://tidbcloud.com/free-trial/" },
+        "secondaryCta": { "text": "View All Documentation", "href": "https://docs.pingcap.com/" }
       },
-      "style": {
-        "background": "brand-violet",
-        "spacing": "section"
-      }
+      "style": { "background": "brand-violet", "spacing": "section" }
     },
     {
       "id": "faq-1778062459306",
@@ -695,10 +648,7 @@
           }
         ]
       },
-      "style": {
-        "background": "gradient-dark-bottom",
-        "spacing": "section"
-      }
+      "style": { "background": "gradient-dark-bottom", "spacing": "section" }
     }
   ]
 }
