@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { logAudit } from '@/lib/audit'
+import { getGitHubAuthHeaders } from '@/lib/github-auth'
 
 const DRAFT_BRANCH = 'drafts/ai'
 
@@ -7,16 +9,6 @@ function isValidSlugPath(slug: string) {
   const segments = slug.split('/').filter(Boolean)
   if (segments.length === 0) return false
   return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
-}
-
-function getGitHubHeaders() {
-  const { GITHUB_TOKEN } = process.env
-  return {
-    Authorization: `Bearer ${GITHUB_TOKEN}`,
-    Accept: 'application/vnd.github+json',
-    'X-GitHub-Api-Version': '2022-11-28',
-    'Content-Type': 'application/json',
-  }
 }
 
 async function readSha(
@@ -55,10 +47,11 @@ async function deleteFile(
 }
 
 export async function POST(req: NextRequest) {
-  const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env
+  const { GITHUB_OWNER, GITHUB_REPO } = process.env
   const publishedBranch = process.env.GITHUB_BRANCH ?? 'staging'
 
-  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+  const headers = await getGitHubAuthHeaders()
+  if (!headers || !GITHUB_OWNER || !GITHUB_REPO) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
 
@@ -77,17 +70,57 @@ export async function POST(req: NextRequest) {
   const includeDraft = body.includeDraft !== false
   const includePublished = body.includePublished !== false
 
-  const headers = getGitHubHeaders()
   const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`
   const message = `chore: delete page /${slug}/`
 
   const targets: Array<{ branch: string; path: string }> = []
 
   if (includePublished) {
-    targets.push(
-      { branch: publishedBranch, path: `src/app/${slug}/page.tsx` },
-      { branch: publishedBranch, path: `src/app/${slug}/page.dsl.json` }
-    )
+    // Only delete the published page.tsx when a sibling page.dsl.json exists:
+    // its presence marks this as a CMS-managed page. A page.tsx with no DSL is
+    // hand-authored (code-owned); deleting it through the CMS API would silently
+    // destroy a developer's file, so refuse it here.
+    let publishedDslSha: string | null
+    try {
+      publishedDslSha = await readSha(
+        baseUrl,
+        headers,
+        `src/app/${slug}/page.dsl.json`,
+        publishedBranch
+      )
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Unknown error during deletion'
+      return NextResponse.json({ error: msg }, { status: 500 })
+    }
+
+    if (publishedDslSha) {
+      targets.push(
+        { branch: publishedBranch, path: `src/app/${slug}/page.tsx` },
+        { branch: publishedBranch, path: `src/app/${slug}/page.dsl.json` }
+      )
+    } else {
+      let publishedTsxSha: string | null
+      try {
+        publishedTsxSha = await readSha(
+          baseUrl,
+          headers,
+          `src/app/${slug}/page.tsx`,
+          publishedBranch
+        )
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Unknown error during deletion'
+        return NextResponse.json({ error: msg }, { status: 500 })
+      }
+      if (publishedTsxSha) {
+        return NextResponse.json(
+          {
+            error:
+              'Refusing to delete a code-owned page (page.tsx with no page.dsl.json). Delete it in the repository instead.',
+          },
+          { status: 409 }
+        )
+      }
+    }
   }
 
   if (includeDraft) {
@@ -110,6 +143,13 @@ export async function POST(req: NextRequest) {
   if (deleted === 0) {
     return NextResponse.json({ error: 'No matching files to delete' }, { status: 404 })
   }
+
+  await logAudit(req, {
+    action: 'delete',
+    target: slug,
+    status: 'success',
+    detail: `${deleted} file(s)`,
+  })
 
   return NextResponse.json({ success: true, deleted })
 }

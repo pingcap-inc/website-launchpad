@@ -21,9 +21,11 @@ const NAV_ITEMS: {
 interface AdminSidebarProps {
   collapsed: boolean
   onToggle: () => void
+  /** Signed-in user block (name/email + sign out); rendered in the footer. */
+  userSlot?: React.ReactNode
 }
 
-export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
+export function AdminSidebar({ collapsed, onToggle, userSlot }: AdminSidebarProps) {
   const pathname = usePathname()
 
   return (
@@ -115,10 +117,11 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
         </ul>
       </nav>
 
-      {/* Footer */}
+      {/* Footer: signed-in user + sign out */}
       {!collapsed && (
-        <div className="border-t border-gray-200 shrink-0 px-5 py-4">
-          <p className="text-label text-gray-400">Internal tool — PingCAP</p>
+        <div className="border-t border-gray-200 shrink-0 px-3 py-4">
+          {userSlot}
+          <p className="mt-3 text-label text-gray-400">Internal tool — PingCAP</p>
         </div>
       )}
     </aside>

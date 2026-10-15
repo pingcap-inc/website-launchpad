@@ -3,7 +3,17 @@
   "meta": {
     "title": "Persistent Context for AI Agents | TiDB",
     "description": "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors.",
-    "canonical": "/solutions/ai-agent-context/"
+    "canonical": "/solutions/ai-agent-context/",
+    "createdBy": "a.hire@pingcap.com",
+    "createdAt": "2026-10-14T03:17:43.178Z",
+    "modifiedBy": "liwen.xu@pingcap.com",
+    "modifiedAt": "2026-10-14T07:02:42.489Z",
+    "ogImage": {
+      "url": "https://static.pingcap.com/images/78891a1c-ai-agent-context-social.png",
+      "alt": "ai agent context social",
+      "width": 1200,
+      "height": 630
+    }
   },
   "sections": [
     {
@@ -12,29 +22,21 @@
       "props": {
         "layout": "centered",
         "eyebrow": "Persistent Context for AI Agents",
-        "headline": "Agents are Ephemeral. Their State Shouldn't Be.",
+        "headline": "Agents Are Ephemeral. Their State Shouldn't Be.",
         "subheadline": "TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors. Agents can resume work across sessions and runtime restarts",
         "primaryCta": {
           "text": "Start Free on TiDB Cloud",
           "href": "https://tidbcloud.com/free-trial/"
         },
-        "secondaryCta": {
-          "text": "",
-          "href": ""
-        },
+        "secondaryCta": { "text": "", "href": "" },
         "heroImage": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg" },
           "alt": "hero image",
           "width": 500,
           "height": 400
         }
       },
-      "style": {
-        "spacing": "hero",
-        "backgroundEffect": "agent-memory"
-      }
+      "style": { "spacing": "hero", "backgroundEffect": "agent-memory" }
     },
     {
       "id": "columns-1782897376614",
@@ -46,12 +48,10 @@
         "titleFullWidth": true,
         "layout": "split",
         "mediaType": "shortcode",
-        "shortCode": "[agent-memory-timeline]"
+        "shortCode": "[agent-memory-timeline]",
+        "itemColumns": 2
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "problem-01",
@@ -110,9 +110,7 @@
         "startPosition": "left",
         "spacing": "xl"
       },
-      "style": {
-        "spacing": "section"
-      }
+      "style": { "spacing": "section" }
     },
     {
       "id": "columns-1782897431316",
@@ -135,13 +133,10 @@
           "width": 1000,
           "height": 1720
         },
-        "shortCode": "[tidb-persistent-layer-animation]"
+        "shortCode": "[tidb-persistent-layer-animation]",
+        "itemColumns": 2
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section",
-        "removePaddingBottom": true
-      }
+      "style": { "background": "primary", "spacing": "section", "removePaddingBottom": true }
     },
     {
       "id": "solution-01",
@@ -155,18 +150,15 @@
             "icon": "Database",
             "title": "Persistent, Queryable Memory",
             "description": "Agents write conversation turns, preferences, facts, and decisions to TiDB Cloud. That memory persists across sessions, stays queryable, and can be accessed by other agents in the same workflow. TiDB keeps checkpoints consistent with the application data the agent changed, so the agent can resume from reliable state.",
-            "cta": {
-              "text": "Explore TiDB Cloud",
-              "href": "https://www.pingcap.com/tidb/cloud/"
-            }
+            "cta": { "text": "Explore TiDB Cloud", "href": "https://www.pingcap.com/tidb/cloud/" }
           },
           {
             "icon": "Shield",
             "title": "Agent and Tenant Isolation ",
             "description": "TiDB Cloud's distributed architecture separates logical isolation from physical infrastructure. Each agent gets its own database with hard data boundaries, while the underlying compute and storage are shared across the cluster.",
             "cta": {
-              "text": "View Architecture",
-              "href": "https://docs.pingcap.com/"
+              "text": "Explore Tenant Isolation",
+              "href": "https://www.pingcap.com/playbook/noisy-neighbor-multi-tenant-mysql/"
             }
           },
           {
@@ -175,23 +167,19 @@
             "description": "On TiDB Cloud, a support agent can query a customer's account tier, open tickets, and semantically similar past conversations in one SQL statement. TiFlash handles analytical queries on live data without needing a separate pipeline.",
             "cta": {
               "text": "See Vector Search",
-              "href": "https://www.pingcap.com/tidb/cloud/"
+              "href": "https://docs.pingcap.com/ai/vector-search-overview/"
             }
           }
         ],
         "columns": 3
       },
-      "style": {
-        "background": "primary",
-        "spacing": "lg",
-        "removePaddingTop": true
-      }
+      "style": { "background": "primary", "spacing": "lg", "removePaddingTop": true }
     },
     {
       "id": "caseStudyCards-1782472692660",
       "type": "caseStudyCards",
       "props": {
-        "title": "Leading AI companies Rely on TiDB",
+        "title": "Leading AI Companies Rely on TiDB",
         "items": [
           {
             "badge": "Provisioning at Scale",
@@ -209,14 +197,8 @@
             "title": "Millions of Agent-Created Databases, Provisioned in Under a Second",
             "description": "Kimi's K2.6 agent builds and hosts full-stack web applications for millions of users, provisioning an isolated database per site instantly, powered by TiDB Cloud's multi-tenant architecture.",
             "stats": [
-              {
-                "value": "<1s",
-                "label": "Database provisioning per site"
-              },
-              {
-                "value": "10M+",
-                "label": "Tenants supported"
-              }
+              { "value": "<1s", "label": "Database provisioning per site" },
+              { "value": "10M+", "label": "Tenants supported" }
             ],
             "href": "https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/",
             "cta": "Read the story"
@@ -237,14 +219,8 @@
             "title": "From Viral Launch to 1M+ Database Tenants",
             "description": "Migrated to TiDB Cloud in two weeks to support explosive growth. TiDB now powers context persistence behind Manus's agent swarms and full-stack app generation.",
             "stats": [
-              {
-                "value": "2 wks",
-                "label": "Migration time"
-              },
-              {
-                "value": "1M+",
-                "label": "DB tenants"
-              }
+              { "value": "2 wks", "label": "Migration time" },
+              { "value": "1M+", "label": "DB tenants" }
             ],
             "href": "https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/",
             "cta": "Read the story"
@@ -265,23 +241,15 @@
             "title": "From Two Data Stores to One Unified Database",
             "description": "Plaud migrated from MySQL + Amazon S3 to TiDB Cloud, eliminating S3 retrieval latency and unlocking online DDL for 2M+ users across 170 countries.",
             "stats": [
-              {
-                "value": "10x",
-                "label": "OPS improvement under peak load"
-              },
-              {
-                "value": "13",
-                "label": "TiDB Cloud clusters in production"
-              }
+              { "value": "10x", "label": "OPS improvement under peak load" },
+              { "value": "13", "label": "TiDB Cloud clusters in production" }
             ],
-            "cta": "Read the story",
-            "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/"
+            "href": "https://www.pingcap.com/case-study/how-plaud-eliminated-s3-latency-limitless-scale/",
+            "cta": "Read the story"
           }
         ]
       },
-      "style": {
-        "spacing": "section"
-      }
+      "style": { "spacing": "section" }
     },
     {
       "id": "use-cases-01",
@@ -293,19 +261,19 @@
         "items": [
           {
             "icon": "MessageSquare",
-            "title": "Customer Support Agents With Conversation History",
+            "title": "Customer Support Agents with Conversation History",
             "description": "Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB Cloud while keeping their data boundaries intact.",
             "borderColor": "border-blue-500"
           },
           {
             "icon": "Code2",
-            "title": "Code Generation Agents With Project Context",
+            "title": "Code Generation Agents with Project Context",
             "description": "Coding agents need memory for repository structure, dependencies, and prior decisions. Persistent project context lets agents continue earlier work instead of starting from a blank prompt. In multi-agent coding workflows, a planning agent and an implementation agent can share repository context without sharing write access.",
             "borderColor": "border-violet-500"
           },
           {
             "icon": "Building",
-            "title": "Enterprise AI Platforms With Tenant Isolation",
+            "title": "Enterprise AI Platforms with Tenant Isolation",
             "description": "Enterprise AI products need context persistence, security boundaries, and predictable scaling. TiDB Cloud supports per-agent isolation and agent memory scaling for platforms serving many customers, teams, and workloads from a shared foundation.",
             "borderColor": "border-teal-500"
           }
@@ -313,21 +281,16 @@
         "columns": 3,
         "borderStyle": "color"
       },
-      "style": {
-        "background": "gradient-dark-top",
-        "spacing": "section"
-      }
+      "style": { "background": "gradient-dark-top", "spacing": "section" }
     },
     {
       "id": "cta-01",
       "type": "cta",
       "props": {
-        "title": "Get Started With TiDB for AI Agent Memory",
+        "title": "Get Started with TiDB for AI Agent Memory",
         "subtitle": "From prototypes to production, build agents that remember.",
         "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg" },
           "alt": "",
           "width": 278,
           "height": 256
@@ -336,15 +299,9 @@
           "text": "Start Free on TiDB Cloud",
           "href": "https://tidbcloud.com/free-trial/"
         },
-        "secondaryCta": {
-          "text": "Contact Sales",
-          "href": "https://www.pingcap.com/contact-us/"
-        }
+        "secondaryCta": { "text": "Contact Sales", "href": "https://www.pingcap.com/contact-us/" }
       },
-      "style": {
-        "background": "brand-violet",
-        "spacing": "section"
-      }
+      "style": { "background": "brand-violet", "spacing": "section" }
     }
   ]
 }

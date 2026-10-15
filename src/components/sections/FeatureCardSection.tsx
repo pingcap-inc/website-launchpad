@@ -5,6 +5,7 @@ import { FeatureCard } from '@/components/ui/FeatureCard'
 export interface FeatureCardItem {
   icon?: React.ReactNode
   title: string
+  label?: string
   description: string | React.ReactNode
   borderColor?: string
   href?: string
@@ -53,6 +54,7 @@ export function FeatureCardSection({
             key={item.title}
             icon={item.icon}
             title={item.title}
+            label={item.label}
             description={item.description}
             borderColor={
               borderStyle === 'color'

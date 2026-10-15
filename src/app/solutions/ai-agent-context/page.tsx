@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        url: 'https://static.pingcap.com/images/78891a1c-ai-agent-context-social.png',
         width: 1200,
         height: 630,
       },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+    images: ['https://static.pingcap.com/images/78891a1c-ai-agent-context-social.png'],
   },
 }
 
@@ -40,7 +40,7 @@ const schema = buildPageSchema({
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
-      name: "Agents are Ephemeral. Their State Shouldn't Be.",
+      name: "Agents Are Ephemeral. Their State Shouldn't Be.",
       path: '/solutions/ai-agent-context/',
     },
   ],
@@ -53,6 +53,16 @@ const dsl: PageDSL = {
     description:
       'TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors.',
     canonical: '/solutions/ai-agent-context/',
+    createdBy: 'a.hire@pingcap.com',
+    createdAt: '2026-10-14T03:17:43.178Z',
+    modifiedBy: 'liwen.xu@pingcap.com',
+    modifiedAt: '2026-10-14T07:02:42.489Z',
+    ogImage: {
+      url: 'https://static.pingcap.com/images/78891a1c-ai-agent-context-social.png',
+      alt: 'ai agent context social',
+      width: 1200,
+      height: 630,
+    },
   },
   sections: [
     {
@@ -61,7 +71,7 @@ const dsl: PageDSL = {
       props: {
         layout: 'centered',
         eyebrow: 'Persistent Context for AI Agents',
-        headline: "Agents are Ephemeral. Their State Shouldn't Be.",
+        headline: "Agents Are Ephemeral. Their State Shouldn't Be.",
         subheadline:
           'TiDB Cloud gives long-running agents a durable state layer for checkpoints, memory records, operational data, and vectors. Agents can resume work across sessions and runtime restarts',
         primaryCta: {
@@ -98,6 +108,7 @@ const dsl: PageDSL = {
         layout: 'split',
         mediaType: 'shortcode',
         shortCode: '[agent-memory-timeline]',
+        itemColumns: 2,
       },
       style: {
         background: 'primary',
@@ -192,6 +203,7 @@ const dsl: PageDSL = {
           height: 1720,
         },
         shortCode: '[tidb-persistent-layer-animation]',
+        itemColumns: 2,
       },
       style: {
         background: 'primary',
@@ -223,8 +235,8 @@ const dsl: PageDSL = {
             description:
               "TiDB Cloud's distributed architecture separates logical isolation from physical infrastructure. Each agent gets its own database with hard data boundaries, while the underlying compute and storage are shared across the cluster.",
             cta: {
-              text: 'View Architecture',
-              href: 'https://docs.pingcap.com/',
+              text: 'Explore Tenant Isolation',
+              href: 'https://www.pingcap.com/playbook/noisy-neighbor-multi-tenant-mysql/',
             },
           },
           {
@@ -234,7 +246,7 @@ const dsl: PageDSL = {
               "On TiDB Cloud, a support agent can query a customer's account tier, open tickets, and semantically similar past conversations in one SQL statement. TiFlash handles analytical queries on live data without needing a separate pipeline.",
             cta: {
               text: 'See Vector Search',
-              href: 'https://www.pingcap.com/tidb/cloud/',
+              href: 'https://docs.pingcap.com/ai/vector-search-overview/',
             },
           },
         ],
@@ -250,7 +262,7 @@ const dsl: PageDSL = {
       id: 'caseStudyCards-1782472692660',
       type: 'caseStudyCards',
       props: {
-        title: 'Leading AI companies Rely on TiDB',
+        title: 'Leading AI Companies Rely on TiDB',
         items: [
           {
             badge: 'Provisioning at Scale',
@@ -355,21 +367,21 @@ const dsl: PageDSL = {
         items: [
           {
             icon: 'MessageSquare',
-            title: 'Customer Support Agents With Conversation History',
+            title: 'Customer Support Agents with Conversation History',
             description:
               'Support agents need persistent memory for previous interactions, account preferences, open issues, and resolution patterns. With an agent memory database, support workflows carry context across conversations instead of asking users to repeat themselves.\n\nIn multi-agent support workflows, a triage agent and a resolution agent can share context through TiDB Cloud while keeping their data boundaries intact.',
             borderColor: 'border-blue-500',
           },
           {
             icon: 'Code2',
-            title: 'Code Generation Agents With Project Context',
+            title: 'Code Generation Agents with Project Context',
             description:
               'Coding agents need memory for repository structure, dependencies, and prior decisions. Persistent project context lets agents continue earlier work instead of starting from a blank prompt. In multi-agent coding workflows, a planning agent and an implementation agent can share repository context without sharing write access.',
             borderColor: 'border-violet-500',
           },
           {
             icon: 'Building',
-            title: 'Enterprise AI Platforms With Tenant Isolation',
+            title: 'Enterprise AI Platforms with Tenant Isolation',
             description:
               'Enterprise AI products need context persistence, security boundaries, and predictable scaling. TiDB Cloud supports per-agent isolation and agent memory scaling for platforms serving many customers, teams, and workloads from a shared foundation.',
             borderColor: 'border-teal-500',
@@ -387,7 +399,7 @@ const dsl: PageDSL = {
       id: 'cta-01',
       type: 'cta',
       props: {
-        title: 'Get Started With TiDB for AI Agent Memory',
+        title: 'Get Started with TiDB for AI Agent Memory',
         subtitle: 'From prototypes to production, build agents that remember.',
         image: {
           image: {

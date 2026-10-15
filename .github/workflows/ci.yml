@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'src/**'
+      - 'scripts/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - 'tsconfig.json'
@@ -18,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need base-branch history to diff the PR's changed files
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -33,6 +36,24 @@ jobs:
 
       - name: ESLint
         run: pnpm lint
+
+      # Advisory only: checks the pages THIS PR changed and annotates any
+      # non-Title-Case headings, but never blocks the merge (continue-on-error).
+      # The pre-commit hook is the local gate; this is the PR-visible reminder.
+      - name: Title Case (changed pages · advisory)
+        continue-on-error: true
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          FILES=$(git diff --name-only "$BASE" HEAD -- 'src/app/**/*.tsx' | tr '\n' ' ')
+          if [ -z "$(echo "$FILES" | tr -d '[:space:]')" ]; then
+            echo "No changed page files — nothing to check."
+            exit 0
+          fi
+          echo "Checking changed pages: $FILES"
+          node scripts/check-title-case.mjs $FILES || {
+            echo "::warning title=Title Case::Some changed headings aren't Title Case (advisory — not blocking). Run 'pnpm title-case:review' to accept each suggestion or keep the original."
+            exit 1
+          }
 
       - name: TypeScript
         run: pnpm type-check

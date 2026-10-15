@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { logAudit, resolveActor } from '@/lib/audit'
+import { getGitHubAuthHeaders } from '@/lib/github-auth'
 
 const DRAFT_BRANCH = 'drafts/ai'
 
@@ -7,16 +9,6 @@ function isValidSlugPath(slug: string) {
   const segments = slug.split('/').filter(Boolean)
   if (segments.length === 0) return false
   return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
-}
-
-function getGitHubHeaders() {
-  const { GITHUB_TOKEN } = process.env
-  return {
-    Authorization: `Bearer ${GITHUB_TOKEN}`,
-    Accept: 'application/vnd.github+json',
-    'X-GitHub-Api-Version': '2022-11-28',
-    'Content-Type': 'application/json',
-  }
 }
 
 async function readFile(
@@ -76,9 +68,10 @@ async function writeFile(
   }
 }
 
-// Rewrite the duplicated DSL's identity so it stands on its own:
-// point the SEO canonical at the new slug instead of the source's.
-function reslugDsl(raw: string, toSlug: string): string {
+// Rewrite the duplicated DSL's identity so it stands on its own: point the SEO
+// canonical at the new slug, and stamp the current user as the creator — the copy
+// is a brand-new page, not a continuation of the source's authorship.
+function reslugDsl(raw: string, toSlug: string, actor: string): string {
   let dsl: unknown
   try {
     dsl = JSON.parse(raw)
@@ -87,19 +80,33 @@ function reslugDsl(raw: string, toSlug: string): string {
     return raw
   }
   if (dsl && typeof dsl === 'object') {
-    const obj = dsl as { meta?: { canonical?: string } }
+    const obj = dsl as {
+      meta?: {
+        canonical?: string
+        createdBy?: string
+        createdAt?: string
+        modifiedBy?: string
+        modifiedAt?: string
+      }
+    }
     if (obj.meta && typeof obj.meta === 'object') {
       obj.meta.canonical = `/${toSlug}/`
+      const now = new Date().toISOString()
+      obj.meta.createdBy = actor
+      obj.meta.createdAt = now
+      obj.meta.modifiedBy = actor
+      obj.meta.modifiedAt = now
     }
   }
   return `${JSON.stringify(dsl, null, 2)}\n`
 }
 
 export async function POST(req: NextRequest) {
-  const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env
+  const { GITHUB_OWNER, GITHUB_REPO } = process.env
   const publishedBranch = process.env.GITHUB_BRANCH ?? 'staging'
 
-  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+  const headers = await getGitHubAuthHeaders()
+  if (!headers || !GITHUB_OWNER || !GITHUB_REPO) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
 
@@ -119,7 +126,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Source and destination are the same' }, { status: 400 })
   }
 
-  const headers = getGitHubHeaders()
   const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`
 
   const destDraftPath = `src/app/${to}/page.dsl.json`
@@ -150,7 +156,8 @@ export async function POST(req: NextRequest) {
 
     // The duplicate always lands as a fresh draft — it goes through the
     // normal review → publish flow rather than going live immediately.
-    const content = reslugDsl(source.content, to)
+    const actor = await resolveActor()
+    const content = reslugDsl(source.content, to, actor)
     await writeFile(
       baseUrl,
       headers,
@@ -167,6 +174,13 @@ export async function POST(req: NextRequest) {
     const msg = err instanceof Error ? err.message : 'Unknown error during copy'
     return NextResponse.json({ error: msg }, { status: 500 })
   }
+
+  await logAudit(req, {
+    action: 'copy',
+    target: from,
+    targetTo: to,
+    status: 'success',
+  })
 
   return NextResponse.json({ success: true, slug: to })
 }

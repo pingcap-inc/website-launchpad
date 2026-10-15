@@ -11,6 +11,7 @@ const badgeVariants = cva(
         // Primary: brand red — "New", "Hot", highlighted feature tags
         default: 'border-transparent bg-brand-red-primary text-white hover:bg-brand-red-dark',
         // Secondary: dark carbon — "Beta", "Preview", status tags
+        violet: 'border-brand-violet-medium bg-brand-violet-dark/20 text-brand-violet-light',
         secondary: 'border-transparent bg-carbon-800 text-carbon-100 hover:bg-carbon-700',
         // Outline: subtle — category labels, eyebrow tags (default)
         outline:

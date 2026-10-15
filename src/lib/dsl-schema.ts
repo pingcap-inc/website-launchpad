@@ -11,6 +11,8 @@ export interface PageMeta {
   title: string // 50-60 chars, must include "TiDB"
   description: string // 120-160 chars
   canonical: string // /slug/  (leading and trailing slash)
+  /** Plain label used in generated BreadcrumbList schema. */
+  breadcrumbName?: string
   noindex?: boolean
   // Unlisted: page stays live at its URL but is kept out of discovery —
   // robots noindex + excluded from the sitemap. Direct-URL-only.
@@ -20,6 +22,23 @@ export interface PageMeta {
   header?: 'full' | 'lp'
   // Optional CTA shown on the right of the 'lp' header. Ignored for 'full'.
   headerCta?: Cta
+  // Page-specific social card, used for both og:image and twitter:image. Omit
+  // to fall back to DEFAULT_SOCIAL_IMAGE. This lives in the DSL rather than only
+  // in a hand-edited page.tsx so that it survives an admin republish — the
+  // generator regenerates page.tsx from this object.
+  //
+  // An ImageRef (not a bare URL) so an upload can carry its real width/height
+  // into og:image:width / og:image:height. Media-library uploads return an
+  // absolute CDN url; per-page uploads return a `/public`-relative path, which
+  // the generator absolutizes — crawlers reject a relative og:image.
+  ogImage?: ImageRef
+  // Authorship — stamped server-side on every write (publish / draft-save / copy).
+  // `createdBy`/`createdAt` are set once and preserved; `modifiedBy`/`modifiedAt`
+  // update on each write. Values are the signed-in Google email (or `local-dev`).
+  createdBy?: string
+  createdAt?: string
+  modifiedBy?: string
+  modifiedAt?: string
 }
 
 export interface Cta {
@@ -160,6 +179,8 @@ export type SectionNode = SectionDefinition
 /** Used with layout="image-right" */
 export interface HeroImage {
   image: ImageRef
+  /** Static visual for visitors who request reduced motion. */
+  reducedMotionImage?: ImageRef
   alt?: string
   width?: number
   height?: number
@@ -176,6 +197,8 @@ export interface HeroForm {
 
 export interface HeroProps {
   layout?: 'split' | 'centered' | 'image-right'
+  statusBadge?: { text: string; variant?: 'default' | 'secondary' | 'outline' | 'violet' }
+  imagePresentation?: 'standard' | 'decorative'
   eyebrow?: string
   /**
    * Plain text OR an HTML string. When HTML tags are detected,
@@ -255,6 +278,7 @@ export interface FeatureCardProps {
 }
 
 export interface FeatureCardItem {
+  label?: string
   /** Lucide icon name OR an image path string (e.g. "/images/..." or "https://...") */
   icon?: IconValue
   title: string
@@ -769,7 +793,9 @@ Available section types (choose appropriate mix):
       subheadline?,
       primaryCta?: {text,href},
       secondaryCta?: {text,href},
-      heroImage?: { image: {assetId?, url}, alt?, width?, height?, align?:"right"|"center", priority? },
+      statusBadge?: { text, variant?:"default"|"secondary"|"outline"|"violet" },
+      imagePresentation?: "standard"|"decorative",
+      heroImage?: { image: {assetId?, url}, reducedMotionImage?: {assetId?, url}, alt?, width?, height?, align?:"right"|"center", priority? },
       heroForm?: {formId, portalId?, region?},
       className?
     }
@@ -785,7 +811,7 @@ Available section types (choose appropriate mix):
   )
 - { type: "stats", props: { eyebrow?, title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4, className? } }
 - { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, viewMore?: {text, href}, itemLayout?: "horizontal"|"vertical", iconSize?: 32|48, className? } }
-- { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
+- { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, label?, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
 - { type: "caseStudyCards", props: { eyebrow?, title, items: [{badge?, logo?: { image: {assetId?, url}, alt?, width?, height? }, title, description, stats: [{value, label}], href?, cta?}], className? } }
 - { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, content?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval?, className? } }
 - { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href}, iconSize?: 32|48, className? } }

@@ -12,7 +12,9 @@
     "lint": "eslint src/",
     "type-check": "tsc --noEmit",
     "title-case": "node scripts/check-title-case.mjs $(git diff --name-only HEAD -- 'src/app/**/*.tsx' | tr '\\n' ' ')",
-    "title-case:fix": "node scripts/check-title-case.mjs --fix $(find src/app -name 'page.tsx' | tr '\\n' ' ')",
+    "title-case:all": "node scripts/check-title-case.mjs $(find src/app -name '*.tsx' | tr '\\n' ' ')",
+    "title-case:fix": "node scripts/check-title-case.mjs --fix $(find src/app -name '*.tsx' | tr '\\n' ' ')",
+    "title-case:review": "node scripts/check-title-case.mjs --review $(find src/app -name '*.tsx' | tr '\\n' ' ')",
     "score:pages": "node scripts/score-pages.mjs",
     "prepare": "husky"
   },
@@ -53,7 +55,9 @@
     "lucide-react": "^0.575.0",
     "mammoth": "^1.12.0",
     "next": "^16.1.6",
+    "next-auth": "5.0.0-beta.32",
     "openai": "^6.29.0",
+    "prettier": "^3.8.1",
     "prismjs": "^1.29.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
@@ -73,7 +77,6 @@
     "lighthouse": "^12.3.0",
     "lint-staged": "^16.2.7",
     "postcss": "^8.4.0",
-    "prettier": "^3.8.1",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.4.0"
   },

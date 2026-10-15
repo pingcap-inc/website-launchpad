@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
         width: 1200,
         height: 630,
       },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
   },
 }
 
@@ -39,7 +39,7 @@ const schema = buildPageSchema({
     'This is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.',
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: 'Production database guides, written for engineers.', path: '/playbook/' },
+    { name: 'Production Database Guides, Written for Engineers.', path: '/playbook/' },
   ],
 })
 
@@ -57,7 +57,7 @@ const dsl: PageDSL = {
       type: 'hero',
       props: {
         layout: 'centered',
-        headline: 'Production database guides, written for engineers.',
+        headline: 'Production Database Guides, Written for Engineers.',
         subheadline:
           'Skip the theory. Each playbook covers a specific problem, the TiDB features that fix it, and how to implement them.',
         primaryCta: {
@@ -167,7 +167,8 @@ const dsl: PageDSL = {
       id: 'cta',
       type: 'cta',
       props: {
-        title: 'Try it on your own data. MySQL-compatible, no shard config, free tier available.',
+        title: 'Try It on Your Own Data',
+        subtitle: 'MySQL-compatible, no shard config, free tier available.',
         image: {
           image: {
             url: 'https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg',

@@ -5,6 +5,22 @@
 import type { PageDSL, HeroProps } from './dsl-schema'
 import { normalizeDSL } from './dsl-utils'
 
+/** Site-wide fallback social card, used when a page sets no `meta.ogImage`. */
+export const DEFAULT_SOCIAL_IMAGE =
+  'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'
+
+// `public/` is mirrored here in production (see cdn-asset.ts). A per-page admin
+// upload is committed to `public/` and reported as a site-relative path, so it
+// has to be rewritten to this base: og:image must be absolute for crawlers, and
+// unlike cdn-asset.ts this cannot be env-gated — the string is baked into the
+// page.tsx we are generating, which only ever runs in production.
+const SOCIAL_CDN_BASE = 'https://static.pingcap.com/launchpad'
+
+function absoluteSocialUrl(url: string): string {
+  if (/^https?:\/\//.test(url)) return url
+  return `${SOCIAL_CDN_BASE}${url.startsWith('/') ? '' : '/'}${url}`
+}
+
 // JSON.stringify all user strings — handles quotes, backslashes, newlines
 const normalizeString = (s?: string | null) => (s ?? '').replace(/\\"/g, '"')
 
@@ -25,11 +41,24 @@ export function dslToTsx(dsl: PageDSL, slug: string): string {
   const pageDesc = meta.description
 
   const hero = sections.find((s) => s.type === 'hero')
-  const pageHeadline = hero ? ((hero.props as HeroProps).headline ?? slug) : slug
+  const pageHeadline =
+    meta.breadcrumbName ?? (hero ? ((hero.props as HeroProps).headline ?? slug) : slug)
+
+  // A faq section only emits FAQPage structured data when the page wraps its
+  // schema with withFaqFromDSL — so import and apply it only when one exists.
+  const hasFaq = sections.some((s) => s.type === 'faq')
+
+  // Page-specific social card, falling back to the site default. Read from the
+  // DSL so a per-page card is not lost the next time this file is regenerated.
+  const ogImageUrl = meta.ogImage?.url?.trim()
+  const ogImage = ogImageUrl ? absoluteSocialUrl(ogImageUrl) : DEFAULT_SOCIAL_IMAGE
+  // The default card is 1200x630; an uploaded one reports its measured size.
+  const ogWidth = (ogImageUrl && meta.ogImage?.width) || 1200
+  const ogHeight = (ogImageUrl && meta.ogImage?.height) || 630
 
   return `import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema } from '@/lib/schema'
+import { buildPageSchema${hasFaq ? ', withFaqFromDSL' : ''} } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
@@ -45,9 +74,9 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
-        width: 1200,
-        height: 630,
+        url: ${JSON.stringify(ogImage)},
+        width: ${ogWidth},
+        height: ${ogHeight},
       },
     ],
     type: 'website',
@@ -55,7 +84,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+    images: [${JSON.stringify(ogImage)}],
   },
 }
 
@@ -74,7 +103,7 @@ const dsl: PageDSL = ${JSON.stringify(normalized, null, 2)}
 export default function GeneratedPage() {
   return (
     <>
-      <JsonLd data={schema} />
+      <JsonLd data={${hasFaq ? 'withFaqFromDSL(schema, dsl)' : 'schema'}} />
       <PageRenderer dsl={dsl} withChrome />
     </>
   )

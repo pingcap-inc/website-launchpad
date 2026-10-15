@@ -354,7 +354,7 @@
           },
           {
             "variant": "violet",
-            "title": "Hands-on Labs",
+            "title": "Hands-On Labs",
             "description": "Drive in and master TiDB's unique capabilities through hands-on practice",
             "cta": {
               "text": "Explore",

@@ -114,8 +114,7 @@ const dsl: PageDSL = {
             },
           },
           {
-            // title-case-ignore — Chicago capitalizes a sentence-final preposition
-            title: 'The Tenant Count You Did Not Plan For',
+            title: 'The Tenant Count You Did Not Plan for',
             description:
               'Agent platforms add a tenant per agent, not per customer. Object count climbs with usage instead of headcount. Tables, schemas, and metadata grow with the tenant list — and the catalog usually breaks before the query path does.',
             image: {

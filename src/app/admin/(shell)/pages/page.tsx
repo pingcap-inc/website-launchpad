@@ -25,6 +25,10 @@ interface PageItem {
   hasPublished: boolean
   hasDraft: boolean
   isCode: boolean
+  createdBy?: string | null
+  createdAt?: string | null
+  modifiedBy?: string | null
+  modifiedAt?: string | null
 }
 
 type PageStatus = 'code' | 'published' | 'draft'
@@ -86,6 +90,14 @@ function toTitleCase(input: string) {
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
+}
+
+// Show just the local-part of an actor email (alice@pingcap.com -> alice);
+// non-email actors like 'local-dev' are shown as-is.
+function shortActor(value?: string | null): string | null {
+  if (!value) return null
+  const at = value.indexOf('@')
+  return at === -1 ? value : value.slice(0, at)
 }
 
 type TreeNode = {
@@ -428,7 +440,24 @@ export default function PagesPage() {
                     <code className="text-body-sm text-gray-700 font-mono">/{node.slug}/</code>
                   </div>
                 </div>
-                <p className="text-body-sm text-gray-900 truncate">{title}</p>
+                <div className="min-w-0">
+                  <p className="text-body-sm text-gray-900 truncate">{title}</p>
+                  {page && (page.createdBy || page.modifiedBy) ? (
+                    <p
+                      className="text-[11px] text-gray-400 truncate"
+                      title={[
+                        page.createdBy ? `Created by ${page.createdBy}` : null,
+                        page.modifiedBy ? `Last modified by ${page.modifiedBy}` : null,
+                      ]
+                        .filter(Boolean)
+                        .join('\n')}
+                    >
+                      {page.createdBy ? <>Created by {shortActor(page.createdBy)}</> : null}
+                      {page.createdBy && page.modifiedBy ? ' · ' : null}
+                      {page.modifiedBy ? <>Modified by {shortActor(page.modifiedBy)}</> : null}
+                    </p>
+                  ) : null}
+                </div>
                 <div className="flex items-center gap-1.5 text-gray-400 text-body-sm">
                   <Clock size={12} />
                   {page ? timeAgo(page.updatedAt) : '—'}

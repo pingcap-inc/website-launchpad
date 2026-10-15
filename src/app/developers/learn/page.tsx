@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
         width: 1200,
         height: 630,
       },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: 'Learn | TiDB Developer Hub',
     description:
       'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
     site: '@PingCAP',
   },
   robots: { index: true, follow: true },
@@ -48,14 +48,14 @@ const schema = buildPageSchema({
     { name: 'Developer Hub', path: '/developers/' },
     { name: 'Learn', path: '/developers/learn/' },
   ],
-  image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+  image: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
   extraSchemas: [
     techArticleSchema({
       title: 'Learn | TiDB Developer Hub',
       description:
         'Learn core TiDB architecture, validate assumptions, and evaluate performance through courses and hands-on labs.',
       url: '/developers/learn/',
-      image: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+      image: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
       proficiencyLevel: 'Beginner',
       dateModified: '2026-02-28',
     }),

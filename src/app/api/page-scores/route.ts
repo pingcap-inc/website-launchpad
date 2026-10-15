@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import { getGitHubAuthHeaders } from '@/lib/github-auth'
 
 type ScorePayload = {
   results?: Array<{
@@ -27,8 +28,9 @@ async function readLocalScores(): Promise<ScorePayload | null> {
 }
 
 async function readRemoteScores(): Promise<ScorePayload | null> {
-  const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH } = process.env
-  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) return null
+  const { GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH } = process.env
+  const headers = await getGitHubAuthHeaders()
+  if (!headers || !GITHUB_OWNER || !GITHUB_REPO) return null
 
   if (cachedRemote && Date.now() - cachedRemote.ts < REMOTE_CACHE_TTL_MS) {
     return cachedRemote.data
@@ -37,13 +39,7 @@ async function readRemoteScores(): Promise<ScorePayload | null> {
   const ref = GITHUB_BRANCH ?? 'staging'
   const res = await fetch(
     `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/reports/page-scorecards.json?ref=${ref}`,
-    {
-      headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
-        Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-      },
-    }
+    { headers }
   )
 
   if (!res.ok) return null

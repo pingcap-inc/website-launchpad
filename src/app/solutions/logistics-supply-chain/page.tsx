@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
         width: 1200,
         height: 630,
       },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
   },
 }
 
@@ -162,7 +162,7 @@ const dsl: PageDSL = {
           },
           {
             variant: 'teal',
-            title: 'Always-on Availability',
+            title: 'Always-On Availability',
             description: 'Built-in high availability across regions for 24/7 logistics operations',
             cta: {
               text: 'Learn more',
@@ -326,7 +326,7 @@ const dsl: PageDSL = {
             },
           },
           {
-            title: 'Built-in Monitoring & Alerting',
+            title: 'Built-In Monitoring & Alerting',
             description:
               'Use standard SQL to detect anomalies directly on live data. Power real-time dashboards with Prometheus and Grafana integration. Enable advanced analytics without exporting data.',
             image: {
@@ -417,7 +417,7 @@ const dsl: PageDSL = {
           },
           {
             variant: 'violet',
-            title: 'Hands-on Labs',
+            title: 'Hands-On Labs',
             description: "Drive in and master TiDB's unique capabilities through hands-on practice",
             cta: {
               text: 'Explore',

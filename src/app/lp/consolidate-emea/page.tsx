@@ -277,7 +277,6 @@ const dsl: PageDSL = {
               width: 181,
               height: 50,
             },
-            // title-case-ignore — "10x" is the correct brand form, not "10X"
             title: 'Pinterest: Graph Service Scaled with 10x Latency Reduction',
             description:
               'Modernized its graph service with TiDB, eliminating manual sharding and achieving dramatic performance gains while cutting infrastructure costs by more than half.',
@@ -307,7 +306,6 @@ const dsl: PageDSL = {
               width: 69,
               height: 40,
             },
-            // title-case-ignore — "1000s" is the correct form, not "1000S"
             title: 'Bolt: Legacy MySQL Modernized to Scale 1000s of Microservices',
             description:
               'Bolt replaced fragile, hard-to-scale MySQL — and passed on Vitess — choosing TiDB to run order, commerce, and payment microservices on AWS with horizontal scale, strong consistency, and zero-downtime maintenance.',
@@ -338,8 +336,7 @@ const dsl: PageDSL = {
         title: "What Changes When It's One Engine",
         items: [
           {
-            // title-case-ignore — Chicago capitalizes a sentence-final preposition
-            title: "Scale You Don't Have to Plan For",
+            title: "Scale You Don't Have to Plan for",
             description:
               '20+ TB, 300K+ QPS, 10K+ writes per second, and millions of tables in a single cluster. No shard keys in your application, and no rebalance that turns into a migration.',
             image: {

@@ -4,12 +4,25 @@ const COPY_ICON_SVG =
   '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>'
 
 function escapeHtml(value: string) {
-  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  // Quotes must be escaped too: several call sites interpolate escaped values
+  // into double-quoted HTML attributes, where a raw " or ' would break out.
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
 }
 
 function sanitizeUrl(raw: string) {
   const trimmed = raw.trim()
   if (!trimmed) return null
+  // Reject any character that could break out of a quoted href/src attribute.
+  // sanitized URLs are interpolated raw (not via escapeHtml) into `src="…"` /
+  // `href="…"`, so a relative URL like `/x"onerror="alert(1)` must not pass.
+  // Legitimate URLs never contain raw quotes, angle brackets, backticks,
+  // backslashes, or whitespace (those are percent-encoded).
+  if (/["'<>`\\\s]/.test(trimmed)) return null
   if (trimmed.startsWith('/') || trimmed.startsWith('#')) return trimmed
   try {
     const parsed = new URL(trimmed)

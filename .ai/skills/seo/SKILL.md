@@ -32,7 +32,7 @@ description: >
 - [ ] `metadata` export with `title`, `description`, `openGraph`, `twitter`, `robots`, `canonical`
 - [ ] `siteName: 'TiDB'` — exact string, no variations
 - [ ] `twitter.site: '@PingCAP'` — exact string
-- [ ] `openGraph.images` present — default `https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png`; replace with page-specific OG image when available
+- [ ] `openGraph.images` present — default `https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png`; replace with page-specific OG image when available
 - [ ] `twitter.images` present — same default URL (format: array of strings `['url']`)
 - [ ] `canonical` always `https://www.pingcap.com/[path]/` — never `vercel.app`
 - [ ] Landing pages (`/lp/*`): `robots: { index: false, follow: false }`

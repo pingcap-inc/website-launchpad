@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: 'TiDB',
     images: [
       {
-        url: 'https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png',
+        url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
         width: 1200,
         height: 630,
       },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@PingCAP',
-    images: ['https://static.pingcap.com/files/2024/09/11005522/Homepage-Ad.png'],
+    images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
   },
 }
 
@@ -42,7 +42,7 @@ const schema = buildPageSchema({
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
-      name: 'How to Connect TiDB to Cursor for AI-assisted App Development',
+      name: 'How to Connect TiDB to Cursor for AI-Assisted App Development',
       path: '/playbook/how-to-cursor-ai-database-integration/',
     },
   ],
@@ -62,7 +62,7 @@ const dsl: PageDSL = {
       type: 'hero',
       props: {
         layout: 'image-right',
-        headline: 'How to Connect TiDB to Cursor for AI-assisted App Development',
+        headline: 'How to Connect TiDB to Cursor for AI-Assisted App Development',
         heroImage: {
           image: {
             url: 'https://static.pingcap.com/images/8596fd96-___2.png',
