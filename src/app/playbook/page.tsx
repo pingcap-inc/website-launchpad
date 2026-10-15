@@ -51,9 +51,9 @@ const dsl: PageDSL = {
       'This is a collection of practical playbooks for engineers dealing with MySQL scaling, sharding, and AI data layers. No theory — just what to do and how to implement it.',
     canonical: '/playbook/',
     createdBy: 'a.hire@pingcap.com',
-    createdAt: '2026-10-15T20:54:13.512Z',
+    createdAt: '2026-10-15T21:05:45.434Z',
     modifiedBy: 'a.hire@pingcap.com',
-    modifiedAt: '2026-10-15T20:54:13.512Z',
+    modifiedAt: '2026-10-15T21:05:45.434Z',
   },
   sections: [
     {
@@ -183,6 +183,28 @@ const dsl: PageDSL = {
             cta: {
               text: 'Read the Playbook',
               href: 'https://www.pingcap.com/playbook/ai-agent-memory/',
+            },
+            layout: 'vertical',
+          },
+          {
+            icon: 'RefreshCw',
+            title: 'Migrate from Aurora MySQL and Scale Writes Without Sharding',
+            description:
+              "Aurora's single-writer limits can hold back growth. This playbook covers how to migrate from Aurora MySQL to TiDB with minimal downtime, scale reads and writes horizontally, and eliminate application-level sharding while keeping MySQL compatibility.",
+            cta: {
+              text: 'Read the Playbook',
+              href: 'https://www.pingcap.com/playbook/aurora-mysql-migration/',
+            },
+            layout: 'vertical',
+          },
+          {
+            icon: 'Layers',
+            title: 'Build an MCP Server with Persistent State Using TiDB',
+            description:
+              'Most MCP tutorials stop at simple tools that lose data on restart. This playbook covers how to build an MCP server in Python, connect it to TiDB Cloud Zero for persistent SQL state, and manage session history, tool outputs, and agent memory as you move from prototype to production.',
+            cta: {
+              text: 'Read the Playbook',
+              href: 'https://www.pingcap.com/playbook/build-mcp-server/',
             },
             layout: 'vertical',
           },
