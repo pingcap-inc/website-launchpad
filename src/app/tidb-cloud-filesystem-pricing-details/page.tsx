@@ -15,11 +15,9 @@ import { CtaSection } from '@/components/sections/CtaSection'
 // by accident. Same pattern as KIMI_STORY_URL on the Filesystem landing page.
 // Do not fill these in from inference — they are product behaviour, not copy.
 
-// What decides whether usage is Pooled or Performance: user choice, file size,
-// access pattern, or something else. They differ by 12x on storage and 100x on
-// operations. The rate card still lists both, because those are published
-// prices, but the page does not tell anyone how to choose. Asked 2026-09-21.
-const POOLED_EXPLAINER: string | null = null
+// Pooled operation SKUs removed 2026-10-16 at the pricing owner's direction:
+// reads and writes are one flat rate each. The two storage lines remain; how
+// usage is placed between them is not stated on the page until confirmed.
 
 // Answered 2026-09-22: at a cap, writes are blocked and reads keep working; the
 // console shows a warning; with a card, overage is billed monthly; without a
@@ -35,13 +33,13 @@ const AT_THE_LIMIT: string | null =
   'At a limit, your existing files stay readable and the file system stops accepting new writes. The TiDB Cloud console shows a warning. With a card on file, usage beyond the free-tier allowance is billed as overage on your monthly invoice.'
 
 // ── Source of truth ──────────────────────────────────────────────────────────
-// "TiDB Cloud Filesystem Pricing Public Preview" v9 (2026-09-22, "Added multiple
-// regions"), as it read on 2026-09-23. Note that the free-tier quantities were
-// corrected on Sep 21 WITHOUT a version bump, so the re-derivation date matters
-// as much as the version string. All seven free-tier lines were recomputed
-// against this rate card and reconcile to $4.99 against the $5.00 allowance. Do not
-// edit these numbers without redoing that check. The source doc's `Discountable`
-// column is internal and is not reproduced anywhere on this page.
+// "TiDB Cloud Filesystem Pricing Public Preview" (Feishu), v9 2026-09-22, with
+// the two pooled operation SKUs removed at the pricing owner's direction on
+// 2026-10-16. Pricing is being revised with finance; the page shows the current
+// rates only, and its worked examples are removed until the new rates are final.
+// The source doc has changed content WITHOUT bumping its version before, so
+// re-derive every figure against the doc itself, not its version string. The
+// `Discountable` column is internal and is not reproduced anywhere on this page.
 //
 // The source publishes five regions, and they go in ONE table rather than a
 // default plus a diff table or a region picker. A pricing-page visitor has not
@@ -65,30 +63,19 @@ const REGIONS = [
 // The region every worked figure on this page uses.
 const RATE_REGION = REGIONS[0]
 
-// Each row carries the source doc's own Description. Those descriptions say
-// what a meter is measured against; they do not say what assigns usage to
-// Pooled or Performance, which is POOLED_EXPLAINER above. Prices are in REGIONS
-// order.
+// Rows carry the source doc's own Description where it helps the reader; the
+// read and write rows carry none, at the pricing owner's direction. Prices are
+// in REGIONS order.
 const RATES = [
   {
     meter: 'Read operations, per 1,000 requests',
-    note: 'File (size < 32KB) read requests against TiDB Cloud Filesystem endpoints',
+    note: '',
     prices: ['$0.04', '$0.04', '$0.04', '$0.04', '$0.04'],
   },
   {
     meter: 'Write operations, per 1,000 requests',
-    note: 'File (size < 32KB) write requests against TiDB Cloud Filesystem endpoints',
+    note: '',
     prices: ['$0.50', '$0.50', '$0.50', '$0.50', '$0.50'],
-  },
-  {
-    meter: 'Pooled file read operations, per 1,000 requests',
-    note: 'File (size >= 32KB) read requests against object storage',
-    prices: ['$0.0004', '$0.0004', '$0.0004', '$0.0001', '$0.0004'],
-  },
-  {
-    meter: 'Pooled file write operations, per 1,000 requests',
-    note: 'File (size >= 32KB) write requests against object storage',
-    prices: ['$0.005', '$0.005', '$0.005', '$0.0014', '$0.005'],
   },
   {
     meter: 'Storage — Performance, per GB-mo',
@@ -339,7 +326,7 @@ export default function FilesystemPricingDetailsPage() {
                 </p>
                 <p>
                   A price per 1,000 requests means you divide the request count by 1,000, then
-                  multiply by the rate. At the non-pooled read rate, 50,000 ÷ 1,000 × $0.04 = $2.00.
+                  multiply by the rate. At the read rate, 50,000 ÷ 1,000 × $0.04 = $2.00.
                 </p>
                 {/* Having refused the one-to-one mapping between a file action and
                     a billable request, the page owes the reader somewhere to get
@@ -382,25 +369,6 @@ export default function FilesystemPricingDetailsPage() {
                 </p>
               </div>
             </div>
-            {/* Silent until answered, 2026-09-23. This block used to tell the
-                reader we could not say which category applied and to contact us,
-                which advertised the gap without closing it. The rate card still
-                lists every published meter, so nothing is hidden from a reader
-                who is billed for one. Setting POOLED_EXPLAINER makes the whole
-                block reappear — that is the one-line patch when Product answers. */}
-            {POOLED_EXPLAINER && (
-              <div>
-                <h3 className="mb-3 text-h3-lg font-bold">Performance and Pooled</h3>
-                <div className="space-y-3 text-body-lg text-text-primary/70">
-                  <p>
-                    The rate card lists two storage categories, Performance and Pooled. It also
-                    lists ordinary read/write requests and separate Pooled file requests. These have
-                    different rates.
-                  </p>
-                  <p>{POOLED_EXPLAINER}</p>
-                </div>
-              </div>
-            )}
           </div>
         </SectionWrapper>
 
@@ -413,7 +381,7 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="rates" style={{ background: 'gray' }}>
           <SectionHeader
             title="Rates and How Billing Works"
-            subtitle="Use the rate for each category of your usage, then add those charges together. All seven billing items are listed below, for every region where Filesystem is priced."
+            subtitle="Use the rate for each category of your usage, then add those charges together. All five billing items are listed below, for every region where Filesystem is priced."
             className="mb-8"
             h2Size="md"
           />
@@ -421,8 +389,7 @@ export default function FilesystemPricingDetailsPage() {
               should be told first which ones they do not need to compare. */}
           <p className="mb-6 max-w-[760px] text-body-lg text-text-primary/70">
             Read and write operations cost the same in every region — $0.04 and $0.50 per 1,000
-            requests — and they dominate most bills. Pooled operations, storage and egress differ by
-            region.
+            requests — and they dominate most bills. Storage and egress differ by region.
           </p>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-body-sm sm:text-body-lg">
@@ -441,7 +408,9 @@ export default function FilesystemPricingDetailsPage() {
                   <tr key={rate.meter} className="border-b border-carbon-300">
                     <td className="py-3 pr-3 sm:pr-6">
                       {rate.meter}
-                      <span className="block text-body-sm text-text-primary/60">{rate.note}</span>
+                      {rate.note && (
+                        <span className="block text-body-sm text-text-primary/60">{rate.note}</span>
+                      )}
                     </td>
                     {rate.prices.map((price, i) => (
                       <td key={REGIONS[i]} className="py-3 pl-3 text-right align-top font-mono">
