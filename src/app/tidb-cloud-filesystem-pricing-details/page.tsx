@@ -60,8 +60,6 @@ const REGIONS = [
   'alicloud-ap-southeast-1',
   'gcp-us-east1',
 ]
-// The region every worked figure on this page uses.
-const RATE_REGION = REGIONS[0]
 
 // Rows carry the source doc's own Description where it helps the reader; the
 // read and write rows carry none, at the pricing owner's direction. Prices are
@@ -148,8 +146,8 @@ const FAQ_ITEMS = [
     a: 'No. The $5 monthly free-tier allowance is shared by all file systems usage in your organization, across billing items and regions. Creating another file system does not add another $5 allowance.',
   },
   {
-    q: 'If the free-tier allowance covers 16 GB, can I store 16 GB without a card?',
-    a: 'No. The allowance is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per file system. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
+    q: 'Does the free-tier allowance raise the no-card storage limit?',
+    a: 'No. The allowance is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per file system. Accounts with a card on file are exempt from the listed no-card limits.',
   },
   { q: 'Can I set a monthly spending limit?', a: SPENDING_LIMIT_ANSWER },
   {
@@ -208,14 +206,6 @@ export default function FilesystemPricingDetailsPage() {
               product page is the parent of this one in the breadcrumb and shares
               its schema @id; it belongs in the hero, not only in a footnote
               eight headings down. */}
-          <p className="mb-6 max-w-[620px] text-body-md text-carbon-400">
-            Every figure on this page is for <code className="font-mono">{RATE_REGION}</code>. All
-            five priced regions are on the{' '}
-            <a href="#rates" className="underline underline-offset-2 hover:no-underline">
-              rate card
-            </a>
-            , where read and write operations cost the same in every one.
-          </p>
           <div className="mb-8 flex flex-wrap items-center gap-3">
             <a
               href="#rates"
@@ -276,9 +266,7 @@ export default function FilesystemPricingDetailsPage() {
                 MB.
               </p>
               <p className="mb-4 text-body-lg text-text-primary/70">
-                The free-tier allowance covers usage charges; it does not increase these limits. For
-                example, 16 GB of Performance storage for a full month costs $4.80, but a file
-                system without a credit card can only hold 2 GB.
+                The free-tier allowance covers usage charges; it does not increase these limits.
               </p>
               {/* Removed 2026-09-23 at the owner's direction: an illustration of
                   how far request volume can run past the free-tier allowance ("200,000 write
@@ -326,7 +314,7 @@ export default function FilesystemPricingDetailsPage() {
                 </p>
                 <p>
                   A price per 1,000 requests means you divide the request count by 1,000, then
-                  multiply by the rate. At the read rate, 50,000 ÷ 1,000 × $0.04 = $2.00.
+                  multiply by the rate.
                 </p>
                 {/* Having refused the one-to-one mapping between a file action and
                     a billable request, the page owes the reader somewhere to get
@@ -351,8 +339,8 @@ export default function FilesystemPricingDetailsPage() {
                   per month; it is a storage unit, not a request count.
                 </p>
                 <p>
-                  At the Performance rate, keeping 2 GB for a full month costs 2 × $0.30 = $0.60.
-                  Billing is monthly and prorated by the hour.
+                  Multiply the GB you keep for the month by the rate. Billing is monthly and
+                  prorated by the hour.
                 </p>
               </div>
             </div>
@@ -364,8 +352,8 @@ export default function FilesystemPricingDetailsPage() {
                   separate billing item from storage and requests.
                 </p>
                 <p>
-                  At $0.09 per GB, 2 GB of internet egress costs $0.18. Use the amount transferred
-                  out in this calculation, not the total amount you have stored.
+                  Multiply the GB transferred out by the rate. Use the amount transferred out, not
+                  the total amount you have stored.
                 </p>
               </div>
             </div>
@@ -389,7 +377,7 @@ export default function FilesystemPricingDetailsPage() {
               should be told first which ones they do not need to compare. */}
           <p className="mb-6 max-w-[760px] text-body-lg text-text-primary/70">
             Read and write operations cost the same in every region — $0.04 and $0.50 per 1,000
-            requests — and they dominate most bills. Storage and egress differ by region.
+            requests. Storage and egress differ by region.
           </p>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-body-sm sm:text-body-lg">
