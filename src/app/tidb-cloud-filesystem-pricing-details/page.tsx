@@ -77,12 +77,12 @@ const RATES = [
   },
   {
     meter: 'Storage — Performance, per GB-mo',
-    note: 'Underlying database storage',
+    note: 'Smaller files, stored in TiDB for fast access',
     prices: ['$0.30', '$0.30', '$0.36', '$0.32', '$0.30'],
   },
   {
     meter: 'Storage — Pooled, per GB-mo',
-    note: 'Underlying object storage',
+    note: 'Larger files, stored in cloud object storage',
     prices: ['$0.025', '$0.025', '$0.027', '$0.019', '$0.022'],
   },
   {
@@ -143,7 +143,7 @@ const SPENDING_LIMIT_ANSWER =
 const FAQ_ITEMS = [
   {
     q: 'Does each file system get its own $5 free-tier allowance?',
-    a: 'No. The $5 monthly free-tier allowance is shared by all file systems usage in your organization, across billing items and regions. Creating another file system does not add another $5 allowance.',
+    a: 'No. The $5 monthly free-tier allowance is shared by all file system usage in your organization, across billing items and regions. Creating another file system does not add another $5 allowance.',
   },
   {
     q: 'Does the free-tier allowance raise the no-card storage limit?',
@@ -377,7 +377,8 @@ export default function FilesystemPricingDetailsPage() {
               should be told first which ones they do not need to compare. */}
           <p className="mb-6 max-w-[760px] text-body-lg text-text-primary/70">
             Read and write operations cost the same in every region — $0.04 and $0.50 per 1,000
-            requests. Storage and egress differ by region.
+            requests. Storage and egress differ by region. Storage is placed automatically by file
+            size. You don&rsquo;t choose between the two storage types.
           </p>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-body-sm sm:text-body-lg">
@@ -430,7 +431,7 @@ export default function FilesystemPricingDetailsPage() {
           <SectionHeader title="Billing and Limits" className="mb-8" h2Size="md" />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">Without a Credit Card on Organization</h3>
+              <h3 className="mb-3 text-h3-lg font-bold">Without a Credit Card on File</h3>
               <ul className="space-y-2 text-body-lg text-carbon-300">
                 <li>One file system per region</li>
                 <li>2,000 files per file system</li>
