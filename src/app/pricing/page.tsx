@@ -228,7 +228,7 @@ const CLOUD_DEPLOYMENT = {
   },
   secondaryCta: {
     text: 'Learn More',
-    href: 'https://docs.pingcap.com/tidbcloud/byoc/',
+    href: 'https://docs.pingcap.com/tidbcloud/byoc/?plan=byoc',
   },
 }
 
