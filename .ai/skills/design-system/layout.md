@@ -32,7 +32,10 @@ To keep section content flush with the full `<Header />` at every width, use the
 ## Page Structure
 
 ```
-Navbar          fixed h-[62px] lg:h-20 — add pt-[62px] lg:pt-20 to page content
+Navbar          sticky h-[62px] lg:h-20 — add pt-[62px] lg:pt-20 to page content
+                A HelloBar (announcement bar, mirrored from the WordPress site)
+                sits above it in normal flow, so the nav's own height is all a
+                page compensates for; the bar's height is already in the flow.
                 Links: relative paths within website-launchpad;
                        full domain https://www.pingcap.com/... outside website-launchpad
                 CTAs: Sign In → https://tidbcloud.com/signin
@@ -156,7 +159,7 @@ The right slot accepts a product screenshot, stats panel, form, or any ReactNode
 - `split` with no `rightSlot`: right column renders empty — always provide a visual
 - Centered layout: default **no eyebrow**
 - Eyebrow (when used): place directly above H1 with `mb-8`
-- Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the fixed Navbar (mobile 62px / desktop 80px)
+- Add `pt-[62px] lg:pt-20` to the page content wrapper to compensate for the sticky Navbar (mobile 62px / desktop 80px). The HelloBar above the Navbar takes its own space in the flow — do not add padding for it.
 - Hero background image: no overlay layer by default
 - Hero image treatment: use `opacity-30` to `opacity-70`; no heavy blur, no strong color cast that competes with headline
 - Mobile fallback (`<md`): text-first reading order; split/image-right layout collapses to single column with copy above visual

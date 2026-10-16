@@ -814,13 +814,14 @@ function ProductPanels({ product }: { product: ProductMenu }) {
 
 /**
  * Desktop Product dropdown. It spans the full container width, so it is
- * positioned against the viewport rather than its nav item.
+ * positioned against the <header> rather than its nav item — `top-full` keeps
+ * it below the nav whether or not the hello bar is still on screen.
  */
 function ProductMegaMenu({ item }: { item: NavDropdown }) {
   if (!item.product) return null
 
   return (
-    <div className="fixed left-1/2 top-20 z-50 -translate-x-1/2 pt-2">
+    <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2">
       <div className="w-[var(--container-max-width)] max-w-[calc(100vw-var(--container-margin)*2)] border border-carbon-800 bg-bg-primary shadow-card">
         <ProductPanels product={item.product} />
       </div>
