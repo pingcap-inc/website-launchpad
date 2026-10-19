@@ -278,10 +278,9 @@ const faqItems: {
     q: 'What Does TiDB Cloud Filesystem Cost?',
     answer: (
       <>
-        Pay as you go for reads, writes, storage and egress, with $5.00 of service credit per
-        organization each month. Public preview prices are published for <code>aws-us-east-1</code>{' '}
-        and may change at general availability. Full rates, free-tier details and no-card limits are
-        on the{' '}
+        Pay as you go for reads, writes, storage and egress, with a monthly free-tier allowance per
+        organization. Public preview pricing is being updated and may change at general
+        availability. Full rates, free-tier details and no-card limits are on the{' '}
         <a href="https://www.pingcap.com/tidb-cloud-filesystem-pricing-details/">
           pricing details page
         </a>
