@@ -76,12 +76,12 @@ const RATES = [
     prices: ['$0.50', '$0.50', '$0.50', '$0.50', '$0.50'],
   },
   {
-    meter: 'Storage — Performance, per GB-mo',
+    meter: 'Database storage, per GB-mo',
     note: 'Smaller files, stored in TiDB for fast access',
     prices: ['$0.30', '$0.30', '$0.36', '$0.32', '$0.30'],
   },
   {
-    meter: 'Storage — Pooled, per GB-mo',
+    meter: 'Object storage, per GB-mo',
     note: 'Larger files, stored in cloud object storage',
     prices: ['$0.025', '$0.025', '$0.027', '$0.019', '$0.022'],
   },
