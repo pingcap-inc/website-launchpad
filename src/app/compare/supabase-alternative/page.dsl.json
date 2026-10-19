@@ -6,8 +6,8 @@
     "canonical": "/compare/supabase-alternative/",
     "createdBy": "nivanya@pingcap.com",
     "createdAt": "2026-10-14T13:51:20.835Z",
-    "modifiedBy": "brian.foster@pingcap.com",
-    "modifiedAt": "2026-10-14T14:12:13.927Z"
+    "modifiedBy": "nivanya@pingcap.com",
+    "modifiedAt": "2026-10-19T09:20:10.075Z"
   },
   "sections": [
     {
@@ -174,7 +174,7 @@
         "subtitle": "Give your agent a real SQL and vector database in seconds, with no signup required.",
         "primaryCta": {
           "text": "Start Free on TiDB Cloud Zero",
-          "href": "https://zero.tidbcloud.com/"
+          "href": "https://tidbcloud.com/free-trial/"
         }
       },
       "style": {
