@@ -76,12 +76,12 @@ const RATES = [
     prices: ['$0.50', '$0.50', '$0.50', '$0.50', '$0.50'],
   },
   {
-    meter: 'Storage — Performance, per GB-mo',
+    meter: 'Database storage, per GB-mo',
     note: 'Smaller files, stored in TiDB for fast access',
     prices: ['$0.30', '$0.30', '$0.36', '$0.32', '$0.30'],
   },
   {
-    meter: 'Storage — Pooled, per GB-mo',
+    meter: 'Object storage, per GB-mo',
     note: 'Larger files, stored in cloud object storage',
     prices: ['$0.025', '$0.025', '$0.027', '$0.019', '$0.022'],
   },
@@ -108,7 +108,7 @@ const PATH = '/tidb-cloud-filesystem-pricing-details/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const TITLE = 'TiDB Cloud Filesystem Pricing Details'
 const DESCRIPTION =
-  'TiDB Cloud Filesystem pricing for reads, writes, storage and egress, with $5 of service free-tier allowance per organization each month. View rates and limits.'
+  'TiDB Cloud Filesystem pricing for reads, writes, storage and egress, with a monthly free-tier allowance per organization. View rates and limits.'
 // Shares the product page's social card. Lives in `public/` and is mirrored to
 // the CDN by the deploy workflow (`public/` -> s3://uploads-pingcap-com/launchpad/),
 // so the absolute URL is the CDN one — crawlers fetch it directly, and it only
@@ -139,20 +139,20 @@ export const metadata: Metadata = {
 
 // Use the same plain-text answers for the visible FAQ and its schema.
 const SPENDING_LIMIT_ANSWER =
-  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly free-tier allowance reduces your charges; it is not a maximum monthly bill.'
+  'TiDB Cloud Filesystem does not support a configurable spending limit. The monthly free-tier allowance reduces your charges; it is not a maximum monthly bill.'
 const FAQ_ITEMS = [
   {
-    q: 'Does each file system get its own $5 free-tier allowance?',
-    a: 'No. The $5 monthly free-tier allowance is shared by all file system usage in your organization, across billing items and regions. Creating another file system does not add another $5 allowance.',
+    q: 'Does each file system get its own free-tier allowance?',
+    a: 'No. The monthly free-tier allowance is shared by all file system usage in your organization, across regions. Creating another file system does not add another allowance.',
   },
   {
     q: 'Does the free-tier allowance raise the no-card storage limit?',
-    a: 'No. The allowance is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per file system. Accounts with a card on file are exempt from the listed no-card limits.',
+    a: 'No. The no-card storage cap is a separate limit of 2 GB per file system and does not change with the allowance. Accounts with a card on file are exempt from the listed no-card limits.',
   },
   { q: 'Can I set a monthly spending limit?', a: SPENDING_LIMIT_ANSWER },
   {
     q: 'What happens when a file system reaches a limit?',
-    a: 'It stops accepting writes, and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the $5 allowance is billed as overage on your monthly invoice rather than blocked.',
+    a: 'It stops accepting writes, and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the free-tier allowance is billed as overage on your monthly invoice rather than blocked.',
   },
 ]
 
@@ -253,7 +253,7 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="start-free" style={{ background: 'gray' }}>
           <SectionHeader
             title="Start Free"
-            subtitle="Every organization gets $5.00 of Filesystem service free-tier allowance each month. This allowance is a dollar amount deducted from your usage charges, shared across all your file systems, billing items and regions."
+            subtitle="Every organization gets a monthly free-tier allowance for Filesystem, shared across all its file systems and regions."
             className="mb-8"
             h2Size="md"
           />
@@ -277,8 +277,8 @@ export default function FilesystemPricingDetailsPage() {
                   there is no configurable spending limit. Restore the fuller
                   explanation only once Product answers. */}
               <p className="mb-5 text-body-lg text-text-primary/70">
-                The $5 allowance reduces your charges; it is not a maximum monthly bill, and there
-                is no configurable spending limit. See{' '}
+                The free-tier allowance reduces your charges; it is not a maximum monthly bill, and
+                there is no configurable spending limit. See{' '}
                 <a href="#limitations" className="underline underline-offset-2 hover:no-underline">
                   Billing and Limits
                 </a>{' '}
@@ -467,7 +467,7 @@ export default function FilesystemPricingDetailsPage() {
           <div className="contain">
             <CtaSection
               title="Start with Your Monthly Free-Tier Allowance"
-              subtitle="Create a file system and try it with your organization's $5 monthly service allowance."
+              subtitle="Create a file system and try it with your organization's monthly free-tier allowance."
               primaryCta={{
                 text: 'Read the quickstart',
                 href: DOCS_QUICKSTART,
