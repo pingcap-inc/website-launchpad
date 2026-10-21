@@ -18,6 +18,16 @@ const nextConfig: NextConfig = {
   },
   // Trailing slash for SEO canonical consistency
   trailingSlash: true,
+  // Renamed pages: keep old, already-indexed URLs resolving
+  async redirects() {
+    return [
+      {
+        source: '/compare/planetscale-vs-tidb/',
+        destination: '/compare/planetscale-alternatives/',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig
