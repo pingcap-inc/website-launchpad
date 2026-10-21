@@ -51,7 +51,7 @@ const routes: Array<{
   { url: '/compare/cockroachdb-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/compare/mysql-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/compare/mysql-compatible-database/', priority: 0.7, changeFrequency: 'monthly' },
-  { url: '/compare/planetscale-vs-tidb/', priority: 0.7, changeFrequency: 'monthly' },
+  { url: '/compare/planetscale-alternatives/', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/compare/supabase-alternative/', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/compare/tidb-vs-oceanbase/', priority: 0.7, changeFrequency: 'monthly' },
   {

@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   description:
     'Evaluate PlanetScale vs TiDB Cloud Starter on MySQL compatibility, branching, scaling, pricing model, and SaaS app fit.',
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com/compare/planetscale-vs-tidb/' },
+  alternates: { canonical: 'https://www.pingcap.com/compare/planetscale-alternatives/' },
   openGraph: {
     title: 'Best PlanetScale Alternative for MySQL - TiDB',
     description:
       'Evaluate PlanetScale vs TiDB Cloud Starter on MySQL compatibility, branching, scaling, pricing model, and SaaS app fit.',
-    url: 'https://www.pingcap.com/compare/planetscale-vs-tidb/',
+    url: 'https://www.pingcap.com/compare/planetscale-alternatives/',
     siteName: 'TiDB',
     images: [
       {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 }
 
 const schema = buildPageSchema({
-  path: '/compare/planetscale-vs-tidb/',
+  path: '/compare/planetscale-alternatives/',
   title: 'Best PlanetScale Alternative for MySQL - TiDB',
   description:
     'Evaluate PlanetScale vs TiDB Cloud Starter on MySQL compatibility, branching, scaling, pricing model, and SaaS app fit.',
@@ -41,7 +41,7 @@ const schema = buildPageSchema({
     { name: 'Home', path: '/' },
     {
       name: 'PlanetScale vs TiDB: Which MySQL-Compatible Platform Fits Best?',
-      path: '/compare/planetscale-vs-tidb/',
+      path: '/compare/planetscale-alternatives/',
     },
   ],
 })
@@ -52,11 +52,11 @@ const dsl: PageDSL = {
     title: 'Best PlanetScale Alternative for MySQL - TiDB',
     description:
       'Evaluate PlanetScale vs TiDB Cloud Starter on MySQL compatibility, branching, scaling, pricing model, and SaaS app fit.',
-    canonical: '/compare/planetscale-vs-tidb/',
+    canonical: '/compare/planetscale-alternatives/',
     createdBy: 'brian.foster@pingcap.com',
     createdAt: '2026-10-14T14:54:53.227Z',
     modifiedBy: 'brian.foster@pingcap.com',
-    modifiedAt: '2026-10-15T12:46:17.723Z',
+    modifiedAt: '2026-10-20T18:29:04.974Z',
   },
   sections: [
     {
