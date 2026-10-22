@@ -534,7 +534,11 @@ function LanguageSwitcher({
   const active = locales.find(({ code }) => code === locale) ?? locales[0]
 
   return (
-    <div className="fixed top-[62px] lg:top-20 left-0 right-0 z-40 bg-bg-primary border-b border-carbon-800">
+    // Sticky rather than fixed: the header now sits below the hello bar until
+    // that scrolls away, so a fixed offset would tuck this bar under the nav.
+    // The top margin cancels the header's negative bottom margin, placing the
+    // bar directly beneath the nav row in the flow.
+    <div className="sticky top-[62px] lg:top-20 z-40 mt-[62px] lg:mt-20 bg-bg-primary border-b border-carbon-800">
       {/* Same `contain` container the header's nav uses, so this control's right
         edge lines up with "Start for Free" at every breakpoint. */}
       <div className="contain h-11 flex items-center justify-end">
@@ -633,9 +637,8 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
   return (
     <>
       <LanguageSwitcher locale={locale} onChange={handleLocaleChange} />
-      {/* Header (62/80px) + the language bar (44px) are both fixed, so the
-        content has to clear their combined height. */}
-      <main className="pt-[106px] lg:pt-[124px]">
+      {/* The language bar above already clears the header in the flow. */}
+      <main>
         {/* ── 1. Hero ── */}
         <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>
           <HeroSection
