@@ -5,9 +5,9 @@
     "description": "Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.",
     "canonical": "/compare/",
     "createdBy": "a.hire@pingcap.com",
-    "createdAt": "2026-10-22T21:25:29.825Z",
+    "createdAt": "2026-10-22T21:25:46.131Z",
     "modifiedBy": "a.hire@pingcap.com",
-    "modifiedAt": "2026-10-22T21:25:29.825Z"
+    "modifiedAt": "2026-10-22T21:25:46.131Z"
   },
   "sections": [
     {
