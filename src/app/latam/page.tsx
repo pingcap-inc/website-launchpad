@@ -84,7 +84,7 @@ export default async function LatamLandingPage({
       <JsonLd data={schema} />
       <Header />
       <LatamPageClient initialLocale={locale} />
-      <Footer />
+      <Footer showLanguageSwitcher={false} />
     </>
   )
 }
