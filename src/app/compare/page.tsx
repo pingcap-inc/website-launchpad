@@ -50,6 +50,10 @@ const dsl: PageDSL = {
     description:
       'Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.',
     canonical: '/compare/',
+    createdBy: 'a.hire@pingcap.com',
+    createdAt: '2026-10-22T21:25:29.825Z',
+    modifiedBy: 'a.hire@pingcap.com',
+    modifiedAt: '2026-10-22T21:25:29.825Z',
   },
   sections: [
     {
@@ -167,6 +171,36 @@ const dsl: PageDSL = {
             cta: {
               text: 'Compare',
               href: 'https://www.pingcap.com/compare/tidb-vs-oceanbase/',
+            },
+            layout: 'vertical',
+          },
+          {
+            title: 'TiDB vs PlanetScale',
+            description:
+              'Vitess-based MySQL with schema branching and provisioned capacity vs. distributed SQL that scales without a sharding key. Covers PlanetScale’s retired free tier, PlanetScale Postgres, HTAP, and pricing for MySQL teams planning their next move.',
+            cta: {
+              text: 'Compare',
+              href: '/compare/planetscale-alternatives/',
+            },
+            layout: 'vertical',
+          },
+          {
+            title: 'MongoDB vs MySQL',
+            description:
+              'Document model vs. relational model across schema, joins, transactions, sharding, and reporting. For teams deciding whether their data is self-contained documents or connected entities, plus where TiDB fits when you need MySQL compatibility with horizontal scale.',
+            cta: {
+              text: 'Compare',
+              href: '/compare/mongodb-vs-mysql/',
+            },
+            layout: 'vertical',
+          },
+          {
+            title: 'TiDB Cloud Zero vs Supabase',
+            description:
+              'A bundled Postgres backend with auth, storage, and realtime vs. an instant MySQL-compatible SQL and vector database that agents can provision without signup. Covers agent state, MCP workflows, multi-tenant scale, and billing shape for AI agent backends.',
+            cta: {
+              text: 'Compare',
+              href: '/compare/supabase-alternative/',
             },
             layout: 'vertical',
           },

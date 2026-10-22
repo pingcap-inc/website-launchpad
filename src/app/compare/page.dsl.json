@@ -3,7 +3,11 @@
   "meta": {
     "title": "TiDB Database Comparisons | PingCAP",
     "description": "Head-to-head comparisons of TiDB vs MySQL, Aurora, CockroachDB, YugabyteDB, and guides to choosing the right distributed SQL database for your workload.",
-    "canonical": "/compare/"
+    "canonical": "/compare/",
+    "createdBy": "a.hire@pingcap.com",
+    "createdAt": "2026-10-22T21:25:29.825Z",
+    "modifiedBy": "a.hire@pingcap.com",
+    "modifiedAt": "2026-10-22T21:25:29.825Z"
   },
   "sections": [
     {
@@ -14,18 +18,10 @@
         "eyebrow": "Database Comparisons",
         "headline": "How TiDB Compares",
         "subheadline": "Explore head-to-head comparisons against MySQL, Aurora, CockroachDB, YugabyteDB, and PostgreSQL. Plus shortlist guides for OLTP, HTAP, SaaS, and AI workloads. Written by engineers, reviewed in production.",
-        "primaryCta": {
-          "text": "Start Free Trial",
-          "href": "https://tidbcloud.com/free-trial/"
-        },
-        "secondaryCta": {
-          "text": "View Docs",
-          "href": "https://docs.pingcap.com/"
-        },
+        "primaryCta": { "text": "Start Free Trial", "href": "https://tidbcloud.com/free-trial/" },
+        "secondaryCta": { "text": "View Docs", "href": "https://docs.pingcap.com/" },
         "heroImage": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg" },
           "alt": "hero image",
           "width": 500,
           "height": 400
@@ -54,10 +50,7 @@
             "icon": "Database",
             "title": "TiDB vs MySQL",
             "description": "Scale-out writes, HTAP, and distributed transactions vs. MySQL's single-primary simplicity. The definitive guide for teams hitting write limits or approaching sharding.",
-            "cta": {
-              "text": "Compare",
-              "href": "https://www.pingcap.com/compare/mysql-vs-tidb/"
-            }
+            "cta": { "text": "Compare", "href": "https://www.pingcap.com/compare/mysql-vs-tidb/" }
           },
           {
             "icon": "Cloud",
@@ -100,10 +93,7 @@
             "icon": "Table",
             "title": "TiDB vs Vitess",
             "description": "Vitess adds sharding on top of MySQL. TiDB replaces the stack entirely. If you're hitting MySQL's write limits and weighing your options, this covers what that difference means in practice: consistency, ops overhead, and which one fits your team.",
-            "cta": {
-              "text": "Compare",
-              "href": "https://www.pingcap.com/compare/vitess-vs-tidb/"
-            },
+            "cta": { "text": "Compare", "href": "https://www.pingcap.com/compare/vitess-vs-tidb/" },
             "layout": "vertical"
           },
           {
@@ -114,14 +104,30 @@
               "href": "https://www.pingcap.com/compare/tidb-vs-oceanbase/"
             },
             "layout": "vertical"
+          },
+          {
+            "title": "TiDB vs PlanetScale",
+            "description": "Vitess-based MySQL with schema branching and provisioned capacity vs. distributed SQL that scales without a sharding key. Covers PlanetScale’s retired free tier, PlanetScale Postgres, HTAP, and pricing for MySQL teams planning their next move.",
+            "layout": "vertical",
+            "cta": { "text": "Compare", "href": "/compare/planetscale-alternatives/" }
+          },
+          {
+            "title": "MongoDB vs MySQL",
+            "description": "Document model vs. relational model across schema, joins, transactions, sharding, and reporting. For teams deciding whether their data is self-contained documents or connected entities, plus where TiDB fits when you need MySQL compatibility with horizontal scale.",
+            "layout": "vertical",
+            "cta": { "text": "Compare", "href": "/compare/mongodb-vs-mysql/" }
+          },
+          {
+            "title": "TiDB Cloud Zero vs Supabase",
+            "description": "A bundled Postgres backend with auth, storage, and realtime vs. an instant MySQL-compatible SQL and vector database that agents can provision without signup. Covers agent state, MCP workflows, multi-tenant scale, and billing shape for AI agent backends.",
+            "layout": "vertical",
+            "cta": { "text": "Compare", "href": "/compare/supabase-alternative/" }
           }
         ],
         "columns": 2,
         "itemLayout": "vertical"
       },
-      "style": {
-        "spacing": "section"
-      }
+      "style": { "spacing": "section" }
     },
     {
       "id": "guides",
@@ -168,24 +174,22 @@
             "href": "https://www.pingcap.com/compare/mysql-compatible-database"
           },
           {
+            "icon": "TrendingUp",
             "title": "Best Databases for Real-Time Analytics",
             "description": "Query latency, data freshness, and concurrency under load. Covers pure OLAP engines, streaming-first systems, and HTAP databases — and when each architecture is the right call.",
-            "icon": "TrendingUp",
             "href": "https://www.pingcap.com/compare/best-databases-for-real-time-analytics/"
           },
           {
+            "icon": "Puzzle",
             "title": "Best HTAP Database",
             "description": "What it actually means to run transactions and analytics on the same live data. Covers architecture trade-offs, freshness guarantees, and how HTAP compares to a dedicated pipeline.",
-            "icon": "Puzzle",
             "href": "https://www.pingcap.com/compare/htap-database/"
           }
         ],
         "columns": 2,
         "borderStyle": "color"
       },
-      "style": {
-        "spacing": "section"
-      }
+      "style": { "spacing": "section" }
     },
     {
       "id": "faq",
@@ -223,9 +227,7 @@
           }
         ]
       },
-      "style": {
-        "spacing": "section"
-      }
+      "style": { "spacing": "section" }
     },
     {
       "id": "about",
@@ -239,38 +241,27 @@
             "variant": "blue",
             "title": "Tradeoffs, Not Feature Checklists",
             "description": "Scaling model, consistency guarantees, failure behavior, operational complexity, TCO at scale. Where a competitor is the better fit, we say so.",
-            "cta": {
-              "text": "",
-              "href": ""
-            },
+            "cta": { "text": "", "href": "" },
             "icon": "Layers"
           },
           {
             "variant": "violet",
             "title": "Reviewed by Engineers",
             "description": "Each page is reviewed by engineers who have deployed these databases at scale. Authors named on every page.",
-            "cta": {
-              "text": "",
-              "href": ""
-            },
+            "cta": { "text": "", "href": "" },
             "icon": "CheckCircle"
           },
           {
             "variant": "teal",
             "title": "Updated When Reality Changes",
             "description": "Licenses shift, architectures get rewritten, pricing flips. Every page shows its last-reviewed date and a changelog. Refreshed quarterly, sooner when a release breaks the comparison.",
-            "cta": {
-              "text": "",
-              "href": ""
-            },
+            "cta": { "text": "", "href": "" },
             "icon": "Repeat"
           }
         ],
         "columns": 3
       },
-      "style": {
-        "spacing": "section"
-      }
+      "style": { "spacing": "section" }
     },
     {
       "id": "cta-final",
@@ -279,26 +270,18 @@
         "title": "Try TiDB Against Your Workload",
         "subtitle": "No credit card required. Connects with your existing MySQL driver in minutes.",
         "image": {
-          "image": {
-            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
-          },
+          "image": { "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg" },
           "alt": "",
           "width": 278,
           "height": 256
         },
-        "primaryCta": {
-          "text": "Start Free Trial",
-          "href": "https://tidbcloud.com/free-trial/"
-        },
+        "primaryCta": { "text": "Start Free Trial", "href": "https://tidbcloud.com/free-trial/" },
         "secondaryCta": {
           "text": "MySQL Compatibility Docs",
           "href": "https://docs.pingcap.com/tidb/stable/mysql-compatibility"
         }
       },
-      "style": {
-        "background": "brand-violet",
-        "spacing": "section"
-      }
+      "style": { "background": "brand-violet", "spacing": "section" }
     }
   ]
 }
