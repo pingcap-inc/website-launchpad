@@ -77,7 +77,7 @@ const RATES = [
   },
   {
     meter: 'Database storage, per GB-mo',
-    note: 'Smaller files, stored in TiDB for fast access',
+    note: 'Smaller files and file metadata, stored in TiDB for fast access',
     prices: ['$0.30', '$0.30', '$0.36', '$0.32', '$0.30'],
   },
   {
@@ -310,7 +310,9 @@ export default function FilesystemPricingDetailsPage() {
               <div className="space-y-3 text-body-lg text-text-primary/70">
                 <p>
                   A read retrieves file data; a write stores it. The prices use request counts, not
-                  the number of files you keep and not the number of agent runs.
+                  the number of files you keep and not the number of agent runs. Listing a directory
+                  or checking a file&rsquo;s details (list, stat) also counts as a read. Managing
+                  your organization and workspaces is not charged.
                 </p>
                 <p>
                   A price per 1,000 requests means you divide the request count by 1,000, then
