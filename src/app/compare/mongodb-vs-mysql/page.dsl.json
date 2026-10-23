@@ -6,8 +6,8 @@
     "canonical": "/compare/mongodb-vs-mysql/",
     "createdBy": "brian.foster@pingcap.com",
     "createdAt": "2026-10-22T22:18:04.756Z",
-    "modifiedBy": "brian.foster@pingcap.com",
-    "modifiedAt": "2026-10-22T22:18:04.756Z"
+    "modifiedBy": "liwen.xu@pingcap.com",
+    "modifiedAt": "2026-10-23T01:51:40.847Z"
   },
   "sections": [
     {
@@ -137,6 +137,31 @@
         "spacing": "section",
         "removePaddingTop": true,
         "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "cta-1792720072821",
+      "type": "cta",
+      "props": {
+        "title": "",
+        "primaryCta": {
+          "text": "Modernize MySQL workloads",
+          "href": "https://www.pingcap.com/solutions/modernize-mysql-workloads/"
+        },
+        "image": null,
+        "subtitle": "Need relational consistency and horizontal scale in one database? Evaluate TiDB against your own workload."
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "sm",
+        "backgroundImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/c1348371-1000011435.png",
+            "alt": "1000011435",
+            "width": 1932,
+            "height": 394
+          }
+        }
       }
     }
   ]
