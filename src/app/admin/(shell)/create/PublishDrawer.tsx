@@ -83,7 +83,7 @@ export function PublishDrawer({
   const [aiScore, setAiScore] = useState<PageScoreResult | null>(null)
   const [aiScoreError, setAiScoreError] = useState('')
   const hasTriggeredScoreRef = useRef(false)
-  const scoredDslRef = useRef<string | null>(null)
+  const [scoredDslJson, setScoredDslJson] = useState<string | null>(null)
   const [linkCheckStatus, setLinkCheckStatus] = useState<'idle' | 'checking' | 'done'>('idle')
   const [linkCheckResults, setLinkCheckResults] = useState<LinkCheckResult[]>([])
   const hasTriggeredLinkCheckRef = useRef(false)
@@ -179,7 +179,7 @@ export function PublishDrawer({
       const data = (await res.json()) as { score?: PageScoreResult; error?: string }
       if (!res.ok || !data.score) throw new Error(data.error ?? 'Failed to score page')
       setAiScore(data.score)
-      scoredDslRef.current = JSON.stringify(dsl)
+      setScoredDslJson(JSON.stringify(dsl))
       setAiScoreStatus('ready')
     } catch (err) {
       setAiScoreStatus('error')
@@ -464,10 +464,8 @@ export function PublishDrawer({
 
   const isScoreStale = useMemo(
     () =>
-      aiScoreStatus === 'ready' &&
-      scoredDslRef.current !== null &&
-      scoredDslRef.current !== JSON.stringify(dsl),
-    [aiScoreStatus, dsl]
+      aiScoreStatus === 'ready' && scoredDslJson !== null && scoredDslJson !== JSON.stringify(dsl),
+    [aiScoreStatus, scoredDslJson, dsl]
   )
 
   const groupedIssues = useMemo(() => {
