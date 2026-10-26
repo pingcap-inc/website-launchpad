@@ -950,9 +950,21 @@ function LeftPanel({
   // ── Resizer state & logic ──────────────────────────────────────────────────
   const containerRef = useRef<HTMLDivElement>(null)
   const [topHeight, setTopHeight] = useState<number | null>(null)
+  // Container height mirrored into state so render never reads the ref.
+  const [containerHeight, setContainerHeight] = useState<number | null>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+    const measure = () => setContainerHeight(container.getBoundingClientRect().height)
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
 
   function getDefaultTopH() {
-    return Math.round((containerRef.current?.getBoundingClientRect().height ?? 600) * 0.5)
+    return Math.round((containerHeight ?? 600) * 0.5)
   }
 
   function handleResizerMouseDown(e: React.MouseEvent) {
@@ -1364,7 +1376,7 @@ function CreatePageInner() {
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode') ?? ''
   const editMode = mode === 'edit'
-  const initialSourceRef = useRef<'draft' | 'published'>(
+  const [initialSource] = useState<'draft' | 'published'>(() =>
     searchParams.get('source') === 'published' ? 'published' : 'draft'
   )
   const mockMode = process.env.NEXT_PUBLIC_USE_MOCK_DSL === '1'
@@ -1387,7 +1399,7 @@ function CreatePageInner() {
   const [draftAvailable, setDraftAvailable] = useState(false)
   const [checkingDraft, setCheckingDraft] = useState(false)
   const [editingPublishedSource, setEditingPublishedSource] = useState(
-    initialSourceRef.current === 'published'
+    initialSource === 'published'
   )
   const [parentOptions, setParentOptions] = useState<{ slug: string; title: string }[]>([])
   const [existingSlugs, setExistingSlugs] = useState<Set<string>>(new Set())
@@ -1513,6 +1525,10 @@ function CreatePageInner() {
     return () => document.removeEventListener('fullscreenchange', handler)
   }, [])
 
+  const updateDsl = useCallback((updater: (prev: PageDSL) => PageDSL) => {
+    setDsl((prev) => (prev ? updater(prev) : prev))
+  }, [])
+
   // Auto-derive slug from DSL canonical on first generate
   useEffect(() => {
     if (dsl?.meta?.canonical && !slug) {
@@ -1529,7 +1545,7 @@ function CreatePageInner() {
         }
       }
     }
-  }, [dsl, slug, existingSlugs])
+  }, [dsl, slug, existingSlugs, updateDsl])
 
   useEffect(() => {
     const loadParents = async () => {
@@ -2079,10 +2095,6 @@ function CreatePageInner() {
     }
   }, [localJson])
 
-  const updateDsl = useCallback((updater: (prev: PageDSL) => PageDSL) => {
-    setDsl((prev) => (prev ? updater(prev) : prev))
-  }, [])
-
   const updateImportWarningFor = useCallback((content: string, selectedPageType: string) => {
     const longFormTypes = ['listicle', 'playbook', 'compare']
     const isLongFormImport = longFormTypes.includes(selectedPageType)
@@ -2379,12 +2391,12 @@ function CreatePageInner() {
     if (!slug || !isValidSlugPath(slug)) return
     if (initialSlugRef.current !== slug) return
     autoLoadedDraftRef.current = true
-    if (initialSourceRef.current === 'published') {
+    if (initialSource === 'published') {
       handleLoadPublished()
     } else {
       handleLoadDraft()
     }
-  }, [slug, handleLoadDraft, handleLoadPublished])
+  }, [slug, initialSource, handleLoadDraft, handleLoadPublished])
 
   const toggleFullscreen = () => {
     if (!previewRef.current) return
