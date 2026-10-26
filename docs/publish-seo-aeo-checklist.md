@@ -14,7 +14,6 @@ Use this as the working release standard for content teams:
 - All hard validation checks pass.
 - AI `finalScore` is `80+`.
 - AEO pages include a direct-answer intro, substantive body content, and at least 3 FAQ items.
-- Page scorecard `overall` is ideally `80+` on staging.
 - Final review happens on staging before production.
 
 ## 1. Hard Validation Checks
@@ -165,64 +164,14 @@ In the editor UI, these dimensions are relabeled as:
 - FAQ has fewer than 3 items: `-3`
 - No CTA section found: `-5`
 
-## 5. Lighthouse-Style Page Scorecards
-
-The repo also includes a page scoring script:
-
-`pnpm run score:pages`
-
-This script evaluates real rendered pages, usually against a staging or preview URL. It is not AEO-specific, but it is useful as a release-quality signal.
-
-### Scorecard dimensions
-
-#### UX
-
-`UX = performance * 0.4 + accessibility * 0.3 + bestPractices * 0.3`
-
-#### SEO
-
-`SEO = lighthouseSEO * 0.5 + titleLength * 0.1 + metaDescriptionLength * 0.1 + h1 * 0.1 + internalLinks * 0.1 + headingStructure * 0.1`
-
-#### Consistency
-
-`Consistency = h1 * 0.2 + headingStructure * 0.2 + altCoverage * 0.2 + ctaCasing * 0.2 + internalLinks * 0.2`
-
-#### Overall
-
-`Overall = (UX + SEO + Consistency) / 3`
-
-### What the script specifically checks
-
-- Lighthouse `performance`
-- Lighthouse `accessibility`
-- Lighthouse `best-practices`
-- Lighthouse `seo`
-- Title length
-- Meta description length
-- H1 count
-- Internal link count
-- Heading structure
-- Image alt text coverage
-- CTA casing consistency
-
-### Recommended scorecard targets
-
-These are good operational targets for staging reviews:
-
-- `UX >= 80`
-- `SEO >= 85`
-- `Consistency >= 80`
-- `Overall >= 80`
-
-## 6. Important Clarification
+## 5. Important Clarification
 
 Today, the quality score is guidance, not a hard CI release gate.
 
 - The admin publish flow blocks on validation and failed links.
 - The AI score provides a quality recommendation.
-- The scorecard workflow generates reports, but it does not currently fail the workflow based on a minimum threshold.
 
-## 7. Practical Team Checklist
+## 6. Practical Team Checklist
 
 Before publishing, confirm all of the following:
 
@@ -235,5 +184,4 @@ Before publishing, confirm all of the following:
 - For AEO pages, the intro answers the query immediately.
 - For AEO pages, the body contains substantive `richTextBlock` content.
 - For AEO pages, FAQ includes at least 3 meaningful questions.
-- Staging scorecard is reviewed.
 - Final stakeholder review happens on staging before production.

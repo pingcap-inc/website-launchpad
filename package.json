@@ -15,7 +15,6 @@
     "title-case:all": "node scripts/check-title-case.mjs $(find src/app -name '*.tsx' | tr '\\n' ' ')",
     "title-case:fix": "node scripts/check-title-case.mjs --fix $(find src/app -name '*.tsx' | tr '\\n' ' ')",
     "title-case:review": "node scripts/check-title-case.mjs --review $(find src/app -name '*.tsx' | tr '\\n' ' ')",
-    "score:pages": "node scripts/score-pages.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -69,12 +68,9 @@
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
     "autoprefixer": "^10.6.1",
-    "cheerio": "^1.2.0",
-    "chrome-launcher": "^1.2.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.4.3",
     "husky": "^9.1.7",
-    "lighthouse": "^12.8.2",
     "lint-staged": "^16.4.0",
     "postcss": "^8.5.31",
     "tailwindcss": "^3.4.19",
