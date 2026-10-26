@@ -2,6 +2,10 @@
 node_modules/
 .pnp
 .pnp.js
+# pnpm is the package manager (pnpm-lock.yaml); other lockfiles go stale and
+# Dependabot still scans them.
+package-lock.json
+yarn.lock
 
 # Next.js
 .next/
