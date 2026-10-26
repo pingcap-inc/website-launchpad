@@ -76,7 +76,7 @@ src/
   - `ci.yml` — lint / type-check / build on `src/**` changes
   - `broken-links.yml` — link check on changed `src/app/**/*.tsx`
 - Push to `main`: `deploy.yml`
-- Manual (workflow_dispatch): `lighthouse-ci.yml`, `score-pages.yml`
+- Manual (workflow_dispatch): `lighthouse-ci.yml`
 
 ## Key Rules
 
