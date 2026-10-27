@@ -853,11 +853,13 @@ export default function WhatIsTidbPage() {
                 workloads. It combines transactions, analytics, and vector search in one
                 MySQL-compatible system that scales horizontally without manual sharding and keeps
                 data strongly consistent. Run it fully managed on TiDB Cloud or on your own
-                infrastructure with TiDB Self-Managed. TiDB is built by{' '}
-                <InlineLink href="https://www.pingcap.com/">PingCAP</InlineLink>, licensed under
-                Apache 2.0, and its storage engine{' '}
-                <InlineLink href="https://www.cncf.io/projects/tikv/">TiKV</InlineLink> is a
-                graduated project of the Cloud Native Computing Foundation (CNCF).
+                infrastructure with TiDB Self-Managed.
+                <span className="mt-4 block">
+                  TiDB is built by <InlineLink href="https://www.pingcap.com/">PingCAP</InlineLink>
+                  , licensed under Apache 2.0, and its storage engine{' '}
+                  <InlineLink href="https://www.cncf.io/projects/tikv/">TiKV</InlineLink> is a
+                  graduated project of the Cloud Native Computing Foundation (CNCF).
+                </span>
               </>
             }
             rightSlot={
