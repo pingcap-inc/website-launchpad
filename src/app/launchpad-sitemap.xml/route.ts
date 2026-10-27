@@ -1,4 +1,11 @@
+import { execFileSync } from 'node:child_process'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import path from 'node:path'
 import type { MetadataRoute } from 'next'
+
+// Prerender at build time, where the git checkout is available. The serverless
+// runtime has no .git, so this must never run per request.
+export const dynamic = 'force-static'
 
 const BASE_URL = 'https://www.pingcap.com'
 
@@ -120,20 +127,74 @@ const routes: Array<{
   // { url: '/open-source-heroes/', priority: 0.6, changeFrequency: 'monthly' },
 ]
 
+const APP_DIR = path.join(process.cwd(), 'src/app')
+
+/**
+ * Files that make up the page at `url`: the files directly in its route folder
+ * plus private `_folders` (e.g. `_components`). Child route folders are
+ * excluded, so `/developers/` doesn't pick up `/developers/learn/` edits.
+ */
+function pageFiles(url: string): string[] {
+  const dir = path.join(APP_DIR, url)
+  if (!existsSync(dir)) return []
+  return readdirSync(dir, { withFileTypes: true })
+    .filter((e) => e.isFile() || (e.isDirectory() && e.name.startsWith('_')))
+    .map((e) => path.relative(process.cwd(), path.join(dir, e.name)))
+}
+
+function shallowBoundaries(): Set<string> {
+  try {
+    const file = execFileSync('git', ['rev-parse', '--git-path', 'shallow'], {
+      encoding: 'utf8',
+    }).trim()
+    return new Set(existsSync(file) ? readFileSync(file, 'utf8').split('\n').filter(Boolean) : [])
+  } catch {
+    return new Set()
+  }
+}
+
+/**
+ * Last time the page's own files changed, taken from git. `--first-parent`
+ * reports the merge into the deployed branch rather than the original commit,
+ * so the date is when the change went live.
+ *
+ * Returns undefined when the date can't be known — no git, or the last change
+ * is older than a shallow clone's history (the boundary commit would claim to
+ * touch every file). An omitted <lastmod> is better than a wrong one: Google
+ * stops trusting a sitemap's lastmod once it sees inaccurate values.
+ */
+function lastModified(url: string, shallow: Set<string>): string | undefined {
+  const files = pageFiles(url)
+  if (files.length === 0) return undefined
+  try {
+    const [sha, date] = execFileSync(
+      'git',
+      ['log', '-1', '--first-parent', '--format=%H %cI', '--', ...files],
+      { encoding: 'utf8' }
+    )
+      .trim()
+      .split(' ')
+    if (!sha || shallow.has(sha)) return undefined
+    return date
+  } catch {
+    return undefined
+  }
+}
+
 export function GET() {
-  const now = new Date().toISOString()
+  const shallow = shallowBoundaries()
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes
-  .map(
-    ({ url, priority, changeFrequency }) => `  <url>
-    <loc>${BASE_URL}${url}</loc>
-    <lastmod>${now}</lastmod>
+  .map(({ url, priority, changeFrequency }) => {
+    const lastmod = lastModified(url, shallow)
+    return `  <url>
+    <loc>${BASE_URL}${url}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''}
     <changefreq>${changeFrequency}</changefreq>
     <priority>${priority}</priority>
   </url>`
-  )
+  })
   .join('\n')}
 </urlset>
 `
