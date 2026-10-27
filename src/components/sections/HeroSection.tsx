@@ -5,6 +5,7 @@ import { SecondaryButton } from '@/components/ui/SecondaryButton'
 import type { ImageRef, HeroProps } from '@/lib/dsl-schema'
 import { resolveCdnUrl } from '@/lib/cdn-url'
 import { Badge } from '@/components/ui/badge'
+import { sanitizeHeadlineHtml } from '@/lib/security/sanitize'
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -160,7 +161,9 @@ function HeroTextBlock({
           centered && 'mx-auto',
           headlineClassName
         )}
-        {...(isHtmlHeadline ? { dangerouslySetInnerHTML: { __html: headline as string } } : {})}
+        {...(isHtmlHeadline
+          ? { dangerouslySetInnerHTML: { __html: sanitizeHeadlineHtml(headline) } }
+          : {})}
       >
         {!isHtmlHeadline ? headline : null}
       </h1>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import type { PageDSL } from '@/lib/dsl-schema'
 import { extractExternalHrefs, checkLinks } from '@/lib/validate-links'
+import { readJsonBody } from '@/lib/security/api-guards'
 
 /**
  * POST /api/ai/validate-links
@@ -11,9 +12,11 @@ import { extractExternalHrefs, checkLinks } from '@/lib/validate-links'
  */
 export async function POST(request: NextRequest) {
   try {
-    const { dsl } = (await request.json()) as { dsl: PageDSL }
+    const parsed = await readJsonBody<{ dsl: PageDSL }>(request)
+    if (!parsed.ok) return parsed.response
+    const { dsl } = parsed.data
 
-    if (!dsl?.sections) {
+    if (!Array.isArray(dsl?.sections)) {
       return NextResponse.json({ error: 'dsl with sections is required' }, { status: 400 })
     }
 

@@ -5,6 +5,8 @@ import {
   GetObjectCommand,
   PutObjectCommand,
 } from '@aws-sdk/client-s3'
+import { logAudit } from '@/lib/audit'
+import { isUnsafeObjectKey, readJsonBody } from '@/lib/security/api-guards'
 
 const CDN_BASE = 'https://static.pingcap.com'
 const TAGS_KEY = 'media/tags.json'
@@ -102,11 +104,11 @@ export async function GET() {
   const images = objects.map((obj) => {
     const url = `${CDN_BASE}/${obj.key}`
     const name = obj.key.split('/').pop() ?? obj.key
-    const meta = metaMap[url] ?? {}
+    const meta = Object.hasOwn(metaMap, url) ? metaMap[url] : {}
     return {
       url,
       name,
-      tags: tagsMap[url] ?? [],
+      tags: Object.hasOwn(tagsMap, url) ? tagsMap[url] : [],
       alt: meta.alt ?? '',
       width: meta.width,
       height: meta.height,
@@ -119,6 +121,44 @@ export async function GET() {
   images.sort((a, b) => b.uploadedAt.localeCompare(a.uploadedAt))
 
   return NextResponse.json({ images })
+}
+
+const MAX_TAGS = 50
+const MAX_TAG_LENGTH = 64
+const MAX_ALT_LENGTH = 1000
+const MAX_BATCH_ENTRIES = 500
+
+// Index keys are CDN URLs of objects under images/ — the only thing the Media
+// Library ever writes. Anything else (incl. `__proto__`/`constructor`) is refused,
+// so caller strings can't become arbitrary keys in the shared JSON indexes.
+function isMediaUrl(url: unknown): url is string {
+  return (
+    typeof url === 'string' &&
+    url.length <= 1024 &&
+    url.startsWith(`${CDN_BASE}/${IMAGES_PREFIX}`) &&
+    !url.includes('..') &&
+    !isUnsafeObjectKey(url)
+  )
+}
+
+function cleanTags(tags: unknown): string[] | null {
+  if (!Array.isArray(tags) || tags.length > MAX_TAGS) return null
+  if (!tags.every((t) => typeof t === 'string')) return null
+  return (tags as string[]).map((t) => t.trim().slice(0, MAX_TAG_LENGTH)).filter(Boolean)
+}
+
+function isDimension(value: unknown) {
+  return (
+    value === null ||
+    value === undefined ||
+    (typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 100_000)
+  )
+}
+
+// Re-home a parsed index on a null-prototype object so lookups/assignments by key
+// can never reach Object.prototype.
+function toDict<T>(obj: Record<string, T>): Record<string, T> {
+  return Object.assign(Object.create(null) as Record<string, T>, obj)
 }
 
 /**
@@ -138,55 +178,90 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: (e as Error).message }, { status: 500 })
   }
 
-  const body = (await req.json()) as {
-    url?: string
-    tags?: string[]
-    alt?: string
-    width?: number | null
-    height?: number | null
+  const parsed = await readJsonBody<{
+    url?: unknown
+    tags?: unknown
+    alt?: unknown
+    width?: unknown
+    height?: unknown
     /** Batch: set tags for many URLs in one read-modify-write cycle */
-    tagEntries?: { url: string; tags: string[] }[]
-  }
+    tagEntries?: unknown
+  }>(req)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.data
 
   // Batch tag update path — no per-URL alt/size in batch mode
-  if (Array.isArray(body.tagEntries)) {
-    const tagsMap = await readJson<Record<string, string[]>>(s3, bucket, TAGS_KEY, {})
-    for (const entry of body.tagEntries) {
-      if (entry.url && Array.isArray(entry.tags)) {
-        tagsMap[entry.url] = entry.tags
-      }
+  if (body.tagEntries !== undefined) {
+    if (!Array.isArray(body.tagEntries) || body.tagEntries.length > MAX_BATCH_ENTRIES) {
+      return NextResponse.json({ error: 'Invalid tagEntries' }, { status: 400 })
     }
+    const entries: { url: string; tags: string[] }[] = []
+    for (const entry of body.tagEntries as { url?: unknown; tags?: unknown }[]) {
+      const tags = cleanTags(entry?.tags)
+      if (!isMediaUrl(entry?.url) || !tags) {
+        return NextResponse.json({ error: 'Invalid tagEntries' }, { status: 400 })
+      }
+      entries.push({ url: entry.url, tags })
+    }
+    const tagsMap = toDict(await readJson<Record<string, string[]>>(s3, bucket, TAGS_KEY, {}))
+    for (const entry of entries) tagsMap[entry.url] = entry.tags
     await writeJson(s3, bucket, TAGS_KEY, tagsMap)
+    await logAudit(req, {
+      action: 'media-tags',
+      status: 'success',
+      detail: `${entries.length} url(s)`,
+    })
     return NextResponse.json({ ok: true })
   }
 
-  if (!body.url) {
-    return NextResponse.json({ error: 'url is required' }, { status: 400 })
+  const url = body.url
+  if (!isMediaUrl(url)) {
+    return NextResponse.json({ error: 'A valid media url is required' }, { status: 400 })
+  }
+
+  const tags = body.tags === undefined ? undefined : cleanTags(body.tags)
+  if (tags === null) {
+    return NextResponse.json({ error: 'Invalid tags' }, { status: 400 })
+  }
+  if (
+    ('alt' in body &&
+      body.alt !== null &&
+      body.alt !== undefined &&
+      (typeof body.alt !== 'string' || body.alt.length > MAX_ALT_LENGTH)) ||
+    !isDimension(body.width) ||
+    !isDimension(body.height)
+  ) {
+    return NextResponse.json({ error: 'Invalid alt, width or height' }, { status: 400 })
   }
 
   const updates: Promise<void>[] = []
 
-  if (Array.isArray(body.tags)) {
-    const p = readJson<Record<string, string[]>>(s3, bucket, TAGS_KEY, {}).then((tagsMap) => {
-      tagsMap[body.url!] = body.tags!
+  if (tags) {
+    const p = readJson<Record<string, string[]>>(s3, bucket, TAGS_KEY, {}).then((raw) => {
+      const tagsMap = toDict(raw)
+      tagsMap[url] = tags
       return writeJson(s3, bucket, TAGS_KEY, tagsMap)
     })
     updates.push(p)
   }
 
   if ('alt' in body || 'width' in body || 'height' in body) {
-    const p = readJson<Record<string, ImageMeta>>(s3, bucket, META_KEY, {}).then((metaMap) => {
-      const existing = metaMap[body.url!] ?? {}
-      if ('alt' in body) existing.alt = body.alt ?? ''
-      if ('width' in body) existing.width = body.width ?? undefined
-      if ('height' in body) existing.height = body.height ?? undefined
-      metaMap[body.url!] = existing
+    const p = readJson<Record<string, ImageMeta>>(s3, bucket, META_KEY, {}).then((raw) => {
+      const metaMap = toDict(raw)
+      const existing: ImageMeta = { ...(metaMap[url] ?? {}) }
+      if ('alt' in body) existing.alt = (body.alt as string | null | undefined) ?? ''
+      if ('width' in body) existing.width = (body.width as number | null | undefined) ?? undefined
+      if ('height' in body)
+        existing.height = (body.height as number | null | undefined) ?? undefined
+      metaMap[url] = existing
       return writeJson(s3, bucket, META_KEY, metaMap)
     })
     updates.push(p)
   }
 
   await Promise.all(updates)
+
+  await logAudit(req, { action: 'media-meta', target: url, status: 'success' })
 
   return NextResponse.json({ ok: true })
 }

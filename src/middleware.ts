@@ -8,12 +8,36 @@ import { auth } from '@/auth'
  *   AUTH_SECRET in production can't surface as a 500 on these paths.
  * - Any deployed branch other than `staging` (per-PR previews, etc.): also 404,
  *   so the admin only ever appears on the single staging deployment.
- * - Local development: no login gate (localhost is not internet-exposed). Auth.js
- *   is not invoked either, keeping the dev loop friction-free.
+ * - Local development (`next dev`, i.e. NODE_ENV === 'development'): no login gate
+ *   (localhost is not internet-exposed). Auth.js is not invoked either, keeping the
+ *   dev loop friction-free.
+ * - Anything else without VERCEL_ENV (e.g. `next start` on a non-Vercel host):
+ *   404. The gate fails CLOSED — an unknown environment never gets an open admin.
  * - Staging preview: requires a signed-in Google user on the @pingcap.com domain
  *   (enforced by the `signIn` callback in `@/auth`). The staging URL is public, so
  *   login — not obscurity — is what protects it.
+ *
+ * On every environment where the admin is reachable (local dev, staging), a
+ * state-changing `/api/*` request carrying a cross-origin `Origin` header is
+ * rejected (403) as a CSRF guard. `/api/auth/*` is excluded: Auth.js runs its own
+ * CSRF-token check there. Same-origin fetches from the admin UI send a matching
+ * Origin; server-to-server callers send none, so neither is affected.
  */
+
+const STATE_CHANGING_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE'])
+
+/** True for a state-changing /api request that a browser marked as cross-origin. */
+function isCrossOriginApiWrite(req: NextRequest): boolean {
+  const { pathname } = req.nextUrl
+  if (!pathname.startsWith('/api/') || pathname.startsWith('/api/auth/')) return false
+  if (!STATE_CHANGING_METHODS.has(req.method.toUpperCase())) return false
+
+  const origin = req.headers.get('origin')
+  if (origin) return origin !== req.nextUrl.origin
+
+  // No Origin header: browsers that omit it still send Fetch Metadata.
+  return req.headers.get('sec-fetch-site') === 'cross-site'
+}
 
 // The authenticated gate for staging. Wrapping with `auth()` resolves the session
 // into `req.auth`, so this runs ONLY for staging (see the dispatcher below).
@@ -56,8 +80,15 @@ export default function middleware(req: NextRequest, ev: NextFetchEvent) {
     return new NextResponse(null, { status: 404 })
   }
 
-  // Local development: not internet-exposed, no gate. Also before Auth.js.
+  // Not on Vercel. Only genuine local development (`next dev`) is let through
+  // ungated; any other host (e.g. `next start` on a VM) fails closed.
   if (!vercelEnv) {
+    if (process.env.NODE_ENV !== 'development') {
+      return new NextResponse(null, { status: 404 })
+    }
+    if (isCrossOriginApiWrite(req)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
     return NextResponse.next()
   }
 
@@ -65,6 +96,12 @@ export default function middleware(req: NextRequest, ev: NextFetchEvent) {
   // preview, so distinguish by the deployed git ref). Hide admin on those too.
   if (process.env.VERCEL_GIT_COMMIT_REF !== 'staging') {
     return new NextResponse(null, { status: 404 })
+  }
+
+  // CSRF guard ahead of the session check, so a cross-site write is refused even
+  // when the victim's browser carries a valid staging session cookie.
+  if (isCrossOriginApiWrite(req)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   // Staging only: run the authenticated gate (this is where Auth.js runs).

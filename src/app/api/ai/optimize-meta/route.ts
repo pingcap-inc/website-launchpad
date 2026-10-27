@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AI_PROVIDER, generateJSON } from '@/lib/ai-client'
+import { readJsonBody } from '@/lib/security/api-guards'
 
 const SYSTEM_PROMPT = `You are an SEO expert for pingcap.com (TiDB distributed SQL database).
 
@@ -42,19 +43,23 @@ function normalizeSlugLeaf(input: string): string {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as {
+    const input = await readJsonBody<{
       content?: string
       pageType?: string
       headline?: string
-    }
-    const content = (body.content ?? '').trim()
+    }>(req)
+    if (!input.ok) return input.response
+    const body = input.data
+    const content = typeof body.content === 'string' ? body.content.trim() : ''
     if (!content) {
       return NextResponse.json({ error: 'content is required' }, { status: 400 })
     }
 
     const truncated = content.length > 6000 ? content.slice(0, 6000) : content
-    const userPrompt = `Page type: ${body.pageType ?? 'compare'}
-${body.headline ? `Working headline: ${body.headline}\n` : ''}Content:
+    const pageType = typeof body.pageType === 'string' ? body.pageType.slice(0, 40) : 'compare'
+    const headline = typeof body.headline === 'string' ? body.headline.slice(0, 300) : ''
+    const userPrompt = `Page type: ${pageType}
+${headline ? `Working headline: ${headline}\n` : ''}Content:
 ${truncated}${AI_PROVIDER === 'bedrock' ? '\n\nStart your response with { and end with }' : ''}`
 
     const raw = await generateJSON(

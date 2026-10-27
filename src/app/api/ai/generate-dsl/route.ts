@@ -5,6 +5,12 @@ import type { PageDSL, SectionDefinition, SectionType } from '@/lib/dsl-schema'
 import type { PageType } from '@/lib/admin/page-types'
 import { schemaMap } from '@/lib/section-registry'
 import { SAFE_CTA_LINKS } from '@/lib/safe-links'
+import {
+  safeCanonicalPath,
+  safeUrl,
+  sanitizeHeadlineHtml,
+  sanitizeHtml,
+} from '@/lib/security/sanitize'
 import { addTableOfContentsForLongForm } from '@/lib/toc'
 import {
   enforceLongFormMaxWidth,
@@ -1222,7 +1228,51 @@ function applyFeatureTabsDefaults(dsl: PageDSL): void {
 function isInvalidHref(href: unknown): boolean {
   if (typeof href !== 'string') return false
   const h = href.trim()
-  return h === '' || h === '#' || h === 'javascript:void(0)'
+  // Model output is untrusted: anything outside http(s)/mailto/tel/relative
+  // (e.g. javascript:, data:) is treated like a placeholder and replaced.
+  return h === '' || h === '#' || safeUrl(h) === null
+}
+
+const URL_KEYS = new Set(['href', 'url', 'src', 'backgroundImageUrl'])
+
+/**
+ * Last line of defence over the whole tree (fixCtaHref only knows the common
+ * CTA shapes): drop any unsafe URL string, and reduce raw-HTML fields (hero
+ * headline, shortCode) to their allowlists.
+ */
+function sanitizeUntrustedContent(value: unknown): void {
+  if (Array.isArray(value)) {
+    value.forEach(sanitizeUntrustedContent)
+    return
+  }
+  if (!value || typeof value !== 'object') return
+  const rec = value as Record<string, unknown>
+  for (const [key, v] of Object.entries(rec)) {
+    if (typeof v === 'string') {
+      if (URL_KEYS.has(key) && v.trim() && safeUrl(v) === null) {
+        console.warn(`[DSL] Unsafe URL on "${key}" removed: ${v.slice(0, 80)}`)
+        delete rec[key]
+      } else if (key === 'headline' && /<[a-z]/i.test(v)) {
+        rec[key] = sanitizeHeadlineHtml(v)
+      } else if (key === 'shortCode' && /<[a-z]/i.test(v)) {
+        rec[key] = sanitizeHtml(v)
+      }
+    } else {
+      sanitizeUntrustedContent(v)
+    }
+  }
+}
+
+/** Canonical is model-controlled and baked into prod code — force a plain path. */
+function enforceSafeCanonical(dsl: PageDSL): void {
+  if (!dsl.meta) return
+  try {
+    dsl.meta.canonical = safeCanonicalPath(dsl.meta.canonical)
+  } catch {
+    const slug = toKebabCase(String(dsl.meta.title ?? '')) || 'generated-page'
+    console.warn(`[DSL] Invalid canonical "${dsl.meta.canonical}", replaced with "/${slug}/"`)
+    dsl.meta.canonical = `/${slug}/`
+  }
 }
 
 function guessSafeLink(text?: string) {
@@ -1342,8 +1392,10 @@ function validateDSL(dsl: unknown, pageType?: PageType | 'auto'): string[] {
     if (!meta.title) errors.push('meta.title is required')
     if (!meta.description) errors.push('meta.description is required')
     if (!meta.canonical) errors.push('meta.canonical is required')
-    else if (typeof meta.canonical === 'string' && !meta.canonical.startsWith('/'))
+    else if (typeof meta.canonical !== 'string' || !meta.canonical.startsWith('/'))
       errors.push('meta.canonical must start with "/"')
+    else if (!/^\/(?:[a-z0-9._~-]+\/)*$/i.test(meta.canonical))
+      errors.push('meta.canonical must be a plain path like "/my-page/"')
   }
 
   // sections
@@ -1504,6 +1556,7 @@ export async function POST(request: NextRequest) {
       stripBackgroundFields(dsl)
       applyFeatureTabsDefaults(dsl)
       sanitizeHeroForm(dsl)
+      sanitizeLinks(dsl)
       errors = validateDSL(dsl, pageType)
       if (errors.length > 0) {
         console.error('[DSL] Retry still has validation errors:', errors)
@@ -1514,6 +1567,10 @@ export async function POST(request: NextRequest) {
 
     sanitizeDSLIcons(dsl)
     sanitizeDSLStyles(dsl)
+    // Regardless of validation outcome (non-blocking above), never return
+    // model-controlled canonicals, URLs or raw HTML unsanitized.
+    enforceSafeCanonical(dsl)
+    sanitizeUntrustedContent(dsl)
     addTableOfContentsForLongForm(dsl, normalizedPageType)
     enforceLongFormMaxWidth(dsl, normalizedPageType)
     ensureLongFormLastUpdated(dsl, normalizedPageType)

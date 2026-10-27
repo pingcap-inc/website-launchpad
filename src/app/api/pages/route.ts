@@ -134,7 +134,12 @@ type CacheEntry = {
 }
 
 const CACHE_TTL_MS = 60_000
-const cacheKey = (params: URLSearchParams) => `pages:${params.toString() || 'default'}`
+// Keyed only on the flags the handler actually reads (normalized to booleans), so
+// arbitrary query strings can't grow the cache — at most 2^5 entries exist.
+const cacheKey = (flags: Record<string, boolean>) =>
+  `pages:${Object.entries(flags)
+    .map(([k, v]) => `${k}=${v ? 1 : 0}`)
+    .join('&')}`
 
 /**
  * GET /api/pages
@@ -151,7 +156,12 @@ export async function GET(req: Request) {
   }
 
   const url = new URL(req.url)
-  const cacheId = cacheKey(url.searchParams)
+  const onlyDsl = url.searchParams.get('onlyDsl') === '1'
+  const includeDrafts = url.searchParams.get('includeDrafts') !== '0'
+  const includeCode = !onlyDsl && url.searchParams.get('includeCode') !== '0'
+  const includeTitle = url.searchParams.get('includeTitle') !== '0'
+  const includeUpdated = url.searchParams.get('includeUpdated') !== '0'
+  const cacheId = cacheKey({ includeDrafts, includeCode, includeTitle, includeUpdated })
   const cached = (globalThis as { __pagesCache?: Map<string, CacheEntry> }).__pagesCache
   if (cached) {
     const entry = cached.get(cacheId)
@@ -159,12 +169,6 @@ export async function GET(req: Request) {
       return NextResponse.json(entry.data)
     }
   }
-
-  const onlyDsl = url.searchParams.get('onlyDsl') === '1'
-  const includeDrafts = url.searchParams.get('includeDrafts') !== '0'
-  const includeCode = !onlyDsl && url.searchParams.get('includeCode') !== '0'
-  const includeTitle = url.searchParams.get('includeTitle') !== '0'
-  const includeUpdated = url.searchParams.get('includeUpdated') !== '0'
 
   const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`
 
