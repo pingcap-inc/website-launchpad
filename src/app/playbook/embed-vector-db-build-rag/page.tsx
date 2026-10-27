@@ -54,9 +54,9 @@ const dsl: PageDSL = {
       "Compare TiDB's embedded vector DB approach against the classic two-DB setup for RAG. Discover how TiDB unifies vector and SQL in one system.",
     canonical: '/playbook/embed-vector-db-build-rag/',
     createdBy: 'a.hire@pingcap.com',
-    createdAt: '2026-10-27T19:17:35.196Z',
+    createdAt: '2026-10-27T19:17:54.746Z',
     modifiedBy: 'a.hire@pingcap.com',
-    modifiedAt: '2026-10-27T19:17:35.196Z',
+    modifiedAt: '2026-10-27T19:17:54.746Z',
   },
   sections: [
     {
