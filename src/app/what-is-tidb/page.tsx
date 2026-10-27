@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { CheckSquare, ChartNoAxesCombined, Cloud, Radius } from 'lucide-react'
+import { BrainCircuit, CheckSquare, ChartNoAxesCombined, Cloud, Radius } from 'lucide-react'
 import {
   FaqSection,
   Footer,
@@ -388,6 +388,12 @@ const capabilities = [
       </>
     ),
     icon: <Radius className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
+  },
+  {
+    title: 'Vector Search for AI Applications',
+    description:
+      'AI applications need embeddings stored next to the operational data that gives them context. TiDB supports a native VECTOR data type and vector indexes, so you can run semantic similarity search with standard SQL and filter by user, tenant, or recency in the same query. There’s no separate vector database to provision or keep in sync. With integrations for frameworks like LangChain and LlamaIndex, TiDB is a practical foundation for RAG, semantic search, and AI agents.',
+    icon: <BrainCircuit className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
   },
 ]
 
@@ -843,10 +849,11 @@ export default function WhatIsTidbPage() {
             subheadline={
               <>
                 TiDB (pronounced &quot;/ˈtaɪdiːbiː./&quot;, &quot;Ti&quot; stands for Titanium) is
-                an open-source, distributed SQL database that supports Hybrid Transactional and
-                Analytical Processing (HTAP) workloads. It is MySQL compatible, horizontally
-                scalable, and designed for applications that require strong consistency and high
-                availability at scale. TiDB is built by{' '}
+                an open-source, distributed SQL database for AI apps, agentic systems, and real-time
+                workloads. It combines transactions, analytics, and vector search in one
+                MySQL-compatible system that scales horizontally without manual sharding and keeps
+                data strongly consistent. Run it fully managed on TiDB Cloud or on your own
+                infrastructure with TiDB Self-Managed. TiDB is built by{' '}
                 <InlineLink href="https://www.pingcap.com/">PingCAP</InlineLink>, licensed under
                 Apache 2.0, and its storage engine{' '}
                 <InlineLink href="https://www.cncf.io/projects/tikv/">TiKV</InlineLink> is a
@@ -933,7 +940,7 @@ export default function WhatIsTidbPage() {
         >
           <FeatureGridSection
             title="Key Capabilities"
-            subtitle="TiDB combines the familiarity of MySQL with the scalability of a distributed system. These are the core capabilities that make that possible."
+            subtitle="TiDB combines the familiarity of MySQL with the scalability of a distributed system and the data foundation AI applications need. These are the core capabilities that make that possible."
             features={capabilities}
             columns={3}
             itemLayout="vertical"
