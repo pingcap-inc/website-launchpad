@@ -1,9 +1,13 @@
 {
   "pageName": "RAG Without Extra Luggage: TiDB’s Embedded Vector DB",
   "meta": {
-    "title": "TiDB vs Pinecone: RAG Stack Simplified | TiDB",
+    "title": "RAG Stack Simplified | TiDB",
     "description": "Compare TiDB's embedded vector DB approach against the classic two-DB setup for RAG. Discover how TiDB unifies vector and SQL in one system.",
-    "canonical": "/playbook/embed-vector-db-build-rag/"
+    "canonical": "/playbook/embed-vector-db-build-rag/",
+    "createdBy": "a.hire@pingcap.com",
+    "createdAt": "2026-10-27T19:17:35.196Z",
+    "modifiedBy": "a.hire@pingcap.com",
+    "modifiedAt": "2026-10-27T19:17:35.196Z"
   },
   "sections": [
     {
@@ -24,21 +28,14 @@
           "height": 300
         }
       },
-      "style": {
-        "background": "primary",
-        "spacing": "section"
-      }
+      "style": { "background": "primary", "spacing": "section" }
     },
     {
       "id": "tableOfContents-1",
       "type": "tableOfContents",
       "props": {
         "items": [
-          {
-            "id": "intro",
-            "label": "Introduction",
-            "level": 1
-          },
+          { "id": "intro", "label": "Introduction", "level": 1 },
           {
             "id": "who-is-this-playbook-for-storage-leads-sres-ai-startup-developers",
             "label": "Who is This Playbook for: Storage Leads, SREs, & AI Startup Developers",
@@ -54,11 +51,7 @@
             "label": "Two Databases, Double Trouble",
             "level": 2
           },
-          {
-            "id": "sync-drift-latency-spikes",
-            "label": "Sync Drift & Latency Spikes",
-            "level": 2
-          },
+          { "id": "sync-drift-latency-spikes", "label": "Sync Drift & Latency Spikes", "level": 2 },
           {
             "id": "diy-route-standalone-vector-store-ops-the-two-db-tango",
             "label": "DIY Route: Standalone Vector Store Ops (The Two-DB Tango)",
@@ -69,21 +62,13 @@
             "label": "Deploy, ETL, Monitor, Repeat",
             "level": 2
           },
-          {
-            "id": "hybrid-queries-in-app-code",
-            "label": "Hybrid Queries in App Code",
-            "level": 2
-          },
+          { "id": "hybrid-queries-in-app-code", "label": "Hybrid Queries in App Code", "level": 2 },
           {
             "id": "tidb-route-embedded-vector-db-power",
             "label": "TiDB Route: Embedded Vector DB Power",
             "level": 1
           },
-          {
-            "id": "vector-columns-beside-rows",
-            "label": "Vector Columns Beside Rows",
-            "level": 2
-          },
+          { "id": "vector-columns-beside-rows", "label": "Vector Columns Beside Rows", "level": 2 },
           {
             "id": "hybrid-similarity-sql-joins",
             "label": "Hybrid Similarity + SQL Joins",
@@ -94,21 +79,13 @@
             "label": "Labor Showdown: Ops Hours & Incidents Count",
             "level": 1
           },
-          {
-            "id": "step-by-step-guide",
-            "label": "Step-by-Step Guide",
-            "level": 1
-          },
+          { "id": "step-by-step-guide", "label": "Step-by-Step Guide", "level": 1 },
           {
             "id": "upgrade-ingest-query-tune",
             "label": "Upgrade, Ingest, Query, Tune",
             "level": 2
           },
-          {
-            "id": "operational-best-practices",
-            "label": "Operational Best Practices",
-            "level": 1
-          },
+          { "id": "operational-best-practices", "label": "Operational Best Practices", "level": 1 },
           {
             "id": "vector-aware-metrics-in-tidb-dashboard",
             "label": "Vector-Aware Metrics in TiDB Dashboard",
@@ -124,31 +101,19 @@
             "label": "Full-Cluster Backup Including Vector Data",
             "level": 2
           },
-          {
-            "id": "proof-in-production",
-            "label": "Proof in Production",
-            "level": 1
-          },
+          { "id": "proof-in-production", "label": "Proof in Production", "level": 1 },
           {
             "id": "new-retail-giant-45-lower-costs-with-a-graphrag-knowledge-system",
             "label": "New Retail Giant: 45% Lower Costs with a GraphRAG Knowledge System",
             "level": 2
           },
-          {
-            "id": "outcomes",
-            "label": "Outcomes",
-            "level": 2
-          },
+          { "id": "outcomes", "label": "Outcomes", "level": 2 },
           {
             "id": "innovative-saas-company-real-time-customer-feedback-intelligence-with-tidb-ai",
             "label": "Innovative SaaS Company: Real-Time Customer Feedback Intelligence with TiDB \\+ AI",
             "level": 2
           },
-          {
-            "id": "next-steps",
-            "label": "Next Steps",
-            "level": 1
-          },
+          { "id": "next-steps", "label": "Next Steps", "level": 1 },
           {
             "id": "spin-up-a-free-tidb-cloud-vector-sandbox",
             "label": "Spin Up a Free TiDB Cloud Vector Sandbox",
