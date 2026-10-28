@@ -6,6 +6,7 @@ import { CloudLakeArchitecture } from './CloudLakeArchitecture'
 import { TiDBPersistentLayer } from './TiDBPersistentLayer'
 import { ReviewBadges } from './ReviewBadges'
 import { isHtmlShortcode, resolveRegisteredShortcode } from '@/lib/shortcodes'
+import { sanitizeHtml } from '@/lib/security/sanitize'
 
 interface ShortcodeRendererProps {
   shortCode?: string
@@ -48,6 +49,12 @@ function ShortcodeFallback({ shortCode }: { shortCode?: string }) {
 
 export function ShortcodeRenderer({ shortCode, className }: ShortcodeRendererProps) {
   const resolvedShortcode = useMemo(() => resolveRegisteredShortcode(shortCode), [shortCode])
+  // shortCode is DSL content (staff/LLM authored) and ships to production, so
+  // raw HTML is reduced to an allowlist: no scripts, handlers or unsafe URLs.
+  const safeHtml = useMemo(
+    () => (isHtmlShortcode(shortCode) ? sanitizeHtml(shortCode) : ''),
+    [shortCode]
+  )
 
   if (resolvedShortcode === 'agent-memory-timeline') {
     return (
@@ -72,7 +79,7 @@ export function ShortcodeRenderer({ shortCode, className }: ShortcodeRendererPro
   }
 
   if (isHtmlShortcode(shortCode)) {
-    return <div className={className} dangerouslySetInnerHTML={{ __html: shortCode ?? '' }} />
+    return <div className={className} dangerouslySetInnerHTML={{ __html: safeHtml }} />
   }
 
   return (

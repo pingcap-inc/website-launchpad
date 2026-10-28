@@ -154,11 +154,47 @@ async function headCheck(href: string): Promise<{ status: number | 'error'; ok: 
   }
 }
 
+// Bound the outbound fan-out of one request: at most MAX_LINKS URLs are checked,
+// with at most CONCURRENCY requests in flight at a time.
+const MAX_LINKS = 200
+const CONCURRENCY = 8
+
+async function mapWithConcurrency<T, R>(
+  items: T[],
+  limit: number,
+  fn: (item: T) => Promise<R>
+): Promise<PromiseSettledResult<R>[]> {
+  const results: PromiseSettledResult<R>[] = new Array(items.length)
+  let next = 0
+  const worker = async () => {
+    while (next < items.length) {
+      const index = next++
+      try {
+        results[index] = { status: 'fulfilled', value: await fn(items[index]) }
+      } catch (reason) {
+        results[index] = { status: 'rejected', reason }
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker))
+  return results
+}
+
 export async function checkLinks(hrefs: HrefEntry[]): Promise<LinkCheckResult[]> {
   if (hrefs.length === 0) return []
 
-  const results = await Promise.allSettled(
-    hrefs.map(async ({ href, location }): Promise<LinkCheckResult> => {
+  const checked = hrefs.slice(0, MAX_LINKS)
+  const skipped: LinkCheckResult[] = hrefs.slice(MAX_LINKS).map(({ href, location }) => ({
+    href,
+    status: 'error',
+    ok: false,
+    location: `${location} [not checked: over ${MAX_LINKS}-link limit]`,
+  }))
+
+  const results = await mapWithConcurrency(
+    checked,
+    CONCURRENCY,
+    async ({ href, location }): Promise<LinkCheckResult> => {
       // Check if domain is trusted first
       try {
         const url = new URL(href)
@@ -171,12 +207,15 @@ export async function checkLinks(hrefs: HrefEntry[]): Promise<LinkCheckResult[]>
 
       const { status, ok } = await headCheck(href)
       return { href, status, ok, location }
-    })
+    }
   )
 
-  return results.map((r) =>
-    r.status === 'fulfilled'
-      ? r.value
-      : { href: '', status: 'error' as const, ok: false, location: 'unknown' }
-  )
+  return [
+    ...results.map((r) =>
+      r.status === 'fulfilled'
+        ? r.value
+        : { href: '', status: 'error' as const, ok: false, location: 'unknown' }
+    ),
+    ...skipped,
+  ]
 }

@@ -4,6 +4,7 @@
  */
 import type { PageDSL, HeroProps } from './dsl-schema'
 import { normalizeDSL } from './dsl-utils'
+import { safeCanonicalPath } from './security/sanitize'
 
 /** Site-wide fallback social card, used when a page sets no `meta.ogImage`. */
 export const DEFAULT_SOCIAL_IMAGE =
@@ -21,7 +22,8 @@ function absoluteSocialUrl(url: string): string {
   return `${SOCIAL_CDN_BASE}${url.startsWith('/') ? '' : '/'}${url}`
 }
 
-// JSON.stringify all user strings — handles quotes, backslashes, newlines
+// Every DSL-derived value below is emitted via JSON.stringify (strings) or a
+// checked number, so it can only ever be a literal in the generated source.
 const normalizeString = (s?: string | null) => (s ?? '').replace(/\\"/g, '"')
 
 function normalizeDslStrings(dsl: PageDSL): PageDSL {
@@ -33,10 +35,19 @@ function normalizeDslStrings(dsl: PageDSL): PageDSL {
   ) as PageDSL
 }
 
+function toPositiveInt(value: unknown, fallback: number): number {
+  const n = Number(value)
+  return Number.isFinite(n) && n > 0 ? Math.round(n) : fallback
+}
+
 export function dslToTsx(dsl: PageDSL, slug: string): string {
   const normalized = normalizeDslStrings(normalizeDSL(dsl))
   const { meta, sections } = normalized
-  const path = meta.canonical.startsWith('/') ? meta.canonical : `/${meta.canonical}`
+  // Throws on anything that is not a plain URL path — it is baked into prod code.
+  const path = safeCanonicalPath(meta.canonical)
+  // safeCanonicalPath allows only [A-Za-z0-9._~/-], so the single-quoted
+  // literals below cannot be broken out of (and keep the committed formatting).
+  const canonicalUrl = `https://www.pingcap.com${path}`
   const pageTitle = meta.title
   const pageDesc = meta.description
 
@@ -53,8 +64,8 @@ export function dslToTsx(dsl: PageDSL, slug: string): string {
   const ogImageUrl = meta.ogImage?.url?.trim()
   const ogImage = ogImageUrl ? absoluteSocialUrl(ogImageUrl) : DEFAULT_SOCIAL_IMAGE
   // The default card is 1200x630; an uploaded one reports its measured size.
-  const ogWidth = (ogImageUrl && meta.ogImage?.width) || 1200
-  const ogHeight = (ogImageUrl && meta.ogImage?.height) || 630
+  const ogWidth = toPositiveInt(ogImageUrl && meta.ogImage?.width, 1200)
+  const ogHeight = toPositiveInt(ogImageUrl && meta.ogImage?.height, 630)
 
   return `import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
@@ -66,11 +77,11 @@ export const metadata: Metadata = {
   title: ${JSON.stringify(pageTitle)},
   description: ${JSON.stringify(pageDesc)},
   robots: { index: ${meta.noindex || meta.unlisted ? 'false' : 'true'}, follow: true },
-  alternates: { canonical: 'https://www.pingcap.com${path}' },
+  alternates: { canonical: '${canonicalUrl}' },
   openGraph: {
     title: ${JSON.stringify(pageTitle)},
     description: ${JSON.stringify(pageDesc)},
-    url: 'https://www.pingcap.com${path}',
+    url: '${canonicalUrl}',
     siteName: 'TiDB',
     images: [
       {

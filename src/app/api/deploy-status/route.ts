@@ -47,10 +47,7 @@ export async function GET() {
     return NextResponse.json({ status: 'unknown' })
   }
 
-  return NextResponse.json({
-    status: STATE_MAP[deployment.state] ?? 'building',
-    url: `https://${deployment.url}`,
-    createdAt: deployment.createdAt,
-    elapsed: Date.now() - deployment.createdAt,
-  })
+  // Only the status is consumed (PublishDrawer polls it); don't expose the
+  // deployment's internal URL or timing.
+  return NextResponse.json({ status: STATE_MAP[deployment.state] ?? 'building' })
 }

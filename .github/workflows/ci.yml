@@ -11,6 +11,9 @@ on:
       - 'tailwind.config.ts'
       - 'next.config.ts'
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     name: Lint · Type-check · Build
@@ -18,15 +21,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
+          persist-credentials: false
           fetch-depth: 0 # need base-branch history to diff the PR's changed files
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 20
           cache: pnpm
@@ -42,8 +46,9 @@ jobs:
       # The pre-commit hook is the local gate; this is the PR-visible reminder.
       - name: Title Case (changed pages · advisory)
         continue-on-error: true
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
         run: |
-          BASE="${{ github.event.pull_request.base.sha }}"
           FILES=$(git diff --name-only "$BASE" HEAD -- 'src/app/**/*.tsx' | tr '\n' ' ')
           if [ -z "$(echo "$FILES" | tr -d '[:space:]')" ]; then
             echo "No changed page files — nothing to check."

@@ -4,6 +4,7 @@ import { cn, isVideoUrl } from '@/lib/utils'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { SlideIn } from '@/components/ui/SlideIn'
 import type { ImageRef } from '@/lib/dsl-schema'
+import { safeUrl } from '@/lib/security/sanitize'
 
 /** Inline-link markdown: [label](url). Internal (starts with / or #) → <Link>, external → <a>. */
 const INLINE_LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g
@@ -18,8 +19,15 @@ function renderDescription(text: string): React.ReactNode {
   INLINE_LINK_RE.lastIndex = 0
 
   while ((match = INLINE_LINK_RE.exec(text)) !== null) {
-    const [full, label, href] = match
+    const [full, label, rawHref] = match
     if (match.index > lastIndex) nodes.push(text.slice(lastIndex, match.index))
+    lastIndex = match.index + full.length
+    // Unsafe schemes (javascript:, data:, …) render as plain text, never as a link.
+    const href = safeUrl(rawHref)
+    if (!href) {
+      nodes.push(label)
+      continue
+    }
     const isInternal = href.startsWith('/') || href.startsWith('#')
     nodes.push(
       isInternal ? (
@@ -38,7 +46,6 @@ function renderDescription(text: string): React.ReactNode {
         </a>
       )
     )
-    lastIndex = match.index + full.length
   }
   if (lastIndex < text.length) nodes.push(text.slice(lastIndex))
 

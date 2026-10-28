@@ -3,6 +3,12 @@ import { AI_PROVIDER, generateJSON } from '@/lib/ai-client'
 import { DSL_SCHEMA_PROMPT, sanitizeDSLIcons } from '@/lib/dsl-schema'
 import type { PageDSL } from '@/lib/dsl-schema'
 import { schemaMap } from '@/lib/section-registry'
+import { readJsonBody } from '@/lib/security/api-guards'
+
+// Cap what a caller can put into the prompt (cost/abuse bound). The largest
+// committed page.dsl.json is ~56 KB.
+const MAX_BODY_BYTES = 512 * 1024
+const MAX_INSTRUCTION_CHARS = 8000
 
 const VALID_BG = new Set([
   'primary',
@@ -116,13 +122,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'ANTHROPIC_MODEL not configured' }, { status: 500 })
   }
 
-  const { dsl, instruction } = (await request.json()) as {
-    dsl: PageDSL
-    instruction: string
-  }
+  const parsed = await readJsonBody<{ dsl: PageDSL; instruction: string }>(request, MAX_BODY_BYTES)
+  if (!parsed.ok) return parsed.response
+  const { dsl, instruction } = parsed.data
 
-  if (!dsl || !instruction?.trim()) {
+  if (!dsl || typeof instruction !== 'string' || !instruction.trim()) {
     return NextResponse.json({ error: 'dsl and instruction are required' }, { status: 400 })
+  }
+  if (instruction.length > MAX_INSTRUCTION_CHARS) {
+    return NextResponse.json(
+      { error: `instruction must be under ${MAX_INSTRUCTION_CHARS} characters` },
+      { status: 413 }
+    )
   }
 
   try {

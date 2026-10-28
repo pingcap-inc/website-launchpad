@@ -4,6 +4,11 @@ import { cleanupImportedMarkdownEscapes } from '@/lib/imported-text'
 export async function GET(req: NextRequest) {
   const docId = req.nextUrl.searchParams.get('docId')
   if (!docId) return NextResponse.json({ error: 'Missing docId' }, { status: 400 })
+  // The id is interpolated into the export URL path — allow only Google's id alphabet
+  // so it can't add path segments or query parameters.
+  if (!/^[A-Za-z0-9_-]{1,200}$/.test(docId)) {
+    return NextResponse.json({ error: 'Invalid docId' }, { status: 400 })
+  }
 
   try {
     const res = await fetch(`https://docs.google.com/document/d/${docId}/export?format=txt`, {

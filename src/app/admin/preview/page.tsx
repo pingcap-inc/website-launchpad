@@ -26,12 +26,15 @@ export default function PreviewPage() {
 
   // Signal parent that iframe is ready to receive postMessage updates
   useEffect(() => {
-    window.parent?.postMessage({ type: 'preview-ready' }, '*')
+    window.parent?.postMessage({ type: 'preview-ready' }, window.location.origin)
   }, [])
 
   // Real-time DSL updates from parent (no iframe reload needed)
   useEffect(() => {
     const handler = (e: MessageEvent) => {
+      // Only the same-origin admin editor that embeds this iframe may drive it;
+      // any other window could otherwise inject an arbitrary DSL (stored XSS).
+      if (e.origin !== window.location.origin || e.source !== window.parent) return
       if (e.data?.type === 'preview-dsl') {
         try {
           setDsl(normalizeDSL(e.data.dsl as PageDSL))
@@ -51,7 +54,7 @@ export default function PreviewPage() {
     const report = () =>
       window.parent?.postMessage(
         { type: 'preview-height', height: document.body.scrollHeight },
-        '*'
+        window.location.origin
       )
     report()
     const t = setTimeout(report, 600) // wait for images/fonts to settle
@@ -82,7 +85,7 @@ export default function PreviewPage() {
           type: 'preview-scroll-to',
           top: image.getBoundingClientRect().top + window.scrollY,
         },
-        '*'
+        window.location.origin
       )
 
       window.setTimeout(() => {

@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { logAudit, resolveActor } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
-
-const DRAFT_BRANCH = 'drafts/ai'
-
-function isValidSlugPath(slug: string) {
-  if (!slug) return false
-  const segments = slug.split('/').filter(Boolean)
-  if (segments.length === 0) return false
-  return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
-}
+import { DRAFT_BRANCH, isValidPageSlug, publishedBranch } from '@/lib/security/api-guards'
 
 async function readFile(
   baseUrl: string,
@@ -18,7 +10,7 @@ async function readFile(
   branch: string
 ) {
   const res = await fetch(
-    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${branch}`,
+    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${encodeURIComponent(branch)}`,
     { headers }
   )
   if (res.status === 404) return null
@@ -37,7 +29,7 @@ async function fileExists(
   branch: string
 ) {
   const res = await fetch(
-    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${branch}`,
+    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${encodeURIComponent(branch)}`,
     { headers }
   )
   if (res.status === 404) return false
@@ -103,7 +95,7 @@ function reslugDsl(raw: string, toSlug: string, actor: string): string {
 
 export async function POST(req: NextRequest) {
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
-  const publishedBranch = process.env.GITHUB_BRANCH ?? 'staging'
+  const pubBranch = publishedBranch()
 
   const headers = await getGitHubAuthHeaders()
   if (!headers || !GITHUB_OWNER || !GITHUB_REPO) {
@@ -117,9 +109,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 })
   }
 
-  const from = body.from?.replace(/^\/|\/$/g, '') ?? ''
-  const to = body.to?.replace(/^\/|\/$/g, '') ?? ''
-  if (!isValidSlugPath(from) || !isValidSlugPath(to)) {
+  const from = typeof body.from === 'string' ? body.from.replace(/^\/|\/$/g, '') : ''
+  const to = typeof body.to === 'string' ? body.to.replace(/^\/|\/$/g, '') : ''
+  if (!isValidPageSlug(from) || !isValidPageSlug(to)) {
     return NextResponse.json({ error: 'Invalid slug path' }, { status: 400 })
   }
   if (from === to) {
@@ -135,7 +127,7 @@ export async function POST(req: NextRequest) {
     // Refuse to clobber an existing page at the destination slug.
     const [draftTaken, publishedTaken] = await Promise.all([
       fileExists(baseUrl, headers, destDraftPath, DRAFT_BRANCH),
-      fileExists(baseUrl, headers, destPublishedPath, publishedBranch),
+      fileExists(baseUrl, headers, destPublishedPath, pubBranch),
     ])
     if (draftTaken || publishedTaken) {
       return NextResponse.json({ error: `A page already exists at /${to}/` }, { status: 409 })
@@ -144,7 +136,7 @@ export async function POST(req: NextRequest) {
     // Seed the duplicate from the source's best-available DSL:
     // prefer the published DSL (final content), fall back to the draft.
     const source =
-      (await readFile(baseUrl, headers, `src/app/${from}/page.dsl.json`, publishedBranch)) ??
+      (await readFile(baseUrl, headers, `src/app/${from}/page.dsl.json`, pubBranch)) ??
       (await readFile(baseUrl, headers, `src/app/${from}/page.dsl.json`, DRAFT_BRANCH))
 
     if (!source) {
@@ -171,8 +163,9 @@ export async function POST(req: NextRequest) {
     // shows up immediately when the list refetches after this returns.
     ;(globalThis as { __pagesCache?: Map<string, unknown> }).__pagesCache?.clear()
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Unknown error during copy'
-    return NextResponse.json({ error: msg }, { status: 500 })
+    console.error('[pages/copy] failed:', err)
+    await logAudit(req, { action: 'copy', target: from, targetTo: to, status: 'error' })
+    return NextResponse.json({ error: 'Copy failed' }, { status: 500 })
   }
 
   await logAudit(req, {

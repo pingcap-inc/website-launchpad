@@ -42,9 +42,24 @@ export async function resolveActor(): Promise<string> {
   return process.env.VERCEL_ENV ? 'unknown' : 'local-dev'
 }
 
+/**
+ * Client IP for the audit record. On Vercel, `x-vercel-forwarded-for` / `x-real-ip`
+ * are set by the edge and overwrite any client-supplied value; the leftmost entry of
+ * `x-forwarded-for` is whatever the client sent, so it is only used off-Vercel
+ * (local dev), where it is not security-relevant.
+ */
+function clientIp(req: Request | null): string | undefined {
+  if (!req) return undefined
+  const first = (value: string | null) => value?.split(',')[0]?.trim() || undefined
+  if (process.env.VERCEL) {
+    return first(req.headers.get('x-vercel-forwarded-for')) ?? first(req.headers.get('x-real-ip'))
+  }
+  return first(req.headers.get('x-real-ip')) ?? first(req.headers.get('x-forwarded-for'))
+}
+
 export async function logAudit(req: Request | null, entry: AuditEntry): Promise<void> {
   const actor = await resolveActor()
-  const ip = req?.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || undefined
+  const ip = clientIp(req)
 
   const record = {
     ts: new Date().toISOString(),
