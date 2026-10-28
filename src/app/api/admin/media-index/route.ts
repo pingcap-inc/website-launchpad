@@ -7,6 +7,7 @@ import {
 } from '@aws-sdk/client-s3'
 import { logAudit } from '@/lib/audit'
 import { isUnsafeObjectKey, readJsonBody } from '@/lib/security/api-guards'
+import { resolveAwsCredentials } from '@/lib/aws-credentials'
 
 const CDN_BASE = 'https://static.pingcap.com'
 const TAGS_KEY = 'media/tags.json'
@@ -20,13 +21,14 @@ interface ImageMeta {
 }
 
 function getS3Client() {
-  const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION } = process.env
-  if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY || !AWS_REGION) {
+  const { AWS_REGION } = process.env
+  const credentials = resolveAwsCredentials('AWS_')
+  if (!credentials || !AWS_REGION) {
     throw new Error('AWS env vars not configured')
   }
   return new S3Client({
     region: AWS_REGION,
-    credentials: { accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY },
+    credentials,
     followRegionRedirects: true,
   })
 }
