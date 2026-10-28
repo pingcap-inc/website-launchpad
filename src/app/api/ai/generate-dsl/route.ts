@@ -18,6 +18,7 @@ import {
   ensureLongFormLastUpdated,
 } from '@/lib/dsl-utils'
 import { resolveAwsCredentials } from '@/lib/aws-credentials'
+import { readJsonBody } from '@/lib/security/api-guards'
 
 const SYSTEM_PROMPT = `You are a PingCAP website content expert. Generate production-ready page content for pingcap.com.
 
@@ -1439,6 +1440,9 @@ function validateDSL(dsl: unknown, pageType?: PageType | 'auto'): string[] {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+const MAX_BODY_BYTES = 1024 * 1024
+const MAX_INTENT_CHARS = 200_000
+
 export async function POST(request: NextRequest) {
   if (process.env.USE_MOCK_DSL === '1') {
     return NextResponse.json(MOCK_DSL)
@@ -1456,13 +1460,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'ANTHROPIC_MODEL not configured' }, { status: 500 })
   }
 
-  const { intent, pageType, preserveSource } = (await request.json()) as {
+  const parsed = await readJsonBody<{
     intent: string
     pageType?: PageType | 'auto'
     preserveSource?: boolean
-  }
-  if (!intent?.trim()) {
+  }>(request, MAX_BODY_BYTES)
+  if (!parsed.ok) return parsed.response
+  const { intent, pageType, preserveSource } = parsed.data
+  if (typeof intent !== 'string' || !intent.trim()) {
     return NextResponse.json({ error: 'intent is required' }, { status: 400 })
+  }
+  // `intent` carries the full source article for long-form pages, so the cap is
+  // generous — it only stops oversized prompts from running up model cost.
+  if (intent.length > MAX_INTENT_CHARS) {
+    return NextResponse.json(
+      { error: `intent is too long (max ${MAX_INTENT_CHARS} characters)` },
+      { status: 413 }
+    )
   }
 
   const pageTypeHint =
