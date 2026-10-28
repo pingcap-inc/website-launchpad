@@ -95,7 +95,7 @@ const howToGuides = [
   },
   {
     title: 'How do I migrate using AWS DMS?',
-    href: 'https://docs.pingcap.com/tidbcloud/migrate-from-mysql-using-data-migration',
+    href: 'https://docs.pingcap.com/tidbcloud/migrate-from-mysql-using-aws-dms/',
   },
 ]
 
