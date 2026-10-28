@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import { GhostButton } from './GhostButton'
+import { HelloBar } from './HelloBar'
 import { PrimaryButton } from './PrimaryButton'
 import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
@@ -72,7 +73,9 @@ function Navbar() {
         isDropdown(item) ? (
           <li
             key={item.label}
-            className="relative"
+            // The Product menu spans the container width and is positioned
+            // against the <header>, so its item must not be a containing block.
+            className={item.label === 'Product' ? undefined : 'relative'}
             onMouseEnter={() => openMenu(item.label)}
             onMouseLeave={closeMenuSoon}
             onFocus={() => openMenu(item.label)}
@@ -118,11 +121,18 @@ function Navbar() {
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openAccordion, setOpenAccordion] = useState<string | null>(null)
+  const headerRef = useRef<HTMLElement>(null)
 
   const toggleAccordion = (label: string) =>
     setOpenAccordion((prev) => (prev === label ? null : label))
 
   useEffect(() => {
+    if (mobileOpen) {
+      // Scroll the hello bar away first, so the panel below — sized against
+      // the viewport minus the nav row — ends exactly at the bottom edge.
+      const offset = headerRef.current?.getBoundingClientRect().top ?? 0
+      if (offset > 0) window.scrollBy(0, offset)
+    }
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
@@ -130,52 +140,62 @@ export function Header() {
   }, [mobileOpen])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-bg-primary">
-      <div className="h-[62px] lg:h-20">
-        <nav
-          className="contain h-full flex items-center justify-between"
-          aria-label="Main navigation"
-        >
-          <a href="/" className="shrink-0">
-            <Image
-              src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
-              alt="TiDB"
-              width={120}
-              height={50}
-              className="block w-[92px] h-[38px] lg:w-[120px] lg:h-[50px]"
-              priority
-            />
-          </a>
-
-          <Navbar />
-
-          <div className="hidden lg:flex items-center gap-4 shrink-0">
-            <GhostButton href="https://tidbcloud.com/signin">Sign In</GhostButton>
-            <PrimaryButton href="https://tidbcloud.com/free-trial/">Start for Free</PrimaryButton>
-          </div>
-
-          <button
-            className="lg:hidden flex items-center justify-center w-6 h-6 text-text-inverse"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-            onClick={() => {
-              setMobileOpen((p) => !p)
-              if (mobileOpen) setOpenAccordion(null)
-            }}
+    <>
+      <HelloBar />
+      <header
+        ref={headerRef}
+        // Sticky rather than fixed so the hello bar above it can scroll away,
+        // as it does on the main site. The negative bottom margin cancels the
+        // nav row's own height in the flow, so pages keep compensating for it
+        // with their existing pt-[62px] lg:pt-20.
+        className="sticky top-0 z-50 -mb-[62px] bg-bg-primary lg:-mb-20"
+      >
+        <div className="h-[62px] lg:h-20">
+          <nav
+            className="contain h-full flex items-center justify-between"
+            aria-label="Main navigation"
           >
-            {mobileOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
-          </button>
-        </nav>
-      </div>
+            <a href="/" className="shrink-0">
+              <Image
+                src="https://static.pingcap.com/files/2026/02/12215103/logo-TiDB.svg"
+                alt="TiDB"
+                width={120}
+                height={50}
+                className="block w-[92px] h-[38px] lg:w-[120px] lg:h-[50px]"
+                priority
+              />
+            </a>
 
-      {mobileOpen && (
-        <HeaderMobileMenu
-          isOpen={mobileOpen}
-          openAccordion={openAccordion}
-          onToggleAccordion={toggleAccordion}
-        />
-      )}
-    </header>
+            <Navbar />
+
+            <div className="hidden lg:flex items-center gap-4 shrink-0">
+              <GhostButton href="https://tidbcloud.com/signin">Sign In</GhostButton>
+              <PrimaryButton href="https://tidbcloud.com/free-trial/">Start for Free</PrimaryButton>
+            </div>
+
+            <button
+              className="lg:hidden flex items-center justify-center w-6 h-6 text-text-inverse"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              onClick={() => {
+                setMobileOpen((p) => !p)
+                if (mobileOpen) setOpenAccordion(null)
+              }}
+            >
+              {mobileOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
+            </button>
+          </nav>
+        </div>
+
+        {mobileOpen && (
+          <HeaderMobileMenu
+            isOpen={mobileOpen}
+            openAccordion={openAccordion}
+            onToggleAccordion={toggleAccordion}
+          />
+        )}
+      </header>
+    </>
   )
 }

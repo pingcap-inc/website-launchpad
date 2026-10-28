@@ -63,7 +63,7 @@
 - Resources: `FileTIcon`, `BookTIcon`, `VideoIcon`, `ScaleTIcon`, `CalendarTIcon`, `CommentsTIcon`, `CodeTIcon`, `BookmarkTIcon`, `EducationIcon`, `AppWindowIcon`, `AwardIcon`
 - Company: `NewspaperIcon`, `BuildingsIcon`, `BriefcaseIcon`, `HandshakeIcon`, `AtIcon`
 
-Rules: `h-[62px] lg:h-20` · content centered via `.contain` (1374px cap, no inner padding) · pure black background · add `pt-[62px] lg:pt-20` to page content wrapper.
+Rules: `h-[62px] lg:h-20` · content centered via `.contain` (1374px cap, no inner padding) · pure black background · add `pt-[62px] lg:pt-20` to page content wrapper. `<Header />` also renders the `HelloBar` announcement bar above the nav (in flow, scrolls away; nav is `sticky`) — nothing to add per page.
 
 > **Navbar ↔ section alignment:** because the Navbar uses `.contain` (no padding) while the standard section container is `max-w-container mx-auto px-4 md:px-8 lg:px-16` (adds `lg:px-16`), the two only line up at ≤1374px viewport — above that, section content sits 64px further in on each side. For a page on the full `<Header />` that must stay flush with the nav at every width, use the `contain` class on section wrappers too (e.g. `src/app/tidb/tidb-cloud-filesystem/page.tsx`). Full detail in `layout.md`.
 
@@ -789,6 +789,8 @@ interface LogoCloudSectionProps {
   className?: string
 }
 ```
+
+Also accepts an optional `cta: { text, href }` rendered above the logos, and an optional `logoClassName` for sizing the logo images. Both are available in the DSL/editor and leave existing layouts unchanged when omitted.
 
 **Variants:**
 

@@ -16,7 +16,9 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       # Buffer for Vercel deployment (Approx 30s)
       - name: Wait for Vercel Deployment
@@ -25,7 +27,7 @@ jobs:
       # 1. Get Vercel Preview URL
       - name: Vercel Preview URL
         id: vercel_preview_url
-        uses: zentered/vercel-preview-url@v1.4.0
+        uses: zentered/vercel-preview-url@fba568fc6d882ae788a9724d7e28dee618728771 # v1.4.0
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
@@ -35,7 +37,7 @@ jobs:
       # 2. Extract Paths from PR Table
       - name: Extract Paths
         id: extract_url
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         env:
           VERCEL_PREVIEW_URL: ${{ steps.vercel_preview_url.outputs.preview_url }}
           VERCEL_PREVIEW_URL_ALT: ${{ steps.vercel_preview_url.outputs.url }}
@@ -86,7 +88,7 @@ jobs:
       - name: Run Lighthouse CI
         if: steps.extract_url.outputs.has_urls == 'true'
         id: lhci
-        uses: treosh/lighthouse-ci-action@v12
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12.6.2
         env:
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         with:
@@ -94,7 +96,10 @@ jobs:
           runs: 2
           configPath: ./.github/lighthouserc.js
           uploadArtifacts: true
-          temporaryPublicStorage: true
+          # Must stay false: the LHR embeds configSettings.extraHeaders, i.e. the
+          # x-vercel-protection-bypass secret from lighthouserc.js, and public
+          # storage would publish it. Reports remain available as run artifacts.
+          temporaryPublicStorage: false
           # Fails the build if Performance is < 70
           budgetPath: |
             [
@@ -109,7 +114,7 @@ jobs:
       # 4. Post Results Summary
       - name: Post score comment
         if: always() && steps.lhci.outputs.manifest != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         env:
           LHCI_MANIFEST: ${{ steps.lhci.outputs.manifest }}
           LHCI_LINKS: ${{ steps.lhci.outputs.links }}

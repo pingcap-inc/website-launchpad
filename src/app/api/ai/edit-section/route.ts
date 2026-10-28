@@ -3,6 +3,11 @@ import { AI_PROVIDER, generateJSON } from '@/lib/ai-client'
 import { sanitizeDSLIcons, DSL_SCHEMA_PROMPT } from '@/lib/dsl-schema'
 import type { SectionNode, PageMeta } from '@/lib/dsl-schema'
 import { schemaMap } from '@/lib/section-registry'
+import { readJsonBody } from '@/lib/security/api-guards'
+
+// Cap what a caller can put into the prompt (cost/abuse bound).
+const MAX_BODY_BYTES = 256 * 1024
+const MAX_INSTRUCTION_CHARS = 8000
 
 function isImageRef(value: unknown): value is { url: string } {
   return (
@@ -102,14 +107,22 @@ function validateSection(s: unknown, originalType: string): string[] {
  */
 export async function POST(req: NextRequest) {
   try {
-    const { section, instruction, pageMeta } = (await req.json()) as {
+    const parsed = await readJsonBody<{
       section: SectionNode
       instruction: string
       pageMeta?: PageMeta
-    }
+    }>(req, MAX_BODY_BYTES)
+    if (!parsed.ok) return parsed.response
+    const { section, instruction, pageMeta } = parsed.data
 
-    if (!section || !instruction) {
+    if (!section || typeof instruction !== 'string' || !instruction.trim()) {
       return NextResponse.json({ error: 'section and instruction are required' }, { status: 400 })
+    }
+    if (instruction.length > MAX_INSTRUCTION_CHARS) {
+      return NextResponse.json(
+        { error: `instruction must be under ${MAX_INSTRUCTION_CHARS} characters` },
+        { status: 413 }
+      )
     }
 
     const basePrompt = `You are editing a single section of a web page DSL.

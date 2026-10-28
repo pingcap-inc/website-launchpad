@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    // data-scroll-behavior lets Next turn off globals.css's smooth scrolling
+    // during route transitions; without it, navigating smooth-scrolls to the footer.
+    <html lang="en" data-scroll-behavior="smooth">
       <head>
         <GTMScript />
         <link rel="preconnect" href="https://static.pingcap.com" />

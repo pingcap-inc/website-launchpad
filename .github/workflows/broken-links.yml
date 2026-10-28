@@ -18,7 +18,9 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       # Buffer for Vercel deployment (Approx 30s)
       - name: Wait for Vercel Deployment
@@ -27,7 +29,7 @@ jobs:
       # 1. Get Vercel Preview URL
       - name: Vercel Preview URL
         id: vercel_preview_url
-        uses: zentered/vercel-preview-url@v1.4.0
+        uses: zentered/vercel-preview-url@fba568fc6d882ae788a9724d7e28dee618728771 # v1.4.0
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
@@ -37,7 +39,7 @@ jobs:
       # 2. Extract Paths from PR Table
       - name: Extract Paths
         id: extract_paths
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         env:
           VERCEL_PREVIEW_URL: ${{ steps.vercel_preview_url.outputs.preview_url }}
           VERCEL_PREVIEW_URL_ALT: ${{ steps.vercel_preview_url.outputs.url }}
@@ -68,6 +70,11 @@ jobs:
                   const value = path.trim();
                   if (!value) return;
                   const normalizedPath = value.startsWith('/') ? value : `/${value}`;
+                  // The PR body is attacker-controllable: accept plain URL paths only.
+                  if (!/^\/[A-Za-z0-9\-._~\/%?#=&+]*$/.test(normalizedPath) || normalizedPath.startsWith('//')) {
+                    core.warning(`Ignoring invalid URL path from PR body: ${JSON.stringify(value).slice(0, 200)}`);
+                    return;
+                  }
                   const hasQueryOrHash = /[?#]/.test(normalizedPath);
                   const looksLikeFile = /\.[^/]+$/.test(normalizedPath.split(/[?#]/)[0]);
                   const formattedPath =
@@ -88,30 +95,42 @@ jobs:
             }
 
       # 3. Run Broken Link Check
+      # Step outputs derived from the PR body are passed via env (never `${{ }}`
+      # inside `run:`) so they can't inject shell. The bypass secret travels only
+      # as a header, and only to the preview host: linkinator sends --header on
+      # EVERY request, so external links are skipped in this authenticated run
+      # rather than leaking the secret to third-party hosts.
       - name: Run Broken Link Check
         if: steps.extract_paths.outputs.has_urls == 'true'
         id: link_check
         env:
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          CHECK_URLS: ${{ steps.extract_paths.outputs.urls }}
+          PREVIEW_HOST: ${{ steps.extract_paths.outputs.preview_host }}
         run: |
-          URL_ARGS=$(echo "${{ steps.extract_paths.outputs.urls }}" | tr '\n' ' ')
+          set -euo pipefail
+          mapfile -t URL_ARGS < <(printf '%s\n' "$CHECK_URLS" | sed '/^[[:space:]]*$/d')
 
-          HEADER_ARG=""
-          if [ -n "$VERCEL_AUTOMATION_BYPASS_SECRET" ]; then
-            HEADER_ARG="--header x-vercel-protection-bypass:$VERCEL_AUTOMATION_BYPASS_SECRET"
+          # Escape the host for use inside a regex, then skip anything not on it.
+          HOST_RE=$(printf '%s' "$PREVIEW_HOST" | sed 's/[][\.^$*+?(){}|/]/\\&/g')
+          SKIP_RE="^(?!https?://${HOST_RE}([/:?#]|$))"
+
+          HEADER_ARGS=()
+          if [ -n "${VERCEL_AUTOMATION_BYPASS_SECRET:-}" ]; then
+            HEADER_ARGS=(--header "x-vercel-protection-bypass:${VERCEL_AUTOMATION_BYPASS_SECRET}")
           fi
 
-          npx --yes linkinator $URL_ARGS \
+          npx --yes linkinator@8.1.0 "${URL_ARGS[@]}" \
             --format json \
             --timeout 10000 \
-            --skip "twitter\.com|x\.com|linkedin\.com|github\.com|facebook\.com|instagram\.com|youtube\.com" \
-            $HEADER_ARG \
+            --skip "$SKIP_RE" \
+            "${HEADER_ARGS[@]}" \
             > link-results.json || true
 
       # 4. Post Results Comment
       - name: Post Results Comment
         if: always() && steps.extract_paths.outputs.has_urls == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         env:
           PREVIEW_HOST: ${{ steps.extract_paths.outputs.preview_host }}
         with:
@@ -158,6 +177,8 @@ jobs:
                 `Checked **${pageCount}** page(s) · **${totalLinks}** links scanned`,
                 '',
                 '✅ No broken links found!',
+                '',
+                '_External links are not checked (the preview bypass header is only sent to the preview host)._',
               ].join('\n');
             } else {
               const lines = [

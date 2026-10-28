@@ -106,14 +106,16 @@ const socialLinks: { label: string; href: string; svgContent: string }[] = [
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 
-export function Footer() {
+export function Footer({ showLanguageSwitcher = true }: { showLanguageSwitcher?: boolean } = {}) {
   return (
     <footer className="bg-bg-primary">
       <div className="contain py-16 lg:py-20">
         {/* Language switcher — mobile only, first row */}
-        <div className="lg:hidden mb-8">
-          <LanguageSwitcher />
-        </div>
+        {showLanguageSwitcher && (
+          <div className="lg:hidden mb-8">
+            <LanguageSwitcher />
+          </div>
+        )}
 
         {/* Main nav grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-[repeat(4,1fr)_minmax(260px,1.4fr)] gap-10 lg:gap-8">
@@ -134,9 +136,11 @@ export function Footer() {
               ))}
             </ul>
             {/* Language switcher — desktop only, under Product */}
-            <div className="hidden lg:flex pt-2">
-              <LanguageSwitcher />
-            </div>
+            {showLanguageSwitcher && (
+              <div className="hidden lg:flex pt-2">
+                <LanguageSwitcher />
+              </div>
+            )}
           </div>
 
           {/* Remaining nav columns */}

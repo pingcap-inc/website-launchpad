@@ -2,9 +2,27 @@ interface JsonLdProps {
   data: Record<string, unknown>
 }
 
+/**
+ * JSON.stringify output is inserted raw into a <script>, so a string value
+ * containing `</script>` would end the element. Escape the characters that can
+ * break out (or start an HTML comment) as JSON unicode escapes — the parsed
+ * JSON-LD is unchanged.
+ */
+function serializeJsonLd(data: unknown): string {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029')
+}
+
 export function JsonLd({ data }: JsonLdProps) {
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
+    />
   )
 }
 

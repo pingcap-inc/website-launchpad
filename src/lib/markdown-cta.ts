@@ -1,3 +1,5 @@
+import { safeUrl } from './security/sanitize'
+
 export type CtaFenceProps = {
   title: string
   subtitle?: string
@@ -11,8 +13,7 @@ export type CtaFenceData = {
 }
 
 export type MarkdownCtaChunk =
-  | { kind: 'richText'; content: string }
-  | { kind: 'cta'; data: CtaFenceData }
+  { kind: 'richText'; content: string } | { kind: 'cta'; data: CtaFenceData }
 
 export const CTA_FENCE_REGEX = /^:::cta([^\n]*)\n([\s\S]*?)^:::\s*$/gm
 
@@ -25,7 +26,8 @@ export function parseCtaFenceParams(rawParams: string): { backgroundImageUrl?: s
     const value = (m[3] ?? m[4] ?? m[5] ?? '').trim()
     if (!value) continue
     if (key === 'bg' || key === 'background' || key === 'backgroundimage') {
-      out.backgroundImageUrl = value
+      const safe = safeUrl(value)
+      if (safe) out.backgroundImageUrl = safe
     }
   }
   return out
@@ -40,7 +42,8 @@ export function parseCtaFenceBody(rawParams: string, inner: string): CtaFenceDat
   let m: RegExpExecArray | null
   while ((m = linkRegex.exec(trimmed))) {
     const text = m[1].replace(/^\*+|\*+$/g, '').trim()
-    const href = m[2].trim()
+    // Markdown content is untrusted: drop links with a non-http(s)/mailto/tel/relative scheme.
+    const href = safeUrl(m[2])
     if (text && href) links.push({ text, href })
   }
   if (!links.length) return null

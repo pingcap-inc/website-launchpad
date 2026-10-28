@@ -43,6 +43,7 @@ import { detectPageType } from '@/lib/detect-page-type'
 import { cleanupImportedMarkdownEscapes } from '@/lib/imported-text'
 import { addTableOfContentsForLongForm } from '@/lib/toc'
 import { splitMarkdownByCtaFences, type MarkdownCtaChunk } from '@/lib/markdown-cta'
+import { toPlainText } from '@/lib/security/sanitize'
 import { SectionCard } from './SectionCard'
 import { AddSectionPanel } from './AddSectionPanel'
 import { PublishDrawer } from './PublishDrawer'
@@ -181,7 +182,9 @@ function parseTextToDsl(text: string, slug?: string): PageDSL {
     .map((line) => line.trim())
     .filter(Boolean)
 
-  const headline = lines[0] ?? 'Imported page'
+  // Imported document text is plain text, but HeroSection renders any headline
+  // containing a tag as HTML — strip tag syntax so imported text stays text.
+  const headline = lines[0] ? toPlainText(lines[0]) || 'Imported page' : 'Imported page'
   const subheadline = lines[1] ?? 'Standardized from imported content.'
 
   const featureHeadingIndex = lines.findIndex((line) =>
@@ -460,7 +463,7 @@ function parseMarkdownLongFormToDsl(text: string, pageType: PageType, slug?: str
   const cleaned = sanitizeImportedContent(text, { isLongForm: true })
   const normalized = cleaned.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim()
   const firstH1Match = normalized.match(/^#\s+(.+)$/m)
-  const headline = firstH1Match?.[1]?.trim() || 'Imported page'
+  const headline = toPlainText(firstH1Match?.[1]?.trim() ?? '') || 'Imported page'
   const bodyWithoutH1 = stripLeadingMarkdownH1(normalized)
   const { beforeFaq, afterFaq, faqItems, faqTitle } = splitMarkdownFaq(bodyWithoutH1)
   const body = [beforeFaq, afterFaq].filter(Boolean).join('\n\n').trim()
@@ -950,9 +953,21 @@ function LeftPanel({
   // ── Resizer state & logic ──────────────────────────────────────────────────
   const containerRef = useRef<HTMLDivElement>(null)
   const [topHeight, setTopHeight] = useState<number | null>(null)
+  // Container height mirrored into state so render never reads the ref.
+  const [containerHeight, setContainerHeight] = useState<number | null>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+    const measure = () => setContainerHeight(container.getBoundingClientRect().height)
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
 
   function getDefaultTopH() {
-    return Math.round((containerRef.current?.getBoundingClientRect().height ?? 600) * 0.5)
+    return Math.round((containerHeight ?? 600) * 0.5)
   }
 
   function handleResizerMouseDown(e: React.MouseEvent) {
@@ -1364,7 +1379,7 @@ function CreatePageInner() {
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode') ?? ''
   const editMode = mode === 'edit'
-  const initialSourceRef = useRef<'draft' | 'published'>(
+  const [initialSource] = useState<'draft' | 'published'>(() =>
     searchParams.get('source') === 'published' ? 'published' : 'draft'
   )
   const mockMode = process.env.NEXT_PUBLIC_USE_MOCK_DSL === '1'
@@ -1387,7 +1402,7 @@ function CreatePageInner() {
   const [draftAvailable, setDraftAvailable] = useState(false)
   const [checkingDraft, setCheckingDraft] = useState(false)
   const [editingPublishedSource, setEditingPublishedSource] = useState(
-    initialSourceRef.current === 'published'
+    initialSource === 'published'
   )
   const [parentOptions, setParentOptions] = useState<{ slug: string; title: string }[]>([])
   const [existingSlugs, setExistingSlugs] = useState<Set<string>>(new Set())
@@ -1454,6 +1469,8 @@ function CreatePageInner() {
   // Listen for height + ready signals from iframe
   useEffect(() => {
     const handler = (e: MessageEvent) => {
+      // The preview iframe is same-origin; ignore messages from anywhere else.
+      if (e.origin !== window.location.origin) return
       if (e.data?.type === 'preview-height') {
         setIframeHeight(e.data.height as number)
       }
@@ -1468,12 +1485,15 @@ function CreatePageInner() {
         iframeReadyRef.current = true
         // Push current DSL immediately when iframe signals ready
         if (dsl) {
-          iframeRef.current?.contentWindow?.postMessage({ type: 'preview-dsl', dsl }, '*')
+          iframeRef.current?.contentWindow?.postMessage(
+            { type: 'preview-dsl', dsl },
+            window.location.origin
+          )
         }
         if (pendingPreviewFocus) {
           iframeRef.current?.contentWindow?.postMessage(
             { type: 'preview-focus', target: pendingPreviewFocus },
-            '*'
+            window.location.origin
           )
         }
       }
@@ -1494,7 +1514,10 @@ function CreatePageInner() {
   // When DSL changes + iframe ready: push update (no reload)
   useEffect(() => {
     if (dsl && iframeReadyRef.current) {
-      iframeRef.current?.contentWindow?.postMessage({ type: 'preview-dsl', dsl }, '*')
+      iframeRef.current?.contentWindow?.postMessage(
+        { type: 'preview-dsl', dsl },
+        window.location.origin
+      )
     }
   }, [dsl])
 
@@ -1502,7 +1525,7 @@ function CreatePageInner() {
     if (!pendingPreviewFocus || !iframeReadyRef.current) return
     iframeRef.current?.contentWindow?.postMessage(
       { type: 'preview-focus', target: pendingPreviewFocus },
-      '*'
+      window.location.origin
     )
   }, [pendingPreviewFocus])
 
@@ -1511,6 +1534,10 @@ function CreatePageInner() {
     const handler = () => setIsFullscreen(!!document.fullscreenElement)
     document.addEventListener('fullscreenchange', handler)
     return () => document.removeEventListener('fullscreenchange', handler)
+  }, [])
+
+  const updateDsl = useCallback((updater: (prev: PageDSL) => PageDSL) => {
+    setDsl((prev) => (prev ? updater(prev) : prev))
   }, [])
 
   // Auto-derive slug from DSL canonical on first generate
@@ -1529,7 +1556,7 @@ function CreatePageInner() {
         }
       }
     }
-  }, [dsl, slug, existingSlugs])
+  }, [dsl, slug, existingSlugs, updateDsl])
 
   useEffect(() => {
     const loadParents = async () => {
@@ -2079,10 +2106,6 @@ function CreatePageInner() {
     }
   }, [localJson])
 
-  const updateDsl = useCallback((updater: (prev: PageDSL) => PageDSL) => {
-    setDsl((prev) => (prev ? updater(prev) : prev))
-  }, [])
-
   const updateImportWarningFor = useCallback((content: string, selectedPageType: string) => {
     const longFormTypes = ['listicle', 'playbook', 'compare']
     const isLongFormImport = longFormTypes.includes(selectedPageType)
@@ -2379,12 +2402,12 @@ function CreatePageInner() {
     if (!slug || !isValidSlugPath(slug)) return
     if (initialSlugRef.current !== slug) return
     autoLoadedDraftRef.current = true
-    if (initialSourceRef.current === 'published') {
+    if (initialSource === 'published') {
       handleLoadPublished()
     } else {
       handleLoadDraft()
     }
-  }, [slug, handleLoadDraft, handleLoadPublished])
+  }, [slug, initialSource, handleLoadDraft, handleLoadPublished])
 
   const toggleFullscreen = () => {
     if (!previewRef.current) return

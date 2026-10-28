@@ -2,16 +2,31 @@ import { NextRequest, NextResponse } from 'next/server'
 import { logAudit, resolveActor } from '@/lib/audit'
 import { stampAuthorship } from '@/lib/authorship'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
+import {
+  DRAFT_BRANCH,
+  isValidPageSlug,
+  publishedBranch,
+  readJsonBody,
+} from '@/lib/security/api-guards'
 import type { PageDSL } from '@/lib/dsl-schema'
 
-const SKIP_SLUGS = new Set(['api', 'admin', 'sections'])
+// The admin only ever reads/writes DSLs on the draft branch or the published
+// (staging) branch. Anything else — notably `main`, or a value that would be
+// interpolated into the GitHub URL — is refused.
+function isAllowedBranch(branch: string) {
+  return branch === DRAFT_BRANCH || branch === 'staging' || branch === publishedBranch()
+}
 
-function isValidSlugPath(slug: string) {
-  if (!slug) return false
-  const segments = slug.split('/').filter(Boolean)
-  if (segments.length === 0) return false
-  if (SKIP_SLUGS.has(segments[0])) return false
-  return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
+// The creator recorded in a committed DSL (base64 contents-API payload), if any.
+function creatorOf(content: string | undefined): { createdBy?: string; createdAt?: string } {
+  if (!content) return {}
+  try {
+    const prior = JSON.parse(Buffer.from(content, 'base64').toString('utf-8')) as PageDSL
+    return { createdBy: prior?.meta?.createdBy, createdAt: prior?.meta?.createdAt }
+  } catch {
+    // Unparseable prior DSL — fall back to stamping a fresh creator.
+    return {}
+  }
 }
 
 function getSlug(params: { slug?: string[] }) {
@@ -26,19 +41,22 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
   const { slug: slugParts } = await params
   const slug = getSlug({ slug: slugParts })
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
-  const branch = req.nextUrl.searchParams.get('branch') ?? process.env.GITHUB_BRANCH ?? 'staging'
+  const branch = req.nextUrl.searchParams.get('branch') ?? publishedBranch()
+  if (!isAllowedBranch(branch)) {
+    return NextResponse.json({ error: 'Invalid branch' }, { status: 400 })
+  }
 
   const headers = await getGitHubAuthHeaders()
   if (!headers || !GITHUB_OWNER || !GITHUB_REPO) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
-  if (!isValidSlugPath(slug)) {
+  if (!isValidPageSlug(slug)) {
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 })
   }
 
   const dslPath = `src/app/${slug}/page.dsl.json`
   const res = await fetch(
-    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${dslPath}?ref=${branch}`,
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${dslPath}?ref=${encodeURIComponent(branch)}`,
     { headers }
   )
 
@@ -66,21 +84,26 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
   const { slug: slugParts } = await params
   const slug = getSlug({ slug: slugParts })
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
-  const branch = process.env.GITHUB_BRANCH ?? 'staging'
+  const branch = publishedBranch()
 
   const headers = await getGitHubAuthHeaders()
   if (!headers || !GITHUB_OWNER || !GITHUB_REPO) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
-  if (!isValidSlugPath(slug)) {
+  if (!isValidPageSlug(slug)) {
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 })
   }
 
-  const body = (await req.json()) as { dsl: PageDSL; branch?: string }
+  const parsed = await readJsonBody<{ dsl: PageDSL; branch?: string }>(req)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.data
   const { dsl } = body
-  // Allow caller to override branch (e.g. 'drafts/ai' for draft saves)
+  // Allow caller to override branch (e.g. 'drafts/ai' for draft saves), within the allowlist.
   const writeBranch = body.branch ?? branch
-  if (!dsl) {
+  if (typeof writeBranch !== 'string' || !isAllowedBranch(writeBranch)) {
+    return NextResponse.json({ error: 'Invalid branch' }, { status: 400 })
+  }
+  if (!dsl?.meta || !Array.isArray(dsl.sections)) {
     return NextResponse.json({ error: 'dsl is required' }, { status: 400 })
   }
 
@@ -88,8 +111,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
   const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`
 
   // Check for existing SHA (upsert). The contents response also carries the prior
-  // file, so we read the previous creator from it and carry it forward — the
-  // original creator survives even if this payload dropped the field.
+  // file, so we read the previous creator from it and carry it forward. Authorship
+  // always comes from the repo, never from the request payload.
   let sha: string | undefined
   let priorCreatedBy: string | undefined
   let priorCreatedAt: string | undefined
@@ -100,16 +123,42 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
   if (check.ok) {
     const existing = (await check.json()) as { sha: string; content?: string }
     sha = existing.sha
-    if (existing.content) {
-      try {
-        const prior = JSON.parse(
-          Buffer.from(existing.content, 'base64').toString('utf-8')
-        ) as PageDSL
-        priorCreatedBy = prior?.meta?.createdBy
-        priorCreatedAt = prior?.meta?.createdAt
-      } catch {
-        // Unparseable prior DSL — fall back to stamping a fresh creator.
-      }
+    ;({ createdBy: priorCreatedBy, createdAt: priorCreatedAt } = creatorOf(existing.content))
+  } else if (check.status === 404 && writeBranch !== DRAFT_BRANCH) {
+    // Creating a new DSL on the published branch. If a hand-authored page.tsx
+    // already lives there, a DSL beside it would make the CMS treat the page as
+    // its own (and allow it to be deleted/moved/overwritten) — refuse.
+    const codePage = await fetch(
+      `${baseUrl}/contents/src/app/${slug}/page.tsx?ref=${encodeURIComponent(writeBranch)}`,
+      { headers }
+    )
+    if (codePage.ok) {
+      await logAudit(req, {
+        action: 'draft-save',
+        target: slug,
+        branch: writeBranch,
+        status: 'denied',
+        detail: 'code-owned page (page.tsx with no page.dsl.json)',
+      })
+      return NextResponse.json(
+        { error: 'Refusing to attach a DSL to a code-owned page.' },
+        { status: 409 }
+      )
+    }
+  } else if (!check.ok && check.status !== 404) {
+    return NextResponse.json({ error: 'Failed to read existing DSL' }, { status: 500 })
+  }
+
+  // First draft of an already-published page: carry its creator over from the
+  // published DSL so editing a page doesn't re-attribute it.
+  if (!priorCreatedBy && writeBranch === DRAFT_BRANCH) {
+    const published = await fetch(
+      `${baseUrl}/contents/${dslPath}?ref=${encodeURIComponent(branch)}`,
+      { headers }
+    )
+    if (published.ok) {
+      const data = (await published.json()) as { content?: string }
+      ;({ createdBy: priorCreatedBy, createdAt: priorCreatedAt } = creatorOf(data.content))
     }
   }
 
@@ -130,8 +179,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
   })
 
   if (!res.ok) {
-    const err = (await res.json()) as { message?: string }
-    return NextResponse.json({ error: err.message ?? 'Failed to save DSL' }, { status: 500 })
+    console.error('[pages] DSL save failed:', res.status, await res.text().catch(() => ''))
+    return NextResponse.json({ error: 'Failed to save DSL' }, { status: 500 })
   }
 
   await logAudit(req, {

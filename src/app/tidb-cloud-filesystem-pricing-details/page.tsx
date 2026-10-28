@@ -15,11 +15,9 @@ import { CtaSection } from '@/components/sections/CtaSection'
 // by accident. Same pattern as KIMI_STORY_URL on the Filesystem landing page.
 // Do not fill these in from inference — they are product behaviour, not copy.
 
-// What decides whether usage is Pooled or Performance: user choice, file size,
-// access pattern, or something else. They differ by 12x on storage and 100x on
-// operations. The rate card still lists both, because those are published
-// prices, but the page does not tell anyone how to choose. Asked 2026-09-21.
-const POOLED_EXPLAINER: string | null = null
+// Pooled operation SKUs removed 2026-10-16 at the pricing owner's direction:
+// reads and writes are one flat rate each. The two storage lines remain; how
+// usage is placed between them is not stated on the page until confirmed.
 
 // Answered 2026-09-22: at a cap, writes are blocked and reads keep working; the
 // console shows a warning; with a card, overage is billed monthly; without a
@@ -35,13 +33,13 @@ const AT_THE_LIMIT: string | null =
   'At a limit, your existing files stay readable and the file system stops accepting new writes. The TiDB Cloud console shows a warning. With a card on file, usage beyond the free-tier allowance is billed as overage on your monthly invoice.'
 
 // ── Source of truth ──────────────────────────────────────────────────────────
-// "TiDB Cloud Filesystem Pricing Public Preview" v9 (2026-09-22, "Added multiple
-// regions"), as it read on 2026-09-23. Note that the free-tier quantities were
-// corrected on Sep 21 WITHOUT a version bump, so the re-derivation date matters
-// as much as the version string. All seven free-tier lines were recomputed
-// against this rate card and reconcile to $4.99 against the $5.00 allowance. Do not
-// edit these numbers without redoing that check. The source doc's `Discountable`
-// column is internal and is not reproduced anywhere on this page.
+// "TiDB Cloud Filesystem Pricing Public Preview" (Feishu), v9 2026-09-22, with
+// the two pooled operation SKUs removed at the pricing owner's direction on
+// 2026-10-16. Pricing is being revised with finance; the page shows the current
+// rates only, and its worked examples are removed until the new rates are final.
+// The source doc has changed content WITHOUT bumping its version before, so
+// re-derive every figure against the doc itself, not its version string. The
+// `Discountable` column is internal and is not reproduced anywhere on this page.
 //
 // The source publishes five regions, and they go in ONE table rather than a
 // default plus a diff table or a region picker. A pricing-page visitor has not
@@ -62,91 +60,35 @@ const REGIONS = [
   'alicloud-ap-southeast-1',
   'gcp-us-east1',
 ]
-// The region every worked figure on this page uses.
-const RATE_REGION = REGIONS[0]
 
-// Each row carries the source doc's own Description. Those descriptions say
-// what a meter is measured against; they do not say what assigns usage to
-// Pooled or Performance, which is POOLED_EXPLAINER above. Prices are in REGIONS
-// order.
+// Rows carry the source doc's own Description where it helps the reader; the
+// read and write rows carry none, at the pricing owner's direction. Prices are
+// in REGIONS order.
 const RATES = [
   {
     meter: 'Read operations, per 1,000 requests',
-    note: 'File (size < 32KB) read requests against TiDB Cloud Filesystem endpoints',
+    note: '',
     prices: ['$0.04', '$0.04', '$0.04', '$0.04', '$0.04'],
   },
   {
     meter: 'Write operations, per 1,000 requests',
-    note: 'File (size < 32KB) write requests against TiDB Cloud Filesystem endpoints',
+    note: '',
     prices: ['$0.50', '$0.50', '$0.50', '$0.50', '$0.50'],
   },
   {
-    meter: 'Pooled file read operations, per 1,000 requests',
-    note: 'File (size >= 32KB) read requests against object storage',
-    prices: ['$0.0004', '$0.0004', '$0.0004', '$0.0001', '$0.0004'],
-  },
-  {
-    meter: 'Pooled file write operations, per 1,000 requests',
-    note: 'File (size >= 32KB) write requests against object storage',
-    prices: ['$0.005', '$0.005', '$0.005', '$0.0014', '$0.005'],
-  },
-  {
-    meter: 'Storage — Performance, per GB-mo',
-    note: 'Underlying database storage',
+    meter: 'Database storage, per GB-mo',
+    note: 'Smaller files and file metadata, stored in TiDB for fast access',
     prices: ['$0.30', '$0.30', '$0.36', '$0.32', '$0.30'],
   },
   {
-    meter: 'Storage — Pooled, per GB-mo',
-    note: 'Underlying object storage',
+    meter: 'Object storage, per GB-mo',
+    note: 'Larger files, stored in cloud object storage',
     prices: ['$0.025', '$0.025', '$0.027', '$0.019', '$0.022'],
   },
   {
     meter: 'Internet egress, per GB',
     note: 'Data transfer out to the internet',
     prices: ['$0.09', '$0.09', '$0.12', '$0.08', '$0.12'],
-  },
-]
-
-const EXAMPLES = [
-  {
-    name: 'Example 1: Infrequent Usage — mount from outside the TiDB Cloud provider region',
-    outcome: 'The free-tier covers this usage',
-    explanation:
-      'The usage adds up to $4.80. Applying the free-tier allowance leaves $0 to pay for this usage.',
-    eligibility:
-      'The 1 GB stored is below the 2 GB no-card storage cap. File-count and single file system under one region limits still apply.',
-    lines: [
-      ['54,400 pooled file write requests', '$0.27'],
-      ['2,720,000 pooled file read requests', '$1.09'],
-      ['2,000 write requests', '$1.00'],
-      ['50,000 read requests', '$2.00'],
-      ['1 GB Performance storage', '$0.30'],
-      ['2 GB Pooled storage', '$0.05'],
-      ['1 GB egress', '$0.09'],
-    ],
-    gross: '$4.80',
-    credit: '-$4.80',
-    net: '$0',
-  },
-  {
-    name: 'Example 2: Medium Usage - mount from inside the TiDB Cloud provider region',
-    outcome: 'The usage exceeds the free-tier allowance',
-    explanation:
-      'The usage adds up to $7.90. Subtract the full $5 free-tier allowance to get $2.90 to pay for this usage.',
-    eligibility:
-      'Keeping 13 GB in one file system exceeds the no-card storage cap and requires a card on file.',
-    lines: [
-      ['90,000 pooled file write requests', '$0.45'],
-      ['4,500,000 pooled file read requests', '$1.80'],
-      ['3,000 write requests', '$1.50'],
-      ['75,000 read requests', '$3.00'],
-      ['3 GB Performance storage', '$0.90'],
-      ['10 GB Pooled storage', '$0.25'],
-      ['0 GB egress', '$0.0'],
-    ],
-    gross: '$7.90',
-    credit: '-$5.00',
-    net: '$2.90',
   },
 ]
 
@@ -166,7 +108,7 @@ const PATH = '/tidb-cloud-filesystem-pricing-details/'
 const CANONICAL = `https://www.pingcap.com${PATH}`
 const TITLE = 'TiDB Cloud Filesystem Pricing Details'
 const DESCRIPTION =
-  'TiDB Cloud Filesystem pricing for reads, writes, storage and egress, with $5 of service free-tier allowance per organization each month. View rates and limits.'
+  'TiDB Cloud Filesystem pricing for reads, writes, storage and egress, with a monthly free-tier allowance per organization. View rates and limits.'
 // Shares the product page's social card. Lives in `public/` and is mirrored to
 // the CDN by the deploy workflow (`public/` -> s3://uploads-pingcap-com/launchpad/),
 // so the absolute URL is the CDN one — crawlers fetch it directly, and it only
@@ -197,20 +139,20 @@ export const metadata: Metadata = {
 
 // Use the same plain-text answers for the visible FAQ and its schema.
 const SPENDING_LIMIT_ANSWER =
-  'TiDB Cloud Filesystem does not support a configurable spending limit. The $5 monthly free-tier allowance reduces your charges; it is not a maximum monthly bill.'
+  'TiDB Cloud Filesystem does not support a configurable spending limit. The monthly free-tier allowance reduces your charges; it is not a maximum monthly bill.'
 const FAQ_ITEMS = [
   {
-    q: 'Does each file system get its own $5 free-tier allowance?',
-    a: 'No. The $5 monthly free-tier allowance is shared by all file systems usage in your organization, across billing items and regions. Creating another file system does not add another $5 allowance.',
+    q: 'Does each file system get its own free-tier allowance?',
+    a: 'No. The monthly free-tier allowance is shared by all file system usage in your organization, across regions. Creating another file system does not add another allowance.',
   },
   {
-    q: 'If the free-tier allowance covers 16 GB, can I store 16 GB without a card?',
-    a: 'No. The allowance is a dollar amount applied to charges; the no-card storage cap is a separate limit of 2 GB per file system. The 16 GB illustration shows a storage cost, not the capacity of a no-card filesystem. Accounts with a card on file are exempt from the listed no-card limits.',
+    q: 'Does the free-tier allowance raise the no-card storage limit?',
+    a: 'No. The no-card storage cap is a separate limit of 2 GB per file system and does not change with the allowance. Accounts with a card on file are exempt from the listed no-card limits.',
   },
   { q: 'Can I set a monthly spending limit?', a: SPENDING_LIMIT_ANSWER },
   {
     q: 'What happens when a file system reaches a limit?',
-    a: 'It stops accepting writes, and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the $5 allowance is billed as overage on your monthly invoice rather than blocked.',
+    a: 'It stops accepting writes, and existing files stay readable. The TiDB Cloud console shows a warning, and write requests are rejected once the limit is in force. With a card on file, usage beyond the free-tier allowance is billed as overage on your monthly invoice rather than blocked.',
   },
 ]
 
@@ -264,14 +206,6 @@ export default function FilesystemPricingDetailsPage() {
               product page is the parent of this one in the breadcrumb and shares
               its schema @id; it belongs in the hero, not only in a footnote
               eight headings down. */}
-          <p className="mb-6 max-w-[620px] text-body-md text-carbon-400">
-            Every figure on this page is for <code className="font-mono">{RATE_REGION}</code>. All
-            five priced regions are on the{' '}
-            <a href="#rates" className="underline underline-offset-2 hover:no-underline">
-              rate card
-            </a>
-            , where read and write operations cost the same in every one.
-          </p>
           <div className="mb-8 flex flex-wrap items-center gap-3">
             <a
               href="#rates"
@@ -296,11 +230,18 @@ export default function FilesystemPricingDetailsPage() {
             aria-labelledby="preview-pricing-notice"
             className="mx-auto max-w-[760px] bg-brand-blue-pale px-4 py-3 text-body-md leading-6 text-text-primary"
           >
+            {/* 2026-10-15: pricing and the SKU list are being revised (two pooled
+                operation SKUs are expected to be removed). The page stays up with
+                the current rates rather than being taken down, because the product
+                page links here and these are the rates in effect today. No
+                effective date or advance-notice commitment is stated, because
+                neither has been confirmed. */}
             <p id="preview-pricing-notice" className="mb-3 text-h3-sm font-bold">
-              Public preview pricing
+              Public preview pricing is being updated
             </p>
             <p>
-              The prices on this page apply to the public preview and may change at GA.{' '}
+              The rates on this page are the current public preview rates. Updated pricing will be
+              published on this page.{' '}
               <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
                 Contact us
               </a>{' '}
@@ -312,7 +253,7 @@ export default function FilesystemPricingDetailsPage() {
         <SectionWrapper id="start-free" style={{ background: 'gray' }}>
           <SectionHeader
             title="Start Free"
-            subtitle="Every organization gets $5.00 of Filesystem service free-tier allowance each month. This allowance is a dollar amount deducted from your usage charges, shared across all your file systems, billing items and regions."
+            subtitle="Every organization gets a monthly free-tier allowance for Filesystem, shared across all its file systems and regions."
             className="mb-8"
             h2Size="md"
           />
@@ -325,9 +266,7 @@ export default function FilesystemPricingDetailsPage() {
                 MB.
               </p>
               <p className="mb-4 text-body-lg text-text-primary/70">
-                The free-tier allowance covers usage charges; it does not increase these limits. For
-                example, 16 GB of Performance storage for a full month costs $4.80, but a file
-                system without a credit card can only hold 2 GB.
+                The free-tier allowance covers usage charges; it does not increase these limits.
               </p>
               {/* Removed 2026-09-23 at the owner's direction: an illustration of
                   how far request volume can run past the free-tier allowance ("200,000 write
@@ -338,8 +277,8 @@ export default function FilesystemPricingDetailsPage() {
                   there is no configurable spending limit. Restore the fuller
                   explanation only once Product answers. */}
               <p className="mb-5 text-body-lg text-text-primary/70">
-                The $5 allowance reduces your charges; it is not a maximum monthly bill, and there
-                is no configurable spending limit. See{' '}
+                The free-tier allowance reduces your charges; it is not a maximum monthly bill, and
+                there is no configurable spending limit. See{' '}
                 <a href="#limitations" className="underline underline-offset-2 hover:no-underline">
                   Billing and Limits
                 </a>{' '}
@@ -371,11 +310,13 @@ export default function FilesystemPricingDetailsPage() {
               <div className="space-y-3 text-body-lg text-text-primary/70">
                 <p>
                   A read retrieves file data; a write stores it. The prices use request counts, not
-                  the number of files you keep and not the number of agent runs.
+                  the number of files you keep and not the number of agent runs. Listing a directory
+                  or checking a file&rsquo;s details (list, stat) also counts as a read. Managing
+                  your organization and workspaces is not charged.
                 </p>
                 <p>
                   A price per 1,000 requests means you divide the request count by 1,000, then
-                  multiply by the rate. At the non-pooled read rate, 50,000 ÷ 1,000 × $0.04 = $2.00.
+                  multiply by the rate.
                 </p>
                 {/* Having refused the one-to-one mapping between a file action and
                     a billable request, the page owes the reader somewhere to get
@@ -400,8 +341,8 @@ export default function FilesystemPricingDetailsPage() {
                   per month; it is a storage unit, not a request count.
                 </p>
                 <p>
-                  At the Performance rate, keeping 2 GB for a full month costs 2 × $0.30 = $0.60.
-                  Billing is monthly and prorated by the hour.
+                  Multiply the GB you keep for the month by the rate. Billing is monthly and
+                  prorated by the hour.
                 </p>
               </div>
             </div>
@@ -413,103 +354,24 @@ export default function FilesystemPricingDetailsPage() {
                   separate billing item from storage and requests.
                 </p>
                 <p>
-                  At $0.09 per GB, 2 GB of internet egress costs $0.18. Use the amount transferred
-                  out in this calculation, not the total amount you have stored.
+                  Multiply the GB transferred out by the rate. Use the amount transferred out, not
+                  the total amount you have stored.
                 </p>
               </div>
             </div>
-            {/* Silent until answered, 2026-09-23. This block used to tell the
-                reader we could not say which category applied and to contact us,
-                which advertised the gap without closing it. The rate card still
-                lists every published meter, so nothing is hidden from a reader
-                who is billed for one. Setting POOLED_EXPLAINER makes the whole
-                block reappear — that is the one-line patch when Product answers. */}
-            {POOLED_EXPLAINER && (
-              <div>
-                <h3 className="mb-3 text-h3-lg font-bold">Performance and Pooled</h3>
-                <div className="space-y-3 text-body-lg text-text-primary/70">
-                  <p>
-                    The rate card lists two storage categories, Performance and Pooled. It also
-                    lists ordinary read/write requests and separate Pooled file requests. These have
-                    different rates.
-                  </p>
-                  <p>{POOLED_EXPLAINER}</p>
-                </div>
-              </div>
-            )}
           </div>
         </SectionWrapper>
 
-        {/* Show complete arithmetic and then explain how shared credit changes it. */}
-        <SectionWrapper id="monthly-cost" style={{ background: 'primary' }}>
-          <SectionHeader
-            title="Example Monthly Bills"
-            subtitle="Add the charges for each billing item, then subtract the available monthly free-tier allowance. These illustrative examples show both the calculation and what remains to pay."
-            className="mb-8"
-            h2Size="md"
-          />
-          <p className="mb-8 max-w-[760px] text-body-lg text-carbon-300">
-            Both examples use non-pooled read/write requests, Performance storage held for a full
-            month and no Pooled usage, at <code className="font-mono">{RATE_REGION}</code> rates.
-            Because both are dominated by requests, which cost the same everywhere, the same usage
-            in the most expensive listed region comes to under 3% more. Each starts with the
-            organization&rsquo;s full $5 monthly free-tier allowance available.
-          </p>
-          <div className="grid gap-6 md:grid-cols-2">
-            {EXAMPLES.map((example) => (
-              <div key={example.name} className="rounded-lg border border-carbon-800 p-6">
-                <h3 className="mb-1 text-h3-sm font-bold">{example.name}</h3>
-                <p className="text-body-sm text-carbon-400">{example.outcome}</p>
-                {/* The shared premise above is ~600px away from this card on a
-                    phone. Repeat the rate category here so the numbers never
-                    travel without the condition that produced them. */}
-                <p className="mb-4 text-body-sm text-carbon-400">
-                  Non-pooled requests, Performance storage, full $5 free-tier allowance available
-                </p>
-                <dl className="mb-5 space-y-3 text-body-md text-carbon-200">
-                  {example.lines.map(([usage, cost]) => (
-                    <div key={usage} className="flex justify-between gap-3">
-                      <dt>{usage}</dt>
-                      <dd className="shrink-0 font-mono">{cost}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <dl className="space-y-2 border-t border-carbon-800 pt-4 text-body-md text-carbon-200">
-                  <div className="flex justify-between">
-                    <dt>Usage charges</dt>
-                    <dd className="font-mono">{example.gross}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt>Free-tier allowance applied</dt>
-                    <dd className="font-mono">{example.credit}</dd>
-                  </div>
-                </dl>
-                <p className="mt-4 text-h3-lg font-bold">
-                  {example.net}{' '}
-                  <span className="ml-2 text-body-md text-carbon-300">after allowance</span>
-                </p>
-                <p className="mt-4 text-body-md text-carbon-200">{example.explanation}</p>
-                <p className="mt-3 text-body-md text-carbon-300">{example.eligibility}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 max-w-[760px] border-l-2 border-carbon-400 pl-6">
-            <h3 className="mb-3 text-h3-lg font-bold">
-              Already Used Some of Your Free-tier Allowance?
-            </h3>
-            <p className="text-body-lg text-carbon-300">
-              If other file system usage in your organization has already consumed $3 of this
-              month&rsquo;s allowance, only $2 remains. For the same $4.80 of usage in Example 1,
-              the amount to pay would be $4.80 + $3.00 − $5.00 = $2.80. Creating a new file system
-              or using another region does not provide an additional free-tier allowance.
-            </p>
-          </div>
-        </SectionWrapper>
+        {/* Example Monthly Bills removed 2026-10-15 while pricing is revised. Both
+            examples were built mostly from the two pooled operation SKUs that are
+            expected to be dropped, so they would be the first thing on the page to
+            go stale. Restore from git history once the new rates are final, and
+            re-derive every line. */}
 
         <SectionWrapper id="rates" style={{ background: 'gray' }}>
           <SectionHeader
             title="Rates and How Billing Works"
-            subtitle="Use the rate for each category of your usage, then add those charges together. All seven billing items are listed below, for every region where Filesystem is priced."
+            subtitle="Use the rate for each category of your usage, then add those charges together. All five billing items are listed below, for every region where Filesystem is priced."
             className="mb-8"
             h2Size="md"
           />
@@ -517,8 +379,8 @@ export default function FilesystemPricingDetailsPage() {
               should be told first which ones they do not need to compare. */}
           <p className="mb-6 max-w-[760px] text-body-lg text-text-primary/70">
             Read and write operations cost the same in every region — $0.04 and $0.50 per 1,000
-            requests — and they dominate most bills. Pooled operations, storage and egress differ by
-            region.
+            requests. Storage and egress differ by region. Storage is placed automatically by file
+            size. You don&rsquo;t choose between the two storage types.
           </p>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-body-sm sm:text-body-lg">
@@ -537,7 +399,9 @@ export default function FilesystemPricingDetailsPage() {
                   <tr key={rate.meter} className="border-b border-carbon-300">
                     <td className="py-3 pr-3 sm:pr-6">
                       {rate.meter}
-                      <span className="block text-body-sm text-text-primary/60">{rate.note}</span>
+                      {rate.note && (
+                        <span className="block text-body-sm text-text-primary/60">{rate.note}</span>
+                      )}
                     </td>
                     {rate.prices.map((price, i) => (
                       <td key={REGIONS[i]} className="py-3 pl-3 text-right align-top font-mono">
@@ -550,8 +414,7 @@ export default function FilesystemPricingDetailsPage() {
             </table>
           </div>
           <p className="mt-4 max-w-[760px] text-body-sm text-text-primary/60">
-            All prices in USD. Billed monthly, prorated by the hour. Worked examples on this page
-            use <code>{RATE_REGION}</code>. Regions are added gradually —{' '}
+            All prices in USD. Billed monthly, prorated by the hour. Regions are added gradually —{' '}
             <a href={CONTACT_US} className="underline underline-offset-2 hover:no-underline">
               contact us
             </a>{' '}
@@ -570,7 +433,7 @@ export default function FilesystemPricingDetailsPage() {
           <SectionHeader title="Billing and Limits" className="mb-8" h2Size="md" />
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <h3 className="mb-3 text-h3-lg font-bold">Without a Credit Card on Organization</h3>
+              <h3 className="mb-3 text-h3-lg font-bold">Without a Credit Card on File</h3>
               <ul className="space-y-2 text-body-lg text-carbon-300">
                 <li>One file system per region</li>
                 <li>2,000 files per file system</li>
@@ -606,7 +469,7 @@ export default function FilesystemPricingDetailsPage() {
           <div className="contain">
             <CtaSection
               title="Start with Your Monthly Free-Tier Allowance"
-              subtitle="Create a file system and try it with your organization's $5 monthly service allowance."
+              subtitle="Create a file system and try it with your organization's monthly free-tier allowance."
               primaryCta={{
                 text: 'Read the quickstart',
                 href: DOCS_QUICKSTART,

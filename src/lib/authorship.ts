@@ -8,8 +8,10 @@ import type { PageDSL } from '@/lib/dsl-schema'
  * preserved across edits), unless `forceCreated` is passed — used when duplicating
  * a page, where the copy is a brand-new page authored by the current user.
  *
- * `priorCreatedBy` / `priorCreatedAt` let a caller carry the creator forward from
- * the previously-committed DSL, in case the incoming payload dropped those fields.
+ * `priorCreatedBy` / `priorCreatedAt` carry the creator forward from the DSL the
+ * server read from the repo. Authorship in the incoming payload is client-supplied
+ * and is never trusted: without a prior value from the repo, the current actor
+ * becomes the creator. (Callers must pass the prior values to preserve a creator.)
  */
 export function stampAuthorship(
   dsl: PageDSL,
@@ -19,8 +21,8 @@ export function stampAuthorship(
   if (!dsl?.meta) return
   const now = new Date().toISOString()
 
-  const existingCreatedBy = dsl.meta.createdBy ?? opts?.priorCreatedBy
-  const existingCreatedAt = dsl.meta.createdAt ?? opts?.priorCreatedAt
+  const existingCreatedBy = opts?.priorCreatedBy
+  const existingCreatedAt = opts?.priorCreatedAt
 
   if (opts?.forceCreated || !existingCreatedBy) {
     dsl.meta.createdBy = actor

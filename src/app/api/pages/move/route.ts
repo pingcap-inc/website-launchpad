@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
-
-const DRAFT_BRANCH = 'drafts/ai'
-
-function isValidSlugPath(slug: string) {
-  if (!slug) return false
-  const segments = slug.split('/').filter(Boolean)
-  if (segments.length === 0) return false
-  return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
-}
+import { DRAFT_BRANCH, isValidPageSlug, publishedBranch } from '@/lib/security/api-guards'
 
 async function readFile(
   baseUrl: string,
@@ -18,7 +10,7 @@ async function readFile(
   branch: string
 ) {
   const res = await fetch(
-    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${branch}`,
+    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${encodeURIComponent(branch)}`,
     { headers }
   )
   if (res.status === 404) return null
@@ -28,6 +20,21 @@ async function readFile(
     sha: data.sha,
     content: Buffer.from(data.content, 'base64').toString('utf-8'),
   }
+}
+
+async function fileExists(
+  baseUrl: string,
+  headers: Record<string, string>,
+  path: string,
+  branch: string
+) {
+  const res = await fetch(
+    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${encodeURIComponent(branch)}`,
+    { headers }
+  )
+  if (res.status === 404) return false
+  if (!res.ok) throw new Error(`Failed to check ${path} on ${branch}`)
+  return true
 }
 
 async function writeFile(
@@ -74,23 +81,23 @@ async function deleteFile(
 
 export async function POST(req: NextRequest) {
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
-  const publishedBranch = process.env.GITHUB_BRANCH ?? 'staging'
+  const pubBranch = publishedBranch()
 
   const headers = await getGitHubAuthHeaders()
   if (!headers || !GITHUB_OWNER || !GITHUB_REPO) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
 
-  const body = (await req.json()) as {
-    from: string
-    to: string
-    includeDraft?: boolean
-    includePublished?: boolean
+  let body: { from?: string; to?: string; includeDraft?: boolean; includePublished?: boolean }
+  try {
+    body = (await req.json()) as typeof body
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 })
   }
 
-  const from = body.from?.replace(/^\/|\/$/g, '')
-  const to = body.to?.replace(/^\/|\/$/g, '')
-  if (!isValidSlugPath(from) || !isValidSlugPath(to)) {
+  const from = typeof body.from === 'string' ? body.from.replace(/^\/|\/$/g, '') : ''
+  const to = typeof body.to === 'string' ? body.to.replace(/^\/|\/$/g, '') : ''
+  if (!isValidPageSlug(from) || !isValidPageSlug(to)) {
     return NextResponse.json({ error: 'Invalid slug path' }, { status: 400 })
   }
   if (from === to) {
@@ -107,12 +114,12 @@ export async function POST(req: NextRequest) {
   if (includePublished) {
     operations.push(
       {
-        branch: publishedBranch,
+        branch: pubBranch,
         path: `src/app/${to}/page.tsx`,
         fromPath: `src/app/${from}/page.tsx`,
       },
       {
-        branch: publishedBranch,
+        branch: pubBranch,
         path: `src/app/${to}/page.dsl.json`,
         fromPath: `src/app/${from}/page.dsl.json`,
       }
@@ -127,14 +134,56 @@ export async function POST(req: NextRequest) {
     })
   }
 
+  const deny = async (error: string, status: number, detail: string) => {
+    await logAudit(req, { action: 'move', target: from, targetTo: to, status: 'denied', detail })
+    return NextResponse.json({ error }, { status })
+  }
+
   const moved: string[] = []
-  for (const op of operations) {
-    const file = await readFile(baseUrl, headers, op.fromPath, op.branch)
-    if (!file) continue
-    const message = `chore: move ${op.fromPath} -> ${op.path}`
-    await writeFile(baseUrl, headers, op.path, op.branch, file.content, message)
-    await deleteFile(baseUrl, headers, op.fromPath, op.branch, file.sha, message)
-    moved.push(`${op.branch}:${op.fromPath}`)
+  try {
+    // Pre-flight, before any write:
+    // 1. A page.tsx with no sibling page.dsl.json is hand-authored (code-owned) —
+    //    the CMS must not move it (same rule as /api/pages/delete).
+    if (includePublished) {
+      const [srcTsx, srcDsl] = await Promise.all([
+        fileExists(baseUrl, headers, `src/app/${from}/page.tsx`, pubBranch),
+        fileExists(baseUrl, headers, `src/app/${from}/page.dsl.json`, pubBranch),
+      ])
+      if (srcTsx && !srcDsl) {
+        return deny(
+          'Refusing to move a code-owned page (page.tsx with no page.dsl.json). Move it in the repository instead.',
+          409,
+          'code-owned source'
+        )
+      }
+    }
+    // 2. Never overwrite anything already at the destination.
+    const destTaken = await Promise.all([
+      ...operations.map((op) => fileExists(baseUrl, headers, op.path, op.branch)),
+      fileExists(baseUrl, headers, `src/app/${to}/page.tsx`, pubBranch),
+    ])
+    if (destTaken.some(Boolean)) {
+      return deny(`A page already exists at /${to}/`, 409, 'destination exists')
+    }
+
+    for (const op of operations) {
+      const file = await readFile(baseUrl, headers, op.fromPath, op.branch)
+      if (!file) continue
+      const message = `chore: move ${op.fromPath} -> ${op.path}`
+      await writeFile(baseUrl, headers, op.path, op.branch, file.content, message)
+      await deleteFile(baseUrl, headers, op.fromPath, op.branch, file.sha, message)
+      moved.push(`${op.branch}:${op.fromPath}`)
+    }
+  } catch (err) {
+    console.error('[pages/move] failed:', err)
+    await logAudit(req, {
+      action: 'move',
+      target: from,
+      targetTo: to,
+      status: 'error',
+      detail: `failed after ${moved.length} file(s)`,
+    })
+    return NextResponse.json({ error: 'Move failed', moved }, { status: 500 })
   }
 
   if (moved.length === 0) {

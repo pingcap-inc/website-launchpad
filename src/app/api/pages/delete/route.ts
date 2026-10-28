@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
-
-const DRAFT_BRANCH = 'drafts/ai'
-
-function isValidSlugPath(slug: string) {
-  if (!slug) return false
-  const segments = slug.split('/').filter(Boolean)
-  if (segments.length === 0) return false
-  return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
-}
+import { DRAFT_BRANCH, isValidPageSlug, publishedBranch } from '@/lib/security/api-guards'
 
 async function readSha(
   baseUrl: string,
@@ -18,7 +10,7 @@ async function readSha(
   branch: string
 ) {
   const res = await fetch(
-    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${branch}`,
+    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${encodeURIComponent(branch)}`,
     { headers }
   )
   if (res.status === 404) return null
@@ -48,7 +40,7 @@ async function deleteFile(
 
 export async function POST(req: NextRequest) {
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
-  const publishedBranch = process.env.GITHUB_BRANCH ?? 'staging'
+  const pubBranch = publishedBranch()
 
   const headers = await getGitHubAuthHeaders()
   if (!headers || !GITHUB_OWNER || !GITHUB_REPO) {
@@ -62,8 +54,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 })
   }
 
-  const slug = body.slug?.replace(/^\/|\/$/g, '')
-  if (!isValidSlugPath(slug)) {
+  const slug = typeof body.slug === 'string' ? body.slug.replace(/^\/|\/$/g, '') : ''
+  if (!isValidPageSlug(slug)) {
     return NextResponse.json({ error: 'Invalid slug path' }, { status: 400 })
   }
 
@@ -82,12 +74,7 @@ export async function POST(req: NextRequest) {
     // destroy a developer's file, so refuse it here.
     let publishedDslSha: string | null
     try {
-      publishedDslSha = await readSha(
-        baseUrl,
-        headers,
-        `src/app/${slug}/page.dsl.json`,
-        publishedBranch
-      )
+      publishedDslSha = await readSha(baseUrl, headers, `src/app/${slug}/page.dsl.json`, pubBranch)
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown error during deletion'
       return NextResponse.json({ error: msg }, { status: 500 })
@@ -95,23 +82,24 @@ export async function POST(req: NextRequest) {
 
     if (publishedDslSha) {
       targets.push(
-        { branch: publishedBranch, path: `src/app/${slug}/page.tsx` },
-        { branch: publishedBranch, path: `src/app/${slug}/page.dsl.json` }
+        { branch: pubBranch, path: `src/app/${slug}/page.tsx` },
+        { branch: pubBranch, path: `src/app/${slug}/page.dsl.json` }
       )
     } else {
       let publishedTsxSha: string | null
       try {
-        publishedTsxSha = await readSha(
-          baseUrl,
-          headers,
-          `src/app/${slug}/page.tsx`,
-          publishedBranch
-        )
+        publishedTsxSha = await readSha(baseUrl, headers, `src/app/${slug}/page.tsx`, pubBranch)
       } catch (err) {
         const msg = err instanceof Error ? err.message : 'Unknown error during deletion'
         return NextResponse.json({ error: msg }, { status: 500 })
       }
       if (publishedTsxSha) {
+        await logAudit(req, {
+          action: 'delete',
+          target: slug,
+          status: 'denied',
+          detail: 'code-owned page (page.tsx with no page.dsl.json)',
+        })
         return NextResponse.json(
           {
             error:
@@ -136,8 +124,14 @@ export async function POST(req: NextRequest) {
       deleted += 1
     }
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Unknown error during deletion'
-    return NextResponse.json({ error: msg }, { status: 500 })
+    console.error('[pages/delete] failed:', err)
+    await logAudit(req, {
+      action: 'delete',
+      target: slug,
+      status: 'error',
+      detail: `failed after ${deleted} file(s)`,
+    })
+    return NextResponse.json({ error: 'Deletion failed', deleted }, { status: 500 })
   }
 
   if (deleted === 0) {

@@ -1,8 +1,29 @@
 import { NextResponse } from 'next/server'
+import { TRUSTED_DOMAINS } from '@/lib/safe-links'
+import { readJsonBody } from '@/lib/security/api-guards'
 
 type ScoreRequest = {
   profile?: string
   target?: string
+}
+
+const MAX_FETCH_BYTES = 2 * 1024 * 1024
+
+// Only fetch our own public sites — an arbitrary URL here would let a caller make
+// the server request internal/metadata endpoints (SSRF). Redirects are not followed
+// so an allowed host can't bounce the request elsewhere.
+function isFetchableTarget(target: string) {
+  try {
+    const url = new URL(target)
+    return (
+      url.protocol === 'https:' &&
+      !url.username &&
+      !url.password &&
+      TRUSTED_DOMAINS.has(url.hostname)
+    )
+  } catch {
+    return false
+  }
 }
 
 function stripHtml(html: string) {
@@ -19,7 +40,9 @@ function buildMockSuggestions(wordCount: number) {
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as ScoreRequest
+    const parsed = await readJsonBody<ScoreRequest>(request, 256 * 1024)
+    if (!parsed.ok) return parsed.response
+    const body = parsed.data
     const profile = body.profile?.trim()
     const target = body.target?.trim()
 
@@ -28,10 +51,16 @@ export async function POST(request: Request) {
     }
 
     let text = target
-    if (target.startsWith('http')) {
-      const res = await fetch(target)
+    if (/^https?:\/\//i.test(target)) {
+      if (!isFetchableTarget(target)) {
+        return NextResponse.json(
+          { error: 'Only https URLs on pingcap.com / tidbcloud.com sites can be fetched.' },
+          { status: 400 }
+        )
+      }
+      const res = await fetch(target, { redirect: 'manual', signal: AbortSignal.timeout(10_000) })
       if (res.ok) {
-        const html = await res.text()
+        const html = (await res.text()).slice(0, MAX_FETCH_BYTES)
         text = stripHtml(html)
       }
     }
@@ -48,9 +77,6 @@ export async function POST(request: Request) {
       suggestions,
     })
   } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Scoring failed.' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Scoring failed.' }, { status: 500 })
   }
 }
