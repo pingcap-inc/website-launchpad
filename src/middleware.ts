@@ -72,7 +72,27 @@ const stagingGate = auth((req) => {
   return NextResponse.redirect(signInUrl)
 })
 
-export default function middleware(req: NextRequest, ev: NextFetchEvent) {
+// Staging is served straight from Vercel, so it doesn't get the proxy-layer security
+// headers that www.pingcap.com has. Add the ones that matter for an authenticated
+// admin: no framing by other sites (clickjacking), no MIME sniffing, no full-URL
+// referrers leaking draft slugs. The /admin/preview iframe is same-origin, so
+// `frame-ancestors 'self'` keeps it working.
+const ADMIN_SECURITY_HEADERS: Record<string, string> = {
+  'X-Frame-Options': 'SAMEORIGIN',
+  'Content-Security-Policy': "frame-ancestors 'self'",
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+}
+
+function withSecurityHeaders(res: Response | void | null): Response | void | null {
+  if (!res) return res
+  for (const [name, value] of Object.entries(ADMIN_SECURITY_HEADERS)) {
+    res.headers.set(name, value)
+  }
+  return res
+}
+
+export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
   const vercelEnv = process.env.VERCEL_ENV
 
   // Production: admin fully disabled. Return before touching Auth.js.
@@ -89,7 +109,7 @@ export default function middleware(req: NextRequest, ev: NextFetchEvent) {
     if (isCrossOriginApiWrite(req)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
-    return NextResponse.next()
+    return withSecurityHeaders(NextResponse.next())
   }
 
   // Deployed but not the staging branch (VERCEL_ENV is 'preview' for every branch
@@ -107,7 +127,9 @@ export default function middleware(req: NextRequest, ev: NextFetchEvent) {
   // Staging only: run the authenticated gate (this is where Auth.js runs).
   // `auth()`'s result is typed for route-handler context, but at runtime Next
   // passes a NextFetchEvent (both carry `waitUntil`); cast to its param type.
-  return stagingGate(req, ev as unknown as Parameters<typeof stagingGate>[1])
+  return withSecurityHeaders(
+    await stagingGate(req, ev as unknown as Parameters<typeof stagingGate>[1])
+  )
 }
 
 export const config = {
