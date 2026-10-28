@@ -57,8 +57,8 @@ const dsl: PageDSL = {
     canonical: '/compare/tidb-vs-postgresql-2026-comparison-guide/',
     createdBy: 'a.hire@pingcap.com',
     createdAt: '2026-10-27T21:20:11.736Z',
-    modifiedBy: 'a.hire@pingcap.com',
-    modifiedAt: '2026-10-27T21:20:11.736Z',
+    modifiedBy: 'liwen.xu@pingcap.com',
+    modifiedAt: '2026-10-28T09:00:33.096Z',
   },
   sections: [
     {
