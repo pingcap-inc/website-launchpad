@@ -7,6 +7,9 @@ on:
 
 permissions:
   contents: read
+  # Lets configure-aws-credentials exchange this run's GitHub OIDC token for
+  # short-lived STS credentials (no stored AWS key) once AWS_DEPLOY_ROLE_ARN is set.
+  id-token: write
 
 jobs:
   deploy-cdn:
@@ -39,7 +42,19 @@ jobs:
           NODE_ENV: production
           NEXT_PUBLIC_ASSET_PREFIX: /launchpad
 
-      - name: Configure AWS credentials
+      # Preferred: GitHub OIDC → IAM role (set repo/environment variable AWS_DEPLOY_ROLE_ARN).
+      - name: Configure AWS credentials (OIDC)
+        if: vars.AWS_DEPLOY_ROLE_ARN != ''
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: website-launchpad-deploy-${{ github.run_id }}
+          aws-region: ${{ vars.AWS_REGION || secrets.AWS_REGION }}
+
+      # Fallback until the role exists. Delete this step and the AWS_ACCESS_KEY_ID /
+      # AWS_SECRET_ACCESS_KEY secrets once the OIDC step has run successfully.
+      - name: Configure AWS credentials (static keys, legacy)
+        if: vars.AWS_DEPLOY_ROLE_ARN == ''
         uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}

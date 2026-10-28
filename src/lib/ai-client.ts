@@ -4,6 +4,7 @@ import {
   ConverseCommand,
   type Message as BedrockMessage,
 } from '@aws-sdk/client-bedrock-runtime'
+import { resolveAwsCredentials } from '@/lib/aws-credentials'
 
 /** Strip markdown code fences (e.g. ```json ... ```) that some models wrap around JSON output. */
 function stripMarkdownCodeFence(text: string): string {
@@ -132,16 +133,15 @@ type Message = { role: 'system' | 'user' | 'assistant'; content: string }
 let _bedrockClient: BedrockRuntimeClient | null = null
 function getBedrockClient(): BedrockRuntimeClient {
   if (_bedrockClient) return _bedrockClient
-  const accessKeyId = process.env.BEDROCK_AWS_ACCESS_KEY_ID
-  const secretAccessKey = process.env.BEDROCK_AWS_SECRET_ACCESS_KEY
-  if (!accessKeyId || !secretAccessKey) {
+  const credentials = resolveAwsCredentials('BEDROCK_AWS_')
+  if (!credentials) {
     throw new Error(
-      'Bedrock IAM credentials missing: set BEDROCK_AWS_ACCESS_KEY_ID and BEDROCK_AWS_SECRET_ACCESS_KEY'
+      'Bedrock IAM credentials missing: set BEDROCK_AWS_ROLE_ARN (or BEDROCK_AWS_ACCESS_KEY_ID and BEDROCK_AWS_SECRET_ACCESS_KEY)'
     )
   }
   _bedrockClient = new BedrockRuntimeClient({
     region: process.env.BEDROCK_AWS_REGION ?? 'ap-southeast-1',
-    credentials: { accessKeyId, secretAccessKey },
+    credentials,
   })
   return _bedrockClient
 }

@@ -17,6 +17,7 @@ import {
   ensureLongFormHero,
   ensureLongFormLastUpdated,
 } from '@/lib/dsl-utils'
+import { resolveAwsCredentials } from '@/lib/aws-credentials'
 
 const SYSTEM_PROMPT = `You are a PingCAP website content expert. Generate production-ready page content for pingcap.com.
 
@@ -1446,9 +1447,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'NVIDIA_API_KEY not configured' }, { status: 500 })
   }
   if (AI_PROVIDER === 'bedrock') {
-    if (!process.env.BEDROCK_AWS_ACCESS_KEY_ID || !process.env.BEDROCK_AWS_SECRET_ACCESS_KEY)
+    if (!resolveAwsCredentials('BEDROCK_AWS_'))
       return NextResponse.json(
-        { error: 'BEDROCK_AWS_ACCESS_KEY_ID / BEDROCK_AWS_SECRET_ACCESS_KEY not configured' },
+        { error: 'BEDROCK_AWS_ROLE_ARN (or BEDROCK_AWS_ACCESS_KEY_ID / SECRET) not configured' },
         { status: 500 }
       )
     if (!process.env.ANTHROPIC_MODEL)

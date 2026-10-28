@@ -3,6 +3,7 @@ import crypto from 'crypto'
 import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3'
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
+import { resolveAwsCredentials } from '@/lib/aws-credentials'
 
 const CDN_BASE = 'https://static.pingcap.com'
 const TAGS_KEY = 'media/tags.json'
@@ -181,13 +182,14 @@ export async function POST(req: NextRequest) {
 
   // ── Media Center path: upload to S3 ──────────────────────────────────────
   if (source === 'media') {
-    const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_S3_BUCKET } = process.env
-    if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY || !AWS_REGION || !AWS_S3_BUCKET) {
+    const { AWS_REGION, AWS_S3_BUCKET } = process.env
+    const credentials = resolveAwsCredentials('AWS_')
+    if (!credentials || !AWS_REGION || !AWS_S3_BUCKET) {
       return NextResponse.json({ error: 'AWS env vars not configured' }, { status: 500 })
     }
     const s3 = new S3Client({
       region: AWS_REGION,
-      credentials: { accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY },
+      credentials,
       followRegionRedirects: true,
     })
     let s3Key = `images/${filename}`
