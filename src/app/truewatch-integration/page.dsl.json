@@ -4,10 +4,11 @@
     "title": "TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen",
     "description": "Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.",
     "canonical": "/truewatch-integration/",
+    "unlisted": true,
     "createdBy": "nivanya@pingcap.com",
     "createdAt": "2026-10-29T14:04:00.299Z",
     "modifiedBy": "nivanya@pingcap.com",
-    "modifiedAt": "2026-10-29T14:04:00.299Z"
+    "modifiedAt": "2026-10-29T14:24:22.085Z"
   },
   "sections": [
     {
@@ -89,18 +90,21 @@
             "title": "Forward path",
             "description": "An administrator creates a data forwarding rule in TrueWatch and selects TiDB Cloud Lake as the target. TrueWatch writes the chosen logs, traces, metrics, and events in Parquet batches into tables you own.",
             "image": {
-              "image": {
-                "url": ""
-              }
+              "alt": ""
             }
           },
           {
             "title": "Query path",
             "description": "TrueWatch adds TiDB Cloud Lake as an external data source through the TiDB Cloud Lake Driver. Metric Analysis and Dashboards run read-only SQL against business tables and forwarded history. Business tables can arrive from TiDB Cloud, MySQL, PostgreSQL, and Amazon S3 files. [Learn more about TiDB Cloud Lake data integration](https://docs.pingcap.com/tidbcloudlake/data-integration-overview/).",
             "image": {
-              "image": {
-                "url": ""
-              }
+              "alt": ""
+            }
+          },
+          {
+            "title": "",
+            "description": "",
+            "image": {
+              "alt": ""
             }
           }
         ],
@@ -142,34 +146,6 @@
         ],
         "columns": 3,
         "borderStyle": "color"
-      },
-      "style": {
-        "spacing": "section"
-      }
-    },
-    {
-      "id": "about",
-      "type": "featureCard",
-      "props": {
-        "title": "About TrueWatch and TiDB",
-        "items": [
-          {
-            "icon": "Activity",
-            "title": "About TrueWatch",
-            "description": "TrueWatch is a Singapore-based unified observability platform. It brings logs, metrics, traces, real user monitoring, synthetics, and security data into one platform for DevOps, SRE, and ITOps teams across multi-cloud environments. TrueWatch received the 2025 AWS Marketplace Partner of the Year (GCR) award.",
-            "borderColor": "gray",
-            "href": "https://www.truewatch.com/"
-          },
-          {
-            "icon": "Database",
-            "title": "About TiDB",
-            "description": "TiDB is the AI-native distributed SQL database built for workloads that grow unpredictably. TiDB Cloud runs transactional applications, and TiDB Cloud Lake runs analytics and search on separate compute over object storage.",
-            "borderColor": "gray",
-            "href": "https://www.pingcap.com/tidb-cloud-lake/"
-          }
-        ],
-        "columns": 2,
-        "borderStyle": "gray"
       },
       "style": {
         "spacing": "section"
