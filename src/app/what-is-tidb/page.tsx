@@ -1029,24 +1029,35 @@ export default function WhatIsTidbPage() {
             </p>
           </div>
 
-          <div className="mt-12 max-w-[960px]">
-            <h3 className="text-h3-xl leading-tight text-text-inverse">
-              TiDB X: The Architecture Behind TiDB Cloud
-            </h3>
-            <p className="mt-5 text-body-lg leading-relaxed text-carbon-300">
-              New TiDB Cloud clusters run on TiDB X, a cloud-native architecture built on two
-              separations. First, compute is separated from storage: data lives in durable object
-              storage, hot data is cached next to compute, and compute follows the work. On TiDB
-              Cloud Starter, an idle database&rsquo;s compute goes to zero while its data stays in
-              storage. Second, compute is separated from compute: heavy background work like index
-              builds, statistics, and compaction runs on its own resources, so it does not slow down
-              transactions. Scaling is 5&ndash;10x faster than classic TiDB, and backups finish in
-              seconds regardless of data volume.
-            </p>
-            <div className="mt-8">
-              <SecondaryButton href="https://docs.pingcap.com/tidbcloud/tidb-x-architecture/">
-                Read the TiDB X Architecture Docs
-              </SecondaryButton>
+          <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(200px,0.35fr)] lg:items-center">
+            <div className="max-w-[960px]">
+              <h3 className="text-h3-xl leading-tight text-text-inverse">
+                TiDB X: The Architecture Behind TiDB Cloud
+              </h3>
+              <p className="mt-5 text-body-lg leading-relaxed text-carbon-300">
+                New TiDB Cloud clusters run on TiDB X, a cloud-native architecture built on two
+                separations. First, compute is separated from storage: data lives in durable object
+                storage, hot data is cached next to compute, and compute follows the work. On TiDB
+                Cloud Starter, an idle database&rsquo;s compute goes to zero while its data stays in
+                storage. Second, compute is separated from compute: heavy background work like index
+                builds, statistics, and compaction runs on its own resources, so it does not slow
+                down transactions. Scaling is 5&ndash;10x faster than classic TiDB, and backups
+                finish in seconds regardless of data volume.
+              </p>
+              <div className="mt-8">
+                <SecondaryButton href="https://docs.pingcap.com/tidbcloud/tidb-x-architecture/">
+                  Read the TiDB X Architecture Docs
+                </SecondaryButton>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <Image
+                src="/images/what-is-tidb/tidb-x-logo.png"
+                alt="TiDB X logo"
+                width={300}
+                height={275}
+                className="h-auto w-32 lg:w-[220px]"
+              />
             </div>
           </div>
         </SectionWrapper>
