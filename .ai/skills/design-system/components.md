@@ -397,7 +397,8 @@ components/
     FeatureCard.tsx         # Card with optional icon, href, borderColor
     SectionHeader.tsx       # Eyebrow + H2 + subtitle (mobile-first sizing)
     HubSpotForm.tsx         # HubSpot form embed
-    LanguageSwitcher.tsx    # EN / JP language selector
+    LanguageSwitcher.tsx    # Footer language selector (languages from lib/languages.ts)
+    HeaderLanguageSwitcher.tsx # Header language selector, hover/click/keyboard ('use client')
     header-icons.tsx        # Header dropdown/menu icon subset
   sections/
     HeroSection.tsx
@@ -405,6 +406,7 @@ components/
     CtaSection.tsx
 lib/
   utils.ts                  # cn() utility (uses clsx + tailwind-merge)
+  languages.ts              # Site languages for the header/footer selectors
   gtm.ts                    # trackCTAClick, trackFormSubmit
   schema.ts                 # buildPageSchema and all schema builders
 ```

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import {
   Network,
@@ -20,10 +20,9 @@ import {
   Building2,
   LifeBuoy,
   ShieldCheck,
-  ChevronDown,
-  Check,
 } from 'lucide-react'
 import {
+  Header,
   HeroSection,
   FeatureGridSection,
   SectionWrapper,
@@ -31,8 +30,9 @@ import {
   SecondaryButton,
   PrimaryButton,
 } from '@/components'
-import { type Locale, locales, translations } from './translations'
-import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE } from './detect-locale'
+import type { LanguageControl } from '@/lib/languages'
+import { type Locale, translations } from './translations'
+import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE, toLocale } from './detect-locale'
 import { cn } from '@/lib/utils'
 import { cdnAsset } from '@/lib/cdn-asset'
 
@@ -497,110 +497,6 @@ const partnerLogos = [
   },
 ]
 
-// ─── Language switcher ───────────────────────────────────────────────────────
-
-// Deliberately no flags. A flag names a country, not a language, and the
-// mismatch is worst exactly here: Spanish has no one flag across the region,
-// and picking any single country's would speak past most of the audience.
-// The globe carries the meaning instead.
-function LanguageSwitcher({
-  locale,
-  onChange,
-}: {
-  locale: Locale
-  onChange: (locale: Locale) => void
-}) {
-  const [open, setOpen] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  // Close on outside click and on Escape. Bound only while open so the page
-  // isn't carrying two document-level listeners the whole time it's mounted.
-  useEffect(() => {
-    if (!open) return
-    const onPointerDown = (event: MouseEvent) => {
-      if (!containerRef.current?.contains(event.target as Node)) setOpen(false)
-    }
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
-    }
-    document.addEventListener('mousedown', onPointerDown)
-    document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.removeEventListener('mousedown', onPointerDown)
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [open])
-
-  const active = locales.find(({ code }) => code === locale) ?? locales[0]
-
-  return (
-    // Sticky rather than fixed: the header now sits below the hello bar until
-    // that scrolls away, so a fixed offset would tuck this bar under the nav.
-    // The top margin cancels the header's negative bottom margin, placing the
-    // bar directly beneath the nav row in the flow.
-    <div className="sticky top-[62px] lg:top-20 z-40 mt-[62px] lg:mt-20 bg-bg-primary border-b border-carbon-800">
-      {/* Same `contain` container the header's nav uses, so this control's right
-        edge lines up with "Start for Free" at every breakpoint. */}
-      <div className="contain h-11 flex items-center justify-end">
-        <div ref={containerRef} className="relative">
-          <button
-            type="button"
-            onClick={() => setOpen((wasOpen) => !wasOpen)}
-            aria-haspopup="listbox"
-            aria-expanded={open}
-            aria-label="Change language"
-            className="flex items-center gap-2 border border-carbon-800 bg-bg-surface px-3 py-1.5 text-label text-text-inverse transition-colors duration-150 hover:border-carbon-700 hover:bg-carbon-900"
-          >
-            {/* White, not an accent colour: red reads as error/destructive on a
-              control whose job is entirely routine. */}
-            <Globe className="h-4 w-4 text-text-inverse" strokeWidth={1.5} />
-            <span className="font-mono uppercase">{active.label}</span>
-            <ChevronDown
-              className={`h-4 w-4 text-carbon-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-              strokeWidth={1.5}
-            />
-          </button>
-
-          {open && (
-            <ul
-              role="listbox"
-              aria-label="Language"
-              className="absolute right-0 top-full z-50 mt-2 min-w-[220px] border border-carbon-800 bg-bg-surface py-1 shadow-2xl"
-            >
-              {locales.map(({ code, label }) => {
-                const isActive = code === locale
-                return (
-                  <li key={code}>
-                    <button
-                      type="button"
-                      role="option"
-                      aria-selected={isActive}
-                      onClick={() => {
-                        onChange(code)
-                        setOpen(false)
-                      }}
-                      className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-body-md transition-colors duration-150 ${
-                        isActive
-                          ? 'bg-text-inverse/10 text-text-inverse'
-                          : 'text-carbon-300 hover:bg-text-inverse/5 hover:text-text-inverse'
-                      }`}
-                    >
-                      <span className="flex-1">{label}</span>
-                      {isActive && (
-                        <Check className="h-4 w-4 shrink-0 text-text-inverse" strokeWidth={2} />
-                      )}
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Locale }) {
@@ -612,6 +508,27 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
   const handleLocaleChange = (next: Locale) => {
     setLocale(next)
     document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; samesite=lax`
+
+    // `?lang=` outranks the cookie on the next load, so keep it in step with
+    // the choice; otherwise a reload would undo it.
+    const url = new URL(window.location.href)
+    if (url.searchParams.has('lang')) {
+      url.searchParams.set('lang', next)
+      window.history.replaceState(window.history.state, '', url)
+    }
+  }
+
+  // The header's language selector stands in for a page-level one: it shows
+  // this page's language, and English, Español and Português switch the page
+  // in place. Any other language (日本語) falls through to its link.
+  const headerLanguage: LanguageControl = {
+    current: locale,
+    onSelect: (code) => {
+      const next = toLocale(code)
+      if (!next) return false
+      handleLocaleChange(next)
+      return true
+    },
   }
 
   const architectureFeatures = t.architecture.features.map((feature, i) => ({
@@ -636,9 +553,8 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
 
   return (
     <>
-      <LanguageSwitcher locale={locale} onChange={handleLocaleChange} />
-      {/* The language bar above already clears the header in the flow. */}
-      <main>
+      <Header language={headerLanguage} />
+      <main className="pt-[62px] lg:pt-20">
         {/* ── 1. Hero ── */}
         <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>
           <HeroSection
