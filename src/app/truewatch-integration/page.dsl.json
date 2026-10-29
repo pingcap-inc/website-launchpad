@@ -1,0 +1,243 @@
+{
+  "pageName": "TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen",
+  "meta": {
+    "title": "TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen",
+    "description": "Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.",
+    "canonical": "/truewatch-integration/",
+    "createdBy": "nivanya@pingcap.com",
+    "createdAt": "2026-10-29T14:04:00.299Z",
+    "modifiedBy": "nivanya@pingcap.com",
+    "modifiedAt": "2026-10-29T14:04:00.299Z"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "statusBadge": {
+          "text": "Public Preview",
+          "variant": "violet"
+        },
+        "eyebrow": "TrueWatch Integration",
+        "headline": "Observability Data. Business Data. <span class=\"text-gradient-violet\">One Screen.</span>",
+        "subheadline": "TrueWatch collects logs, traces, metrics, and events. TiDB Cloud Lake keeps them on the retention schedule you set and serves business tables back to TrueWatch dashboards with SQL.",
+        "primaryCta": {
+          "text": "Try TiDB Cloud Lake",
+          "href": "https://tidbcloud.com/signup/?signup_source=pingcap-en-truewatch"
+        },
+        "secondaryCta": {
+          "text": "Contact Sales",
+          "href": "https://www.pingcap.com/contact-us/"
+        },
+        "heroImage": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f54533cc-1000011158.svg"
+          },
+          "alt": "hero image",
+          "width": 500,
+          "height": 400
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "benefits",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Why TrueWatch and TiDB Cloud Lake",
+        "title": "Control Retention. See Business Impact. Scale on Demand.",
+        "items": [
+          {
+            "icon": "Database",
+            "title": "Keep Observability History You Control",
+            "description": "Forwarding rules in TrueWatch write selected logs, traces, metrics, and events into TiDB Cloud Lake in Parquet batches. You set retention, capacity, and access policies in TiDB Cloud Lake, separate from retention in TrueWatch.",
+            "layout": "vertical"
+          },
+          {
+            "icon": "BarChart2",
+            "title": "See Business Data Next to System Health",
+            "description": "TrueWatch connects to TiDB Cloud Lake as an external data source through the TiDB Cloud Lake Driver. Read-only SQL in Metric Analysis and Dashboards places orders, users, or revenue beside live observability signals.",
+            "layout": "vertical"
+          },
+          {
+            "icon": "Gauge",
+            "title": "Scale Compute Only When You Query",
+            "description": "TiDB Cloud Lake keeps data in object storage and scales compute independently. Auto-suspend stops idle warehouse compute charges, so months of history do not need always-on compute.",
+            "layout": "vertical"
+          }
+        ],
+        "columns": 3,
+        "itemLayout": "vertical",
+        "iconSize": 48
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "architecture",
+      "type": "featureMedia",
+      "props": {
+        "eyebrow": "How It Works",
+        "title": "How TrueWatch Connects to TiDB Cloud Lake",
+        "subtitle": "TrueWatch stays the place where teams watch systems and investigate incidents. TiDB Cloud Lake holds long-term observability history and the business tables that explain it, on separate analytical compute.",
+        "items": [
+          {
+            "title": "Forward path",
+            "description": "An administrator creates a data forwarding rule in TrueWatch and selects TiDB Cloud Lake as the target. TrueWatch writes the chosen logs, traces, metrics, and events in Parquet batches into tables you own.",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          },
+          {
+            "title": "Query path",
+            "description": "TrueWatch adds TiDB Cloud Lake as an external data source through the TiDB Cloud Lake Driver. Metric Analysis and Dashboards run read-only SQL against business tables and forwarded history. Business tables can arrive from TiDB Cloud, MySQL, PostgreSQL, and Amazon S3 files. [Learn more about TiDB Cloud Lake data integration](https://docs.pingcap.com/tidbcloudlake/data-integration-overview/).",
+            "image": {
+              "image": {
+                "url": ""
+              }
+            }
+          }
+        ],
+        "startPosition": "left",
+        "spacing": "lg"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "use-cases",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Use Cases",
+        "title": "How Teams Use TrueWatch with TiDB Cloud Lake",
+        "items": [
+          {
+            "icon": "Clock",
+            "label": "Long-term analysis",
+            "title": "Incident Reviews Past the Retention Window",
+            "description": "Compare this week's latency spike with the same release window last quarter. TiDB Cloud Lake holds the older traces and logs, and TrueWatch queries them with SQL.",
+            "borderColor": "violet"
+          },
+          {
+            "icon": "DollarSign",
+            "label": "Payments and e-commerce",
+            "title": "Business Impact of System Health",
+            "description": "Join error rates and checkout latency with payment success or order volume on one TrueWatch dashboard. Teams see which incidents cost revenue, not only which ones raised alerts.",
+            "borderColor": "blue"
+          },
+          {
+            "icon": "Shield",
+            "label": "Regulated industries",
+            "title": "Retention for Audit and Governance",
+            "description": "Keep observability records in your own TiDB Cloud Lake account under your retention periods and access policies. Encryption, AWS IAM role authentication, and AWS PrivateLink support permission and audit requirements.",
+            "borderColor": "teal"
+          }
+        ],
+        "columns": 3,
+        "borderStyle": "color"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "about",
+      "type": "featureCard",
+      "props": {
+        "title": "About TrueWatch and TiDB",
+        "items": [
+          {
+            "icon": "Activity",
+            "title": "About TrueWatch",
+            "description": "TrueWatch is a Singapore-based unified observability platform. It brings logs, metrics, traces, real user monitoring, synthetics, and security data into one platform for DevOps, SRE, and ITOps teams across multi-cloud environments. TrueWatch received the 2025 AWS Marketplace Partner of the Year (GCR) award.",
+            "borderColor": "gray",
+            "href": "https://www.truewatch.com/"
+          },
+          {
+            "icon": "Database",
+            "title": "About TiDB",
+            "description": "TiDB is the AI-native distributed SQL database built for workloads that grow unpredictably. TiDB Cloud runs transactional applications, and TiDB Cloud Lake runs analytics and search on separate compute over object storage.",
+            "borderColor": "gray",
+            "href": "https://www.pingcap.com/tidb-cloud-lake/"
+          }
+        ],
+        "columns": 2,
+        "borderStyle": "gray"
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "props": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "What Is the TrueWatch and TiDB Cloud Lake Integration?",
+            "a": "The TrueWatch and TiDB Cloud Lake integration connects an observability platform to a managed analytics warehouse. TrueWatch collects logs, traces, metrics, and events, then forwards selected data into TiDB Cloud Lake for long-term retention. TrueWatch dashboards also query TiDB Cloud Lake with read-only SQL, so business tables appear next to system health. Teams keep investigating incidents in TrueWatch while TiDB Cloud Lake holds the history and the business context."
+          },
+          {
+            "q": "How Does TrueWatch Send Observability Data to TiDB Cloud Lake?",
+            "a": "TrueWatch sends data to TiDB Cloud Lake through data forwarding rules. An administrator creates a rule in TrueWatch, selects TiDB Cloud Lake as the target, and chooses which logs, traces, metrics, or events to forward. TrueWatch writes the data in Parquet batches into target tables in TiDB Cloud Lake. From there, the customer manages lifecycle and storage policies in TiDB Cloud Lake, separate from retention settings in TrueWatch."
+          },
+          {
+            "q": "Can TrueWatch Dashboards Query Business Data in TiDB Cloud Lake?",
+            "a": "Yes. TrueWatch adds TiDB Cloud Lake as an external data source and connects through the TiDB Cloud Lake Driver. Users run read-only SQL from TrueWatch Metric Analysis and Dashboards against tables already in TiDB Cloud Lake, such as orders, users, or revenue. Results display beside real-time observability data, so teams do not copy business data into the observability platform to compare it with system behavior."
+          },
+          {
+            "q": "Who Controls Retention and Access for Data in TiDB Cloud Lake?",
+            "a": "The customer controls retention and access. Forwarded data sits in the customer's TiDB Cloud Lake account under its own retention periods, capacity settings, and access policies. TiDB Cloud Lake encrypts data and supports AWS IAM role authentication, object-level access control, and private connectivity through AWS PrivateLink. TrueWatch stores connection credentials encrypted, with fine-grained access control. Together these controls support data sovereignty, permission, and audit requirements."
+          },
+          {
+            "q": "How Is TiDB Cloud Lake Priced for Observability Data?",
+            "a": "TiDB Cloud Lake pricing covers warehouse compute, storage, cloud service and API usage, and applicable Data Integration hosting. Data sits in object storage, and compute scales separately from storage. Suspending a warehouse stops its compute charges, while storage and other applicable charges continue. Teams can keep months of forwarded history and pay for warehouse compute only while TrueWatch or analysts run queries. TrueWatch usage is billed by TrueWatch."
+          },
+          {
+            "q": "Is the TrueWatch and TiDB Cloud Lake Integration Available Now?",
+            "a": "TiDB Cloud Lake is in Public Preview. Teams sign in to TiDB Cloud, open My Lake, and initialize a lake by choosing a name, plan, cloud provider, and region. The TiDB Cloud Lake Quick Start covers creating a warehouse and running a first query. To plan a TrueWatch rollout, contact the TiDB team about data volumes, retention requirements, and which observability data to forward first."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "cta",
+      "type": "cta",
+      "props": {
+        "title": "Plan Your First TrueWatch Forwarding Rules",
+        "subtitle": "Tell us your data volumes and retention needs, and we will plan the first forwarding rules with you.",
+        "image": {
+          "image": {
+            "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg"
+          },
+          "alt": "",
+          "width": 278,
+          "height": 256
+        },
+        "primaryCta": {
+          "text": "Contact Sales",
+          "href": "https://www.pingcap.com/contact-us/"
+        },
+        "secondaryCta": {
+          "text": "Read the Quick Start",
+          "href": "https://docs.pingcap.com/tidbcloudlake/lake-quick-start/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
