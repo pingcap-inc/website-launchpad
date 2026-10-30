@@ -56,8 +56,8 @@ const dsl: PageDSL = {
     unlisted: true,
     createdBy: 'nivanya@pingcap.com',
     createdAt: '2026-10-29T14:24:38.818Z',
-    modifiedBy: 'nivanya@pingcap.com',
-    modifiedAt: '2026-10-29T14:24:38.818Z',
+    modifiedBy: 'liwen.xu@pingcap.com',
+    modifiedAt: '2026-10-30T01:37:10.242Z',
   },
   sections: [
     {
@@ -147,9 +147,14 @@ const dsl: PageDSL = {
               'An administrator creates a data forwarding rule in TrueWatch and selects TiDB Cloud Lake as the target. TrueWatch writes the chosen logs, traces, metrics, and events in Parquet batches into tables you own.',
             image: {
               image: {
-                url: '',
+                url: 'https://static.pingcap.com/images/28e67671-tidb-block1-scale-red-black.png',
+                alt: 'tidb block1 scale red black',
+                width: 1120,
+                height: 840,
               },
-              alt: '',
+              alt: 'tidb block1 scale red black',
+              width: 1120,
+              height: 840,
             },
           },
           {
@@ -158,9 +163,14 @@ const dsl: PageDSL = {
               'TrueWatch adds TiDB Cloud Lake as an external data source through the TiDB Cloud Lake Driver. Metric Analysis and Dashboards run read-only SQL against business tables and forwarded history. Business tables can arrive from TiDB Cloud, MySQL, PostgreSQL, and Amazon S3 files. [Learn more about TiDB Cloud Lake data integration](https://docs.pingcap.com/tidbcloudlake/data-integration-overview/).',
             image: {
               image: {
-                url: '',
+                url: 'https://static.pingcap.com/images/f77c02e6-tidb-block2-consistency-blue-black.png',
+                alt: 'tidb block2 consistency blue black',
+                width: 1120,
+                height: 840,
               },
-              alt: '',
+              alt: 'tidb block2 consistency blue black',
+              width: 1120,
+              height: 840,
             },
           },
           {
