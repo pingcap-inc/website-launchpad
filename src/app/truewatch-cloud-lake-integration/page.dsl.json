@@ -8,7 +8,7 @@
     "createdBy": "nivanya@pingcap.com",
     "createdAt": "2026-10-29T14:24:38.818Z",
     "modifiedBy": "liwen.xu@pingcap.com",
-    "modifiedAt": "2026-10-30T01:37:10.242Z"
+    "modifiedAt": "2026-10-30T01:38:55.338Z"
   },
   "sections": [
     {
@@ -103,8 +103,7 @@
               "width": 1120,
               "height": 840
             }
-          },
-          { "title": "", "description": "", "image": { "image": { "url": "" }, "alt": "" } }
+          }
         ],
         "startPosition": "left",
         "spacing": "lg"
@@ -143,7 +142,7 @@
         "columns": 3,
         "borderStyle": "color"
       },
-      "style": { "spacing": "section" }
+      "style": { "spacing": "section", "removePaddingTop": true }
     },
     {
       "id": "faq",

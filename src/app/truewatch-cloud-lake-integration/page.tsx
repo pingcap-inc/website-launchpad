@@ -57,7 +57,7 @@ const dsl: PageDSL = {
     createdBy: 'nivanya@pingcap.com',
     createdAt: '2026-10-29T14:24:38.818Z',
     modifiedBy: 'liwen.xu@pingcap.com',
-    modifiedAt: '2026-10-30T01:37:10.242Z',
+    modifiedAt: '2026-10-30T01:38:55.338Z',
   },
   sections: [
     {
@@ -173,16 +173,6 @@ const dsl: PageDSL = {
               height: 840,
             },
           },
-          {
-            title: '',
-            description: '',
-            image: {
-              image: {
-                url: '',
-              },
-              alt: '',
-            },
-          },
         ],
         startPosition: 'left',
         spacing: 'lg',
@@ -228,6 +218,7 @@ const dsl: PageDSL = {
       },
       style: {
         spacing: 'section',
+        removePaddingTop: true,
       },
     },
     {
