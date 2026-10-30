@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { CheckSquare, ChartNoAxesCombined, Cloud, Radius } from 'lucide-react'
+import { BrainCircuit, CheckSquare, ChartNoAxesCombined, Cloud, Radius } from 'lucide-react'
 import {
   FaqSection,
   Footer,
@@ -23,14 +23,16 @@ import { reactNodeToPlainText } from '@/lib/react-text'
 import { VideoDialog } from '@/components/ui/VideoDialog'
 import { HeroVideo } from './_components/HeroVideo'
 
+const pageTitle = 'What is TiDB? Distributed SQL for Apps and AI Agents | TiDB'
+const pageDescription =
+  'TiDB is an open-source distributed SQL database that gives apps and AI agents one data layer: transactions, analytics, and vector search. Learn how it works.'
+
 export const metadata: Metadata = {
-  title: 'What is TiDB? | TiDB',
-  description:
-    'Learn what TiDB is, how its HTAP architecture works, and how TiDB Server, TiKV, TiFlash, and PD work together in one distributed SQL system.',
+  title: pageTitle,
+  description: pageDescription,
   openGraph: {
-    title: 'What is TiDB? | TiDB',
-    description:
-      'Learn what TiDB is, how its HTAP architecture works, and how TiDB Server, TiKV, TiFlash, and PD work together in one distributed SQL system.',
+    title: pageTitle,
+    description: pageDescription,
     url: 'https://www.pingcap.com/what-is-tidb/',
     siteName: 'TiDB',
     type: 'website',
@@ -46,9 +48,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'What is TiDB? | TiDB',
-    description:
-      'Learn what TiDB is, how its HTAP architecture works, and how TiDB Server, TiKV, TiFlash, and PD work together in one distributed SQL system.',
+    title: pageTitle,
+    description: pageDescription,
     site: '@PingCAP',
     creator: '@PingCAP',
     images: ['https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'],
@@ -65,10 +66,11 @@ const faqs = [
     a: (
       <>
         TiDB is an open-source, distributed SQL database built by{' '}
-        <InlineLink href="https://www.pingcap.com/about-us/">PingCAP</InlineLink>. It supports
-        Hybrid Transactional and Analytical Processing (HTAP) workloads, is compatible with the
-        MySQL protocol, and scales horizontally across commodity hardware. TiDB is licensed under
-        Apache 2.0, and its storage layer{' '}
+        <InlineLink href="https://www.pingcap.com/about-us/">PingCAP</InlineLink>. It gives
+        applications and AI agents one data layer, with transactions, real-time analytics (HTAP),
+        and native vector search (in public preview) in one system. It is compatible with the MySQL
+        protocol and scales horizontally across commodity hardware. TiDB is licensed under Apache
+        2.0, and its storage layer{' '}
         <InlineLink href="https://www.cncf.io/projects/tikv/">TiKV</InlineLink> is a CNCF Graduated
         project.
       </>
@@ -95,7 +97,7 @@ const faqs = [
         Yes. TiDB is fully open source under the Apache 2.0 license, including enterprise-grade
         features. The full source code is available on{' '}
         <InlineLink href="https://github.com/pingcap/tidb">GitHub</InlineLink>, where TiDB has over
-        39,900 stars and more than 1,200 contributors. TiKV, TiDB&rsquo;s distributed storage
+        40,000 stars and more than 1,200 contributors. TiKV, TiDB&rsquo;s distributed storage
         engine, is a{' '}
         <InlineLink href="https://www.cncf.io/projects/tikv/">
           graduated project of the Cloud Native Computing Foundation
@@ -132,8 +134,49 @@ const faqs = [
         PingCAP&rsquo;s fully managed Database-as-a-Service built on top of TiDB. It handles
         provisioning, scaling, backups, and upgrades so your team can focus on building applications
         instead of operating database infrastructure. TiDB Cloud is available on AWS, Google Cloud,
-        and Azure, with options ranging from a free-tier starter plan to dedicated clusters for
-        mission-critical workloads.
+        and Azure. TiDB Cloud comes in Starter for large numbers of small databases, Essential for
+        production apps that need predictable throughput, Premium for the most demanding enterprise
+        workloads, and BYOC, which runs in your own cloud account with PingCAP handling maintenance
+        and upgrades. New clusters on all four run on the TiDB X architecture.
+      </>
+    ),
+  },
+  {
+    q: 'Can TiDB be used as a vector database?',
+    a: (
+      <>
+        Yes. TiDB supports a native VECTOR data type and vector indexes for similarity search, so
+        you can store embeddings next to your relational data and query both with SQL. Because
+        vectors live in the same distributed database as your operational data, you avoid syncing
+        data into a separate vector store. Vector search is in public preview on TiDB Cloud Starter
+        and TiDB Self-Managed (v8.4.0 and later).
+      </>
+    ),
+  },
+  {
+    q: 'Is TiDB a good database for AI agents?',
+    a: (
+      <>
+        TiDB fits agent workloads that read and write state at high concurrency, retrieve context
+        with vector search, and need consistent data. It scales horizontally as agent traffic grows,
+        runs ACID transactions across nodes, and supports online schema changes as agents add
+        tables.{' '}
+        <InlineLink href="https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/">
+          Manus
+        </InlineLink>
+        , a general-purpose AI agent platform, runs on TiDB Cloud, where over 90% of new database
+        clusters are created by AI agents.
+      </>
+    ),
+  },
+  {
+    q: 'What is TiDB X?',
+    a: (
+      <>
+        TiDB X is the cloud-native architecture that powers TiDB Cloud. It separates compute from
+        storage and separates heavy background work from transactions, so TiDB can run millions of
+        small databases cost-effectively and keep latency steady for large production workloads.
+        PingCAP has announced it will open-source the TiDB X core by the end of 2026.
       </>
     ),
   },
@@ -141,9 +184,8 @@ const faqs = [
 
 const schema = buildPageSchema({
   path: '/what-is-tidb/',
-  title: 'What is TiDB? | TiDB',
-  description:
-    'Learn what TiDB is, how its HTAP architecture works, and how TiDB Server, TiKV, TiFlash, and PD work together in one distributed SQL system.',
+  title: pageTitle,
+  description: pageDescription,
   pageType: 'AboutPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
@@ -152,18 +194,24 @@ const schema = buildPageSchema({
   extraSchemas: [
     articleSchema({
       title: 'What is TiDB?',
-      description:
-        'Learn what TiDB is, how its HTAP architecture works, and how TiDB Server, TiKV, TiFlash, and PD work together in one distributed SQL system.',
+      description: pageDescription,
       url: 'https://www.pingcap.com/what-is-tidb/',
       datePublished: '2026-04-27T13:58:08+08:00',
-      dateModified: '2026-04-30T11:21:32+08:00',
+      dateModified: '2026-10-29T00:00:00+08:00',
       image: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
     }),
     softwareApplicationSchema({
       name: 'TiDB',
       description:
-        'TiDB is an open-source, distributed SQL database with MySQL compatibility, horizontal scalability, and built-in HTAP for real-time transactional and analytical workloads.',
+        'TiDB is an open-source, distributed SQL database with MySQL compatibility, horizontal scalability, built-in HTAP for real-time transactional and analytical workloads, and native vector and full-text search for applications and AI agents.',
       url: 'https://www.pingcap.com/tidb/',
+      featureList: [
+        'HTAP',
+        'Vector search',
+        'Full-text search',
+        'MySQL compatibility',
+        'Horizontal scaling',
+      ],
     }),
     // Derived from `faqs` so the schema can never drift from the rendered copy.
     faqSchema(faqs.map((faq) => ({ question: faq.q, answer: reactNodeToPlainText(faq.a) }))),
@@ -325,17 +373,39 @@ const capabilities = [
     icon: <CheckSquare className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
   },
   {
-    title: 'Horizontal Scalability',
+    title: 'Native Vector and Full-Text Search',
+    description: (
+      <>
+        TiDB stores embeddings in a native VECTOR data type and indexes them for fast similarity
+        search, alongside full-text search on the same tables. You can join similarity results with
+        live relational data in one SQL query, inside one ACID transaction. RAG pipelines and agent
+        memory run without a separate vector database or a sync job to keep it current. Vector
+        search is in public preview on TiDB Cloud Starter and TiDB Self-Managed v8.4.0 and later.
+        Full-text search is in public preview on TiDB Cloud Starter in select AWS regions. See the{' '}
+        <InlineLink href="https://docs.pingcap.com/tidbcloud/vector-search-overview/">
+          vector search docs
+        </InlineLink>
+        .
+      </>
+    ),
+    icon: <BrainCircuit className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
+  },
+  {
+    title: 'Scale on Every Dimension',
     description: (
       <>
         When your workload grows, you add nodes. TiDB{' '}
         <InlineLink href="https://www.pingcap.com/horizontal-scaling-vs-vertical-scaling/">
           scales horizontally
         </InlineLink>{' '}
-        by distributing data and queries across commodity hardware, with no manual sharding
-        required. Because compute and storage are decoupled, you can scale each layer independently:
-        add TiDB Server nodes to handle more concurrent connections, or add TiKV/TiFlash nodes to
-        expand storage capacity. Scaling happens online with zero downtime.
+        with no manual sharding, and compute and storage scale independently. Scale is more than
+        data volume: TiDB scales tables, connections, and online schema changes in a single cluster,
+        and adds indexes at up to{' '}
+        <InlineLink href="https://www.pingcap.com/blog/tidb-x-index-creation-5-5m-rows-near-zero-business-impact-online-ddl/">
+          5.5 million rows per second
+        </InlineLink>
+        . It also scales the number of databases: TiDB Cloud Starter runs millions of database
+        instances, most of them created by AI agents. Scaling happens online with zero downtime.
       </>
     ),
     icon: (
@@ -367,7 +437,8 @@ const capabilities = [
         any Kubernetes-compatible environment, or use{' '}
         <InlineLink href="https://www.pingcap.com/tidb-cloud/">TiDB Cloud</InlineLink>,
         PingCAP&rsquo;s fully managed Database-as-a-Service available on AWS, Google Cloud, and
-        Azure.
+        Azure. TiDB Cloud also lets AI agents create databases on demand through an API. At Manus,
+        over 90% of new database clusters are created by AI agents, not humans.
       </>
     ),
     icon: <Cloud className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
@@ -393,15 +464,28 @@ const capabilities = [
 
 const useCases = [
   {
-    title: 'Financial Services',
-    description:
-      'Banks, payment processors, and fintech platforms use TiDB for workloads where data consistency, high availability, and disaster tolerance are non-negotiable. TiDB’s multi-replica architecture and ACID guarantees meet the requirements of ledger systems, fraud detection, and regulatory, while scaling to handle transaction volumes that overwhelm single-node databases.',
-    href: 'https://www.pingcap.com/solutions/fintech/',
+    title: 'AI Agents and AI Applications',
+    description: (
+      <>
+        AI agents read context, make decisions, and write results back, often in the same step. TiDB
+        handles that in one system:{' '}
+        <InlineLink href="https://docs.pingcap.com/tidbcloud/vector-search-overview/">
+          native vector
+        </InlineLink>{' '}
+        and full-text search for retrieval and RAG, ACID transactions for agent state and memory,
+        and real-time analytics on the same data. Agent workloads also look different: most agent
+        databases stay tiny while a few grow huge, schemas change as the agent works, and traffic
+        arrives in bursts. TiDB handles this with online schema changes and compute that scales to
+        zero when idle. AI-native companies like Manus, Kimi, and Dify use TiDB as their unified
+        data layer.
+      </>
+    ),
+    href: 'https://www.pingcap.com/ai/',
     ctaText: 'Learn more',
-    borderColor: 'border-brand-red-primary',
+    borderColor: 'border-brand-teal-medium',
     icon: (
       <Image
-        src="/images/what-is-tidb/financial.svg"
+        src="/images/what-is-tidb/ai.svg"
         alt=""
         width={60}
         height={60}
@@ -427,6 +511,23 @@ const useCases = [
     ),
   },
   {
+    title: 'Financial Services',
+    description:
+      'Banks, payment processors, and fintech platforms use TiDB for workloads where data consistency, high availability, and disaster tolerance are non-negotiable. TiDB’s multi-replica architecture and ACID guarantees meet the requirements of ledger systems, fraud detection, and regulatory reporting, while scaling to handle transaction volumes that overwhelm single-node databases.',
+    href: 'https://www.pingcap.com/solutions/fintech/',
+    ctaText: 'Learn more',
+    borderColor: 'border-brand-red-primary',
+    icon: (
+      <Image
+        src="/images/what-is-tidb/financial.svg"
+        alt=""
+        width={60}
+        height={60}
+        className="h-15 w-15"
+      />
+    ),
+  },
+  {
     title: 'Real-Time Analytics and Operational Reporting',
     description:
       'Teams that need real-time dashboards, cohort analysis, or operational reporting on transactional data can run those queries directly in TiDB using TiFlash. There’s no need to build and maintain a separate ETL pipeline into an analytics warehouse. One database, one source of truth, both workloads.',
@@ -436,33 +537,6 @@ const useCases = [
     icon: (
       <Image
         src="/images/what-is-tidb/real-time.svg"
-        alt=""
-        width={60}
-        height={60}
-        className="h-15 w-15"
-      />
-    ),
-  },
-  {
-    title: 'AI Applications',
-    description: (
-      <>
-        TiDB supports{' '}
-        <InlineLink href="https://docs.pingcap.com/tidbcloud/vector-search-overview/">
-          native vector search
-        </InlineLink>
-        , enabling developers to build retrieval-augmented generation (RAG) pipelines and agent
-        memory systems without bolting on a separate vector database. AI-native companies like Manus
-        and Dify use TiDB as their unified, combining structured data, semantic vectors, and
-        full-text search in a single query layer for a simpler stack.
-      </>
-    ),
-    href: 'https://www.pingcap.com/ai/',
-    ctaText: 'Learn more',
-    borderColor: 'border-brand-teal-medium',
-    icon: (
-      <Image
-        src="/images/what-is-tidb/ai.svg"
         alt=""
         width={60}
         height={60}
@@ -519,6 +593,27 @@ const customerStories = [
     tone: 'bg-brand-blue-bg',
   },
   {
+    company: 'Kimi',
+    body: 'Runs its agent app-hosting platform on TiDB Cloud Starter, where every app an agent builds gets its own database and idle apps use no compute. Each database provisions in under a second, and sites with no traffic generate no database compute cost, so Kimi can host agent-created apps at the scale of millions of tenants.',
+    primaryCta: {
+      text: 'Read the Case Study',
+      href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
+    },
+    tone: 'bg-brand-red-bg',
+  },
+  {
+    company: 'Dify',
+    quote:
+      '“We consolidated our entire AI backend into TiDB, letting our engineers focus on building agent features instead of managing database complexity.”',
+    attribution: 'Dify engineering team',
+    body: 'Consolidated nearly half a million database containers into one unified TiDB system, cutting operational overhead by 90%. Dify, one of the most popular open-source LLM app development platforms, with over 100,000 GitHub stars, needed a single data layer that could handle documents, vectors, chat histories, and relational data for thousands of developers building AI applications. TiDB’s native vector search enabled built-in RAG workflows without a separate vector database.',
+    primaryCta: {
+      text: 'Read the Case Study',
+      href: 'https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/',
+    },
+    tone: 'bg-brand-teal-bg',
+  },
+  {
     company: 'Atlassian',
     quote:
       '“TiDB came to our rescue, consolidating 750 Postgres clusters down to 16 with zero performance degradation.”',
@@ -532,26 +627,14 @@ const customerStories = [
     tone: 'bg-brand-violet-bg',
   },
   {
-    company: 'Dify',
-    quote:
-      '“We consolidated our entire AI backend into TiDB, letting our engineers focus on building agent features instead of managing database complexity.”',
-    attribution: 'Dify engineering team',
-    body: 'Consolidated nearly half a million database containers into one unified TiDB system, cutting operational overhead by 90%. Dify, the second most popular LLM development tool on GitHub with 70,000+ stars, needed a single data layer that could handle documents, vectors, chat histories, and relational data for thousands of developers building AI applications. TiDB’s native vector search enabled built-in RAG workflows without a separate vector database.',
-    primaryCta: {
-      text: 'Read the Case Study',
-      href: 'https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/',
-    },
-    tone: 'bg-brand-teal-bg',
-  },
-  {
     company: 'PLAID',
     quote:
       '“With TiDB, we can now perform upgrades with zero downtime and large table schema migrations.”',
     attribution: 'Zander Hill | Experienced Data Reliability Engineer',
     body: 'Reduced database maintenance effort by 96% with zero downtime upgrades after migrating from Amazon Aurora to TiDB. A team of six engineers migrated nearly 100 services in under two years. Where Aurora upgrades once consumed 26 engineering weeks and 104 minutes of planned downtime, equivalent TiDB upgrades now take one engineering week with zero downtime.',
     primaryCta: {
-      text: 'Read the Case Study',
-      href: 'https://www.pingcap.com/event/how-plaid-migrated-to-tidb/',
+      text: 'Read the Customer Story',
+      href: 'https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/',
     },
     secondaryCta: { text: 'Watch video', href: 'https://www.youtube.com/watch?v=jRsZ35K1wx8' },
     tone: 'bg-brand-red-bg',
@@ -598,7 +681,7 @@ const recognitionCards = [
     body: (
       <>
         TiDB has over{' '}
-        <InlineLink href="https://github.com/pingcap/tidb">39,900 GitHub stars</InlineLink> and more
+        <InlineLink href="https://github.com/pingcap/tidb">40,000 GitHub stars</InlineLink> and more
         than 1,200 contributors worldwide. Its storage engine, TiKV, is a CNCF Graduated project,
         the highest maturity level in the Cloud Native Computing Foundation, alongside projects like
         Kubernetes and Prometheus.
@@ -606,7 +689,7 @@ const recognitionCards = [
     ),
     logo: 'cncf' as const,
     stats: [
-      { image: '/images/what-is-tidb/FUTURO_ICONS-1.svg', value: '39.9K', label: 'GitHub stars' },
+      { image: '/images/what-is-tidb/FUTURO_ICONS-1.svg', value: '40K+', label: 'GitHub stars' },
       {
         image: '/images/what-is-tidb/FUTURO_ICONS-2.svg',
         value: '1200+',
@@ -641,6 +724,13 @@ const getStartedCards = [
       'Try TiDB instantly in your browser. No signup, no installation, no configuration.',
     cta: { text: 'Try Now', href: 'https://play.tidbcloud.com/' },
   },
+  {
+    variant: 'teal' as const,
+    title: 'TiDB Cloud Zero',
+    description:
+      'For AI agents. Your agent gets a live database in about a second, with no sign-up. Claim it into TiDB Cloud Starter to keep it.',
+    cta: { text: 'Try TiDB Cloud Zero', href: 'https://zero.tidbcloud.com/' },
+  },
 ]
 
 function StoryWordmark({ company }: { company: string }) {
@@ -650,6 +740,17 @@ function StoryWordmark({ company }: { company: string }) {
         src="/images/logos/manuse-logo-white.svg"
         alt="manus"
         width={148}
+        height={40}
+        className="h-10 w-auto"
+      />
+    )
+  }
+  if (company === 'Kimi') {
+    return (
+      <Image
+        src="/images/logos/latam-kimi-logo-white.svg"
+        alt="Kimi"
+        width={118}
         height={40}
         className="h-10 w-auto"
       />
@@ -697,10 +798,12 @@ function CustomerStoryCard({
         <div className="flex items-center">
           <StoryWordmark company={company} />
         </div>
-        <div>
-          <p className="max-w-[460px] text-body-lg italic leading-relaxed text-white">{quote}</p>
-          <p className="mt-5 text-body-md italic text-carbon-200">{attribution}</p>
-        </div>
+        {quote ? (
+          <div>
+            <p className="max-w-[460px] text-body-lg italic leading-relaxed text-white">{quote}</p>
+            <p className="mt-5 text-body-md italic text-carbon-200">{attribution}</p>
+          </div>
+        ) : null}
       </div>
       <div className="flex flex-1 flex-col p-8">
         <p className="text-body-md leading-relaxed text-carbon-300">{body}</p>
@@ -842,15 +945,17 @@ export default function WhatIsTidbPage() {
             headline="What is TiDB?"
             subheadline={
               <>
-                TiDB (pronounced &quot;/ˈtaɪdiːbiː./&quot;, &quot;Ti&quot; stands for Titanium) is
-                an open-source, distributed SQL database that supports Hybrid Transactional and
-                Analytical Processing (HTAP) workloads. It is MySQL compatible, horizontally
-                scalable, and designed for applications that require strong consistency and high
-                availability at scale. TiDB is built by{' '}
-                <InlineLink href="https://www.pingcap.com/">PingCAP</InlineLink>, licensed under
-                Apache 2.0, and its storage engine{' '}
-                <InlineLink href="https://www.cncf.io/projects/tikv/">TiKV</InlineLink> is a
-                graduated project of the Cloud Native Computing Foundation (CNCF).
+                TiDB (pronounced &quot;/ˈtaɪdiːbiː/&quot;, &quot;Ti&quot; stands for Titanium) is an
+                open-source, distributed SQL database that gives applications and AI agents one data
+                layer: transactions, real-time analytics, and vector search (in public preview) in a
+                single ACID system. It is MySQL compatible and scales horizontally on every
+                dimension, from data volume and connections to the number of databases you run.
+                <span className="mt-4 block">
+                  TiDB is built by <InlineLink href="https://www.pingcap.com/">PingCAP</InlineLink>,
+                  licensed under Apache 2.0, and its storage engine{' '}
+                  <InlineLink href="https://www.cncf.io/projects/tikv/">TiKV</InlineLink> is a
+                  graduated project of the Cloud Native Computing Foundation (CNCF).
+                </span>
               </>
             }
             rightSlot={
@@ -911,9 +1016,9 @@ export default function WhatIsTidbPage() {
           <div className="mt-8 border border-carbon-800 px-5 py-6 sm:px-6">
             <p className="text-body-lg leading-relaxed">
               The result is a system where you can scale your SQL compute independently from your
-              storage, run transactional and analytical workloads on the same data simultaneously,
-              and maintain strong consistency across the entire cluster. For a full technical deep
-              dive, see the{' '}
+              storage, run transactional, analytical, and vector search workloads on the same data
+              simultaneously, and maintain strong consistency across the entire cluster. For a full
+              technical deep dive, see the{' '}
               <InlineLink
                 href="https://docs.pingcap.com/tidb/stable/overview/"
                 className="border-white"
@@ -922,6 +1027,38 @@ export default function WhatIsTidbPage() {
               </InlineLink>
               .
             </p>
+          </div>
+
+          <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(200px,0.35fr)] lg:items-center">
+            <div className="max-w-[960px]">
+              <h3 className="text-h3-xl leading-tight text-text-inverse">
+                TiDB X: The Architecture Behind TiDB Cloud
+              </h3>
+              <p className="mt-5 text-body-lg leading-relaxed text-carbon-300">
+                New TiDB Cloud clusters run on TiDB X, a cloud-native architecture built on two
+                separations. First, compute is separated from storage: data lives in durable object
+                storage, hot data is cached next to compute, and compute follows the work. On TiDB
+                Cloud Starter, an idle database&rsquo;s compute goes to zero while its data stays in
+                storage. Second, compute is separated from compute: heavy background work like index
+                builds, statistics, and compaction runs on its own resources, so it does not slow
+                down transactions. Scaling is 5&ndash;10x faster than classic TiDB, and backups
+                finish in seconds regardless of data volume.
+              </p>
+              <div className="mt-8">
+                <SecondaryButton href="https://docs.pingcap.com/tidbcloud/tidb-x-architecture/">
+                  Read the TiDB X Architecture Docs
+                </SecondaryButton>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <Image
+                src="/images/what-is-tidb/tidb-x-logo.png"
+                alt="TiDB X logo"
+                width={300}
+                height={275}
+                className="h-auto w-32 lg:w-[220px]"
+              />
+            </div>
           </div>
         </SectionWrapper>
 
@@ -933,7 +1070,7 @@ export default function WhatIsTidbPage() {
         >
           <FeatureGridSection
             title="Key Capabilities"
-            subtitle="TiDB combines the familiarity of MySQL with the scalability of a distributed system. These are the core capabilities that make that possible."
+            subtitle="TiDB combines the familiarity of MySQL with the scale of a distributed system, and adds the analytical and vector engines that AI workloads need. These are the core capabilities that make that possible."
             features={capabilities}
             columns={3}
             itemLayout="vertical"
@@ -948,7 +1085,7 @@ export default function WhatIsTidbPage() {
         >
           <FeatureCardSection
             title="Common Use Cases"
-            subtitle="From financial infrastructure to AI agent platforms, TiDB powers production workloads across industries where scale, consistency, and uptime are non-negotiable."
+            subtitle="From AI agent platforms to financial infrastructure, TiDB powers production workloads where scale, consistency, and uptime are non-negotiable."
             items={useCases}
             columns={2}
           />
@@ -962,7 +1099,7 @@ export default function WhatIsTidbPage() {
         >
           <SectionHeader
             title="Who Uses TiDB"
-            subtitle="From financial infrastructure to AI agent platforms, TiDB powers production workloads across industries where scale, consistency, and uptime are non-negotiable."
+            subtitle="AI-native companies and global enterprises run TiDB in production."
             h2Size="sm"
             align="left"
           />
@@ -993,7 +1130,7 @@ export default function WhatIsTidbPage() {
         >
           <SectionHeader
             title={'Analyst and Peer\nRecognition'}
-            subtitle="From financial infrastructure to AI agent platforms, TiDB powers production workloads across industries where scale, consistency, and uptime are non-negotiable."
+            subtitle="Independent reviewers and the open source community back TiDB’s track record."
             h2Size="sm"
             align="left"
             className="max-w-[760px]"
@@ -1015,7 +1152,11 @@ export default function WhatIsTidbPage() {
         >
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.42fr)_minmax(280px,0.58fr)] lg:items-center">
             <div className="max-w-[960px]">
-              <SectionHeader title="TiDB vs. Traditional Databases" h2Size="sm" align="left" />
+              <SectionHeader
+                title="TiDB vs. Traditional and Fragmented Data Stacks"
+                h2Size="sm"
+                align="left"
+              />
               <p className="text-body-2xl text-carbon-200">
                 If you’re running MySQL or PostgreSQL today, you already know the pattern. Your
                 application grows, your data grows, and eventually a single database server can’t
@@ -1033,6 +1174,14 @@ export default function WhatIsTidbPage() {
                 live transactional data, and fails over automatically with no data loss. You don’t
                 migrate to a different paradigm. You migrate to a better architecture for the same
                 paradigm.
+              </p>
+              <p className="mt-8 text-body-2xl text-carbon-200">
+                AI applications add more layers. Teams often run a vector database for embeddings, a
+                cache for session state, and a warehouse for analytics, each with its own sync jobs
+                and consistency model. TiDB keeps operational data, vectors, and analytics in one
+                distributed SQL database, so an agent can retrieve context and write its result in
+                the same transaction. The same architecture runs systems of record for companies
+                like Atlassian and millions of databases created by AI agents.
               </p>
               <div className="mt-10">
                 <PrimaryButton href="https://www.pingcap.com/compare/">
@@ -1055,7 +1204,7 @@ export default function WhatIsTidbPage() {
             title="Get Started with TiDB"
             subtitle="Choose the path that best fits your workflow."
             items={getStartedCards}
-            columns={3}
+            columns={4}
           />
         </SectionWrapper>
 
