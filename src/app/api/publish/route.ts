@@ -8,14 +8,16 @@ import { stampAuthorship } from '@/lib/authorship'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
 import {
   DRAFT_BRANCH,
-  isValidPageSlug,
+  normalizePageSlug,
   publishedBranch,
+  readJsonBody,
   safeEqual,
 } from '@/lib/security/api-guards'
+import { findInvalidSection } from '@/lib/security/api-section-types'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 interface PublishRequest {
-  slug: string
+  slug: unknown
   dsl: PageDSL
   branch?: string
   addToSitemap?: boolean
@@ -58,6 +60,9 @@ function injectSitemapEntry(
   if (insertPoint === -1) throw new Error('Could not find sitemap routes array closing bracket')
   return source.slice(0, insertPoint) + '\n' + newEntry + source.slice(insertPoint)
 }
+
+// A published DSL is a few hundred KB at most; 2 MB leaves ample headroom.
+const PUBLISH_BODY_LIMIT = 2 * 1024 * 1024
 
 // Only staging (or the configured GITHUB_BRANCH) and main are publish targets. An allowlist
 // (rather than a ref-name syntax check) also rules out dot-segment values like
@@ -122,21 +127,21 @@ export async function POST(request: NextRequest) {
   const { GITHUB_OWNER, GITHUB_REPO, VERCEL_OWNER } = process.env
   const mainPublishToken = process.env.PUBLISH_MAIN_TOKEN
 
-  let body: PublishRequest
-  try {
-    body = (await request.json()) as PublishRequest
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 })
-  }
+  const parsed = await readJsonBody<PublishRequest>(request, PUBLISH_BODY_LIMIT)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.data
 
   const {
-    slug,
+    slug: rawSlug,
     dsl,
     branch = publishedBranch(),
     addToSitemap: _addToSitemapLegacy,
     priority = 0.7,
     changeFrequency = 'monthly',
   } = body
+
+  // Canonicalize once; every check, path and message below uses this same value.
+  const slug = normalizePageSlug(rawSlug)
 
   // Reject non-allowlisted branches before any gate decision.
   if (!isAllowedPublishBranch(branch)) {
@@ -148,7 +153,7 @@ export async function POST(request: NextRequest) {
     if (!mainPublishToken || !providedToken || !safeEqual(providedToken, mainPublishToken)) {
       await logAudit(request, {
         action: 'publish',
-        target: typeof slug === 'string' ? slug : undefined,
+        target: slug ?? (typeof rawSlug === 'string' ? rawSlug.slice(0, 200) : undefined),
         branch,
         status: 'denied',
         detail: 'missing or invalid x-publish-main-token',
@@ -162,14 +167,23 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  if (!isValidPageSlug(slug)) {
+  if (!slug) {
     return NextResponse.json(
       { error: 'Invalid slug. Use lowercase letters, numbers, hyphens, and slashes only.' },
       { status: 400 }
     )
   }
-  if (!dsl?.meta || !Array.isArray(dsl?.sections)) {
+  if (!dsl?.meta || typeof dsl.meta !== 'object' || !Array.isArray(dsl?.sections)) {
     return NextResponse.json({ error: 'Invalid DSL structure' }, { status: 400 })
+  }
+  const badSection = findInvalidSection(dsl.sections)
+  if (badSection) {
+    return NextResponse.json(
+      {
+        error: `Invalid DSL structure: section ${badSection.index + 1} has unknown type "${badSection.type}"`,
+      },
+      { status: 400 }
+    )
   }
   if (
     typeof priority !== 'number' ||
@@ -220,10 +234,29 @@ export async function POST(request: NextRequest) {
   }
   const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`
 
+  // Every failure from here on is audited, so a half-attempted publish is visible.
+  const fail = async (step: string, error: string) => {
+    await logAudit(request, {
+      action: 'publish',
+      target: slug,
+      branch,
+      status: 'error',
+      detail: step,
+    })
+    return NextResponse.json({ success: false, error, step }, { status: 500 })
+  }
+
   let targetDir: DirState
   try {
     targetDir = await readTargetDir(baseUrl, headers, slug, branch)
   } catch {
+    await logAudit(request, {
+      action: 'publish',
+      target: slug,
+      branch,
+      status: 'error',
+      detail: 'inspect',
+    })
     return NextResponse.json(
       { success: false, error: 'Failed to inspect target path', step: 'inspect' },
       { status: 500 }
@@ -316,24 +349,14 @@ export async function POST(request: NextRequest) {
 
   // 1. Get current branch HEAD commit SHA
   const refRes = await fetch(`${baseUrl}/git/ref/heads/${branch}`, { headers })
-  if (!refRes.ok) {
-    return NextResponse.json(
-      { success: false, error: `Branch '${branch}' not found`, step: 'ref' },
-      { status: 500 }
-    )
-  }
+  if (!refRes.ok) return fail('ref', `Branch '${branch}' not found`)
   const {
     object: { sha: headSha },
   } = (await refRes.json()) as { object: { sha: string } }
 
   // 2. Get the tree SHA of the HEAD commit
   const commitRes = await fetch(`${baseUrl}/git/commits/${headSha}`, { headers })
-  if (!commitRes.ok) {
-    return NextResponse.json(
-      { success: false, error: 'Failed to fetch HEAD commit', step: 'commit' },
-      { status: 500 }
-    )
-  }
+  if (!commitRes.ok) return fail('commit', 'Failed to fetch HEAD commit')
   const {
     tree: { sha: baseTreeSha },
   } = (await commitRes.json()) as { tree: { sha: string } }
@@ -346,10 +369,12 @@ export async function POST(request: NextRequest) {
         headers,
         body: JSON.stringify({ content, encoding: 'utf-8' }),
       })
+      if (!blobRes.ok) return null
       const { sha: blobSha } = (await blobRes.json()) as { sha: string }
       return { path, mode: '100644', type: 'blob', sha: blobSha }
     })
   )
+  if (treeItems.some((item) => item === null)) return fail('blob', 'Failed to create git blob')
 
   // 4. Create new tree
   const treeRes = await fetch(`${baseUrl}/git/trees`, {
@@ -357,12 +382,7 @@ export async function POST(request: NextRequest) {
     headers,
     body: JSON.stringify({ base_tree: baseTreeSha, tree: treeItems }),
   })
-  if (!treeRes.ok) {
-    return NextResponse.json(
-      { success: false, error: 'Failed to create git tree', step: 'tree' },
-      { status: 500 }
-    )
-  }
+  if (!treeRes.ok) return fail('tree', 'Failed to create git tree')
   const { sha: newTreeSha } = (await treeRes.json()) as { sha: string }
 
   // 5. Create commit
@@ -376,12 +396,7 @@ export async function POST(request: NextRequest) {
     headers,
     body: JSON.stringify({ message: commitMessage, tree: newTreeSha, parents: [headSha] }),
   })
-  if (!newCommitRes.ok) {
-    return NextResponse.json(
-      { success: false, error: 'Failed to create commit', step: 'commit-create' },
-      { status: 500 }
-    )
-  }
+  if (!newCommitRes.ok) return fail('commit-create', 'Failed to create commit')
   const { sha: newCommitSha, html_url: commitHtmlUrl } = (await newCommitRes.json()) as {
     sha: string
     html_url: string
@@ -393,12 +408,7 @@ export async function POST(request: NextRequest) {
     headers,
     body: JSON.stringify({ sha: newCommitSha }),
   })
-  if (!updateRefRes.ok) {
-    return NextResponse.json(
-      { success: false, error: 'Failed to update branch ref', step: 'update-ref' },
-      { status: 500 }
-    )
-  }
+  if (!updateRefRes.ok) return fail('update-ref', 'Failed to update branch ref')
 
   const deployUrl =
     branch === 'main'

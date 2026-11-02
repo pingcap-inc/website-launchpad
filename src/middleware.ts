@@ -8,14 +8,21 @@ import { auth } from '@/auth'
  *   AUTH_SECRET in production can't surface as a 500 on these paths.
  * - Any deployed branch other than `staging` (per-PR previews, etc.): also 404,
  *   so the admin only ever appears on the single staging deployment.
- * - Local development (`next dev`, i.e. NODE_ENV === 'development'): no login gate
- *   (localhost is not internet-exposed). Auth.js is not invoked either, keeping the
- *   dev loop friction-free.
+ * - Local development (`next dev`, i.e. NODE_ENV === 'development'): no login gate,
+ *   but only for loopback requests. `pnpm dev` binds to 127.0.0.1 (the real control,
+ *   so other machines on the LAN can't reach it); in addition any request whose Host
+ *   isn't localhost / 127.0.0.1 / [::1] is refused, as defense in depth against DNS
+ *   rebinding. Auth.js is not invoked, keeping the dev loop friction-free.
  * - Anything else without VERCEL_ENV (e.g. `next start` on a non-Vercel host):
  *   404. The gate fails CLOSED — an unknown environment never gets an open admin.
  * - Staging preview: requires a signed-in Google user on the @pingcap.com domain
  *   (enforced by the `signIn` callback in `@/auth`). The staging URL is public, so
  *   login — not obscurity — is what protects it.
+ *
+ * - Staging, optional publisher allowlist: when ADMIN_PUBLISHER_EMAILS (comma-
+ *   separated) is set, only those signed-in emails may call the live-site-changing
+ *   endpoints in PUBLISHER_ONLY_PATHS (403 for everyone else). Unset = any signed-in
+ *   @pingcap.com user, as before.
  *
  * On every environment where the admin is reachable (local dev, staging), a
  * state-changing `/api/*` request carrying a cross-origin `Origin` header is
@@ -39,6 +46,40 @@ function isCrossOriginApiWrite(req: NextRequest): boolean {
   return req.headers.get('sec-fetch-site') === 'cross-site'
 }
 
+/** Hostnames accepted on the ungated local-dev path (port is ignored). */
+const LOOPBACK_HOSTNAMES = new Set(['localhost', '127.0.0.1', '[::1]', '::1'])
+
+/** True when the request's Host header names a loopback address (any port). */
+function isLoopbackHost(req: NextRequest): boolean {
+  const host = req.headers.get('host')
+  if (!host) return false
+  // Strip the port: "[::1]:3000" -> "[::1]", "localhost:3000" -> "localhost".
+  const hostname = host.startsWith('[') ? host.slice(0, host.indexOf(']') + 1) : host.split(':')[0]
+  return LOOPBACK_HOSTNAMES.has(hostname.toLowerCase())
+}
+
+/**
+ * Endpoints that change the live site (publish to main/staging, delete or move a
+ * page). Restricted to ADMIN_PUBLISHER_EMAILS when that env var is set.
+ */
+const PUBLISHER_ONLY_PATHS = ['/api/publish', '/api/pages/delete', '/api/pages/move']
+
+function isPublisherOnlyPath(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, '')
+  return PUBLISHER_ONLY_PATHS.includes(p)
+}
+
+/** The configured publisher allowlist (lowercased), or null when unset/empty. */
+function publisherAllowlist(): Set<string> | null {
+  const raw = process.env.ADMIN_PUBLISHER_EMAILS
+  if (!raw) return null
+  const emails = raw
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean)
+  return emails.length ? new Set(emails) : null
+}
+
 // The authenticated gate for staging. Wrapping with `auth()` resolves the session
 // into `req.auth`, so this runs ONLY for staging (see the dispatcher below).
 const stagingGate = auth((req) => {
@@ -58,6 +99,17 @@ const stagingGate = auth((req) => {
 
   // `req.auth` is set only for a session that cleared the @pingcap.com signIn gate.
   if (req.auth) {
+    // Optional per-role gate: only listed publishers may change the live site.
+    const allowlist = publisherAllowlist()
+    if (allowlist && isPublisherOnlyPath(pathname)) {
+      const email = req.auth.user?.email?.toLowerCase()
+      if (!email || !allowlist.has(email)) {
+        return NextResponse.json(
+          { error: 'Forbidden: publishing is restricted to designated publishers' },
+          { status: 403 }
+        )
+      }
+    }
     return NextResponse.next()
   }
 
@@ -106,6 +158,11 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
     if (process.env.NODE_ENV !== 'development') {
       return new NextResponse(null, { status: 404 })
     }
+    // Defense in depth (DNS rebinding / a dev server accidentally bound to 0.0.0.0):
+    // the ungated admin only answers to a loopback Host.
+    if (!isLoopbackHost(req)) {
+      return new NextResponse(null, { status: 404 })
+    }
     if (isCrossOriginApiWrite(req)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
@@ -114,7 +171,8 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   // Deployed but not the staging branch (VERCEL_ENV is 'preview' for every branch
   // preview, so distinguish by the deployed git ref). Hide admin on those too.
-  if (process.env.VERCEL_GIT_COMMIT_REF !== 'staging') {
+  // Fails closed: an unknown VERCEL_ENV value, or a missing ref, is not staging.
+  if (vercelEnv !== 'preview' || process.env.VERCEL_GIT_COMMIT_REF !== 'staging') {
     return new NextResponse(null, { status: 404 })
   }
 

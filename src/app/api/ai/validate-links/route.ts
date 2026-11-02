@@ -26,9 +26,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ results })
   } catch (error) {
     console.error('[validate-links] Error:', error)
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Link validation failed' }, { status: 500 })
   }
 }

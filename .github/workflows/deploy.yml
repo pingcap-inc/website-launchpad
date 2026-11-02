@@ -35,6 +35,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # public/ is synced to static.pingcap.com below, bypassing the admin upload
+      # route's SVG checks — apply the same active-content check before anything ships.
+      - name: Check public SVGs for active content
+        run: node scripts/check-public-svgs.mjs public
+
       - name: Build
         run: pnpm build
         env:

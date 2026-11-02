@@ -4,6 +4,7 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 import { externalLinkProps } from '@/lib/links'
 import { handleInPageScroll } from '@/lib/in-page-scroll'
+import { safeHref } from '@/lib/security/sanitize'
 
 interface SecondaryButtonProps {
   children: React.ReactNode
@@ -53,7 +54,9 @@ export function ArrowUpRight(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export const SecondaryButton = React.forwardRef<SecondaryButtonRef, SecondaryButtonProps>(
-  ({ children, className, onClick, href, dark = true, as, newTab }, ref) => {
+  ({ children, className, onClick, href: rawHref, dark = true, as, newTab }, ref) => {
+    // href may come from page DSL: never render a javascript:/data: link.
+    const href = rawHref ? safeHref(rawHref) : rawHref
     const classes = cn(
       'group inline-flex items-center gap-2',
       'text-base font-medium',

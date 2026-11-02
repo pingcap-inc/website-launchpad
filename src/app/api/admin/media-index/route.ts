@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  S3Client,
-  ListObjectsV2Command,
-  GetObjectCommand,
-  PutObjectCommand,
-} from '@aws-sdk/client-s3'
+import { S3Client, ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3'
 import { logAudit } from '@/lib/audit'
 import { isUnsafeObjectKey, readJsonBody } from '@/lib/security/api-guards'
+import { updateJsonObject } from '@/lib/security/api-s3-json'
 import { resolveAwsCredentials } from '@/lib/aws-credentials'
 
 const CDN_BASE = 'https://static.pingcap.com'
@@ -41,17 +37,6 @@ async function readJson<T>(s3: S3Client, bucket: string, key: string, fallback: 
   } catch {
     return fallback
   }
-}
-
-async function writeJson(s3: S3Client, bucket: string, key: string, data: unknown): Promise<void> {
-  await s3.send(
-    new PutObjectCommand({
-      Bucket: bucket,
-      Key: key,
-      Body: JSON.stringify(data, null, 2),
-      ContentType: 'application/json',
-    })
-  )
 }
 
 /**
@@ -205,9 +190,23 @@ export async function PATCH(req: NextRequest) {
       }
       entries.push({ url: entry.url, tags })
     }
-    const tagsMap = toDict(await readJson<Record<string, string[]>>(s3, bucket, TAGS_KEY, {}))
-    for (const entry of entries) tagsMap[entry.url] = entry.tags
-    await writeJson(s3, bucket, TAGS_KEY, tagsMap)
+    try {
+      await updateJsonObject<Record<string, string[]>>(
+        s3,
+        bucket,
+        TAGS_KEY,
+        () => ({}),
+        (raw) => {
+          const tagsMap = toDict(raw)
+          for (const entry of entries) tagsMap[entry.url] = entry.tags
+          return tagsMap
+        }
+      )
+    } catch (err) {
+      console.error('[media-index] tags batch update failed:', err)
+      await logAudit(req, { action: 'media-tags', status: 'error', detail: 'index write failed' })
+      return NextResponse.json({ error: 'Failed to update tags' }, { status: 500 })
+    }
     await logAudit(req, {
       action: 'media-tags',
       status: 'success',
@@ -239,29 +238,54 @@ export async function PATCH(req: NextRequest) {
   const updates: Promise<void>[] = []
 
   if (tags) {
-    const p = readJson<Record<string, string[]>>(s3, bucket, TAGS_KEY, {}).then((raw) => {
-      const tagsMap = toDict(raw)
-      tagsMap[url] = tags
-      return writeJson(s3, bucket, TAGS_KEY, tagsMap)
-    })
-    updates.push(p)
+    updates.push(
+      updateJsonObject<Record<string, string[]>>(
+        s3,
+        bucket,
+        TAGS_KEY,
+        () => ({}),
+        (raw) => {
+          const tagsMap = toDict(raw)
+          tagsMap[url] = tags
+          return tagsMap
+        }
+      )
+    )
   }
 
   if ('alt' in body || 'width' in body || 'height' in body) {
-    const p = readJson<Record<string, ImageMeta>>(s3, bucket, META_KEY, {}).then((raw) => {
-      const metaMap = toDict(raw)
-      const existing: ImageMeta = { ...(metaMap[url] ?? {}) }
-      if ('alt' in body) existing.alt = (body.alt as string | null | undefined) ?? ''
-      if ('width' in body) existing.width = (body.width as number | null | undefined) ?? undefined
-      if ('height' in body)
-        existing.height = (body.height as number | null | undefined) ?? undefined
-      metaMap[url] = existing
-      return writeJson(s3, bucket, META_KEY, metaMap)
-    })
-    updates.push(p)
+    updates.push(
+      updateJsonObject<Record<string, ImageMeta>>(
+        s3,
+        bucket,
+        META_KEY,
+        () => ({}),
+        (raw) => {
+          const metaMap = toDict(raw)
+          const existing: ImageMeta = { ...(metaMap[url] ?? {}) }
+          if ('alt' in body) existing.alt = (body.alt as string | null | undefined) ?? ''
+          if ('width' in body)
+            existing.width = (body.width as number | null | undefined) ?? undefined
+          if ('height' in body)
+            existing.height = (body.height as number | null | undefined) ?? undefined
+          metaMap[url] = existing
+          return metaMap
+        }
+      )
+    )
   }
 
-  await Promise.all(updates)
+  const results = await Promise.allSettled(updates)
+  if (results.some((r) => r.status === 'rejected')) {
+    console.error('[media-index] update failed:', results)
+    await logAudit(req, {
+      action: 'media-meta',
+      target: url,
+      status: 'error',
+      detail: 'index write failed',
+    })
+    return NextResponse.json({ error: 'Failed to update media metadata' }, { status: 500 })
+  }
 
   await logAudit(req, { action: 'media-meta', target: url, status: 'success' })
 

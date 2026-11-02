@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { logAudit, resolveActor } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
-import { DRAFT_BRANCH, isValidPageSlug, publishedBranch } from '@/lib/security/api-guards'
+import {
+  DRAFT_BRANCH,
+  normalizePageSlug,
+  publishedBranch,
+  readJsonBody,
+} from '@/lib/security/api-guards'
 
 async function readFile(
   baseUrl: string,
@@ -102,16 +107,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
 
-  let body: { from?: string; to?: string }
-  try {
-    body = (await req.json()) as { from?: string; to?: string }
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 })
-  }
+  const parsed = await readJsonBody<{ from?: unknown; to?: unknown }>(req, 16 * 1024)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.data
 
-  const from = typeof body.from === 'string' ? body.from.replace(/^\/|\/$/g, '') : ''
-  const to = typeof body.to === 'string' ? body.to.replace(/^\/|\/$/g, '') : ''
-  if (!isValidPageSlug(from) || !isValidPageSlug(to)) {
+  const from = normalizePageSlug(body.from)
+  const to = normalizePageSlug(body.to)
+  if (!from || !to) {
     return NextResponse.json({ error: 'Invalid slug path' }, { status: 400 })
   }
   if (from === to) {
@@ -130,6 +132,13 @@ export async function POST(req: NextRequest) {
       fileExists(baseUrl, headers, destPublishedPath, pubBranch),
     ])
     if (draftTaken || publishedTaken) {
+      await logAudit(req, {
+        action: 'copy',
+        target: from,
+        targetTo: to,
+        status: 'denied',
+        detail: 'destination exists',
+      })
       return NextResponse.json({ error: `A page already exists at /${to}/` }, { status: 409 })
     }
 

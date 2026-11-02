@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import type { SectionStyle } from '@/lib/dsl-schema'
 import { resolveCdnUrl } from '@/lib/cdn-url'
+import { safeBackgroundImageUrl } from '@/lib/security/sanitize'
 import { cn } from '@/lib/utils'
 import { ExactHeroBackground } from './ExactHeroBackground'
 
@@ -75,9 +76,10 @@ export function SectionWrapper({
 }: SectionWrapperProps) {
   const resolved = resolveSectionStyle(style, defaultStyle)
   const background = resolved.background ?? 'primary'
-  const backgroundImage = resolved.backgroundImage?.image?.url
-    ? resolved.backgroundImage
-    : undefined
+  // The URL lands inside a CSS url(): only our own asset hosts, and nothing that
+  // could break out of the string (quotes, parens, `;`, whitespace).
+  const backgroundImageUrl = safeBackgroundImageUrl(resolved.backgroundImage?.image?.url)
+  const backgroundImage = backgroundImageUrl ? resolved.backgroundImage : undefined
   const backgroundEffect = resolved.backgroundEffect
   const backgroundImageOpacityClassName = resolved.backgroundImageOpacityClassName ?? 'opacity-80'
   const backgroundImageOverlayClassName = resolved.backgroundImageOverlayClassName
@@ -106,7 +108,7 @@ export function SectionWrapper({
           <ExactHeroBackground className="absolute inset-0" />
         </>
       )}
-      {backgroundImage && (
+      {backgroundImageUrl && (
         <>
           <div
             aria-hidden="true"
@@ -114,7 +116,7 @@ export function SectionWrapper({
               'pointer-events-none absolute inset-0 bg-no-repeat bg-cover bg-center',
               backgroundImageOpacityClassName
             )}
-            style={{ backgroundImage: `url("${resolveCdnUrl(backgroundImage.image.url)}")` }}
+            style={{ backgroundImage: `url("${resolveCdnUrl(backgroundImageUrl)}")` }}
           />
           {backgroundImageOverlayClassName && (
             <div

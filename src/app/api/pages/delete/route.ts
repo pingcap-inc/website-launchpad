@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
-import { DRAFT_BRANCH, isValidPageSlug, publishedBranch } from '@/lib/security/api-guards'
+import {
+  DRAFT_BRANCH,
+  normalizePageSlug,
+  publishedBranch,
+  readJsonBody,
+} from '@/lib/security/api-guards'
 
 async function readSha(
   baseUrl: string,
@@ -47,15 +52,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
 
-  let body: { slug: string; includeDraft?: boolean; includePublished?: boolean }
-  try {
-    body = await req.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 })
-  }
+  const parsed = await readJsonBody<{
+    slug?: unknown
+    includeDraft?: boolean
+    includePublished?: boolean
+  }>(req, 16 * 1024)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.data
 
-  const slug = typeof body.slug === 'string' ? body.slug.replace(/^\/|\/$/g, '') : ''
-  if (!isValidPageSlug(slug)) {
+  const slug = normalizePageSlug(body.slug)
+  if (!slug) {
     return NextResponse.json({ error: 'Invalid slug path' }, { status: 400 })
   }
 

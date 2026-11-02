@@ -38,6 +38,30 @@ export function safeHref(raw: unknown, fallback = '#'): string {
   return safeUrl(raw) ?? fallback
 }
 
+/** Hosts a section background image may be loaded from (besides site-relative paths). */
+const BACKGROUND_IMAGE_HOSTS = new Set(['static.pingcap.com', 'www.pingcap.com'])
+
+/**
+ * Returns the URL if it may be placed inside a CSS `url("…")`, otherwise null.
+ * Only site-relative paths (`/images/…`) and https URLs on our own asset hosts
+ * are allowed, and any character that could close the string or the `url()`
+ * (quotes, parens, `;`, backslash, whitespace) is rejected outright rather than
+ * escaped.
+ */
+export function safeBackgroundImageUrl(raw: unknown): string | null {
+  const url = safeUrl(raw)
+  if (!url || /[\s"'()\\;<>]/.test(url)) return null
+  if (url.startsWith('/')) return url.startsWith('//') ? null : url
+  let parsed: URL
+  try {
+    parsed = new URL(url)
+  } catch {
+    return null
+  }
+  if (parsed.protocol !== 'https:' || parsed.username || parsed.password) return null
+  return BACKGROUND_IMAGE_HOSTS.has(parsed.hostname.toLowerCase()) ? url : null
+}
+
 const ATTR_ESCAPES: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
@@ -87,6 +111,7 @@ type AllowList = {
   tags: Set<string>
   /** Attributes allowed on every allowed tag. */
   attrs: Set<string>
+  /** Allow `style`, reduced to SAFE_STYLE_PROPS declarations (see sanitizeStyle). */
   allowStyle: boolean
   /** Allow arbitrary `data-*` attributes. */
   allowData: boolean
@@ -213,18 +238,108 @@ export const SNIPPET_ALLOWLIST: AllowList = {
   allowData: true,
 }
 
-function isSafeStyle(value: string): boolean {
-  return !/expression\s*\(|url\s*\(|javascript:|vbscript:|@import|behavior\s*:|-moz-binding/i.test(
-    value
-  )
+/**
+ * Layout/typography properties an HTML snippet may set inline. Anything that can
+ * load a resource (background, list-style, border-image, mask, cursor, content,
+ * filter, …) is deliberately absent.
+ */
+const SAFE_STYLE_PROPS = new Set([
+  'align-items',
+  'background-color',
+  'border',
+  'border-bottom',
+  'border-color',
+  'border-left',
+  'border-radius',
+  'border-right',
+  'border-style',
+  'border-top',
+  'border-width',
+  'bottom',
+  'color',
+  'display',
+  'flex',
+  'flex-direction',
+  'flex-wrap',
+  'font-size',
+  'font-style',
+  'font-weight',
+  'gap',
+  'height',
+  'justify-content',
+  'left',
+  'line-height',
+  'margin',
+  'margin-bottom',
+  'margin-left',
+  'margin-right',
+  'margin-top',
+  'max-height',
+  'max-width',
+  'min-height',
+  'min-width',
+  'opacity',
+  'overflow',
+  'padding',
+  'padding-bottom',
+  'padding-left',
+  'padding-right',
+  'padding-top',
+  'position',
+  'right',
+  'text-align',
+  'text-decoration',
+  'top',
+  'transform',
+  'vertical-align',
+  'white-space',
+  'width',
+])
+
+/** CSS functions a value may call; everything else (url, image-set, image, element, expression, …) is rejected. */
+const SAFE_STYLE_FUNCS = new Set([
+  'calc',
+  'rgb',
+  'rgba',
+  'hsl',
+  'hsla',
+  'translate',
+  'translatex',
+  'translatey',
+  'scale',
+  'rotate',
+])
+
+/**
+ * Reduces an inline style to allowlisted `property: value` declarations.
+ * A blocklist (`url(`) is bypassable through image-set(), CSS escapes and the
+ * like, so values are restricted to a plain character set plus a small set of
+ * known-safe functions. Returns null when nothing survives.
+ */
+function sanitizeStyle(value: string): string | null {
+  // CSS escapes and comments can disguise any token; no legitimate inline style needs them.
+  if (/[\\<>]|\/\*/.test(value)) return null
+  const out: string[] = []
+  for (const decl of value.split(';')) {
+    const colon = decl.indexOf(':')
+    if (colon === -1) continue
+    const prop = decl.slice(0, colon).trim().toLowerCase()
+    const val = decl.slice(colon + 1).trim()
+    if (!SAFE_STYLE_PROPS.has(prop) || !val) continue
+    if (!/^[a-zA-Z0-9#%.,\s+\-*/()!]+$/.test(val)) continue
+    const funcs = val.match(/[a-zA-Z-]+(?=\s*\()/g) ?? []
+    const parens = (val.match(/\(/g) ?? []).length
+    if (funcs.length !== parens || !funcs.every((f) => SAFE_STYLE_FUNCS.has(f.toLowerCase()))) {
+      continue
+    }
+    out.push(`${prop}:${val}`)
+  }
+  return out.length ? out.join(';') : null
 }
 
 function sanitizeAttr(name: string, rawValue: string, allow: AllowList): string | null {
   const value = decodeEntities(rawValue)
-  if (name === 'style') {
-    if (!allow.allowStyle || !isSafeStyle(value)) return null
-    return value
-  }
+  if (name === 'style') return allow.allowStyle ? sanitizeStyle(value) : null
   if (name.startsWith('data-')) return allow.allowData ? value : null
   if (!allow.attrs.has(name)) return null
   if (URL_ATTRS.has(name)) return safeUrl(value)
@@ -238,6 +353,26 @@ function sanitizeAttr(name: string, rawValue: string, allow: AllowList): string 
 }
 
 const TAG_NAME_RE = /^[a-zA-Z][a-zA-Z0-9-]*/
+
+/**
+ * Anti-tabnabbing: any link that can open a new browsing context always gets
+ * `rel="noopener noreferrer"`. Author-supplied rel tokens are kept, except
+ * `opener`, which would re-enable window.opener.
+ */
+function forceNoopener(attrs: Array<[string, string | null]>): void {
+  const target = attrs.find(([k]) => k === 'target')
+  if (!target) return
+  const t = (target[1] ?? '').trim().toLowerCase()
+  if (t === '' || t === '_self' || t === '_top' || t === '_parent') return
+  const relIdx = attrs.findIndex(([k]) => k === 'rel')
+  const tokens = (relIdx === -1 ? '' : (attrs[relIdx][1] ?? ''))
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((tok) => tok && tok !== 'opener' && tok !== 'noopener' && tok !== 'noreferrer')
+  const rel = ['noopener', 'noreferrer', ...tokens].join(' ')
+  if (relIdx === -1) attrs.push(['rel', rel])
+  else attrs[relIdx] = ['rel', rel]
+}
 
 /**
  * Allowlist HTML sanitizer. Keeps allowed tags and attributes, drops every
@@ -285,7 +420,7 @@ export function sanitizeHtml(input: unknown, allow: AllowList = SNIPPET_ALLOWLIS
     let j = i + (closing ? 2 : 1) + nameMatch[0].length
 
     // Parse attributes up to the closing `>`, honouring quotes.
-    const attrs: string[] = []
+    const attrs: Array<[name: string, value: string | null]> = []
     while (j < n && html[j] !== '>') {
       const ch = html[j]
       if (/\s/.test(ch) || ch === '/') {
@@ -318,7 +453,8 @@ export function sanitizeHtml(input: unknown, allow: AllowList = SNIPPET_ALLOWLIS
       if (closing) continue
       const safe = sanitizeAttr(attrName, value ?? '', allow)
       if (safe === null) continue
-      attrs.push(value === null ? attrName : `${attrName}="${escapeHtml(safe)}"`)
+      if (attrs.some(([existing]) => existing === attrName)) continue
+      attrs.push([attrName, value === null ? null : safe])
     }
     i = j < n ? j + 1 : n
 
@@ -335,14 +471,9 @@ export function sanitizeHtml(input: unknown, allow: AllowList = SNIPPET_ALLOWLIS
       if (!VOID_TAGS.has(tag)) out += `</${tag}>`
       continue
     }
-    if (
-      tag === 'a' &&
-      attrs.some((a) => a === 'target="_blank"') &&
-      !attrs.some((a) => a.startsWith('rel='))
-    ) {
-      attrs.push('rel="noopener noreferrer"')
-    }
-    out += `<${tag}${attrs.length ? ` ${attrs.join(' ')}` : ''}>`
+    if (tag === 'a') forceNoopener(attrs)
+    const serialized = attrs.map(([k, v]) => (v === null ? k : `${k}="${escapeHtml(v)}"`))
+    out += `<${tag}${serialized.length ? ` ${serialized.join(' ')}` : ''}>`
   }
 
   return out
@@ -351,6 +482,37 @@ export function sanitizeHtml(input: unknown, allow: AllowList = SNIPPET_ALLOWLIS
 /** Sanitizer for hero headlines that may carry inline highlight markup. */
 export function sanitizeHeadlineHtml(input: unknown): string {
   return sanitizeHtml(input, HEADLINE_ALLOWLIST)
+}
+
+const DSL_URL_KEYS = new Set(['href', 'url', 'src', 'backgroundImageUrl'])
+
+/**
+ * Deep, in-place pass over an untrusted (LLM- or user-authored) DSL tree:
+ * drops any unsafe URL string on an href/url/src field and reduces raw-HTML
+ * fields (hero `headline`, `shortCode`) to their allowlists. Shared by every
+ * AI route that returns DSL so none of them hands back unsanitized output.
+ */
+export function sanitizeUntrustedDsl(value: unknown): void {
+  if (Array.isArray(value)) {
+    value.forEach(sanitizeUntrustedDsl)
+    return
+  }
+  if (!value || typeof value !== 'object') return
+  const rec = value as Record<string, unknown>
+  for (const [key, v] of Object.entries(rec)) {
+    if (typeof v === 'string') {
+      if (DSL_URL_KEYS.has(key) && v.trim() && safeUrl(v) === null) {
+        console.warn(`[DSL] Unsafe URL on "${key}" removed: ${v.slice(0, 80)}`)
+        delete rec[key]
+      } else if (key === 'headline' && /<[a-z]/i.test(v)) {
+        rec[key] = sanitizeHeadlineHtml(v)
+      } else if (key === 'shortCode' && /<[a-z]/i.test(v)) {
+        rec[key] = sanitizeHtml(v)
+      }
+    } else {
+      sanitizeUntrustedDsl(v)
+    }
+  }
 }
 
 /** Strips anything tag-like from plain imported text so it can never be read as HTML. */

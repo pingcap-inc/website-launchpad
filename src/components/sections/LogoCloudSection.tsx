@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { externalLinkProps } from '@/lib/links'
 import type { ImageRef } from '@/lib/dsl-schema'
+import { safeUrl } from '@/lib/security/sanitize'
 
 export interface LogoCloudItem {
   name: string
@@ -67,14 +68,16 @@ export function LogoCloudSection({
       </div>
     )
 
-    if (logo.href) {
+    // Unsafe schemes (javascript:, data:, …) render the logo unlinked.
+    const href = safeUrl(logo.href)
+    if (href) {
       return (
         <a
           key={key}
-          href={logo.href}
+          href={href}
           aria-label={logo.name}
           className="shrink-0"
-          {...externalLinkProps(logo.href)}
+          {...externalLinkProps(href)}
         >
           {content}
         </a>

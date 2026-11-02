@@ -4,6 +4,7 @@ import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand } from 
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
 import { resolveAwsCredentials } from '@/lib/aws-credentials'
+import { updateJsonObject } from '@/lib/security/api-s3-json'
 
 const CDN_BASE = 'https://static.pingcap.com'
 const TAGS_KEY = 'media/tags.json'
@@ -35,6 +36,72 @@ function isSafeSvg(buffer: Buffer) {
   return !SVG_ACTIVE_CONTENT.test(text)
 }
 
+type UploadType = 'image/png' | 'image/jpeg' | 'image/webp' | 'image/svg+xml' | 'video/mp4'
+
+// Stored extension per type. The first entry is used when the uploaded name has no
+// matching extension; the others are accepted as-is so existing names are kept.
+const EXTENSIONS: Record<UploadType, string[]> = {
+  'image/png': ['png'],
+  'image/jpeg': ['jpg', 'jpeg'],
+  'image/webp': ['webp'],
+  'image/svg+xml': ['svg'],
+  'video/mp4': ['mp4'],
+}
+
+function startsWith(buffer: Buffer, bytes: number[], offset = 0) {
+  return buffer.length >= offset + bytes.length && bytes.every((b, i) => buffer[offset + i] === b)
+}
+
+function ascii(buffer: Buffer, start: number, end: number) {
+  return buffer.length >= end ? buffer.toString('latin1', start, end) : ''
+}
+
+// SVG has no magic number: accept only text that is plainly an SVG document — an
+// optional BOM/XML prolog/comments/doctype, then a root <svg> element — with no NUL.
+function looksLikeSvg(buffer: Buffer) {
+  if (buffer.includes(0)) return false
+  const head = buffer.toString('utf-8', 0, Math.min(buffer.length, 4096)).replace(/^\uFEFF/, '')
+  return /^\s*(<\?xml[^>]*\?>\s*)?(<!--[\s\S]*?-->\s*)*(<!doctype\s+svg[^>]*>\s*)?(<!--[\s\S]*?-->\s*)*<svg[\s>]/i.test(
+    head
+  )
+}
+
+/**
+ * The file's real type, from its leading bytes (never from the client-supplied
+ * name or MIME type). Null when it is none of the accepted formats.
+ */
+function detectUploadType(buffer: Buffer): UploadType | null {
+  if (startsWith(buffer, [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) return 'image/png'
+  if (startsWith(buffer, [0xff, 0xd8, 0xff])) return 'image/jpeg'
+  if (ascii(buffer, 0, 4) === 'RIFF' && ascii(buffer, 8, 12) === 'WEBP') return 'image/webp'
+  if (ascii(buffer, 4, 8) === 'ftyp') {
+    // ISO-BMFF: AVIF/HEIC share the container, so only MP4-family brands count.
+    const brand = ascii(buffer, 8, 12)
+    if (!/^(avi[fs]|hei[cmsx]|mif1|msf1)$/.test(brand)) return 'video/mp4'
+    return null
+  }
+  if (looksLikeSvg(buffer)) return 'image/svg+xml'
+  return null
+}
+
+// The stored file name: sanitized base name with an extension forced to match the
+// detected type, so the CDN serves it with the right Content-Type.
+function storedName(originalName: string, type: UploadType) {
+  const sanitized = originalName
+    .replace(/[^a-z0-9._-]/gi, '_')
+    .replace(/^\.+/, '_')
+    .toLowerCase()
+  const dot = sanitized.lastIndexOf('.')
+  const ext = dot > 0 ? sanitized.slice(dot + 1) : ''
+  const base = (dot > 0 ? sanitized.slice(0, dot) : sanitized).replace(/\./g, '_') || 'file'
+  const finalExt = EXTENSIONS[type].includes(ext) ? ext : EXTENSIONS[type][0]
+  return `${base.slice(-(100 - finalExt.length - 1))}.${finalExt}`
+}
+
+function sha256Hex(buffer: Buffer | Uint8Array) {
+  return crypto.createHash('sha256').update(buffer).digest('hex')
+}
+
 // Git's blob id for `content` — what the GitHub contents API reports as `sha`.
 function gitBlobSha(content: Buffer) {
   return crypto.createHash('sha1').update(`blob ${content.length}\0`).update(content).digest('hex')
@@ -46,17 +113,38 @@ function isPreconditionFailed(err: unknown) {
 }
 
 /**
+ * Whether the object at `key` holds exactly `buffer`, by SHA-256. Uses the digest
+ * recorded in the object's metadata at upload; objects uploaded before that was
+ * recorded are read back and hashed (only when the sizes already match).
+ */
+async function hasSameContent(
+  s3: S3Client,
+  bucket: string,
+  key: string,
+  buffer: Buffer,
+  sha256: string
+) {
+  const head = await s3.send(new HeadObjectCommand({ Bucket: bucket, Key: key }))
+  const recorded = head.Metadata?.sha256
+  if (recorded) return recorded === sha256
+  if (head.ContentLength !== buffer.length) return false
+  const obj = await s3.send(new GetObjectCommand({ Bucket: bucket, Key: key }))
+  const bytes = await obj.Body?.transformToByteArray()
+  return !!bytes && sha256Hex(bytes) === sha256
+}
+
+/**
  * Write `buffer` under `key` only if nothing is there yet. Returns 'written', or
- * 'identical' when the existing object already has exactly this content, or
- * 'conflict' when a different object holds the key.
+ * 'identical' when the existing object already has exactly this content (SHA-256),
+ * or 'conflict' when a different object holds the key.
  */
 async function putIfAbsent(
   s3: S3Client,
   bucket: string,
   key: string,
   buffer: Buffer,
-  contentType: string,
-  md5Hex: string
+  contentType: UploadType,
+  sha256: string
 ): Promise<'written' | 'identical' | 'conflict'> {
   try {
     await s3.send(
@@ -67,6 +155,7 @@ async function putIfAbsent(
         ContentType: contentType,
         // Never served inline as a document if opened directly (SVG script).
         ...(contentType === 'image/svg+xml' ? { ContentDisposition: 'attachment' } : {}),
+        Metadata: { sha256 },
         IfNoneMatch: '*',
       })
     )
@@ -74,8 +163,7 @@ async function putIfAbsent(
   } catch (err) {
     if (!isPreconditionFailed(err)) throw err
   }
-  const head = await s3.send(new HeadObjectCommand({ Bucket: bucket, Key: key }))
-  return head.ETag?.replace(/"/g, '') === md5Hex ? 'identical' : 'conflict'
+  return (await hasSameContent(s3, bucket, key, buffer, sha256)) ? 'identical' : 'conflict'
 }
 
 /**
@@ -118,8 +206,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'file is required' }, { status: 400 })
   }
 
-  const isVideo = file.type.startsWith('video/')
-
+  // The client-declared MIME type is only a first filter (and must agree with the
+  // content below); the stored type is always the one detected from the bytes.
+  if (!Object.hasOwn(EXTENSIONS, file.type)) {
+    return NextResponse.json(
+      { error: 'Only PNG, JPG, SVG, WebP, MP4 are allowed' },
+      { status: 415 }
+    )
+  }
+  // Size limit by the declared type, before buffering; the detected type must equal
+  // the declared one below, so the limit that applied is the right one.
+  const isVideo = file.type === 'video/mp4'
   const MAX_SIZE = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES
   if (file.size > MAX_SIZE) {
     return NextResponse.json(
@@ -128,10 +225,18 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const allowed = ['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp', 'video/mp4']
-  if (!allowed.includes(file.type)) {
+  const bytes = await file.arrayBuffer()
+  const buffer = Buffer.from(bytes)
+  const detectedType = detectUploadType(buffer)
+  if (!detectedType || detectedType !== file.type || buffer.length > MAX_SIZE) {
+    await logAudit(req, {
+      action: 'upload-image',
+      target: file.name.slice(0, 200),
+      status: 'denied',
+      detail: `content does not match declared type (${file.type} vs ${detectedType ?? 'unknown'})`,
+    })
     return NextResponse.json(
-      { error: 'Only PNG, JPG, SVG, WebP, MP4 are allowed' },
+      { error: 'File content does not match its type. Only PNG, JPG, SVG, WebP, MP4 are allowed' },
       { status: 415 }
     )
   }
@@ -145,7 +250,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const isSvg = file.type === 'image/svg+xml'
+  const isSvg = detectedType === 'image/svg+xml'
   // Page-specific uploads are committed under public/ and served from the main
   // www.pingcap.com origin, where an SVG document is too risky — SVGs go through
   // the Media Library (static.pingcap.com) only.
@@ -156,8 +261,6 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes)
   if (isSvg && !isSafeSvg(buffer)) {
     await logAudit(req, {
       action: 'upload-image',
@@ -168,12 +271,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'SVG contains scripts or event handlers' }, { status: 415 })
   }
   const fullHash = crypto.createHash('sha1').update(buffer).digest('hex')
-  const md5Hex = crypto.createHash('md5').update(buffer).digest('hex')
-  const safeName = file.name
-    .replace(/[^a-z0-9._-]/gi, '_')
-    .replace(/^\.+/, '_')
-    .toLowerCase()
-    .slice(-100)
+  const contentSha256 = sha256Hex(buffer)
+  const safeName = storedName(file.name, detectedType)
   // Short content-address prefix (the media library strips an 8-hex prefix for
   // display); on a collision with different content we fall back to a longer one
   // rather than overwrite the existing object.
@@ -194,10 +293,10 @@ export async function POST(req: NextRequest) {
     })
     let s3Key = `images/${filename}`
     try {
-      let outcome = await putIfAbsent(s3, AWS_S3_BUCKET, s3Key, buffer, file.type, md5Hex)
+      let outcome = await putIfAbsent(s3, AWS_S3_BUCKET, s3Key, buffer, detectedType, contentSha256)
       if (outcome === 'conflict') {
         s3Key = `images/${longFilename}`
-        outcome = await putIfAbsent(s3, AWS_S3_BUCKET, s3Key, buffer, file.type, md5Hex)
+        outcome = await putIfAbsent(s3, AWS_S3_BUCKET, s3Key, buffer, detectedType, contentSha256)
       }
       if (outcome === 'conflict') {
         return NextResponse.json(
@@ -213,25 +312,31 @@ export async function POST(req: NextRequest) {
     const publicUrl = `${CDN_BASE}/${s3Key}`
 
     // Skip tags.json read-modify-write when there's nothing to set, or when
-    // the caller plans to batch-update tags after a parallel upload.
+    // the caller plans to batch-update tags after a parallel upload. The write is
+    // conditional (IfMatch), so concurrent tag edits aren't lost.
     if (!skipTagsUpdate && tags.length > 0) {
-      let tagsMap: Record<string, string[]> = {}
       try {
-        const res = await s3.send(new GetObjectCommand({ Bucket: AWS_S3_BUCKET, Key: TAGS_KEY }))
-        const body = await res.Body?.transformToString()
-        if (body) tagsMap = JSON.parse(body) as Record<string, string[]>
-      } catch {
-        // tags.json doesn't exist yet — start fresh
-      }
-      tagsMap[publicUrl] = tags
-      await s3.send(
-        new PutObjectCommand({
-          Bucket: AWS_S3_BUCKET,
-          Key: TAGS_KEY,
-          Body: JSON.stringify(tagsMap, null, 2),
-          ContentType: 'application/json',
+        await updateJsonObject<Record<string, string[]>>(
+          s3,
+          AWS_S3_BUCKET,
+          TAGS_KEY,
+          () => ({}),
+          (raw) => {
+            const tagsMap = Object.assign(Object.create(null) as Record<string, string[]>, raw)
+            tagsMap[publicUrl] = tags
+            return tagsMap
+          }
+        )
+      } catch (err) {
+        // The file itself is stored; only its tags failed. Report it, keep the upload.
+        console.error('[upload-image] tags update failed:', err)
+        await logAudit(req, {
+          action: 'media-tags',
+          target: publicUrl,
+          status: 'error',
+          detail: 'tags write after upload failed',
         })
-      )
+      }
     }
 
     await logAudit(req, {

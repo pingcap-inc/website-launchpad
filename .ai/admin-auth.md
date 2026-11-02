@@ -6,12 +6,23 @@ sign-in, restricted to the `pingcap.com` email domain. Implemented with
 
 ## Gate behaviour (see `src/middleware.ts`)
 
-| Environment                | Condition                                       | Behaviour                                             |
-| -------------------------- | ----------------------------------------------- | ----------------------------------------------------- |
-| Production                 | `VERCEL_ENV === 'production'`                   | `/admin` + `/api` return **404** (unchanged)          |
-| Preview — non-`staging`    | `VERCEL_ENV === 'preview'`, git ref ≠ `staging` | **404** — admin is hidden on per-PR previews          |
-| Preview — `staging` branch | `VERCEL_ENV === 'preview'`, git ref = `staging` | **Require** a signed-in `@pingcap.com` Google user    |
-| Local (`pnpm dev`)         | `VERCEL_ENV` unset                              | **No** login gate — localhost is not internet-exposed |
+| Environment                | Condition                                                           | Behaviour                                                                                                |
+| -------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Production                 | `VERCEL_ENV === 'production'`                                       | `/admin` + `/api` return **404** (unchanged)                                                             |
+| Preview — non-`staging`    | `VERCEL_ENV === 'preview'`, git ref ≠ `staging`                     | **404** — admin is hidden on per-PR previews                                                             |
+| Preview — `staging` branch | `VERCEL_ENV === 'preview'`, git ref = `staging`                     | **Require** a signed-in `@pingcap.com` Google user                                                       |
+| Local (`pnpm dev`)         | `VERCEL_ENV` unset, `NODE_ENV === 'development'`                    | **No** login gate, but only for a loopback `Host` (localhost / 127.0.0.1 / [::1]); anything else **404** |
+| Anything else              | e.g. `next start` off Vercel, unknown `VERCEL_ENV`, missing git ref | **404** — fails closed                                                                                   |
+
+`pnpm dev` binds to `127.0.0.1` (`next dev -H 127.0.0.1`), so the ungated local
+admin is not reachable from the LAN. The loopback-`Host` check is defense in depth
+against DNS rebinding. If you deliberately run `next dev -H 0.0.0.0` (e.g. to test
+on a phone), `/admin` and `/api` return 404 from non-loopback hosts.
+
+Cross-origin writes (`POST`/`PUT`/`PATCH`/`DELETE` to `/api/*` with a foreign
+`Origin`, or `Sec-Fetch-Site: cross-site`) get **403** on staging and locally.
+`/admin` and `/api` responses also carry `X-Frame-Options: SAMEORIGIN`,
+`frame-ancestors 'self'`, `nosniff` and a strict `Referrer-Policy`.
 
 So the admin only ever appears on the single **staging** deployment, and that
 deployment requires login. The staging URL is public and predictable, so the
@@ -39,9 +50,22 @@ you want to exercise the real login flow locally):
 | `AUTH_GOOGLE_SECRET` | Google OAuth 2.0 **Client secret**.                          |
 
 > `AUTH_SECRET` **must** be set on every deployed (preview) environment. Without
-> it the gate cannot verify sessions. Local dev falls back to an insecure dev
-> secret purely so `pnpm dev` doesn't crash — it never protects anything, because
-> localhost bypasses the gate.
+> it Auth.js fails closed (no session can be issued or verified). The insecure dev
+> secret is used **only** when `NODE_ENV === 'development'` and not on Vercel, so
+> `pnpm dev` doesn't crash — it never protects anything, because localhost
+> bypasses the gate.
+
+Sessions are JWTs that expire after **12 hours** (refreshed hourly while in use).
+They can't be revoked early; signing out clears the cookie on that browser only.
+Rotating `AUTH_SECRET` invalidates every session at once.
+
+### Optional: restrict who can publish
+
+Set `ADMIN_PUBLISHER_EMAILS` (comma-separated, case-insensitive) on the Preview
+environment to limit `POST /api/publish`, `/api/pages/delete` and `/api/pages/move`
+to those accounts; everyone else on `@pingcap.com` gets **403** for those routes
+but can still edit and save drafts. Unset = any signed-in `@pingcap.com` user may
+publish.
 
 ## Google Cloud Console setup (one time)
 
@@ -113,9 +137,11 @@ The server resolves its GitHub token through `getGitHubToken()`
   **1-hour installation token** (cached until ~5 min before expiry). The App is
   installed on only this repo with only the permissions it needs (Contents: R/W),
   and commits are attributed to the App — not a person.
-- **Fallback — `GITHUB_TOKEN` PAT.** If the App vars are absent, the static PAT is
-  used, so nothing breaks before the App exists and local dev keeps working.
-  Remove `GITHUB_TOKEN` from Preview once the App is confirmed working.
+- **Fallback — `GITHUB_TOKEN` PAT.** Used **only when the App vars are absent**, so
+  nothing breaks before the App exists and local dev keeps working. Once the App is
+  configured, a failed App token mint fails closed (the route returns 500 and logs
+  the error) instead of silently falling back to the PAT. Remove `GITHUB_TOKEN` from
+  Preview once the App is confirmed working.
 
 ### GitHub App setup (one time)
 

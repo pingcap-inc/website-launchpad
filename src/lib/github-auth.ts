@@ -10,8 +10,9 @@ import crypto from 'crypto'
  *   - GITHUB_APP_PRIVATE_KEY           (PEM; literal \n are unescaped)
  *   - GITHUB_APP_INSTALLATION_ID       (optional; auto-resolved from the repo if absent)
  *
- * Fallback: the static GITHUB_TOKEN PAT, so nothing breaks before the App exists
- * and local dev keeps working. Remove GITHUB_TOKEN once the App is in place.
+ * Fallback: the static GITHUB_TOKEN PAT — used ONLY when no App is configured, so
+ * local dev and pre-App environments keep working. Once the App is configured a
+ * failed mint returns null (fail closed); remove GITHUB_TOKEN once the App is in place.
  *
  * The installation token is minted on demand and cached until shortly before it
  * expires; concurrent callers share a single in-flight mint.
@@ -96,9 +97,9 @@ async function mintInstallationToken(): Promise<string | null> {
 }
 
 /**
- * Returns a usable GitHub token, or null if none can be obtained. Prefers a cached,
- * still-valid App installation token; otherwise mints one; otherwise falls back to
- * the GITHUB_TOKEN PAT.
+ * Returns a usable GitHub token, or null if none can be obtained. When the App is
+ * configured: a cached, still-valid installation token, else a freshly minted one,
+ * else null (no PAT fallback). When no App is configured: the GITHUB_TOKEN PAT.
  */
 export async function getGitHubToken(): Promise<string | null> {
   if (!appConfigured()) {
@@ -113,9 +114,18 @@ export async function getGitHubToken(): Promise<string | null> {
     inflight = (async () => {
       try {
         const minted = await mintInstallationToken()
-        // If the App mint fails but a PAT is still around, use it so writes don't
-        // hard-fail during a misconfiguration.
-        return minted ?? process.env.GITHUB_TOKEN ?? null
+        // Fail closed: when the App is configured, never silently fall back to the
+        // long-lived GITHUB_TOKEN PAT — a broken App setup must surface, not quietly
+        // widen the credential in use. Callers return a 500 on null.
+        if (!minted) {
+          console.error(
+            '[github-auth] GitHub App is configured but minting an installation token failed; refusing to fall back to GITHUB_TOKEN.'
+          )
+        }
+        return minted
+      } catch (err) {
+        console.error('[github-auth] GitHub App token mint threw:', err)
+        return null
       } finally {
         inflight = null
       }

@@ -22,11 +22,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   // The middleware must leave /admin/login reachable without a session.
   pages: { signIn: '/admin/login' },
   // A real secret MUST be set (AUTH_SECRET) on every deployed environment. The
-  // dev fallback exists only so local `pnpm dev` doesn't crash — local requests
-  // are never gated on it (see middleware: localhost bypasses the login gate).
+  // fallback applies ONLY to local `next dev` off Vercel, so it doesn't crash —
+  // local requests are never gated on it (the middleware skips Auth.js there).
+  // Anywhere else a missing AUTH_SECRET leaves `secret` undefined and Auth.js fails
+  // closed (MissingSecret) instead of signing sessions with a public string.
   secret:
     process.env.AUTH_SECRET ??
-    (process.env.NODE_ENV === 'production' ? undefined : 'dev-only-insecure-secret'),
+    (process.env.NODE_ENV === 'development' && !process.env.VERCEL_ENV
+      ? 'dev-only-insecure-secret'
+      : undefined),
+  // JWT sessions can't be revoked server-side, so keep their lifetime short: a
+  // stolen or departed-employee session dies within a working day. Active users
+  // get the cookie re-issued at most hourly (sliding window).
+  session: { strategy: 'jwt', maxAge: 12 * 60 * 60, updateAge: 60 * 60 },
   providers: [
     // clientId / clientSecret are read from AUTH_GOOGLE_ID / AUTH_GOOGLE_SECRET.
     Google({
