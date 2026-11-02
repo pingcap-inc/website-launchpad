@@ -555,7 +555,11 @@ export function LatamPageClient({ initialLocale = DEFAULT_LOCALE }: { initialLoc
   return (
     <>
       <Header language={headerLanguage} />
-      <main className="pt-[62px] lg:pt-20">
+      {/* The root layout's <html lang> is fixed to English for the whole site;
+        this marks the localised body so screen readers and translators read it
+        in the right language. The header and footer stay English, so they sit
+        outside it. */}
+      <main lang={locale} className="pt-[62px] lg:pt-20">
         {/* ── 1. Hero ── */}
         <SectionWrapper style={{ background: 'primary', spacing: 'hero' }}>
           <HeroSection
