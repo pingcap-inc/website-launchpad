@@ -1,9 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import { ChevronRight, type LucideIcon } from 'lucide-react'
+import { ChevronRight, Globe, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { externalLinkProps, isExternalHref } from '@/lib/links'
+import { DEFAULT_LANGUAGE, SITE_LANGUAGES, type LanguageControl } from '@/lib/languages'
 import {
   type IconProps,
   CloudTIcon,
@@ -841,11 +842,15 @@ export function HeaderMobileMenu({
   isOpen,
   openAccordion,
   onToggleAccordion,
+  language,
 }: {
   isOpen: boolean
   openAccordion: string | null
   onToggleAccordion: (label: string) => void
+  language?: LanguageControl
 }) {
+  const currentLanguage = language?.current ?? DEFAULT_LANGUAGE
+
   return (
     <div
       className={cn(
@@ -888,6 +893,45 @@ export function HeaderMobileMenu({
               </a>
             </li>
           </ul>
+          {/* Same languages as the desktop selector. The links wrap beside the
+            globe rather than under it, and are padded to a comfortable tap
+            height. */}
+          <nav
+            aria-label="Language"
+            className="flex items-start gap-3 border-t border-carbon-800 pt-3 pb-4"
+          >
+            {/* Lined up with the first row of languages, not the whole block. */}
+            <Globe
+              size={20}
+              strokeWidth={1.25}
+              className="mt-[10px] shrink-0 text-text-inverse"
+              aria-hidden="true"
+            />
+            <div className="flex flex-wrap gap-x-5">
+              {SITE_LANGUAGES.map((item) => {
+                const isCurrent = item.code === currentLanguage
+                return (
+                  <a
+                    key={item.code}
+                    href={item.href}
+                    lang={item.code}
+                    hrefLang={item.code}
+                    aria-current={isCurrent ? 'true' : undefined}
+                    {...externalLinkProps(item.href)}
+                    onClick={(event) => {
+                      if (language?.onSelect?.(item.code)) event.preventDefault()
+                    }}
+                    className={cn(
+                      'py-2 text-base transition-colors duration-150',
+                      isCurrent ? 'font-semibold text-text-inverse' : 'font-normal text-carbon-400'
+                    )}
+                  >
+                    {item.label}
+                  </a>
+                )
+              })}
+            </div>
+          </nav>
           <div className="py-4 flex justify-center">
             <PrimaryButton
               href="https://tidbcloud.com/free-trial/"

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { cookies, headers } from 'next/headers'
-import { Header, Footer } from '@/components'
+import { Footer } from '@/components'
 import { JsonLd } from '@/components/ui/JsonLd'
 import { buildPageSchema, softwareApplicationSchema } from '@/lib/schema'
 import { LatamPageClient } from './LatamPageClient'
@@ -82,7 +82,8 @@ export default async function LatamLandingPage({
   return (
     <>
       <JsonLd data={schema} />
-      <Header />
+      {/* The header is rendered by LatamPageClient, which hands it the page's
+        language so the header's selector can switch it in place. */}
       <LatamPageClient initialLocale={locale} />
       <Footer showLanguageSwitcher={false} />
     </>

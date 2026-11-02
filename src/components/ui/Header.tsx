@@ -8,7 +8,9 @@ import { PrimaryButton } from './PrimaryButton'
 import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { isExternalHref } from '@/lib/links'
+import type { LanguageControl } from '@/lib/languages'
 import { cn } from '@/lib/utils'
+import { HeaderLanguageSwitcher } from './HeaderLanguageSwitcher'
 
 const HeaderMegaMenu = dynamic(() => import('./HeaderMenus').then((mod) => mod.HeaderMegaMenu))
 const HeaderMobileMenu = dynamic(() => import('./HeaderMenus').then((mod) => mod.HeaderMobileMenu))
@@ -44,6 +46,11 @@ const navItems: NavItemLite[] = [
     external: true,
   },
 ]
+
+// With the language selector in the row, the nav items run out of room below
+// 1150px, so they close up (12px -> 8px -> 4px a side). The AI pill keeps its
+// own padding. Measured to keep the row from overflowing down to 1024px.
+const NAV_ITEM_NARROW_PADDING = 'max-[1149px]:px-2 max-[1099px]:px-1'
 
 function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
@@ -90,7 +97,7 @@ function Navbar() {
                 'flex items-center gap-1.5 px-3 py-2 transition-colors duration-150 cursor-pointer',
                 item.label === 'AI'
                   ? 'bg-brand-red-primary text-text-inverse h-5 mr-3'
-                  : 'hover:text-carbon-400'
+                  : cn('hover:text-carbon-400', NAV_ITEM_NARROW_PADDING)
               )}
             >
               {item.label === 'AI' && (
@@ -107,7 +114,10 @@ function Navbar() {
               {...(item.external || isExternalHref(item.href)
                 ? { target: '_blank', rel: 'noopener noreferrer' }
                 : {})}
-              className="px-3 py-2 hover:text-carbon-400 transition-colors duration-150 block"
+              className={cn(
+                'px-3 py-2 hover:text-carbon-400 transition-colors duration-150 block',
+                NAV_ITEM_NARROW_PADDING
+              )}
             >
               {item.label}
             </a>
@@ -118,13 +128,31 @@ function Navbar() {
   )
 }
 
-export function Header() {
+/**
+ * `language` is only passed by a page that can switch language in place (the
+ * LATAM page); every other page is English and its selector links out.
+ */
+export function Header({ language }: { language?: LanguageControl } = {}) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openAccordion, setOpenAccordion] = useState<string | null>(null)
   const headerRef = useRef<HTMLElement>(null)
 
   const toggleAccordion = (label: string) =>
     setOpenAccordion((prev) => (prev === label ? null : label))
+
+  // A language switched in place from the mobile menu should also close it,
+  // so the visitor sees the page change.
+  const mobileLanguage: LanguageControl | undefined = language && {
+    current: language.current,
+    onSelect: (code) => {
+      const handled = language.onSelect?.(code) ?? false
+      if (handled) {
+        setMobileOpen(false)
+        setOpenAccordion(null)
+      }
+      return handled
+    },
+  }
 
   useEffect(() => {
     if (mobileOpen) {
@@ -168,7 +196,8 @@ export function Header() {
 
             <Navbar />
 
-            <div className="hidden lg:flex items-center gap-4 shrink-0">
+            <div className="hidden lg:flex items-center gap-4 max-[1099px]:gap-3 shrink-0">
+              <HeaderLanguageSwitcher language={language} />
               <GhostButton href="https://tidbcloud.com/signin">Sign In</GhostButton>
               <PrimaryButton href="https://tidbcloud.com/free-trial/">Start for Free</PrimaryButton>
             </div>
@@ -193,6 +222,7 @@ export function Header() {
             isOpen={mobileOpen}
             openAccordion={openAccordion}
             onToggleAccordion={toggleAccordion}
+            language={mobileLanguage}
           />
         )}
       </header>
