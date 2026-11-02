@@ -59,13 +59,14 @@ Sessions are JWTs that expire after **12 hours** (refreshed hourly while in use)
 They can't be revoked early; signing out clears the cookie on that browser only.
 Rotating `AUTH_SECRET` invalidates every session at once.
 
-### Optional: restrict who can publish
+### Who can delete pages
 
-Set `ADMIN_PUBLISHER_EMAILS` (comma-separated, case-insensitive) on the Preview
-environment to limit `POST /api/publish`, `/api/pages/delete` and `/api/pages/move`
-to those accounts; everyone else on `@pingcap.com` gets **403** for those routes
-but can still edit and save drafts. Unset = any signed-in `@pingcap.com` user may
-publish.
+Only the accounts listed in `ADMIN_DELETE_EMAILS` (comma-separated,
+case-insensitive, set on the Preview environment) may call `POST /api/pages/delete`
+on staging; everyone else on `@pingcap.com` gets **403** ("you are not allowed to
+delete pages"). The list **fails closed**: if it is unset or empty, nobody can
+delete pages on staging. Publishing, moving, copying and draft saves stay open to
+any signed-in `@pingcap.com` user. Local `pnpm dev` (no login) is not affected.
 
 ## Google Cloud Console setup (one time)
 
