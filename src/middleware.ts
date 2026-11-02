@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest, type NextFetchEvent } from 'next/server'
 import { auth } from '@/auth'
+import { canDeletePages } from '@/lib/admin-permissions'
 
 /**
  * Gates the admin surface (`/admin/*`) and its API routes (`/api/*`).
@@ -19,10 +20,9 @@ import { auth } from '@/auth'
  *   (enforced by the `signIn` callback in `@/auth`). The staging URL is public, so
  *   login — not obscurity — is what protects it.
  *
- * - Staging, page deletion allowlist: only the signed-in emails listed in
- *   ADMIN_DELETE_EMAILS (comma-separated) may call the endpoints in
- *   DELETE_ONLY_PATHS (403 for everyone else). The list fails CLOSED: unset or
- *   empty means nobody can delete pages on staging.
+ * - Staging, page deletion: only the accounts in `canDeletePages`
+ *   (`@/lib/admin-permissions`) may call the endpoints in DELETE_ONLY_PATHS;
+ *   everyone else gets 403.
  *
  * On every environment where the admin is reachable (local dev, staging), a
  * state-changing `/api/*` request carrying a cross-origin `Origin` header is
@@ -58,22 +58,12 @@ function isLoopbackHost(req: NextRequest): boolean {
   return LOOPBACK_HOSTNAMES.has(hostname.toLowerCase())
 }
 
-/** Endpoints that delete pages. Only ADMIN_DELETE_EMAILS may call them on staging. */
+/** Endpoints that delete pages. Only `canDeletePages` accounts may call them on staging. */
 const DELETE_ONLY_PATHS = ['/api/pages/delete']
 
 function isDeleteOnlyPath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, '')
   return DELETE_ONLY_PATHS.includes(p)
-}
-
-/** The configured deletion allowlist (lowercased). Empty when unset — nobody may delete. */
-function deleteAllowlist(): Set<string> {
-  return new Set(
-    (process.env.ADMIN_DELETE_EMAILS ?? '')
-      .split(',')
-      .map((e) => e.trim().toLowerCase())
-      .filter(Boolean)
-  )
 }
 
 // The authenticated gate for staging. Wrapping with `auth()` resolves the session
@@ -95,10 +85,9 @@ const stagingGate = auth((req) => {
 
   // `req.auth` is set only for a session that cleared the @pingcap.com signIn gate.
   if (req.auth) {
-    // Only listed accounts may delete pages; an unset list means nobody can.
+    // Only designated accounts may delete pages.
     if (isDeleteOnlyPath(pathname)) {
-      const email = req.auth.user?.email?.toLowerCase()
-      if (!email || !deleteAllowlist().has(email)) {
+      if (!canDeletePages(req.auth.user?.email)) {
         return NextResponse.json(
           { error: 'Forbidden: you are not allowed to delete pages' },
           { status: 403 }

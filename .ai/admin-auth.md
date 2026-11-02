@@ -61,12 +61,13 @@ Rotating `AUTH_SECRET` invalidates every session at once.
 
 ### Who can delete pages
 
-Only the accounts listed in `ADMIN_DELETE_EMAILS` (comma-separated,
-case-insensitive, set on the Preview environment) may call `POST /api/pages/delete`
-on staging; everyone else on `@pingcap.com` gets **403** ("you are not allowed to
-delete pages"). The list **fails closed**: if it is unset or empty, nobody can
-delete pages on staging. Publishing, moving, copying and draft saves stay open to
-any signed-in `@pingcap.com` user. Local `pnpm dev` (no login) is not affected.
+Only the accounts in `PAGE_DELETERS` (`src/lib/admin-permissions.ts`, currently
+`liwen.xu@pingcap.com`) may delete pages on staging. The rule is enforced in the
+middleware (`POST /api/pages/delete` → **403** "you are not allowed to delete pages"
+for anyone else), and the pages list only shows the Delete button to those
+accounts. Publishing, moving, copying and draft saves stay open to any signed-in
+`@pingcap.com` user. Local `pnpm dev` (no login) shows Delete and is not restricted.
+To change who can delete, edit `PAGE_DELETERS` and ship it through a PR.
 
 ## Google Cloud Console setup (one time)
 
