@@ -32,7 +32,7 @@ import {
 } from '@/components'
 import type { LanguageControl } from '@/lib/languages'
 import { type Locale, translations } from './translations'
-import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE, toLocale } from './detect-locale'
+import { DEFAULT_LOCALE, LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE, toLocale } from './detect-locale'
 import { cn } from '@/lib/utils'
 import { cdnAsset } from '@/lib/cdn-asset'
 
@@ -499,7 +499,7 @@ const partnerLogos = [
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Locale }) {
+export function LatamPageClient({ initialLocale = DEFAULT_LOCALE }: { initialLocale?: Locale }) {
   const [locale, setLocale] = useState<Locale>(initialLocale)
   const t = translations[locale]
 
@@ -519,13 +519,14 @@ export function LatamPageClient({ initialLocale = 'en' }: { initialLocale?: Loca
   }
 
   // The header's language selector stands in for a page-level one: it shows
-  // this page's language, and English, Español and Português switch the page
-  // in place. Any other language (日本語) falls through to its link.
+  // this page's language, and Español and Português switch the page in place.
+  // English and 日本語 fall through to their links — English goes to the
+  // English site's homepage, not this page in English.
   const headerLanguage: LanguageControl = {
     current: locale,
     onSelect: (code) => {
       const next = toLocale(code)
-      if (!next) return false
+      if (!next || next === 'en') return false
       handleLocaleChange(next)
       return true
     },
