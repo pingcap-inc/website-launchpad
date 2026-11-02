@@ -53,7 +53,7 @@ const dsl: PageDSL = {
     createdBy: 'a.hire@pingcap.com',
     createdAt: '2026-10-14T20:41:15.077Z',
     modifiedBy: 'a.hire@pingcap.com',
-    modifiedAt: '2026-10-14T20:41:15.077Z',
+    modifiedAt: '2026-11-02T18:11:41.080Z',
   },
   sections: [
     {
@@ -64,7 +64,7 @@ const dsl: PageDSL = {
         eyebrow: 'Integrations & Compatibility',
         headline: 'TiDB Integrations: Kubernetes, Kafka, Spark and Cloud',
         subheadline:
-          'TiDB and TiDB Cloud integrate with the tools modern engineering teams already run. Fully MySQL protocol compatible with standard drivers, JDBC, ODBC, and popular ORMs like Hibernate, Prisma, and SQLAlchemy.',
+          'TiDB and TiDB Cloud integrate with the tools modern engineering teams already run. MySQL protocol compatible with standard drivers, JDBC, ODBC, and popular ORMs like Hibernate, Prisma, and SQLAlchemy.',
         primaryCta: {
           text: 'Start for Free',
           href: 'https://tidbcloud.com/free-trial/',
