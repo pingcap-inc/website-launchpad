@@ -8,7 +8,12 @@ import type { Locale } from './translations'
  *   2. Cookie              — a language the visitor picked themselves
  *   3. Accept-Language     — the browser's own language preference
  *   4. IP country header   — where the request appears to come from
- *   5. English             — fallback
+ *   5. Portuguese          — fallback
+ *
+ * Only `?lang=en` shows the page in English. Every other signal resolves to
+ * Spanish or Portuguese: the language selector's English entry leads to the
+ * English site's homepage rather than this page, so an English browser — and
+ * any `en` cookie left from before that change — lands on the Portuguese page.
  *
  * Accept-Language is checked before the IP country on purpose: this app sits
  * behind an nginx proxy, so the country header may reflect the proxy's own
@@ -20,6 +25,11 @@ export const LOCALE_COOKIE = 'latam-locale'
 export const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // 1 year
 
 const SUPPORTED: Locale[] = ['en', 'es', 'pt']
+
+/** Languages the page picks for itself. English is only ever asked for via `?lang=`. */
+const AUTO_DETECTED: Locale[] = ['es', 'pt']
+
+export const DEFAULT_LOCALE: Locale = 'pt'
 
 /** ISO 3166-1 alpha-2 → locale. Latin America plus the European homelands. */
 const COUNTRY_LOCALE: Record<string, Locale> = {
@@ -65,6 +75,7 @@ export function localeFromCountry(country: string | undefined | null): Locale | 
 
 /**
  * Pick a locale from an Accept-Language header, honouring q-values.
+ * English entries are skipped, so "en-US,en;q=0.9,es;q=0.8" → 'es'.
  * e.g. "pt-BR,pt;q=0.9,en-US;q=0.8" → 'pt'
  */
 export function localeFromAcceptLanguage(header: string | undefined | null): Locale | undefined {
@@ -85,7 +96,7 @@ export function localeFromAcceptLanguage(header: string | undefined | null): Loc
     // Match the primary subtag so "pt-BR" and "es-419" both resolve.
     const primary = tag.split('-')[0]
     const match = toLocale(primary)
-    if (match) return match
+    if (match && AUTO_DETECTED.includes(match)) return match
   }
 
   return undefined
@@ -113,7 +124,8 @@ export function detectLocale(signals: LocaleSignals): LocaleDecision {
   if (fromQuery) return { locale: fromQuery, source: 'query' }
 
   const fromCookie = toLocale(signals.cookie)
-  if (fromCookie) return { locale: fromCookie, source: 'cookie' }
+  if (fromCookie && AUTO_DETECTED.includes(fromCookie))
+    return { locale: fromCookie, source: 'cookie' }
 
   const fromLanguage = localeFromAcceptLanguage(signals.acceptLanguage)
   if (fromLanguage) return { locale: fromLanguage, source: 'accept-language' }
@@ -121,7 +133,7 @@ export function detectLocale(signals: LocaleSignals): LocaleDecision {
   const fromCountry = localeFromCountry(signals.country)
   if (fromCountry) return { locale: fromCountry, source: 'country' }
 
-  return { locale: 'en', source: 'default' }
+  return { locale: DEFAULT_LOCALE, source: 'default' }
 }
 
 /**

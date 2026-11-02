@@ -7,13 +7,14 @@ import { LatamPageClient } from './LatamPageClient'
 import { LOCALE_COOKIE, countryFromHeaders, detectLocale } from './detect-locale'
 
 // Shared by both the metadata export and the JSON-LD graph so the two can't
-// drift. The page is localised at runtime, but its canonical/indexable
-// representation is the English one these strings describe.
+// drift. The page is localised at runtime on one URL, so these describe the
+// version a crawler gets: with no language signals it falls back to
+// Portuguese (see detect-locale.ts). Keep them in Portuguese while that holds.
 const PAGE_PATH = '/latam/'
 const PAGE_URL = 'https://www.pingcap.com/latam/'
-const PAGE_TITLE = 'Scale Your AI Agents on One Data Platform | TiDB Cloud'
+const PAGE_TITLE = 'Escale Agentes de IA em uma Plataforma de Dados | TiDB Cloud'
 const PAGE_DESCRIPTION =
-  "Build scalable, AI-ready apps on TiDB's data platform for always-on transactions, real-time intelligence, and cloud-native growth."
+  'Crie aplicações prontas para IA no TiDB, banco de dados distribuído compatível com MySQL para transações sempre ativas e dados em tempo real.'
 const OG_IMAGE = 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'
 
 export const metadata: Metadata = {
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
       },
     ],
     type: 'website',
-    locale: 'en_US',
+    locale: 'pt_BR',
   },
   twitter: {
     card: 'summary_large_image',
@@ -52,13 +53,13 @@ const schema = buildPageSchema({
   image: OG_IMAGE,
   breadcrumbs: [
     { name: 'Home', path: '/' },
-    { name: 'Distributed SQL for Latin America', path: PAGE_PATH },
+    { name: 'SQL Distribuído para a América Latina', path: PAGE_PATH },
   ],
   extraSchemas: [
     softwareApplicationSchema({
       name: 'TiDB Cloud',
       description:
-        'A distributed SQL database platform for always-on transactions, real-time analytics, vector search, and AI-native applications.',
+        'Uma plataforma de banco de dados SQL distribuído para transações sempre ativas, análises em tempo real, busca vetorial e aplicações nativas de IA.',
       url: 'https://www.pingcap.com/tidb/cloud/',
     }),
   ],
