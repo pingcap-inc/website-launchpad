@@ -7,7 +7,7 @@
     "createdBy": "a.hire@pingcap.com",
     "createdAt": "2026-10-14T20:41:15.077Z",
     "modifiedBy": "a.hire@pingcap.com",
-    "modifiedAt": "2026-11-02T18:11:41.080Z"
+    "modifiedAt": "2026-11-02T18:15:44.957Z"
   },
   "sections": [
     {
@@ -165,7 +165,7 @@
       "id": "mysql-compatibility",
       "type": "cta",
       "props": {
-        "title": "TiDB Is Fully MySQL Compatible",
+        "title": "TiDB Is MySQL Compatible",
         "subtitle": " Most integrations rely on open standards like JDBC and ODBC — reducing friction when migrating or modernizing existing workloads. If you are modernizing legacy systems, see how to Modernize MySQL workloads with TiDB.",
         "image": {
           "image": { "url": "https://static.pingcap.com/images/f2890cff-cta-cube-violet-mini.svg" },
@@ -623,8 +623,8 @@
         "title": "Integration FAQs",
         "items": [
           {
-            "q": "Is TiDB fully MySQL compatible?",
-            "a": "Yes. TiDB supports the MySQL protocol and works with standard MySQL drivers."
+            "q": "Is TiDB MySQL compatible?",
+            "a": "TiDB supports the MySQL protocol and works with standard MySQL drivers."
           },
           {
             "q": "Does TiDB integrate with Kafka?",
