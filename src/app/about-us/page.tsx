@@ -176,12 +176,11 @@ const dsl: PageDSL = {
           {
             type: 'content',
             content:
-              "This year something new happened. Most of the databases created on TiDB Cloud weren't started by a person at all. They were started by AI agents, building apps on someone's behalf.\n\nIt's a different kind of user, but it's the problem we started with: the database shouldn't be what holds the work back.",
+              "This year, something changed. Most new databases on TiDB Cloud weren't started by a person. They were started by AI agents building apps for someone.\n\nIt's a new kind of user with the same old problem: the database shouldn't hold the work back. Behind every agent is still a person who needs that work to be there tomorrow. That's who we build for.",
           },
           {
             type: 'content',
-            content:
-              "Agents are temporary. Their work isn't. Behind every agent there is still a person who needs that work to be there tomorrow, and a team that needs it to be correct.\n\nThat's who we build for. Whether it's an enterprise running core systems or a startup shipping something new this week, it's the same database underneath.",
+            content: '> "Agents are temporary. Their work isn\'t."',
           },
         ],
       },
