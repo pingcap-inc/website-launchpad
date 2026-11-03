@@ -6,18 +6,27 @@ sign-in, restricted to the `pingcap.com` email domain. Implemented with
 
 ## Gate behaviour (see `src/middleware.ts`)
 
-| Environment                | Condition                                                           | Behaviour                                                                                                |
-| -------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Production                 | `VERCEL_ENV === 'production'`                                       | `/admin` + `/api` return **404** (unchanged)                                                             |
-| Preview — non-`staging`    | `VERCEL_ENV === 'preview'`, git ref ≠ `staging`                     | **404** — admin is hidden on per-PR previews                                                             |
-| Preview — `staging` branch | `VERCEL_ENV === 'preview'`, git ref = `staging`                     | **Require** a signed-in `@pingcap.com` Google user                                                       |
-| Local (`pnpm dev`)         | `VERCEL_ENV` unset, `NODE_ENV === 'development'`                    | **No** login gate, but only for a loopback `Host` (localhost / 127.0.0.1 / [::1]); anything else **404** |
-| Anything else              | e.g. `next start` off Vercel, unknown `VERCEL_ENV`, missing git ref | **404** — fails closed                                                                                   |
+| Environment                | Condition                                                           | Behaviour                                                                                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Production                 | `VERCEL_ENV === 'production'`                                       | `/admin` + `/api` return **404** (unchanged)                                                                                                                                                             |
+| Preview — non-`staging`    | `VERCEL_ENV === 'preview'`, git ref ≠ `staging`                     | **404** — admin is hidden on per-PR previews                                                                                                                                                             |
+| Preview — `staging` branch | `VERCEL_ENV === 'preview'`, git ref = `staging`                     | **Require** a signed-in `@pingcap.com` Google user                                                                                                                                                       |
+| Local (`pnpm dev`)         | `VERCEL_ENV` unset, `NODE_ENV === 'development'`                    | **Require** login (same as staging) by default; skipped only with `ADMIN_DEV_AUTH_BYPASS=1` in `.env.local`, and then only for a loopback `Host` (localhost / 127.0.0.1 / [::1]) — anything else **404** |
+| Anything else              | e.g. `next start` off Vercel, unknown `VERCEL_ENV`, missing git ref | **404** — fails closed                                                                                                                                                                                   |
 
-`pnpm dev` binds to `127.0.0.1` (`next dev -H 127.0.0.1`), so the ungated local
-admin is not reachable from the LAN. The loopback-`Host` check is defense in depth
-against DNS rebinding. If you deliberately run `next dev -H 0.0.0.0` (e.g. to test
-on a phone), `/admin` and `/api` return 404 from non-loopback hosts.
+Local development is **secure by default**: without the opt-out it goes through
+the same Auth.js gate as staging (sign in with a `@pingcap.com` Google account,
+which needs `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` locally). To work without
+logging in on your own machine, add `ADMIN_DEV_AUTH_BYPASS=1` to `.env.local`
+(exactly `1`; see `src/lib/dev-auth.ts`). The opt-out only applies under `next dev`
+off Vercel, so a container or VM started with `NODE_ENV=development`, or a fresh
+checkout without the flag, still requires login.
+
+With the opt-out, `pnpm dev` binds to `127.0.0.1` (`next dev -H 127.0.0.1`), so the
+ungated local admin is not reachable from the LAN, and requests whose `Host` isn't a
+loopback name get 404 (defense in depth against DNS rebinding). If you deliberately
+run `next dev -H 0.0.0.0` (e.g. to test on a phone), `/admin` and `/api` return 404
+from non-loopback hosts.
 
 Cross-origin writes (`POST`/`PUT`/`PATCH`/`DELETE` to `/api/*` with a foreign
 `Origin`, or `Sec-Fetch-Site: cross-site`) get **403** on staging and locally.
@@ -66,7 +75,8 @@ Only the accounts in `PAGE_DELETERS` (`src/lib/admin-permissions.ts`, currently
 middleware (`POST /api/pages/delete` → **403** "you are not allowed to delete pages"
 for anyone else), and the pages list only shows the Delete button to those
 accounts. Publishing, moving, copying and draft saves stay open to any signed-in
-`@pingcap.com` user. Local `pnpm dev` (no login) shows Delete and is not restricted.
+`@pingcap.com` user. Local `pnpm dev` with `ADMIN_DEV_AUTH_BYPASS=1` (no login) shows
+Delete and is not restricted; without it, the same rule as staging applies.
 To change who can delete, edit `PAGE_DELETERS` and ship it through a PR.
 
 ## Google Cloud Console setup (one time)
