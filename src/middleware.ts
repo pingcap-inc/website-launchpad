@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest, type NextFetchEvent } from 'next/server'
 import { auth } from '@/auth'
 import { canDeletePages } from '@/lib/admin-permissions'
+import { isLocalDevAuthBypass } from '@/lib/dev-auth'
 
 /**
  * Gates the admin surface (`/admin/*`) and its API routes (`/api/*`).
@@ -9,11 +10,12 @@ import { canDeletePages } from '@/lib/admin-permissions'
  *   AUTH_SECRET in production can't surface as a 500 on these paths.
  * - Any deployed branch other than `staging` (per-PR previews, etc.): also 404,
  *   so the admin only ever appears on the single staging deployment.
- * - Local development (`next dev`, i.e. NODE_ENV === 'development'): no login gate,
- *   but only for loopback requests. `pnpm dev` binds to 127.0.0.1 (the real control,
- *   so other machines on the LAN can't reach it); in addition any request whose Host
- *   isn't localhost / 127.0.0.1 / [::1] is refused, as defense in depth against DNS
- *   rebinding. Auth.js is not invoked, keeping the dev loop friction-free.
+ * - Local development (`next dev`, i.e. NODE_ENV === 'development'): login is
+ *   REQUIRED by default, exactly as on staging. A developer may opt out for their
+ *   own machine with `ADMIN_DEV_AUTH_BYPASS=1` in `.env.local` (see
+ *   `isLocalDevAuthBypass`); even then only loopback requests are let through —
+ *   `pnpm dev` binds to 127.0.0.1, and any request whose Host isn't localhost /
+ *   127.0.0.1 / [::1] is refused (defense in depth against DNS rebinding).
  * - Anything else without VERCEL_ENV (e.g. `next start` on a non-Vercel host):
  *   404. The gate fails CLOSED — an unknown environment never gets an open admin.
  * - Staging preview: requires a signed-in Google user on the @pingcap.com domain
@@ -136,21 +138,27 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
     return new NextResponse(null, { status: 404 })
   }
 
-  // Not on Vercel. Only genuine local development (`next dev`) is let through
-  // ungated; any other host (e.g. `next start` on a VM) fails closed.
+  // Not on Vercel. Only `next dev` may serve the admin at all; any other host
+  // (e.g. `next start` on a VM) fails closed.
   if (!vercelEnv) {
     if (process.env.NODE_ENV !== 'development') {
       return new NextResponse(null, { status: 404 })
     }
     // Defense in depth (DNS rebinding / a dev server accidentally bound to 0.0.0.0):
-    // the ungated admin only answers to a loopback Host.
+    // the local admin only answers to a loopback Host.
     if (!isLoopbackHost(req)) {
       return new NextResponse(null, { status: 404 })
     }
     if (isCrossOriginApiWrite(req)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
-    return withSecurityHeaders(NextResponse.next())
+    // Login is skipped only when the developer explicitly opted out locally.
+    if (isLocalDevAuthBypass()) {
+      return withSecurityHeaders(NextResponse.next())
+    }
+    return withSecurityHeaders(
+      await stagingGate(req, ev as unknown as Parameters<typeof stagingGate>[1])
+    )
   }
 
   // Deployed but not the staging branch (VERCEL_ENV is 'preview' for every branch

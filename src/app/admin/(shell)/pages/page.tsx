@@ -1,11 +1,12 @@
 import { auth } from '@/auth'
 import { canDeletePages } from '@/lib/admin-permissions'
+import { isLocalDevAuthBypass } from '@/lib/dev-auth'
 import PagesClient from './PagesClient'
 
 export default async function PagesPage() {
-  // Local `pnpm dev` has no login gate, so keep Delete available there.
-  const isLocalDev = process.env.NODE_ENV === 'development' && !process.env.VERCEL_ENV
-  const session = isLocalDev ? null : await auth()
+  // With the explicit local opt-out there is no login, so keep Delete available.
+  const bypass = isLocalDevAuthBypass()
+  const session = bypass ? null : await auth()
 
-  return <PagesClient canDelete={isLocalDev || canDeletePages(session?.user?.email)} />
+  return <PagesClient canDelete={bypass || canDeletePages(session?.user?.email)} />
 }
