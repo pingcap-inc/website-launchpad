@@ -1,19 +1,19 @@
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/ui/JsonLd'
-import { buildPageSchema, withFaqFromDSL } from '@/lib/schema'
+import { buildPageSchema } from '@/lib/schema'
 import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
-  title: 'About TiDB | One Data Foundation for Enterprise and AI',
+  title: 'About Us | How Three Engineers Built TiDB and PingCAP',
   description:
-    'TiDB is the distributed SQL database for enterprise applications and AI agents. Open source at its core since 2015, headquartered in Sunnyvale, CA.',
+    'PingCAP started in 2015 when three infrastructure engineers built the database they wished they had, in the open. This is the story of TiDB.',
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/about-us/' },
   openGraph: {
-    title: 'About TiDB | One Data Foundation for Enterprise and AI',
+    title: 'About Us | How Three Engineers Built TiDB and PingCAP',
     description:
-      'TiDB is the distributed SQL database for enterprise applications and AI agents. Open source at its core since 2015, headquartered in Sunnyvale, CA.',
+      'PingCAP started in 2015 when three infrastructure engineers built the database they wished they had, in the open. This is the story of TiDB.',
     url: 'https://www.pingcap.com/about-us/',
     siteName: 'TiDB',
     images: [
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/about-us/',
-  title: 'About TiDB | One Data Foundation for Enterprise and AI',
+  title: 'About Us | How Three Engineers Built TiDB and PingCAP',
   description:
-    'TiDB is the distributed SQL database for enterprise applications and AI agents. Open source at its core since 2015, headquartered in Sunnyvale, CA.',
+    'PingCAP started in 2015 when three infrastructure engineers built the database they wished they had, in the open. This is the story of TiDB.',
   pageType: 'AboutPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
@@ -46,11 +46,11 @@ const schema = buildPageSchema({
 })
 
 const dsl: PageDSL = {
-  pageName: 'About TiDB | One Data Foundation for Enterprise and AI',
+  pageName: 'About Us | How Three Engineers Built TiDB and PingCAP',
   meta: {
-    title: 'About TiDB | One Data Foundation for Enterprise and AI',
+    title: 'About Us | How Three Engineers Built TiDB and PingCAP',
     description:
-      'TiDB is the distributed SQL database for enterprise applications and AI agents. Open source at its core since 2015, headquartered in Sunnyvale, CA.',
+      'PingCAP started in 2015 when three infrastructure engineers built the database they wished they had, in the open. This is the story of TiDB.',
     canonical: '/about-us/',
     breadcrumbName: 'About Us',
     createdBy: 'a.hire@pingcap.com',
@@ -62,18 +62,17 @@ const dsl: PageDSL = {
       type: 'hero',
       props: {
         layout: 'centered',
-        eyebrow: 'About TiDB',
-        headline:
-          'One Data Foundation for <span class="text-gradient-violet">Enterprise Apps and AI Agents</span>',
+        eyebrow: 'About Us',
+        headline: 'We Built the Database We Wished We Had',
         subheadline:
-          'Enterprises and AI-native teams start from different places. They end up needing the same database: one that scales without giving up consistency. TiDB is built for both.',
+          "TiDB started in 2015 with three infrastructure engineers and a problem they couldn't stop thinking about. This is the story of what they built, who it's for, and where it's going.",
         primaryCta: {
-          text: 'Start for Free',
-          href: 'https://tidbcloud.com/free-trial/',
+          text: 'Explore Job Openings',
+          href: 'https://www.pingcap.com/careers/',
         },
         secondaryCta: {
-          text: 'Book a Demo',
-          href: 'https://www.pingcap.com/demo/',
+          text: 'Try TiDB',
+          href: 'https://tidbcloud.com/free-trial/',
         },
       },
       style: {
@@ -81,35 +80,57 @@ const dsl: PageDSL = {
       },
     },
     {
-      id: 'stats',
-      type: 'stats',
+      id: 'how-it-started',
+      type: 'columns',
       props: {
-        title: 'TiDB at a Glance',
-        columns: 4,
+        eyebrow: '2015',
+        title: 'It Started with a Frustration',
+        layout: 'columns',
+        itemColumns: 2,
         items: [
           {
-            icon: 'GitBranch',
-            value: '2015',
-            label: 'Founded',
-            description: 'By three infrastructure engineers, as an open source project',
+            type: 'content',
+            content:
+              "In 2015, three infrastructure engineers were tired of how databases were managed at large internet companies. Every time an application grew, managing, scaling, and maintaining the database took far more effort than it should have.\n\nThey looked for a database that could grow with the application without that pain. They didn't find one. So they started building it, in the open, and named the company PingCAP.\n\nThat project became TiDB. Max Liu, one of the three, still leads the company as CEO. You can [watch him talk about the architecture behind it](https://youtu.be/g0OikEsHPV4).",
           },
           {
-            icon: 'Database',
-            value: '10 PB',
-            label: 'Data in a single cluster',
-            description: 'Up from 1 PB a year earlier, alongside 3M+ tables per cluster',
+            type: 'media',
+            image: {
+              image: {
+                url: 'https://static.pingcap.com/files/2024/05/12232917/Max-The-Rise-of-HTAP-New-1.png',
+                alt: 'Max Liu, co-founder and CEO of PingCAP, speaking on stage',
+                width: 1200,
+                height: 675,
+              },
+              alt: 'Max Liu, co-founder and CEO of PingCAP, speaking on stage',
+              width: 1200,
+              height: 675,
+            },
+          },
+        ],
+      },
+      style: {
+        spacing: 'section',
+      },
+    },
+    {
+      id: 'open-from-day-one',
+      type: 'columns',
+      props: {
+        eyebrow: 'Open Source',
+        title: 'Open from Day One',
+        layout: 'columns',
+        itemColumns: 2,
+        items: [
+          {
+            type: 'content',
+            content:
+              "Open source wasn't a decision we made later. TiDB was open from the first commit, and it still is. Hundreds of contributors around the world help build it, and TiKV, the storage engine underneath TiDB, is a graduated project of the Cloud Native Computing Foundation.\n\nWorking in the open keeps us honest. Anyone can read the code, question a design choice, or fix something we missed. By the end of 2026, we plan to open source the core of TiDB X, our newest architecture, so the next version of TiDB is built the same way the first one was.",
           },
           {
-            icon: 'Cloud',
-            value: '3M',
-            label: 'Instances on TiDB Cloud Starter',
-            description: 'Up from tens of thousands six months earlier',
-          },
-          {
-            icon: 'Bot',
-            value: '99%+',
-            label: 'Created by AI agents',
-            description: 'Share of those Starter instances provisioned by agents, not people',
+            type: 'content',
+            content:
+              '> "Open source is our gene. It\'s our DNA. It has been open for us since day one. As an engineer, I love open source."\n\nMax Liu, co-founder and CEO',
           },
         ],
       },
@@ -119,36 +140,23 @@ const dsl: PageDSL = {
       },
     },
     {
-      id: 'two-paths',
-      type: 'featureHighlights',
+      id: 'built-with-customers',
+      type: 'columns',
       props: {
-        eyebrow: 'Our Mission',
-        title: 'Different Starting Points, One Data Foundation',
-        subtitle:
-          'Our mission is to give engineers a database that keeps up, whether the user is a person or an agent. Our theme for 2026 is infinite agents and infinite data, running on the same infrastructure. Enterprise systems and AI agents are converging on the same requirements from opposite directions, and TiDB serves both.',
-        columns: 2,
+        eyebrow: 'Our Customers',
+        title: 'Built Alongside the People Who Run It',
+        layout: 'columns',
+        itemColumns: 2,
         items: [
           {
-            variant: 'red',
-            icon: 'Building',
-            title: 'Enterprise: Infinite Data',
-            description:
-              'Consolidate database fleets, migrate with zero downtime, and run across regions with the consistency core systems depend on.',
-            cta: {
-              text: 'Plan a migration',
-              href: '/developers/migration-center/',
-            },
+            type: 'content',
+            content:
+              "The hardest problems we've worked on came from customers who wouldn't accept a limit. Atlassian runs Jira and Confluence for tens of millions of people on systems that can never go down. Pinterest, Plaid, Flipkart, and many others brought workloads their previous databases struggled to handle.\n\nEach of them pushed TiDB further than we would have on our own. Ten years in, we still build it the same way: alongside the engineers who depend on it.",
           },
           {
-            variant: 'violet',
-            icon: 'Bot',
-            title: 'AI-Native: Infinite Agents',
-            description:
-              'Give every agent its own isolated database in under a second, with vectors, transactions, and analytics in one engine and state that outlives the session.',
-            cta: {
-              text: 'Explore TiDB for AI',
-              href: '/ai/',
-            },
+            type: 'content',
+            content:
+              '> "For our customers, this is not ephemeral data. This is their system of record. We do not tolerate any downtime."\n\nVinod Kumar, Atlassian, speaking at TiDB SCaiLE 2026',
           },
         ],
       },
@@ -157,190 +165,23 @@ const dsl: PageDSL = {
       },
     },
     {
-      id: 'customers',
-      type: 'caseStudyCards',
+      id: 'whats-changing',
+      type: 'columns',
       props: {
-        eyebrow: 'Customers',
-        title: 'Proven by Enterprises and AI Pioneers',
+        eyebrow: 'Today',
+        title: 'A New Kind of User, the Same Old Problem',
+        layout: 'columns',
+        itemColumns: 2,
         items: [
           {
-            badge: 'Enterprise Consolidation',
-            logo: {
-              image: {
-                url: 'https://static.pingcap.com/images/efcf8f2a-atlassian_logo_inverse_rgb_2x.png',
-                alt: 'Atlassian logo',
-                width: 592,
-                height: 96,
-              },
-              alt: 'Atlassian logo',
-              width: 592,
-              height: 96,
-            },
-            title: '750+ PostgreSQL Clusters Consolidated into 16',
-            description:
-              'Atlassian serves tens of millions of active users across Jira and Confluence, and runs its Forge SQL service on TiDB with more than 3 million tables.',
-            stats: [
-              {
-                value: '750+ → 16',
-                label: 'Clusters consolidated',
-              },
-              {
-                value: '3M+',
-                label: 'Tables supported',
-              },
-            ],
-            href: 'https://www.pingcap.com/blog/how-atlassian-scaled-three-million-tables-multi-tenancy-tidb/',
-            cta: 'Read the story',
+            type: 'content',
+            content:
+              "This year something new happened. Most of the databases created on TiDB Cloud weren't started by a person at all. They were started by AI agents, building apps on someone's behalf.\n\nIt's a different kind of user, but it's the problem we started with: the database shouldn't be what holds the work back.",
           },
           {
-            badge: 'Infrastructure Efficiency',
-            logo: {
-              image: {
-                url: 'https://static.pingcap.com/images/51545d7d-pinterest-logo.svg',
-                alt: 'Pinterest logo',
-                width: 181,
-                height: 50,
-              },
-              alt: 'Pinterest logo',
-              width: 181,
-              height: 50,
-            },
-            title: 'A Graph Service Modernized on Distributed SQL',
-            description:
-              'Pinterest moved its graph service to TiDB and cut infrastructure cost by around half.',
-            stats: [
-              {
-                value: '~50%',
-                label: 'Infrastructure savings',
-              },
-              {
-                value: '10x',
-                label: 'Lower P99 latency',
-              },
-            ],
-            href: 'https://www.pingcap.com/blog/why-pinterest-modernized-graph-service-distributed-sql/',
-            cta: 'Read the story',
-          },
-          {
-            badge: 'Tenant Isolation at Scale',
-            logo: {
-              image: {
-                url: 'https://static.pingcap.com/images/0fc78057-manus.svg',
-                alt: 'Manus logo',
-                width: 165,
-                height: 48,
-              },
-              alt: 'Manus logo',
-              width: 165,
-              height: 48,
-            },
-            title: 'From Viral Launch to 1.5M+ Clusters',
-            description:
-              'Manus migrated to TiDB Cloud in two weeks and has since scaled to more than 1.5 million clusters behind its agents.',
-            stats: [
-              {
-                value: '2 wks',
-                label: 'Migration time',
-              },
-              {
-                value: '1.5M+',
-                label: 'TiDB Cloud clusters',
-              },
-            ],
-            href: 'https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/',
-            cta: 'Read the story',
-          },
-          {
-            badge: 'Persistent Agent Workspaces',
-            logo: {
-              image: {
-                url: 'https://static.pingcap.com/images/68b65a2a-20260525-230213.png',
-                alt: 'Kimi logo',
-                width: 1511,
-                height: 512,
-              },
-              alt: 'Kimi logo',
-              width: 1511,
-              height: 512,
-            },
-            title: '1M+ Persistent Filesystems for Agents',
-            description:
-              "Moonshot AI's Kimi runs more than one million persistent filesystems on TiDB Cloud Filesystem and cut data infrastructure costs by an order of magnitude.",
-            stats: [
-              {
-                value: '1M+',
-                label: 'Persistent filesystems',
-              },
-              {
-                value: '10x',
-                label: 'Lower data infrastructure cost',
-              },
-            ],
-            href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
-            cta: 'Read the story',
-          },
-        ],
-      },
-      style: {
-        background: 'gray',
-        spacing: 'section',
-      },
-    },
-    {
-      id: 'history',
-      type: 'featureCard',
-      props: {
-        eyebrow: 'Our History',
-        title: 'Built in the Open Since 2015',
-        subtitle:
-          'PingCAP was founded by three infrastructure engineers who wanted a better way to run databases at scale. They built it as open source, and that is still how TiDB is made.',
-        columns: 4,
-        items: [
-          {
-            label: '2015',
-            icon: 'GitBranch',
-            title: 'Founded as Open Source',
-            description:
-              'TiDB starts as an open source project and stays that way. Hundreds of contributors join over the years, and its storage layer, TiKV, becomes a CNCF Graduated project.',
-          },
-          {
-            label: '2025',
-            icon: 'Layers',
-            title: 'TiDB X Announced',
-            description:
-              'A new architecture that puts object storage at the backbone of TiDB, unveiled at the 2025 keynote.',
-          },
-          {
-            label: 'October 2026',
-            icon: 'Rocket',
-            title: 'TiDB SCaiLE 2026',
-            description:
-              'TiDB X now powers every new TiDB Cloud cluster by default. New: TiDB Cloud Zero for agents, TiDB Cloud Premium GA planned for November, plus BYOC, TiDB Cloud Filesystem, and PostgreSQL support on Starter in public preview.',
-            href: 'https://www.pingcap.com/press-release/tidb-scaile-2026-announcements/',
-          },
-          {
-            label: 'End of 2026',
-            icon: 'Code2',
-            title: 'TiDB X Core Goes Open Source',
-            description:
-              'The core code of TiDB X is planned to be open sourced by the end of 2026, with a zero-downtime rolling upgrade path from TiDB classic targeted for October 2027.',
-          },
-        ],
-      },
-      style: {
-        spacing: 'section',
-      },
-    },
-    {
-      id: 'ceo-quote',
-      type: 'testimonials',
-      props: {
-        title: 'Open Source Is Our DNA',
-        items: [
-          {
-            quote:
-              "Open source is our gene. It's our DNA. It was open for us from day one, and we believe open source is the best way to collaborate and innovate faster.",
-            author: 'Max Liu, Co-Founder and CEO, at TiDB SCaiLE 2026',
+            type: 'content',
+            content:
+              "Agents are temporary. Their work isn't. Behind every agent there is still a person who needs that work to be there tomorrow, and a team that needs it to be correct.\n\nThat's who we build for. Whether it's an enterprise running core systems or a startup shipping something new this week, it's the same database underneath.",
           },
         ],
       },
@@ -395,61 +236,23 @@ const dsl: PageDSL = {
         ],
       },
       style: {
-        background: 'primary',
         spacing: 'section',
-      },
-    },
-    {
-      id: 'faq',
-      type: 'faq',
-      props: {
-        title: 'Company Facts',
-        items: [
-          {
-            q: 'What is TiDB?',
-            a: 'TiDB is the distributed SQL database for enterprise applications and AI agents. It runs transactions, analytics, and vector search in one engine, with MySQL compatibility and PostgreSQL support in public preview on TiDB Cloud Starter.',
-          },
-          {
-            q: 'What is TiDB X?',
-            a: "TiDB X is TiDB's new architecture. It separates compute from storage, and separates heavy background work like indexing and compaction from online transactions, so latency stays flat as workloads grow. It powers every new TiDB Cloud cluster by default.",
-          },
-          {
-            q: 'When was PingCAP founded?',
-            a: 'PingCAP was founded in 2015 by three infrastructure engineers. TiDB has been open source from the start.',
-          },
-          {
-            q: 'Where is TiDB headquartered?',
-            a: 'TiDB is headquartered in Sunnyvale, California, and serves customers worldwide.',
-          },
-          {
-            q: 'Who leads the company?',
-            a: 'Max Liu is the co-founder and CEO.',
-          },
-          {
-            q: 'Is TiDB open source?',
-            a: 'Yes. TiDB and its storage layer, TiKV, are open source, and TiKV is a CNCF Graduated project. The core code of TiDB X is planned to be open sourced by the end of 2026.',
-          },
-        ],
-      },
-      style: {
-        spacing: 'section',
-        background: 'gray',
       },
     },
     {
       id: 'cta',
       type: 'cta',
       props: {
-        title: 'Build on One Data Foundation',
+        title: 'Come Build with Us',
         subtitle:
-          'Start free on TiDB Cloud, or join the team building it. We hire people who love open source and big problems.',
+          "We're engineers and builders who love open source and hard problems. We're headquartered in Sunnyvale, California, and work with customers around the world.",
         primaryCta: {
-          text: 'Start for Free',
-          href: 'https://tidbcloud.com/free-trial/',
-        },
-        secondaryCta: {
           text: 'Explore Job Openings',
           href: 'https://www.pingcap.com/careers/',
+        },
+        secondaryCta: {
+          text: 'Start for Free',
+          href: 'https://tidbcloud.com/free-trial/',
         },
       },
       style: {
@@ -463,7 +266,7 @@ const dsl: PageDSL = {
 export default function GeneratedPage() {
   return (
     <>
-      <JsonLd data={withFaqFromDSL(schema, dsl)} />
+      <JsonLd data={schema} />
       <PageRenderer dsl={dsl} withChrome />
     </>
   )
