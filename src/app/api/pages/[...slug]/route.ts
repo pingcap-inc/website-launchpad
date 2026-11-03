@@ -29,6 +29,9 @@ function creatorOf(content: string | undefined): { createdBy?: string; createdAt
   }
 }
 
+// A DSL is a few hundred KB at most; 2 MB leaves ample headroom.
+const DSL_BODY_LIMIT = 2 * 1024 * 1024
+
 function getSlug(params: { slug?: string[] }) {
   return (params.slug ?? []).join('/')
 }
@@ -79,6 +82,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 /**
  * PUT /api/pages/[...slug]
  * Saves an updated page.dsl.json to GitHub (draft save — does not publish page.tsx).
+ * Writes to the draft branch unless the caller explicitly names another allowlisted
+ * branch, so an omitted `branch` can never land on the published (staging) branch.
  */
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug: string[] }> }) {
   const { slug: slugParts } = await params
@@ -94,12 +99,12 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 })
   }
 
-  const parsed = await readJsonBody<{ dsl: PageDSL; branch?: string }>(req)
+  const parsed = await readJsonBody<{ dsl: PageDSL; branch?: string }>(req, DSL_BODY_LIMIT)
   if (!parsed.ok) return parsed.response
   const body = parsed.data
   const { dsl } = body
-  // Allow caller to override branch (e.g. 'drafts/ai' for draft saves), within the allowlist.
-  const writeBranch = body.branch ?? branch
+  // Default to the draft branch; writing to the published branch must be explicit.
+  const writeBranch = body.branch ?? DRAFT_BRANCH
   if (typeof writeBranch !== 'string' || !isAllowedBranch(writeBranch)) {
     return NextResponse.json({ error: 'Invalid branch' }, { status: 400 })
   }
@@ -132,7 +137,21 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
       `${baseUrl}/contents/src/app/${slug}/page.tsx?ref=${encodeURIComponent(writeBranch)}`,
       { headers }
     )
-    if (codePage.ok) {
+    // Fail closed: only a definitive 404 proves there is no hand-authored page.
+    if (codePage.status !== 404) {
+      if (!codePage.ok) {
+        await logAudit(req, {
+          action: 'draft-save',
+          target: slug,
+          branch: writeBranch,
+          status: 'error',
+          detail: `code-owned check failed (${codePage.status})`,
+        })
+        return NextResponse.json(
+          { error: 'Could not verify the page is not code-owned' },
+          { status: 502 }
+        )
+      }
       await logAudit(req, {
         action: 'draft-save',
         target: slug,
@@ -180,6 +199,13 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
 
   if (!res.ok) {
     console.error('[pages] DSL save failed:', res.status, await res.text().catch(() => ''))
+    await logAudit(req, {
+      action: 'draft-save',
+      target: slug,
+      branch: writeBranch,
+      status: 'error',
+      detail: `github ${res.status}`,
+    })
     return NextResponse.json({ error: 'Failed to save DSL' }, { status: 500 })
   }
 

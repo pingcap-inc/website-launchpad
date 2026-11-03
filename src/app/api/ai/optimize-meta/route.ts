@@ -86,15 +86,14 @@ ${truncated}${AI_PROVIDER === 'bedrock' ? '\n\nStart your response with { and en
     const description = clamp(descRaw, 160)
 
     if (!slug || !title || !description) {
-      return NextResponse.json(
-        { error: 'AI response missing required fields', raw: parsed },
-        { status: 502 }
-      )
+      console.error('[optimize-meta] AI response missing required fields:', parsed)
+      return NextResponse.json({ error: 'AI response missing required fields' }, { status: 502 })
     }
 
     return NextResponse.json({ slug, title, description })
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal error'
-    return NextResponse.json({ error: message }, { status: 500 })
+    // Provider/SDK errors can carry role ARNs and account ids — keep them server-side.
+    console.error('AI optimize-meta error:', err)
+    return NextResponse.json({ error: 'AI meta optimization failed' }, { status: 500 })
   }
 }

@@ -21,15 +21,32 @@ export function publishedBranch(): string {
 }
 
 /**
- * A CMS page slug: one or more `[a-z0-9-]` segments, not under a reserved top-level
+ * A CMS page slug in canonical form: one or more `[a-z0-9-]` segments joined by
+ * single slashes, with no leading/trailing slash, not under a reserved top-level
  * directory. No dots, so no `.`/`..` traversal and no `route.xml`-style dirs.
+ *
+ * Strict on purpose: a value that is only valid after normalization (`/a/`, `a//b`)
+ * is rejected, so a guard can never approve one string while the commit path is
+ * built from another. Run caller input through `normalizePageSlug` first.
  */
 export function isValidPageSlug(slug: string | undefined | null): slug is string {
-  if (!slug || slug.length > 200) return false
-  const segments = slug.split('/').filter(Boolean)
-  if (segments.length === 0 || segments.length > 8) return false
+  if (typeof slug !== 'string' || !slug || slug.length > 200) return false
+  const segments = slug.split('/')
+  if (segments.length > 8) return false
   if (RESERVED_TOP_SEGMENTS.has(segments[0])) return false
   return segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
+}
+
+/**
+ * Canonicalize a caller-supplied slug (trim whitespace, drop leading/trailing
+ * slashes, collapse repeated slashes) and validate it. Returns the single string
+ * every later check and path must use, or null when it is not a valid page slug.
+ * Case is not folded: an uppercase slug is rejected rather than silently renamed.
+ */
+export function normalizePageSlug(raw: unknown): string | null {
+  if (typeof raw !== 'string') return null
+  const slug = raw.trim().split('/').filter(Boolean).join('/')
+  return isValidPageSlug(slug) ? slug : null
 }
 
 /** Constant-time string comparison (hashing first equalises the lengths). */

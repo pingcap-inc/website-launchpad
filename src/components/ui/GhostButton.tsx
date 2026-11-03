@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 import { externalLinkProps } from '@/lib/links'
+import { safeHref } from '@/lib/security/sanitize'
 
 interface GhostButtonProps {
   children: React.ReactNode
@@ -8,7 +9,8 @@ interface GhostButtonProps {
   href?: string
 }
 
-export function GhostButton({ children, className, onClick, href }: GhostButtonProps) {
+export function GhostButton({ children, className, onClick, href: rawHref }: GhostButtonProps) {
+  const href = rawHref ? safeHref(rawHref) : rawHref
   const classes = cn(
     'inline-flex items-center gap-2 font-medium rounded-pill',
     'bg-transparent text-text-inverse hover:text-carbon-400',

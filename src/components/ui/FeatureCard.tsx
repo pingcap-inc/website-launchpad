@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 import { externalLinkProps } from '@/lib/links'
+import { safeHref } from '@/lib/security/sanitize'
 import { SecondaryButton } from './SecondaryButton'
 
 interface FeatureCardProps {
@@ -22,10 +23,11 @@ export function FeatureCard({
   label,
   description,
   borderColor = 'border-carbon-800',
-  href,
+  href: rawHref,
   ctaText,
   className,
 }: FeatureCardProps) {
+  const href = rawHref ? safeHref(rawHref) : rawHref
   // Description with inline JSX (e.g. <InlineLink>) cannot be nested inside the
   // card-level <a>. In that case, drop the wrapping anchor and let the CTA be the link.
   const wrapInAnchor = href && typeof description === 'string'

@@ -63,6 +63,11 @@ jobs:
       - name: TypeScript
         run: pnpm type-check
 
+      # Same gate the Deploy CDN workflow runs before syncing public/ — fail on the PR,
+      # not after merge.
+      - name: Check public SVGs for active content
+        run: node scripts/check-public-svgs.mjs public
+
       - name: Build
         run: pnpm build
         env:

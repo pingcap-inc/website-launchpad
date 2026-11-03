@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import { SecondaryButton } from './SecondaryButton'
 import { externalLinkProps } from '@/lib/links'
+import { safeHref } from '@/lib/security/sanitize'
 
 type ColorCardVariant = 'red' | 'violet' | 'blue' | 'teal'
 
@@ -50,8 +51,9 @@ export function ColorCard({ variant, title, description, cta, icon, className }:
   )
 
   if (cta?.href) {
+    const href = safeHref(cta.href)
     return (
-      <a href={cta.href} className={rootClassName} {...externalLinkProps(cta.href)}>
+      <a href={href} className={rootClassName} {...externalLinkProps(href)}>
         {content}
       </a>
     )

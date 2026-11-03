@@ -4,6 +4,7 @@ import { sanitizeDSLIcons, DSL_SCHEMA_PROMPT } from '@/lib/dsl-schema'
 import type { SectionNode, PageMeta } from '@/lib/dsl-schema'
 import { schemaMap } from '@/lib/section-registry'
 import { readJsonBody } from '@/lib/security/api-guards'
+import { sanitizeUntrustedDsl } from '@/lib/security/sanitize'
 
 // Cap what a caller can put into the prompt (cost/abuse bound).
 const MAX_BODY_BYTES = 256 * 1024
@@ -205,10 +206,13 @@ Keep all fields that don't need changing. Preserve the "type" field exactly.${
     // Sanitize icons
     const fakeDSL = { meta: { title: '', description: '', canonical: '/' }, sections: [updated] }
     sanitizeDSLIcons(fakeDSL)
+    // Model output is untrusted: drop unsafe URLs and reduce headline/shortCode HTML.
+    sanitizeUntrustedDsl(fakeDSL.sections[0])
 
     return NextResponse.json(fakeDSL.sections[0])
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal error'
-    return NextResponse.json({ error: message }, { status: 500 })
+    // Provider/SDK errors can carry role ARNs and account ids — keep them server-side.
+    console.error('AI edit-section error:', err)
+    return NextResponse.json({ error: 'AI edit failed' }, { status: 500 })
   }
 }

@@ -803,6 +803,9 @@ interface LeftPanelProps {
   generateError: string
   importStatus: 'idle' | 'loading' | 'error'
   importError: string
+  /** A Google Doc link prefilled from ?intent= waits for an explicit click before importing. */
+  docImportPending: boolean
+  onConfirmDocImport: () => void
   mockMode: boolean
   localJson: string
   localJsonError: string
@@ -859,6 +862,8 @@ function LeftPanel({
   generateError,
   importStatus,
   importError,
+  docImportPending,
+  onConfirmDocImport,
   mockMode,
   localJson,
   localJsonError,
@@ -1178,6 +1183,18 @@ function LeftPanel({
                 Preserve source wording as much as possible
               </label>
             )} */}
+            {docImportPending && importStatus !== 'loading' && (
+              <div className="flex items-center gap-2 text-label text-gray-500">
+                <span>Google Doc link from the page URL.</span>
+                <button
+                  type="button"
+                  onClick={onConfirmDocImport}
+                  className="font-medium text-gray-900 underline"
+                >
+                  Import it
+                </button>
+              </div>
+            )}
             {importStatus === 'loading' && (
               <div className="text-label text-gray-500">Importing Google Doc…</div>
             )}
@@ -1424,6 +1441,10 @@ function CreatePageInner() {
     fallback: string
   } | null>(null)
   const lastImportedDocIdRef = useRef<string | null>(null)
+  // Intent text that came from ?intent= (attacker-controllable via a crafted link),
+  // and the Google Doc the user explicitly agreed to import from it.
+  const [queryPrefilledIntent, setQueryPrefilledIntent] = useState<string | null>(null)
+  const [confirmedDocId, setConfirmedDocId] = useState<string | null>(null)
   const [briefUrl, setBriefUrl] = useState('')
   const [briefFile, setBriefFile] = useState<File | null>(null)
   const [briefLoading, setBriefLoading] = useState(false)
@@ -1696,7 +1717,10 @@ function CreatePageInner() {
     const queryIntent = searchParams.get('intent')
     if (!queryIntent) return
     if (intentInitializedRef.current || intent.trim()) return
+    // Prefill only — anything that acts on this value (Google Doc import,
+    // generation) must wait for an explicit user action.
     setIntent(queryIntent)
+    setQueryPrefilledIntent(queryIntent)
     intentInitializedRef.current = true
   }, [searchParams, intent])
 
@@ -1751,6 +1775,10 @@ function CreatePageInner() {
     if (!url || trimmed !== url) return
     const docId = extractGoogleDocId(url)
     if (!docId || lastImportedDocIdRef.current === docId) return
+    // A link that arrived via ?intent= is not auto-fetched: the user confirms it first.
+    if (queryPrefilledIntent !== null && trimmed === queryPrefilledIntent.trim()) {
+      if (confirmedDocId !== docId) return
+    }
 
     let cancelled = false
     const run = async () => {
@@ -1784,7 +1812,18 @@ function CreatePageInner() {
     return () => {
       cancelled = true
     }
-  }, [intent, slug])
+  }, [intent, slug, queryPrefilledIntent, confirmedDocId])
+
+  // Google Doc id waiting for the user to confirm an import prefilled from ?intent=.
+  const pendingQueryDocId = (() => {
+    if (queryPrefilledIntent === null) return null
+    const trimmed = intent.trim()
+    if (trimmed !== queryPrefilledIntent.trim()) return null
+    const url = extractGoogleDocUrl(trimmed)
+    if (!url || trimmed !== url) return null
+    const docId = extractGoogleDocId(url)
+    return docId && docId !== confirmedDocId ? docId : null
+  })()
 
   // Initialize intent from refine payload (e.g. /admin/create?refine=1)
   useEffect(() => {
@@ -2482,6 +2521,8 @@ function CreatePageInner() {
             generateError={generateError}
             importStatus={importStatus}
             importError={importError}
+            docImportPending={pendingQueryDocId !== null}
+            onConfirmDocImport={() => setConfirmedDocId(pendingQueryDocId)}
             mockMode={mockMode}
             localJson={localJson}
             localJsonError={localJsonError}
