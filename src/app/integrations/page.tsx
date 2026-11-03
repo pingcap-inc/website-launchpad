@@ -53,7 +53,7 @@ const dsl: PageDSL = {
     createdBy: 'a.hire@pingcap.com',
     createdAt: '2026-10-14T20:41:15.077Z',
     modifiedBy: 'a.hire@pingcap.com',
-    modifiedAt: '2026-10-14T20:41:15.077Z',
+    modifiedAt: '2026-11-02T18:15:44.957Z',
   },
   sections: [
     {
@@ -64,7 +64,7 @@ const dsl: PageDSL = {
         eyebrow: 'Integrations & Compatibility',
         headline: 'TiDB Integrations: Kubernetes, Kafka, Spark and Cloud',
         subheadline:
-          'TiDB and TiDB Cloud integrate with the tools modern engineering teams already run. Fully MySQL protocol compatible with standard drivers, JDBC, ODBC, and popular ORMs like Hibernate, Prisma, and SQLAlchemy.',
+          'TiDB and TiDB Cloud integrate with the tools modern engineering teams already run. MySQL protocol compatible with standard drivers, JDBC, ODBC, and popular ORMs like Hibernate, Prisma, and SQLAlchemy.',
         primaryCta: {
           text: 'Start for Free',
           href: 'https://tidbcloud.com/free-trial/',
@@ -232,7 +232,7 @@ const dsl: PageDSL = {
       id: 'mysql-compatibility',
       type: 'cta',
       props: {
-        title: 'TiDB Is Fully MySQL Compatible',
+        title: 'TiDB Is MySQL Compatible',
         subtitle:
           ' Most integrations rely on open standards like JDBC and ODBC — reducing friction when migrating or modernizing existing workloads. If you are modernizing legacy systems, see how to Modernize MySQL workloads with TiDB.',
         image: {
@@ -764,8 +764,8 @@ const dsl: PageDSL = {
         title: 'Integration FAQs',
         items: [
           {
-            q: 'Is TiDB fully MySQL compatible?',
-            a: 'Yes. TiDB supports the MySQL protocol and works with standard MySQL drivers.',
+            q: 'Is TiDB MySQL compatible?',
+            a: 'TiDB supports the MySQL protocol and works with standard MySQL drivers.',
           },
           {
             q: 'Does TiDB integrate with Kafka?',
