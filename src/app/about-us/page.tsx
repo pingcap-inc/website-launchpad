@@ -180,7 +180,7 @@ const dsl: PageDSL = {
           },
           {
             type: 'content',
-            content: '> "Agents are temporary. Their work isn\'t."',
+            content: '[agent-instance-grid]',
           },
         ],
       },

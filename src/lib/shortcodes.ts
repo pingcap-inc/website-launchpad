@@ -5,6 +5,7 @@ export type RegisteredShortcode =
   | 'tidb-persistent-layer-animation'
   | 'cloud-lake-architecture'
   | 'review-badges'
+  | 'agent-instance-grid'
 
 const SHORTCODE_ALIASES: Record<string, RegisteredShortcode> = {
   'cloud-lake-architecture': 'cloud-lake-architecture',
@@ -25,6 +26,8 @@ const SHORTCODE_ALIASES: Record<string, RegisteredShortcode> = {
   'gartner-g2': 'review-badges',
   'gartner g2': 'review-badges',
   'gartner-g2-badges': 'review-badges',
+  'agent-instance-grid': 'agent-instance-grid',
+  'agent instance grid': 'agent-instance-grid',
 }
 
 function normalizeShortcodeKey(value: string) {
