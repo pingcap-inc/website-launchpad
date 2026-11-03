@@ -1,0 +1,37 @@
+name: SVG Gate
+
+# The public/ active-content gate. Deliberately NO path filter: it runs on every
+# PR (a path-filtered workflow is skipped — and a required check left pending — on
+# PRs that only touch public/, which is exactly where SVGs land). It is fast and
+# dependency-free (plain Node, no install). Make the job "Public SVG active-content
+# check" a REQUIRED status check in the main ruleset. Deploy CDN re-runs the same
+# script before syncing public/ to the CDN.
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  svg-gate:
+    name: Public SVG active-content check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20
+
+      - name: Check public SVGs for active content and symlinks
+        run: node scripts/check-public-svgs.mjs public

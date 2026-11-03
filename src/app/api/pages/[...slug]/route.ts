@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { logAudit, resolveActor } from '@/lib/audit'
 import { stampAuthorship } from '@/lib/authorship'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
@@ -8,6 +9,7 @@ import {
   publishedBranch,
   readJsonBody,
 } from '@/lib/security/api-guards'
+import { classifyRepoPageDir } from '@/lib/security/api-code-owned'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 // The admin only ever reads/writes DSLs on the draft branch or the published
@@ -32,6 +34,11 @@ function creatorOf(content: string | undefined): { createdBy?: string; createdAt
 // A DSL is a few hundred KB at most; 2 MB leaves ample headroom.
 const DSL_BODY_LIMIT = 2 * 1024 * 1024
 
+// A git blob sha as the GitHub contents API reports it.
+function isBlobSha(value: unknown): value is string {
+  return typeof value === 'string' && /^[0-9a-f]{40}$/.test(value)
+}
+
 function getSlug(params: { slug?: string[] }) {
   return (params.slug ?? []).join('/')
 }
@@ -41,6 +48,8 @@ function getSlug(params: { slug?: string[] }) {
  * Fetches the page.dsl.json for the given slug path from GitHub.
  */
 export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string[] }> }) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const { slug: slugParts } = await params
   const slug = getSlug({ slug: slugParts })
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
@@ -70,10 +79,13 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
     return NextResponse.json({ error: 'Failed to fetch DSL' }, { status: 500 })
   }
 
-  const data = (await res.json()) as { content: string }
+  const data = (await res.json()) as { content: string; sha?: string }
   try {
     const dsl = JSON.parse(Buffer.from(data.content, 'base64').toString('utf-8')) as PageDSL
-    return NextResponse.json(dsl)
+    // The blob sha lets a client save with `baseSha` (optimistic concurrency, see PUT).
+    return NextResponse.json(dsl, {
+      headers: isBlobSha(data.sha) ? { 'x-dsl-sha': data.sha } : undefined,
+    })
   } catch {
     return NextResponse.json({ error: 'Failed to parse DSL JSON' }, { status: 500 })
   }
@@ -81,15 +93,24 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 
 /**
  * PUT /api/pages/[...slug]
- * Saves an updated page.dsl.json to GitHub (draft save — does not publish page.tsx).
- * Writes to the draft branch unless the caller explicitly names another allowlisted
- * branch, so an omitted `branch` can never land on the published (staging) branch.
+ * Saves an updated page.dsl.json to the draft branch (draft save — does not publish
+ * page.tsx). Only the draft branch is writable here: the published (staging) branch
+ * is written exclusively by /api/publish, which validates the DSL, regenerates
+ * page.tsx and records a `publish` audit entry.
+ *
+ * Optimistic concurrency: a client may send `baseSha` — the blob sha it loaded (the
+ * GET response's `x-dsl-sha` header), or `null` when it is creating the draft. If the
+ * draft changed since, the save is refused with 409 instead of overwriting it. When
+ * `baseSha` is omitted the save is last-writer-wins (legacy behaviour).
  */
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug: string[] }> }) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const { slug: slugParts } = await params
   const slug = getSlug({ slug: slugParts })
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
-  const branch = publishedBranch()
+  const pubBranch = publishedBranch()
+  const writeBranch = DRAFT_BRANCH
 
   const headers = await getGitHubAuthHeaders()
   if (!headers || !GITHUB_OWNER || !GITHUB_REPO) {
@@ -99,21 +120,57 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 })
   }
 
-  const parsed = await readJsonBody<{ dsl: PageDSL; branch?: string }>(req, DSL_BODY_LIMIT)
+  const parsed = await readJsonBody<{ dsl: PageDSL; branch?: unknown; baseSha?: unknown }>(
+    req,
+    DSL_BODY_LIMIT
+  )
   if (!parsed.ok) return parsed.response
   const body = parsed.data
   const { dsl } = body
-  // Default to the draft branch; writing to the published branch must be explicit.
-  const writeBranch = body.branch ?? DRAFT_BRANCH
-  if (typeof writeBranch !== 'string' || !isAllowedBranch(writeBranch)) {
-    return NextResponse.json({ error: 'Invalid branch' }, { status: 400 })
+
+  const audit = (status: 'success' | 'denied' | 'error', detail?: string) =>
+    logAudit(req, { action: 'draft-save', target: slug, branch: writeBranch, status, detail })
+
+  // Draft saves go to the draft branch only. `branch` is still accepted for
+  // compatibility, but only when it names the draft branch.
+  if (body.branch !== undefined && body.branch !== DRAFT_BRANCH) {
+    await audit('denied', 'non-draft branch requested')
+    return NextResponse.json(
+      {
+        error: `Draft saves can only write to ${DRAFT_BRANCH}. Use Publish to update ${pubBranch}.`,
+      },
+      { status: 400 }
+    )
   }
-  if (!dsl?.meta || !Array.isArray(dsl.sections)) {
+  const baseSha = body.baseSha
+  if (baseSha !== undefined && baseSha !== null && !isBlobSha(baseSha)) {
+    return NextResponse.json({ error: 'Invalid baseSha' }, { status: 400 })
+  }
+  if (!dsl?.meta || typeof dsl.meta !== 'object' || !Array.isArray(dsl.sections)) {
     return NextResponse.json({ error: 'dsl is required' }, { status: 400 })
   }
 
   const dslPath = `src/app/${slug}/page.dsl.json`
   const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`
+
+  // A draft DSL for a hand-authored page would make publish (and delete/move) treat
+  // it as a CMS page. Ownership is decided on the published branch — where publish
+  // will write — whatever branch this save targets. Fails closed.
+  try {
+    if ((await classifyRepoPageDir(baseUrl, headers, slug, pubBranch)) === 'code-owned') {
+      await audit('denied', `code-owned page on ${pubBranch}`)
+      return NextResponse.json(
+        { error: 'Refusing to attach a DSL to a code-owned page.' },
+        { status: 409 }
+      )
+    }
+  } catch {
+    await audit('error', 'code-owned check failed')
+    return NextResponse.json(
+      { error: 'Could not verify the page is not code-owned' },
+      { status: 502 }
+    )
+  }
 
   // Check for existing SHA (upsert). The contents response also carries the prior
   // file, so we read the previous creator from it and carry it forward. Authorship
@@ -129,50 +186,28 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
     const existing = (await check.json()) as { sha: string; content?: string }
     sha = existing.sha
     ;({ createdBy: priorCreatedBy, createdAt: priorCreatedAt } = creatorOf(existing.content))
-  } else if (check.status === 404 && writeBranch !== DRAFT_BRANCH) {
-    // Creating a new DSL on the published branch. If a hand-authored page.tsx
-    // already lives there, a DSL beside it would make the CMS treat the page as
-    // its own (and allow it to be deleted/moved/overwritten) — refuse.
-    const codePage = await fetch(
-      `${baseUrl}/contents/src/app/${slug}/page.tsx?ref=${encodeURIComponent(writeBranch)}`,
-      { headers }
-    )
-    // Fail closed: only a definitive 404 proves there is no hand-authored page.
-    if (codePage.status !== 404) {
-      if (!codePage.ok) {
-        await logAudit(req, {
-          action: 'draft-save',
-          target: slug,
-          branch: writeBranch,
-          status: 'error',
-          detail: `code-owned check failed (${codePage.status})`,
-        })
-        return NextResponse.json(
-          { error: 'Could not verify the page is not code-owned' },
-          { status: 502 }
-        )
-      }
-      await logAudit(req, {
-        action: 'draft-save',
-        target: slug,
-        branch: writeBranch,
-        status: 'denied',
-        detail: 'code-owned page (page.tsx with no page.dsl.json)',
-      })
-      return NextResponse.json(
-        { error: 'Refusing to attach a DSL to a code-owned page.' },
-        { status: 409 }
-      )
-    }
-  } else if (!check.ok && check.status !== 404) {
+  } else if (check.status !== 404) {
+    await audit('error', `read existing draft failed (${check.status})`)
     return NextResponse.json({ error: 'Failed to read existing DSL' }, { status: 500 })
+  }
+
+  // Someone else saved (or created/deleted) this draft since the client loaded it.
+  if (baseSha !== undefined && (baseSha ?? undefined) !== sha) {
+    await audit('denied', 'stale baseSha (draft changed since it was loaded)')
+    return NextResponse.json(
+      {
+        error: 'This draft was changed by someone else. Reload it before saving.',
+        sha: sha ?? null,
+      },
+      { status: 409 }
+    )
   }
 
   // First draft of an already-published page: carry its creator over from the
   // published DSL so editing a page doesn't re-attribute it.
-  if (!priorCreatedBy && writeBranch === DRAFT_BRANCH) {
+  if (!priorCreatedBy) {
     const published = await fetch(
-      `${baseUrl}/contents/${dslPath}?ref=${encodeURIComponent(branch)}`,
+      `${baseUrl}/contents/${dslPath}?ref=${encodeURIComponent(pubBranch)}`,
       { headers }
     )
     if (published.ok) {
@@ -189,6 +224,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
     content: Buffer.from(JSON.stringify(dsl, null, 2), 'utf-8').toString('base64'),
     branch: writeBranch,
   }
+  // GitHub rejects the write (409) if the file's sha no longer matches, so a save
+  // racing another one between our read and this write cannot overwrite it either.
   if (sha) putBody.sha = sha
 
   const res = await fetch(`${baseUrl}/contents/${dslPath}`, {
@@ -199,22 +236,19 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
 
   if (!res.ok) {
     console.error('[pages] DSL save failed:', res.status, await res.text().catch(() => ''))
-    await logAudit(req, {
-      action: 'draft-save',
-      target: slug,
-      branch: writeBranch,
-      status: 'error',
-      detail: `github ${res.status}`,
-    })
+    if (res.status === 409 || res.status === 422) {
+      await audit('denied', `github ${res.status} (concurrent change)`)
+      return NextResponse.json(
+        { error: 'This draft was changed by someone else. Reload it before saving.' },
+        { status: 409 }
+      )
+    }
+    await audit('error', `github ${res.status}`)
     return NextResponse.json({ error: 'Failed to save DSL' }, { status: 500 })
   }
 
-  await logAudit(req, {
-    action: 'draft-save',
-    target: slug,
-    branch: writeBranch,
-    status: 'success',
-  })
+  const saved = (await res.json().catch(() => ({}))) as { content?: { sha?: string } }
+  await audit('success')
 
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true, sha: saved.content?.sha })
 }

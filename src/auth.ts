@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Google from 'next-auth/providers/google'
+import { isLocalDevAuthBypass } from '@/lib/dev-auth'
 
 /**
  * The only email domain allowed to sign in to the admin surface. Access to the
@@ -21,16 +22,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   // Use our own branded sign-in page instead of the bare Auth.js default.
   // The middleware must leave /admin/login reachable without a session.
   pages: { signIn: '/admin/login' },
-  // A real secret MUST be set (AUTH_SECRET) on every deployed environment. The
-  // fallback applies ONLY to local `next dev` off Vercel, so it doesn't crash —
-  // local requests are never gated on it (the middleware skips Auth.js there).
+  // A real secret MUST be set (AUTH_SECRET) wherever login is used: on staging AND
+  // for local login in `next dev`. There is no hardcoded fallback. The only case
+  // that gets a stand-in is the explicit local opt-out (`isLocalDevAuthBypass`),
+  // where no session is ever required; it gets a random per-process value so
+  // Auth.js can initialise, and nothing signed with it outlives the process.
   // Anywhere else a missing AUTH_SECRET leaves `secret` undefined and Auth.js fails
-  // closed (MissingSecret) instead of signing sessions with a public string.
+  // closed (MissingSecret) instead of signing sessions with a known string.
   secret:
-    process.env.AUTH_SECRET ??
-    (process.env.NODE_ENV === 'development' && !process.env.VERCEL_ENV
-      ? 'dev-only-insecure-secret'
-      : undefined),
+    process.env.AUTH_SECRET ||
+    (isLocalDevAuthBypass() ? `dev-bypass-${globalThis.crypto.randomUUID()}` : undefined),
   // JWT sessions can't be revoked server-side, so keep their lifetime short: a
   // stolen or departed-employee session dies within a working day. Active users
   // get the cookie re-issued at most hourly (sliding window).

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { TRUSTED_DOMAINS } from '@/lib/safe-links'
+import { requireAdmin } from '@/lib/security/require-admin'
+import { isCheckableUrl } from '@/lib/validate-links'
 import { readJsonBody } from '@/lib/security/api-guards'
 
 type ScoreRequest = {
@@ -10,21 +11,10 @@ type ScoreRequest = {
 const MAX_FETCH_BYTES = 2 * 1024 * 1024
 
 // Only fetch our own public sites — an arbitrary URL here would let a caller make
-// the server request internal/metadata endpoints (SSRF). Redirects are not followed
-// so an allowed host can't bounce the request elsewhere.
-function isFetchableTarget(target: string) {
-  try {
-    const url = new URL(target)
-    return (
-      url.protocol === 'https:' &&
-      !url.username &&
-      !url.password &&
-      TRUSTED_DOMAINS.has(url.hostname)
-    )
-  } catch {
-    return false
-  }
-}
+// the server request internal/metadata endpoints (SSRF). Uses the link checker's
+// rule (https, default port, no credentials, trusted host) so the two cannot drift.
+// Redirects are not followed so an allowed host can't bounce the request elsewhere.
+const isFetchableTarget = isCheckableUrl
 
 /**
  * Read at most `maxBytes` of a response body, cancelling the stream once the cap is
@@ -63,6 +53,8 @@ function buildMockSuggestions(wordCount: number) {
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin(request)
+  if (denied) return denied
   try {
     const parsed = await readJsonBody<ScoreRequest>(request, 256 * 1024)
     if (!parsed.ok) return parsed.response
@@ -78,7 +70,10 @@ export async function POST(request: Request) {
     if (/^https?:\/\//i.test(target)) {
       if (!isFetchableTarget(target)) {
         return NextResponse.json(
-          { error: 'Only https URLs on pingcap.com / tidbcloud.com sites can be fetched.' },
+          {
+            error:
+              'Only https URLs on the default port on pingcap.com / tidbcloud.com sites can be fetched.',
+          },
           { status: 400 }
         )
       }

@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
 import { SlideIn } from '../ui/SlideIn'
 import type { ImageRef } from '@/lib/dsl-schema'
+import { safeUrl } from '@/lib/security/sanitize'
 
 interface TestimonialCard {
   quote: string
@@ -29,11 +30,13 @@ interface TestimonialsSectionProps {
 function TestimonialCard({
   quote,
   author,
-  href,
+  href: rawHref,
   cta,
   logo,
   size = 'lg',
 }: TestimonialCard & { size?: 'lg' | 'sm' }) {
+  // Unsafe schemes (javascript:, data:, …) render the card unlinked.
+  const href = safeUrl(rawHref) ?? undefined
   const isClickable = Boolean(href && cta)
   const Wrapper = isClickable ? 'a' : 'div'
   const wrapperProps = isClickable ? { href } : {}

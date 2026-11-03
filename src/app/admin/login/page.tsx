@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { signIn } from '@/auth'
+import { safeAdminCallback } from './safe-callback'
 
 export const metadata: Metadata = {
   title: 'Sign in · AI Website Platform',
@@ -35,7 +36,8 @@ export default async function AdminLoginPage({
 }: {
   searchParams: Promise<{ callbackUrl?: string }>
 }) {
-  const { callbackUrl } = await searchParams
+  // Untrusted query input: only a same-origin /admin path survives (else /admin/).
+  const redirectTo = safeAdminCallback((await searchParams).callbackUrl)
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
@@ -61,7 +63,7 @@ export default async function AdminLoginPage({
         <form
           action={async () => {
             'use server'
-            await signIn('google', { redirectTo: callbackUrl || '/admin' })
+            await signIn('google', { redirectTo })
           }}
         >
           <button

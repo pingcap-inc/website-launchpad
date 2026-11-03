@@ -63,10 +63,8 @@ jobs:
       - name: TypeScript
         run: pnpm type-check
 
-      # Same gate the Deploy CDN workflow runs before syncing public/ — fail on the PR,
-      # not after merge.
-      - name: Check public SVGs for active content
-        run: node scripts/check-public-svgs.mjs public
+      # The public/ SVG active-content gate lives in svg-gate.yml: this workflow is
+      # path-filtered (and public/** isn't in the filter), so it can't be the gate.
 
       - name: Build
         run: pnpm build

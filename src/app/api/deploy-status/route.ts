@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 
 type VercelState = 'BUILDING' | 'INITIALIZING' | 'QUEUED' | 'READY' | 'ERROR' | 'CANCELED'
 
@@ -22,7 +23,9 @@ const STATE_MAP: Record<string, 'building' | 'ready' | 'error'> = {
   CANCELED: 'error',
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const { VERCEL_TOKEN, VERCEL_PROJECT_ID, VERCEL_TEAM_ID } = process.env
 
   if (!VERCEL_TOKEN || !VERCEL_PROJECT_ID) {

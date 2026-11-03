@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { AI_PROVIDER, generateJSON } from '@/lib/ai-client'
 import { DSL_SCHEMA_PROMPT, sanitizeDSLIcons } from '@/lib/dsl-schema'
 import type { PageDSL } from '@/lib/dsl-schema'
@@ -111,6 +112,8 @@ Rules:
 `
 
 export async function POST(request: NextRequest) {
+  const denied = await requireAdmin(request)
+  if (denied) return denied
   if (AI_PROVIDER === 'nvidia' && !process.env.NVIDIA_API_KEY) {
     return NextResponse.json({ error: 'NVIDIA_API_KEY not configured' }, { status: 500 })
   }

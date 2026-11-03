@@ -95,10 +95,12 @@ jobs:
           urls: ${{ steps.extract_url.outputs.urls }}
           runs: 2
           configPath: ./.github/lighthouserc.js
-          uploadArtifacts: true
-          # Must stay false: the LHR embeds configSettings.extraHeaders, i.e. the
-          # x-vercel-protection-bypass secret from lighthouserc.js, and public
-          # storage would publish it. Reports remain available as run artifacts.
+          # Both must stay false: every LHR (JSON and the HTML report, which embeds
+          # the JSON) contains configSettings.extraHeaders, i.e. the
+          # x-vercel-protection-bypass secret from lighthouserc.js. Public storage
+          # would publish it, and the action's own artifact upload would ship it
+          # unredacted. The reports are redacted and uploaded by the steps below.
+          uploadArtifacts: false
           temporaryPublicStorage: false
           # Fails the build if Performance is < 70
           budgetPath: |
@@ -110,6 +112,48 @@ jobs:
                 "performance": 70
               }
             ]
+
+      # 3b. Strip the bypass secret from every report, verify it is gone, then upload.
+      # Fails (and uploads nothing) if the secret is still present anywhere.
+      - name: Redact protection-bypass secret from reports
+        id: redact
+        if: always() && steps.lhci.outcome != 'skipped'
+        env:
+          BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          RESULTS_DIR: ${{ steps.lhci.outputs.resultsPath || '.lighthouseci' }}
+        run: |
+          [ -d "$RESULTS_DIR" ] || { echo "No results at $RESULTS_DIR"; exit 0; }
+          node -e '
+            const fs = require("fs"), path = require("path");
+            const secret = process.env.BYPASS_SECRET || "";
+            const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+              e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]);
+            let leaks = 0;
+            for (const f of walk(process.env.RESULTS_DIR)) {
+              let t = fs.readFileSync(f, "utf8");
+              if (secret) t = t.split(secret).join("REDACTED");
+              // Also blank the header value itself, whatever it is (plain or JSON-escaped).
+              t = t.replace(/(x-vercel-protection-bypass\\*"\s*:\s*\\*")[^"\\]*/gi, "$1REDACTED");
+              fs.writeFileSync(f, t);
+              if (secret && t.includes(secret)) leaks++;
+            }
+            if (leaks) { console.error(`secret still present in ${leaks} file(s)`); process.exit(1); }
+            console.log("Reports redacted.");
+          '
+          if [ -n "$BYPASS_SECRET" ] && grep -rqF -- "$BYPASS_SECRET" "$RESULTS_DIR"; then
+            echo "::error::bypass secret still present in Lighthouse reports; not uploading"
+            exit 1
+          fi
+          echo "dir=$RESULTS_DIR" >> "$GITHUB_OUTPUT"
+
+      - name: Upload redacted Lighthouse reports
+        if: always() && steps.redact.outcome == 'success' && steps.redact.outputs.dir != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lighthouse-results
+          path: ${{ steps.redact.outputs.dir }}
+          include-hidden-files: true
+          retention-days: 14
 
       # 4. Post Results Summary
       - name: Post score comment

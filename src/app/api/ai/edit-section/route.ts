@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { AI_PROVIDER, generateJSON } from '@/lib/ai-client'
 import { sanitizeDSLIcons, DSL_SCHEMA_PROMPT } from '@/lib/dsl-schema'
 import type { SectionNode, PageMeta } from '@/lib/dsl-schema'
@@ -107,6 +108,8 @@ function validateSection(s: unknown, originalType: string): string[] {
  * Body: { section: SectionNode, instruction: string, pageMeta: PageMeta }
  */
 export async function POST(req: NextRequest) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   try {
     const parsed = await readJsonBody<{
       section: SectionNode
