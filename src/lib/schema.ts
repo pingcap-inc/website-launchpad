@@ -172,6 +172,8 @@ export function softwareApplicationSchema(options: {
    * on a page whose own copy says pricing isn't published yet.
    */
   price?: string | null
+  /** Emitted as schema.org `featureList`; omitted when empty. */
+  featureList?: string[]
 }): Record<string, unknown> {
   return {
     '@type': 'SoftwareApplication',
@@ -180,6 +182,7 @@ export function softwareApplicationSchema(options: {
     operatingSystem: 'Linux, macOS, Windows',
     description: options.description,
     url: options.url,
+    ...(options.featureList?.length ? { featureList: options.featureList } : {}),
     ...(options.price === null
       ? {}
       : {

@@ -6,5 +6,6 @@
   "Bolt: Legacy MySQL Modernized to Scale 1000s of Microservices",
   "Plaud: 10x QPS Under Peak Load",
   "Kimi: <1s Database Provisioning Per Agent Task",
-  "Production iGaming Platform Running Live Vector Search"
+  "Production iGaming Platform Running Live Vector Search",
+  "TiDB X: The Architecture Behind TiDB Cloud"
 ]
