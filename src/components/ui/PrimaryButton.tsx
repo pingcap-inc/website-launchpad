@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import { externalLinkProps } from '@/lib/links'
 import { handleInPageScroll } from '@/lib/in-page-scroll'
+import { safeHref } from '@/lib/security/sanitize'
 
 interface PrimaryButtonProps {
   children: React.ReactNode
@@ -34,7 +35,15 @@ export function ArrowUpRightIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-export function PrimaryButton({ children, className, onClick, href, newTab }: PrimaryButtonProps) {
+export function PrimaryButton({
+  children,
+  className,
+  onClick,
+  href: rawHref,
+  newTab,
+}: PrimaryButtonProps) {
+  // href may come from page DSL: never render a javascript:/data: link.
+  const href = rawHref ? safeHref(rawHref) : rawHref
   const classes = cn(
     'group relative overflow-hidden',
     'rounded-none h-10 bg-bg-inverse px-4',

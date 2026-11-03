@@ -26,6 +26,30 @@ function isFetchableTarget(target: string) {
   }
 }
 
+/**
+ * Read at most `maxBytes` of a response body, cancelling the stream once the cap is
+ * reached, so an oversized (or endless) page is never buffered in full.
+ */
+async function readCappedText(res: Response, maxBytes: number): Promise<string> {
+  const reader = res.body?.getReader()
+  if (!reader) return ''
+  const chunks: Uint8Array[] = []
+  let total = 0
+  try {
+    while (total < maxBytes) {
+      const { done, value } = await reader.read()
+      if (done) break
+      const room = maxBytes - total
+      const chunk = value.byteLength > room ? value.subarray(0, room) : value
+      chunks.push(chunk)
+      total += chunk.byteLength
+    }
+  } finally {
+    await reader.cancel().catch(() => {})
+  }
+  return Buffer.concat(chunks).toString('utf-8')
+}
+
 function stripHtml(html: string) {
   return html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<[^>]*>/g, ' ')
 }
@@ -60,8 +84,9 @@ export async function POST(request: Request) {
       }
       const res = await fetch(target, { redirect: 'manual', signal: AbortSignal.timeout(10_000) })
       if (res.ok) {
-        const html = (await res.text()).slice(0, MAX_FETCH_BYTES)
-        text = stripHtml(html)
+        text = stripHtml(await readCappedText(res, MAX_FETCH_BYTES))
+      } else {
+        await res.body?.cancel().catch(() => {})
       }
     }
 

@@ -114,40 +114,70 @@ const TIMEOUT_MS = 5_000
 // for real users, so we treat these as OK rather than broken links.
 const BOT_BLOCK_STATUSES = new Set([401, 403, 429])
 
+// A 3xx here is a redirect we deliberately did not follow (off the allowlist or
+// past the hop cap): the link resolves, so it is not reported as broken.
 function statusIsOk(status: number, resOk: boolean): boolean {
-  return resOk || BOT_BLOCK_STATUSES.has(status)
+  return resOk || BOT_BLOCK_STATUSES.has(status) || (status >= 300 && status < 400)
+}
+
+const MAX_REDIRECTS = 5
+const USER_AGENT = 'PingCAP-LinkChecker/1.0'
+
+/**
+ * Whether the server may request `href`: https only, default port, no credentials,
+ * and an allowlisted host. Applied to the initial URL and to every redirect hop.
+ */
+export function isCheckableUrl(href: string): boolean {
+  try {
+    const url = new URL(href)
+    return (
+      url.protocol === 'https:' &&
+      !url.username &&
+      !url.password &&
+      url.port === '' &&
+      TRUSTED_DOMAINS.has(url.hostname)
+    )
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Fetch `href` following redirects by hand (`redirect: 'manual'`), so each hop's
+ * target is re-validated against the allowlist before it is requested — an allowed
+ * host cannot bounce the server to an internal or arbitrary one. A redirect whose
+ * target is not allowlisted is not followed; that 3xx response is returned as-is
+ * (the link resolves, we just don't chase it off the allowlist).
+ */
+async function fetchAllowlisted(href: string, method: 'HEAD' | 'GET'): Promise<Response> {
+  if (!isCheckableUrl(href)) throw new Error('disallowed URL')
+  let current = href
+  for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
+    const res = await fetch(current, {
+      method,
+      redirect: 'manual',
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+      headers: { 'User-Agent': USER_AGENT },
+    })
+    // The body is never needed; release the connection.
+    await res.body?.cancel().catch(() => {})
+    const location = res.headers.get('location')
+    if (res.status < 300 || res.status >= 400 || !location) return res
+    const next = new URL(location, current).toString()
+    if (!isCheckableUrl(next)) return res
+    current = next
+  }
+  throw new Error('too many redirects')
 }
 
 async function headCheck(href: string): Promise<{ status: number | 'error'; ok: boolean }> {
   try {
-    const controller = new AbortController()
-    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
-
-    const res = await fetch(href, {
-      method: 'HEAD',
-      redirect: 'follow',
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'PingCAP-LinkChecker/1.0',
-      },
-    })
-
-    clearTimeout(timer)
-
+    const res = await fetchAllowlisted(href, 'HEAD')
     // Some servers reject HEAD but accept GET — retry with GET for 405
     if (res.status === 405) {
-      const controller2 = new AbortController()
-      const timer2 = setTimeout(() => controller2.abort(), TIMEOUT_MS)
-      const getRes = await fetch(href, {
-        method: 'GET',
-        redirect: 'follow',
-        signal: controller2.signal,
-        headers: { 'User-Agent': 'PingCAP-LinkChecker/1.0' },
-      })
-      clearTimeout(timer2)
+      const getRes = await fetchAllowlisted(href, 'GET')
       return { status: getRes.status, ok: statusIsOk(getRes.status, getRes.ok) }
     }
-
     return { status: res.status, ok: statusIsOk(res.status, res.ok) }
   } catch {
     return { status: 'error', ok: false }
@@ -195,14 +225,23 @@ export async function checkLinks(hrefs: HrefEntry[]): Promise<LinkCheckResult[]>
     checked,
     CONCURRENCY,
     async ({ href, location }): Promise<LinkCheckResult> => {
-      // Check if domain is trusted first
+      // Check the URL is one the server may request (https + trusted host) first
+      let url: URL
       try {
-        const url = new URL(href)
-        if (!TRUSTED_DOMAINS.has(url.hostname)) {
-          return { href, status: 'error', ok: false, location: `${location} [untrusted domain]` }
-        }
+        url = new URL(href)
       } catch {
         return { href, status: 'error', ok: false, location: `${location} [malformed URL]` }
+      }
+      if (!TRUSTED_DOMAINS.has(url.hostname)) {
+        return { href, status: 'error', ok: false, location: `${location} [untrusted domain]` }
+      }
+      if (!isCheckableUrl(href)) {
+        return {
+          href,
+          status: 'error',
+          ok: false,
+          location: `${location} [only https URLs on the default port are checked]`,
+        }
       }
 
       const { status, ok } = await headCheck(href)

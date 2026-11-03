@@ -4,6 +4,7 @@ import { DSL_SCHEMA_PROMPT, sanitizeDSLIcons } from '@/lib/dsl-schema'
 import type { PageDSL } from '@/lib/dsl-schema'
 import { schemaMap } from '@/lib/section-registry'
 import { readJsonBody } from '@/lib/security/api-guards'
+import { safeCanonicalPath, sanitizeUntrustedDsl } from '@/lib/security/sanitize'
 import { resolveAwsCredentials } from '@/lib/aws-credentials'
 
 // Cap what a caller can put into the prompt (cost/abuse bound). The largest
@@ -152,12 +153,20 @@ export async function POST(request: NextRequest) {
     applyFeatureTabsDefaults(updated)
     sanitizeDSLIcons(updated)
     sanitizeDSLStyles(updated)
+    // Model output is untrusted: same URL/HTML pass as generate-dsl, and never
+    // let the model swap the canonical for something that isn't a plain path.
+    sanitizeUntrustedDsl(updated)
+    if (updated.meta) {
+      try {
+        updated.meta.canonical = safeCanonicalPath(updated.meta.canonical)
+      } catch {
+        updated.meta.canonical = dsl.meta?.canonical ?? ''
+      }
+    }
     return NextResponse.json(updated)
   } catch (error) {
+    // Provider/SDK errors can carry role ARNs and account ids — keep them server-side.
     console.error('AI edit-dsl error:', error)
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'AI API error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'AI edit failed' }, { status: 500 })
   }
 }

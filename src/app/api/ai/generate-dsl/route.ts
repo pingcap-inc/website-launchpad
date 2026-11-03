@@ -5,12 +5,7 @@ import type { PageDSL, SectionDefinition, SectionType } from '@/lib/dsl-schema'
 import type { PageType } from '@/lib/admin/page-types'
 import { schemaMap } from '@/lib/section-registry'
 import { SAFE_CTA_LINKS } from '@/lib/safe-links'
-import {
-  safeCanonicalPath,
-  safeUrl,
-  sanitizeHeadlineHtml,
-  sanitizeHtml,
-} from '@/lib/security/sanitize'
+import { safeCanonicalPath, safeUrl, sanitizeUntrustedDsl } from '@/lib/security/sanitize'
 import { addTableOfContentsForLongForm } from '@/lib/toc'
 import {
   enforceLongFormMaxWidth,
@@ -1235,36 +1230,6 @@ function isInvalidHref(href: unknown): boolean {
   return h === '' || h === '#' || safeUrl(h) === null
 }
 
-const URL_KEYS = new Set(['href', 'url', 'src', 'backgroundImageUrl'])
-
-/**
- * Last line of defence over the whole tree (fixCtaHref only knows the common
- * CTA shapes): drop any unsafe URL string, and reduce raw-HTML fields (hero
- * headline, shortCode) to their allowlists.
- */
-function sanitizeUntrustedContent(value: unknown): void {
-  if (Array.isArray(value)) {
-    value.forEach(sanitizeUntrustedContent)
-    return
-  }
-  if (!value || typeof value !== 'object') return
-  const rec = value as Record<string, unknown>
-  for (const [key, v] of Object.entries(rec)) {
-    if (typeof v === 'string') {
-      if (URL_KEYS.has(key) && v.trim() && safeUrl(v) === null) {
-        console.warn(`[DSL] Unsafe URL on "${key}" removed: ${v.slice(0, 80)}`)
-        delete rec[key]
-      } else if (key === 'headline' && /<[a-z]/i.test(v)) {
-        rec[key] = sanitizeHeadlineHtml(v)
-      } else if (key === 'shortCode' && /<[a-z]/i.test(v)) {
-        rec[key] = sanitizeHtml(v)
-      }
-    } else {
-      sanitizeUntrustedContent(v)
-    }
-  }
-}
-
 /** Canonical is model-controlled and baked into prod code — force a plain path. */
 function enforceSafeCanonical(dsl: PageDSL): void {
   if (!dsl.meta) return
@@ -1585,7 +1550,7 @@ export async function POST(request: NextRequest) {
     // Regardless of validation outcome (non-blocking above), never return
     // model-controlled canonicals, URLs or raw HTML unsanitized.
     enforceSafeCanonical(dsl)
-    sanitizeUntrustedContent(dsl)
+    sanitizeUntrustedDsl(dsl)
     addTableOfContentsForLongForm(dsl, normalizedPageType)
     enforceLongFormMaxWidth(dsl, normalizedPageType)
     ensureLongFormLastUpdated(dsl, normalizedPageType)
@@ -1599,10 +1564,8 @@ export async function POST(request: NextRequest) {
     }
     return NextResponse.json(dsl)
   } catch (error) {
+    // Provider/SDK errors can carry role ARNs and account ids — keep them server-side.
     console.error('AI generate-dsl error:', error)
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'AI API error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'AI generation failed' }, { status: 500 })
   }
 }

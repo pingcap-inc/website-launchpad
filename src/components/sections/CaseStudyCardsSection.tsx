@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { SecondaryButton } from '@/components/ui/SecondaryButton'
 import { externalLinkProps } from '@/lib/links'
 import { cn } from '@/lib/utils'
+import { safeUrl } from '@/lib/security/sanitize'
 
 export interface CaseStudyCardStat {
   value: string
@@ -36,7 +37,9 @@ export interface CaseStudyCardsProps {
 /** More than this many cards flips the section into carousel mode. */
 const CAROUSEL_THRESHOLD = 3
 
-function Card({ badge, logo, title, description, stats, href, cta }: CaseStudyCardItem) {
+function Card({ badge, logo, title, description, stats, href: rawHref, cta }: CaseStudyCardItem) {
+  // Unsafe schemes (javascript:, data:, …) render the card unlinked.
+  const href = safeUrl(rawHref) ?? undefined
   const Wrapper = href ? 'a' : 'article'
 
   return (

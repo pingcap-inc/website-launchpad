@@ -49,6 +49,7 @@ export default function AssistantPage() {
   const [iframeHeight, setIframeHeight] = useState(3000)
   const [previewKey, setPreviewKey] = useState(0)
   const previewRef = useRef<HTMLDivElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -63,7 +64,14 @@ export default function AssistantPage() {
   // Listen for height reported by the iframe preview page
   useEffect(() => {
     const handler = (e: MessageEvent) => {
-      if (e.data?.type === 'preview-height') setIframeHeight(e.data.height)
+      // Only trust our own same-origin preview iframe, and only a sane height.
+      if (e.origin !== window.location.origin) return
+      if (!iframeRef.current || e.source !== iframeRef.current.contentWindow) return
+      const data = e.data as { type?: unknown; height?: unknown } | null
+      if (data?.type !== 'preview-height') return
+      const height = data.height
+      if (typeof height !== 'number' || !Number.isFinite(height) || height <= 0) return
+      setIframeHeight(Math.min(Math.ceil(height), 100_000))
     }
     window.addEventListener('message', handler)
     return () => window.removeEventListener('message', handler)
@@ -338,6 +346,7 @@ export default function AssistantPage() {
             {viewport === 'mobile' ? (
               <div className="flex justify-center bg-gray-100 min-h-full py-4 px-3">
                 <iframe
+                  ref={iframeRef}
                   key={previewKey}
                   src="/admin/preview"
                   style={{

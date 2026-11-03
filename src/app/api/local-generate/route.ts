@@ -4,18 +4,29 @@ import path from 'path'
 import prettier from 'prettier'
 import prettierConfig from '../../../../prettier.config.mjs'
 import { dslToTsx } from '@/lib/dsl-to-tsx'
+import { logAudit } from '@/lib/audit'
 import type { PageDSL } from '@/lib/dsl-schema'
+import { normalizePageSlug, readJsonBody } from '@/lib/security/api-guards'
+import { findInvalidSection } from '@/lib/security/api-section-types'
 
 interface LocalGenerateRequest {
-  slug: string
+  slug: unknown
   dsl: PageDSL
 }
 
-function isValidSlugPath(slug: string) {
-  if (!slug) return false
-  const segments = slug.split('/').filter(Boolean)
-  return segments.length > 0 && segments.every((segment) => /^[a-z0-9-]+$/.test(segment))
+async function exists(file: string) {
+  try {
+    await fs.lstat(file)
+    return true
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return false
+    throw err
+  }
 }
+
+// Route files that mark a directory as code-owned (or a non-page route). Same rule
+// as /api/publish: generate into an empty dir or over a CMS page, never over these.
+const CODE_OWNED_FILES = ['page.tsx', 'page.jsx', 'page.js', 'page.mdx', 'route.ts', 'route.js']
 
 export async function POST(request: NextRequest) {
   if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
@@ -25,17 +36,40 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { slug: rawSlug, dsl } = (await request.json()) as LocalGenerateRequest
-  const slug = rawSlug?.replace(/^\/|\/$/g, '')
+  const parsed = await readJsonBody<LocalGenerateRequest>(request, 2 * 1024 * 1024)
+  if (!parsed.ok) return parsed.response
+  const { slug: rawSlug, dsl } = parsed.data
+  // Same canonical slug rule as the publish route (rejects reserved dirs like api/admin).
+  const slug = normalizePageSlug(rawSlug)
 
-  if (!isValidSlugPath(slug)) {
+  if (!slug) {
     return NextResponse.json(
       { error: 'Invalid slug. Use lowercase letters, numbers, hyphens, and slashes only.' },
       { status: 400 }
     )
   }
-  if (!dsl?.meta || !dsl?.sections) {
+  if (!dsl?.meta || !Array.isArray(dsl?.sections) || findInvalidSection(dsl.sections)) {
     return NextResponse.json({ error: 'Invalid DSL structure' }, { status: 400 })
+  }
+
+  // Refuse to overwrite a hand-authored page: an existing page.tsx (or route file)
+  // with no sibling page.dsl.json is code-owned.
+  const appDir = path.join(process.cwd(), 'src', 'app', slug)
+  if (!(await exists(path.join(appDir, 'page.dsl.json')))) {
+    for (const name of CODE_OWNED_FILES) {
+      if (await exists(path.join(appDir, name))) {
+        await logAudit(request, {
+          action: 'local-generate',
+          target: slug,
+          status: 'denied',
+          detail: 'code-owned page',
+        })
+        return NextResponse.json(
+          { error: 'Refusing to overwrite a code-owned page or route at this path.' },
+          { status: 409 }
+        )
+      }
+    }
   }
 
   // Format with the same options the publish route and the Prettier CLI use, so
@@ -49,7 +83,6 @@ export async function POST(request: NextRequest) {
     ...prettierConfig,
     parser: 'json',
   })
-  const appDir = path.join(process.cwd(), 'src', 'app', slug)
   const pagePath = path.join(appDir, 'page.tsx')
   const dslPath = path.join(appDir, 'page.dsl.json')
 
@@ -57,5 +90,6 @@ export async function POST(request: NextRequest) {
   await fs.writeFile(pagePath, pageCode, 'utf-8')
   await fs.writeFile(dslPath, dslJson, 'utf-8')
 
+  await logAudit(request, { action: 'local-generate', target: slug, status: 'success' })
   return NextResponse.json({ success: true, pagePath, dslPath })
 }

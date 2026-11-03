@@ -1,82 +1,81 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
-import { DRAFT_BRANCH, isValidPageSlug, publishedBranch } from '@/lib/security/api-guards'
+import {
+  DRAFT_BRANCH,
+  normalizePageSlug,
+  publishedBranch,
+  readJsonBody,
+} from '@/lib/security/api-guards'
 
-async function readFile(
-  baseUrl: string,
-  headers: Record<string, string>,
-  path: string,
-  branch: string
-) {
+type GitHubHeaders = Record<string, string>
+
+// Blob sha of `path` on `branch`, or null when the file does not exist.
+async function readBlobSha(baseUrl: string, headers: GitHubHeaders, path: string, branch: string) {
   const res = await fetch(
     `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${encodeURIComponent(branch)}`,
     { headers }
   )
   if (res.status === 404) return null
   if (!res.ok) throw new Error(`Failed to read ${path} on ${branch}`)
-  const data = (await res.json()) as { sha: string; content: string }
-  return {
-    sha: data.sha,
-    content: Buffer.from(data.content, 'base64').toString('utf-8'),
+  const data = (await res.json()) as { sha?: string; type?: string }
+  if (data.type !== 'file' || !data.sha) throw new Error(`${path} on ${branch} is not a file`)
+  return data.sha
+}
+
+async function fileExists(baseUrl: string, headers: GitHubHeaders, path: string, branch: string) {
+  return (await readBlobSha(baseUrl, headers, path, branch)) !== null
+}
+
+async function githubJson<T>(url: string, headers: GitHubHeaders, init?: RequestInit): Promise<T> {
+  const res = await fetch(url, { ...init, headers })
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { message?: string }
+    throw new Error(err.message ?? `GitHub request failed (${res.status})`)
   }
+  return (await res.json()) as T
 }
 
-async function fileExists(
+/**
+ * Move files on one branch as a single commit (Git data API): one tree that adds
+ * every destination path and removes every source path, one commit, one ref update.
+ * Either all of the branch's files move or none do, so a page.tsx can never be left
+ * without its page.dsl.json. The ref update is a fast-forward only, so a concurrent
+ * push makes it fail cleanly rather than being overwritten.
+ */
+async function moveOnBranch(
   baseUrl: string,
-  headers: Record<string, string>,
-  path: string,
-  branch: string
-) {
-  const res = await fetch(
-    `${baseUrl}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${encodeURIComponent(branch)}`,
-    { headers }
-  )
-  if (res.status === 404) return false
-  if (!res.ok) throw new Error(`Failed to check ${path} on ${branch}`)
-  return true
-}
-
-async function writeFile(
-  baseUrl: string,
-  headers: Record<string, string>,
-  path: string,
+  headers: GitHubHeaders,
   branch: string,
-  content: string,
+  moves: Array<{ fromPath: string; path: string; sha: string }>,
   message: string
 ) {
-  const res = await fetch(`${baseUrl}/contents/${path}`, {
-    method: 'PUT',
-    headers,
+  const ref = await githubJson<{ object: { sha: string } }>(
+    `${baseUrl}/git/ref/heads/${branch}`,
+    headers
+  )
+  const head = await githubJson<{ tree: { sha: string } }>(
+    `${baseUrl}/git/commits/${ref.object.sha}`,
+    headers
+  )
+  const tree = await githubJson<{ sha: string }>(`${baseUrl}/git/trees`, headers, {
+    method: 'POST',
     body: JSON.stringify({
-      message,
-      content: Buffer.from(content, 'utf-8').toString('base64'),
-      branch,
+      base_tree: head.tree.sha,
+      tree: moves.flatMap((m) => [
+        { path: m.path, mode: '100644', type: 'blob', sha: m.sha },
+        { path: m.fromPath, mode: '100644', type: 'blob', sha: null },
+      ]),
     }),
   })
-  if (!res.ok) {
-    const err = (await res.json()) as { message?: string }
-    throw new Error(err.message ?? `Failed to write ${path} on ${branch}`)
-  }
-}
-
-async function deleteFile(
-  baseUrl: string,
-  headers: Record<string, string>,
-  path: string,
-  branch: string,
-  sha: string,
-  message: string
-) {
-  const res = await fetch(`${baseUrl}/contents/${path}`, {
-    method: 'DELETE',
-    headers,
-    body: JSON.stringify({ message, sha, branch }),
+  const commit = await githubJson<{ sha: string }>(`${baseUrl}/git/commits`, headers, {
+    method: 'POST',
+    body: JSON.stringify({ message, tree: tree.sha, parents: [ref.object.sha] }),
   })
-  if (!res.ok) {
-    const err = (await res.json()) as { message?: string }
-    throw new Error(err.message ?? `Failed to delete ${path} on ${branch}`)
-  }
+  await githubJson(`${baseUrl}/git/refs/heads/${branch}`, headers, {
+    method: 'PATCH',
+    body: JSON.stringify({ sha: commit.sha, force: false }),
+  })
 }
 
 export async function POST(req: NextRequest) {
@@ -88,16 +87,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'GitHub env vars not configured' }, { status: 500 })
   }
 
-  let body: { from?: string; to?: string; includeDraft?: boolean; includePublished?: boolean }
-  try {
-    body = (await req.json()) as typeof body
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON in request body' }, { status: 400 })
-  }
+  const parsed = await readJsonBody<{
+    from?: unknown
+    to?: unknown
+    includeDraft?: boolean
+    includePublished?: boolean
+  }>(req, 16 * 1024)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.data
 
-  const from = typeof body.from === 'string' ? body.from.replace(/^\/|\/$/g, '') : ''
-  const to = typeof body.to === 'string' ? body.to.replace(/^\/|\/$/g, '') : ''
-  if (!isValidPageSlug(from) || !isValidPageSlug(to)) {
+  const from = normalizePageSlug(body.from)
+  const to = normalizePageSlug(body.to)
+  if (!from || !to) {
     return NextResponse.json({ error: 'Invalid slug path' }, { status: 400 })
   }
   if (from === to) {
@@ -166,13 +167,18 @@ export async function POST(req: NextRequest) {
       return deny(`A page already exists at /${to}/`, 409, 'destination exists')
     }
 
+    // Resolve every source blob first, then commit each branch's moves at once.
+    const byBranch = new Map<string, Array<{ fromPath: string; path: string; sha: string }>>()
     for (const op of operations) {
-      const file = await readFile(baseUrl, headers, op.fromPath, op.branch)
-      if (!file) continue
-      const message = `chore: move ${op.fromPath} -> ${op.path}`
-      await writeFile(baseUrl, headers, op.path, op.branch, file.content, message)
-      await deleteFile(baseUrl, headers, op.fromPath, op.branch, file.sha, message)
-      moved.push(`${op.branch}:${op.fromPath}`)
+      const sha = await readBlobSha(baseUrl, headers, op.fromPath, op.branch)
+      if (!sha) continue
+      const list = byBranch.get(op.branch) ?? []
+      list.push({ fromPath: op.fromPath, path: op.path, sha })
+      byBranch.set(op.branch, list)
+    }
+    for (const [branch, moves] of byBranch) {
+      await moveOnBranch(baseUrl, headers, branch, moves, `chore: move /${from}/ -> /${to}/`)
+      for (const m of moves) moved.push(`${branch}:${m.fromPath}`)
     }
   } catch (err) {
     console.error('[pages/move] failed:', err)
@@ -181,7 +187,7 @@ export async function POST(req: NextRequest) {
       target: from,
       targetTo: to,
       status: 'error',
-      detail: `failed after ${moved.length} file(s)`,
+      detail: `failed after ${moved.length} file(s) (each branch moves in one commit)`,
     })
     return NextResponse.json({ error: 'Move failed', moved }, { status: 500 })
   }
