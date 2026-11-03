@@ -120,6 +120,11 @@ const routes: Array<{
     priority: 0.8,
     changeFrequency: 'monthly',
   },
+  {
+    url: '/solutions/fintech/',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+  },
   // Regional pages
   { url: '/latam/', priority: 0.8, changeFrequency: 'monthly' },
   // Campaign / program pages
