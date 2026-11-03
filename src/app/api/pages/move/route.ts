@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requirePageManager } from '@/lib/security/require-admin'
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
 import {
@@ -7,6 +8,7 @@ import {
   publishedBranch,
   readJsonBody,
 } from '@/lib/security/api-guards'
+import { classifyRepoPageDir } from '@/lib/security/api-code-owned'
 
 type GitHubHeaders = Record<string, string>
 
@@ -79,6 +81,8 @@ async function moveOnBranch(
 }
 
 export async function POST(req: NextRequest) {
+  const denied = await requirePageManager(req)
+  if (denied) return denied
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
   const pubBranch = publishedBranch()
 
@@ -142,28 +146,25 @@ export async function POST(req: NextRequest) {
 
   const moved: string[] = []
   try {
-    // Pre-flight, before any write:
-    // 1. A page.tsx with no sibling page.dsl.json is hand-authored (code-owned) —
-    //    the CMS must not move it (same rule as /api/pages/delete).
-    if (includePublished) {
-      const [srcTsx, srcDsl] = await Promise.all([
-        fileExists(baseUrl, headers, `src/app/${from}/page.tsx`, pubBranch),
-        fileExists(baseUrl, headers, `src/app/${from}/page.dsl.json`, pubBranch),
-      ])
-      if (srcTsx && !srcDsl) {
-        return deny(
-          'Refusing to move a code-owned page (page.tsx with no page.dsl.json). Move it in the repository instead.',
-          409,
-          'code-owned source'
-        )
-      }
-    }
-    // 2. Never overwrite anything already at the destination.
-    const destTaken = await Promise.all([
-      ...operations.map((op) => fileExists(baseUrl, headers, op.path, op.branch)),
-      fileExists(baseUrl, headers, `src/app/${to}/page.tsx`, pubBranch),
+    // Pre-flight, before any write (same code-owned rule as publish/delete/draft-save):
+    // 1. A hand-authored (code-owned) source must not be moved by the CMS.
+    const [srcKind, destKind] = await Promise.all([
+      classifyRepoPageDir(baseUrl, headers, from, pubBranch),
+      classifyRepoPageDir(baseUrl, headers, to, pubBranch),
     ])
-    if (destTaken.some(Boolean)) {
+    if (srcKind === 'code-owned') {
+      return deny(
+        'Refusing to move a code-owned page (page.tsx with no page.dsl.json). Move it in the repository instead.',
+        409,
+        'code-owned source'
+      )
+    }
+    // 2. Never overwrite anything already at the destination (a CMS page, a
+    //    hand-authored page or route on the published branch, or a draft).
+    const destTaken = await Promise.all(
+      operations.map((op) => fileExists(baseUrl, headers, op.path, op.branch))
+    )
+    if (destKind !== 'missing' || destTaken.some(Boolean)) {
       return deny(`A page already exists at /${to}/`, 409, 'destination exists')
     }
 

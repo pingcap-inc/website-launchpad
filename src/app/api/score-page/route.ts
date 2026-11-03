@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import type { PageDSL } from '@/lib/dsl-schema'
 import type { ContentPageType } from '@/lib/detect-page-type'
 import { scorePage } from '@/lib/scoring'
@@ -14,6 +15,8 @@ const PAGE_TYPES = new Set<ContentPageType>([
 ])
 
 export async function POST(req: Request) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   try {
     const parsed = await readJsonBody<{ dsl?: PageDSL; pageType?: ContentPageType }>(req)
     if (!parsed.ok) return parsed.response

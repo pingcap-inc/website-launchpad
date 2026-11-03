@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { cleanupImportedMarkdownEscapes } from '@/lib/imported-text'
 
 export async function GET(req: NextRequest) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const docId = req.nextUrl.searchParams.get('docId')
   if (!docId) return NextResponse.json({ error: 'Missing docId' }, { status: 400 })
   // The id is interpolated into the export URL path — allow only Google's id alphabet

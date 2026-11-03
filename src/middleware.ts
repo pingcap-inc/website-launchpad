@@ -1,15 +1,17 @@
 import { NextResponse, type NextRequest, type NextFetchEvent } from 'next/server'
 import { auth } from '@/auth'
-import { canDeletePages } from '@/lib/admin-permissions'
-import { isLocalDevAuthBypass } from '@/lib/dev-auth'
+import { canManagePages, isDestructivePagePath } from '@/lib/admin-permissions'
+import { writeAuditRecord } from '@/lib/audit'
+import { isLocalDevAuthBypass, isLoopbackHost, isStagingDeployment } from '@/lib/dev-auth'
 
 /**
  * Gates the admin surface (`/admin/*`) and its API routes (`/api/*`).
  *
  * - Production: fully disabled (404). Auth.js is never invoked here, so a missing
  *   AUTH_SECRET in production can't surface as a 500 on these paths.
- * - Any deployed branch other than `staging` (per-PR previews, etc.): also 404,
- *   so the admin only ever appears on the single staging deployment.
+ * - Any deployment other than the `staging` branch of pingcap-inc/website-launchpad
+ *   (per-PR previews, a `staging` branch in a fork, etc.): also 404, so the admin
+ *   only ever appears on the single staging deployment (see `isStagingDeployment`).
  * - Local development (`next dev`, i.e. NODE_ENV === 'development'): login is
  *   REQUIRED by default, exactly as on staging. A developer may opt out for their
  *   own machine with `ADMIN_DEV_AUTH_BYPASS=1` in `.env.local` (see
@@ -22,9 +24,13 @@ import { isLocalDevAuthBypass } from '@/lib/dev-auth'
  *   (enforced by the `signIn` callback in `@/auth`). The staging URL is public, so
  *   login — not obscurity — is what protects it.
  *
- * - Staging, page deletion: only the accounts in `canDeletePages`
- *   (`@/lib/admin-permissions`) may call the endpoints in DELETE_ONLY_PATHS;
- *   everyone else gets 403.
+ * - Destructive page operations (delete, move): only the accounts in
+ *   `canManagePages` (`@/lib/admin-permissions`) may call the endpoints in
+ *   DESTRUCTIVE_PAGE_PATHS wherever login is enforced; everyone else gets 403.
+ *   Route handlers re-check this via `requirePageManager`.
+ *
+ * Every denial this middleware issues for a reachable admin (401, 403) is written
+ * as an `[audit]` line (`writeAuditRecord`, Edge-safe) with status `denied`.
  *
  * On every environment where the admin is reachable (local dev, staging), a
  * state-changing `/api/*` request carrying a cross-origin `Origin` header is
@@ -48,25 +54,24 @@ function isCrossOriginApiWrite(req: NextRequest): boolean {
   return req.headers.get('sec-fetch-site') === 'cross-site'
 }
 
-/** Hostnames accepted on the ungated local-dev path (port is ignored). */
-const LOOPBACK_HOSTNAMES = new Set(['localhost', '127.0.0.1', '[::1]', '::1'])
-
-/** True when the request's Host header names a loopback address (any port). */
-function isLoopbackHost(req: NextRequest): boolean {
-  const host = req.headers.get('host')
-  if (!host) return false
-  // Strip the port: "[::1]:3000" -> "[::1]", "localhost:3000" -> "localhost".
-  const hostname = host.startsWith('[') ? host.slice(0, host.indexOf(']') + 1) : host.split(':')[0]
-  return LOOPBACK_HOSTNAMES.has(hostname.toLowerCase())
+/** Record a middleware denial as a structured `[audit]` line, then return `res`. */
+function denied(req: NextRequest, actor: string, reason: string, res: NextResponse): NextResponse {
+  writeAuditRecord(req, actor, {
+    action: 'access',
+    target: req.nextUrl.pathname,
+    status: 'denied',
+    detail: `${req.method.toUpperCase()} ${res.status} ${reason}`,
+  })
+  return res
 }
 
-/** Endpoints that delete pages. Only `canDeletePages` accounts may call them on staging. */
-const DELETE_ONLY_PATHS = ['/api/pages/delete']
-
-function isDeleteOnlyPath(pathname: string): boolean {
-  const p = pathname.replace(/\/+$/, '')
-  return DELETE_ONLY_PATHS.includes(p)
-}
+const csrfDenied = (req: NextRequest) =>
+  denied(
+    req,
+    'unresolved',
+    'cross-origin write',
+    NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  )
 
 // The authenticated gate for staging. Wrapping with `auth()` resolves the session
 // into `req.auth`, so this runs ONLY for staging (see the dispatcher below).
@@ -87,14 +92,18 @@ const stagingGate = auth((req) => {
 
   // `req.auth` is set only for a session that cleared the @pingcap.com signIn gate.
   if (req.auth) {
-    // Only designated accounts may delete pages.
-    if (isDeleteOnlyPath(pathname)) {
-      if (!canDeletePages(req.auth.user?.email)) {
-        return NextResponse.json(
-          { error: 'Forbidden: you are not allowed to delete pages' },
+    // Only designated accounts may delete or move pages.
+    const email = req.auth.user?.email
+    if (isDestructivePagePath(pathname) && !canManagePages(email)) {
+      return denied(
+        req,
+        email || 'unknown',
+        'not a page manager',
+        NextResponse.json(
+          { error: 'Forbidden: you are not allowed to delete or move pages' },
           { status: 403 }
         )
-      }
+      )
     }
     return NextResponse.next()
   }
@@ -102,11 +111,17 @@ const stagingGate = auth((req) => {
   // Unauthenticated: APIs get a 401; browser navigation goes straight to the
   // branded sign-in page (not /api/auth/signin — that adds an extra redirect hop).
   if (pathname.startsWith('/api')) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return denied(
+      req,
+      'anonymous',
+      'not signed in',
+      NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    )
   }
 
+  // Relative path only: the login page accepts nothing but same-origin /admin paths.
   const signInUrl = new URL('/admin/login', req.nextUrl.origin)
-  signInUrl.searchParams.set('callbackUrl', req.nextUrl.href)
+  signInUrl.searchParams.set('callbackUrl', `${req.nextUrl.pathname}${req.nextUrl.search}`)
   return NextResponse.redirect(signInUrl)
 })
 
@@ -146,11 +161,11 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
     }
     // Defense in depth (DNS rebinding / a dev server accidentally bound to 0.0.0.0):
     // the local admin only answers to a loopback Host.
-    if (!isLoopbackHost(req)) {
+    if (!isLoopbackHost(req.headers.get('host'))) {
       return new NextResponse(null, { status: 404 })
     }
     if (isCrossOriginApiWrite(req)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      return csrfDenied(req)
     }
     // Login is skipped only when the developer explicitly opted out locally.
     if (isLocalDevAuthBypass()) {
@@ -161,17 +176,18 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
     )
   }
 
-  // Deployed but not the staging branch (VERCEL_ENV is 'preview' for every branch
-  // preview, so distinguish by the deployed git ref). Hide admin on those too.
-  // Fails closed: an unknown VERCEL_ENV value, or a missing ref, is not staging.
-  if (vercelEnv !== 'preview' || process.env.VERCEL_GIT_COMMIT_REF !== 'staging') {
+  // Deployed but not the staging deployment (VERCEL_ENV is 'preview' for every
+  // branch preview, so distinguish by the deployed git ref AND source repo). Hide
+  // admin on those too. Fails closed: an unknown VERCEL_ENV value, a missing ref or
+  // a missing/foreign repo owner/slug is not staging.
+  if (!isStagingDeployment()) {
     return new NextResponse(null, { status: 404 })
   }
 
   // CSRF guard ahead of the session check, so a cross-site write is refused even
   // when the victim's browser carries a valid staging session cookie.
   if (isCrossOriginApiWrite(req)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    return csrfDenied(req)
   }
 
   // Staging only: run the authenticated gate (this is where Auth.js runs).

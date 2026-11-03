@@ -1,14 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { S3Client, ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3'
 import { logAudit } from '@/lib/audit'
-import { isUnsafeObjectKey, readJsonBody } from '@/lib/security/api-guards'
+import { readJsonBody } from '@/lib/security/api-guards'
+import {
+  MEDIA_CDN_BASE,
+  MEDIA_IMAGES_PREFIX,
+  MediaIndexFullError,
+  assertMediaIndexBounds,
+  findMissingMediaObjects,
+  isMediaUrl,
+} from '@/lib/security/api-media-index'
 import { updateJsonObject } from '@/lib/security/api-s3-json'
 import { resolveAwsCredentials } from '@/lib/aws-credentials'
 
-const CDN_BASE = 'https://static.pingcap.com'
+const CDN_BASE = MEDIA_CDN_BASE
 const TAGS_KEY = 'media/tags.json'
 const META_KEY = 'media/meta.json'
-const IMAGES_PREFIX = 'images/'
+const IMAGES_PREFIX = MEDIA_IMAGES_PREFIX
 
 interface ImageMeta {
   alt?: string
@@ -43,7 +52,9 @@ async function readJson<T>(s3: S3Client, bucket: string, key: string, fallback: 
  * GET /api/admin/media-index
  * Returns all images under `images/` merged with tags and metadata.
  */
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const bucket = process.env.AWS_S3_BUCKET
   if (!bucket) {
     return NextResponse.json({ error: 'AWS_S3_BUCKET not configured' }, { status: 500 })
@@ -115,19 +126,6 @@ const MAX_TAG_LENGTH = 64
 const MAX_ALT_LENGTH = 1000
 const MAX_BATCH_ENTRIES = 500
 
-// Index keys are CDN URLs of objects under images/ — the only thing the Media
-// Library ever writes. Anything else (incl. `__proto__`/`constructor`) is refused,
-// so caller strings can't become arbitrary keys in the shared JSON indexes.
-function isMediaUrl(url: unknown): url is string {
-  return (
-    typeof url === 'string' &&
-    url.length <= 1024 &&
-    url.startsWith(`${CDN_BASE}/${IMAGES_PREFIX}`) &&
-    !url.includes('..') &&
-    !isUnsafeObjectKey(url)
-  )
-}
-
 function cleanTags(tags: unknown): string[] | null {
   if (!Array.isArray(tags) || tags.length > MAX_TAGS) return null
   if (!tags.every((t) => typeof t === 'string')) return null
@@ -149,10 +147,60 @@ function toDict<T>(obj: Record<string, T>): Record<string, T> {
 }
 
 /**
+ * Before a URL becomes a new key in an index, confirm its object exists in the
+ * bucket — the index only ever describes real uploads. URLs already in the index
+ * are not re-checked. Returns the verified set (consulted again inside the write,
+ * in case the index changed in between), or the URLs whose objects are missing.
+ */
+async function verifyNewMediaUrls(
+  s3: S3Client,
+  bucket: string,
+  indexKey: string,
+  urls: string[]
+): Promise<{ ok: true; known: Set<string> } | { ok: false; missing: string[] }> {
+  // On a read failure this falls back to {}, which only means more HEAD checks.
+  const index = await readJson<Record<string, unknown>>(s3, bucket, indexKey, {})
+  const fresh = [...new Set(urls)].filter((url) => !Object.hasOwn(index, url))
+  const missing = await findMissingMediaObjects(s3, bucket, fresh)
+  if (missing.length) return { ok: false, missing }
+  return { ok: true, known: new Set(urls) }
+}
+
+// Apply `entries` to an index, adding new keys only for URLs verified above and
+// within the index caps.
+function applyBounded<T>(
+  raw: Record<string, T>,
+  known: Set<string>,
+  entries: Array<[string, (prev: T | undefined) => T]>
+): Record<string, T> {
+  const index = toDict(raw)
+  let added = 0
+  for (const [url, update] of entries) {
+    const exists = Object.hasOwn(index, url)
+    if (!exists) {
+      if (!known.has(url)) throw new MediaIndexFullError('Unverified media url')
+      added++
+    }
+    index[url] = update(exists ? index[url] : undefined)
+  }
+  assertMediaIndexBounds(index, added)
+  return index
+}
+
+function indexWriteError(err: unknown) {
+  if (err instanceof MediaIndexFullError) {
+    return NextResponse.json({ error: err.message }, { status: 413 })
+  }
+  return NextResponse.json({ error: 'Failed to update media metadata' }, { status: 500 })
+}
+
+/**
  * PATCH /api/admin/media-index
  * Body: { url, tags?, alt?, width?, height? }
  */
 export async function PATCH(req: NextRequest) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const bucket = process.env.AWS_S3_BUCKET
   if (!bucket) {
     return NextResponse.json({ error: 'AWS_S3_BUCKET not configured' }, { status: 500 })
@@ -191,21 +239,39 @@ export async function PATCH(req: NextRequest) {
       entries.push({ url: entry.url, tags })
     }
     try {
+      const verified = await verifyNewMediaUrls(
+        s3,
+        bucket,
+        TAGS_KEY,
+        entries.map((e) => e.url)
+      )
+      if (!verified.ok) {
+        await logAudit(req, {
+          action: 'media-tags',
+          status: 'denied',
+          detail: `${verified.missing.length} url(s) with no object`,
+        })
+        return NextResponse.json(
+          { error: 'Some media urls do not exist', missing: verified.missing.slice(0, 20) },
+          { status: 404 }
+        )
+      }
       await updateJsonObject<Record<string, string[]>>(
         s3,
         bucket,
         TAGS_KEY,
         () => ({}),
-        (raw) => {
-          const tagsMap = toDict(raw)
-          for (const entry of entries) tagsMap[entry.url] = entry.tags
-          return tagsMap
-        }
+        (raw) =>
+          applyBounded(
+            raw,
+            verified.known,
+            entries.map((entry) => [entry.url, () => entry.tags])
+          )
       )
     } catch (err) {
       console.error('[media-index] tags batch update failed:', err)
       await logAudit(req, { action: 'media-tags', status: 'error', detail: 'index write failed' })
-      return NextResponse.json({ error: 'Failed to update tags' }, { status: 500 })
+      return indexWriteError(err)
     }
     await logAudit(req, {
       action: 'media-tags',
@@ -235,6 +301,38 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid alt, width or height' }, { status: 400 })
   }
 
+  const writesMeta = 'alt' in body || 'width' in body || 'height' in body
+  if (!tags && !writesMeta) {
+    return NextResponse.json({ ok: true })
+  }
+
+  // The object must exist before it can gain an index entry (checked once against
+  // both indexes: a URL already in either is a known upload).
+  let known: Set<string>
+  try {
+    const [inTags, inMeta] = await Promise.all([
+      readJson<Record<string, unknown>>(s3, bucket, TAGS_KEY, {}),
+      readJson<Record<string, unknown>>(s3, bucket, META_KEY, {}),
+    ])
+    if (!Object.hasOwn(inTags, url) && !Object.hasOwn(inMeta, url)) {
+      const missing = await findMissingMediaObjects(s3, bucket, [url])
+      if (missing.length) {
+        await logAudit(req, {
+          action: 'media-meta',
+          target: url,
+          status: 'denied',
+          detail: 'no such object',
+        })
+        return NextResponse.json({ error: 'Media object not found' }, { status: 404 })
+      }
+    }
+    known = new Set([url])
+  } catch (err) {
+    console.error('[media-index] existence check failed:', err)
+    await logAudit(req, { action: 'media-meta', target: url, status: 'error', detail: 'head' })
+    return NextResponse.json({ error: 'Failed to update media metadata' }, { status: 500 })
+  }
+
   const updates: Promise<void>[] = []
 
   if (tags) {
@@ -244,39 +342,40 @@ export async function PATCH(req: NextRequest) {
         bucket,
         TAGS_KEY,
         () => ({}),
-        (raw) => {
-          const tagsMap = toDict(raw)
-          tagsMap[url] = tags
-          return tagsMap
-        }
+        (raw) => applyBounded(raw, known, [[url, () => tags]])
       )
     )
   }
 
-  if ('alt' in body || 'width' in body || 'height' in body) {
+  if (writesMeta) {
     updates.push(
       updateJsonObject<Record<string, ImageMeta>>(
         s3,
         bucket,
         META_KEY,
         () => ({}),
-        (raw) => {
-          const metaMap = toDict(raw)
-          const existing: ImageMeta = { ...(metaMap[url] ?? {}) }
-          if ('alt' in body) existing.alt = (body.alt as string | null | undefined) ?? ''
-          if ('width' in body)
-            existing.width = (body.width as number | null | undefined) ?? undefined
-          if ('height' in body)
-            existing.height = (body.height as number | null | undefined) ?? undefined
-          metaMap[url] = existing
-          return metaMap
-        }
+        (raw) =>
+          applyBounded(raw, known, [
+            [
+              url,
+              (prev) => {
+                const existing: ImageMeta = { ...(prev ?? {}) }
+                if ('alt' in body) existing.alt = (body.alt as string | null | undefined) ?? ''
+                if ('width' in body)
+                  existing.width = (body.width as number | null | undefined) ?? undefined
+                if ('height' in body)
+                  existing.height = (body.height as number | null | undefined) ?? undefined
+                return existing
+              },
+            ],
+          ])
       )
     )
   }
 
   const results = await Promise.allSettled(updates)
-  if (results.some((r) => r.status === 'rejected')) {
+  const failure = results.find((r): r is PromiseRejectedResult => r.status === 'rejected')
+  if (failure) {
     console.error('[media-index] update failed:', results)
     await logAudit(req, {
       action: 'media-meta',
@@ -284,7 +383,7 @@ export async function PATCH(req: NextRequest) {
       status: 'error',
       detail: 'index write failed',
     })
-    return NextResponse.json({ error: 'Failed to update media metadata' }, { status: 500 })
+    return indexWriteError(failure.reason)
   }
 
   await logAudit(req, { action: 'media-meta', target: url, status: 'success' })

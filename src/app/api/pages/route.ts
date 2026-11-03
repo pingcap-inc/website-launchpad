@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
 
 export interface PageListItem {
@@ -147,6 +148,8 @@ const cacheKey = (flags: Record<string, boolean>) =>
  * and code-only pages (page.tsx/page.jsx/page.mdx).
  */
 export async function GET(req: Request) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
   const branch = process.env.GITHUB_BRANCH ?? 'staging'
 
