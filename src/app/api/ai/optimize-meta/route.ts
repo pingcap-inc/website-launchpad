@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { AI_PROVIDER, generateJSON } from '@/lib/ai-client'
 import { readJsonBody } from '@/lib/security/api-guards'
 
@@ -42,6 +43,8 @@ function normalizeSlugLeaf(input: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   try {
     const input = await readJsonBody<{
       content?: string

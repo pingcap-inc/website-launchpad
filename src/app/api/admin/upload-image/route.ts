@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import crypto from 'crypto'
 import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3'
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
 import { resolveAwsCredentials } from '@/lib/aws-credentials'
 import { updateJsonObject } from '@/lib/security/api-s3-json'
+import { looksLikeSvg } from '@/lib/security/api-svg'
+import { assertMediaIndexBounds } from '@/lib/security/api-media-index'
 
 const CDN_BASE = 'https://static.pingcap.com'
 const TAGS_KEY = 'media/tags.json'
@@ -20,6 +23,11 @@ function isValidSlugPath(slug: string) {
 }
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024
+// Same per-image tag limits as /api/admin/media-index.
+const MAX_TAGS = 50
+const MAX_TAG_LENGTH = 64
+// MAX_TAGS tags of MAX_TAG_LENGTH chars, comma-separated, with room for spaces.
+const MAX_TAGS_FIELD_CHARS = MAX_TAGS * (MAX_TAG_LENGTH + 2)
 const MAX_VIDEO_BYTES = 50 * 1024 * 1024
 // Multipart framing + the small text fields on top of the largest allowed file.
 const MAX_REQUEST_BYTES = MAX_VIDEO_BYTES + 1024 * 1024
@@ -54,16 +62,6 @@ function startsWith(buffer: Buffer, bytes: number[], offset = 0) {
 
 function ascii(buffer: Buffer, start: number, end: number) {
   return buffer.length >= end ? buffer.toString('latin1', start, end) : ''
-}
-
-// SVG has no magic number: accept only text that is plainly an SVG document — an
-// optional BOM/XML prolog/comments/doctype, then a root <svg> element — with no NUL.
-function looksLikeSvg(buffer: Buffer) {
-  if (buffer.includes(0)) return false
-  const head = buffer.toString('utf-8', 0, Math.min(buffer.length, 4096)).replace(/^\uFEFF/, '')
-  return /^\s*(<\?xml[^>]*\?>\s*)?(<!--[\s\S]*?-->\s*)*(<!doctype\s+svg[^>]*>\s*)?(<!--[\s\S]*?-->\s*)*<svg[\s>]/i.test(
-    head
-  )
 }
 
 /**
@@ -172,6 +170,8 @@ async function putIfAbsent(
  * Body: multipart/form-data with `file` and `slug` fields.
  */
 export async function POST(req: NextRequest) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
   const branch = 'drafts/ai'
 
@@ -189,18 +189,29 @@ export async function POST(req: NextRequest) {
   }
 
   const file = formData.get('file') as File | null
-  const slug = (formData.get('slug') as string | null) ?? 'admin'
-  if (!isValidSlugPath(slug)) {
+  const textField = (name: string) => {
+    const value = formData.get(name)
+    return typeof value === 'string' ? value : null
+  }
+  const slug = textField('slug') ?? 'admin'
+  if (slug.length > 200 || !isValidSlugPath(slug)) {
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 })
   }
-  const source = (formData.get('source') as string | null) ?? ''
-  const tagsRaw = (formData.get('tags') as string | null) ?? ''
-  const skipTagsUpdate = (formData.get('skipTagsUpdate') as string | null) === '1'
+  const source = textField('source') ?? ''
+  const skipTagsUpdate = textField('skipTagsUpdate') === '1'
+  // Validate the raw field before expanding it: its length is bounded first, so the
+  // split below can only ever produce a small array; then the tag count is capped.
+  const tagsRaw = textField('tags') ?? ''
+  if (tagsRaw.length > MAX_TAGS_FIELD_CHARS) {
+    return NextResponse.json({ error: 'Tags field is too long' }, { status: 400 })
+  }
   const tags = tagsRaw
     .split(',')
-    .map((t) => t.trim().slice(0, 64))
+    .map((t) => t.trim().slice(0, MAX_TAG_LENGTH))
     .filter(Boolean)
-    .slice(0, 50)
+  if (tags.length > MAX_TAGS) {
+    return NextResponse.json({ error: `At most ${MAX_TAGS} tags are allowed` }, { status: 400 })
+  }
 
   if (!file || typeof file === 'string') {
     return NextResponse.json({ error: 'file is required' }, { status: 400 })
@@ -323,7 +334,10 @@ export async function POST(req: NextRequest) {
           () => ({}),
           (raw) => {
             const tagsMap = Object.assign(Object.create(null) as Record<string, string[]>, raw)
+            const added = Object.hasOwn(tagsMap, publicUrl) ? 0 : 1
             tagsMap[publicUrl] = tags
+            // Same index caps as /api/admin/media-index (the object was just stored).
+            assertMediaIndexBounds(tagsMap, added)
             return tagsMap
           }
         )

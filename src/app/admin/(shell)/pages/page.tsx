@@ -1,5 +1,5 @@
 import { auth } from '@/auth'
-import { canDeletePages } from '@/lib/admin-permissions'
+import { canManagePages } from '@/lib/admin-permissions'
 import { isLocalDevAuthBypass } from '@/lib/dev-auth'
 import PagesClient from './PagesClient'
 
@@ -8,5 +8,5 @@ export default async function PagesPage() {
   const bypass = isLocalDevAuthBypass()
   const session = bypass ? null : await auth()
 
-  return <PagesClient canDelete={bypass || canDeletePages(session?.user?.email)} />
+  return <PagesClient canDelete={bypass || canManagePages(session?.user?.email)} />
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import prettier from 'prettier'
 import prettierConfig from '../../../../prettier.config.mjs'
 import { dslToTsx } from '@/lib/dsl-to-tsx'
@@ -14,6 +15,7 @@ import {
   safeEqual,
 } from '@/lib/security/api-guards'
 import { findInvalidSection } from '@/lib/security/api-section-types'
+import { classifyRepoPageDir, type PageDirKind } from '@/lib/security/api-code-owned'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 interface PublishRequest {
@@ -33,18 +35,6 @@ const CHANGE_FREQUENCIES = new Set([
   'monthly',
   'yearly',
   'never',
-])
-
-// Route files that mark a directory as code-owned (or as a non-page route). The CMS
-// must never overwrite or sit beside these — a page.tsx with no page.dsl.json is a
-// hand-authored page, and a page next to a route.ts fails the build.
-const CODE_OWNED_FILES = new Set([
-  'page.tsx',
-  'page.jsx',
-  'page.js',
-  'page.mdx',
-  'route.ts',
-  'route.js',
 ])
 
 function injectSitemapEntry(
@@ -75,30 +65,10 @@ function isAllowedPublishBranch(branch: unknown): branch is string {
   )
 }
 
-type DirState = { kind: 'missing' } | { kind: 'cms' } | { kind: 'code-owned' }
-
-// Classify the target directory on the branch being published to, so a publish can
-// create a new page or update a CMS page but never overwrite a code-owned one.
-async function readTargetDir(
-  baseUrl: string,
-  headers: Record<string, string>,
-  slug: string,
-  branch: string
-): Promise<DirState> {
-  const res = await fetch(`${baseUrl}/contents/src/app/${slug}?ref=${encodeURIComponent(branch)}`, {
-    headers,
-  })
-  if (res.status === 404) return { kind: 'missing' }
-  if (!res.ok) throw new Error('Failed to inspect target path')
-  const data = (await res.json()) as unknown
-  // A file (not a directory) at the slug path is never a valid page target.
-  if (!Array.isArray(data)) return { kind: 'code-owned' }
-  const names = new Set(data.map((entry) => (entry as { name?: string }).name ?? ''))
-  if (names.has('page.dsl.json')) return { kind: 'cms' }
-  for (const name of names) {
-    if (CODE_OWNED_FILES.has(name)) return { kind: 'code-owned' }
-  }
-  return { kind: 'missing' }
+// MOCK_PUBLISH_SUCCESS is a local/e2e convenience only: never on Vercel (any
+// environment) and never in a production build.
+function isMockPublishAllowed() {
+  return !process.env.VERCEL && !process.env.VERCEL_ENV && process.env.NODE_ENV !== 'production'
 }
 
 // The previously-committed creator, read from the repo (never from the request).
@@ -124,6 +94,8 @@ async function readPriorAuthorship(
 }
 
 export async function POST(request: NextRequest) {
+  const denied = await requireAdmin(request)
+  if (denied) return denied
   const { GITHUB_OWNER, GITHUB_REPO, VERCEL_OWNER } = process.env
   const mainPublishToken = process.env.PUBLISH_MAIN_TOKEN
 
@@ -200,8 +172,10 @@ export async function POST(request: NextRequest) {
   }
 
   // Mock mode (local/e2e) short-circuits only after the same validation and gate as
-  // a real publish, and is still audited.
-  if (process.env.MOCK_PUBLISH_SUCCESS === '1') {
+  // a real publish, and is still audited. Fails closed: the flag is honoured only
+  // off Vercel in a non-production build, so a stray env var on a deployment can
+  // never make publish report success without committing anything.
+  if (process.env.MOCK_PUBLISH_SUCCESS === '1' && isMockPublishAllowed()) {
     await logAudit(request, {
       action: 'publish',
       target: slug,
@@ -246,9 +220,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: false, error, step }, { status: 500 })
   }
 
-  let targetDir: DirState
+  // Classify the target directory on the branch being published to, so a publish can
+  // create a new page or update a CMS page but never overwrite a code-owned one.
+  let targetDir: PageDirKind
   try {
-    targetDir = await readTargetDir(baseUrl, headers, slug, branch)
+    targetDir = await classifyRepoPageDir(baseUrl, headers, slug, branch)
   } catch {
     await logAudit(request, {
       action: 'publish',
@@ -262,7 +238,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-  if (targetDir.kind === 'code-owned') {
+  if (targetDir === 'code-owned') {
     await logAudit(request, {
       action: 'publish',
       target: slug,
@@ -284,7 +260,7 @@ export async function POST(request: NextRequest) {
   // draft — never from the request; the modifier is always the current user.
   const dslRepoPath = `src/app/${slug}/page.dsl.json`
   const prior =
-    (targetDir.kind === 'cms'
+    (targetDir === 'cms'
       ? await readPriorAuthorship(baseUrl, headers, dslRepoPath, branch)
       : null) ?? (await readPriorAuthorship(baseUrl, headers, dslRepoPath, DRAFT_BRANCH))
   const actor = await resolveActor()

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 
 export interface BuildItem {
   id: string
@@ -16,7 +17,9 @@ export interface BuildItem {
  * Returns the last 10 Vercel deployments.
  * Requires: VERCEL_TOKEN + VERCEL_PROJECT_ID (+ optional VERCEL_TEAM_ID)
  */
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const { VERCEL_TOKEN, VERCEL_PROJECT_ID, VERCEL_TEAM_ID } = process.env
 
   if (!VERCEL_TOKEN || !VERCEL_PROJECT_ID) {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import type { PageDSL } from '@/lib/dsl-schema'
 import { extractExternalHrefs, checkLinks } from '@/lib/validate-links'
 import { readJsonBody } from '@/lib/security/api-guards'
@@ -11,6 +12,8 @@ import { readJsonBody } from '@/lib/security/api-guards'
  * Extracts all external hrefs from a PageDSL and verifies them via HTTP HEAD.
  */
 export async function POST(request: NextRequest) {
+  const denied = await requireAdmin(request)
+  if (denied) return denied
   try {
     const parsed = await readJsonBody<{ dsl: PageDSL }>(request)
     if (!parsed.ok) return parsed.response

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 
 function extractDocId(url: string) {
   const match = url.match(/\/document\/d\/([a-zA-Z0-9-_]+)/)
@@ -6,6 +7,8 @@ function extractDocId(url: string) {
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin(request)
+  if (denied) return denied
   try {
     const body = (await request.json()) as { url?: string }
     const url = body.url?.trim()

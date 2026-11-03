@@ -58,13 +58,19 @@ function clientIp(req: Request | null): string | undefined {
 }
 
 export async function logAudit(req: Request | null, entry: AuditEntry): Promise<void> {
-  const actor = await resolveActor()
-  const ip = clientIp(req)
+  writeAuditRecord(req, await resolveActor(), entry)
+}
 
+/**
+ * Emit one `[audit]` line for an already-known actor. Synchronous and free of
+ * Node-only APIs, so the Edge middleware can use it to record access denials
+ * (it has the session on `req.auth` and must not call `auth()` again).
+ */
+export function writeAuditRecord(req: Request | null, actor: string, entry: AuditEntry): void {
   const record = {
     ts: new Date().toISOString(),
     actor,
-    ip,
+    ip: clientIp(req),
     env: process.env.VERCEL_ENV ?? 'local',
     ...entry,
   }

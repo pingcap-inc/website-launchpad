@@ -6,13 +6,13 @@ sign-in, restricted to the `pingcap.com` email domain. Implemented with
 
 ## Gate behaviour (see `src/middleware.ts`)
 
-| Environment                | Condition                                                           | Behaviour                                                                                                                                                                                                |
-| -------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Production                 | `VERCEL_ENV === 'production'`                                       | `/admin` + `/api` return **404** (unchanged)                                                                                                                                                             |
-| Preview — non-`staging`    | `VERCEL_ENV === 'preview'`, git ref ≠ `staging`                     | **404** — admin is hidden on per-PR previews                                                                                                                                                             |
-| Preview — `staging` branch | `VERCEL_ENV === 'preview'`, git ref = `staging`                     | **Require** a signed-in `@pingcap.com` Google user                                                                                                                                                       |
-| Local (`pnpm dev`)         | `VERCEL_ENV` unset, `NODE_ENV === 'development'`                    | **Require** login (same as staging) by default; skipped only with `ADMIN_DEV_AUTH_BYPASS=1` in `.env.local`, and then only for a loopback `Host` (localhost / 127.0.0.1 / [::1]) — anything else **404** |
-| Anything else              | e.g. `next start` off Vercel, unknown `VERCEL_ENV`, missing git ref | **404** — fails closed                                                                                                                                                                                   |
+| Environment                | Condition                                                                             | Behaviour                                                                                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Production                 | `VERCEL_ENV === 'production'`                                                         | `/admin` + `/api` return **404** (unchanged)                                                                                                                                                             |
+| Preview — non-`staging`    | `VERCEL_ENV === 'preview'`, not the staging deployment (below)                        | **404** — admin is hidden on per-PR previews                                                                                                                                                             |
+| Preview — `staging` branch | `VERCEL_ENV === 'preview'`, git ref = `staging`, repo = pingcap-inc/website-launchpad | **Require** a signed-in `@pingcap.com` Google user                                                                                                                                                       |
+| Local (`pnpm dev`)         | `VERCEL_ENV` unset, `NODE_ENV === 'development'`                                      | **Require** login (same as staging) by default; skipped only with `ADMIN_DEV_AUTH_BYPASS=1` in `.env.local`, and then only for a loopback `Host` (localhost / 127.0.0.1 / [::1]) — anything else **404** |
+| Anything else              | e.g. `next start` off Vercel, unknown `VERCEL_ENV`, missing git ref                   | **404** — fails closed                                                                                                                                                                                   |
 
 Local development is **secure by default**: without the opt-out it goes through
 the same Auth.js gate as staging (sign in with a `@pingcap.com` Google account,
@@ -37,8 +37,29 @@ So the admin only ever appears on the single **staging** deployment, and that
 deployment requires login. The staging URL is public and predictable, so the
 login — not the obscurity of the URL — is what actually protects it.
 
-Staging detection uses `VERCEL_GIT_COMMIT_REF` (the deployed branch), since
-`VERCEL_ENV` is `preview` for every branch preview and can't distinguish them.
+Staging detection (`isStagingDeployment`, `src/lib/dev-auth.ts`) requires
+`VERCEL_ENV === 'preview'`, `VERCEL_GIT_COMMIT_REF === 'staging'` (the deployed
+branch — `VERCEL_ENV` is `preview` for every branch preview and can't distinguish
+them) **and** the Vercel system vars `VERCEL_GIT_REPO_OWNER === 'pingcap-inc'` /
+`VERCEL_GIT_REPO_SLUG === 'website-launchpad'` (case-insensitive). A branch merely
+_named_ `staging` in a fork or another connected repo therefore gets 404. If any of
+these vars is missing (e.g. "Automatically expose System Environment Variables" is
+turned off in the Vercel project), the admin fails closed with 404.
+
+### Handler-level backstop
+
+Route handlers re-check the same decision with `requireAdmin(req)` /
+`requirePageManager(req)` from `src/lib/security/require-admin.ts` (each returns
+`null` to proceed, or the 401/403/404 `Response` to send). These replicate the
+middleware's environment + session rules (not its CSRF check or headers), so a
+matcher change or path-normalisation gap can't expose an API on its own.
+
+### Post-login redirect
+
+The middleware passes only a relative `callbackUrl` (`/admin/...`) to
+`/admin/login`, and the login page accepts nothing else (`safeAdminCallback`,
+`src/app/admin/login/safe-callback.ts`): absolute URLs, `//host`, backslashes,
+control characters and non-`/admin` paths fall back to `/admin/`.
 
 Domain enforcement is in the `signIn` callback in `src/auth.ts`: a login is
 accepted only when Google reports `email_verified` **and** the email ends in
@@ -58,26 +79,32 @@ you want to exercise the real login flow locally):
 | `AUTH_GOOGLE_ID`     | Google OAuth 2.0 **Client ID**.                              |
 | `AUTH_GOOGLE_SECRET` | Google OAuth 2.0 **Client secret**.                          |
 
-> `AUTH_SECRET` **must** be set on every deployed (preview) environment. Without
-> it Auth.js fails closed (no session can be issued or verified). The insecure dev
-> secret is used **only** when `NODE_ENV === 'development'` and not on Vercel, so
-> `pnpm dev` doesn't crash — it never protects anything, because localhost
-> bypasses the gate.
+> `AUTH_SECRET` **must** be set on every deployed (preview) environment **and** in
+> `.env.local` if you sign in locally (generate one with `npx auth secret`). Without
+> it Auth.js fails closed (no session can be issued or verified). There is no
+> hardcoded fallback secret: only the explicit local opt-out
+> (`ADMIN_DEV_AUTH_BYPASS=1`), where no session is ever needed, gets a random
+> per-process stand-in so Auth.js can initialise.
 
 Sessions are JWTs that expire after **12 hours** (refreshed hourly while in use).
 They can't be revoked early; signing out clears the cookie on that browser only.
 Rotating `AUTH_SECRET` invalidates every session at once.
 
-### Who can delete pages
+### Who can delete or move pages
 
-Only the accounts in `PAGE_DELETERS` (`src/lib/admin-permissions.ts`, currently
-`liwen.xu@pingcap.com`) may delete pages on staging. The rule is enforced in the
-middleware (`POST /api/pages/delete` → **403** "you are not allowed to delete pages"
-for anyone else), and the pages list only shows the Delete button to those
-accounts. Publishing, moving, copying and draft saves stay open to any signed-in
-`@pingcap.com` user. Local `pnpm dev` with `ADMIN_DEV_AUTH_BYPASS=1` (no login) shows
-Delete and is not restricted; without it, the same rule as staging applies.
-To change who can delete, edit `PAGE_DELETERS` and ship it through a PR.
+Deleting and moving (renaming the slug of) a page are both destructive — a move
+removes the page from its old URL on the draft and published branches — so they
+share one allowlist: `PAGE_MANAGERS` (`src/lib/admin-permissions.ts`, currently
+`liwen.xu@pingcap.com`, checked with `canManagePages`). The endpoints are listed in
+`DESTRUCTIVE_PAGE_PATHS` (`/api/pages/delete`, `/api/pages/move`). The rule is
+enforced in the middleware (→ **403** "you are not allowed to delete or move pages"
+for anyone else) and again in the handlers via `requirePageManager`. The pages list
+only shows the Delete button to those accounts; the editor still shows the slug
+field, and a move by anyone else fails with that 403 message. Publishing, copying
+and draft saves stay open to any signed-in `@pingcap.com` user. Local `pnpm dev`
+with `ADMIN_DEV_AUTH_BYPASS=1` (no login) is not restricted; without it, the same
+rule as staging applies. To change who is allowed, edit `PAGE_MANAGERS` and ship it
+through a PR.
 
 ## Google Cloud Console setup (one time)
 
@@ -114,6 +141,14 @@ runtime logs (Project → Logs) and can be forwarded to a log drain for retentio
 Logged routes: `POST /api/publish` (success + main-token denial),
 `POST /api/pages/delete`, `POST /api/pages/move`, `POST /api/pages/copy`,
 `PUT /api/pages/[...slug]` (draft save), `POST /api/admin/upload-image`.
+
+Access **denials** are logged too: every 401/403 the middleware returns on a
+reachable admin (not signed in, CSRF / cross-origin write, not a page manager), and
+every denial from the handler backstop, emits `action: "access"`, `status:
+"denied"`, the path as `target` and e.g. `"POST 403 not a page manager"` as
+`detail` (via the Edge-safe `writeAuditRecord`). For CSRF denials the actor is
+`unresolved` (the session isn't read before refusing); unauthenticated calls are
+`anonymous`. Plain 404s for production / non-staging hosts are not logged.
 
 Each line carries: `ts`, `actor` (the signed-in Google email; `local-dev` when
 login is bypassed locally), `ip`, `env`, `action`, `target`, optional `targetTo`

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { logAudit, resolveActor } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
 import {
@@ -7,6 +8,7 @@ import {
   publishedBranch,
   readJsonBody,
 } from '@/lib/security/api-guards'
+import { classifyRepoPageDir } from '@/lib/security/api-code-owned'
 
 async function readFile(
   baseUrl: string,
@@ -99,6 +101,8 @@ function reslugDsl(raw: string, toSlug: string, actor: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = await requireAdmin(req)
+  if (denied) return denied
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
   const pubBranch = publishedBranch()
 
@@ -123,15 +127,16 @@ export async function POST(req: NextRequest) {
   const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`
 
   const destDraftPath = `src/app/${to}/page.dsl.json`
-  const destPublishedPath = `src/app/${to}/page.tsx`
 
   try {
     // Refuse to clobber an existing page at the destination slug.
-    const [draftTaken, publishedTaken] = await Promise.all([
+    // The published side uses the shared code-owned rule, so a hand-authored page
+    // or route at the destination counts as taken, not just a page.tsx.
+    const [draftTaken, publishedKind] = await Promise.all([
       fileExists(baseUrl, headers, destDraftPath, DRAFT_BRANCH),
-      fileExists(baseUrl, headers, destPublishedPath, pubBranch),
+      classifyRepoPageDir(baseUrl, headers, to, pubBranch),
     ])
-    if (draftTaken || publishedTaken) {
+    if (draftTaken || publishedKind !== 'missing') {
       await logAudit(req, {
         action: 'copy',
         target: from,

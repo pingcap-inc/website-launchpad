@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requirePageManager } from '@/lib/security/require-admin'
 import { logAudit } from '@/lib/audit'
 import { getGitHubAuthHeaders } from '@/lib/github-auth'
 import {
@@ -7,6 +8,7 @@ import {
   publishedBranch,
   readJsonBody,
 } from '@/lib/security/api-guards'
+import { classifyRepoPageDir, type PageDirKind } from '@/lib/security/api-code-owned'
 
 async function readSha(
   baseUrl: string,
@@ -44,6 +46,8 @@ async function deleteFile(
 }
 
 export async function POST(req: NextRequest) {
+  const denied = await requirePageManager(req)
+  if (denied) return denied
   const { GITHUB_OWNER, GITHUB_REPO } = process.env
   const pubBranch = publishedBranch()
 
@@ -74,46 +78,39 @@ export async function POST(req: NextRequest) {
   const targets: Array<{ branch: string; path: string }> = []
 
   if (includePublished) {
-    // Only delete the published page.tsx when a sibling page.dsl.json exists:
-    // its presence marks this as a CMS-managed page. A page.tsx with no DSL is
-    // hand-authored (code-owned); deleting it through the CMS API would silently
-    // destroy a developer's file, so refuse it here.
-    let publishedDslSha: string | null
+    // Only delete the published page.tsx when the directory is CMS-managed (has a
+    // page.dsl.json). A code-owned directory (page/route file with no DSL) is
+    // hand-authored; deleting it through the CMS API would silently destroy a
+    // developer's file, so refuse it here. Same rule as publish/move/draft-save.
+    let kind: PageDirKind
     try {
-      publishedDslSha = await readSha(baseUrl, headers, `src/app/${slug}/page.dsl.json`, pubBranch)
+      kind = await classifyRepoPageDir(baseUrl, headers, slug, pubBranch)
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unknown error during deletion'
-      return NextResponse.json({ error: msg }, { status: 500 })
+      console.error('[pages/delete] inspect failed:', err)
+      await logAudit(req, { action: 'delete', target: slug, status: 'error', detail: 'inspect' })
+      return NextResponse.json({ error: 'Could not inspect the page' }, { status: 500 })
     }
 
-    if (publishedDslSha) {
+    if (kind === 'code-owned') {
+      await logAudit(req, {
+        action: 'delete',
+        target: slug,
+        status: 'denied',
+        detail: 'code-owned page (page/route file with no page.dsl.json)',
+      })
+      return NextResponse.json(
+        {
+          error:
+            'Refusing to delete a code-owned page (page.tsx with no page.dsl.json). Delete it in the repository instead.',
+        },
+        { status: 409 }
+      )
+    }
+    if (kind === 'cms') {
       targets.push(
         { branch: pubBranch, path: `src/app/${slug}/page.tsx` },
         { branch: pubBranch, path: `src/app/${slug}/page.dsl.json` }
       )
-    } else {
-      let publishedTsxSha: string | null
-      try {
-        publishedTsxSha = await readSha(baseUrl, headers, `src/app/${slug}/page.tsx`, pubBranch)
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : 'Unknown error during deletion'
-        return NextResponse.json({ error: msg }, { status: 500 })
-      }
-      if (publishedTsxSha) {
-        await logAudit(req, {
-          action: 'delete',
-          target: slug,
-          status: 'denied',
-          detail: 'code-owned page (page.tsx with no page.dsl.json)',
-        })
-        return NextResponse.json(
-          {
-            error:
-              'Refusing to delete a code-owned page (page.tsx with no page.dsl.json). Delete it in the repository instead.',
-          },
-          { status: 409 }
-        )
-      }
     }
   }
 

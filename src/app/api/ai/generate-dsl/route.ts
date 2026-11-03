@@ -1,4 +1,6 @@
+import crypto from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/security/require-admin'
 import { AI_PROVIDER, generateJSON, generateText } from '@/lib/ai-client'
 import { DSL_SCHEMA_PROMPT, sanitizeDSLIcons } from '@/lib/dsl-schema'
 import type { PageDSL, SectionDefinition, SectionType } from '@/lib/dsl-schema'
@@ -695,28 +697,51 @@ async function fillSectionWithAI(
         console.warn(
           `[generate-dsl] JSON parse failed for "${sectionType}" after compact retry. Error: ${finalError}`
         )
-        const fallback =
+        const fallback: Record<string, unknown> =
           sectionType === 'faq'
             ? { title: 'FAQ', items: [] }
             : { content: fullContent.slice(0, 1200) }
+        fallbackFills.add(fallback)
         return fallback
       }
     }
   }
 }
 
+// Cache of raw AI section fills, so regenerating the same document is fast.
+// Process-global, so it must never hand one request a result computed for different
+// input: the key is a SHA-256 over *every* input that shapes the AI output (section
+// type, content hint, the full section content — not a prefix — preserveSource and
+// pageType). Only the unprocessed AI output is cached, and it is deep-copied on the
+// way in and out, so per-request post-processing (heading sanitizing, trimming,
+// table restoring) can never leak into another request through a shared object.
+// Fallback results (AI output that could not be parsed) are never cached.
 type CacheEntry = { value: Record<string, unknown>; expiresAt: number }
 const fillSectionCache = new Map<string, CacheEntry>()
 const CACHE_TTL_MS = 30 * 60 * 1000
+const CACHE_MAX_ENTRIES = 100
+const CACHE_MAX_VALUE_CHARS = 256 * 1024
+const fallbackFills = new WeakSet<object>()
 
-function getCacheKey(
-  sectionType: string,
-  contentHint: string,
-  fullContent: string,
+function getCacheKey(input: {
+  sectionType: string
+  contentHint: string
+  fullContent: string
   preserveSource: boolean
-): string {
-  const preview = fullContent.slice(0, 2000)
-  return `${sectionType}::${preserveSource ? 'preserve' : 'default'}::${contentHint}::${preview.length}::${preview}`
+  pageType: string
+}): string {
+  return crypto
+    .createHash('sha256')
+    .update(
+      JSON.stringify([
+        input.sectionType,
+        input.contentHint,
+        input.fullContent,
+        input.preserveSource,
+        input.pageType.toLowerCase(),
+      ])
+    )
+    .digest('hex')
 }
 
 function getCachedSection(key: string): Record<string, unknown> | null {
@@ -726,14 +751,28 @@ function getCachedSection(key: string): Record<string, unknown> | null {
     fillSectionCache.delete(key)
     return null
   }
-  return entry.value
+  return structuredClone(entry.value)
 }
 
 function setCachedSection(key: string, value: Record<string, unknown>) {
-  fillSectionCache.set(key, { value, expiresAt: Date.now() + CACHE_TTL_MS })
-  if (fillSectionCache.size > 200) {
-    const firstKey = fillSectionCache.keys().next().value as string | undefined
-    if (firstKey) fillSectionCache.delete(firstKey)
+  if (fallbackFills.has(value)) return
+  let size: number
+  try {
+    size = JSON.stringify(value).length
+  } catch {
+    return
+  }
+  if (size > CACHE_MAX_VALUE_CHARS) return
+  const now = Date.now()
+  for (const [k, entry] of fillSectionCache) {
+    if (entry.expiresAt < now) fillSectionCache.delete(k)
+  }
+  fillSectionCache.delete(key)
+  fillSectionCache.set(key, { value: structuredClone(value), expiresAt: now + CACHE_TTL_MS })
+  while (fillSectionCache.size > CACHE_MAX_ENTRIES) {
+    const oldest = fillSectionCache.keys().next().value as string | undefined
+    if (oldest === undefined) break
+    fillSectionCache.delete(oldest)
   }
 }
 
@@ -1049,22 +1088,28 @@ async function generateLongFormDslFromOutline(
           : section.sectionType === 'richTextBlock' && section.id.includes('main') && split.main
             ? split.main
             : normalizedContent
-      const cacheKey = getCacheKey(
-        section.sectionType,
-        section.contentHint,
-        sectionContent,
-        preserveSource
-      )
+      const cacheKey = getCacheKey({
+        sectionType: section.sectionType,
+        contentHint: section.contentHint,
+        fullContent: sectionContent,
+        preserveSource,
+        pageType,
+      })
       const cached = getCachedSection(cacheKey)
       const start = Date.now()
-      const props =
-        cached ??
-        (await fillSectionWithAI(
+      let props: Record<string, unknown>
+      if (cached) {
+        props = cached
+      } else {
+        props = await fillSectionWithAI(
           section.sectionType,
           section.contentHint,
           sectionContent,
           preserveSource
-        ))
+        )
+        // Cache the raw AI output, before the per-request post-processing below.
+        setCachedSection(cacheKey, props)
+      }
       const elapsedMs = Date.now() - start
       console.log(`[generate-dsl] ${section.sectionType} ${cached ? 'cache' : 'ai'} ${elapsedMs}ms`)
       if (
@@ -1089,7 +1134,6 @@ async function generateLongFormDslFromOutline(
           props.content = restoreSourceMarkdownTables(content, sourceTables)
         }
       }
-      if (!cached) setCachedSection(cacheKey, props)
 
       return {
         id: section.id,
@@ -1409,6 +1453,8 @@ const MAX_BODY_BYTES = 1024 * 1024
 const MAX_INTENT_CHARS = 200_000
 
 export async function POST(request: NextRequest) {
+  const denied = await requireAdmin(request)
+  if (denied) return denied
   if (process.env.USE_MOCK_DSL === '1') {
     return NextResponse.json(MOCK_DSL)
   }

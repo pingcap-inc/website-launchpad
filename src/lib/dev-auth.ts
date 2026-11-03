@@ -15,3 +15,34 @@ export function isLocalDevAuthBypass(): boolean {
     process.env.ADMIN_DEV_AUTH_BYPASS === '1'
   )
 }
+
+/** Hostnames accepted on the ungated local-dev path (port is ignored). */
+const LOOPBACK_HOSTNAMES = new Set(['localhost', '127.0.0.1', '[::1]', '::1'])
+
+/** True when a `Host` header value names a loopback address (any port). */
+export function isLoopbackHost(host: string | null | undefined): boolean {
+  if (!host) return false
+  // Strip the port: "[::1]:3000" -> "[::1]", "localhost:3000" -> "localhost".
+  const hostname = host.startsWith('[') ? host.slice(0, host.indexOf(']') + 1) : host.split(':')[0]
+  return LOOPBACK_HOSTNAMES.has(hostname.toLowerCase())
+}
+
+/** The only Git repository whose `staging` branch deployment may serve the admin. */
+const ADMIN_REPO_OWNER = 'pingcap-inc'
+const ADMIN_REPO_SLUG = 'website-launchpad'
+
+/**
+ * True only on the Vercel preview deployment of the `staging` branch of
+ * pingcap-inc/website-launchpad. The branch name alone is not trusted: it is also
+ * checked against the Vercel system env vars for the source repository, so a
+ * `staging` branch in a fork (or another repo wired to the same project) does not
+ * qualify. Fails closed when any of the vars is missing.
+ */
+export function isStagingDeployment(): boolean {
+  return (
+    process.env.VERCEL_ENV === 'preview' &&
+    process.env.VERCEL_GIT_COMMIT_REF === 'staging' &&
+    (process.env.VERCEL_GIT_REPO_OWNER ?? '').toLowerCase() === ADMIN_REPO_OWNER &&
+    (process.env.VERCEL_GIT_REPO_SLUG ?? '').toLowerCase() === ADMIN_REPO_SLUG
+  )
+}
