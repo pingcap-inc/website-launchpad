@@ -34,6 +34,7 @@ const routes: Array<{
   { url: '/developers/migration-center/', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/developers/learn/', priority: 0.7, changeFrequency: 'monthly' },
   // Content pages
+  { url: '/about-us/', priority: 0.6, changeFrequency: 'monthly' },
   { url: '/glossary/', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/what-is-tidb/', priority: 0.8, changeFrequency: 'monthly' },
   { url: '/integrations/', priority: 0.8, changeFrequency: 'weekly' },
