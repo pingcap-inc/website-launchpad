@@ -75,6 +75,12 @@ const routes: Array<{
     priority: 0.7,
     changeFrequency: 'monthly',
   },
+  // Listicle pages
+  {
+    url: '/listicle/best-databases-for-ai-applications/',
+    priority: 0.7,
+    changeFrequency: 'monthly',
+  },
   // Playbook pages
   { url: '/playbook/', priority: 0.8, changeFrequency: 'weekly' },
   { url: '/playbook/ai-agent-memory/', priority: 0.7, changeFrequency: 'monthly' },
