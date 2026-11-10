@@ -1,6 +1,14 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { BrainCircuit, CheckSquare, ChartNoAxesCombined, Cloud, Radius } from 'lucide-react'
+import {
+  BrainCircuit,
+  CheckSquare,
+  ChartNoAxesCombined,
+  Cloud,
+  Cpu,
+  Network,
+  Radius,
+} from 'lucide-react'
 import {
   FaqSection,
   Footer,
@@ -579,6 +587,94 @@ const companyLogos = [
   },
 ]
 
+const tidbXCards: ColorCardItem[] = [
+  {
+    variant: 'red',
+    title: (
+      <div className="flex gap-2 items-center">
+        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
+          5
+        </div>
+        TiProxy
+      </div>
+    ),
+    description: (
+      <>
+        <InlineLink
+          href="https://docs.pingcap.com/tidb/stable/tiproxy-overview/"
+          className="border-white"
+        >
+          TiProxy
+        </InlineLink>{' '}
+        is the gateway layer. It holds client connections and routes SQL traffic, so the compute
+        behind it can scale or upgrade without dropping connections.
+      </>
+    ),
+    icon: <Network strokeWidth={1.5} className="w-full h-full" />,
+  },
+  {
+    variant: 'teal',
+    title: (
+      <div className="flex gap-2 items-center">
+        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
+          6
+        </div>
+        Object Storage
+      </div>
+    ),
+    description: (
+      <>
+        In TiDB X, object storage such as Amazon S3 holds the persistent copy of all data. TiKV and
+        TiFlash act as a fast cache in front of it, so new nodes load data on demand instead of
+        copying it.
+      </>
+    ),
+    icon: <Cloud strokeWidth={1.5} className="w-full h-full" />,
+  },
+  {
+    variant: 'violet',
+    title: (
+      <div className="flex gap-2 items-center">
+        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
+          7
+        </div>
+        Shared Services
+      </div>
+    ),
+    description: (
+      <>
+        In TiDB X, heavy background work like compaction, statistics, and DDL runs in separate
+        elastic pools. Index builds and data imports no longer compete with live transactions.
+      </>
+    ),
+    icon: <Cpu strokeWidth={1.5} className="w-full h-full" />,
+  },
+]
+
+const architectureComparison = [
+  {
+    label: 'Persistent data',
+    classic: 'Local disks on TiKV nodes',
+    tidbX: 'Object storage, such as Amazon S3',
+  },
+  {
+    label: 'Background work',
+    classic: 'Same nodes as live traffic',
+    tidbX: 'Separate elastic pools',
+  },
+  {
+    label: 'Scaling',
+    classic: 'Copies data between nodes',
+    tidbX: 'Loads data on demand, 5–10x faster',
+  },
+  { label: 'Backups', classic: 'Full data copy', tidbX: 'Seconds, regardless of data volume' },
+  {
+    label: 'Where it runs',
+    classic: 'TiDB Self-Managed',
+    tidbX: 'TiDB Cloud Starter, Essential, Premium, and BYOC',
+  },
+]
+
 const customerStories = [
   {
     company: 'manus',
@@ -591,27 +687,6 @@ const customerStories = [
       href: 'https://www.pingcap.com/case-study/manus-agentic-ai-database-tidb/',
     },
     tone: 'bg-brand-blue-bg',
-  },
-  {
-    company: 'Kimi',
-    body: 'Runs its agent app-hosting platform on TiDB Cloud Starter, where every app an agent builds gets its own database and idle apps use no compute. Each database provisions in under a second, and sites with no traffic generate no database compute cost, so Kimi can host agent-created apps at the scale of millions of tenants.',
-    primaryCta: {
-      text: 'Read the Case Study',
-      href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
-    },
-    tone: 'bg-brand-red-bg',
-  },
-  {
-    company: 'Dify',
-    quote:
-      '“We consolidated our entire AI backend into TiDB, letting our engineers focus on building agent features instead of managing database complexity.”',
-    attribution: 'Dify engineering team',
-    body: 'Consolidated nearly half a million database containers into one unified TiDB system, cutting operational overhead by 90%. Dify, one of the most popular open-source LLM app development platforms, with over 100,000 GitHub stars, needed a single data layer that could handle documents, vectors, chat histories, and relational data for thousands of developers building AI applications. TiDB’s native vector search enabled built-in RAG workflows without a separate vector database.',
-    primaryCta: {
-      text: 'Read the Case Study',
-      href: 'https://www.pingcap.com/case-study/dify-consolidates-massive-database-containers-into-one-unified-system-with-tidb/',
-    },
-    tone: 'bg-brand-teal-bg',
   },
   {
     company: 'Atlassian',
@@ -627,6 +702,15 @@ const customerStories = [
     tone: 'bg-brand-violet-bg',
   },
   {
+    company: 'Kimi',
+    body: 'Runs its agent app-hosting platform on TiDB Cloud Starter, where every app an agent builds gets its own database and an idle app’s compute goes to zero. Kimi cut its data infrastructure cost by an order of magnitude.',
+    primaryCta: {
+      text: 'Read the Case Study',
+      href: 'https://www.pingcap.com/case-study/kimi-2-6-agent-hosting-platform-tidb-cloud/',
+    },
+    tone: 'bg-brand-red-bg',
+  },
+  {
     company: 'PLAID',
     quote:
       '“With TiDB, we can now perform upgrades with zero downtime and large table schema migrations.”',
@@ -637,7 +721,7 @@ const customerStories = [
       href: 'https://www.pingcap.com/blog/accelerating-distributed-sql-adoption-plaid-amazon-aurora-migration/',
     },
     secondaryCta: { text: 'Watch video', href: 'https://www.youtube.com/watch?v=jRsZ35K1wx8' },
-    tone: 'bg-brand-red-bg',
+    tone: 'bg-brand-teal-bg',
   },
 ]
 
@@ -949,7 +1033,8 @@ export default function WhatIsTidbPage() {
                 open-source, distributed SQL database that gives applications and AI agents one data
                 layer: transactions, real-time analytics, and vector search (in public preview) in a
                 single ACID system. It is MySQL compatible and scales horizontally on every
-                dimension, from data volume and connections to the number of databases you run.
+                dimension, from data volume and connections to the number of tables and databases
+                you run.
                 <span className="mt-4 block">
                   TiDB is built by <InlineLink href="https://www.pingcap.com/">PingCAP</InlineLink>,
                   licensed under Apache 2.0, and its storage engine{' '}
@@ -978,10 +1063,13 @@ export default function WhatIsTidbPage() {
                 title="How TiDB Works"
                 subtitle={
                   <>
-                    TiDB separates compute from storage, which means you can scale each layer
-                    independently based on your workload. The{' '}
-                    <InlineLink href="https://www.pingcap.com/tidb/">architecture</InlineLink> has
-                    four core components:
+                    TiDB separates compute from storage. The SQL layer, Placement Driver, and
+                    storage engines below are the same wherever TiDB runs. What differs is where
+                    data lives. TiDB Self-Managed stores it on local disks across TiKV nodes, the
+                    classic{' '}
+                    <InlineLink href="https://www.pingcap.com/tidb/">architecture</InlineLink>. TiDB
+                    Cloud runs TiDB X, which keeps these components and moves persistent data to
+                    object storage.
                   </>
                 }
                 align="left"
@@ -1013,7 +1101,75 @@ export default function WhatIsTidbPage() {
             <FeatureHighlightsSection items={componentCards} columns={4} cardClassName="px-4" />
           </div>
 
-          <div className="mt-8 border border-carbon-800 px-5 py-6 sm:px-6">
+          <div className="mt-16 max-w-[960px]">
+            <h3 className="text-h3-xl leading-tight text-text-inverse">
+              How TiDB X Evolves the Same Architecture
+            </h3>
+            <p className="mt-5 text-body-lg leading-relaxed text-carbon-300">
+              The four components above run in every TiDB deployment. In TiDB Cloud Starter,
+              Essential, Premium, and BYOC, they run on TiDB X, which changes two things: where data
+              lives and where heavy work runs. Persistent data moves to object storage, and
+              background jobs like compaction, statistics, and index builds move to separate elastic
+              pools, so they no longer slow down transactions. On TiDB Cloud Starter, an idle
+              database&rsquo;s compute goes to zero while its data stays in storage.
+            </p>
+          </div>
+
+          <div className="mt-10">
+            <Image
+              src="/images/what-is-tidb/tidb-x-architecture.png"
+              alt="TiDB X architecture: a gateway routes traffic to stateless SQL compute, which reads from a shared cache of row (TiKV) and columnar (TiFlash) engines backed by shared object storage, while compaction, statistics collection, and DDL run in separate background compute"
+              width={1676}
+              height={670}
+              className="h-auto w-full"
+            />
+          </div>
+
+          <p className="mt-10 text-body-lg leading-relaxed text-carbon-300">
+            TiDB X adds three components to make this work:
+          </p>
+
+          <div className="mt-6">
+            <FeatureHighlightsSection items={tidbXCards} columns={3} cardClassName="px-4" />
+          </div>
+
+          <div className="mt-10 overflow-x-auto">
+            <table className="w-full border-collapse text-body-md">
+              <caption className="sr-only">Classic TiDB compared with TiDB X</caption>
+              <thead>
+                <tr className="border-b-2 border-carbon-800">
+                  <th scope="col" className="w-1/4 py-3 pr-6 text-left font-bold text-carbon-400">
+                    <span className="sr-only">Aspect</span>
+                  </th>
+                  <th scope="col" className="py-3 px-4 text-left font-bold text-text-inverse">
+                    Classic TiDB
+                  </th>
+                  <th scope="col" className="py-3 px-4 text-left font-bold text-brand-red-primary">
+                    TiDB X
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {architectureComparison.map((row) => (
+                  <tr key={row.label} className="border-b border-carbon-800">
+                    <th scope="row" className="py-3 pr-6 text-left font-bold text-text-inverse">
+                      {row.label}
+                    </th>
+                    <td className="py-3 px-4 text-carbon-300">{row.classic}</td>
+                    <td className="py-3 px-4 text-text-inverse">{row.tidbX}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-8">
+            <SecondaryButton href="https://docs.pingcap.com/tidbcloud/tidb-x-architecture/">
+              Read the TiDB X Architecture Docs
+            </SecondaryButton>
+          </div>
+
+          <div className="mt-12 border border-carbon-800 px-5 py-6 sm:px-6">
             <p className="text-body-lg leading-relaxed">
               The result is a system where you can scale your SQL compute independently from your
               storage, run transactional, analytical, and vector search workloads on the same data
@@ -1027,38 +1183,6 @@ export default function WhatIsTidbPage() {
               </InlineLink>
               .
             </p>
-          </div>
-
-          <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(200px,0.35fr)] lg:items-center">
-            <div className="max-w-[960px]">
-              <h3 className="text-h3-xl leading-tight text-text-inverse">
-                TiDB X: The Architecture Behind TiDB Cloud
-              </h3>
-              <p className="mt-5 text-body-lg leading-relaxed text-carbon-300">
-                New TiDB Cloud clusters run on TiDB X, a cloud-native architecture built on two
-                separations. First, compute is separated from storage: data lives in durable object
-                storage, hot data is cached next to compute, and compute follows the work. On TiDB
-                Cloud Starter, an idle database&rsquo;s compute goes to zero while its data stays in
-                storage. Second, compute is separated from compute: heavy background work like index
-                builds, statistics, and compaction runs on its own resources, so it does not slow
-                down transactions. Scaling is 5&ndash;10x faster than classic TiDB, and backups
-                finish in seconds regardless of data volume.
-              </p>
-              <div className="mt-8">
-                <SecondaryButton href="https://docs.pingcap.com/tidbcloud/tidb-x-architecture/">
-                  Read the TiDB X Architecture Docs
-                </SecondaryButton>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <Image
-                src="/images/what-is-tidb/tidb-x-logo.png"
-                alt="TiDB X logo"
-                width={300}
-                height={275}
-                className="h-auto w-32 lg:w-[220px]"
-              />
-            </div>
           </div>
         </SectionWrapper>
 
