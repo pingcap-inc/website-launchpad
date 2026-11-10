@@ -126,6 +126,11 @@ const routes: Array<{
     priority: 0.8,
     changeFrequency: 'monthly',
   },
+  { url: '/solutions/fintech/', priority: 0.8, changeFrequency: 'monthly' },
+  { url: '/solutions/saas/', priority: 0.8, changeFrequency: 'monthly' },
+  { url: '/solutions/e-commerce/', priority: 0.8, changeFrequency: 'monthly' },
+  { url: '/solutions/modernize-mysql-workloads/', priority: 0.8, changeFrequency: 'monthly' },
+  { url: '/solutions/enable-operational-intelligence/', priority: 0.8, changeFrequency: 'monthly' },
   // Regional pages
   { url: '/latam/', priority: 0.8, changeFrequency: 'monthly' },
   // Campaign / program pages
