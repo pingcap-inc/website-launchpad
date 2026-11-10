@@ -16,7 +16,7 @@ import { FormSection } from '@/components/sections/FormSection'
 import { LogoCloudSection } from '@/components/sections/LogoCloudSection'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { SectionWrapper } from '@/components/ui/SectionWrapper'
-import { InlineLink } from '@/components/ui/InlineLink'
+import { SecondaryButton } from '@/components/ui/SecondaryButton'
 
 export interface LinkItem {
   text: string
@@ -92,21 +92,6 @@ export function Intro({
   )
 }
 
-// ─── Inline card links ─────────────────────────────────────────────────────────
-
-export function CardLinks({ links }: { links: LinkItem[] }) {
-  if (links.length === 0) return null
-  return (
-    <span className="mt-4 flex flex-col items-start gap-2">
-      {links.map((l) => (
-        <InlineLink key={l.href + l.text} href={l.href} className="text-text-inverse font-bold">
-          {l.text}
-        </InlineLink>
-      ))}
-    </span>
-  )
-}
-
 // ─── Workload cards (single column, icon left) ─────────────────────────────────
 
 export interface WorkloadItem {
@@ -117,28 +102,32 @@ export interface WorkloadItem {
   links?: LinkItem[]
 }
 
+/** Two-column grid, icon left, matching the live WordPress "card-workload" layout. */
 export function WorkloadCards({ items }: { items: WorkloadItem[] }) {
   return (
-    <div className="grid grid-cols-1 gap-6">
+    <div className="grid grid-cols-1 gap-x-12 gap-y-16 lg:grid-cols-2">
       {items.map((item) => (
-        <div
-          key={item.title}
-          className="flex flex-col gap-6 border border-carbon-800 p-8 md:flex-row md:items-start md:gap-10"
-        >
+        <div key={item.title} className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
           <Image
             src={item.icon.src}
             alt={item.icon.alt}
             width={120}
             height={120}
-            className="h-24 w-24 shrink-0 md:h-[120px] md:w-[120px]"
+            className="h-24 w-24 shrink-0 sm:h-[120px] sm:w-[120px]"
           />
           <div className="flex flex-col gap-4">
             {item.tag && <p className="font-mono text-eyebrow text-secondary m-0">{item.tag}</p>}
-            <h3 className="text-h3-lg font-bold leading-normal m-0">{item.title}</h3>
-            <div className="text-body-md leading-relaxed text-secondary">
-              <p className="m-0">{item.body}</p>
-              <CardLinks links={item.links ?? []} />
-            </div>
+            <h3 className="text-h3-lg font-medium leading-snug m-0">{item.title}</h3>
+            <p className="text-body-md leading-relaxed text-secondary m-0">{item.body}</p>
+            {item.links && item.links.length > 0 && (
+              <div className="mt-2 flex flex-col items-start gap-3">
+                {item.links.map((l) => (
+                  <SecondaryButton key={l.href + l.text} href={l.href}>
+                    {l.text}
+                  </SecondaryButton>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       ))}
