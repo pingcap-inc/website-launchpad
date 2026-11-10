@@ -16,6 +16,7 @@ import {
   SeeTidbInAction,
   SolutionHero,
   WorkloadCards,
+  withMediaText,
   type WorkloadItem,
 } from '../_components/shared'
 import { solutionMetadata, solutionSchema } from '../_components/meta'
@@ -129,8 +130,8 @@ const capabilities = [
         url: 'https://static.pingcap.com/files/2024/10/17015341/Elastic-Scalability-Illus.svg',
       },
       alt: 'Elastic Scalability Illus',
-      width: 600,
-      height: 500,
+      width: 450,
+      height: 375,
     },
   },
   {
@@ -142,8 +143,8 @@ const capabilities = [
         url: 'https://static.pingcap.com/files/2024/10/17015541/High-Availability-Illustration.svg',
       },
       alt: 'High Availability Illustration',
-      width: 600,
-      height: 500,
+      width: 450,
+      height: 375,
     },
   },
   {
@@ -155,8 +156,8 @@ const capabilities = [
         url: 'https://static.pingcap.com/files/2024/10/17015427/Real-Time-Analytics-Illustration.svg',
       },
       alt: 'Real-Time Analytics Illustration',
-      width: 600,
-      height: 500,
+      width: 450,
+      height: 375,
     },
   },
 ]
@@ -284,7 +285,7 @@ export default function ECommercePage() {
               eyebrow="Key Capabilities"
               title="Built for Scale, Availability, and Business Continuity"
             />
-            <FeatureMediaSection items={capabilities} startPosition="left" />
+            <FeatureMediaSection items={capabilities.map(withMediaText)} startPosition="right" />
           </div>
         </SectionWrapper>
 
@@ -292,6 +293,7 @@ export default function ECommercePage() {
           <div className="space-y-16">
             <Intro
               title="Proven Success in eCommerce Innovation"
+              size="sm"
               paragraphs={[
                 'Discover how leading eCommerce companies have harnessed the power of TiDB to enable real-time personalization and insights, optimize inventory and logistics, and handle high-volume traffic.',
               ]}

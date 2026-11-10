@@ -344,6 +344,7 @@ export default function OperationalIntelligencePage() {
           <div className="space-y-16">
             <Intro
               title="Real-Time Analytics at Enterprise Scale"
+              size="md"
               paragraphs={[
                 'Run operational dashboards, anomaly detection models, and live analytical workloads on the same consistent data source powering your mission-critical transactions.',
               ]}

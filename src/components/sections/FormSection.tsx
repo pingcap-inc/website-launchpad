@@ -51,7 +51,7 @@ export function FormSection({
         )}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="flex flex-col gap-6 border border-carbon-800 p-8">
-            <h3 className="text-h3-lg font-bold leading-normal m-0">{demo.title}</h3>
+            <h3 className="text-h3-lg md:text-h3-xl font-bold leading-normal m-0">{demo.title}</h3>
             {demo.body && (
               <p className="text-body-md leading-relaxed text-secondary m-0">{demo.body}</p>
             )}
@@ -76,7 +76,9 @@ export function FormSection({
             )}
           </div>
           <div className="flex flex-col gap-4 border border-carbon-800 p-8">
-            {formTitle && <h3 className="text-h3-lg font-bold leading-normal m-0">{formTitle}</h3>}
+            {formTitle && (
+              <h3 className="text-h3-lg md:text-h3-xl font-bold leading-normal m-0">{formTitle}</h3>
+            )}
             {formSubtitle && (
               <p className="text-body-md leading-relaxed text-secondary m-0">{formSubtitle}</p>
             )}

@@ -8,6 +8,7 @@ import {
   SeeTidbInAction,
   SolutionHero,
   WorkloadCards,
+  withMediaText,
   type WorkloadItem,
 } from '../_components/shared'
 import { solutionMetadata, solutionSchema } from '../_components/meta'
@@ -125,8 +126,8 @@ const capabilities = [
         url: 'https://static.pingcap.com/files/2024/10/17001926/Unparalleled-Scalability-Illus.svg',
       },
       alt: 'Unparalleled Scalability Illus',
-      width: 600,
-      height: 500,
+      width: 450,
+      height: 375,
     },
   },
   {
@@ -138,8 +139,8 @@ const capabilities = [
         url: 'https://static.pingcap.com/files/2024/10/17002019/Reliable-Operations-Illustration.svg',
       },
       alt: 'Real-Time Insights Illustration',
-      width: 600,
-      height: 500,
+      width: 450,
+      height: 375,
     },
   },
   {
@@ -151,8 +152,8 @@ const capabilities = [
         url: 'https://static.pingcap.com/files/2024/10/17002114/Robust-Security-Illustration-1.svg',
       },
       alt: 'HA and Reliability Illustration',
-      width: 600,
-      height: 500,
+      width: 450,
+      height: 375,
     },
   },
 ]
@@ -248,7 +249,7 @@ export default function FintechPage() {
                     height={64}
                     className="h-16 w-16"
                   />
-                  <h3 className="text-h3-sm font-bold leading-normal m-0">{step.title}</h3>
+                  <h3 className="text-h3-lg font-bold leading-normal m-0">{step.title}</h3>
                   <p className="text-body-md leading-relaxed text-secondary m-0">{step.body}</p>
                 </li>
               ))}
@@ -259,7 +260,7 @@ export default function FintechPage() {
         <SectionWrapper style={{ background: 'inverse' }}>
           <div className="space-y-16">
             <Intro eyebrow="Key Capabilities" title="Why Fintech Leaders Choose TiDB" />
-            <FeatureMediaSection items={capabilities} startPosition="left" />
+            <FeatureMediaSection items={capabilities.map(withMediaText)} startPosition="right" />
           </div>
         </SectionWrapper>
 
@@ -267,6 +268,7 @@ export default function FintechPage() {
           <div className="space-y-16">
             <Intro
               title="Proven Results with Fintech Innovators"
+              size="sm"
               paragraphs={[
                 'Discover how leading fintech companies have harnessed the power of TiDB to drive innovation, enhance operational efficiency, and secure their transactions',
               ]}

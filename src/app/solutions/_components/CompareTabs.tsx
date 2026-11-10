@@ -58,7 +58,7 @@ export function CompareTabs({ tabs }: { tabs: CompareTab[] }) {
                       className="h-auto w-full max-w-[320px]"
                     />
                     {col.headingStyle === 'h4' ? (
-                      <h4 className="text-h3-sm font-bold m-0">{col.heading}</h4>
+                      <h4 className="text-h3-lg font-bold m-0">{col.heading}</h4>
                     ) : (
                       <p className="font-mono text-eyebrow text-secondary m-0">{col.heading}</p>
                     )}

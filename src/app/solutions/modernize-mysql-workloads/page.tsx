@@ -4,7 +4,7 @@ import {
   JsonLd,
   SectionWrapper,
   FeatureMediaSection,
-  FeatureCardSection,
+  FeatureCard,
   PrimaryButton,
   CountUp,
   InlineLink,
@@ -66,12 +66,12 @@ function CapabilityText({
 }) {
   return (
     <>
-      <h3 className="text-h3-lg md:text-h2-sm font-bold mb-6">{title}</h3>
+      <h3 className="text-h3-xl md:text-h2-mb font-bold leading-tight mb-6">{title}</h3>
       <div className="space-y-6">
         {points.map((p) => (
           <div key={p.heading}>
-            <h4 className="text-h3-sm font-bold mb-2">{p.heading}</h4>
-            <p className="text-body-xl text-secondary leading-relaxed m-0">{p.body}</p>
+            <h4 className="text-h3-lg font-bold mb-2">{p.heading}</h4>
+            <p className="text-body-2xl text-secondary leading-relaxed m-0">{p.body}</p>
           </div>
         ))}
       </div>
@@ -323,6 +323,37 @@ const stats = [
   { prefix: '', value: '80% Less', suffix: 'Sprawl', label: 'Vs. Single-Node Deployments' },
 ]
 
+const LABS = [
+  {
+    icon: labIcon,
+    label: 'Hands-on Lab',
+    title: 'Migrate from MySQL to TiDB Using TiDB Data Migration',
+    description: (
+      <LabMeta
+        body="Gain end-to-end experience configuring, migrating, and validating SQL workloads—exactly as outlined in Step 2."
+        level="Intermediate"
+        time="90 minutes"
+      />
+    ),
+    href: 'https://labs.tidb.io/labs/demo_011',
+    ctaText: 'Start Lab',
+  },
+  {
+    icon: labIcon,
+    label: 'Hands-on Lab',
+    title: 'SQL Workloads Replay with TiDB Data Migration',
+    description: (
+      <LabMeta
+        body="Validate post-migration performance by replaying real SQL traffic, ensuring workloads perform as expected before going live."
+        level="Advanced"
+        time="90 minutes"
+      />
+    ),
+    href: 'https://labs.tidb.io/labs/demo_302',
+    ctaText: 'Start Lab',
+  },
+]
+
 export default function ModernizeMysqlPage() {
   return (
     <>
@@ -394,12 +425,12 @@ export default function ModernizeMysqlPage() {
               ]}
             />
             <FeatureMediaSection
-              startPosition="left"
+              startPosition="right"
               items={capabilities.map((c) => ({
                 title: c.title,
                 description: '',
                 content: <CapabilityText title={c.title} points={c.points} />,
-                image: { image: { url: c.image }, alt: c.alt, width: 600, height: 500 },
+                image: { image: { url: c.image }, alt: c.alt, width: 450, height: 375 },
               }))}
             />
           </div>
@@ -430,40 +461,14 @@ export default function ModernizeMysqlPage() {
         </SectionWrapper>
 
         <SectionWrapper>
-          <FeatureCardSection
-            title="Hands-on Practice"
-            columns={2}
-            items={[
-              {
-                icon: labIcon,
-                label: 'Hands-on Lab',
-                title: 'Migrate from MySQL to TiDB Using TiDB Data Migration',
-                description: (
-                  <LabMeta
-                    body="Gain end-to-end experience configuring, migrating, and validating SQL workloads—exactly as outlined in Step 2."
-                    level="Intermediate"
-                    time="90 minutes"
-                  />
-                ),
-                href: 'https://labs.tidb.io/labs/demo_011',
-                ctaText: 'Start Lab',
-              },
-              {
-                icon: labIcon,
-                label: 'Hands-on Lab',
-                title: 'SQL Workloads Replay with TiDB Data Migration',
-                description: (
-                  <LabMeta
-                    body="Validate post-migration performance by replaying real SQL traffic, ensuring workloads perform as expected before going live."
-                    level="Advanced"
-                    time="90 minutes"
-                  />
-                ),
-                href: 'https://labs.tidb.io/labs/demo_302',
-                ctaText: 'Start Lab',
-              },
-            ]}
-          />
+          <div className="space-y-12">
+            <Intro title="Hands-on Practice" size="xs" />
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {LABS.map((lab) => (
+                <FeatureCard key={lab.href} {...lab} />
+              ))}
+            </div>
+          </div>
         </SectionWrapper>
 
         <SectionWrapper style={{ background: 'gradient-dark-top' }}>

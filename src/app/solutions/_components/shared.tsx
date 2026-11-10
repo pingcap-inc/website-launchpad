@@ -63,12 +63,15 @@ export function Intro({
   title,
   paragraphs = [],
   align = 'left',
+  size = 'lg',
   className,
 }: {
   eyebrow?: string
   title: string
   paragraphs?: ReactNode[]
   align?: 'left' | 'center'
+  /** H2 size: lg 64px · md 56px · sm 50px · xs 40px (desktop). Match the live page. */
+  size?: 'lg' | 'md' | 'sm' | 'xs'
   className?: string
 }) {
   return (
@@ -76,7 +79,9 @@ export function Intro({
       eyebrow={eyebrow}
       title={title}
       align={align}
-      className={className}
+      h2Size={size === 'xs' ? 'sm' : size}
+      // SectionHeader has no 40px option; override its H2 size for "xs".
+      className={cn(size === 'xs' && 'md:[&_h2]:text-h2-mb', className)}
       subtitle={
         paragraphs.length > 0 ? (
           <span className="flex flex-col gap-4">
@@ -90,6 +95,23 @@ export function Intro({
       }
     />
   )
+}
+
+// ─── Media rows (text + illustration) ─────────────────────────────────────────
+
+/** Text side of a FeatureMediaSection row, sized to the live pages (42px H3, 22px body). */
+export function MediaText({ title, description }: { title: string; description: string }) {
+  return (
+    <>
+      <h3 className="text-h3-xl md:text-h2-mb font-bold leading-tight mb-6">{title}</h3>
+      <p className="text-body-2xl text-secondary leading-relaxed m-0">{description}</p>
+    </>
+  )
+}
+
+/** Adds the live-sized text block to FeatureMediaSection items. */
+export function withMediaText<T extends { title: string; description: string }>(item: T) {
+  return { ...item, content: <MediaText title={item.title} description={item.description} /> }
 }
 
 // ─── Workload cards (single column, icon left) ─────────────────────────────────
@@ -203,11 +225,13 @@ export function LogoRow({
   logos: { name: string; src: string; href?: string }[]
 }) {
   return (
-    <LogoCloudSection
-      title={title}
-      align="center"
-      logos={logos.map((l) => ({ name: l.name, image: { url: l.src }, href: l.href }))}
-    />
+    <div className="space-y-12">
+      <Intro title={title} align="center" size="xs" />
+      <LogoCloudSection
+        align="center"
+        logos={logos.map((l) => ({ name: l.name, image: { url: l.src }, href: l.href }))}
+      />
+    </div>
   )
 }
 
@@ -239,7 +263,7 @@ export function CaseCards({ items }: { items: CaseCardItem[] }) {
               className="h-auto max-h-12 w-auto max-w-[160px] object-contain"
             />
           </div>
-          <h3 className="text-h3-sm font-bold leading-normal m-0">{item.title}</h3>
+          <h3 className="text-h3-lg font-bold leading-normal m-0">{item.title}</h3>
           <p className="text-body-md leading-relaxed text-secondary m-0 flex-1">{item.body}</p>
           <span className="font-bold underline-offset-4 group-hover:underline">Read More</span>
         </a>
@@ -368,8 +392,8 @@ export function ResourcesRow({
 }) {
   return (
     <SectionWrapper>
+      <Intro title={title} size="xs" className="mb-10" />
       <FeatureHighlightsSection
-        title={title}
         columns={4}
         items={items.map((r, i) => ({
           variant: RESOURCE_VARIANTS[i % RESOURCE_VARIANTS.length],
