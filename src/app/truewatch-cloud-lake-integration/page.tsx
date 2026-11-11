@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen',
   description:
     'Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.',
-  robots: { index: false, follow: true },
+  robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/truewatch-cloud-lake-integration/' },
   openGraph: {
     title: 'TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen',
@@ -53,11 +53,11 @@ const dsl: PageDSL = {
     description:
       'Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.',
     canonical: '/truewatch-cloud-lake-integration/',
-    unlisted: true,
+    unlisted: false,
     createdBy: 'nivanya@pingcap.com',
     createdAt: '2026-10-29T14:24:38.818Z',
     modifiedBy: 'liwen.xu@pingcap.com',
-    modifiedAt: '2026-10-30T01:38:55.338Z',
+    modifiedAt: '2026-11-11T05:32:04.322Z',
   },
   sections: [
     {
@@ -118,7 +118,7 @@ const dsl: PageDSL = {
           },
           {
             icon: 'Gauge',
-            title: 'Scale Compute Only When You Query',
+            title: 'Scale Compute Only When You Query Data',
             description:
               'TiDB Cloud Lake keeps data in object storage and scales compute independently. Auto-suspend stops idle warehouse compute charges, so months of history do not need always-on compute.',
             layout: 'vertical',
