@@ -5,15 +5,15 @@ import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
-  title: 'TrueWatch and TiDB Cloud Lake Observability Integration',
+  title: 'TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen',
   description:
-    'Forward TrueWatch logs, traces, metrics, and events to TiDB Cloud Lake for long-term storage, then query them next to business data in one dashboard.',
+    'Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.',
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/truewatch-cloud-lake-integration/' },
   openGraph: {
-    title: 'TrueWatch and TiDB Cloud Lake Observability Integration',
+    title: 'TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen',
     description:
-      'Forward TrueWatch logs, traces, metrics, and events to TiDB Cloud Lake for long-term storage, then query them next to business data in one dashboard.',
+      'Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.',
     url: 'https://www.pingcap.com/truewatch-cloud-lake-integration/',
     siteName: 'TiDB',
     images: [
@@ -34,9 +34,9 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/truewatch-cloud-lake-integration/',
-  title: 'TrueWatch and TiDB Cloud Lake Observability Integration',
+  title: 'TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen',
   description:
-    'Forward TrueWatch logs, traces, metrics, and events to TiDB Cloud Lake for long-term storage, then query them next to business data in one dashboard.',
+    'Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.',
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
@@ -47,11 +47,11 @@ const schema = buildPageSchema({
 })
 
 const dsl: PageDSL = {
-  pageName: 'TrueWatch and TiDB Cloud Lake Observability Integration',
+  pageName: 'TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen',
   meta: {
-    title: 'TrueWatch and TiDB Cloud Lake Observability Integration',
+    title: 'TrueWatch and TiDB Cloud Lake: Observability Data and Business Data on One Screen',
     description:
-      'Forward TrueWatch logs, traces, metrics, and events to TiDB Cloud Lake for long-term storage, then query them next to business data in one dashboard.',
+      'Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.',
     canonical: '/truewatch-cloud-lake-integration/',
     breadcrumbName: 'TrueWatch and TiDB Cloud Lake Integration',
     unlisted: false,
