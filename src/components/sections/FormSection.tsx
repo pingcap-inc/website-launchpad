@@ -5,7 +5,7 @@ import { LazyHubSpotForm } from '@/components/ui/LazyHubSpotForm'
 import { PrimaryButton } from '@/components/ui/PrimaryButton'
 
 /**
- * Optional left-hand column shown beside the form (e.g. "Tour TiDB Cloud").
+ * Optional left-hand column shown beside the form (e.g. "View Interactive Demos").
  * When omitted, FormSection renders exactly as before: header left, form right.
  */
 export interface FormSectionDemo {

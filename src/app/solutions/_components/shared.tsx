@@ -430,11 +430,16 @@ export function CtaBand({ title }: { title: string }) {
 
 // ─── "See TiDB in Action" footer block ─────────────────────────────────────────
 
-/** Left column copy for the solution pages (approved Nov 2026). Logistics does not use this. */
-export const TOUR_TIDB_CLOUD_DEMO = {
-  title: 'Tour TiDB Cloud',
-  body: 'Explore console walkthroughs for TiDB Cloud Starter and Dedicated',
-  cta: { text: 'View Console Tours', href: 'https://www.pingcap.com/demo/' },
+/** Left column of "See TiDB in Action", copied verbatim from the live WordPress pages. */
+export const VIEW_INTERACTIVE_DEMOS = {
+  title: 'View Interactive Demos',
+  body: 'You’ll learn how to:',
+  bullets: [
+    'Scale out MySQL workloads with zero downtime',
+    'Combine transactional, operational, and AI data in one system',
+    'Gain real-time insights and built-in resilience',
+  ],
+  cta: { text: 'View Now', href: '/demo/' },
   image: {
     src: 'https://static.pingcap.com/files/2025/11/04220532/Mask-group.svg',
     width: 465,
@@ -450,7 +455,7 @@ export function SeeTidbInAction() {
         subtitle="Get to know TiDB in the way that fits you best"
         portalId="4466002"
         formId="066e9d00-f659-43b2-8fa5-71fb88dfab59"
-        demo={TOUR_TIDB_CLOUD_DEMO}
+        demo={VIEW_INTERACTIVE_DEMOS}
         formTitle="Book a 30-Minute Meeting"
         formSubtitle="Please enter your information in the form and we’ll contact you shortly."
       />
