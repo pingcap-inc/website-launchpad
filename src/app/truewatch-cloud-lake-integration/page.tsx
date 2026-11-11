@@ -40,7 +40,7 @@ const schema = buildPageSchema({
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
-      name: 'Observability Data. Business Data. <span class="text-gradient-violet">One Screen.</span>',
+      name: 'TrueWatch and TiDB Cloud Lake Integration',
       path: '/truewatch-cloud-lake-integration/',
     },
   ],
@@ -53,6 +53,7 @@ const dsl: PageDSL = {
     description:
       'Connect TrueWatch observability with TiDB Cloud Lake analytics. Forward logs, traces, metrics, and events to long-term storage, then query business tables next to system health in one dashboard.',
     canonical: '/truewatch-cloud-lake-integration/',
+    breadcrumbName: 'TrueWatch and TiDB Cloud Lake Integration',
     unlisted: false,
     createdBy: 'nivanya@pingcap.com',
     createdAt: '2026-10-29T14:24:38.818Z',
@@ -142,7 +143,7 @@ const dsl: PageDSL = {
           'TrueWatch stays the place where teams watch systems and investigate incidents. TiDB Cloud Lake holds long-term observability history and the business tables that explain it, on separate analytical compute.',
         items: [
           {
-            title: 'Forward path',
+            title: 'Forward Path',
             description:
               'An administrator creates a data forwarding rule in TrueWatch and selects TiDB Cloud Lake as the target. TrueWatch writes the chosen logs, traces, metrics, and events in Parquet batches into tables you own.',
             image: {
@@ -158,7 +159,7 @@ const dsl: PageDSL = {
             },
           },
           {
-            title: 'Query path',
+            title: 'Query Path',
             description:
               'TrueWatch adds TiDB Cloud Lake as an external data source through the TiDB Cloud Lake Driver. Metric Analysis and Dashboards run read-only SQL against business tables and forwarded history. Business tables can arrive from TiDB Cloud, MySQL, PostgreSQL, and Amazon S3 files. [Learn more about TiDB Cloud Lake data integration](https://docs.pingcap.com/tidbcloudlake/data-integration-overview/).',
             image: {
