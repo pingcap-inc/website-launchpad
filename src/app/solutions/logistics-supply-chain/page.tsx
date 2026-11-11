@@ -328,7 +328,7 @@ const dsl: PageDSL = {
           {
             title: 'Built-In Monitoring & Alerting',
             description:
-              'Use standard SQL to detect anomalies directly on live data. Power real-time dashboards with Prometheus and Grafana integration. Enable advanced analytics without exporting data.',
+              'Use standard SQL to detect anomalies directly on live data. Power real-time dashboards with Prometheus and Grafana integration. Run demand forecasts and anomaly detection models against the same fresh operational data, with built-in vector search when you need it, and no exports.\n\n[Explore AI and vector search on TiDB](https://www.pingcap.com/ai/vector-search/)',
             image: {
               image: {
                 url: 'https://static.pingcap.com/images/24dffffb-rapid_productivity_illustration_2.svg',
