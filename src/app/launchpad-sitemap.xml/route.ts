@@ -75,6 +75,8 @@ const routes: Array<{
     priority: 0.7,
     changeFrequency: 'monthly',
   },
+  // Integration pages
+  { url: '/truewatch-cloud-lake-integration/', priority: 0.7, changeFrequency: 'monthly' },
   // Listicle pages
   {
     url: '/listicle/best-databases-for-ai-applications/',
