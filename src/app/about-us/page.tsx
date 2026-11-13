@@ -211,8 +211,8 @@ const dsl: PageDSL = {
         eyebrow: 'Global Presence',
         title: 'Where We Are',
         subtitle:
-          "We're headquartered in Sunnyvale, California, with offices in Singapore and Tokyo, and we work with customers around the world.",
-        columns: 3,
+          "We're headquartered in Sunnyvale, California, with offices in Singapore, Kuala Lumpur, and Tokyo, and we work with customers around the world.",
+        columns: 4,
         items: [
           {
             icon: 'Building',
@@ -225,6 +225,13 @@ const dsl: PageDSL = {
             icon: 'Globe',
             title: 'Singapore',
             description: '230 Victoria Street, Bugis Junction Towers, #07-10, Singapore 188024.',
+            label: 'Office',
+          },
+          {
+            icon: 'Globe',
+            title: 'Kuala Lumpur, Malaysia',
+            description:
+              'Suite 12-01, Sunway V2 Tower 2, No. 158, Jalan Peel, Sunway Velocity, Kuala Lumpur 55100.',
             label: 'Office',
           },
           {
