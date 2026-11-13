@@ -88,11 +88,21 @@
         "items": [
           {
             "type": "content",
-            "content": "In 2015, three infrastructure engineers were tired of how databases were managed at large internet companies. Every time an application grew, managing, scaling, and maintaining the database took far more effort than it should have.\n\nThey looked for a database that could grow with the application without that pain. They didn't find one. So they started building it, in the open. The company became PingCAP, and the project became TiDB."
+            "content": "In 2015, three infrastructure engineers were tired of how databases were managed at large internet companies. Every time an application grew, managing, scaling, and maintaining the database took far more effort than it should have.\n\nThey looked for a database that could grow with the application without that pain. They didn't find one. So they started building it, in the open. The company became PingCAP, and the project became TiDB.\n\nPingCAP was co-founded by Max Liu (CEO), Ed Huang (CTO), and Dylan Cui."
           },
           {
-            "type": "content",
-            "content": "Max Liu, co-founder and CEO\n\nEd Huang, co-founder and CTO\n\nDylan Cui, co-founder"
+            "type": "media",
+            "image": {
+              "image": {
+                "url": "/images/about-us/max-liu-on-stage.jpg",
+                "alt": "Max Liu, co-founder and CEO of PingCAP, speaking on stage",
+                "width": 1600,
+                "height": 1066
+              },
+              "alt": "Max Liu, co-founder and CEO of PingCAP, speaking on stage",
+              "width": 1600,
+              "height": 1066
+            }
           }
         ]
       },
@@ -231,6 +241,48 @@
       },
       "style": {
         "spacing": "section"
+      }
+    },
+    {
+      "id": "gallery",
+      "type": "columns",
+      "props": {
+        "layout": "columns",
+        "itemColumns": 2,
+        "items": [
+          {
+            "type": "media",
+            "image": {
+              "image": {
+                "url": "/images/about-us/tidb-scaile-2026-cubes.jpg",
+                "alt": "Lit-up TiDB and TiDB SCaiLE 2026 cubes at the event",
+                "width": 1500,
+                "height": 1000
+              },
+              "alt": "Lit-up TiDB and TiDB SCaiLE 2026 cubes at the event",
+              "width": 1500,
+              "height": 1000
+            }
+          },
+          {
+            "type": "media",
+            "image": {
+              "image": {
+                "url": "/images/about-us/tidb-scaile-2026-tote.jpg",
+                "alt": "An attendee carrying a TiDB tote bag at TiDB SCaiLE 2026",
+                "width": 1600,
+                "height": 1066
+              },
+              "alt": "An attendee carrying a TiDB tote bag at TiDB SCaiLE 2026",
+              "width": 1600,
+              "height": 1066
+            }
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section",
+        "removePaddingTop": true
       }
     },
     {
