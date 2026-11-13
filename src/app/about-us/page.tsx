@@ -116,7 +116,7 @@ const dsl: PageDSL = {
           {
             type: 'content',
             content:
-              "In 2015, three infrastructure engineers were tired of how databases were managed at large internet companies. Every time an application grew, managing, scaling, and maintaining the database took far more effort than it should have.\n\nThey looked for a database that could grow with the application without that pain. They didn't find one. So they started building it, in the open, and named the company PingCAP.\n\nThat project became TiDB. All three co-founders still lead the company today.",
+              "In 2015, three infrastructure engineers were tired of how databases were managed at large internet companies. Every time an application grew, managing, scaling, and maintaining the database took far more effort than it should have.\n\nThey looked for a database that could grow with the application without that pain. They didn't find one. So they started building it, in the open. The company became PingCAP, and the project became TiDB.",
           },
           {
             type: 'content',
