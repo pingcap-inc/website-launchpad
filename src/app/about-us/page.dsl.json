@@ -1,0 +1,309 @@
+{
+  "pageName": "About TiDB | One Data Layer for Every Kind of Scale",
+  "meta": {
+    "title": "About TiDB | One Data Layer for Every Kind of Scale",
+    "description": "TiDB's mission is to make sure the database never holds a team back. Meet the company behind the open-source data layer for enterprises and AI agents.",
+    "canonical": "/about-us/",
+    "breadcrumbName": "About Us",
+    "createdBy": "a.hire@pingcap.com",
+    "createdAt": "2026-11-03T00:00:00.000Z"
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "props": {
+        "layout": "centered",
+        "eyebrow": "About Us",
+        "headline": "One Data Layer for Every Kind of Scale",
+        "subheadline": "Our mission is to make sure the database is never what holds a team back. Applications grow, data piles up, and AI agents now create databases faster than any team could. TiDB is one open-source data layer that scales with all of it, without sharding, rewrites, or giving up consistency.",
+        "primaryCta": {
+          "text": "Start for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        },
+        "secondaryCta": {
+          "text": "Explore Job Openings",
+          "href": "https://www.pingcap.com/careers/"
+        }
+      },
+      "style": {
+        "spacing": "hero"
+      }
+    },
+    {
+      "id": "what-we-solve",
+      "type": "columns",
+      "props": {
+        "eyebrow": "Our Mission",
+        "title": "What We're Solving",
+        "layout": "columns",
+        "itemColumns": 2,
+        "items": [
+          {
+            "type": "content",
+            "content": "For years, teams have stitched databases together to keep up: sharding MySQL by hand, splitting transactions from analytics, adding a new system for every new need. Each fix adds another thing to run."
+          },
+          {
+            "type": "content",
+            "content": "[stack-consolidation]"
+          }
+        ]
+      },
+      "style": {
+        "background": "gray",
+        "spacing": "section",
+        "removePaddingBottom": true
+      }
+    },
+    {
+      "id": "what-we-solve-agents",
+      "type": "columns",
+      "props": {
+        "layout": "columns",
+        "itemColumns": 2,
+        "items": [
+          {
+            "type": "content",
+            "content": "[agent-instance-grid]"
+          },
+          {
+            "type": "content",
+            "content": "Now AI agents are adding a new kind of scale on top. In the last six months, 99% of the databases on TiDB Cloud Starter were created by agents, not people.\n\nBoth paths lead to the same need: one data layer for transactions, analytics, and vectors that scales from a single small instance to millions of them, and from gigabytes to petabytes, without a rewrite. That's what we build."
+          }
+        ]
+      },
+      "style": {
+        "background": "gray",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "how-it-started",
+      "type": "columns",
+      "props": {
+        "eyebrow": "How We Started",
+        "title": "It Started with a Frustration",
+        "layout": "columns",
+        "itemColumns": 2,
+        "items": [
+          {
+            "type": "content",
+            "content": "In 2015, three infrastructure engineers were tired of how databases were managed at large internet companies. Every time an application grew, managing, scaling, and maintaining the database took far more effort than it should have.\n\nThey looked for a database that could grow with the application without that pain. They didn't find one. So they started building it, in the open. The company became PingCAP, and the project became TiDB.\n\nPingCAP was co-founded by Max Liu (CEO), Ed Huang (CTO), and Dylan Cui."
+          },
+          {
+            "type": "media",
+            "image": {
+              "image": {
+                "url": "/images/about-us/max-liu-on-stage.jpg",
+                "alt": "Max Liu, co-founder and CEO of PingCAP, speaking on stage",
+                "width": 1600,
+                "height": 1066
+              },
+              "alt": "Max Liu, co-founder and CEO of PingCAP, speaking on stage",
+              "width": 1600,
+              "height": 1066
+            }
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "open-from-day-one",
+      "type": "columns",
+      "props": {
+        "eyebrow": "Open Source",
+        "title": "Open from Day One",
+        "layout": "columns",
+        "itemColumns": 2,
+        "items": [
+          {
+            "type": "content",
+            "content": "Open source wasn't a decision we made later. TiDB was open from the first commit, and it still is. Hundreds of contributors around the world help build it, and TiKV, the storage engine underneath TiDB, is a graduated project of the Cloud Native Computing Foundation.\n\nWorking in the open keeps us honest. Anyone can read the code, question a design choice, or fix something we missed. By the end of 2026, we plan to open source the core of TiDB X, our newest architecture, so the next version of TiDB is built the same way the first one was."
+          },
+          {
+            "type": "content",
+            "content": "> \"Open source is in our DNA. TiDB has been open since day one, and we believe it's the best way to collaborate and the fastest way to innovate.\"\n\nMax Liu, co-founder and CEO"
+          }
+        ]
+      },
+      "style": {
+        "background": "gray",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "built-with-customers",
+      "type": "columns",
+      "props": {
+        "eyebrow": "Our Customers",
+        "title": "Built Alongside the People Who Run It",
+        "layout": "columns",
+        "itemColumns": 2,
+        "items": [
+          {
+            "type": "content",
+            "content": "The hardest problems we've worked on came from customers who wouldn't accept a limit. Atlassian runs Jira and Confluence for tens of millions of people on systems that can never go down. Pinterest, Plaid, Flipkart, and many others brought workloads their previous databases struggled to handle.\n\nEach of them pushed TiDB further than we would have on our own, and we still build it that way: alongside the engineers who depend on it."
+          },
+          {
+            "type": "content",
+            "content": "> \"Storage could no longer be an afterthought managed team by team. It had to become a first-class internal platform. TiDB proved to be the platform that ticked all of those boxes.\"\n\nVinod Kumar, Atlassian, speaking at TiDB SCaiLE 2026"
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "where-we-are",
+      "type": "featureCard",
+      "props": {
+        "eyebrow": "Global Presence",
+        "title": "Where We Are",
+        "subtitle": "We're headquartered in Sunnyvale, California, with offices in Singapore, Kuala Lumpur, and Tokyo, and we work with customers around the world.",
+        "columns": 4,
+        "items": [
+          {
+            "icon": "Building",
+            "title": "Sunnyvale, California",
+            "description": "440 N Wolfe Rd, Sunnyvale, CA 94085, USA.",
+            "label": "Headquarters",
+            "className": "border-brand-violet-light bg-brand-violet-bg"
+          },
+          {
+            "icon": "Globe",
+            "title": "Singapore",
+            "description": "230 Victoria Street, Bugis Junction Towers, #07-10, Singapore 188024.",
+            "label": "Office"
+          },
+          {
+            "icon": "Globe",
+            "title": "Kuala Lumpur, Malaysia",
+            "description": "Suite 12-01, Sunway V2 Tower 2, No. 158, Jalan Peel, Sunway Velocity, Kuala Lumpur 55100.",
+            "label": "Office"
+          },
+          {
+            "icon": "Globe",
+            "title": "Tokyo, Japan",
+            "description": "Tokiwabashi Tower 9F, 2-6-4 Otemachi, Chiyoda-ku, Tokyo 100-0004.",
+            "label": "Office"
+          }
+        ],
+        "borderStyle": "gray"
+      },
+      "style": {
+        "background": "gray",
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "values",
+      "type": "featureGrid",
+      "props": {
+        "eyebrow": "Company Values",
+        "title": "How We Work",
+        "columns": 3,
+        "items": [
+          {
+            "icon": "Users",
+            "title": "Customer Success",
+            "description": "We listen to customers, learn how they see the problem, and turn their pain points into opportunities."
+          },
+          {
+            "icon": "Target",
+            "title": "Deliver Results with Excellence",
+            "description": "We hold a high bar and measure success by what actually ships and works."
+          },
+          {
+            "icon": "MessageSquare",
+            "title": "Be Open",
+            "description": "We communicate transparently, stay curious, and welcome different views and challenges."
+          },
+          {
+            "icon": "Briefcase",
+            "title": "Be an Owner",
+            "description": "We take responsibility for the whole company's outcomes and keep at problems until they are solved."
+          },
+          {
+            "icon": "Puzzle",
+            "title": "Respect and Empower People",
+            "description": "We bring out each other's strengths, collaborate inclusively, and give feedback instead of blame."
+          },
+          {
+            "icon": "Lightbulb",
+            "title": "Think Big, Think Long and Think Different",
+            "description": "We stay ambitious and turn breakthrough ideas into products people rely on."
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section"
+      }
+    },
+    {
+      "id": "gallery",
+      "type": "columns",
+      "props": {
+        "layout": "columns",
+        "itemColumns": 2,
+        "items": [
+          {
+            "type": "media",
+            "image": {
+              "image": {
+                "url": "/images/about-us/tidb-scaile-2026-cubes.jpg",
+                "alt": "Lit-up TiDB and TiDB SCaiLE 2026 cubes at the event",
+                "width": 1500,
+                "height": 1000
+              },
+              "alt": "Lit-up TiDB and TiDB SCaiLE 2026 cubes at the event",
+              "width": 1500,
+              "height": 1000
+            }
+          },
+          {
+            "type": "media",
+            "image": {
+              "image": {
+                "url": "/images/about-us/tidb-scaile-2026-tote.jpg",
+                "alt": "An attendee carrying a TiDB tote bag at TiDB SCaiLE 2026",
+                "width": 1600,
+                "height": 1066
+              },
+              "alt": "An attendee carrying a TiDB tote bag at TiDB SCaiLE 2026",
+              "width": 1600,
+              "height": 1066
+            }
+          }
+        ]
+      },
+      "style": {
+        "spacing": "section",
+        "removePaddingTop": true
+      }
+    },
+    {
+      "id": "cta",
+      "type": "cta",
+      "props": {
+        "title": "Come Build with Us",
+        "subtitle": "We're engineers and builders who love open source and hard problems, and we're hiring.",
+        "primaryCta": {
+          "text": "Explore Job Openings",
+          "href": "https://www.pingcap.com/careers/"
+        },
+        "secondaryCta": {
+          "text": "Start for Free",
+          "href": "https://tidbcloud.com/free-trial/"
+        }
+      },
+      "style": {
+        "background": "brand-violet",
+        "spacing": "section"
+      }
+    }
+  ]
+}
