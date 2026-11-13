@@ -187,13 +187,13 @@ const dsl: PageDSL = {
         eyebrow: 'Global Presence',
         title: 'Where We Are',
         subtitle:
-          "We're headquartered in Silicon Valley, with offices in Asia Pacific, and we work with customers around the world.",
+          "We're headquartered in Sunnyvale, California, with offices in Singapore and Tokyo, and we work with customers around the world.",
         columns: 3,
         items: [
           {
             icon: 'Building',
-            title: 'Sunnyvale, California',
-            description: 'Headquarters. 440 N Wolfe Rd, Sunnyvale, CA 94085, USA.',
+            title: 'Sunnyvale, California (Headquarters)',
+            description: '440 N Wolfe Rd, Sunnyvale, CA 94085, USA.',
           },
           {
             icon: 'Globe',
