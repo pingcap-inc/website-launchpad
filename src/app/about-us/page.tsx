@@ -5,15 +5,15 @@ import { PageRenderer } from '@/lib/page-renderer'
 import type { PageDSL } from '@/lib/dsl-schema'
 
 export const metadata: Metadata = {
-  title: 'About Us | How Three Engineers Built TiDB and PingCAP',
+  title: 'About TiDB | One Data Layer for Every Kind of Scale',
   description:
-    'PingCAP started in 2015 when three infrastructure engineers built the database they wished they had, in the open. This is the story of TiDB.',
+    "TiDB's mission is to make sure the database never holds a team back. Meet the company behind the open-source data layer for enterprises and AI agents.",
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.pingcap.com/about-us/' },
   openGraph: {
-    title: 'About Us | How Three Engineers Built TiDB and PingCAP',
+    title: 'About TiDB | One Data Layer for Every Kind of Scale',
     description:
-      'PingCAP started in 2015 when three infrastructure engineers built the database they wished they had, in the open. This is the story of TiDB.',
+      "TiDB's mission is to make sure the database never holds a team back. Meet the company behind the open-source data layer for enterprises and AI agents.",
     url: 'https://www.pingcap.com/about-us/',
     siteName: 'TiDB',
     images: [
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
 
 const schema = buildPageSchema({
   path: '/about-us/',
-  title: 'About Us | How Three Engineers Built TiDB and PingCAP',
+  title: 'About TiDB | One Data Layer for Every Kind of Scale',
   description:
-    'PingCAP started in 2015 when three infrastructure engineers built the database they wished they had, in the open. This is the story of TiDB.',
+    "TiDB's mission is to make sure the database never holds a team back. Meet the company behind the open-source data layer for enterprises and AI agents.",
   pageType: 'AboutPage',
   breadcrumbs: [
     { name: 'Home', path: '/' },
@@ -46,11 +46,11 @@ const schema = buildPageSchema({
 })
 
 const dsl: PageDSL = {
-  pageName: 'About Us | How Three Engineers Built TiDB and PingCAP',
+  pageName: 'About TiDB | One Data Layer for Every Kind of Scale',
   meta: {
-    title: 'About Us | How Three Engineers Built TiDB and PingCAP',
+    title: 'About TiDB | One Data Layer for Every Kind of Scale',
     description:
-      'PingCAP started in 2015 when three infrastructure engineers built the database they wished they had, in the open. This is the story of TiDB.',
+      "TiDB's mission is to make sure the database never holds a team back. Meet the company behind the open-source data layer for enterprises and AI agents.",
     canonical: '/about-us/',
     breadcrumbName: 'About Us',
     createdBy: 'a.hire@pingcap.com',
@@ -63,16 +63,16 @@ const dsl: PageDSL = {
       props: {
         layout: 'centered',
         eyebrow: 'About Us',
-        headline: 'We Built the Database We Wished We Had',
+        headline: 'One Data Layer for Every Kind of Scale',
         subheadline:
-          "TiDB started in 2015 with three infrastructure engineers and a problem they couldn't stop thinking about. This is the story of what they built, who it's for, and where it's going.",
+          'Our mission is to make sure the database is never what holds a team back. Applications grow, data piles up, and AI agents now create databases faster than any team could. TiDB is one open-source data layer that scales with all of it, without sharding, rewrites, or giving up consistency.',
         primaryCta: {
-          text: 'Explore Job Openings',
-          href: 'https://www.pingcap.com/careers/',
+          text: 'Start for Free',
+          href: 'https://tidbcloud.com/free-trial/',
         },
         secondaryCta: {
-          text: 'Try TiDB',
-          href: 'https://tidbcloud.com/free-trial/',
+          text: 'Explore Job Openings',
+          href: 'https://www.pingcap.com/careers/',
         },
       },
       style: {
@@ -80,10 +80,35 @@ const dsl: PageDSL = {
       },
     },
     {
+      id: 'what-we-solve',
+      type: 'columns',
+      props: {
+        eyebrow: 'Our Mission',
+        title: "What We're Solving",
+        layout: 'columns',
+        itemColumns: 2,
+        items: [
+          {
+            type: 'content',
+            content:
+              "For years, teams have stitched databases together to keep up: sharding MySQL by hand, splitting transactions from analytics, adding a new system for every new need. Each fix adds another thing to run.\n\nNow AI agents are adding a new kind of scale on top. In the last six months, 99% of the databases on TiDB Cloud Starter were created by agents, not people.\n\nBoth paths lead to the same need: one data layer for transactions, analytics, and vectors that scales from a single small instance to millions of them, and from gigabytes to petabytes, without a rewrite. That's what we build.",
+          },
+          {
+            type: 'content',
+            content: '[agent-instance-grid]',
+          },
+        ],
+      },
+      style: {
+        background: 'gray',
+        spacing: 'section',
+      },
+    },
+    {
       id: 'how-it-started',
       type: 'columns',
       props: {
-        eyebrow: '2015',
+        eyebrow: 'How We Started',
         title: 'It Started with a Frustration',
         layout: 'columns',
         itemColumns: 2,
@@ -91,21 +116,12 @@ const dsl: PageDSL = {
           {
             type: 'content',
             content:
-              "In 2015, three infrastructure engineers were tired of how databases were managed at large internet companies. Every time an application grew, managing, scaling, and maintaining the database took far more effort than it should have.\n\nThey looked for a database that could grow with the application without that pain. They didn't find one. So they started building it, in the open, and named the company PingCAP.\n\nThat project became TiDB. Max Liu, one of the three, still leads the company as CEO. You can [watch him talk about the architecture behind it](https://youtu.be/g0OikEsHPV4).",
+              "In 2015, three infrastructure engineers were tired of how databases were managed at large internet companies. Every time an application grew, managing, scaling, and maintaining the database took far more effort than it should have.\n\nThey looked for a database that could grow with the application without that pain. They didn't find one. So they started building it, in the open, and named the company PingCAP.\n\nThat project became TiDB. All three co-founders still lead the company today.",
           },
           {
-            type: 'media',
-            image: {
-              image: {
-                url: 'https://static.pingcap.com/files/2024/05/12232917/Max-The-Rise-of-HTAP-New-1.png',
-                alt: 'Max Liu, co-founder and CEO of PingCAP, speaking on stage',
-                width: 1200,
-                height: 675,
-              },
-              alt: 'Max Liu, co-founder and CEO of PingCAP, speaking on stage',
-              width: 1200,
-              height: 675,
-            },
+            type: 'content',
+            content:
+              'Max Liu, co-founder and CEO\n\nEd Huang, co-founder and CTO\n\nDylan Cui, co-founder',
           },
         ],
       },
@@ -130,7 +146,7 @@ const dsl: PageDSL = {
           {
             type: 'content',
             content:
-              '> "Open source is our gene. It\'s our DNA. It has been open for us since day one. As an engineer, I love open source."\n\nMax Liu, co-founder and CEO',
+              '> "Open source is in our DNA. TiDB has been open since day one, and we believe it\'s the best way to collaborate and the fastest way to innovate."\n\nMax Liu, co-founder and CEO',
           },
         ],
       },
@@ -151,12 +167,12 @@ const dsl: PageDSL = {
           {
             type: 'content',
             content:
-              "The hardest problems we've worked on came from customers who wouldn't accept a limit. Atlassian runs Jira and Confluence for tens of millions of people on systems that can never go down. Pinterest, Plaid, Flipkart, and many others brought workloads their previous databases struggled to handle.\n\nEach of them pushed TiDB further than we would have on our own. Ten years in, we still build it the same way: alongside the engineers who depend on it.",
+              "The hardest problems we've worked on came from customers who wouldn't accept a limit. Atlassian runs Jira and Confluence for tens of millions of people on systems that can never go down. Pinterest, Plaid, Flipkart, and many others brought workloads their previous databases struggled to handle.\n\nEach of them pushed TiDB further than we would have on our own, and we still build it that way: alongside the engineers who depend on it.",
           },
           {
             type: 'content',
             content:
-              '> "For our customers, this is not ephemeral data. This is their system of record. We do not tolerate any downtime."\n\nVinod Kumar, Atlassian, speaking at TiDB SCaiLE 2026',
+              '> "Storage could no longer be an afterthought managed team by team. It had to become a first-class internal platform. TiDB proved to be the platform that ticked all of those boxes."\n\nVinod Kumar, Atlassian, speaking at TiDB SCaiLE 2026',
           },
         ],
       },
@@ -165,22 +181,29 @@ const dsl: PageDSL = {
       },
     },
     {
-      id: 'whats-changing',
-      type: 'columns',
+      id: 'where-we-are',
+      type: 'featureGrid',
       props: {
-        eyebrow: 'Today',
-        title: 'A New Kind of User, the Same Old Problem',
-        layout: 'columns',
-        itemColumns: 2,
+        eyebrow: 'Global Presence',
+        title: 'Where We Are',
+        subtitle:
+          "We're headquartered in Silicon Valley, with offices in Asia Pacific, and we work with customers around the world.",
+        columns: 3,
         items: [
           {
-            type: 'content',
-            content:
-              "This year, something changed. Most new databases on TiDB Cloud weren't started by a person. They were started by AI agents building apps for someone.\n\nIt's a new kind of user with the same old problem: the database shouldn't hold the work back. Behind every agent is still a person who needs that work to be there tomorrow. That's who we build for.",
+            icon: 'Building',
+            title: 'Sunnyvale, California',
+            description: 'Headquarters. 440 N Wolfe Rd, Sunnyvale, CA 94085, USA.',
           },
           {
-            type: 'content',
-            content: '[agent-instance-grid]',
+            icon: 'Globe',
+            title: 'Singapore',
+            description: '230 Victoria Street, Bugis Junction Towers, #07-10, Singapore 188024.',
+          },
+          {
+            icon: 'Globe',
+            title: 'Tokyo, Japan',
+            description: 'Tokiwabashi Tower 9F, 2-6-4 Otemachi, Chiyoda-ku, Tokyo 100-0004.',
           },
         ],
       },
@@ -244,7 +267,7 @@ const dsl: PageDSL = {
       props: {
         title: 'Come Build with Us',
         subtitle:
-          "We're engineers and builders who love open source and hard problems. We're headquartered in Sunnyvale, California, and work with customers around the world.",
+          "We're engineers and builders who love open source and hard problems, and we're hiring.",
         primaryCta: {
           text: 'Explore Job Openings',
           href: 'https://www.pingcap.com/careers/',
