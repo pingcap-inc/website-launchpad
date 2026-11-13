@@ -6,6 +6,7 @@ export type RegisteredShortcode =
   | 'cloud-lake-architecture'
   | 'review-badges'
   | 'agent-instance-grid'
+  | 'stack-consolidation'
 
 const SHORTCODE_ALIASES: Record<string, RegisteredShortcode> = {
   'cloud-lake-architecture': 'cloud-lake-architecture',
@@ -28,6 +29,8 @@ const SHORTCODE_ALIASES: Record<string, RegisteredShortcode> = {
   'gartner-g2-badges': 'review-badges',
   'agent-instance-grid': 'agent-instance-grid',
   'agent instance grid': 'agent-instance-grid',
+  'stack-consolidation': 'stack-consolidation',
+  'stack consolidation': 'stack-consolidation',
 }
 
 function normalizeShortcodeKey(value: string) {

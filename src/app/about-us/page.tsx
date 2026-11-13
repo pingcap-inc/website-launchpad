@@ -91,7 +91,31 @@ const dsl: PageDSL = {
           {
             type: 'content',
             content:
-              "For years, teams have stitched databases together to keep up: sharding MySQL by hand, splitting transactions from analytics, adding a new system for every new need. Each fix adds another thing to run.\n\nNow AI agents are adding a new kind of scale on top. In the last six months, 99% of the databases on TiDB Cloud Starter were created by agents, not people.\n\nBoth paths lead to the same need: one data layer for transactions, analytics, and vectors that scales from a single small instance to millions of them, and from gigabytes to petabytes, without a rewrite. That's what we build.",
+              'For years, teams have stitched databases together to keep up: sharding MySQL by hand, splitting transactions from analytics, adding a new system for every new need. Each fix adds another thing to run.',
+          },
+          {
+            type: 'content',
+            content: '[stack-consolidation]',
+          },
+        ],
+      },
+      style: {
+        background: 'gray',
+        spacing: 'section',
+        removePaddingBottom: true,
+      },
+    },
+    {
+      id: 'what-we-solve-agents',
+      type: 'columns',
+      props: {
+        layout: 'columns',
+        itemColumns: 2,
+        items: [
+          {
+            type: 'content',
+            content:
+              "Now AI agents are adding a new kind of scale on top. In the last six months, 99% of the databases on TiDB Cloud Starter were created by agents, not people.\n\nBoth paths lead to the same need: one data layer for transactions, analytics, and vectors that scales from a single small instance to millions of them, and from gigabytes to petabytes, without a rewrite. That's what we build.",
           },
           {
             type: 'content',
@@ -182,7 +206,7 @@ const dsl: PageDSL = {
     },
     {
       id: 'where-we-are',
-      type: 'featureGrid',
+      type: 'featureCard',
       props: {
         eyebrow: 'Global Presence',
         title: 'Where We Are',
@@ -192,20 +216,25 @@ const dsl: PageDSL = {
         items: [
           {
             icon: 'Building',
-            title: 'Sunnyvale, California (Headquarters)',
+            title: 'Sunnyvale, California',
             description: '440 N Wolfe Rd, Sunnyvale, CA 94085, USA.',
+            label: 'Headquarters',
+            className: 'border-brand-violet-light bg-brand-violet-bg',
           },
           {
             icon: 'Globe',
             title: 'Singapore',
             description: '230 Victoria Street, Bugis Junction Towers, #07-10, Singapore 188024.',
+            label: 'Office',
           },
           {
             icon: 'Globe',
             title: 'Tokyo, Japan',
             description: 'Tokiwabashi Tower 9F, 2-6-4 Otemachi, Chiyoda-ku, Tokyo 100-0004.',
+            label: 'Office',
           },
         ],
+        borderStyle: 'gray',
       },
       style: {
         background: 'gray',
