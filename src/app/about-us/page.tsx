@@ -114,12 +114,12 @@ const dsl: PageDSL = {
         items: [
           {
             type: 'content',
-            content:
-              "Now AI agents are adding a new kind of scale on top. In the last six months, 99% of the databases on TiDB Cloud Starter were created by agents, not people.\n\nBoth paths lead to the same need: one data layer for transactions, analytics, and vectors that scales from a single small instance to millions of them, and from gigabytes to petabytes, without a rewrite. That's what we build.",
+            content: '[agent-instance-grid]',
           },
           {
             type: 'content',
-            content: '[agent-instance-grid]',
+            content:
+              "Now AI agents are adding a new kind of scale on top. In the last six months, 99% of the databases on TiDB Cloud Starter were created by agents, not people.\n\nBoth paths lead to the same need: one data layer for transactions, analytics, and vectors that scales from a single small instance to millions of them, and from gigabytes to petabytes, without a rewrite. That's what we build.",
           },
         ],
       },
