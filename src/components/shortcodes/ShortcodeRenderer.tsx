@@ -5,6 +5,8 @@ import { AgentMemoryTimeline } from './AgentMemoryTimeline'
 import { CloudLakeArchitecture } from './CloudLakeArchitecture'
 import { TiDBPersistentLayer } from './TiDBPersistentLayer'
 import { ReviewBadges } from './ReviewBadges'
+import { AgentInstanceGrid } from './AgentInstanceGrid'
+import { StackConsolidation } from './StackConsolidation'
 import { isHtmlShortcode, resolveRegisteredShortcode } from '@/lib/shortcodes'
 import { sanitizeHtml } from '@/lib/security/sanitize'
 
@@ -76,6 +78,14 @@ export function ShortcodeRenderer({ shortCode, className }: ShortcodeRendererPro
 
   if (resolvedShortcode === 'review-badges') {
     return <ReviewBadges className={className} />
+  }
+
+  if (resolvedShortcode === 'stack-consolidation') {
+    return <StackConsolidation className={className} />
+  }
+
+  if (resolvedShortcode === 'agent-instance-grid') {
+    return <AgentInstanceGrid className={className} />
   }
 
   if (isHtmlShortcode(shortCode)) {
