@@ -100,7 +100,7 @@ const dsl: PageDSL = {
         ],
       },
       style: {
-        background: 'gray',
+        background: 'gradient-dark-bottom',
         spacing: 'section',
         removePaddingBottom: true,
       },
@@ -124,7 +124,7 @@ const dsl: PageDSL = {
         ],
       },
       style: {
-        background: 'gray',
+        background: 'gradient-dark-top',
         spacing: 'section',
       },
     },
@@ -184,7 +184,7 @@ const dsl: PageDSL = {
         ],
       },
       style: {
-        background: 'gray',
+        background: 'gradient-dark-top',
         spacing: 'section',
       },
     },
@@ -253,7 +253,7 @@ const dsl: PageDSL = {
         borderStyle: 'gray',
       },
       style: {
-        background: 'gray',
+        background: 'gradient-dark-top',
         spacing: 'section',
       },
     },
