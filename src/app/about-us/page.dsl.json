@@ -94,12 +94,12 @@
             "type": "media",
             "image": {
               "image": {
-                "url": "/images/about-us/max-liu-on-stage.jpg",
-                "alt": "Max Liu, co-founder and CEO of PingCAP, speaking on stage",
+                "url": "/images/about-us/pingcap-co-founders.jpg",
+                "alt": "PingCAP co-founders Max Liu, Ed Huang, and Dylan Cui behind a TiDB logo at the PingCAP office",
                 "width": 1600,
                 "height": 1066
               },
-              "alt": "Max Liu, co-founder and CEO of PingCAP, speaking on stage",
+              "alt": "PingCAP co-founders Max Liu, Ed Huang, and Dylan Cui behind a TiDB logo at the PingCAP office",
               "width": 1600,
               "height": 1066
             }
