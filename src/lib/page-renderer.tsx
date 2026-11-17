@@ -271,6 +271,7 @@ export const componentMap: Record<SectionType, ComponentEntry<any>> = {
     mapProps: (props: SectionPropsMap['caseStudyCards']) => ({
       eyebrow: props.eyebrow,
       title: props.title,
+      subtitle: props.subtitle,
       items: props.items,
       className: props.className,
     }),

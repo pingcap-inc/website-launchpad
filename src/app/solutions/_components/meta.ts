@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { buildPageSchema, softwareApplicationSchema } from '@/lib/schema'
+import { buildPageSchema, faqSchema } from '@/lib/schema'
 
 const SOCIAL_IMAGE = 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'
 
@@ -30,7 +30,14 @@ export function solutionMetadata(path: string, title: string, description: strin
   }
 }
 
-export function solutionSchema(path: string, title: string, description: string, name: string) {
+/** WebPage + BreadcrumbList + FAQPage, per the solution page template. */
+export function solutionSchema(
+  path: string,
+  title: string,
+  description: string,
+  name: string,
+  faq: { question: string; answer: string }[]
+) {
   return buildPageSchema({
     path,
     title,
@@ -41,14 +48,6 @@ export function solutionSchema(path: string, title: string, description: string,
       { name: 'Home', path: '/' },
       { name, path },
     ],
-    extraSchemas: [
-      softwareApplicationSchema({
-        name: 'TiDB',
-        description,
-        url: 'https://www.pingcap.com/tidb/',
-        // These pages publish no price; don't let the schema assert one.
-        price: null,
-      }),
-    ],
+    extraSchemas: [faqSchema(faq)],
   })
 }

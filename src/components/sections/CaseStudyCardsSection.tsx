@@ -22,7 +22,8 @@ export interface CaseStudyCardItem {
   }
   title: string
   description: string
-  stats: CaseStudyCardStat[]
+  /** Optional. Only use a figure the linked case study publishes; omit rather than invent one. */
+  stats?: CaseStudyCardStat[]
   href?: string
   cta?: string
 }
@@ -30,6 +31,8 @@ export interface CaseStudyCardItem {
 export interface CaseStudyCardsProps {
   eyebrow?: string
   title: string
+  /** Optional intro paragraph under the heading. */
+  subtitle?: string
   items: CaseStudyCardItem[]
   className?: string
 }
@@ -71,17 +74,21 @@ function Card({ badge, logo, title, description, stats, href: rawHref, cta }: Ca
       ) : null}
       <h3 className="text-h3-sm font-bold leading-[1.15] text-white">{title}</h3>
       <p className="mt-5 text-base leading-7 text-secondary font-light flex-1">{description}</p>
-      <div className="mt-12 grid gap-8 sm:grid-cols-2 border-t border-carbon-900 py-8">
-        {stats.map((stat, index) => (
-          <div
-            key={`${title}-${stat.value}-${index}`}
-            className="rounded-lg bg-white/5 border border-carbon-900 px-4 py-4"
-          >
-            <div className="text-[36px] font-bold leading-none text-white">{stat.value}</div>
-            <div className="mt-2 min-h-10 text-sm leading-5 text-secondary">{stat.label}</div>
-          </div>
-        ))}
-      </div>
+      {stats && stats.length > 0 ? (
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 border-t border-carbon-900 py-8">
+          {stats.map((stat, index) => (
+            <div
+              key={`${title}-${stat.value}-${index}`}
+              className="rounded-lg bg-white/5 border border-carbon-900 px-4 py-4"
+            >
+              <div className="text-[36px] font-bold leading-none text-white">{stat.value}</div>
+              <div className="mt-2 min-h-10 text-sm leading-5 text-secondary">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-8" />
+      )}
       <div className="mt-auto">
         <SecondaryButton as="span" className="text-white">
           {cta || 'Read the story'}
@@ -291,7 +298,13 @@ function CaseStudyCarousel({ items }: { items: CaseStudyCardItem[] }) {
   )
 }
 
-export function CaseStudyCardsSection({ eyebrow, title, items, className }: CaseStudyCardsProps) {
+export function CaseStudyCardsSection({
+  eyebrow,
+  title,
+  subtitle,
+  items,
+  className,
+}: CaseStudyCardsProps) {
   const isCarousel = items.length > CAROUSEL_THRESHOLD
 
   return (
@@ -301,6 +314,9 @@ export function CaseStudyCardsSection({ eyebrow, title, items, className }: Case
           <p className="font-mono text-eyebrow block mb-4 text-secondary">{eyebrow}</p>
         ) : null}
         <h2 className="text-h2-mb md:text-h2-md font-bold leading-tight text-white">{title}</h2>
+        {subtitle ? (
+          <p className="mt-6 text-body-2xl leading-relaxed text-secondary">{subtitle}</p>
+        ) : null}
       </div>
       {isCarousel ? (
         <CaseStudyCarousel items={items} />
