@@ -58,7 +58,7 @@ const dsl: PageDSL = {
     createdBy: 'a.hire@pingcap.com',
     createdAt: '2026-11-17T22:34:06.839Z',
     modifiedBy: 'a.hire@pingcap.com',
-    modifiedAt: '2026-11-17T22:34:06.839Z',
+    modifiedAt: '2026-11-17T22:38:30.209Z',
   },
   sections: [
     {
@@ -69,11 +69,14 @@ const dsl: PageDSL = {
         headline: 'How to Turn a Lovable AI App Builder Prototype into a Production App',
         heroImage: {
           image: {
-            url: 'https://static.pingcap.com/images/f54533cc-1000011158.svg',
+            url: 'https://static.pingcap.com/images/dd0669e1-clip_path_group.png',
+            alt: 'clip path group',
+            width: 720,
+            height: 664,
           },
-          alt: 'hero image',
-          width: 500,
-          height: 400,
+          alt: 'clip path group',
+          width: 720,
+          height: 664,
         },
       },
       style: {
