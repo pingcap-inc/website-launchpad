@@ -291,6 +291,7 @@ export interface FeatureCardItem {
 export interface CaseStudyCardsProps {
   eyebrow?: string
   title: string
+  subtitle?: string
   items: CaseStudyCardItem[]
   className?: string
 }
@@ -305,7 +306,7 @@ export interface CaseStudyCardItem {
   }
   title: string
   description: string
-  stats: CaseStudyCardStat[]
+  stats?: CaseStudyCardStat[]
   href?: string
   cta?: string
 }
@@ -814,7 +815,7 @@ Available section types (choose appropriate mix):
 - { type: "stats", props: { eyebrow?, title?, subtitle?, items: [{icon?, value, label, description?}], columns?: 2|3|4, className? } }
 - { type: "featureGrid", props: { eyebrow?, title, subtitle?, items: [{icon?, title, description, cta?: {text, href}, layout?: "horizontal"|"vertical"}], columns?: 2|3|4, viewMore?: {text, href}, itemLayout?: "horizontal"|"vertical", iconSize?: 32|48, className? } }
 - { type: "featureCard", props: { eyebrow?, title, subtitle?, items: [{icon?, title, label?, description, borderColor?, href?, className?}], columns?: 2|3|4, borderStyle?: "gray"|"color", className? } }
-- { type: "caseStudyCards", props: { eyebrow?, title, items: [{badge?, logo?: { image: {assetId?, url}, alt?, width?, height? }, title, description, stats: [{value, label}], href?, cta?}], className? } }
+- { type: "caseStudyCards", props: { eyebrow?, title, subtitle?, items: [{badge?, logo?: { image: {assetId?, url}, alt?, width?, height? }, title, description, stats?: [{value, label}], href?, cta?}], className? } }
 - { type: "featureTabs", props: { eyebrow?, title, subtitle?, tabs: [{id, label, description?, bullets?, primaryCta?, secondaryCta?, content?, image: { image: {assetId?, url}, alt?, width?, height? }}], autoSwitch?, autoSwitchInterval?, className? } }
 - { type: "featureHighlights", props: { eyebrow?, title, subtitle?, items: [{variant: "red"|"violet"|"blue"|"teal", title, description, cta: {text, href}, icon?}], columns?: 2|3|4, viewMore?: {text, href}, iconSize?: 32|48, className? } }
 - { type: "featureMedia", props: { eyebrow?, title?, subtitle?, items: [{title, description (supports inline links via [label](url)), image: {image: {assetId?, url}, alt?, width?, height?}, video?: {src?, sources?: [{src, type?}], poster?, width?, height?, autoPlay?, loop?, muted?, controls?} (when present, renders a video instead of the image; use sources for multiple formats)}], startPosition?: "left"|"right", spacing?: "sm"|"md"|"lg"|"xl", className? } }

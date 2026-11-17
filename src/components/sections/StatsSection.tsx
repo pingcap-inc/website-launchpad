@@ -43,10 +43,14 @@ export function StatsSection({
         {stats.map((stat, i) => (
           <div key={i} className="px-8 py-8 flex flex-col gap-4">
             {stat.icon && <div className="w-12 h-12 text-current">{stat.icon}</div>}
-            <CountUp
-              value={stat.value}
-              className="text-h2-mb md:text-h2-sm font-bold text-current leading-none"
-            />
+            {/* CountUp renders 0 until scrolled into view; give crawlers and screen readers the real value. */}
+            <span className="sr-only">{stat.value}</span>
+            <span aria-hidden="true">
+              <CountUp
+                value={stat.value}
+                className="text-h2-mb md:text-h2-sm font-bold text-current leading-none"
+              />
+            </span>
             <p className="text-body-md font-bold text-current">{stat.label}</p>
             {stat.description && (
               <p className="text-body-sm text-secondary leading-relaxed">{stat.description}</p>

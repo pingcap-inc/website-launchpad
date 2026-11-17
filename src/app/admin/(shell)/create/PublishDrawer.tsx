@@ -380,14 +380,14 @@ export function PublishDrawer({
                 !item.logo?.image?.url ||
                 !item.title ||
                 !item.description ||
-                !item.stats?.length ||
-                item.stats.some((stat: any) => !stat.value || !stat.label)
+                // Stats are optional; when present, each needs a value and label.
+                (item.stats ?? []).some((stat: any) => !stat.value || !stat.label)
             )
           ) {
             nextLint.push({
               label: 'Section',
               status: 'fail',
-              detail: `${prefix} · Each card needs logo, title, description, and stats.`,
+              detail: `${prefix} · Each card needs logo, title, and description (stats need value and label).`,
             })
           } else {
             nextLint.push({

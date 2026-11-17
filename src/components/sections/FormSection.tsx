@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { LazyHubSpotForm } from '@/components/ui/LazyHubSpotForm'
 import { PrimaryButton } from '@/components/ui/PrimaryButton'
+import { SecondaryButton } from '@/components/ui/SecondaryButton'
 
 /**
  * Optional left-hand column shown beside the form (e.g. "View Interactive Demos").
@@ -13,6 +14,8 @@ export interface FormSectionDemo {
   body?: string
   bullets?: string[]
   cta: { text: string; href: string }
+  /** Optional second button beside `cta` (e.g. "Start for Free"). */
+  secondaryCta?: { text: string; href: string }
   /** Decorative illustration pinned to the bottom of the column. */
   image?: { src: string; width: number; height: number }
 }
@@ -62,8 +65,13 @@ export function FormSection({
                 ))}
               </ul>
             )}
-            <div>
+            <div className="flex flex-wrap items-center gap-6">
               <PrimaryButton href={demo.cta.href}>{demo.cta.text}</PrimaryButton>
+              {demo.secondaryCta && (
+                <SecondaryButton href={demo.secondaryCta.href}>
+                  {demo.secondaryCta.text}
+                </SecondaryButton>
+              )}
             </div>
             {demo.image && (
               <Image
