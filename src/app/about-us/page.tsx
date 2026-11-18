@@ -65,7 +65,7 @@ const dsl: PageDSL = {
         eyebrow: 'About Us',
         headline: 'One Data Layer for Every Kind of Scale',
         subheadline:
-          'Our mission is to make sure the database is never what holds a team back. Applications grow, data piles up, and AI agents now create databases faster than any team could. TiDB is one open-source data layer that scales with all of it, without sharding, rewrites, or giving up consistency.',
+          'Our mission is to make sure the database is never what holds a business back. Applications grow, data piles up, and AI agents now create databases faster than any business could. TiDB is one open-source data layer that scales with all of it, without sharding, rewrites, or giving up consistency.',
         primaryCta: {
           text: 'Start for Free',
           href: 'https://tidbcloud.com/free-trial/',
@@ -91,7 +91,7 @@ const dsl: PageDSL = {
           {
             type: 'content',
             content:
-              'For years, teams have stitched databases together to keep up: sharding MySQL by hand, splitting transactions from analytics, adding a new system for every new need. Each fix adds another thing to run.',
+              'For years, businesses have stitched databases together to keep up: sharding MySQL by hand, splitting transactions from analytics, adding a new system for every new need. Each fix adds another thing to run.',
           },
           {
             type: 'content',
