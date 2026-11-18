@@ -22,7 +22,7 @@ export function StackConsolidation({ className }: { className?: string }) {
     >
       <div className="mb-6 flex items-end justify-between gap-6">
         <p className="m-0 max-w-[260px] text-body-md text-text-secondary">
-          Systems a team runs to keep up as an application grows
+          Systems a business runs to keep up as an application grows
         </p>
         <p className="m-0 whitespace-nowrap text-[56px] font-bold leading-none text-gradient-violet md:text-[72px]">
           6 → 1
