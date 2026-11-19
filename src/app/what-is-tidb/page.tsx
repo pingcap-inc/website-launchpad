@@ -232,7 +232,7 @@ const componentCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          1
+          2
         </div>
         TiDB Server
       </div>
@@ -265,7 +265,7 @@ const componentCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          2
+          3
         </div>
         PD (Placement Driver)
       </div>
@@ -298,7 +298,7 @@ const componentCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          3
+          4
         </div>
         TiKV
       </div>
@@ -331,7 +331,7 @@ const componentCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          4
+          5
         </div>
         TiFlash
       </div>
@@ -589,11 +589,11 @@ const companyLogos = [
 
 const tidbXCards: ColorCardItem[] = [
   {
-    variant: 'red',
+    variant: 'blue',
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          5
+          1
         </div>
         TiProxy
       </div>
@@ -649,6 +649,13 @@ const tidbXCards: ColorCardItem[] = [
     ),
     icon: <Cpu strokeWidth={1.5} className="h-12 w-12" />,
   },
+]
+
+const architectureCards: ColorCardItem[] = [
+  tidbXCards[0],
+  ...componentCards,
+  tidbXCards[1],
+  tidbXCards[2],
 ]
 
 const architectureComparison = [
@@ -1057,62 +1064,25 @@ export default function WhatIsTidbPage() {
             spacing: 'section',
           }}
         >
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.2fr)] lg:items-center">
-            <div className="max-w-[560px]">
-              <SectionHeader
-                title="How TiDB Works"
-                subtitle={
-                  <>
-                    TiDB separates compute from storage. The SQL layer, Placement Driver, and
-                    storage engines below are the same wherever TiDB runs. What differs is where
-                    data lives. TiDB Self-Managed stores it on local disks across TiKV nodes, the
-                    classic{' '}
-                    <InlineLink href="https://www.pingcap.com/tidb/">architecture</InlineLink>. TiDB
-                    Cloud runs TiDB X, which keeps these components and moves persistent data to
-                    object storage.
-                  </>
-                }
-                align="left"
-                className="mb-6"
-              />
-              <div className="mt-10 max-w-[360px]">
-                <Image
-                  src="/images/what-is-tidb/stack.svg"
-                  alt=""
-                  width={360}
-                  height={281}
-                  className="h-auto w-full"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center">
-              <Image
-                src="/images/what-is-tidb/architecture.svg"
-                alt="TiDB architecture diagram showing PD cluster, TiDB cluster, and storage cluster with TiKV and TiFlash nodes"
-                width={728}
-                height={534}
-                className="h-auto w-full max-w-[680px]"
-              />
-            </div>
-          </div>
-
-          <div className="mt-12">
-            <FeatureHighlightsSection items={componentCards} columns={4} cardClassName="px-4" />
-          </div>
-
-          <div className="mt-16 max-w-[960px]">
-            <h3 className="text-h3-xl leading-tight text-text-inverse">
-              How TiDB X Evolves the Same Architecture
-            </h3>
-            <p className="mt-5 text-body-lg leading-relaxed text-carbon-300">
-              The four components above run in every TiDB deployment. In TiDB Cloud Starter,
-              Essential, Premium, and BYOC, they run on TiDB X, which changes two things: where data
-              lives and where heavy work runs. Persistent data moves to object storage, and
-              background jobs like compaction, statistics, and index builds move to separate elastic
-              pools, so they no longer slow down transactions. On TiDB Cloud Starter, an idle
-              database&rsquo;s compute goes to zero while its data stays in storage.
-            </p>
+          <div className="max-w-[960px]">
+            <SectionHeader
+              title="How TiDB Works"
+              subtitle={
+                <>
+                  TiDB separates compute from storage, so each layer scales on its own. The diagram
+                  shows TiDB X, the{' '}
+                  <InlineLink href="https://docs.pingcap.com/tidbcloud/tidb-x-architecture/">
+                    architecture
+                  </InlineLink>{' '}
+                  behind TiDB Cloud Starter, Essential, Premium, and BYOC. Persistent data lives in
+                  object storage, and heavy background work runs on separate compute, so it never
+                  slows down transactions. TiDB Self-Managed uses the same core components, with
+                  data stored on local disks across TiKV nodes.
+                </>
+              }
+              align="left"
+              className="mb-6"
+            />
           </div>
 
           <div className="mt-10">
@@ -1125,12 +1095,17 @@ export default function WhatIsTidbPage() {
             />
           </div>
 
-          <p className="mt-10 text-body-lg leading-relaxed text-carbon-300">
-            TiDB X adds three components to make this work:
-          </p>
+          <div className="mt-12">
+            <FeatureHighlightsSection items={architectureCards} columns={4} cardClassName="px-4" />
+          </div>
 
-          <div className="mt-6">
-            <FeatureHighlightsSection items={tidbXCards} columns={3} cardClassName="px-4" />
+          <div className="mt-16 max-w-[960px]">
+            <h3 className="text-h3-xl leading-tight text-text-inverse">Classic TiDB vs. TiDB X</h3>
+            <p className="mt-5 text-body-lg leading-relaxed text-carbon-300">
+              Both run the same SQL layer, Placement Driver, and storage engines. TiDB X changes
+              where data lives and where heavy work runs. On TiDB Cloud Starter, an idle
+              database&rsquo;s compute goes to zero while its data stays in storage.
+            </p>
           </div>
 
           <div className="mt-10 overflow-x-auto">
