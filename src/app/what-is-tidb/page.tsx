@@ -265,7 +265,7 @@ const componentCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          3
+          7
         </div>
         PD (Placement Driver)
       </div>
@@ -280,7 +280,7 @@ const componentCards: ColorCardItem[] = [
         </InlineLink>{' '}
         manages cluster metadata, handles timestamp allocation for transactions, and makes
         scheduling decisions, like where to place data replicas and how to balance load across
-        nodes.
+        nodes. It runs as a cluster-wide service alongside the layers in the diagram.
       </>
     ),
     icon: (
@@ -298,7 +298,7 @@ const componentCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          4
+          3
         </div>
         TiKV
       </div>
@@ -331,7 +331,7 @@ const componentCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          5
+          4
         </div>
         TiFlash
       </div>
@@ -617,7 +617,7 @@ const tidbXCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          6
+          5
         </div>
         Object Storage
       </div>
@@ -636,7 +636,7 @@ const tidbXCards: ColorCardItem[] = [
     title: (
       <div className="flex gap-2 items-center">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold leading-none text-black">
-          7
+          6
         </div>
         Shared Services
       </div>
@@ -653,9 +653,12 @@ const tidbXCards: ColorCardItem[] = [
 
 const architectureCards: ColorCardItem[] = [
   tidbXCards[0],
-  ...componentCards,
+  componentCards[0],
+  componentCards[2],
+  componentCards[3],
   tidbXCards[1],
   tidbXCards[2],
+  componentCards[1],
 ]
 
 const architectureComparison = [
