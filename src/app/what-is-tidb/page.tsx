@@ -1141,26 +1141,13 @@ export default function WhatIsTidbPage() {
             </table>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap gap-4">
             <SecondaryButton href="https://docs.pingcap.com/tidbcloud/tidb-x-architecture/">
-              Read the TiDB X Architecture Docs
+              TiDB X Architecture (TiDB Cloud)
             </SecondaryButton>
-          </div>
-
-          <div className="mt-12 border border-carbon-800 px-5 py-6 sm:px-6">
-            <p className="text-body-lg leading-relaxed">
-              The result is a system where you can scale your SQL compute independently from your
-              storage, run transactional, analytical, and vector search workloads on the same data
-              simultaneously, and maintain strong consistency across the entire cluster. For a full
-              technical deep dive, see the{' '}
-              <InlineLink
-                href="https://docs.pingcap.com/tidb/stable/overview/"
-                className="border-white"
-              >
-                TiDB architecture documentation
-              </InlineLink>
-              .
-            </p>
+            <SecondaryButton href="https://docs.pingcap.com/tidb/stable/overview/">
+              Classic Architecture (TiDB Self-Managed)
+            </SecondaryButton>
           </div>
         </SectionWrapper>
 
