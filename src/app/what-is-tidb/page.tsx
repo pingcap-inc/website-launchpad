@@ -783,14 +783,11 @@ const getStartedCards = [
     cta: { text: 'Start Free', href: 'https://tidbcloud.com/free-trial/' },
   },
   {
-    variant: 'violet' as const,
-    title: 'TiDB Self-Managed',
+    variant: 'blue' as const,
+    title: 'TiDB Playground',
     description:
-      'Deploy on your own infrastructure using TiDB Operator on Kubernetes. Full control, full flexibility, open source.',
-    cta: {
-      text: 'Quick Start Guide',
-      href: 'https://docs.pingcap.com/tidb/stable/quick-start-with-tidb/',
-    },
+      'Try TiDB instantly in your browser. No signup, no installation, no configuration.',
+    cta: { text: 'Try Now', href: 'https://play.tidbcloud.com/' },
   },
   {
     variant: 'teal' as const,
@@ -800,11 +797,14 @@ const getStartedCards = [
     cta: { text: 'Try TiDB Cloud Zero', href: 'https://zero.tidbcloud.com/' },
   },
   {
-    variant: 'blue' as const,
-    title: 'TiDB Playground',
+    variant: 'violet' as const,
+    title: 'TiDB Self-Managed',
     description:
-      'Try TiDB instantly in your browser. No signup, no installation, no configuration.',
-    cta: { text: 'Try Now', href: 'https://play.tidbcloud.com/' },
+      'Deploy on your own infrastructure using TiDB Operator on Kubernetes. Full control, full flexibility, open source.',
+    cta: {
+      text: 'Quick Start Guide',
+      href: 'https://docs.pingcap.com/tidb/stable/quick-start-with-tidb/',
+    },
   },
 ]
 
