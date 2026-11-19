@@ -105,8 +105,8 @@ const faqs = [
         Yes. TiDB is fully open source under the Apache 2.0 license, including enterprise-grade
         features. The full source code is available on{' '}
         <InlineLink href="https://github.com/pingcap/tidb">GitHub</InlineLink>, where TiDB has over
-        40,000 stars and more than 1,200 contributors. TiKV, TiDB&rsquo;s distributed storage
-        engine, is a{' '}
+        40,000 stars and more than 950 contributors. TiKV, TiDB&rsquo;s distributed storage engine,
+        is a{' '}
         <InlineLink href="https://www.cncf.io/projects/tikv/">
           graduated project of the Cloud Native Computing Foundation
         </InlineLink>
@@ -556,14 +556,20 @@ const useCases = [
 
 const companyLogos = [
   { name: 'Manus', image: { url: '/images/logos/manuse-logo-white.svg' }, width: 96, height: 24 },
-  { name: 'Plaid', image: { url: '/images/logos/plaid-logo-white.svg' }, width: 78, height: 24 },
-  { name: 'Dify', image: { url: '/images/logos/dify-logo-white.svg' }, width: 84, height: 24 },
   {
     name: 'Pinterest',
     image: { url: '/images/logos/pinterest-logo-white.svg' },
     width: 94,
     height: 24,
   },
+  {
+    name: 'Kimi',
+    image: { url: '/images/logos/latam-kimi-logo-white.svg' },
+    width: 71,
+    height: 24,
+  },
+  { name: 'Plaid', image: { url: '/images/logos/plaid-logo-white.svg' }, width: 78, height: 24 },
+  { name: 'Dify', image: { url: '/images/logos/dify-logo-white.svg' }, width: 84, height: 24 },
   { name: 'Square', image: { url: '/images/logos/square-logo-white.svg' }, width: 94, height: 24 },
   {
     name: 'Flipkart',
@@ -661,30 +667,6 @@ const architectureCards: ColorCardItem[] = [
   componentCards[1],
 ]
 
-const architectureComparison = [
-  {
-    label: 'Persistent data',
-    classic: 'Local disks on TiKV nodes',
-    tidbX: 'Object storage, such as Amazon S3',
-  },
-  {
-    label: 'Background work',
-    classic: 'Same nodes as live traffic',
-    tidbX: 'Separate elastic pools',
-  },
-  {
-    label: 'Scaling',
-    classic: 'Copies data between nodes',
-    tidbX: 'Loads data on demand, 5–10x faster',
-  },
-  { label: 'Backups', classic: 'Full data copy', tidbX: 'Seconds, regardless of data volume' },
-  {
-    label: 'Where it runs',
-    classic: 'TiDB Self-Managed',
-    tidbX: 'TiDB Cloud Starter, Essential, Premium, and BYOC',
-  },
-]
-
 const customerStories = [
   {
     company: 'manus',
@@ -737,16 +719,15 @@ const customerStories = [
 
 const recognitionCards = [
   {
-    title: 'G2: Leader in Three Categories',
+    title: 'G2: Leader in Relational Databases',
     body: (
       <>
-        TiDB earned a leader position in{' '}
-        <InlineLink href="https://www.g2.com/products/tidb/reviews">
-          G2’s Summer 2025 Grid reports
-        </InlineLink>{' '}
-        across three categories: Database-as-a-Service, Database Management Systems, and Relational
-        Databases. G2 placements are based on verified customer reviews evaluating satisfaction and
-        market presence.
+        TiDB was named a Leader in the{' '}
+        <InlineLink href="https://www.pingcap.com/ebook-whitepaper/g2-grid-report-relational-databases-spring-2026-tidb/">
+          G2 Grid® Report for Relational Databases, Spring 2026
+        </InlineLink>
+        , which ranks more than 80 database products on customer satisfaction and market presence.
+        98% of reviewers rate TiDB 4 or 5 stars, and 90% would recommend it to a peer.
       </>
     ),
     logo: 'g2' as const,
@@ -757,7 +738,7 @@ const recognitionCards = [
     title: 'Gartner Peer Insights',
     body: (
       <>
-        TiDB has 165+ reviews on{' '}
+        TiDB is rated 4.9 out of 5 from 165 ratings on{' '}
         <InlineLink href="https://www.gartner.com/reviews/market/cloud-database-management-systems/vendor/pingcap/product/tidb">
           Gartner Peer Insights
         </InlineLink>
@@ -776,8 +757,8 @@ const recognitionCards = [
       <>
         TiDB has over{' '}
         <InlineLink href="https://github.com/pingcap/tidb">40,000 GitHub stars</InlineLink> and more
-        than 1,200 contributors worldwide. Its storage engine, TiKV, is a CNCF Graduated project,
-        the highest maturity level in the Cloud Native Computing Foundation, alongside projects like
+        than 950 contributors worldwide. Its storage engine, TiKV, is a CNCF Graduated project, the
+        highest maturity level in the Cloud Native Computing Foundation, alongside projects like
         Kubernetes and Prometheus.
       </>
     ),
@@ -786,7 +767,7 @@ const recognitionCards = [
       { image: '/images/what-is-tidb/FUTURO_ICONS-1.svg', value: '40K+', label: 'GitHub stars' },
       {
         image: '/images/what-is-tidb/FUTURO_ICONS-2.svg',
-        value: '1200+',
+        value: '950+',
         label: 'Contributors',
       },
     ],
@@ -812,18 +793,18 @@ const getStartedCards = [
     },
   },
   {
-    variant: 'blue' as const,
-    title: 'TiDB Playground',
-    description:
-      'Try TiDB instantly in your browser. No signup, no installation, no configuration.',
-    cta: { text: 'Try Now', href: 'https://play.tidbcloud.com/' },
-  },
-  {
     variant: 'teal' as const,
     title: 'TiDB Cloud Zero',
     description:
       'For AI agents. Your agent gets a live database in about a second, with no sign-up. Claim it into TiDB Cloud Starter to keep it.',
     cta: { text: 'Try TiDB Cloud Zero', href: 'https://zero.tidbcloud.com/' },
+  },
+  {
+    variant: 'blue' as const,
+    title: 'TiDB Playground',
+    description:
+      'Try TiDB instantly in your browser. No signup, no installation, no configuration.',
+    cta: { text: 'Try Now', href: 'https://play.tidbcloud.com/' },
   },
 ]
 
@@ -923,7 +904,7 @@ function RecognitionLogo({ kind }: { kind: 'g2' | 'gartner' | 'cncf' }) {
     return (
       <Image
         src="/images/what-is-tidb/26fe3c9c-helpdesk_leader_leader.svg"
-        alt="G2 Leader Winter 2025"
+        alt="G2 Leader badge"
         width={94}
         height={112}
         className="h-[112px] w-auto"
@@ -1102,46 +1083,7 @@ export default function WhatIsTidbPage() {
             <FeatureHighlightsSection items={architectureCards} columns={4} cardClassName="px-4" />
           </div>
 
-          <div className="mt-16 max-w-[960px]">
-            <h3 className="text-h3-xl leading-tight text-text-inverse">Classic TiDB vs. TiDB X</h3>
-            <p className="mt-5 text-body-lg leading-relaxed text-carbon-300">
-              Both run the same SQL layer, Placement Driver, and storage engines. TiDB X changes
-              where data lives and where heavy work runs. On TiDB Cloud Starter, an idle
-              database&rsquo;s compute goes to zero while its data stays in storage.
-            </p>
-          </div>
-
-          <div className="mt-10 overflow-x-auto">
-            <table className="w-full border-collapse text-body-md">
-              <caption className="sr-only">Classic TiDB compared with TiDB X</caption>
-              <thead>
-                <tr className="border-b-2 border-carbon-800">
-                  <th scope="col" className="w-1/4 py-3 pr-6 text-left font-bold text-carbon-400">
-                    <span className="sr-only">Aspect</span>
-                  </th>
-                  <th scope="col" className="py-3 px-4 text-left font-bold text-text-inverse">
-                    Classic TiDB
-                  </th>
-                  <th scope="col" className="py-3 px-4 text-left font-bold text-brand-red-primary">
-                    TiDB X
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {architectureComparison.map((row) => (
-                  <tr key={row.label} className="border-b border-carbon-800">
-                    <th scope="row" className="py-3 pr-6 text-left font-bold text-text-inverse">
-                      {row.label}
-                    </th>
-                    <td className="py-3 px-4 text-carbon-300">{row.classic}</td>
-                    <td className="py-3 px-4 text-text-inverse">{row.tidbX}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap gap-4">
             <SecondaryButton href="https://docs.pingcap.com/tidbcloud/tidb-x-architecture/">
               TiDB X Architecture (TiDB Cloud)
             </SecondaryButton>
