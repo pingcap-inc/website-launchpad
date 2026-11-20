@@ -364,41 +364,6 @@ const componentCards: ColorCardItem[] = [
 
 const capabilities = [
   {
-    title: 'MySQL Compatibility',
-    description: (
-      <>
-        TiDB implements the MySQL wire protocol and is compatible with MySQL syntax, functions, and
-        ecosystem tooling. Most applications built on MySQL can connect to TiDB with zero code
-        changes. Same connection strings, same ORMs, same drivers. For teams already running MySQL,
-        this means you can migrate to a distributed database without rewriting your application
-        layer or retraining your developers. TiDB also provides a suite of{' '}
-        <InlineLink href="https://docs.pingcap.com/tidb/stable/migration-overview/">
-          data migration tools
-        </InlineLink>{' '}
-        to simplify the transition.
-      </>
-    ),
-    icon: <CheckSquare className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
-  },
-  {
-    title: 'Native Vector and Full-Text Search',
-    description: (
-      <>
-        TiDB stores embeddings in a native VECTOR data type and indexes them for fast similarity
-        search, alongside full-text search on the same tables. You can join similarity results with
-        live relational data in one SQL query, inside one ACID transaction. RAG pipelines and agent
-        memory run without a separate vector database or a sync job to keep it current. Vector
-        search is in public preview on TiDB Cloud Starter and TiDB Self-Managed v8.4.0 and later.
-        Full-text search is in public preview on TiDB Cloud Starter in select AWS regions. See the{' '}
-        <InlineLink href="https://docs.pingcap.com/tidbcloud/vector-search-overview/">
-          vector search docs
-        </InlineLink>
-        .
-      </>
-    ),
-    icon: <BrainCircuit className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
-  },
-  {
     title: 'Scale on Every Dimension',
     description: (
       <>
@@ -427,10 +392,22 @@ const capabilities = [
     ),
   },
   {
-    title: 'Real-Time Analytics (HTAP)',
-    description:
-      'Most databases force you to choose between transactions and analytics. TiDB handles both. TiKV serves your OLTP workload while TiFlash runs OLAP queries on the same data in real time. There’s no ETL pipeline to build, no replica lag to worry about, and no separate analytics database to maintain. Your application writes to TiDB once, and both operational queries and analytical dashboards read from the same source of truth.',
-    icon: <ChartNoAxesCombined className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
+    title: 'Native Vector and Full-Text Search',
+    description: (
+      <>
+        TiDB stores embeddings in a native VECTOR data type and indexes them for fast similarity
+        search, alongside full-text search on the same tables. You can join similarity results with
+        live relational data in one SQL query, inside one ACID transaction. RAG pipelines and agent
+        memory run without a separate vector database or a sync job to keep it current. Vector
+        search is in public preview on TiDB Cloud Starter and TiDB Self-Managed v8.4.0 and later.
+        Full-text search is in public preview on TiDB Cloud Starter in select AWS regions. See the{' '}
+        <InlineLink href="https://docs.pingcap.com/tidbcloud/vector-search-overview/">
+          vector search docs
+        </InlineLink>
+        .
+      </>
+    ),
+    icon: <BrainCircuit className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
   },
   {
     title: 'Cloud-Native Deployment',
@@ -450,6 +427,29 @@ const capabilities = [
       </>
     ),
     icon: <Cloud className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
+  },
+  {
+    title: 'Real-Time Analytics (HTAP)',
+    description:
+      'Most databases force you to choose between transactions and analytics. TiDB handles both. TiKV serves your OLTP workload while TiFlash runs OLAP queries on the same data in real time. There’s no ETL pipeline to build, no replica lag to worry about, and no separate analytics database to maintain. Your application writes to TiDB once, and both operational queries and analytical dashboards read from the same source of truth.',
+    icon: <ChartNoAxesCombined className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
+  },
+  {
+    title: 'MySQL Compatibility',
+    description: (
+      <>
+        TiDB implements the MySQL wire protocol and is compatible with MySQL syntax, functions, and
+        ecosystem tooling. Most applications built on MySQL can connect to TiDB with zero code
+        changes. Same connection strings, same ORMs, same drivers. For teams already running MySQL,
+        this means you can migrate to a distributed database without rewriting your application
+        layer or retraining your developers. TiDB also provides a suite of{' '}
+        <InlineLink href="https://docs.pingcap.com/tidb/stable/migration-overview/">
+          data migration tools
+        </InlineLink>{' '}
+        to simplify the transition.
+      </>
+    ),
+    icon: <CheckSquare className="h-10 w-10 text-text-inverse" strokeWidth={1} />,
   },
   {
     title: 'Strong Consistency and High Availability',
