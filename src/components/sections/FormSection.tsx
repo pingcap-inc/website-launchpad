@@ -29,6 +29,8 @@ export interface FormSectionProps {
   formTitle?: string
   /** Text under `formTitle`, used with `demo`. */
   formSubtitle?: string
+  /** Alignment of the section header, used with `demo` (default centered). */
+  headerAlign?: 'center' | 'left'
   className?: string
 }
 
@@ -41,13 +43,14 @@ export function FormSection({
   demo,
   formTitle,
   formSubtitle,
+  headerAlign = 'center',
   className,
 }: FormSectionProps) {
   if (demo) {
     return (
       <div className={cn('space-y-12', className)}>
         {(title || subtitle) && (
-          <SectionHeader title={title ?? ''} subtitle={subtitle} align="center" />
+          <SectionHeader title={title ?? ''} subtitle={subtitle} align={headerAlign} />
         )}
         {/* Matches the live "See TiDB in Action" block: two open columns split by a
             thin rule with a round "or" badge (vertical on desktop, horizontal when stacked). */}

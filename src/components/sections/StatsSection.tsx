@@ -22,6 +22,12 @@ interface StatsSectionProps {
   columns?: 2 | 3 | 4
   /** Wrap each stat in a bordered box (matches the web3 stat row on live). */
   bordered?: boolean
+  /** Center each stat's icon, value and text. */
+  centered?: boolean
+  /** Size classes for the icon wrapper (default 48px). */
+  iconClassName?: string
+  /** Classes for the label line (default: bold body text). */
+  labelClassName?: string
   className?: string
 }
 
@@ -38,6 +44,9 @@ export function StatsSection({
   stats,
   columns = 3,
   bordered = false,
+  centered = false,
+  iconClassName = 'w-12 h-12',
+  labelClassName = 'text-body-md font-bold text-current',
   className,
 }: StatsSectionProps) {
   const hasHeader = Boolean(eyebrow || title || subtitle)
@@ -51,10 +60,11 @@ export function StatsSection({
             key={i}
             className={cn(
               'px-8 py-8 flex flex-col gap-4',
-              bordered && 'border border-carbon-800 bg-black'
+              bordered && 'border border-carbon-800 bg-black',
+              centered && 'items-center text-center'
             )}
           >
-            {stat.icon && <div className="w-12 h-12 text-current">{stat.icon}</div>}
+            {stat.icon && <div className={cn('text-current', iconClassName)}>{stat.icon}</div>}
             <CountUp
               value={stat.value}
               className={cn(
@@ -62,7 +72,7 @@ export function StatsSection({
                 stat.valueClassName ?? 'text-current'
               )}
             />
-            {stat.label && <p className="text-body-md font-bold text-current">{stat.label}</p>}
+            {stat.label && <p className={labelClassName}>{stat.label}</p>}
             {stat.description && (
               <p className="text-body-sm text-secondary leading-relaxed">{stat.description}</p>
             )}

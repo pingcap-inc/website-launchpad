@@ -69,6 +69,7 @@ export function Intro({
   paragraphs = [],
   align = 'left',
   size = 'lg',
+  fullWidth = false,
   className,
 }: {
   eyebrow?: string
@@ -77,6 +78,8 @@ export function Intro({
   align?: 'left' | 'center'
   /** H2 size: lg 64px · md 56px · sm 50px · xs 40px (desktop). Match the live page. */
   size?: 'lg' | 'md' | 'sm' | 'xs'
+  /** Drop the default title/subtitle max-width (live "Resources" headings span the row). */
+  fullWidth?: boolean
   className?: string
 }) {
   return (
@@ -84,6 +87,7 @@ export function Intro({
       eyebrow={eyebrow}
       title={title}
       align={align}
+      fullWidth={fullWidth}
       h2Size={size === 'xs' ? 'sm' : size}
       // SectionHeader has no 40px option; override its H2 size for "xs".
       className={cn(size === 'xs' && 'md:[&_h2]:text-h2-mb', className)}
@@ -416,22 +420,36 @@ const RESOURCE_VARIANTS = ['red', 'violet', 'blue', 'teal'] as const
 export function ResourcesRow({
   title,
   items = DEFAULT_RESOURCES,
+  titleSize = 'xs',
 }: {
   title: string
   items?: ResourceCard[]
+  /** Heading size; most live solution pages use 40px ('xs'), costs uses 56px ('md'). */
+  titleSize?: 'lg' | 'md' | 'sm' | 'xs'
 }) {
+  // ColorCard tuned to the live solution pages' resource card: 16/16/26px padding,
+  // 60×80 icon with the title 32px below it, "Read ↗" pinned bottom-right.
   return (
     <SectionWrapper>
-      <Intro title={title} size="xs" className="mb-10" />
+      <Intro title={title} size={titleSize} fullWidth className="mb-10" />
       <FeatureHighlightsSection
         columns={4}
+        cardClassName="px-4 pt-4 pb-[26px] lg:min-h-[358px]"
         items={items.map((r, i) => ({
           variant: RESOURCE_VARIANTS[i % RESOURCE_VARIANTS.length],
           title: r.title,
           description: r.description,
           cta: r.cta,
+          ctaAlign: 'end' as const,
           icon: (
-            <Image src={r.icon.src} alt={r.icon.alt} width={48} height={48} className="h-12 w-12" />
+            <Image
+              src={r.icon.src}
+              alt={r.icon.alt}
+              width={60}
+              height={80}
+              // ColorCard puts 24px under the icon; +8px gives live's 32px.
+              className="mb-2 h-20 w-[60px] object-contain"
+            />
           ),
         }))}
       />
@@ -477,14 +495,25 @@ export const VIEW_INTERACTIVE_DEMOS = {
   },
 }
 
-export function SeeTidbInAction() {
+/** The meeting form most live solution pages post to. */
+const DEMO_FORM_ID = '066e9d00-f659-43b2-8fa5-71fb88dfab59'
+
+export function SeeTidbInAction({
+  formId = DEMO_FORM_ID,
+  headerAlign = 'center',
+}: {
+  /** HubSpot form ID; must match the live page (costs uses its own form). */
+  formId?: string
+  headerAlign?: 'center' | 'left'
+} = {}) {
   return (
     <SectionWrapper id="demo">
       <FormSection
         title="See TiDB in Action"
         subtitle="Get to know TiDB in the way that fits you best"
         portalId="4466002"
-        formId="066e9d00-f659-43b2-8fa5-71fb88dfab59"
+        formId={formId}
+        headerAlign={headerAlign}
         demo={VIEW_INTERACTIVE_DEMOS}
         formTitle="Book a 30-Minute Meeting"
         formSubtitle="Please enter your information in the form and we’ll contact you shortly."
