@@ -249,6 +249,7 @@ const videos = [
   {
     url: 'https://youtu.be/HXJrzE_PeD4',
     thumb: 'https://static.pingcap.com/files/2025/02/10195215/Catalyst-customer-story.jpg',
+    company: 'Catalyst',
     quote:
       '"TiDB definitely outshines some of the other databases we looked at when it comes to performance and costs."',
     name: 'Sha Ma',
@@ -257,6 +258,7 @@ const videos = [
   {
     url: 'https://youtu.be/o6eetnpi-3Q',
     thumb: 'https://static.pingcap.com/files/2024/10/10195300/Plaid-customer-story.jpg',
+    company: 'Plaid',
     quote:
       '"With TiDB, we can now perform upgrades with zero downtime and large table schema migrations."',
     name: 'Zander Hill',
@@ -265,6 +267,7 @@ const videos = [
   {
     url: 'https://www.youtube.com/watch?v=ohGY7hm9T80',
     thumb: 'https://static.pingcap.com/files/2026/01/06202609/Conga-Video-Cover.jpg',
+    company: 'Conga',
     quote:
       '"TiDB stands out primarily for its ability to handle transactional and analytical workloads with exceptional performance."',
     name: 'Andy Buttaro',
@@ -410,7 +413,7 @@ export default function SaasPage() {
                   >
                     <Image
                       src={v.thumb}
-                      alt=""
+                      alt={`${v.company} customer story video with ${v.name}`}
                       width={640}
                       height={360}
                       className="aspect-video h-auto w-full object-cover"
