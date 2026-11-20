@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import Link from 'next/link'
+import { SectionNav } from './_entry/SectionNav'
 
 export const metadata: Metadata = {
   title: 'Local Entry',
@@ -100,14 +101,18 @@ async function getRouteGroups() {
   }
 }
 
+/** Compact link: page name with its path underneath. */
 function RouteLink({ route, label }: { route: Route; label: string }) {
   return (
     <Link
       href={route.href}
-      className="flex flex-col gap-1 rounded-xl border border-border-primary bg-bg-secondary px-5 py-4 text-text-inverse transition-colors hover:border-brand-red-primary hover:text-brand-red-primary"
+      title={route.href}
+      className="group/link flex min-w-0 flex-col rounded px-2 py-1 transition-colors hover:bg-carbon-900"
     >
-      <span className="text-base font-bold">{label}</span>
-      <span className="text-xs text-text-secondary">{route.href}</span>
+      <span className="truncate text-sm text-text-inverse group-hover/link:text-brand-red-primary">
+        {label}
+      </span>
+      <span className="truncate font-mono text-xs text-text-secondary">{route.href}</span>
     </Link>
   )
 }
@@ -116,25 +121,34 @@ export default async function HomePage() {
   const { standalone, parents, total } = await getRouteGroups()
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-12 px-6 py-20 sm:px-10">
-      <section className="space-y-4">
-        <p className="text-sm uppercase tracking-[0.16em] text-brand-red-primary">
-          website-launchpad
+    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-8 px-6 py-12 sm:px-10">
+      <section className="space-y-2">
+        <h1 className="text-3xl font-bold leading-tight">Local Preview Entry Page</h1>
+        <p className="text-sm text-text-secondary">
+          {total} pages in `src/app`. Local onboarding only — in production, `/` is served by
+          WordPress.
         </p>
-        <h1 className="text-4xl font-bold leading-tight sm:text-5xl">Local Preview Entry Page</h1>
-        <p className="max-w-2xl text-base text-text-secondary sm:text-lg">
-          This root page exists for local onboarding. In production, root traffic is still handled
-          by WordPress and reverse proxy routing.
-        </p>
-        <p className="text-sm text-text-secondary">{total} pages found in `src/app`.</p>
       </section>
 
       {total === 0 && <p className="text-sm text-text-secondary">No routes found in `src/app`.</p>}
 
+      {parents.length > 0 && (
+        <SectionNav
+          // Single-page sections are skipped here; they're one line away in the list below.
+          sections={parents
+            .filter((g) => g.children.length > 1)
+            .map((g) => ({
+              key: g.key,
+              label: toTitleCase(g.key),
+              count: g.children.length,
+            }))}
+        />
+      )}
+
       {standalone.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold">Top-Level Pages</h2>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="space-y-2">
+          <h2 className="text-lg font-bold">Top-Level Pages</h2>
+          <div className="grid grid-cols-2 gap-x-4 sm:grid-cols-3 lg:grid-cols-5">
             {standalone.map((route) => (
               <RouteLink key={route.href} route={route} label={toTitleCase(route.segments[0])} />
             ))}
@@ -142,37 +156,41 @@ export default async function HomePage() {
         </section>
       )}
 
-      {parents.map((group) => (
-        <section key={group.key} className="space-y-4">
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-border-primary pb-3">
-            <h2 className="text-2xl font-bold">
+      {/* Each section with child pages collapses to one line; click to expand. */}
+      <section className="divide-y divide-border-primary border-y border-border-primary">
+        {parents.map((group) => (
+          <details key={group.key} id={group.key} className="group scroll-mt-6 py-2">
+            <summary className="flex cursor-pointer list-none items-baseline gap-3 rounded px-2 py-1 hover:bg-carbon-900 [&::-webkit-details-marker]:hidden">
+              <span className="w-3 text-text-secondary transition-transform group-open:rotate-90">
+                ›
+              </span>
+              <h2 className="text-lg font-bold">{toTitleCase(group.key)}</h2>
+              <span className="text-sm text-text-secondary">
+                {group.children.length} {group.children.length === 1 ? 'page' : 'pages'}
+              </span>
               {group.parent ? (
                 <Link
                   href={group.parent.href}
-                  className="transition-colors hover:text-brand-red-primary"
+                  className="ml-auto text-sm text-text-secondary transition-colors hover:text-brand-red-primary"
                 >
-                  {toTitleCase(group.key)}
+                  {group.parent.href}
                 </Link>
               ) : (
-                toTitleCase(group.key)
+                <span className="ml-auto text-sm text-text-secondary">no index page</span>
               )}
-            </h2>
-            <span className="text-sm text-text-secondary">
-              /{group.key}/{group.parent ? '' : ' · no index page'} · {group.children.length}{' '}
-              {group.children.length === 1 ? 'child page' : 'child pages'}
-            </span>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {group.children.map((route) => (
-              <RouteLink
-                key={route.href}
-                route={route}
-                label={route.segments.slice(1).map(toTitleCase).join(' / ')}
-              />
-            ))}
-          </div>
-        </section>
-      ))}
+            </summary>
+            <div className="grid gap-x-4 pb-2 pl-5 pt-1 sm:grid-cols-2 lg:grid-cols-3">
+              {group.children.map((route) => (
+                <RouteLink
+                  key={route.href}
+                  route={route}
+                  label={route.segments.slice(1).map(toTitleCase).join(' / ')}
+                />
+              ))}
+            </div>
+          </details>
+        ))}
+      </section>
     </main>
   )
 }
