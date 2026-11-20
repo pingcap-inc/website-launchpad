@@ -2,6 +2,8 @@ name: Broken Link Check
 
 on:
   pull_request:
+    # `edited` re-runs the check once someone fills in the URL path later.
+    types: [opened, synchronize, reopened, edited]
     paths:
       - 'src/app/**/*.tsx'
 
@@ -17,51 +19,21 @@ jobs:
     environment: preview
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-        with:
-          persist-credentials: false
-
-      # Buffer for Vercel deployment (Approx 30s)
-      - name: Wait for Vercel Deployment
-        run: sleep 40
-
-      # 1. Get Vercel Preview URL
-      - name: Vercel Preview URL
-        id: vercel_preview_url
-        uses: zentered/vercel-preview-url@fba568fc6d882ae788a9724d7e28dee618728771 # v1.4.0
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        with:
-          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
-
-      # 2. Extract Paths from PR Table
-      - name: Extract Paths
-        id: extract_paths
+      # 1. Read the URL paths from the PR template table. This runs first so a PR
+      # that never filled in "URL path" (the template's HTML-comment placeholder
+      # is not a path) skips everything below instead of checking /example-path/.
+      - name: Read URL paths
+        id: read_paths
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
-        env:
-          VERCEL_PREVIEW_URL: ${{ steps.vercel_preview_url.outputs.preview_url }}
-          VERCEL_PREVIEW_URL_ALT: ${{ steps.vercel_preview_url.outputs.url }}
         with:
           script: |
-            const body = context.payload.pull_request.body || "";
-            const rawBaseUrl = (process.env.VERCEL_PREVIEW_URL || process.env.VERCEL_PREVIEW_URL_ALT || "").trim();
-            const extractedUrl = (rawBaseUrl.match(/https?:\/\/[^\s)]+/)?.[0] || "").replace(/\/$/, "");
-            const extractedHost = rawBaseUrl.replace(/^\s*https?:\/\//, '').split(/[\s)]+/)[0].replace(/\/$/, "");
-            const baseUrl = extractedUrl || (extractedHost ? `https://${extractedHost}` : "");
+            // Drop template placeholders like `<!-- /example-path/ -->` before parsing.
+            const body = (context.payload.pull_request.body || "").replace(/<!--[\s\S]*?-->/g, "");
 
-            if (!baseUrl || baseUrl === "" || baseUrl === "undefined") {
-              core.setFailed(`Vercel URL not found. raw output: "${rawBaseUrl || "empty"}"`);
-              return;
-            }
-
-            const previewHost = new URL(baseUrl).host;
-
-            const regex = /\|\s*URL path\s*\|\s*([^|]+)\s*\|/i;
+            const regex = /\|\s*URL path\s*\|\s*([^|\n]*)\|/i;
             const match = body.match(regex);
 
-            let urlList = [];
+            const pathList = [];
             if (match && match[1]) {
               const rawValue = match[1].replace(/`/g, '').trim();
               if (rawValue && rawValue.toLowerCase() !== 'n/a') {
@@ -81,20 +53,72 @@ jobs:
                     !hasQueryOrHash && !looksLikeFile && !normalizedPath.endsWith('/')
                       ? `${normalizedPath}/`
                       : normalizedPath;
-                  urlList.push(`${baseUrl}${formattedPath}`);
+                  pathList.push(formattedPath);
                 });
               }
             }
 
-            if (urlList.length === 0) {
-              core.setOutput('has_urls', 'false');
+            if (pathList.length === 0) {
+              core.notice('No "URL path" filled in the PR description; skipping the broken link check.');
+              core.setOutput('has_paths', 'false');
             } else {
-              core.setOutput('urls', urlList.join('\n'));
-              core.setOutput('has_urls', 'true');
-              core.setOutput('preview_host', previewHost);
+              core.setOutput('paths', pathList.join('\n'));
+              core.setOutput('has_paths', 'true');
             }
 
-      # 3. Run Broken Link Check
+      - name: Checkout
+        if: steps.read_paths.outputs.has_paths == 'true'
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      # Buffer for Vercel deployment (Approx 30s)
+      - name: Wait for Vercel Deployment
+        if: steps.read_paths.outputs.has_paths == 'true'
+        run: sleep 40
+
+      # 2. Get Vercel Preview URL
+      - name: Vercel Preview URL
+        if: steps.read_paths.outputs.has_paths == 'true'
+        id: vercel_preview_url
+        uses: zentered/vercel-preview-url@fba568fc6d882ae788a9724d7e28dee618728771 # v1.4.0
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
+
+      # 3. Build full URLs on the preview host
+      - name: Extract Paths
+        if: steps.read_paths.outputs.has_paths == 'true'
+        id: extract_paths
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        env:
+          VERCEL_PREVIEW_URL: ${{ steps.vercel_preview_url.outputs.preview_url }}
+          VERCEL_PREVIEW_URL_ALT: ${{ steps.vercel_preview_url.outputs.url }}
+          CHECK_PATHS: ${{ steps.read_paths.outputs.paths }}
+        with:
+          script: |
+            const rawBaseUrl = (process.env.VERCEL_PREVIEW_URL || process.env.VERCEL_PREVIEW_URL_ALT || "").trim();
+            const extractedUrl = (rawBaseUrl.match(/https?:\/\/[^\s)]+/)?.[0] || "").replace(/\/$/, "");
+            const extractedHost = rawBaseUrl.replace(/^\s*https?:\/\//, '').split(/[\s)]+/)[0].replace(/\/$/, "");
+            const baseUrl = extractedUrl || (extractedHost ? `https://${extractedHost}` : "");
+
+            if (!baseUrl || baseUrl === "" || baseUrl === "undefined") {
+              core.setFailed(`Vercel URL not found. raw output: "${rawBaseUrl || "empty"}"`);
+              return;
+            }
+
+            const urlList = (process.env.CHECK_PATHS || "")
+              .split('\n')
+              .filter(Boolean)
+              .map(path => `${baseUrl}${path}`);
+
+            core.setOutput('urls', urlList.join('\n'));
+            core.setOutput('has_urls', urlList.length > 0 ? 'true' : 'false');
+            core.setOutput('preview_host', new URL(baseUrl).host);
+
+      # 4. Run Broken Link Check
       # Step outputs derived from the PR body are passed via env (never `${{ }}`
       # inside `run:`) so they can't inject shell. The bypass secret travels only
       # as a header, and only to the preview host: linkinator sends --header on
@@ -127,7 +151,7 @@ jobs:
             "${HEADER_ARGS[@]}" \
             > link-results.json || true
 
-      # 4. Post Results Comment
+      # 5. Post Results Comment
       - name: Post Results Comment
         if: always() && steps.extract_paths.outputs.has_urls == 'true'
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
