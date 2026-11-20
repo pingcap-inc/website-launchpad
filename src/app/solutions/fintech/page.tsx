@@ -18,8 +18,15 @@ const TITLE = 'Scalable Databases for Fintech Apps | TiDB by PingCAP'
 const DESCRIPTION =
   'Discover TiDB’s cloud-native, distributed SQL database for fintech apps—real-time, reliable, and infinitely scalable for payments, fraud detection, and more.'
 
-export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION)
-const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'Fintech')
+/** Same share image as the live page. */
+const SOCIAL_IMAGE = {
+  url: 'https://static.pingcap.com/files/2024/10/17080100/Fintech-social-scaled.jpeg',
+  width: 2560,
+  height: 1280,
+}
+
+export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION, SOCIAL_IMAGE)
+const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'Fintech', { image: SOCIAL_IMAGE })
 
 const VECTOR_SEARCH_URL = 'https://www.pingcap.com/ai/vector-search/'
 

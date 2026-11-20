@@ -24,8 +24,17 @@ const TITLE = 'TiDB: The Cloud-Native Operations Data Store'
 const DESCRIPTION =
   'Empower real-time analytics and operational intelligence with TiDB’s unified, scalable data store for hybrid and multi-cloud environments.'
 
-export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION)
-const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'Enable Operational Intelligence')
+/** Same share image as the live page. */
+const SOCIAL_IMAGE = {
+  url: 'https://static.pingcap.com/files/2024/11/10231933/Enable-Opereational-Intelligence.png',
+  width: 1440,
+  height: 720,
+}
+
+export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION, SOCIAL_IMAGE)
+const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'Enable Operational Intelligence', {
+  image: SOCIAL_IMAGE,
+})
 
 const whyItems = [
   {

@@ -1,10 +1,29 @@
 import type { Metadata } from 'next'
 import { buildPageSchema, softwareApplicationSchema, faqSchema } from '@/lib/schema'
 
-const SOCIAL_IMAGE = 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png'
+export interface SocialImage {
+  url: string
+  width: number
+  height: number
+}
 
-/** Metadata for a /solutions/* page. Title and description must match the live page. */
-export function solutionMetadata(path: string, title: string, description: string): Metadata {
+/** Repo default share image, for pages whose live version has no page-specific one. */
+const DEFAULT_SOCIAL_IMAGE: SocialImage = {
+  url: 'https://static.pingcap.com/files/2026/10/08015109/tidb-social-image.png',
+  width: 1200,
+  height: 630,
+}
+
+/**
+ * Metadata for a /solutions/* page. Title and description must match the live
+ * page; pass `image` when the live page has its own og:image.
+ */
+export function solutionMetadata(
+  path: string,
+  title: string,
+  description: string,
+  image: SocialImage = DEFAULT_SOCIAL_IMAGE
+): Metadata {
   const url = `https://www.pingcap.com${path}`
   return {
     title,
@@ -16,7 +35,7 @@ export function solutionMetadata(path: string, title: string, description: strin
       description,
       url,
       siteName: 'TiDB',
-      images: [{ url: SOCIAL_IMAGE, width: 1200, height: 630 }],
+      images: [image],
       locale: 'en_US',
       type: 'website',
     },
@@ -25,7 +44,7 @@ export function solutionMetadata(path: string, title: string, description: strin
       site: '@PingCAP',
       title,
       description,
-      images: [SOCIAL_IMAGE],
+      images: [image.url],
     },
   }
 }
@@ -35,14 +54,21 @@ export function solutionSchema(
   title: string,
   description: string,
   name: string,
-  faq?: { question: string; answer: string }[]
+  {
+    faq,
+    image = DEFAULT_SOCIAL_IMAGE,
+  }: {
+    faq?: { question: string; answer: string }[]
+    /** Same image as passed to solutionMetadata. */
+    image?: SocialImage
+  } = {}
 ) {
   return buildPageSchema({
     path,
     title,
     description,
     pageType: 'WebPage',
-    image: SOCIAL_IMAGE,
+    image: image.url,
     breadcrumbs: [
       { name: 'Home', path: '/' },
       { name, path },

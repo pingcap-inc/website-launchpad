@@ -26,8 +26,15 @@ const TITLE = 'Scalable eCommerce Database | TiDB Distributed SQL'
 const DESCRIPTION =
   'Power your eCommerce platform with TiDB—scalable, real-time, and highly available. Handle transactions and analytics effortlessly in one unified database.'
 
-export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION)
-const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'eCommerce')
+/** Same share image as the live page. */
+const SOCIAL_IMAGE = {
+  url: 'https://static.pingcap.com/files/2024/10/17073814/eCommerce-social-scaled.jpeg',
+  width: 2560,
+  height: 1280,
+}
+
+export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION, SOCIAL_IMAGE)
+const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'eCommerce', { image: SOCIAL_IMAGE })
 
 const workloads: WorkloadItem[] = [
   {

@@ -20,8 +20,15 @@ const TITLE = 'Database for SaaS Applications | TiDB'
 const DESCRIPTION =
   'Discover TiDB, the database for SaaS applications that scales effortlessly, cuts costs, and powers real-time analytics. Book your demo today.'
 
-export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION)
-const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'SaaS')
+/** Same share image as the live page. */
+const SOCIAL_IMAGE = {
+  url: 'https://static.pingcap.com/files/2024/11/29000953/SaaS-banner-social-1.png',
+  width: 1200,
+  height: 600,
+}
+
+export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION, SOCIAL_IMAGE)
+const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'SaaS', { image: SOCIAL_IMAGE })
 
 /**
  * Replaces the former "Customer 360" card (Nov 2026).

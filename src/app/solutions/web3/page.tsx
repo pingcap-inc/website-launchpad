@@ -48,13 +48,9 @@ const faqs = [
   },
 ]
 
-const schema = solutionSchema(
-  PATH,
-  TITLE,
-  DESCRIPTION,
-  'Web3',
-  faqs.map((f) => ({ question: f.q, answer: typeof f.a === 'string' ? f.a : '' }))
-)
+const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'Web3', {
+  faq: faqs.map((f) => ({ question: f.q, answer: typeof f.a === 'string' ? f.a : '' })),
+})
 
 const stats = [
   {

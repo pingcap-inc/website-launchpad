@@ -29,8 +29,17 @@ const TITLE = 'Effortless MySQL Scaling | TiDB Solutions'
 const DESCRIPTION =
   'Scale MySQL workloads without limits. TiDB delivers cloud-native elasticity, real-time analytics, and built-in resiliency—start scaling smarter today.'
 
-export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION)
-const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'Modernize MySQL Workloads')
+/** Same share image as the live page. */
+const SOCIAL_IMAGE = {
+  url: 'https://static.pingcap.com/files/2024/11/26202650/Modernize-MySQL-Workloads-social-banner.png',
+  width: 1024,
+  height: 512,
+}
+
+export const metadata = solutionMetadata(PATH, TITLE, DESCRIPTION, SOCIAL_IMAGE)
+const schema = solutionSchema(PATH, TITLE, DESCRIPTION, 'Modernize MySQL Workloads', {
+  image: SOCIAL_IMAGE,
+})
 
 const painPoints = [
   {
