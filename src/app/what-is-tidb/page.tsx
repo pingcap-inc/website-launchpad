@@ -719,15 +719,16 @@ const customerStories = [
 
 const recognitionCards = [
   {
-    title: 'G2: Leader in Relational Databases',
+    title: 'G2: Leader in Three Categories',
     body: (
       <>
-        TiDB was named a Leader in the{' '}
-        <InlineLink href="https://www.pingcap.com/ebook-whitepaper/g2-grid-report-relational-databases-spring-2026-tidb/">
-          G2 Grid® Report for Relational Databases, Spring 2026
-        </InlineLink>
-        , which ranks more than 80 database products on customer satisfaction and market presence.
-        98% of reviewers rate TiDB 4 or 5 stars, and 90% would recommend it to a peer.
+        TiDB was named a Leader in{' '}
+        <InlineLink href="https://www.g2.com/products/tidb/reviews">
+          G2&rsquo;s Fall 2026 Grid® Reports
+        </InlineLink>{' '}
+        for Relational Databases, Database Management Systems, and Database-as-a-Service, and a
+        Momentum Leader in all three. G2 placements are based on verified customer reviews
+        evaluating satisfaction and market presence.
       </>
     ),
     logo: 'g2' as const,
@@ -903,10 +904,10 @@ function RecognitionLogo({ kind }: { kind: 'g2' | 'gartner' | 'cncf' }) {
   if (kind === 'g2') {
     return (
       <Image
-        src="/images/what-is-tidb/26fe3c9c-helpdesk_leader_leader.svg"
-        alt="G2 Leader badge"
-        width={94}
-        height={112}
+        src="/images/what-is-tidb/g2-leader-fall-2026.svg"
+        alt="G2 Leader, Fall 2026"
+        width={92}
+        height={106}
         className="h-[112px] w-auto"
       />
     )
