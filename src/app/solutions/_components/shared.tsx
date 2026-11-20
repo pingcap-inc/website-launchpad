@@ -32,17 +32,22 @@ export function SolutionHero({
   secondaryCta,
   backgroundUrl,
 }: {
-  headline: string
+  /** Plain text, or a node for styled headlines (e.g. web3's gradient first line). */
+  headline: ReactNode
   subheadline: string
   primaryCta: LinkItem
   secondaryCta: LinkItem
-  backgroundUrl: string
+  /** Optional hero background image. Omit for a plain dark hero (e.g. the costs page). */
+  backgroundUrl?: string
 }) {
   return (
     <SectionWrapper
       style={{
-        spacing: 'section',
-        backgroundImage: { image: { url: backgroundUrl } },
+        // 'hero' = no outer padding; HeroSection's own `pt-10 md:py-20` provides
+        // the vertical rhythm (matches /solutions/ai-agent-context/). Using
+        // 'section' here doubled the top/bottom spacing.
+        spacing: 'hero',
+        ...(backgroundUrl ? { backgroundImage: { image: { url: backgroundUrl } } } : {}),
       }}
     >
       <HeroSection
@@ -122,24 +127,49 @@ export interface WorkloadItem {
   title: string
   body: ReactNode
   links?: LinkItem[]
+  /** Optional colored border class (e.g. 'border-brand-teal-medium'); wraps the card in a box. */
+  borderColor?: string
 }
 
 /** Two-column grid, icon left, matching the live WordPress "card-workload" layout. */
 export function WorkloadCards({ items }: { items: WorkloadItem[] }) {
+  const bordered = items.some((i) => i.borderColor)
   return (
-    <div className="grid grid-cols-1 gap-x-12 gap-y-16 lg:grid-cols-2">
+    <div
+      className={cn('grid grid-cols-1 lg:grid-cols-2', bordered ? 'gap-6' : 'gap-x-12 gap-y-16')}
+    >
       {items.map((item) => (
-        <div key={item.title} className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+        <div
+          key={item.title}
+          className={cn(
+            'flex flex-col gap-6',
+            // Bordered variant (web3 on live): 60px icon stacked above the title.
+            // Borderless variant: icon left of the text.
+            item.borderColor
+              ? `border ${item.borderColor} bg-black p-8`
+              : 'sm:flex-row sm:items-start sm:gap-8'
+          )}
+        >
           <Image
             src={item.icon.src}
             alt={item.icon.alt}
-            width={120}
-            height={120}
-            className="h-24 w-24 shrink-0 sm:h-[120px] sm:w-[120px]"
+            width={item.borderColor ? 60 : 120}
+            height={item.borderColor ? 60 : 120}
+            className={cn(
+              'shrink-0',
+              item.borderColor ? 'h-[60px] w-[60px]' : 'h-24 w-24 sm:h-[120px] sm:w-[120px]'
+            )}
           />
           <div className="flex flex-col gap-4">
             {item.tag && <p className="font-mono text-eyebrow text-secondary m-0">{item.tag}</p>}
-            <h3 className="text-h3-lg font-medium leading-snug m-0">{item.title}</h3>
+            <h3
+              className={cn(
+                'text-h3-lg leading-snug m-0',
+                item.borderColor ? 'font-bold' : 'font-medium'
+              )}
+            >
+              {item.title}
+            </h3>
             <p className="text-body-md leading-relaxed text-secondary m-0">{item.body}</p>
             {item.links && item.links.length > 0 && (
               <div className="mt-2 flex flex-col items-start gap-3">

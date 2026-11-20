@@ -7,8 +7,11 @@ import { CountUp } from '@/components/ui/CountUp'
 export interface StatItem {
   icon?: React.ReactNode
   value: string
-  label: string
+  /** Bold line under the value. Omit to show only the (gray) description. */
+  label?: string
   description?: string
+  /** Optional text color/gradient classes for the value (defaults to the current text color). */
+  valueClassName?: string
 }
 
 interface StatsSectionProps {
@@ -17,6 +20,8 @@ interface StatsSectionProps {
   subtitle?: string
   stats: StatItem[]
   columns?: 2 | 3 | 4
+  /** Wrap each stat in a bordered box (matches the web3 stat row on live). */
+  bordered?: boolean
   className?: string
 }
 
@@ -32,6 +37,7 @@ export function StatsSection({
   subtitle,
   stats,
   columns = 3,
+  bordered = false,
   className,
 }: StatsSectionProps) {
   const hasHeader = Boolean(eyebrow || title || subtitle)
@@ -41,13 +47,22 @@ export function StatsSection({
       {hasHeader && <SectionHeader eyebrow={eyebrow} title={title ?? ''} subtitle={subtitle} />}
       <div className={cn('grid grid-cols-1 gap-6', colsMap[columns])}>
         {stats.map((stat, i) => (
-          <div key={i} className="px-8 py-8 flex flex-col gap-4">
+          <div
+            key={i}
+            className={cn(
+              'px-8 py-8 flex flex-col gap-4',
+              bordered && 'border border-carbon-800 bg-black'
+            )}
+          >
             {stat.icon && <div className="w-12 h-12 text-current">{stat.icon}</div>}
             <CountUp
               value={stat.value}
-              className="text-h2-mb md:text-h2-sm font-bold text-current leading-none"
+              className={cn(
+                'text-h2-mb md:text-h2-sm font-bold leading-none',
+                stat.valueClassName ?? 'text-current'
+              )}
             />
-            <p className="text-body-md font-bold text-current">{stat.label}</p>
+            {stat.label && <p className="text-body-md font-bold text-current">{stat.label}</p>}
             {stat.description && (
               <p className="text-body-sm text-secondary leading-relaxed">{stat.description}</p>
             )}
