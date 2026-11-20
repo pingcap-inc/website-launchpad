@@ -4,14 +4,16 @@ import {
   JsonLd,
   SectionWrapper,
   FeatureMediaSection,
-  FeatureCard,
   PrimaryButton,
+  SecondaryButton,
   CountUp,
   InlineLink,
 } from '@/components'
 import Image from 'next/image'
+import { Clock, SignalHigh, SignalMedium } from 'lucide-react'
 import {
   CustomerRatingQuotes,
+  DottedSteps,
   IconGrid,
   Intro,
   LogoRow,
@@ -216,13 +218,16 @@ const versusTabs: CompareTab[] = [
 
 function YoullGet({ items }: { items: string[] }) {
   return (
-    <div className="text-body-md text-secondary">
-      <p className="m-0 mb-2">
-        <strong className="text-text-inverse">You’ll get</strong>
+    // Live: gray semibold label, white bullets with tight lines.
+    <div className="mt-6 text-body-md">
+      <p className="m-0">
+        <strong className="font-bold text-secondary">You’ll get</strong>
       </p>
-      <ul className="list-disc space-y-1 pl-5">
+      <ul className="mt-5 list-disc space-y-2.5 pl-5 text-white">
         {items.map((i) => (
-          <li key={i}>{i}</li>
+          <li key={i} className="leading-tight">
+            {i}
+          </li>
         ))}
       </ul>
     </div>
@@ -294,27 +299,50 @@ const adoptionSteps = [
   },
 ]
 
-function LabMeta({ body, level, time }: { body: string; level: string; time: string }) {
-  return (
-    <>
-      {body}
-      <span className="mt-4 flex gap-6 font-mono text-eyebrow">
-        <span>{level}</span>
-        <span>{time}</span>
-      </span>
-    </>
-  )
+interface Lab {
+  title: string
+  body: string
+  level: 'Intermediate' | 'Advanced'
+  time: string
+  href: string
 }
 
-const labIcon = (
-  <Image
-    src="https://static.pingcap.com/files/2025/07/21210921/hands-on-lab.svg"
-    alt="hands-on-lab"
-    width={48}
-    height={48}
-    className="h-12 w-12"
-  />
-)
+/**
+ * Lab card as on live: bordered box, "Hands-on Lab" label, 60px circular lab icon
+ * beside the title, body, level + duration meta, "Start Lab ↗".
+ */
+function LabCard({ lab }: { lab: Lab }) {
+  const LevelIcon = lab.level === 'Advanced' ? SignalHigh : SignalMedium
+  return (
+    <div className="flex flex-col border border-carbon-900 bg-black p-8">
+      <p className="m-0 text-body-md font-light text-secondary">Hands-on Lab</p>
+      <div className="mt-6 flex items-center gap-5">
+        <Image
+          src="https://static.pingcap.com/files/2025/07/21210921/hands-on-lab.svg"
+          alt=""
+          width={60}
+          height={60}
+          className="h-[60px] w-[60px] shrink-0"
+        />
+        <h3 className="m-0 text-h3-lg font-bold leading-snug">{lab.title}</h3>
+      </div>
+      <p className="m-0 mt-4 text-body-md font-light leading-relaxed text-secondary">{lab.body}</p>
+      <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-body-md font-light text-secondary">
+        <span className="inline-flex items-center gap-1.5">
+          <LevelIcon strokeWidth={1.5} className="h-5 w-5 text-white" aria-hidden="true" />
+          {lab.level}
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <Clock strokeWidth={1.5} className="h-5 w-5 text-white" aria-hidden="true" />
+          {lab.time}
+        </span>
+      </div>
+      <div className="mt-5">
+        <SecondaryButton href={lab.href}>Start Lab</SecondaryButton>
+      </div>
+    </div>
+  )
+}
 
 const stats = [
   { prefix: 'Up to', value: '500TB', label: 'Scale Per Cluster' },
@@ -323,34 +351,20 @@ const stats = [
   { prefix: '', value: '80% Less', suffix: 'Sprawl', label: 'Vs. Single-Node Deployments' },
 ]
 
-const LABS = [
+const LABS: Lab[] = [
   {
-    icon: labIcon,
-    label: 'Hands-on Lab',
     title: 'Migrate from MySQL to TiDB Using TiDB Data Migration',
-    description: (
-      <LabMeta
-        body="Gain end-to-end experience configuring, migrating, and validating SQL workloads—exactly as outlined in Step 2."
-        level="Intermediate"
-        time="90 minutes"
-      />
-    ),
+    body: 'Gain end-to-end experience configuring, migrating, and validating SQL workloads—exactly as outlined in Step 2.',
+    level: 'Intermediate',
+    time: '90 minutes',
     href: 'https://labs.tidb.io/labs/demo_011',
-    ctaText: 'Start Lab',
   },
   {
-    icon: labIcon,
-    label: 'Hands-on Lab',
     title: 'SQL Workloads Replay with TiDB Data Migration',
-    description: (
-      <LabMeta
-        body="Validate post-migration performance by replaying real SQL traffic, ensuring workloads perform as expected before going live."
-        level="Advanced"
-        time="90 minutes"
-      />
-    ),
+    body: 'Validate post-migration performance by replaying real SQL traffic, ensuring workloads perform as expected before going live.',
+    level: 'Advanced',
+    time: '90 minutes',
     href: 'https://labs.tidb.io/labs/demo_302',
-    ctaText: 'Start Lab',
   },
 ]
 
@@ -407,12 +421,16 @@ export default function ModernizeMysqlPage() {
           <div className="space-y-16">
             <Intro
               title="Why MySQL Can’t Scale With You"
+              align="center"
               paragraphs={[
                 'MySQL’s monolithic architecture runs on a single server where query processing, transaction management, and storage are tightly coupled within a single node.',
                 'Scaling out this architecture is difficult because MySQL wasn’t built to natively distribute data across multiple nodes. Most teams rely on replication or manual sharding workarounds that add complexity and limit scalability.',
               ]}
             />
-            <IconGrid items={painPoints} columns={3} iconSize={120} />
+            {/* Live: three centered cards in the same 1050px column as the heading. */}
+            <div className="mx-auto max-w-[1050px]">
+              <IconGrid items={painPoints} columns={3} iconSize={150} centered />
+            </div>
           </div>
         </SectionWrapper>
 
@@ -448,24 +466,26 @@ export default function ModernizeMysqlPage() {
           </div>
         </SectionWrapper>
 
-        <SectionWrapper style={{ background: 'gradient-dark-bottom' }}>
-          <div className="space-y-16">
-            <Intro
-              title="Adoption Made Simple"
-              paragraphs={[
-                'TiDB guides you through SQL modernization with a four-step process backed by tools, best practices, and expert support.',
-              ]}
-            />
-            <IconGrid items={adoptionSteps} columns={4} iconSize={50} />
-          </div>
+        {/* Live splits this in two: the heading section fades navy → black, then the
+            steps sit on black directly below it. */}
+        <SectionWrapper style={{ background: 'gradient-dark-top' }}>
+          <Intro
+            title="Adoption Made Simple"
+            paragraphs={[
+              'TiDB guides you through SQL modernization with a four-step process backed by tools, best practices, and expert support.',
+            ]}
+          />
+        </SectionWrapper>
+        <SectionWrapper style={{ removePaddingTop: true }}>
+          <DottedSteps items={adoptionSteps} />
         </SectionWrapper>
 
         <SectionWrapper>
           <div className="space-y-12">
-            <Intro title="Hands-on Practice" size="xs" />
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <Intro title="Hands-on Practice" size="xs" align="center" fullWidth />
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {LABS.map((lab) => (
-                <FeatureCard key={lab.href} {...lab} />
+                <LabCard key={lab.href} lab={lab} />
               ))}
             </div>
           </div>

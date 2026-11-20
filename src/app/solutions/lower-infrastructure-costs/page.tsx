@@ -372,6 +372,7 @@ export default function LowerInfrastructureCostsPage() {
           title="Resources to Fuel Your TiDB Journey"
           items={resources}
           titleSize="md"
+          titleAlign="left"
         />
 
         <SectionWrapper style={{ background: 'brand-violet' }}>

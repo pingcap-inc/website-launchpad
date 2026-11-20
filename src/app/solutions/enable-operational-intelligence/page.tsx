@@ -296,6 +296,11 @@ export default function OperationalIntelligencePage() {
             title="The Trusted Data Serving Layer for 1000s of Customers Globally"
             logos={[
               {
+                name: 'Streak',
+                src: 'https://static.pingcap.com/files/2024/11/26202123/Streak-1.svg',
+                href: 'https://www.pingcap.com/case-study/streak-find-out-why-streak-built-its-realtime-crm-using-tidb/',
+              },
+              {
                 name: 'Catalyst',
                 src: 'https://static.pingcap.com/files/2024/11/10225931/Catalyst.svg',
                 href: 'https://www.pingcap.com/case-study/catalyst-rearchitects-core-saas-platform-tidb-60x-faster-performance/',

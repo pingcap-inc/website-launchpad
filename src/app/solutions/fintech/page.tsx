@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { Header, Footer, JsonLd, SectionWrapper, FeatureMediaSection } from '@/components'
+import { StepsTimeline, type TimelineStep } from '../_components/StepsTimeline'
 import {
   CaseCards,
   CtaBand,
@@ -83,7 +83,7 @@ const workloads: WorkloadItem[] = [
   },
 ]
 
-const steps = [
+const steps: TimelineStep[] = [
   {
     icon: 'https://static.pingcap.com/files/2025/11/17180917/step-1.svg',
     alt: 'Connect Data Sources icon',
@@ -233,28 +233,13 @@ export default function FintechPage() {
           </div>
         </SectionWrapper>
 
-        <SectionWrapper style={{ background: 'gradient-dark-bottom' }}>
-          <div className="space-y-16">
-            <Intro title="How TiDB Simplifies Fintech Adoption" />
-            <ol className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
-              {steps.map((step) => (
-                <li
-                  key={step.title}
-                  className="flex flex-col gap-4 border-t border-carbon-700 pt-6"
-                >
-                  <Image
-                    src={step.icon}
-                    alt={step.alt}
-                    width={64}
-                    height={64}
-                    className="h-16 w-16"
-                  />
-                  <h3 className="text-h3-lg font-bold leading-normal m-0">{step.title}</h3>
-                  <p className="text-body-md leading-relaxed text-secondary m-0">{step.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
+        {/* Live splits this block in two: the heading section fades navy → black,
+            then the timeline section fades black → navy, with no gap between. */}
+        <SectionWrapper style={{ background: 'gradient-dark-top', removePaddingBottom: true }}>
+          <Intro title="How TiDB Simplifies Fintech Adoption" />
+        </SectionWrapper>
+        <SectionWrapper style={{ background: 'gradient-dark-bottom', removePaddingTop: true }}>
+          <StepsTimeline steps={steps} className="pt-2" />
         </SectionWrapper>
 
         <SectionWrapper style={{ background: 'inverse' }}>
@@ -264,16 +249,21 @@ export default function FintechPage() {
           </div>
         </SectionWrapper>
 
-        <SectionWrapper style={{ background: 'gradient-dark-top' }}>
+        {/* Live: black at the top fading to navy at the bottom. */}
+        <SectionWrapper style={{ background: 'gradient-dark-bottom' }}>
           <div className="space-y-16">
-            <Intro
-              title="Proven Results with Fintech Innovators"
-              size="sm"
-              paragraphs={[
-                'Discover how leading fintech companies have harnessed the power of TiDB to drive innovation, enhance operational efficiency, and secure their transactions',
-              ]}
+            <CaseCards
+              intro={
+                <Intro
+                  title="Proven Results with Fintech Innovators"
+                  size="sm"
+                  paragraphs={[
+                    'Discover how leading fintech companies have harnessed the power of TiDB to drive innovation, enhance operational efficiency, and secure their transactions',
+                  ]}
+                />
+              }
+              items={cases}
             />
-            <CaseCards items={cases} />
           </div>
         </SectionWrapper>
 

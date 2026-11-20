@@ -4,7 +4,7 @@ import {
   JsonLd,
   SectionWrapper,
   FeatureMediaSection,
-  SecondaryButton,
+  PrimaryButton,
 } from '@/components'
 import {
   CaseCards,
@@ -267,7 +267,8 @@ export default function ECommercePage() {
           </div>
         </SectionWrapper>
 
-        <SectionWrapper style={{ background: 'gradient-dark-bottom' }}>
+        {/* Live: navy at the top fading to black at the bottom. */}
+        <SectionWrapper style={{ background: 'gradient-dark-top' }}>
           <div className="space-y-16">
             <Intro
               title="Unified HTAP Database for Transactions and Analytics"
@@ -291,16 +292,20 @@ export default function ECommercePage() {
 
         <SectionWrapper>
           <div className="space-y-16">
-            <Intro
-              title="Proven Success in eCommerce Innovation"
-              size="sm"
-              paragraphs={[
-                'Discover how leading eCommerce companies have harnessed the power of TiDB to enable real-time personalization and insights, optimize inventory and logistics, and handle high-volume traffic.',
-              ]}
+            <CaseCards
+              intro={
+                <Intro
+                  title="Proven Success in eCommerce Innovation"
+                  size="sm"
+                  paragraphs={[
+                    'Discover how leading eCommerce companies have harnessed the power of TiDB to enable real-time personalization and insights, optimize inventory and logistics, and handle high-volume traffic.',
+                  ]}
+                />
+              }
+              items={cases}
             />
-            <CaseCards items={cases} />
             <div className="flex justify-center">
-              <SecondaryButton href="/customers/">See how leaders scale with TiDB</SecondaryButton>
+              <PrimaryButton href="/customers/">See how leaders scale with TiDB</PrimaryButton>
             </div>
           </div>
         </SectionWrapper>

@@ -43,15 +43,18 @@ export function SolutionHero({
   return (
     <SectionWrapper
       style={{
-        // 'hero' = no outer padding; HeroSection's own `pt-10 md:py-20` provides
-        // the vertical rhythm (matches /solutions/ai-agent-context/). Using
-        // 'section' here doubled the top/bottom spacing.
+        // 'hero' = no outer padding; the vertical rhythm comes from HeroSection's
+        // own `pt-10 md:py-20` plus the className below.
         spacing: 'hero',
         ...(backgroundUrl ? { backgroundImage: { image: { url: backgroundUrl } } } : {}),
       }}
     >
       <HeroSection
         layout="centered"
+        // Live WordPress banner padding (top/bottom): 60/40 mobile, 120/200 from
+        // 1024px. Added to HeroSection's inner pt-10 md:py-20, that gives
+        // 60/40 mobile, 80/80 tablet (live 60/60) and 120/200 desktop.
+        className="pb-10 pt-5 md:pb-0 md:pt-0 lg:pb-[120px] lg:pt-10"
         headline={headline}
         subheadline={subheadline}
         primaryCta={primaryCta}
@@ -89,8 +92,15 @@ export function Intro({
       align={align}
       fullWidth={fullWidth}
       h2Size={size === 'xs' ? 'sm' : size}
-      // SectionHeader has no 40px option; override its H2 size for "xs".
-      className={cn(size === 'xs' && 'md:[&_h2]:text-h2-mb', className)}
+      className={cn(
+        // SectionHeader has no 40px option; override its H2 size for "xs".
+        size === 'xs' && 'md:[&_h2]:text-h2-mb',
+        // Live centered section headings sit in a 1050px column with the intro at 840px.
+        align === 'center' &&
+          !fullWidth &&
+          '[&>h2]:mx-auto [&>h2]:max-w-[1050px] [&>p]:max-w-[840px]',
+        className
+      )}
       subtitle={
         paragraphs.length > 0 ? (
           <span className="flex flex-col gap-4">
@@ -211,6 +221,7 @@ const ICON_SIZE_CLASS = {
   50: 'h-[50px] w-[50px]',
   96: 'h-24 w-24',
   120: 'h-[120px] w-[120px]',
+  150: 'h-[150px] w-[150px]',
 } as const
 
 export function IconGrid({
@@ -218,17 +229,27 @@ export function IconGrid({
   columns = 3,
   iconSize = 96,
   horizontal = false,
+  centered = false,
 }: {
   items: IconGridItem[]
   columns?: 2 | 3 | 4
   iconSize?: keyof typeof ICON_SIZE_CLASS
   /** Icon to the left of the text instead of above it. */
   horizontal?: boolean
+  /** Center the icon and text in each item (e.g. modernize-mysql's pain points). */
+  centered?: boolean
 }) {
   return (
-    <div className={cn('grid grid-cols-1 gap-10', gridCols[columns])}>
+    <div className={cn('grid grid-cols-1', centered ? 'gap-8' : 'gap-10', gridCols[columns])}>
       {items.map((item) => (
-        <div key={item.title} className={cn('flex gap-6', horizontal ? 'flex-row' : 'flex-col')}>
+        <div
+          key={item.title}
+          className={cn(
+            'flex gap-6',
+            horizontal ? 'flex-row' : 'flex-col',
+            centered && 'items-center text-center'
+          )}
+        >
           <Image
             src={item.icon.src}
             alt={item.icon.alt}
@@ -236,13 +257,78 @@ export function IconGrid({
             height={iconSize}
             className={cn('shrink-0', ICON_SIZE_CLASS[iconSize])}
           />
-          <div className="flex flex-col gap-3">
+          <div className={cn('flex flex-col', centered ? 'gap-5' : 'gap-3')}>
             <h3 className="text-h3-sm md:text-h3-lg font-bold leading-normal m-0">{item.title}</h3>
             {item.body && (
               <p className="text-body-md leading-relaxed text-secondary m-0">{item.body}</p>
             )}
             {item.extra}
           </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ─── Dotted step columns (line across the top, one coloured dot per step) ─────
+
+export interface DottedStep {
+  icon: { src: string; alt: string }
+  title: string
+  body: ReactNode
+  extra?: ReactNode
+}
+
+/** Dot colours in step order, as on live (teal, violet, red, blue). */
+const STEP_DOTS = [
+  'bg-brand-teal-medium',
+  'bg-brand-violet-medium',
+  'bg-brand-red-primary',
+  'bg-brand-blue-medium',
+]
+
+/**
+ * Four step columns under a line that ends in an arrow, matching the live
+ * modernize-mysql "Adoption Made Simple" block (1440px): equal columns, steps
+ * 2–4 inset 32px so each 12px dot sits at its column's text start, 50px icon
+ * 33px below the line, title 22px below the icon. Below `lg` each step gets its
+ * own top rule with the dot on it.
+ */
+export function DottedSteps({ items }: { items: DottedStep[] }) {
+  return (
+    <div className="relative grid grid-cols-1 gap-y-12 md:grid-cols-2 md:gap-x-8 lg:grid-cols-4 lg:gap-x-0 lg:gap-y-0">
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 hidden h-px bg-carbon-700 lg:block"
+      >
+        <span className="absolute -top-1 right-0 h-0 w-0 border-y-4 border-l-8 border-y-transparent border-l-white" />
+      </div>
+      {items.map((item, i) => (
+        <div
+          key={item.title}
+          className={cn(
+            'relative border-t border-carbon-700 pt-8 lg:border-t-0 lg:pt-[33px]',
+            i > 0 && 'lg:pl-8'
+          )}
+        >
+          <span
+            aria-hidden="true"
+            className={cn(
+              'absolute -top-1.5 left-0 h-3 w-3 rounded-full',
+              i > 0 && 'lg:left-8',
+              STEP_DOTS[i % STEP_DOTS.length]
+            )}
+          />
+          <Image
+            src={item.icon.src}
+            alt={item.icon.alt}
+            width={50}
+            height={50}
+            className="h-[50px] w-[50px]"
+          />
+          <h3 className="mb-0 mt-[22px] text-h3-lg font-bold leading-[30px]">{item.title}</h3>
+          <p className="mb-0 mt-5 text-body-md leading-relaxed text-secondary">{item.body}</p>
+          {item.extra}
         </div>
       ))}
     </div>
@@ -258,11 +344,16 @@ export function LogoRow({
   title: string
   logos: { name: string; src: string; href?: string }[]
 }) {
+  // Live solution pages: a static, centered row (no marquee), each logo 165px wide
+  // with height from its aspect ratio, 32px apart, under a 36px heading.
   return (
-    <div className="space-y-12">
-      <Intro title={title} align="center" size="xs" />
+    <div className="space-y-14">
+      <Intro title={title} align="center" size="xs" fullWidth className="md:[&_h2]:text-[36px]" />
       <LogoCloudSection
         align="center"
+        autoScroll={false}
+        logoClassName="h-auto w-[165px]"
+        className="[&>div:last-child]:gap-8"
         logos={logos.map((l) => ({ name: l.name, image: { url: l.src }, href: l.href }))}
       />
     </div>
@@ -278,29 +369,46 @@ export interface CaseCardItem {
   href: string
 }
 
-export function CaseCards({ items }: { items: CaseCardItem[] }) {
+function CaseCard({ item, className }: { item: CaseCardItem; className?: string }) {
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
-      {items.map((item) => (
-        <a
-          key={item.href}
-          href={item.href}
-          {...externalLinkProps(item.href)}
-          className="group flex flex-col gap-4 border border-carbon-800 p-6 transition-transform duration-200 ease-in-out hover:-translate-y-2"
-        >
-          <div className="flex h-12 items-center">
-            <Image
-              src={item.logo.src}
-              alt={item.logo.alt}
-              width={160}
-              height={48}
-              className="h-auto max-h-12 w-auto max-w-[160px] object-contain"
-            />
-          </div>
-          <h3 className="text-h3-lg font-bold leading-normal m-0">{item.title}</h3>
-          <p className="text-body-md leading-relaxed text-secondary m-0 flex-1">{item.body}</p>
-          <span className="font-bold underline-offset-4 group-hover:underline">Read More</span>
-        </a>
+    <a
+      href={item.href}
+      {...externalLinkProps(item.href)}
+      className={cn(
+        'group flex flex-col transition-transform duration-200 ease-in-out hover:-translate-y-2',
+        className
+      )}
+    >
+      <Image
+        src={item.logo.src}
+        alt={item.logo.alt}
+        width={160}
+        height={30}
+        className="h-[30px] w-auto max-w-[180px] object-contain object-left"
+      />
+      <h3 className="mb-0 mt-8 text-h3-lg font-bold leading-snug">{item.title}</h3>
+      <p className="mb-0 mt-5 text-body-md leading-relaxed text-secondary">{item.body}</p>
+      <div className="mt-4">
+        <SecondaryButton as="span">Read More</SecondaryButton>
+      </div>
+    </a>
+  )
+}
+
+/**
+ * Case-study grid, laid out like the live solution pages: a 4-column grid where
+ * the intro spans columns 1–2 of the first row, the first case sits in column 4
+ * beside it, and the remaining cases fill the row below. Borderless cards:
+ * 30px-tall logo, title, short result, "Read More ↗".
+ */
+export function CaseCards({ intro, items }: { intro?: ReactNode; items: CaseCardItem[] }) {
+  const [first, ...rest] = items
+  return (
+    <div className="grid grid-cols-1 gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-4 lg:gap-y-[72px]">
+      {intro && <div className="md:col-span-2">{intro}</div>}
+      {first && <CaseCard item={first} className={cn(intro && 'lg:col-start-4')} />}
+      {rest.map((item) => (
+        <CaseCard key={item.href} item={item} />
       ))}
     </div>
   )
@@ -421,17 +529,20 @@ export function ResourcesRow({
   title,
   items = DEFAULT_RESOURCES,
   titleSize = 'xs',
+  titleAlign = 'center',
 }: {
   title: string
   items?: ResourceCard[]
-  /** Heading size; most live solution pages use 40px ('xs'), costs uses 56px ('md'). */
+  /** Heading size; most live solution pages use ~40px ('xs'), costs uses 56px ('md'). */
   titleSize?: 'lg' | 'md' | 'sm' | 'xs'
+  /** Most live solution pages center this heading; costs left-aligns it. */
+  titleAlign?: 'left' | 'center'
 }) {
   // ColorCard tuned to the live solution pages' resource card: 16/16/26px padding,
   // 60×80 icon with the title 32px below it, "Read ↗" pinned bottom-right.
   return (
     <SectionWrapper>
-      <Intro title={title} size={titleSize} fullWidth className="mb-10" />
+      <Intro title={title} size={titleSize} align={titleAlign} fullWidth className="mb-10" />
       <FeatureHighlightsSection
         columns={4}
         cardClassName="px-4 pt-4 pb-[26px] lg:min-h-[358px]"

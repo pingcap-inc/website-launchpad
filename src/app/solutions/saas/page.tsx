@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Header, Footer, JsonLd, SectionWrapper } from '@/components'
 import { VideoDialog } from '@/components/ui/VideoDialog'
+import { SecondaryButton } from '@/components/ui/SecondaryButton'
 import {
   IconGrid,
   Intro,
@@ -321,32 +322,40 @@ export default function SaasPage() {
                 </>,
               ]}
             />
-            <div className="grid grid-cols-1 gap-6">
+            {/* Live: a dashed, dark-red "Problem" card beside a solid navy "TiDB Enables"
+                card with its icon on the left (on top below md). 30px/40px padding,
+                32px gaps on desktop, 16px when stacked. */}
+            <div className="grid grid-cols-1 gap-4 md:gap-8">
               {complexity.map((row) => (
-                <div key={row.problem.title} className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <div className="flex flex-col gap-3 border border-carbon-800 p-8">
-                    <p className="font-mono text-eyebrow text-secondary m-0">Problem</p>
-                    <h3 className="text-h3-sm md:text-h3-lg font-bold leading-normal m-0">
-                      {row.problem.title}
-                    </h3>
-                    <p className="text-body-md leading-relaxed text-secondary m-0">
+                <div
+                  key={row.problem.title}
+                  className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8"
+                >
+                  <div className="flex flex-col gap-2.5 border border-dashed border-carbon-800 bg-brand-red-bg/30 px-10 py-[30px]">
+                    <p className="m-0 font-mono text-[15px] font-medium leading-[29px] text-brand-red-primary">
+                      Problem
+                    </p>
+                    <h3 className="m-0 text-h3-lg font-bold leading-[30px]">{row.problem.title}</h3>
+                    <p className="m-0 text-body-md leading-[26px] text-secondary">
                       {row.problem.body}
                     </p>
                   </div>
-                  <div className="flex gap-6 border border-brand-blue-medium bg-brand-blue-bg p-8">
+                  <div className="flex flex-col gap-8 bg-brand-blue-bg/60 px-10 py-[30px] md:flex-row md:items-center">
                     <Image
                       src={row.enables.icon}
                       alt={row.enables.alt}
-                      width={64}
-                      height={64}
-                      className="h-16 w-16 shrink-0"
+                      width={112}
+                      height={112}
+                      className="h-28 w-28 shrink-0 md:h-[89px] md:w-[89px]"
                     />
-                    <div className="flex flex-col gap-3">
-                      <p className="font-mono text-eyebrow text-secondary m-0">TiDB Enables</p>
-                      <h3 className="text-h3-sm md:text-h3-lg font-bold leading-normal m-0">
+                    <div className="flex flex-col gap-2.5">
+                      <p className="m-0 font-mono text-[15px] font-medium leading-[29px] text-brand-blue-light">
+                        TiDB Enables
+                      </p>
+                      <h3 className="m-0 text-h3-lg font-bold leading-[30px]">
                         {row.enables.title}
                       </h3>
-                      <p className="text-body-md leading-relaxed text-secondary m-0">
+                      <p className="m-0 text-body-md leading-[26px] text-secondary">
                         {row.enables.body}
                       </p>
                     </div>
@@ -405,9 +414,10 @@ export default function SaasPage() {
                         <span className="font-bold">{v.name}</span>
                         <span className="text-body-sm text-secondary">{v.role}</span>
                       </span>
-                      <span className="mt-auto font-bold underline-offset-4 group-hover:underline">
+                      {/* A span, not a link: the whole card is already the dialog trigger button. */}
+                      <SecondaryButton as="span" className="mt-auto self-start">
                         Watch the Video
-                      </span>
+                      </SecondaryButton>
                     </span>
                   </button>
                 </VideoDialog>
