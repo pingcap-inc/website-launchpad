@@ -4,11 +4,12 @@
  * theme (pingcap-inc/NA-website-wordpress-theme), which renders the same
  * selector on the rest of www.pingcap.com.
  *
- * Español and Português point at the LATAM landing page, which picks its
- * language from `?lang=`. URLs are absolute so they also work from previews.
+ * 한국어 is the WordPress site's TranslatePress copy under /ko/. Español and
+ * Português point at the LATAM landing page, which picks its language from
+ * `?lang=`. URLs are absolute so they also work from previews.
  */
 
-export type SiteLanguageCode = 'en' | 'ja' | 'es' | 'pt'
+export type SiteLanguageCode = 'en' | 'ja' | 'ko' | 'es' | 'pt'
 
 export interface SiteLanguage {
   code: SiteLanguageCode
@@ -22,6 +23,7 @@ export interface SiteLanguage {
 export const SITE_LANGUAGES: SiteLanguage[] = [
   { code: 'en', label: 'English', shortLabel: 'EN', href: 'https://www.pingcap.com/' },
   { code: 'ja', label: '日本語', shortLabel: 'JA', href: 'https://pingcap.co.jp/' },
+  { code: 'ko', label: '한국어', shortLabel: 'KO', href: 'https://www.pingcap.com/ko/' },
   {
     code: 'es',
     label: 'Español',
