@@ -7,7 +7,7 @@ import type { PageDSL } from '@/lib/dsl-schema'
 export const metadata: Metadata = {
   title: 'Lovable AI App Builder: Post-Launch Scaling Guide | TiDB',
   description:
-    'Learn what to do after shipping your Lovable AI app. Get launch-ready, understand data storage, recognize scaling signals, and migrate to TiDB when growth',
+    'Learn what to do after shipping your Lovable AI app: get launch-ready, understand data storage, spot scaling signals, and know when to migrate to TiDB.',
   robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://www.pingcap.com/playbook/lovable-ai-app-builder-post-launch-guide/',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Lovable AI App Builder: Post-Launch Scaling Guide | TiDB',
     description:
-      'Learn what to do after shipping your Lovable AI app. Get launch-ready, understand data storage, recognize scaling signals, and migrate to TiDB when growth',
+      'Learn what to do after shipping your Lovable AI app: get launch-ready, understand data storage, spot scaling signals, and know when to migrate to TiDB.',
     url: 'https://www.pingcap.com/playbook/lovable-ai-app-builder-post-launch-guide/',
     siteName: 'TiDB',
     images: [
@@ -38,7 +38,7 @@ const schema = buildPageSchema({
   path: '/playbook/lovable-ai-app-builder-post-launch-guide/',
   title: 'Lovable AI App Builder: Post-Launch Scaling Guide | TiDB',
   description:
-    'Learn what to do after shipping your Lovable AI app. Get launch-ready, understand data storage, recognize scaling signals, and migrate to TiDB when growth',
+    'Learn what to do after shipping your Lovable AI app: get launch-ready, understand data storage, spot scaling signals, and know when to migrate to TiDB.',
   breadcrumbs: [
     { name: 'Home', path: '/' },
     {
@@ -53,7 +53,7 @@ const dsl: PageDSL = {
   meta: {
     title: 'Lovable AI App Builder: Post-Launch Scaling Guide | TiDB',
     description:
-      'Learn what to do after shipping your Lovable AI app. Get launch-ready, understand data storage, recognize scaling signals, and migrate to TiDB when growth',
+      'Learn what to do after shipping your Lovable AI app: get launch-ready, understand data storage, spot scaling signals, and know when to migrate to TiDB.',
     canonical: '/playbook/lovable-ai-app-builder-post-launch-guide/',
     createdBy: 'a.hire@pingcap.com',
     createdAt: '2026-11-23T22:24:18.328Z',
