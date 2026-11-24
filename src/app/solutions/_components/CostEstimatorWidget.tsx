@@ -12,9 +12,12 @@ import Script from 'next/script'
  * Stable (non-hashed) CDN URLs are used on purpose so the embed tracks the
  * product team's current widget rather than pinning to one content hash.
  *
- * NOTE (ops): loading this third-party script needs the proxy-layer CSP to
- * allow `script-src https://static.pingcap.com`. Images from that origin
- * already load; confirm/allow the script origin before this ships to prod.
+ * CSP: checked on www.pingcap.com in Nov 2026. The proxy-layer policy is only
+ * `base-uri 'self'; object-src 'none'; frame-ancestors 'self'`, with no
+ * `script-src`/`default-src`, so this script is not blocked. The live
+ * WordPress version of this page loads the same widget under that policy. If a
+ * `script-src` is ever added at the proxy, it must include
+ * `https://static.pingcap.com`.
  */
 const WIDGET_CSS = 'https://static.pingcap.com/cost-estimation/widget.css'
 const WIDGET_JS = 'https://static.pingcap.com/cost-estimation/widget.js'
