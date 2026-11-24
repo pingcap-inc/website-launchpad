@@ -11,6 +11,8 @@ export interface ColorCardItem {
   description: string | React.ReactNode
   cta?: { text: string; href: string }
   icon?: React.ReactNode
+  /** Horizontal position of the CTA (default left; 'end' pins it bottom-right). */
+  ctaAlign?: 'start' | 'end'
 }
 
 interface FeatureHighlightsProps {

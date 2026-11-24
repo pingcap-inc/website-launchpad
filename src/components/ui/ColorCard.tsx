@@ -19,10 +19,20 @@ interface ColorCardProps {
   cta?: { text: string; href: string }
   /** Lucide icon or any SVG node */
   icon?: React.ReactNode
+  /** Horizontal position of the CTA (default left; 'end' pins it bottom-right). */
+  ctaAlign?: 'start' | 'end'
   className?: string
 }
 
-export function ColorCard({ variant, title, description, cta, icon, className }: ColorCardProps) {
+export function ColorCard({
+  variant,
+  title,
+  description,
+  cta,
+  icon,
+  ctaAlign = 'start',
+  className,
+}: ColorCardProps) {
   const rootClassName = cn(
     'group flex flex-col p-8',
     bgMap[variant],
@@ -38,7 +48,7 @@ export function ColorCard({ variant, title, description, cta, icon, className }:
       <div className="text-body-md text-text-inverse leading-relaxed flex-1">{description}</div>
 
       {cta?.text && (
-        <div className="mt-8">
+        <div className={cn('mt-8', ctaAlign === 'end' && 'self-end')}>
           <SecondaryButton
             className="group-hover:bg-transparent group-hover:text-text-inverse"
             as="span"
