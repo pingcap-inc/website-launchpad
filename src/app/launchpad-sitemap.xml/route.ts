@@ -102,6 +102,11 @@ const routes: Array<{
     changeFrequency: 'monthly',
   },
   {
+    url: '/playbook/lovable-ai-app-builder-post-launch-guide/',
+    priority: 0.7,
+    changeFrequency: 'monthly',
+  },
+  {
     url: '/playbook/noisy-neighbor-multi-tenant-mysql/',
     priority: 0.7,
     changeFrequency: 'monthly',
