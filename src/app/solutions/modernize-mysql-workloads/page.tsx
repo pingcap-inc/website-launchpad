@@ -517,7 +517,7 @@ export default function ModernizeMysqlPage() {
                         href="https://www.pingcap.com/ai/vector-search/"
                         className="text-text-inverse font-bold"
                       >
-                        Learn about vector search on TiDB
+                        Learn About Vector Search on TiDB
                       </InlineLink>
                     </span>
                   </>,
