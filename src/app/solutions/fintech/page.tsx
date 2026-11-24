@@ -85,7 +85,7 @@ const workloads: WorkloadItem[] = [
         text: 'Download White Paper',
         href: 'https://static.pingcap.com/files/2024/10/23001123/Implementing-Real-Timefraud_detection_with_TiDB.pdf',
       },
-      { text: 'Explore vector search on TiDB', href: VECTOR_SEARCH_URL },
+      { text: 'Explore Vector Search on TiDB', href: VECTOR_SEARCH_URL },
     ],
   },
 ]
