@@ -29,7 +29,6 @@ const footerNav = [
         label: 'TiDB Cloud Filesystem',
         href: 'https://www.pingcap.com/tidb/tidb-cloud-filesystem/',
       },
-      { label: 'OSS Insight', href: 'https://ossinsight.io/' },
     ],
   },
   {

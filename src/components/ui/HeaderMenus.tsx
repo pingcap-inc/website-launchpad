@@ -13,7 +13,6 @@ import {
   GearIcon,
   SlidersIcon,
   StarIcon,
-  EyeIcon,
   ChartDownTIcon,
   AiTIcon,
   WalletTIcon,
@@ -212,7 +211,6 @@ const dropdowns: NavDropdown[] = [
             icon: WalletTIcon,
           },
           { label: 'TiDB Cloud Zero', href: 'https://zero.tidbcloud.com/', icon: BoltTIcon },
-          { label: 'OSS Insight', href: 'https://ossinsight.io/', icon: EyeIcon },
         ],
       },
       banner: {
